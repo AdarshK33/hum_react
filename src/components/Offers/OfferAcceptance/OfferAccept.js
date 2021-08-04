@@ -249,8 +249,16 @@ const OfferAccept = (props) => {
                   </p>
                 </Container>
               )}
-              {candidateProfileData.status === 2 &&
-              candidateProfileData.documentUploaded === 0 ? (
+              {(candidateProfileData.status === 2 &&
+                candidateProfileData.documentUploaded === 0 &&
+                candidateProfileData.documentReUploadCount !== 4 &&
+                candidateProfileData.adminVerificationStatus === 0 &&
+                candidateProfileData.verificationStatus === 0) ||
+              (candidateProfileData.status === 2 &&
+                candidateProfileData.documentUploaded === 1 &&
+                candidateProfileData.documentReUploadCount !== 4 &&
+                (candidateProfileData.adminVerificationStatus === 2 ||
+                  candidateProfileData.verificationStatus === 2)) ? (
                 <Link
                   style={{
                     color: "#ffffff",

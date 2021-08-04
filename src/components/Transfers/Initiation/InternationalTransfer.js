@@ -48,8 +48,8 @@ const InternationalTransfer = () => {
   const [newCurrency, setNewCurrency] = useState("");
   const [newCurrencyErrMsg, setNewCurrencyErrMsg] = useState("");
   const [countryInsurance, setCountryInsurance] = useState(false);
-  // const [projectTerm, setProjectTerm] = useState("");
-  // const [projectTermErrMsg, setProjectTermErrMsg] = useState("");
+  const [projectTerm, setProjectTerm] = useState(0);
+  const [projectTermErrMsg, setProjectTermErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
@@ -74,11 +74,11 @@ const InternationalTransfer = () => {
     getCostCentreDetails();
   }, []);
 
-  useEffect(() => {
-    if (newCostCentre !== "") {
-      getCostCentreManagersDetails(newCostCentre);
-    }
-  }, [newCostCentre]);
+  // useEffect(() => {
+  //   if (newCostCentre !== "") {
+  //     getCostCentreManagersDetails(newCostCentre);
+  //   }
+  // }, [newCostCentre]);
 
   useEffect(() => {
     if (formValid === true) {
@@ -102,7 +102,8 @@ const InternationalTransfer = () => {
         promotedDesignation: newDesignation,
         promotedFixedGross: newGross,
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedManagerId: newManager,
+        // promotedManagerId: newManager,
+        promotedManagerName: newManager,
         promotedMonthlyBonus: newBonus,
         remark: null,
         status: 0,
@@ -112,7 +113,14 @@ const InternationalTransfer = () => {
         isInsuranceCovered: countryInsurance,
         currency: newCurrency,
         promotedManagerEmailId: newMangerMailId,
-        promotedTermOfProject: calProjectTerm,
+        promotedTermOfProject:
+          projectTerm !== "0"
+            ? parseInt(projectTerm) <= 10
+              ? projectTerm === "1"
+                ? projectTerm + " Year"
+                : projectTerm + " Years"
+              : parseInt(projectTerm) / 10 + " Months"
+            : null,
       };
       createTransferInitiation(initiationData);
     }
@@ -134,6 +142,32 @@ const InternationalTransfer = () => {
   const countryChangeHandler = (e) => {
     setNewCountry(e.target.value);
     setNewCountryErrMsg("");
+    if (
+      countryDetails !== null &&
+      countryDetails !== undefined &&
+      Object.keys(countryDetails).length !== 0 &&
+      e.target.value !== "" &&
+      e.target.value !== null &&
+      e.target.value !== undefined
+    ) {
+      const countryItem = countryDetails.find((dept) => {
+        return dept.countryName === e.target.value;
+      });
+      if (
+        countryItem !== null &&
+        countryItem !== undefined &&
+        Object.keys(countryItem).length !== 0 &&
+        countryItem.currency !== "" &&
+        countryItem.currency !== null &&
+        countryItem.currency !== undefined
+      ) {
+        setNewCurrency(countryItem.currency);
+      } else {
+        setNewCurrency("");
+      }
+    } else {
+      setNewCurrency("");
+    }
   };
 
   const designationChangeHandler = (e) => {
@@ -151,9 +185,36 @@ const InternationalTransfer = () => {
     setNewBonusErrMsg("");
   };
 
-  const changeEffectiveDateHandler = (date) => {
-    setEffectiveDate(date);
+  const changeEffectiveDateHandler = (Val) => {
+    setEffectiveDate(Val);
     setEffectiveDateErrMsg("");
+    let date = Val;
+    console.log(date);
+
+    if (date !== "" && date !== null && date !== undefined) {
+      if (parseInt(projectTerm) <= 10) {
+        var fullDate = new Date(
+          date.setFullYear(date.getFullYear() + parseInt(projectTerm))
+        );
+        ChangeReturnDate(fullDate);
+        fullDate = new Date(
+          date.setFullYear(date.getFullYear() - parseInt(projectTerm))
+        );
+      } else {
+        var fullDate = new Date(
+          date.setMonth(date.getMonth() + parseInt(projectTerm) / 10)
+        );
+        ChangeReturnDate(fullDate);
+        fullDate = new Date(
+          date.setMonth(date.getMonth() - parseInt(projectTerm) / 10)
+        );
+      }
+    } else {
+      setReturnDate(new Date());
+    }
+  };
+  const ChangeReturnDate = (date) => {
+    setReturnDate(date);
   };
 
   const changeReturnDateHandler = (date) => {
@@ -204,14 +265,43 @@ const InternationalTransfer = () => {
     setNewCurrencyErrMsg("");
   };
 
-  // const changeProjectTermHandler = (e) => {
-  //   setProjectTerm(e.target.value);
-  //   setProjectTermErrMsg("");
-  // };
+  const changeProjectTermHandler = (e) => {
+    setProjectTerm(e.target.value);
+    setProjectTermErrMsg("");
+    if (
+      effectiveDate !== null &&
+      effectiveDate !== undefined &&
+      effectiveDate !== "" &&
+      e.target.value !== "0"
+    ) {
+      if (parseInt(e.target.value) <= 10) {
+        console.log("year->", e.target.value);
+        setReturnDate(
+          new Date(
+            returnDate.setFullYear(
+              effectiveDate.getFullYear() + parseInt(e.target.value)
+            )
+          )
+        );
+      } else {
+        console.log("month->", parseInt(e.target.value) / 10);
+        setReturnDate(
+          new Date(
+            returnDate.setMonth(
+              effectiveDate.getMonth() + parseInt(e.target.value) / 10
+            )
+          )
+        );
+      }
+    } else {
+      setReturnDate(new Date());
+    }
+  };
 
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    const Valid = /^[0-9\b]+$/;
 
     if (searchInput === "") {
       validForm = false;
@@ -228,12 +318,16 @@ const InternationalTransfer = () => {
       setNewDesignationErrMsg("Please select designation");
     }
 
-    if (effectiveDate === "") {
+    if (
+      effectiveDate === "" ||
+      effectiveDate === undefined ||
+      effectiveDate === null
+    ) {
       validForm = false;
       setEffectiveDateErrMsg("Please enter onward date");
     }
 
-    if (returnDate === "") {
+    if (returnDate === "" || returnDate === undefined || returnDate === null) {
       validForm = false;
       setReturnDateErrMsg("Please enter return date");
     }
@@ -255,7 +349,43 @@ const InternationalTransfer = () => {
 
     if (newGross === "") {
       validForm = false;
+
       setNewGrossErrMsg("Please enter fixed gross");
+      console.log("validForm", validForm);
+    } else if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 &&
+      (initiationEmpData.currentContractType === "Permanent" ||
+        initiationEmpData.currentContractType === "permanent")
+    ) {
+      if (Valid.test(newGross)) {
+        if (parseInt(newGross) < 18000) {
+          validForm = false;
+          setNewGrossErrMsg("Value should be greater than 18000");
+          console.log("validForm", validForm);
+        }
+      } else {
+        validForm = false;
+        setNewGrossErrMsg("Value should be number");
+      }
+    } else if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 &&
+      (initiationEmpData.currentContractType === "Parttime" ||
+        initiationEmpData.currentContractType === "parttime")
+    ) {
+      if (Valid.test(newGross)) {
+        if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+          validForm = false;
+          setNewGrossErrMsg("Value should be between 90 - 200");
+          console.log("validForm", validForm);
+        }
+      } else {
+        validForm = false;
+        setNewGrossErrMsg("Value should be number");
+      }
     }
 
     if (newCurrency === "") {
@@ -265,13 +395,16 @@ const InternationalTransfer = () => {
 
     if (newBonus === "") {
       validForm = false;
-      setNewBonusErrMsg("Please enter bonus");
+      setNewBonusErrMsg("Please enter relocation bonus");
+    } else if (newBonus.length > 2 || !Valid.test(newBonus)) {
+      validForm = false;
+      setNewBonusErrMsg("Please enter two digits figure");
     }
 
-    // if (projectTerm === "") {
-    //   validForm = false;
-    //   setProjectTermErrMsg("Please enter project term");
-    // }
+    if (projectTerm === "" || projectTerm === "0" || projectTerm === 0) {
+      validForm = false;
+      setProjectTermErrMsg("Please enter project term");
+    }
 
     return validForm;
   };
@@ -330,19 +463,31 @@ const InternationalTransfer = () => {
             <Row className="mb-3">
               <Col md={6}>
                 <Row>
-                  <Col md={5}>Cost Centre Name</Col>
+                  <Col md={5}>Cost Center Name</Col>
                   <Col md={7} className="text-primary">
                     {initiationEmpData.currentCostCentre}
                   </Col>
                 </Row>
               </Col>
               <Col md={6}>
-                <Row>
-                  <Col md={5}>Contract Type:</Col>
-                  <Col md={7} className="text-primary">
-                    {initiationEmpData.currentContractType}
+                <Form.Group as={Row} controlId="transferInitiationCostCentre">
+                  <Form.Label column md={5}>
+                    Cost center of the host country:
+                  </Form.Label>
+                  <Col md={7}>
+                    <Form.Control
+                      type="text"
+                      placeholder="New Cost Center"
+                      value={newCostCentre}
+                      className="text-primary"
+                      onChange={changeCostCentreHandler}
+                    ></Form.Control>
+
+                    {costCentreErrMsg !== "" && (
+                      <span className="text-danger">{costCentreErrMsg}</span>
+                    )}
                   </Col>
-                </Row>
+                </Form.Group>
               </Col>
             </Row>
             <Row className="my-3">
@@ -388,28 +533,13 @@ const InternationalTransfer = () => {
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
-                      as="select"
-                      className="text-primary"
-                      aria-label="transferInitiationDesignation"
+                      type="text"
+                      placeholder="New Designation"
                       value={newDesignation}
-                      placeholder="Select Designation"
+                      className="text-primary"
                       onChange={designationChangeHandler}
-                    >
-                      <option>Select Designation</option>
-                      {designationDetails !== null &&
-                        designationDetails !== undefined &&
-                        designationDetails.length > 0 &&
-                        designationDetails.map((item) => {
-                          return (
-                            <option
-                              key={`design_${item.designationId}`}
-                              value={item.designation}
-                            >
-                              {item.designation}
-                            </option>
-                          );
-                        })}
-                    </Form.Control>
+                    ></Form.Control>
+
                     {newDesignationErrMsg !== "" && (
                       <span className="text-danger">
                         {newDesignationErrMsg}
@@ -419,95 +549,8 @@ const InternationalTransfer = () => {
                 </Form.Group>
               </Col>
             </Row>
+
             <Row className="my-3">
-              <Col md={6}>
-                <Form.Group
-                  as={Row}
-                  controlId="transferInitiationEffectiveDate"
-                >
-                  <Form.Label column md={5}>
-                    Onward Date:
-                  </Form.Label>
-                  <Col md={7}>
-                    <div className="transfers-date">
-                      <DatePicker
-                        className="text-primary form-control"
-                        selected={effectiveDate}
-                        minDate={new Date()}
-                        closeOnScroll={true}
-                        dateFormat="yyyy-MM-dd"
-                        onChange={(date) => {
-                          changeEffectiveDateHandler(date);
-                        }}
-                      />
-                    </div>
-                  </Col>
-                  {effectiveDateErrMsg !== "" && (
-                    <span className="text-danger">{effectiveDateErrMsg}</span>
-                  )}
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group as={Row} controlId="transferInitiationReturnDate">
-                  <Form.Label column md={5}>
-                    Return Date:
-                  </Form.Label>
-                  <Col md={7}>
-                    <div className="transfers-date">
-                      <DatePicker
-                        className="text-primary form-control"
-                        selected={returnDate}
-                        minDate={effectiveDate}
-                        closeOnScroll={true}
-                        dateFormat="yyyy-MM-dd"
-                        onChange={(date) => {
-                          changeReturnDateHandler(date);
-                        }}
-                      />
-                    </div>
-                  </Col>
-                  {returnDateErrMsg !== "" && (
-                    <span className="text-danger">{returnDateErrMsg}</span>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className="my-3">
-              <Col md={6}>
-                <Form.Group as={Row} controlId="transferInitiationCostCentre">
-                  <Form.Label column md={5}>
-                    Cost centre of the host country:
-                  </Form.Label>
-                  <Col md={7}>
-                    <Form.Control
-                      as="select"
-                      className="text-primary"
-                      aria-label="transferInitiationCostCentre"
-                      value={newCostCentre}
-                      placeholder="Select Cost Centre"
-                      onChange={changeCostCentreHandler}
-                    >
-                      <option>Select Cost Centre</option>
-                      {costCentreData !== null &&
-                        costCentreData !== undefined &&
-                        costCentreData.length > 0 &&
-                        costCentreData.map((item) => {
-                          return (
-                            <option
-                              key={`cost_centre_${item.costCentreName}`}
-                              value={item.costCentreName}
-                            >
-                              {item.costCentreName}
-                            </option>
-                          );
-                        })}
-                    </Form.Control>
-                    {costCentreErrMsg !== "" && (
-                      <span className="text-danger">{costCentreErrMsg}</span>
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationManager">
                   <Form.Label column md={5}>
@@ -515,35 +558,19 @@ const InternationalTransfer = () => {
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
-                      as="select"
-                      className="text-primary"
-                      aria-label="transferInitiationManager"
+                      type="text"
+                      placeholder="New Manager"
                       value={newManager}
-                      placeholder="Select Manager"
+                      className="text-primary"
                       onChange={changeManagerHandler}
-                    >
-                      <option>Select Manager</option>
-                      {costCentreManagersData !== null &&
-                        costCentreManagersData !== undefined &&
-                        costCentreManagersData.length !== 0 &&
-                        costCentreManagersData.map((item) => {
-                          return (
-                            <option
-                              key={`manager_${item.employeeId}`}
-                              value={item.employeeId}
-                              data-email={item.email}
-                            >{`${item.firstName} ${item.lastName}`}</option>
-                          );
-                        })}
-                    </Form.Control>
+                    ></Form.Control>
+
                     {managerErrMsg !== "" && (
                       <span className="text-danger">{managerErrMsg}</span>
                     )}
                   </Col>
                 </Form.Group>
               </Col>
-            </Row>
-            <Row className="my-3">
               <Col md={6}>
                 <Form.Group
                   as={Row}
@@ -567,6 +594,95 @@ const InternationalTransfer = () => {
                   </Col>
                 </Form.Group>
               </Col>
+            </Row>
+            <Row className="my-3">
+              <Col md={6}>
+                <Form.Group
+                  as={Row}
+                  controlId="transferInitiationEffectiveDate"
+                >
+                  <Form.Label column md={5}>
+                    Onward Date:
+                  </Form.Label>
+                  <Col md={7}>
+                    <div className="transfers-date">
+                      <DatePicker
+                        className="text-primary form-control"
+                        selected={effectiveDate}
+                        minDate={moment().toDate()}
+                        closeOnScroll={true}
+                        dateFormat="yyyy-MM-dd"
+                        onChange={(date) => {
+                          changeEffectiveDateHandler(date);
+                        }}
+                      />
+                      {effectiveDateErrMsg !== "" && (
+                        <span className="text-danger">
+                          {effectiveDateErrMsg}
+                        </span>
+                      )}
+                    </div>
+                  </Col>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationReturnDate">
+                  <Form.Label column md={5}>
+                    Return Date:
+                  </Form.Label>
+                  <Col md={7}>
+                    <div className="transfers-date">
+                      <DatePicker
+                        className="text-primary form-control"
+                        selected={returnDate}
+                        minDate={moment().toDate()}
+                        closeOnScroll={true}
+                        dateFormat="yyyy-MM-dd"
+                        disabled={true}
+                        onChange={(date) => {
+                          changeReturnDateHandler(date);
+                        }}
+                      />
+                      {returnDateErrMsg !== "" && (
+                        <span className="text-danger">{returnDateErrMsg}</span>
+                      )}
+                    </div>
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="my-3">
+              <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationProjectTerm">
+                  <Form.Label column md={5}>
+                    Term of the project:
+                  </Form.Label>
+                  <Col md={7}>
+                    <Form.Control
+                      as="select"
+                      className="text-primary"
+                      value={projectTerm}
+                      placeholder="Select Location"
+                      onChange={changeProjectTermHandler}
+                    >
+                      <option value="0">Select Term Of Project</option>
+                      <option value="30">3 Months</option>
+                      <option value="60">6 Months</option>
+                      <option value="1">1 Year</option>
+                      <option value="2">2 Years</option>
+                      <option value="3">3 Years</option>
+                      <option value="4">4 Years</option>
+                      <option value="5">5 Years</option>
+                    </Form.Control>
+
+                    {projectTermErrMsg !== "" && (
+                      <span className="text-danger">{projectTermErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="my-3">
               <Col md={6}>
                 <Row>
                   <Col md={7}>
@@ -605,26 +721,11 @@ const InternationalTransfer = () => {
                 </Row>
               </Col>
             </Row>
+
             <Row className="my-3">
-              <Col md={6}>
-                <Form.Group as={Row} controlId="transferInitiationProjectTerm">
-                  <Form.Label column md={5}>
-                    Term of the project:
-                  </Form.Label>
-                  <Col md={7}>
-                    <Form.Control
-                      type="text"
-                      placeholder="Project term"
-                      value={calProjectTerm}
-                      className="text-primary"
-                      disabled
-                    ></Form.Control>
-                  </Col>
-                </Form.Group>
+              <Col className="font-weight-bold">
+                <u>Remuneration</u>
               </Col>
-            </Row>
-            <Row className="my-3">
-              <Col className="font-weight-bold">Renumeration</Col>
             </Row>
             <Row className="my-3">
               <Col md={4}>
@@ -638,6 +739,7 @@ const InternationalTransfer = () => {
                       placeholder="Currency"
                       value={newCurrency}
                       className="text-primary"
+                      disabled={true}
                       onChange={changeCurrencyHandler}
                     ></Form.Control>
                     {newCurrencyErrMsg !== "" && (
@@ -669,7 +771,7 @@ const InternationalTransfer = () => {
               <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationBonus">
                   <Form.Label column md={5}>
-                    Bonus:
+                    Bonus (%):
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control

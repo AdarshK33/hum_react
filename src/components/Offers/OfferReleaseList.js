@@ -96,7 +96,12 @@ const OfferReleaseList = () => {
                   </div>
                 </div>
                 <Link to="/manager-offer-release">
-                  <Button className="apply-button btn btn-light mr-2">
+                  <Button
+                    className="apply-button btn btn-light mr-2"
+                    onClick={() => {
+                      viewCandidateId(0);
+                    }}
+                  >
                     Initate Offer
                   </Button>
                 </Link>

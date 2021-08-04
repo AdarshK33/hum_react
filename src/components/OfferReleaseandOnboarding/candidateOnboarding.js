@@ -157,7 +157,13 @@ const CandidateOnboarding = () => {
     }
   }, [personalInfoData]);
   useEffect(() => {
-    if (empData !== undefined && empData !== null) {
+    if (
+      empData !== undefined &&
+      empData !== null &&
+      candidateData !== undefined &&
+      candidateData !== null &&
+      Object.keys(candidateData).length !== 0
+    ) {
       setEmployeeData({
         ...employeeData,
         ["active"]: empData !== undefined ? empData.active : "",
@@ -175,6 +181,30 @@ const CandidateOnboarding = () => {
             : empData.firstName,
         ["fatherName"]: empData.fatherName,
         ["gender"]: empData.gender,
+        // ["joiningDate"]:
+        //   candidateData !== undefined &&
+        //   candidateData !== null &&
+        //   Object.keys(candidateData).length !== 0 &&
+        //   candidateData.workInformation !== undefined &&
+        //   candidateData.workInformation !== null &&
+        //   candidateData.workInformation.dateOfJoin !== null &&
+        //   candidateData.workInformation.dateOfJoin !== undefined &&
+        //   candidateData.workInformation.dateOfJoin !== ""
+        //     ? new Date(candidateData.workInformation.dateOfJoin)
+        //     : new Date(),
+        ["joiningDate"]:
+          candidateData !== undefined &&
+          candidateData !== null &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation.dateOfJoin !== null &&
+          candidateData.workInformation.dateOfJoin !== undefined &&
+          candidateData.workInformation.dateOfJoin !== ""
+            ? moment(candidateData.workInformation.dateOfJoin).format(
+                "YYYY-MM-DD"
+              )
+            : moment().format("YYYY-MM-DD"),
         ["locationId"]: empData.locationId,
         ["lastName"]: empData.lastName,
         ["loginType"]: empData.loginType,
@@ -198,28 +228,28 @@ const CandidateOnboarding = () => {
     }
   }, [empData]);
 
-  useEffect(() => {
-    if (
-      candidateData !== undefined &&
-      candidateData.workInformation !== undefined &&
-      candidateData.workInformation !== null
-    ) {
-      setEmployeeData({
-        ...employeeData,
-        ["joiningDate"]:
-          candidateData !== undefined &&
-          candidateData !== null &&
-          Object.keys(candidateData).length !== 0 &&
-          candidateData.workInformation !== undefined &&
-          candidateData.workInformation !== null &&
-          candidateData.workInformation.dateOfJoin !== null &&
-          candidateData.workInformation.dateOfJoin !== undefined &&
-          candidateData.workInformation.dateOfJoin !== ""
-            ? new Date(candidateData.workInformation.dateOfJoin)
-            : new Date(),
-      });
-    }
-  }, [candidateData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateData !== undefined &&
+  //     candidateData.workInformation !== undefined &&
+  //     candidateData.workInformation !== null
+  //   ) {
+  //     setEmployeeData({
+  //       ...employeeData,
+  //       ["joiningDate"]:
+  //         candidateData !== undefined &&
+  //         candidateData !== null &&
+  //         Object.keys(candidateData).length !== 0 &&
+  //         candidateData.workInformation !== undefined &&
+  //         candidateData.workInformation !== null &&
+  //         candidateData.workInformation.dateOfJoin !== null &&
+  //         candidateData.workInformation.dateOfJoin !== undefined &&
+  //         candidateData.workInformation.dateOfJoin !== ""
+  //           ? new Date(candidateData.workInformation.dateOfJoin)
+  //           : new Date(),
+  //     });
+  //   }
+  // }, [candidateData]);
 
   const [employeeData, setEmployeeData] = useState(
     {
@@ -374,7 +404,7 @@ const CandidateOnboarding = () => {
   };
 
   const handleDataSave = () => {
-    console.log("emdata", employeeData);
+    console.log("emdata", employeeData, moment().format("YYYY-MM-DD"));
     const costCenterData = {
       costCenterSplitId: 0,
       costCentreA: costCenterA,
@@ -595,7 +625,7 @@ const CandidateOnboarding = () => {
             </Col>
             <Col sm={6}>
               <DatePicker
-                className=" joiningField"
+                className="joiningField"
                 selected={
                   employeeData !== undefined &&
                   employeeData !== null &&
@@ -731,7 +761,11 @@ const CandidateOnboarding = () => {
         candidateData.workInformation.contractType !== "Internship" ? (
           <Row>
             <Col sm={4}>
-              <label className="mr-3">Fixed Gross:</label>
+              {candidateData.workInformation.contractType === "Parttime" ? (
+                <label className="mr-3">Fixed Gross (Hourly) :</label>
+              ) : (
+                <label className="mr-3">Fixed Gross :</label>
+              )}
               <label>
                 {candidateData.remuneration !== undefined &&
                 candidateData.remuneration !== null ? (

@@ -129,7 +129,7 @@ const FinanceClearanceList = () => {
           value={enableValue}
           onChange={(e) => statusRender(e, value)}
         >
-          <option value={null}> select </option>
+          <option value={null}> Yet to Approve </option>
           <option value="0"> Due </option>
           <option value="1"> No Due </option>
           <option value="2"> On Hold </option>
@@ -161,7 +161,7 @@ const FinanceClearanceList = () => {
       setCleranceData(formData);
      saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
-    }else if(formData.financeClearanceStatus == 1 ){
+    }else if(formData.financeClearanceStatus == 1 && formData.financeAmount == 0){
       formData['disabled'] = true
       console.log(formData,"1")
       setCleranceData(formData);
@@ -174,7 +174,8 @@ const FinanceClearanceList = () => {
      saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
     }else{
-      toast.error("Please enter finance-remarks")
+      toast.error(formData.financeClearanceStatus == 1?"Please enter finance-remarks and financeAmount should be zero":"Please enter finance-remarks");
+
     }
     }else{
       toast.error("please enter finance status and remarks")
@@ -225,6 +226,7 @@ const FinanceClearanceList = () => {
   };
   const options = [
     { value: "3", label: "All" },
+    { value: "4", label: "Yet to Approve" },
     { value: "0", label: "Due" },
     { value: "1", label: "No Due" },
     { value: "2", label: "On Hold" },

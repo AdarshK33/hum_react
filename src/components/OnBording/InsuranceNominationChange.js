@@ -176,7 +176,7 @@ const InsuranceNomination = (props) => {
 
   const [nomineeRelationshipError, setNomineeRelationshipError] =
     useState(false);
-
+  const [nomineeDocStatus, setNomineeDocStatus] = useState(false);
   const [nomineeDOBError, setNomineeDOBError] = useState(false);
   const [nomineeDOB, setNomineeDOB] = useState();
 
@@ -502,6 +502,7 @@ const InsuranceNomination = (props) => {
           if (item.documentType === 24 && item.documentName) {
             insuranceDoc = item.documentName ? item.documentName : "";
             setNomineUploade(true);
+            setNomineeDocStatus(item.status ? item.status : 0);
           }
 
           setStateNomine({
@@ -509,6 +510,11 @@ const InsuranceNomination = (props) => {
           });
         });
         console.log("documents prefill", insuranceDoc);
+      } else {
+        setNomineUploade(false);
+        setStateNomine({
+          insurenceForm: "",
+        });
       }
     }
   }, [documentViewData, candidateInsuranceNominationData]);
@@ -1032,77 +1038,79 @@ const InsuranceNomination = (props) => {
   console.log("documentViewData", documentViewData);
 
   useEffect(() => {
-    if (
-      candidateInsuranceNominationData !== undefined &&
-      candidateInsuranceNominationData !== null &&
-      Object.keys(candidateInsuranceNominationData).length !== 0 &&
-      candidateInsuranceNominationData[0].insuranceNominationHoldDeath !==
-        undefined &&
-      candidateInsuranceNominationData[0].insuranceNominationHoldDeath == true
-    ) {
-      setInsuranceHoldDeathYes(
-        candidateInsuranceNominationData[0].insuranceNominationHoldDeath
-      );
-      setInsuranceHoldDeathNo(false);
-    } else if (
-      candidateInsuranceNominationData !== undefined &&
-      candidateInsuranceNominationData !== null &&
-      Object.keys(candidateInsuranceNominationData).length !== 0 &&
-      candidateInsuranceNominationData[0].insuranceNominationHoldDeath !==
-        undefined &&
-      candidateInsuranceNominationData[0].insuranceNominationHoldDeath == false
-    ) {
-      setInsuranceHoldDeathNo(true);
-      setInsuranceHoldDeathYes(false);
-    }
+    // if (
+    //   candidateInsuranceNominationData !== undefined &&
+    //   candidateInsuranceNominationData !== null &&
+    //   Object.keys(candidateInsuranceNominationData).length !== 0 &&
+    //   candidateInsuranceNominationData[0].insuranceNominationHoldDeath !==
+    //     undefined &&
+    //   candidateInsuranceNominationData[0].insuranceNominationHoldDeath == true
+    // ) {
+    //   setInsuranceHoldDeathYes(
+    //     candidateInsuranceNominationData[0].insuranceNominationHoldDeath
+    //   );
+    //   setInsuranceHoldDeathNo(false);
+    // } else if (
+    //   candidateInsuranceNominationData !== undefined &&
+    //   candidateInsuranceNominationData !== null &&
+    //   Object.keys(candidateInsuranceNominationData).length !== 0 &&
+    //   candidateInsuranceNominationData[0].insuranceNominationHoldDeath !==
+    //     undefined &&
+    //   candidateInsuranceNominationData[0].insuranceNominationHoldDeath == false
+    // ) {
+    //   setInsuranceHoldDeathNo(true);
+    //   setInsuranceHoldDeathYes(false);
+    // }
+
+    // if (
+    //   candidateInsuranceNominationData !== undefined &&
+    //   candidateInsuranceNominationData !== null &&
+    //   Object.keys(candidateInsuranceNominationData).length !== 0 &&
+    //   candidateInsuranceNominationData[0].insuranceNominationHoldDeath ===
+    //     true &&
+    //   candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
+    //     null &&
+    //   candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
+    //     undefined &&
+    //   candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+    //     .nomineeId !== undefined
+    // ) {
+    //   console.log(
+    //     "candidateInsuranceNominationData.nomineeId",
+    //     candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+    //       .nomineeId
+    //   );
+    //   setNomineeValue(
+    //     candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+    //       .nomineeId
+    //   );
+    // }
 
     if (
       candidateInsuranceNominationData !== undefined &&
       candidateInsuranceNominationData !== null &&
-      Object.keys(candidateInsuranceNominationData).length !== 0 &&
-      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
-        null &&
-      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
-        undefined &&
-      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
-        .nomineeId !== undefined
+      Object.keys(candidateInsuranceNominationData).length !== 0
     ) {
-      console.log(
-        "candidateInsuranceNominationData.nomineeId",
-        candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
-          .nomineeId
-      );
-      setNomineeValue(
-        candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
-          .nomineeId
-      );
-    }
-
-    if (
-      candidateInsuranceNominationData !== undefined &&
-      candidateInsuranceNominationData !== null &&
-      Object.keys(candidateInsuranceNominationData).length !== 0 &&
-      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
-        null &&
-      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
-        undefined &&
-      candidateInsuranceNominationData[0].insuranceNominationHoldDeath === true
-    ) {
-      setNomineeDOB(
-        new Date(
-          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination.dateOfBirth
-        )
-      );
-      setNominee({
-        nomineeAddress:
-          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
-            .address,
-        nomineeName:
-          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
-            .nomineeName,
-        nomineeRelationship:
-          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
-            .relationship,
+      candidateInsuranceNominationData.map((item) => {
+        if (
+          item.insuranceNominationHoldDeath === true &&
+          item.candidateInsuranceDeathNomination !== null &&
+          item.candidateInsuranceDeathNomination !== undefined &&
+          Object.keys(item.candidateInsuranceDeathNomination) !== 0
+        ) {
+          setInsuranceHoldDeathYes(item.insuranceNominationHoldDeath);
+          setInsuranceHoldDeathNo(false);
+          setNomineeValue(item.candidateInsuranceDeathNomination.nomineeId);
+          setNomineeDOB(
+            new Date(item.candidateInsuranceDeathNomination.dateOfBirth)
+          );
+          setNominee({
+            nomineeAddress: item.candidateInsuranceDeathNomination.address,
+            nomineeName: item.candidateInsuranceDeathNomination.nomineeName,
+            nomineeRelationship:
+              item.candidateInsuranceDeathNomination.relationship,
+          });
+        }
       });
     }
   }, [candidateInsuranceNominationData]);
@@ -1257,7 +1265,7 @@ const InsuranceNomination = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Something went wrong");
+      toast.info("Please select file");
     }
   };
   const sumInsuredChange = (e) => {
@@ -1970,6 +1978,16 @@ const InsuranceNomination = (props) => {
     {
       required ? setRequired(!required) : setRequired(required);
     }
+    setNomineUploade(false);
+    setStateNomine({
+      insurenceForm: "",
+    });
+    setNomineeDOB();
+    setNominee({
+      nomineeAddress: "",
+      nomineeName: "",
+      nomineeRelationship: "",
+    });
   };
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
@@ -3216,6 +3234,7 @@ const InsuranceNomination = (props) => {
                         selected={Nominee1DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "1")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={DOBError_1 ? { borderColor: "red" } : {}}
@@ -3473,6 +3492,7 @@ const InsuranceNomination = (props) => {
                         required
                         onChange={(e) => dateOfBirthHandler(e, "11")}
                         dateFormat="yyyy-MM-dd"
+                        maxDate={new Date()}
                         placeholderText="YYYY-MM-DD"
                         disabled={disable}
                         style={extra1DOBError_1 ? { borderColor: "red" } : {}}
@@ -3688,6 +3708,7 @@ const InsuranceNomination = (props) => {
                         selected={Nominee2DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "2")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={DOBError_2 ? { borderColor: "red" } : {}}
@@ -3907,6 +3928,7 @@ const InsuranceNomination = (props) => {
                         selected={extra2Nominee1DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "12")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         disabled={disable}
@@ -4124,6 +4146,7 @@ const InsuranceNomination = (props) => {
                         selected={Nominee5DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "5")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={DOBError_5 ? { borderColor: "red" } : {}}
@@ -4344,6 +4367,7 @@ const InsuranceNomination = (props) => {
                         disabled={disable}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "51")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={DOBError_51 ? { borderColor: "red" } : {}}
@@ -4713,6 +4737,7 @@ const InsuranceNomination = (props) => {
                         selected={Nominee3DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "3")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={DOBError_3 ? { borderColor: "red" } : {}}
@@ -4925,6 +4950,7 @@ const InsuranceNomination = (props) => {
                         selected={Nominee4DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "4")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={DOBError_4 ? { borderColor: "red" } : {}}
@@ -5178,6 +5204,7 @@ const InsuranceNomination = (props) => {
                         selected={In_law_Nominee1DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "6")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={In_law_DOBError_1 ? { borderColor: "red" } : {}}
@@ -5400,6 +5427,7 @@ const InsuranceNomination = (props) => {
                         selected={In_law_Nominee2DOB}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "7")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={In_law_DOBError_2 ? { borderColor: "red" } : {}}
@@ -5631,6 +5659,7 @@ const InsuranceNomination = (props) => {
                         selected={nomineeDOB}
                         required
                         onChange={(e) => nomineeDateOfBirthHandler(e, "1")}
+                        maxDate={new Date()}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
                         style={nomineeDOBError ? { borderColor: "red" } : {}}
@@ -5726,6 +5755,15 @@ const InsuranceNomination = (props) => {
                       accept="image/jpeg,.pdf"
                       name="insurenceForm"
                       style={{ display: "none" }}
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (nomineeDocStatus === 2 || nomineeDocStatus === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                       onChange={(e) => {
                         DocChangeHandler(e);
                       }}
@@ -5733,7 +5771,17 @@ const InsuranceNomination = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label
+                    className={
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (nomineeDocStatus === 2 || nomineeDocStatus === 0)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
+                        ? "custom-file-upload"
+                        : "custom-file-disable"
+                    }
+                  >
                     <input
                       type="button"
                       name="insurenceForm"
@@ -5741,6 +5789,15 @@ const InsuranceNomination = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (nomineeDocStatus === 2 || nomineeDocStatus === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                     />
                     Upload File{" "}
                     <i

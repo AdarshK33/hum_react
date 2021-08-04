@@ -7,6 +7,7 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 // import { RoleManagementContext } from "../../context/RoleManagementState";
 // import { AdminContext } from "../../context/AdminState";
 
@@ -23,19 +24,21 @@ const EmployeeExitList = () => {
     changeEmployeeId,
     makeEmployeeDataNull,
   } = useContext(EmployeeSeparationContext);
+  const {MakeCostCenterDataNull} = useContext(SeparationContext)
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
-
+  const [actionStatus, setActionStatus] = useState("9");
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [employeeExitStatus, setEmployeeExitStatus] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListView("all", pageCount);
+    EmployeeSeparationListView("all", pageCount,actionStatus);
   }, []);
 
   // useEffect(() => {
-  //   makeEmployeeDataNull();
-  //   makeSearchEmp1DataNull();
+  //   MakeCostCenterDataNull();
+  //   makeEmployeeDataNull()
   // }, []);
   console.log("---->", EmployeeSeparationList);
 
@@ -115,9 +118,9 @@ const EmployeeExitList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListView(searchValue, pageNumber - 1);
+      EmployeeSeparationListView(searchValue, pageNumber - 1,actionStatus);
     } else {
-      EmployeeSeparationListView("all", pageNumber - 1);
+      EmployeeSeparationListView("all", pageNumber - 1,actionStatus);
     }
     setCurrentRecords(EmployeeSeparationList);
   };
@@ -126,7 +129,34 @@ const EmployeeExitList = () => {
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
   };
-
+  const statusHandler = (e) => {
+    setEmployeeExitStatus(e.target.value);
+    setActionStatus(e.target.value)
+    setPageCount(0);
+    setCurrentPage(1);
+    setSearchValue("");
+    if (e.target.value === "0") {
+      EmployeeSeparationListView("all", 0, 0);
+    } else if (e.target.value === "1") {
+      EmployeeSeparationListView("all", 0, 1);
+    } else if (e.target.value === "2") {
+      EmployeeSeparationListView("all", 0, 2);
+    } else if (e.target.value === "3") {
+      EmployeeSeparationListView("all", 0, 3);
+    }else if (e.target.value === "4") {
+      EmployeeSeparationListView("all", 0, 4);
+    } else if (e.target.value === "5") {
+      EmployeeSeparationListView("all", 0, 5);
+    }else if (e.target.value === "6") {
+      EmployeeSeparationListView("all", 0, 6);
+    }else if (e.target.value === "7") {
+      EmployeeSeparationListView("all", 0, 7);
+    }else if (e.target.value === "8") {
+      EmployeeSeparationListView("all", 0, 8);
+    }else{
+      EmployeeSeparationListView("all", 0,9);
+    }
+  };
   const searchDataHandler = () => {
     if (searchValue !== "") {
       EmployeeSeparationListView(searchValue, pageCount);
@@ -159,8 +189,10 @@ const EmployeeExitList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
+                <Row>
+              <Col sm="8">                
                 <b>EMPLOYEE SEPARATION LISTING</b>
-
+                </Col>
                 {/* <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
@@ -176,11 +208,55 @@ const EmployeeExitList = () => {
                     />
                   </div>
                 </div> */}
+                 <Col sm={2}>
+                    <div className="promotion_initiate">
                 <Link to="/manager-initiate-exit">
-                  <Button className="apply-button btn btn-light mr-2">
+                <Button className="apply-button btn btn-light mr-2">
                     Initiate Exit
                   </Button>
                 </Link>
+                </div>
+                </Col>
+                  <Col sm={2}>
+                    <Form>
+                      <div className="promotion_status_search">
+                        {/* className="faq-form mr-2""job-filter" */}
+                        <Form.Group>
+                          <Form.Control
+                            as="select"
+                            name="employeeExitStatus"
+                            value={employeeExitStatus}
+                            onChange={statusHandler}
+                            // placeholder="Search.."
+                            //   disabled={disabled}"
+
+                            style={
+                              false
+                                ? { borderColor: "red" }
+                                : { borderRadius: "20px" }
+                            }
+                          >
+                            <option value="" disabled selected hidden>
+                              Search status
+                            </option>
+                            <option value="8">All</option>
+                            <option value="0">Resignation Applied</option>
+                            <option value="1">Withdraw</option>
+                            <option value="2">Resignation Confirmed</option>
+                            <option value="3">Resignation Approved</option>
+                            <option value="4">Terminated Confirmed</option>
+                            <option value="5">Terminated Approved</option>
+                            <option value="6">End of InternShip</option>
+                            <option value="7">End of Probation</option>
+
+                          </Form.Control>
+                        </Form.Group>
+                        {/* <br></br> */}
+                      </div>
+                    </Form>
+                  </Col>
+                 
+                </Row>
               </div>
               <div className="table-responsive">
                 <Table id="table-to-xls" className="table table-hover">
@@ -245,16 +321,23 @@ const EmployeeExitList = () => {
                             && item.lastWorkingDate !== ""?item.lastWorkingDate:"NA"}</td>
                             <td>{item.reasonForResignation}</td>
                             {/* <td>{item.modeOfSeparationReasonId}</td> */}
-                            <td>{item.noticePeriod}</td>
+                            <td>{item.contractType.toLowerCase() === 'internship' ?"NA":
+                            (item.department == "AFS" ||item.department == "IT" ||item.department == "Legal" ||item.department == "Finance")?2:1
+  }</td>
                             <td>
                               {item.status === 0
-                                ? "Pending"
-                                : item.status === 2
-                                ? "Approve"
-                                : item.status === 4
-                                ? "Resigned"
-                                :item.status === 5
-                                ? "End of Internship":""}
+                                ? "Resignation Applied"
+                                : item.status === 1
+                                ? "Withdraw":
+                                 item.status === 2
+                                ? "Resignation Confirmed"
+                                : item.status === 3
+                                ? "Resignation Approved"
+                                :item.status === 4
+                                ? "Terminated Confirmed": item.status === 5
+                                ? "Terminated Approved":item.status === 6 ?
+                              "End of InternShip":item.status === 7?
+                            "End of Probation":item.status === 8?"Not Confirmed":''}
                             </td>
                             <td>
                               <Link to={"/exit-view/" + item.employeeId}>
@@ -265,11 +348,18 @@ const EmployeeExitList = () => {
                                 />
                               </Link>
                             </td>
-
+                            
                             <td>
-                              {item.status === 2 || item.status === 4 || item.status === 5 ? (
+                              {(item.status === 2 || item.status === 3|| item.status === 4 ||item.status === 5|| item.status === 6 )? (
                                 <Edit2 />
-                              ) : (
+                              ) : item.status == 8?(
+                                <Link to={"/exit-initiate-action/" + item.employeeId}>
+                              <Edit2
+                                onClick={() => {
+                                  fetchEmployeeDetails(item.employeeId);
+                                }}
+                              />
+                            </Link>):(
                                 <Link to={"/exit-action/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {

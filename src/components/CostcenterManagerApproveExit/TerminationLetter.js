@@ -9,21 +9,21 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import "./exitForm.css";
 const ref = React.createRef();
 
-const RelievingLetter = (props) => {
+const TerminationLetter = (props) => {
   const [showLetter, setLetter] = useState(false);
-  const { relivingLetterData } = useContext(EmployeeSeparationContext);
+  const { terminationLetterData ,fetchTerminationLetterData} = useContext(EmployeeSeparationContext);
   const [showSignature, setSignature] = useState(false);
   const [message, setMessage] = useState(false);
   const handleClose = () => {
     setLetter(false);
   };
   useEffect(() => {
-    if (props.previewLetter) {
-      console.log(props.previewLetter);
+    if (props.terminationLetter) {
+      console.log(props.terminationLetter);
       setLetter(true);
     }
     // console.log(relievingLetterData,"relieving")
-  }, [props.previewLetter]);
+  }, [props.terminationLetter]);
   const addSignature = () => {
     setSignature(true);
   };
@@ -37,27 +37,15 @@ const RelievingLetter = (props) => {
   // };
   return (
     console.log(showLetter),
-    console.log(props.previewLetter),
-    console.log("letterData", relivingLetterData),
+    console.log(props.terminationLetter),
+    console.log("letterData", terminationLetterData),
     (
       <Fragment>
-        {/* <Modal show={message} onHide={() => handleClosePopup()} centered>
-          <Container style={{ textAlign: "center", margin: "2rem 0 2rem 0" }}>
-            <Modal.Body>
-              <p style={{ marginBottom: "2rem" }}>
-                {" "}
-                The details have been saved successfully. The relieving letter
-                will be sent to the employee on {moment().format("DD-MM-YYYY")}
-              </p>
-              <Button onClick={() => handleClosePopup()}>OK</Button>
-            </Modal.Body>
-          </Container>
-        </Modal> */}
+      
         <Modal
           show={showLetter}
           onHide={() => handleClose()}
           size="md"
-          // className="text-center"
         >
           <Container className="mb-5">
             <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
@@ -68,23 +56,23 @@ const RelievingLetter = (props) => {
                   Date: <b>{moment().format("DD-MM-YYYY")}</b>
                 </p>
                 <br></br>
-                <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
+                <h5 className="text-center"> Termination of your employment </h5>
                 <div className="relievingLetterHeading">
                   <div className="mt-1">
                     <p>
                       Name:&nbsp;&nbsp;
-                      {relivingLetterData !== undefined &&
-                        relivingLetterData.employeeName}
+                      {terminationLetterData !== undefined &&
+                        terminationLetterData.employeeName}
                     </p>
                     <p>
                       EmployeeId:&nbsp;&nbsp;
-                      {relivingLetterData !== undefined &&
-                        relivingLetterData.employeeId}
+                      {terminationLetterData !== undefined &&
+                        terminationLetterData.employeeId}
                     </p>
                     <p>
                       Designation:&nbsp;&nbsp;
-                      {relivingLetterData !== undefined &&
-                        relivingLetterData.designation}
+                      {terminationLetterData !== undefined &&
+                        terminationLetterData.designation}
                     </p>
                   </div>
                 </div>
@@ -93,29 +81,27 @@ const RelievingLetter = (props) => {
                     {" "}
                     Dear{" "}
                     <b>
-                      {relivingLetterData !== undefined &&
-                        relivingLetterData.employeeName}
+                      {terminationLetterData !== undefined &&
+                        terminationLetterData.employeeName}
                       ,
                     </b>{" "}
                   </p>
                   <p>
-                    With reference to your resignation. We would like to inform
-                    you that your resignation has been accepted and you are
-                    relieved from the services of the Decathlon Sports India on
-                    the closing of working hours of{" "}
-                    <b>{relivingLetterData !== undefined && relivingLetterData.dateOfResignation}</b>. We hereby
-                    confirm that you have been working in Decathlon Sports India
-                    since<b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>. Please be
-                    informed that you shall be bound by the relevant clause of
-                    your appointment letter which states that you shall not use,
-                    disclose, remove or transfer whether directly or indirectly,
-                    to any person, corporation or organisation, any trade
-                    secrets, know-how and confidential information relating to
-                    the business or financial conditions of Decathlon. During
-                    the employment tenure with us, we found him to be good at
-                    work & thank you for your service and commitment to the
-                    Decathlon. He left the services of the Decathlon on his own
-                    accord. We wish him all the best in his future endeavours.
+                  You have been associated Decathlon Sports India Private Limited
+               (“Decathlon/Company”) at its XXXXXXXX located at {terminationLetterData !== undefined && terminationLetterData.location} 
+               {terminationLetterData !== undefined && terminationLetterData.company}. It has come to our notice that you were working 
+               as {terminationLetterData !== undefined && terminationLetterData.designation}.  This is reference to the Show
+                Cause letter dated on {terminationLetterData !== undefined && terminationLetterData.dateOfResignation}. 
+                It has come to our knowledge that on XXXXXXXXXXX, you have indulged 
+                in act of misconduct {terminationLetterData !== undefined && terminationLetterData.reason} at in Decathlon 
+                XXXXXXXXXX.  The facts of the same are as below 
+
+                Hence the above acts of yours have constituted serious misconduct in 
+                connection with the employer’s business or property.
+                Therefore, you are hereby terminated from your employment with Decathlon
+                 with immediate effect as on {terminationLetterData !== undefined && terminationLetterData.lastWorkingDate}. 
+                 Your full and final settlement post calculations of any dues from you
+                  will be recovered and shall be paid to you during the next payroll cycle.
                   </p>
                   <p className="mt-5 mb-5">
                     <b>For Decathlon Sports India India Pvt Ltd,</b>
@@ -159,4 +145,4 @@ const RelievingLetter = (props) => {
     )
   );
 };
-export default RelievingLetter;
+export default TerminationLetter;

@@ -82,7 +82,7 @@ const EditWorkInformation = () => {
       candidateData.candidateInformation !== undefined &&
       candidateData.candidateInformation !== null
     ) {
-      viewCandidateId(candidateData.candidateInformation.candidateId);
+      // viewCandidateId(candidateData.candidateInformation.candidateId);
     }
   }, []);
   useEffect(() => {
@@ -311,6 +311,8 @@ const EditWorkInformation = () => {
       expatUser: 0,
       nationality: state.nationality,
       passportNumber: state.passportNumber,
+      passportExpiryDate: moment(dateOfValidity).format("YYYY-MM-DD"),
+      passportIssuedDate: moment(dateOfIssue).format("YYYY-MM-DD"),
     };
     console.log("update data", updateData);
     if (dateOfLeavingError === false) {
@@ -607,7 +609,7 @@ const EditWorkInformation = () => {
           <Row>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location state</Form.Label>
+                <Form.Label>Work Location</Form.Label>
                 <Form.Control
                   as="select"
                   value={stateValue}
@@ -616,7 +618,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
-                  <option value="">Select State</option>
+                  <option value="">Select Location</option>
                   {stateList !== null &&
                     stateList !== undefined &&
                     stateList.map((item, i) => {
@@ -631,7 +633,7 @@ const EditWorkInformation = () => {
             </Col>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location City</Form.Label>
+                <Form.Label>Site</Form.Label>
                 <Form.Control
                   as="select"
                   value={city}
@@ -640,7 +642,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
-                  <option value="">Select City</option>
+                  <option value="">Select Site</option>
                   {cityList !== null &&
                     cityList !== undefined &&
                     cityList.map((item, i) => {
@@ -679,6 +681,7 @@ const EditWorkInformation = () => {
                     required
                     onChange={(e) => dateOfLeavingHandler(e)}
                     dateFormat="yyyy-MM-dd"
+                    minDate={dateOfJoining}
                     placeholderText="Date of Leaving"
                     disabled={disabled}
                   />

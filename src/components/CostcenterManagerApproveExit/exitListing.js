@@ -7,11 +7,11 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
-
+import {AppContext} from "../../context/AppState"
 const ExitListing = () => {
   const {
-    EmployeeSeparationListView,
-    EmployeeSeparationList,
+    EmployeeSeparationExitList,
+    EmployeeSeparationListExitView,
     ViewEmployeeDataById,
     employeeData,
     ModeOfSeparationView,
@@ -19,49 +19,51 @@ const ExitListing = () => {
     loader,
     total,
     changeEmployeeId,
+    ViewEmployeeProfile
   } = useContext(EmployeeSeparationContext);
+  const { user } = useContext(AppContext);
 
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListView("all", pageCount);
+    EmployeeSeparationListExitView("all", pageCount, 9);
   }, []);
 
-  console.log("---->", EmployeeSeparationList);
+  console.log("---->", EmployeeSeparationExitList);
 
   // useEffect(() => {
   //   if (
-  //     EmployeeSeparationList !== null &&
-  //     EmployeeSeparationList !== undefined
+  //     EmployeeSeparationExitList !== null &&
+  //     EmployeeSeparationExitList !== undefined
   //   ) {
   //     console.log("list");
-  //     setCurrentRecords(EmployeeSeparationList);
+  //     setCurrentRecords(EmployeeSeparationExitList);
   //   }
-  // }, [EmployeeSeparationList, currentRecords]);
+  // }, [EmployeeSeparationExitList, currentRecords]);
   // console.log("Records-->", currentRecords);
 
   useEffect(() => {
     if (
-      EmployeeSeparationList &&
-      EmployeeSeparationList !== null &&
-      EmployeeSeparationList !== undefined &&
-      Object.keys(EmployeeSeparationList).length !== 0 &&
+      EmployeeSeparationExitList &&
+      EmployeeSeparationExitList !== null &&
+      EmployeeSeparationExitList !== undefined &&
+      Object.keys(EmployeeSeparationExitList).length !== 0 &&
       ModeOfSeparationData &&
       ModeOfSeparationData !== null &&
       ModeOfSeparationData !== undefined &&
       Object.keys(ModeOfSeparationData).length !== 0
     ) {
-      if (EmployeeSeparationList.modeOfSeparationId === 1) {
+      if (EmployeeSeparationExitList.modeOfSeparationId === 1) {
         console.log(ModeOfSeparationData[0].modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
       }
-      EmployeeSeparationList.map((rotate, r) => {
+      EmployeeSeparationExitList.map((rotate, r) => {
         ModeOfSeparationData.map((item, i) => {
           if (
-            EmployeeSeparationList[r].modeOfSeparationId ===
+            EmployeeSeparationExitList[r].modeOfSeparationId ===
             ModeOfSeparationData[i].modeOfSeparation.separationId
           ) {
             // console.log(
@@ -71,14 +73,16 @@ const ExitListing = () => {
 
             ModeOfSeparationData[i].modeOfSeparationReasonList.map(
               (item1, j) => {
-                if (EmployeeSeparationList[r].modeOfSeparationReasonId === 0) {
-                  EmployeeSeparationList[r].modeOfSeparationReasonId = "";
+                if (
+                  EmployeeSeparationExitList[r].modeOfSeparationReasonId === 0
+                ) {
+                  EmployeeSeparationExitList[r].modeOfSeparationReasonId = "";
                 } else if (
-                  EmployeeSeparationList[r].modeOfSeparationReasonId ===
+                  EmployeeSeparationExitList[r].modeOfSeparationReasonId ===
                   ModeOfSeparationData[i].modeOfSeparationReasonList[j]
                     .separationReasonId
                 ) {
-                  EmployeeSeparationList[r].modeOfSeparationReasonId =
+                  EmployeeSeparationExitList[r].modeOfSeparationReasonId =
                     ModeOfSeparationData[i].modeOfSeparationReasonList[
                       j
                     ].modeOfSeparationReason;
@@ -93,10 +97,10 @@ const ExitListing = () => {
           }
         });
       });
-      setCurrentRecords(EmployeeSeparationList);
+      setCurrentRecords(EmployeeSeparationExitList);
     }
-  }, [EmployeeSeparationList, ModeOfSeparationData]);
-
+  }, [EmployeeSeparationExitList, ModeOfSeparationData]);
+console.log(user,"user")
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -110,11 +114,11 @@ const ExitListing = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListView(searchValue, pageNumber - 1);
+      EmployeeSeparationListExitView(searchValue, pageNumber - 1, 9);
     } else {
-      EmployeeSeparationListView("all", pageNumber - 1);
+      EmployeeSeparationListExitView("all", pageNumber - 1, 9);
     }
-    setCurrentRecords(EmployeeSeparationList);
+    setCurrentRecords(EmployeeSeparationExitList);
   };
 
   /*-----------------Pagination------------------*/
@@ -124,9 +128,9 @@ const ExitListing = () => {
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      EmployeeSeparationListView(searchValue, pageCount);
+      EmployeeSeparationListExitView(searchValue, pageCount, 9);
     } else {
-      EmployeeSeparationListView("all", pageCount);
+      EmployeeSeparationListExitView("all", pageCount, 9);
     }
   };
 
@@ -141,7 +145,7 @@ const ExitListing = () => {
     // CostCenter();
   };
   return (
-    console.log(EmployeeSeparationList),
+    console.log(EmployeeSeparationExitList),
     (
       <Fragment>
         <Breadcrumb
@@ -200,8 +204,8 @@ const ExitListing = () => {
                       </tr>
                     </thead>
                     {loader === true &&
-                    EmployeeSeparationList !== null &&
-                    EmployeeSeparationList !== undefined &&
+                    EmployeeSeparationExitList !== null &&
+                    EmployeeSeparationExitList !== undefined &&
                     ModeOfSeparationData !== null &&
                     ModeOfSeparationData !== undefined ? (
                       <tbody>
@@ -221,12 +225,12 @@ const ExitListing = () => {
                           </td>
                         </tr>
                       </tbody>
-                    ) : EmployeeSeparationList !== undefined &&
-                      EmployeeSeparationList !== null &&
-                      EmployeeSeparationList.length > 0 &&
+                    ) : EmployeeSeparationExitList !== undefined &&
+                      EmployeeSeparationExitList !== null &&
+                      EmployeeSeparationExitList.length > 0 &&
                       ModeOfSeparationData !== null &&
                       ModeOfSeparationData !== undefined ? (
-                      EmployeeSeparationList.map((item, i) => {
+                      EmployeeSeparationExitList.map((item, i) => {
                         return (
                           <tbody key={item.candidateId}>
                             <tr>
@@ -237,12 +241,77 @@ const ExitListing = () => {
                               <td>{item.contractType}</td>
                               <td>{item.dateOfResignation}</td>
                               <td>{item.lastWorkingDate}</td>
-                              <td>{item.modeOfSeparationReasonId}</td>
+                              <td>{item.reasonForResignation}</td>
                               <td>{item.managerName}</td>
-                              <td>{item.noticePeriod}</td>
+                              <td>
+                                {item.contractType.toLowerCase() ===
+                                "internship"
+                                  ? "NA"
+                                  : item.department == "AFS" ||
+                                    item.department == "IT" ||
+                                    item.department == "Legal" ||
+                                    item.department == "Finance"
+                                  ? 2
+                                  : 1}
+                              </td>
 
                               <td>
-                                {(item.status === 4||item.status === 5)?<Edit2/>:<Link to={"/employee-info/" + item.employeeId}>
+                              {/* {(item !== null &&
+                                item !== undefined &&
+                                Object.keys(item).length !== 0)?(
+                                (item.loginType == 7 || item.additionalRole == 7) && item.isManager === true?(
+                                  (item.status === 2 ||
+                                    item.status === 3 ||
+                                      item.status === 5)?(
+                                        <Edit2 />
+                                            ) : (
+                                                <Link
+                        to={"/exit-action/" + item.employeeId}
+                                    >
+                                        <Edit2
+                                            onClick={() => {
+                                        fetchEmployeeDetails(
+                          item.employeeId
+                                        );
+                                            }}
+                          />
+                      </Link>
+                      )
+                    ) : (item.status === 0 || item.status === 8) ? (
+                        <Link
+              to={"/exit-action/" + item.employeeId}
+                >
+                            <Edit2  
+                      onClick={() => {
+                        fetchEmployeeDetails(item.employeeId);
+                                          }}
+                                            />
+                                </Link>
+                                  ) : (
+                                  <Link
+                                  to={"/employee-info/" + item.employeeId}
+                                  >
+                                  <Edit2
+                                  onClick={() => {
+                                  fetchEmployeeDetails(item.employeeId);
+                                  }}
+                                  />
+                                  </Link>
+                                  )
+                                  ) : (
+                                  <Edit2 />
+                                  )}         */}
+
+
+
+                                {(item.status === 3||item.status === 5|| item.status === 6)?<Edit2/>:((
+                                ((user.loginType == 7 ||user.additionalRole == (7||3||9) )&& item.isManager == true)) && item.status == 2)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
+                                  <Edit2
+                                    onClick={() => {
+                                      fetchEmployeeDetails(item.employeeId);
+                                    }}
+                                  />
+                                </Link>:<Link to={"/employee-info/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       fetchEmployeeDetails(item.employeeId);
@@ -267,8 +336,8 @@ const ExitListing = () => {
             </Col>
           </Row>
         </Container>
-        {EmployeeSeparationList !== null &&
-          EmployeeSeparationList !== undefined &&
+        {EmployeeSeparationExitList !== null &&
+          EmployeeSeparationExitList !== undefined &&
           ModeOfSeparationData !== null &&
           ModeOfSeparationData !== undefined &&
           Object.keys(ModeOfSeparationData).length !== 0 && (

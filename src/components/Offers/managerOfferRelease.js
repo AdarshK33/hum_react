@@ -15,7 +15,7 @@ import WorkInformation from "./workInformation";
 import RemunerationInformation from "./remunerationInformation";
 import GenerateOfferLetter from "./generateOfferLetter";
 import { OfferContext } from "../../context/OfferState";
-
+import { BonusContext } from "../../context/BonusState";
 const ManagerOfferRelease = () => {
   const {
     remunerationSave,
@@ -29,7 +29,8 @@ const ManagerOfferRelease = () => {
     workInfoView,
     remunerationData,
   } = useContext(OfferContext);
-
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
   const [isChecked, setIsChecked] = useState(false);
   const checkedHandler = (e) => {
     setIsChecked(true);
@@ -42,6 +43,7 @@ const ManagerOfferRelease = () => {
     if (
       createCandidateResponse !== null &&
       createCandidateResponse !== undefined &&
+      Object.keys(createCandidateResponse).length !== 0 &&
       createCandidateResponse.candidateId !== undefined
     ) {
       console.log("work info.........");
@@ -55,12 +57,42 @@ const ManagerOfferRelease = () => {
     if (
       createCandidateResponse !== null &&
       createCandidateResponse !== undefined &&
+      Object.keys(createCandidateResponse).length !== 0 &&
       createCandidateResponse.candidateId !== undefined
     ) {
       workInfoView(createCandidateResponse.candidateId);
     }
   };
 
+  const generateOfferClick = (e) => {
+    console.log("inside generateOfferClick");
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      Object.keys(candidateData.candidateInformation).length !== 0
+    ) {
+      viewCandidateId(candidateData.candidateInformation.candidateId);
+    }
+  };
+
+  const generatebonusClick = (e) => {
+    console.log("inside generateOfferClick");
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.workInformation !== null &&
+      candidateData.workInformation !== undefined &&
+      Object.keys(candidateData.workInformation).length !== 0
+    ) {
+      viewBonusByContarctType(
+        candidateData.workInformation.contractType,
+        candidateData.workInformation.department,
+        candidateData.workInformation.position
+      );
+    }
+  };
   // const workInformationClick = (e) => {
   //   console.log("inside workInformationClick");
   //   if (
@@ -137,7 +169,7 @@ const ManagerOfferRelease = () => {
               </AccordionItemPanel>
             </AccordionItem>
 
-            <AccordionItem>
+            <AccordionItem onClick={(generateOfferClick, generatebonusClick)}>
               <AccordionItemHeading>
                 <AccordionItemButton>
                   Step 4: Generate Offer Letter

@@ -26,6 +26,9 @@ const GroupReducer = (state, action) => {
 
     case "DISCIPLINARY_TERMINATION":
       return { ...state, DisciplinaryTermination: action.payload };
+      case "FETCH_TERMINATION_LETTER_DATA":
+        return { ...state, terminationLetterData: action.payload };   
+
     default:
       return state;
   }

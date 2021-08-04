@@ -43,9 +43,9 @@ const handlePageChange = (pageNumber) => {
 
     setCurrentPage(pageNumber);
     if (searchValue !== "all" || costCenter !== "all" || itStatus !== "3" || financeStatus !== "3") {
-      viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageNumber-1,costCenter);
+      viewAdminITClearanceList(itStatus,searchValue,pageNumber-1,costCenter);
     } else {
-      viewAdminITClearanceList("3","3","all",pageNumber-1,"all");
+      viewAdminITClearanceList("3","all",pageNumber-1,"all");
     }
     setCurrentRecords(adminNoDueClearanceList);
 }
@@ -59,9 +59,9 @@ useEffect(() => {
   }
   const searchDataHandler = () => {
     if (searchValue !== "" && searchValue !== "all") {
-      viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageCount,costCenter);
+      viewAdminITClearanceList(itStatus,searchValue,pageCount,costCenter);
     }else{
-      viewAdminITClearanceList("3","3",searchValue,pageCount,"all");
+      viewAdminITClearanceList("3",searchValue,pageCount,"all");
 
     }
   }
@@ -76,44 +76,46 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-     viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageCount,data2);
+     viewAdminITClearanceList(itStatus,searchValue,pageCount,data2);
   }else{
-     viewAdminITClearanceList("3","3","all",pageCount,data2);
+     viewAdminITClearanceList("3","all",pageCount,data2);
   }
 } 
-const handleFinanceStatus = (options) => {
-  let finance = options !== null?options.value:''
-  console.log(finance)
-  SetFinanceStatus(finance)
-  if (financeStatus !== "" && financeStatus !== "3") {
-     viewAdminITClearanceList(finance,itStatus,searchValue,pageCount,costCenter);
-  }else{
-     viewAdminITClearanceList(finance,"3","all",pageCount,"all");
-  }
-} 
+// const handleFinanceStatus = (options) => {
+//   let finance = options !== null?options.value:''
+//   console.log(finance)
+//   SetFinanceStatus(finance)
+//   if (financeStatus !== "" && financeStatus !== "3") {
+//      viewAdminITClearanceList(itStatus,searchValue,pageCount,costCenter);
+//   }else{
+//      viewAdminITClearanceList("3","all",pageCount,"all");
+//   }
+// } 
 const handleITStatus = (options) => {
   let itvalue = options !== null?options.value:''
   console.log(itvalue)
   SetITStatus(itvalue)
   if (itStatus !== "" && itStatus !== "3") {
-     viewAdminITClearanceList(financeStatus,itvalue,searchValue,pageCount,costCenter);
+     viewAdminITClearanceList(itvalue,searchValue,pageCount,costCenter);
   }else{
-     viewAdminITClearanceList("3",itvalue,"all",pageCount,"all");
+     viewAdminITClearanceList(itvalue,"all",pageCount,"all");
   }
 } 
 useEffect(() => {
   console.log(pageCount,"pageCount")
-  viewAdminITClearanceList(financeStatus,itStatus,searchValue, pageCount,costCenter);
-},[costCenter,searchValue,financeStatus,itStatus,pageCount]);
+  viewAdminITClearanceList(itStatus,searchValue, pageCount,costCenter);
+},[costCenter,searchValue,itStatus,pageCount]);
 
 const options1 = [
   { value: "3", label: "All" },
+  { value: "4", label: "Yet to Approve" },
   { value: "0", label: "Due" },
   { value: "1", label: "No Due" },
   { value: "2", label: "On Hold" },
 ];
 const options2 = [
   { value: "3", label: "All" },
+  { value: "4", label: "Yet to Approve" },
   { value: "0", label: "Due" },
   { value: "1", label: "No Due" },
   { value: "2", label: "On Hold" },
@@ -124,22 +126,9 @@ const options2 = [
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
-          <Row className="mt-4 mainWrapper">
-          <div className="col-sm-5">
-          <Col className="selectList">
-            <br/>
-            <label className="title" style={{padding:"6px"}}>IT Clearance Status</label> &nbsp;&nbsp;
-             
-          <Select
-          className="selectInputWrapper"
-           name="filters"
-          placeholder="IT Clearance "
-            options={options1}
-            onChange={handleITStatus}
-               required isSearchable />
-          </Col>
-          </div>
-          <div className="col-sm-5">
+          {/* <Row className="mt-4 mainWrapper"> */}
+         
+          {/* <div className="col-sm-5">
           <Col className="selectList">
             <br/>
             <label className="title" style={{padding:"6px"}}>Finance Clearance Status</label> &nbsp;&nbsp;
@@ -152,8 +141,8 @@ const options2 = [
           onChange={handleFinanceStatus}
                required isSearchable />
           </Col>
-          </div>
-        </Row>
+          </div> */}
+        {/* </Row> */}
           <Row className="mt-4 mainWrapper">
       
           <div className="col-sm-3" style={{marginLeft: '10px'}}>
@@ -170,7 +159,21 @@ const options2 = [
               onClick={searchDataHandler}
             />
           </div>
-          <div className="col-sm-4" style={{marginRight: '110px'}}>
+          <div className="col-sm-4">
+          <Col className="selectList">
+            <br/>
+            <label className="title" style={{padding:"6px"}}>IT Clearance Status</label> &nbsp;&nbsp;
+             
+          <Select
+          className="selectInputWrapper"
+           name="filters"
+          placeholder="IT Clearance "
+            options={options1}
+            onChange={handleITStatus}
+               required isSearchable />
+          </Col>
+          </div>
+          <div className="col-sm-4" >
           <Col className="selectList">
             <br/>
             <label className="title" style={{padding:"6px"}}>Select Cost Center</label> &nbsp;&nbsp;

@@ -27,6 +27,9 @@ const GenerateOfferLetter = () => {
 
   const handleClose = () => setShow(false);
 
+  useEffect(() => {
+    console.log("candidateData useeffect", candidateData);
+  }, [candidateData]);
   const offerLetterClick = () => {
     console.log("offer candidate id", createCandidateResponse.candidateId);
     console.log("candidateData id", candidateData);
@@ -87,118 +90,138 @@ const GenerateOfferLetter = () => {
   };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
-        {!saveLetter ? (
-          <Row>
-            <Col sm={5}></Col>
-            <Col sm={2}>
-              <Button type="button" onClick={offerLetterClick}>
-                Generate Offer Letter
-              </Button>
-            </Col>
-          </Row>
-        ) : (
-          <div className="preview-section">
-            <Button type="button" onClick={previewOfferLetter}>
-              Preview Offer Letter
-            </Button>
-            <br></br>
-            <br></br>
-            <img src={calendarImage} alt="calendar" width="200px" />
-            <br></br>
-            <br></br>
-            {letterSent ? (
-              ""
-            ) : (
-              <Button
-                type="button"
-                onClick={submitOfferLetter}
-                style={{ textAlign: "center" }}
-              >
-                Submit
-              </Button>
-            )}
-          </div>
-        )}
-      </Form>
-
-      <Modal show={showModal} onHide={handleClose} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        {submitLetter ? (
-          <Modal.Body>
-            <div className="offer-letter-message ">
-              <p>Offer Letter Sent to Candidate</p>
-              <br></br>
-              <Link to="/offer-release-list" className="text-center">
-                <Button type="button" onClick={handleClose}>
-                  Close
-                </Button>
-              </Link>
-            </div>
-          </Modal.Body>
-        ) : previewLetter || showModal ? (
-          <Modal.Body>
-            {offerLetterData &&
-            offerLetterData.contractType !== undefined &&
-            offerLetterData.contractType !== null &&
-            offerLetterData.contractType === "Permanent" ? (
-              <PermanentOfferLetter />
-            ) : offerLetterData &&
-              offerLetterData.contractType !== undefined &&
-              offerLetterData.contractType !== null &&
-              offerLetterData.contractType === "Parttime" ? (
-              <PartTimeOfferLetter />
-            ) : offerLetterData &&
-              offerLetterData.contractType !== undefined &&
-              offerLetterData.contractType !== null &&
-              offerLetterData.contractType === "Local Expat" ? (
-              <LocalExpatOfferLetter />
-            ) : (
-              <InternOfferLetter />
-            )}
-            <br></br>
-            <Row>
-              <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{offerLetterData.managerName}</p>
-              </Col>
-              <Col sm={6} className="signature-center-text">
-                {showSignature ? (
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                ) : (
-                  <>
-                    <p className="signature-text">Your signature</p>
-                    <Button variant="primary" onClick={digitalSignature}>
-                      Add digital signature
-                    </Button>
-                  </>
-                )}
-              </Col>
-            </Row>
-            {showSignature && !previewLetter ? (
+      {candidateData !== null &&
+      candidateData !== undefined &&
+      Object.keys(candidateData).length !== 0 &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      Object.keys(candidateData.candidateInformation).length !== 0 &&
+      candidateData.workInformation !== "" &&
+      candidateData.workInformation !== null &&
+      candidateData.workInformation !== undefined &&
+      Object.keys(candidateData.workInformation).length !== 0 &&
+      candidateData.remuneration !== null &&
+      candidateData.remuneration !== undefined &&
+      Object.keys(candidateData.remuneration) !== 0 ? (
+        <Fragment>
+          <Form onSubmit={submitHandler}>
+            {!saveLetter ? (
               <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <Button variant="primary" onClick={saveOfferLetter}>
-                    Save Changes
+                <Col sm={5}></Col>
+                <Col sm={2}>
+                  <Button type="button" onClick={offerLetterClick}>
+                    Generate Offer Letter
                   </Button>
                 </Col>
               </Row>
             ) : (
+              <div className="preview-section">
+                <Button type="button" onClick={previewOfferLetter}>
+                  Preview Offer Letter
+                </Button>
+                <br></br>
+                <br></br>
+                <img src={calendarImage} alt="calendar" width="200px" />
+                <br></br>
+                <br></br>
+                {letterSent ? (
+                  ""
+                ) : (
+                  <Button
+                    type="button"
+                    onClick={submitOfferLetter}
+                    style={{ textAlign: "center" }}
+                  >
+                    Submit
+                  </Button>
+                )}
+              </div>
+            )}
+          </Form>
+
+          <Modal show={showModal} onHide={handleClose} size="md">
+            <Modal.Header closeButton className="modal-line"></Modal.Header>
+            {submitLetter ? (
+              <Modal.Body>
+                <div className="offer-letter-message ">
+                  <p>Offer Letter Sent to Candidate</p>
+                  <br></br>
+                  <Link to="/offer-release-list" className="text-center">
+                    <Button type="button" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Link>
+                </div>
+              </Modal.Body>
+            ) : previewLetter || showModal ? (
+              <Modal.Body>
+                {offerLetterData &&
+                offerLetterData.contractType !== undefined &&
+                offerLetterData.contractType !== null &&
+                offerLetterData.contractType === "Permanent" ? (
+                  <PermanentOfferLetter />
+                ) : offerLetterData &&
+                  offerLetterData.contractType !== undefined &&
+                  offerLetterData.contractType !== null &&
+                  offerLetterData.contractType === "Parttime" ? (
+                  <PartTimeOfferLetter />
+                ) : offerLetterData &&
+                  offerLetterData.contractType !== undefined &&
+                  offerLetterData.contractType !== null &&
+                  offerLetterData.contractType === "Local Expat" ? (
+                  <LocalExpatOfferLetter />
+                ) : (
+                  <InternOfferLetter />
+                )}
+                <br></br>
+                <Row>
+                  <Col sm={6}>
+                    <p>Thanking you</p>
+                    <p>{offerLetterData.managerName}</p>
+                  </Col>
+                  <Col sm={6} className="signature-center-text">
+                    {showSignature ? (
+                      <img
+                        src={calendarImage}
+                        alt="calendar"
+                        width="50px"
+                        className="digital-signature"
+                      />
+                    ) : (
+                      <>
+                        <p className="signature-text">Your signature</p>
+                        <Button variant="primary" onClick={digitalSignature}>
+                          Add digital signature
+                        </Button>
+                      </>
+                    )}
+                  </Col>
+                </Row>
+                {showSignature && !previewLetter ? (
+                  <Row>
+                    <Col sm={4}></Col>
+                    <Col sm={5}>
+                      <br></br>
+                      <br></br>
+                      <Button variant="primary" onClick={saveOfferLetter}>
+                        Save Changes
+                      </Button>
+                    </Col>
+                  </Row>
+                ) : (
+                  ""
+                )}
+              </Modal.Body>
+            ) : (
               ""
             )}
-          </Modal.Body>
-        ) : (
-          ""
-        )}
-      </Modal>
+          </Modal>
+        </Fragment>
+      ) : (
+        <p style={{ color: "red", textAlign: "center" }}>
+          Please Enter all the details to generate offer letter
+        </p>
+      )}
     </Fragment>
   );
 };

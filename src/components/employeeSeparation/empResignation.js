@@ -9,9 +9,9 @@ import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 const EmpResignation = () => {
-  const [regDate, setRegDate] = useState();
-  const [noticePeriod,setNoticePeriod] = useState(null)
-  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + (noticePeriod !== undefined && noticePeriod !== null)?noticePeriod:0)));
+  const [regDate, setRegDate] = useState(new Date());
+  const [noticePeriod,setNoticePeriod] = useState(0)
+  const [lastDate, setLastDate] = useState();
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
@@ -20,6 +20,7 @@ const EmpResignation = () => {
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
+  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
   const { locationDetails, locationDetailsList } = useContext(
     PermissionContext
   );
@@ -41,7 +42,7 @@ const EmpResignation = () => {
     withdraw,
     loader,
   } = useContext(SeparationContext);
-  console.log("employeeData", employeeData);
+  console.log("employeeData",user, employeeData);
   useEffect(() => {
     locationDetails();
   }, []);
@@ -64,10 +65,20 @@ const EmpResignation = () => {
   }, [user.costCentre]);
   console.log(user, "user");
   useEffect(() => {
+    if(employeeData == null){
+    ViewEmployeeDataById(user.employeeId);
+    setSubmitted(false)
+    setReasonOfSepration("");
+      setComments()
+    modeOfSeparation();
+    ModeOfSeparationView(); 
+    }
+  }, [employeeData]);
+  useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
     ViewEmployeeDataById(user.employeeId);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (
@@ -94,7 +105,7 @@ const EmpResignation = () => {
   }, [managerList]);
 
   useEffect(() => {
-    console.log("profile data", user, employeeData);
+    console.log("profile data", user,"profile data1", employeeData);
     if (
       user !== null &&
       user !== undefined &&
@@ -103,7 +114,33 @@ const EmpResignation = () => {
         Object.keys(employeeData).length > 0)
     ) {
       console.log("profile data", user);
-      setEmailId(user.email);
+      setEmailId(user.personalEmail);
+      // if(user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance"){
+      //   setNoticePeriod(2)
+      // }else{
+      //   setNoticePeriod(1)
+      // }
+     
+    }
+    if((user !== null &&
+      user !== undefined) && (user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance") && (user.contractType === "permanent" ||user.contractType === "parttime" )){
+      setNoticePeriod(2)
+      var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (2)))
+      let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1)))
+    ;
+      setLastDateSelection(aboveDateValue)
+      setEmailId(user.personalEmail);
+      setLastDate(dateValue)
+      console.log(dateValue,aboveDateValue,"2")
+    }else{
+      setNoticePeriod(1)
+      var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (1)))
+      let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1)))
+      setLastDateSelection(aboveDateValue)
+      setLastDate(dateValue)
+      setEmailId(user.personalEmail);
+      console.log(dateValue,aboveDateValue,"1")
+
     }
   }, [user]);
 
@@ -115,18 +152,36 @@ const EmpResignation = () => {
       employeeData !== undefined &&
       Object.keys(employeeData).length !== 0
     ) {
-      console.log(employeeData,"employeedata")
+      console.log(employeeData,"inuse")
       setRegDate(new Date(employeeData.dateOfResignation));
-      setLastDate(new Date(employeeData.lastWorkingDate));
-      setNoticePeriod(employeeData.noticePeriod)
+      var noticeValue = 0
+      // setLastDate(new Date(employeeData.lastWorkingDate));
+      if(employeeData.department == "AFS" || employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
+        setNoticePeriod(2)
+        var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (2)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1)))
+      ;
+        setLastDateSelection(aboveDateValue)
+        setLastDate(dateValue)
+        console.log(dateValue,aboveDateValue,"2")
+      }else{
+        setNoticePeriod(1)
+        var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (1)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1)))
+        setLastDateSelection(aboveDateValue)
+        setLastDate(dateValue)
+        console.log(dateValue,aboveDateValue,"1")
+
+      }
+     
       setReasonOfSepration("");
-      setEmailId(employeeData.emailId);
+      setEmailId(employeeData.personalEmailId);
       setSubmitted(true);
       setComments(employeeData.employeeComment);
-      console.log(noticePeriod,"98098098098")
+      console.log(employeeData,"98098098098")
     }
   }, [employeeData]);
-
+console.log(employeeData)
   useEffect(() => {
     if (
       employeeData &&
@@ -186,7 +241,7 @@ const EmpResignation = () => {
         setRegDate();
         setLastDate();
         setReasonOfSepration("");
-        setEmailId(user.email);
+        setEmailId(user.personalEmail);
         if (
           managerList &&
           managerList &&
@@ -239,7 +294,7 @@ const EmpResignation = () => {
     }
   }, [ModeOfSeparationData]);
   console.log("reasonOfSeparationList", reasonOfSeparationList);
-  console.log(lastDate,"lastDate")
+  console.log(lastDate,regDate,"lastDate")
   const SubmitHandler = (e) => {
     e.preventDefault();
     var reasonId = 0;
@@ -256,7 +311,7 @@ const EmpResignation = () => {
       costCentreManagerName: null,
       costCentreName: user.costCentre,
       dateOfResignation: regDate,
-      emailId: emailId,
+      personalEmail: emailId,
       empName: user.firstName + user.lastName,
       employeeComment: comments,
       employeeId: user.employeeId,
@@ -272,7 +327,7 @@ const EmpResignation = () => {
       managerPosition: null,
       modeOfSeparationId: 4,
       modeOfSeparationReasonId: reasonId,
-      noticePeriod: 0,
+      noticePeriod: noticePeriod,
       noticePeriodRecovery: 0,
       noticePeriodRecoveryDays: 0,
       position: user.position,
@@ -305,6 +360,10 @@ const EmpResignation = () => {
     setWithdrawThis(true);
     ViewEmployeeDataById(user.employeeId);
     managerData(user.costCentre);
+    setReasonOfSepration("");
+  
+      setComments("");
+     setReasonOfSepration("");
 
     // if (
     //   employeeData &&
@@ -430,7 +489,7 @@ const EmpResignation = () => {
                 <Col sm={4}>
                   <Form.Group as={Row}>
                     <Form.Label column sm="4" className="labels-data">
-                      Mode of Separation:
+                      Type of Separation:
                     </Form.Label>
                     <Col sm="8">
                       <Form.Control
@@ -518,7 +577,7 @@ const EmpResignation = () => {
                       <Col sm="8">
                         <DatePicker
                           minDate={moment().toDate()}
-                          value={moment().format("DD/MM/YYYY")}
+                          value={moment(regDate).format("DD/MM/YYYY")}
                           disabled={true}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
@@ -543,7 +602,7 @@ const EmpResignation = () => {
                     <Col sm="8">
                       <Form.Control
                         type="text"
-                        value="2 Months"
+                        value={`${noticePeriod ==1?`${noticePeriod} Month`:noticePeriod>1?`${noticePeriod} Months`:""}`}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -610,6 +669,7 @@ const EmpResignation = () => {
                           value={moment(lastDate).format("DD/MM/YYYY")}
                           selected={lastDate}
                           minDate={moment().toDate()}
+                          maxDate={lastDateSelection}
                           onChange={(date) => setLastDate(date)}
                           className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"
@@ -684,8 +744,8 @@ const EmpResignation = () => {
                       Exit Feedback Form:
                     </Form.Label>
                     <Col sm="7">
-                      <a href="#" className="readTextBlue">
-                        Exit Feedback Form
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="readTextBlue">
+                        Click here
                       </a>
                     </Col>
                   </Form.Group>

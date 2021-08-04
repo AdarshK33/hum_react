@@ -387,6 +387,7 @@ const Documents = (props) => {
       ReqPassport: false,
       ReqCollegeId: false,
       ReqCollegeLetter: false,
+      HigestEducationLetter: false,
     },
   ]);
 
@@ -403,6 +404,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = false;
       tempArray[0].ReqCollegeId = false;
       tempArray[0].ReqCollegeLetter = false;
+      tempArray[0].HigestEducationLetter = true;
       setFandP_Required(tempArray);
     }
     if (localExpact === true) {
@@ -417,6 +419,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = true;
       tempArray[0].ReqCollegeId = false;
       tempArray[0].ReqCollegeLetter = false;
+      tempArray[0].HigestEducationLetter = false;
     }
     if (internship === true) {
       let tempArray = [...FandP_Time_Required];
@@ -430,6 +433,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = false;
       tempArray[0].ReqCollegeId = true;
       tempArray[0].ReqCollegeLetter = true;
+      tempArray[0].HigestEducationLetter = false;
     }
   };
   // whichOneIsRequired();
@@ -738,10 +742,14 @@ const Documents = (props) => {
   };
 
   const EduCetificateUploadValidation = () => {
-    if (UploadedArray[0].ULEducationCer === false) {
-      if (EducationCertificatesValidation() === true) {
-        setEduCertificatesError(true);
-        return false;
+    if (FandP_Time_Required[0].HigestEducationLetter === true) {
+      if (UploadedArray[0].ULEducationCer === false) {
+        if (EducationCertificatesValidation() === true) {
+          setEduCertificatesError(true);
+          return false;
+        }
+      } else {
+        return true;
       }
     } else {
       return true;
@@ -895,7 +903,7 @@ const Documents = (props) => {
     console.log("ERROR-->", latestPaySlipsError, state.latestPaySlips);
     console.log(value);
     if (value === true) {
-      completeDocumentUpload(candidateProfileData.candidateId);
+      // completeDocumentUpload(candidateProfileData.candidateId);
       console.log(state);
       setOnDocumentProceed(true);
       const nextPage = props.NextStep;
@@ -1060,10 +1068,11 @@ const Documents = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Something went wrong");
+      toast.info("Please select file");
     }
   };
   const proceedHandler = () => {
+    completeDocumentUpload(candidateProfileData.candidateId);
     setOnDocumentProceed(false);
     setOnDocumentPopup(true);
   };
@@ -1187,9 +1196,12 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       disabled={
-                        (stateOfDisable.photoId === 2 ||
-                          stateOfDisable.photoId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.photoId === 2 ||
+                            stateOfDisable.photoId === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1199,9 +1211,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.photoId === 2 ||
-                        stateOfDisable.photoId === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.photoId === 2 ||
+                          stateOfDisable.photoId === 0)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1211,9 +1226,12 @@ const Documents = (props) => {
                       className="custom_file_Upload_button"
                       name="photoId"
                       disabled={
-                        (stateOfDisable.photoId === 2 ||
-                          stateOfDisable.photoId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.photoId === 2 ||
+                            stateOfDisable.photoId === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1277,11 +1295,16 @@ const Documents = (props) => {
                       accept="image/jpeg,.pdf"
                       name="aadharId"
                       disabled={
-                        (stateOfDisable.aadharId === 2 ||
-                          stateOfDisable.aadharId === 0 ||
-                          adminDocApprove.aadharId === 2 ||
-                          adminDocApprove.aadharId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.aadharId === 0 ||
+                            stateOfDisable.aadharId === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 2 &&
+                          (adminDocApprove.aadharId === 0 ||
+                            adminDocApprove.aadharId === 2)) ||
+                        (candidateProfileData.documentUploaded === 0 &&
+                          candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.adminVerificationStatus === 0)
                           ? false
                           : true
                       }
@@ -1295,11 +1318,16 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.aadharId === 2 ||
-                        stateOfDisable.aadharId === 0 ||
-                        adminDocApprove.aadharId === 2 ||
-                        adminDocApprove.aadharId === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.aadharId === 0 ||
+                          stateOfDisable.aadharId === 2)) ||
+                      (candidateProfileData.adminVerificationStatus === 2 &&
+                        (adminDocApprove.aadharId === 0 ||
+                          adminDocApprove.aadharId === 2)) ||
+                      (candidateProfileData.documentUploaded === 0 &&
+                        candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.adminVerificationStatus === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1309,11 +1337,16 @@ const Documents = (props) => {
                       name="aadharId"
                       className="custom_file_Upload_button"
                       disabled={
-                        (stateOfDisable.aadharId === 2 ||
-                          stateOfDisable.aadharId === 0 ||
-                          adminDocApprove.aadharId === 2 ||
-                          adminDocApprove.aadharId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.aadharId === 0 ||
+                            stateOfDisable.aadharId === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 2 &&
+                          (adminDocApprove.aadharId === 0 ||
+                            adminDocApprove.aadharId === 2)) ||
+                        (candidateProfileData.documentUploaded === 0 &&
+                          candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.adminVerificationStatus === 0)
                           ? false
                           : true
                       }
@@ -1377,9 +1410,12 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       disabled={
-                        (stateOfDisable.panId === 2 ||
-                          stateOfDisable.panId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.panId === 2 ||
+                            stateOfDisable.panId === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1389,9 +1425,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.panId === 2 ||
-                        stateOfDisable.panId === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.panId === 2 ||
+                          stateOfDisable.panId === 0)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1404,9 +1443,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.panId === 2 ||
-                          stateOfDisable.panId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.panId === 2 ||
+                            stateOfDisable.panId === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1466,9 +1508,12 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.addressProof === 2 ||
-                          stateOfDisable.addressProof === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.addressProof === 2 ||
+                            stateOfDisable.addressProof === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1477,9 +1522,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.addressProof === 2 ||
-                        stateOfDisable.addressProof === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.addressProof === 2 ||
+                          stateOfDisable.addressProof === 0)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1492,9 +1540,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.addressProof === 2 ||
-                          stateOfDisable.addressProof === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.addressProof === 2 ||
+                            stateOfDisable.addressProof === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1553,9 +1604,12 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.passport === 2 ||
-                          stateOfDisable.passport === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.passport === 0 ||
+                            stateOfDisable.passport === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1564,9 +1618,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.passport === 2 ||
-                        stateOfDisable.passport === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.passport === 0 ||
+                          stateOfDisable.passport === 2)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1579,9 +1636,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.passport === 2 ||
-                          stateOfDisable.passport === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.passport === 0 ||
+                            stateOfDisable.passport === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1640,9 +1700,12 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.frro === 2 ||
-                          stateOfDisable.frro === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.frro === 2 ||
+                            stateOfDisable.frro === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1651,9 +1714,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.frro === 2 ||
-                        stateOfDisable.frro === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.frro === 2 ||
+                          stateOfDisable.frro === 0)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1666,9 +1732,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.frro === 2 ||
-                          stateOfDisable.frro === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.frro === 2 ||
+                            stateOfDisable.frro === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1745,11 +1814,16 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.epfPassBook === 2 ||
-                          stateOfDisable.epfPassBook === 0 ||
-                          adminDocApprove.epfPassBook === 2 ||
-                          adminDocApprove.epfPassBook === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.epfPassBook === 0 ||
+                            stateOfDisable.epfPassBook === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 2 &&
+                          (adminDocApprove.epfPassBook === 0 ||
+                            adminDocApprove.epfPassBook === 2)) ||
+                        (candidateProfileData.documentUploaded === 0 &&
+                          candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.adminVerificationStatus === 0)
                           ? false
                           : true
                       }
@@ -1758,11 +1832,16 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.epfPassBook === 2 ||
-                        stateOfDisable.epfPassBook === 0 ||
-                        adminDocApprove.epfPassBook === 2 ||
-                        adminDocApprove.epfPassBook === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.epfPassBook === 0 ||
+                          stateOfDisable.epfPassBook === 2)) ||
+                      (candidateProfileData.adminVerificationStatus === 2 &&
+                        (adminDocApprove.epfPassBook === 0 ||
+                          adminDocApprove.epfPassBook === 2)) ||
+                      (candidateProfileData.documentUploaded === 0 &&
+                        candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.adminVerificationStatus === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1775,11 +1854,16 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.epfPassBook === 2 ||
-                          stateOfDisable.epfPassBook === 0 ||
-                          adminDocApprove.epfPassBook === 2 ||
-                          adminDocApprove.epfPassBook === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.epfPassBook === 0 ||
+                            stateOfDisable.epfPassBook === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 2 &&
+                          (adminDocApprove.epfPassBook === 0 ||
+                            adminDocApprove.epfPassBook === 2)) ||
+                        (candidateProfileData.documentUploaded === 0 &&
+                          candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.adminVerificationStatus === 0)
                           ? false
                           : true
                       }
@@ -1840,11 +1924,16 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.cancelledCheque === 2 ||
-                          stateOfDisable.cancelledCheque === 0 ||
-                          adminDocApprove.cancelledCheque === 2 ||
-                          adminDocApprove.cancelledCheque === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.cancelledCheque === 0 ||
+                            stateOfDisable.cancelledCheque === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 2 &&
+                          (adminDocApprove.cancelledCheque === 0 ||
+                            adminDocApprove.cancelledCheque === 2)) ||
+                        (candidateProfileData.documentUploaded === 0 &&
+                          candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.adminVerificationStatus === 0)
                           ? false
                           : true
                       }
@@ -1853,11 +1942,16 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.cancelledCheque === 2 ||
-                        stateOfDisable.cancelledCheque === 0 ||
-                        adminDocApprove.cancelledCheque === 2 ||
-                        adminDocApprove.cancelledCheque === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.cancelledCheque === 0 ||
+                          stateOfDisable.cancelledCheque === 2)) ||
+                      (candidateProfileData.adminVerificationStatus === 2 &&
+                        (adminDocApprove.cancelledCheque === 0 ||
+                          adminDocApprove.cancelledCheque === 2)) ||
+                      (candidateProfileData.documentUploaded === 0 &&
+                        candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.adminVerificationStatus === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1870,11 +1964,16 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.cancelledCheque === 2 ||
-                          stateOfDisable.cancelledCheque === 0 ||
-                          adminDocApprove.cancelledCheque === 2 ||
-                          adminDocApprove.cancelledCheque === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.cancelledCheque === 0 ||
+                            stateOfDisable.cancelledCheque === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 2 &&
+                          (adminDocApprove.cancelledCheque === 0 ||
+                            adminDocApprove.cancelledCheque === 2)) ||
+                        (candidateProfileData.documentUploaded === 0 &&
+                          candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.adminVerificationStatus === 0)
                           ? false
                           : true
                       }
@@ -1934,9 +2033,12 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.collegeLetter === 2 ||
-                          stateOfDisable.collegeLetter === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.collegeLetter === 0 ||
+                            stateOfDisable.collegeLetter === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -1945,9 +2047,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.collegeLetter === 2 ||
-                        stateOfDisable.collegeLetter === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.collegeLetter === 0 ||
+                          stateOfDisable.collegeLetter === 2)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1960,9 +2065,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.collegeLetter === 2 ||
-                          stateOfDisable.collegeLetter === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.collegeLetter === 0 ||
+                            stateOfDisable.collegeLetter === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -2022,9 +2130,12 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.collegeId === 2 ||
-                          stateOfDisable.collegeId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.collegeId === 0 ||
+                            stateOfDisable.collegeId === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -2033,9 +2144,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.collegeId === 2 ||
-                        stateOfDisable.collegeId === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.collegeId === 0 ||
+                          stateOfDisable.collegeId === 2)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -2048,9 +2162,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.collegeId === 2 ||
-                          stateOfDisable.collegeId === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.collegeId === 0 ||
+                            stateOfDisable.collegeId === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -2085,7 +2202,13 @@ const Documents = (props) => {
           <Row style={{ marginTop: "2rem" }}>
             <Col>
               <Form.Group>
-                <div className="FileInput">
+                <div
+                  className={
+                    FandP_Time_Required[0].HigestEducationLetter
+                      ? "FileInput"
+                      : "FileInputWithOutStar"
+                  }
+                >
                   <label>Highest education certification</label>
                 </div>
                 <div className="parentInput">
@@ -2104,9 +2227,12 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        (stateOfDisable.educationCertificate === 2 ||
-                          stateOfDisable.educationCertificate === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.educationCertificate === 2 ||
+                            stateOfDisable.educationCertificate === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -2115,9 +2241,12 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      (stateOfDisable.educationCertificate === 2 ||
-                        stateOfDisable.educationCertificate === 0) &&
-                      candidateProfileData.documentUploaded === 0
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (stateOfDisable.educationCertificate === 2 ||
+                          stateOfDisable.educationCertificate === 0)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -2130,9 +2259,12 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        (stateOfDisable.educationCertificate === 2 ||
-                          stateOfDisable.educationCertificate === 0) &&
-                        candidateProfileData.documentUploaded === 0
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (stateOfDisable.educationCertificate === 2 ||
+                            stateOfDisable.educationCertificate === 0)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
                       }
@@ -2186,9 +2318,12 @@ const Documents = (props) => {
                           }}
                           readOnly
                           disabled={
-                            (stateOfDisable.relievingLetter === 2 ||
-                              stateOfDisable.relievingLetter === 0) &&
-                            candidateProfileData.documentUploaded === 0
+                            (candidateProfileData.documentUploaded === 1 &&
+                              candidateProfileData.verificationStatus === 2 &&
+                              (stateOfDisable.relievingLetter === 0 ||
+                                stateOfDisable.relievingLetter === 2)) ||
+                            (candidateProfileData.verificationStatus === 0 &&
+                              candidateProfileData.documentUploaded === 0)
                               ? false
                               : true
                           }
@@ -2197,9 +2332,12 @@ const Documents = (props) => {
 
                       <label
                         className={
-                          (stateOfDisable.relievingLetter === 2 ||
-                            stateOfDisable.relievingLetter === 0) &&
-                          candidateProfileData.documentUploaded === 0
+                          (candidateProfileData.documentUploaded === 1 &&
+                            candidateProfileData.verificationStatus === 2 &&
+                            (stateOfDisable.relievingLetter === 0 ||
+                              stateOfDisable.relievingLetter === 2)) ||
+                          (candidateProfileData.verificationStatus === 0 &&
+                            candidateProfileData.documentUploaded === 0)
                             ? "custom-file-upload"
                             : "custom-file-disable"
                         }
@@ -2212,9 +2350,12 @@ const Documents = (props) => {
                             handleUpload(e);
                           }}
                           disabled={
-                            (stateOfDisable.relievingLetter === 2 ||
-                              stateOfDisable.relievingLetter === 0) &&
-                            candidateProfileData.documentUploaded === 0
+                            (candidateProfileData.documentUploaded === 1 &&
+                              candidateProfileData.verificationStatus === 2 &&
+                              (stateOfDisable.relievingLetter === 0 ||
+                                stateOfDisable.relievingLetter === 2)) ||
+                            (candidateProfileData.verificationStatus === 0 &&
+                              candidateProfileData.documentUploaded === 0)
                               ? false
                               : true
                           }
@@ -2266,9 +2407,11 @@ const Documents = (props) => {
                           }}
                           readOnly
                           disabled={
-                            (stateOfDisable.latestPaySlips === 2 ||
-                              stateOfDisable.latestPaySlips === 0) &&
-                            candidateProfileData.documentUploaded === 0
+                            (candidateProfileData.documentUploaded === 1 &&
+                              candidateProfileData.verificationStatus === 2 &&
+                              stateOfDisable.latestPaySlips === 2) ||
+                            (candidateProfileData.verificationStatus === 0 &&
+                              candidateProfileData.documentUploaded === 0)
                               ? false
                               : true
                           }
@@ -2277,9 +2420,11 @@ const Documents = (props) => {
 
                       <label
                         className={
-                          (stateOfDisable.latestPaySlips === 2 ||
-                            stateOfDisable.latestPaySlips === 0) &&
-                          candidateProfileData.documentUploaded === 0
+                          (candidateProfileData.documentUploaded === 1 &&
+                            candidateProfileData.verificationStatus === 2 &&
+                            stateOfDisable.latestPaySlips === 2) ||
+                          (candidateProfileData.verificationStatus === 0 &&
+                            candidateProfileData.documentUploaded === 0)
                             ? "custom-file-upload"
                             : "custom-file-disable"
                         }
@@ -2292,9 +2437,11 @@ const Documents = (props) => {
                             handleUpload(e);
                           }}
                           disabled={
-                            (stateOfDisable.latestPaySlips === 2 ||
-                              stateOfDisable.latestPaySlips === 0) &&
-                            candidateProfileData.documentUploaded === 0
+                            (candidateProfileData.documentUploaded === 1 &&
+                              candidateProfileData.verificationStatus === 2 &&
+                              stateOfDisable.latestPaySlips === 2) ||
+                            (candidateProfileData.verificationStatus === 0 &&
+                              candidateProfileData.documentUploaded === 0)
                               ? false
                               : true
                           }

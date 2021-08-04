@@ -20,22 +20,22 @@ const RelivingLetter = () => {
           <br></br>
           <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
 
-          <p>Name:{relivingLetterData.employeeName}</p>
-          <p>EmployeeId:{relivingLetterData.employeeId}</p>
-          <p>Designation:{relivingLetterData.designation}</p>
+          <p>Name:{relivingLetterData !== undefined && relivingLetterData.employeeName}</p>
+          <p>EmployeeId:{relivingLetterData !== undefined && relivingLetterData.employeeId}</p>
+          <p>Designation:{relivingLetterData !== undefined && relivingLetterData.designation}</p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{relivingLetterData.employeeName},</b>{" "}
+              Dear <b>{relivingLetterData !== undefined && relivingLetterData.employeeName},</b>{" "}
             </p>
             <p>
               With reference to your resignation. We would like to inform you
               that your resignation has been accepted and you are relieved from
               the services of the Decathlon Sports India on the closing of
-              working hours of <b>{relivingLetterData.dateOfResignation}</b>. We
+              working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>. We
               hereby confirm that you have been working in Decathlon Sports
-              India since <b>{relivingLetterData.dateOfJoining}</b>. Please be
+              India since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>. Please be
               informed that you shall be bound by the relevant clause of your
               appointment letter which states that you shall not use, disclose,
               remove or transfer whether directly or indirectly, to any person,

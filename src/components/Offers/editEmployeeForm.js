@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import { Search, PlusCircle, MinusCircle } from "react-feather";
+import { Search, PlusCircle, MinusCircle, LogOut } from "react-feather";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 import { useHistory } from "react-router-dom";
@@ -30,6 +30,7 @@ const EditEmployeeForm = () => {
     searchEmpData1,
     searchForEmp2,
     searchEmpData2,
+    viewCandidateId,
   } = useContext(OfferContext);
 
   useEffect(() => {
@@ -170,7 +171,7 @@ const EditEmployeeForm = () => {
           data1.employeeName !== undefined &&
           (data1.employeeName !== "" ? data1.employeeName : "")
       );
-      console.log("empName", data1.employeeName);
+
       setRefEmail1(
         data1 !== null &&
           data1 !== undefined &&
@@ -246,6 +247,13 @@ const EditEmployeeForm = () => {
   const checkedYesHandler = () => {
     setYesChecked(true);
     setNoChecked(false);
+    setSecondRef(false);
+    setEmpName1("");
+    setEmpName2("");
+    setRefEmail1("");
+    setRefEmail2("");
+    setDesignation1("");
+    setDesignation2("");
   };
   const checkedNoHandler = () => {
     setNoChecked(true);
@@ -261,16 +269,18 @@ const EditEmployeeForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    let firstNameError;
-    let lastNameError;
+    let firstNameError = false;
+    let lastNameError = false;
+    var validEmail1 = false;
+    var validEmail2 = false;
 
-    if (firstName !== "" && !/^[a-zA-Z]*$/g.test(firstName)) {
+    if (firstName !== !/^[a-zA-Z]*$/g.test(firstName)) {
       firstNameError = true;
     } else {
       firstNameError = false;
     }
 
-    if (lastName !== "" && !/^[a-zA-Z]*$/g.test(lastName)) {
+    if (lastName !== !/^[a-zA-Z]*$/g.test(lastName)) {
       lastNameError = true;
     } else {
       lastNameError = false;
@@ -287,13 +297,15 @@ const EditEmployeeForm = () => {
           designation: desgination1 !== null ? desgination1 : null,
           email: refEmail1 !== null ? refEmail1 : null,
           employeeName: empName1 !== null ? empName1 : null,
-          referenceId: data1.referenceId,
+          referenceId:
+            data1 !== null && data1 !== undefined ? data1.referenceId : null,
         },
         {
           designation: desgination2 !== null ? desgination2 : null,
           email: refEmail2 !== null ? refEmail2 : null,
           employeeName: empName2 !== null ? empName2 : null,
-          referenceId: data2.referenceId,
+          referenceId:
+            data2 !== null && data2 !== undefined ? data2.referenceId : null,
         },
       ],
       createdDate: candidateData.candidateInformation.createdDate,
@@ -311,7 +323,7 @@ const EditEmployeeForm = () => {
       panNumber: null,
       personalEmail: email,
       photo: null,
-      referred: candidateData.candidateInformation.referred,
+      referred: yesChecked === true ? true : false,
       status: candidateData.candidateInformation.status,
       statusDesc: candidateData.candidateInformation.statusDesc,
       verificationStatus: candidateData.candidateInformation.verificationStatus,
@@ -323,21 +335,115 @@ const EditEmployeeForm = () => {
     //   !updateData.candidateReferences[0].email
     //     ? false
     //     : true;
+    let sameEmail = false;
     let refValue = candidateData.candidateInformation.referred;
     if (
-      firstNameError === false &&
-      lastNameError === false &&
-      refValue === true
+      yesChecked === true &&
+      searchEmpData1 !== null &&
+      searchEmpData2 !== null
+    ) {
+      if (searchEmpData1.email === searchEmpData2.email) {
+        sameEmail = true;
+      } else {
+        sameEmail = false;
+      }
+    }
+    if (
+      yesChecked === true &&
+      searchEmpData1 !== null &&
+      searchEmpData2 !== null &&
+      Object.keys(searchEmpData1).length !== 0 &&
+      Object.keys(searchEmpData2).length !== 0
+    ) {
+      if (searchEmpData1.email === searchEmpData2.email) {
+        sameEmail = true;
+      } else {
+        sameEmail = false;
+      }
+    } else {
+      sameEmail = false;
+    }
+    if (
+      yesChecked === true &&
+      searchEmpData1 !== null &&
+      Object.keys(searchEmpData1).length !== 0
+    ) {
+      let EmailId = searchEmpData1.email;
+      console.log(searchEmpData2);
+      if (
+        searchEmpData1.email !== undefined &&
+        searchEmpData1.email !== "" &&
+        searchEmpData1.email !== null &&
+        searchEmpData1.email.length > 0 &&
+        searchEmpData1.email.includes("decathlon.com") &&
+        refEmail1 !== undefined &&
+        refEmail1 !== null &&
+        refEmail1 !== "" &&
+        refEmail1.includes("decathlon.com")
+      ) {
+        console.log("inside.........");
+        validEmail1 = true;
+      } else {
+        validEmail1 = false;
+      }
+    } else {
+      validEmail1 = true;
+    }
+
+    if (
+      yesChecked === true &&
+      secondRef === true &&
+      searchEmpData2 !== null &&
+      Object.keys(searchEmpData2).length !== 0
+    ) {
+      if (
+        searchEmpData2.email !== undefined &&
+        searchEmpData2.email !== null &&
+        searchEmpData2.email.length > 0 &&
+        searchEmpData2.email.includes("decathlon.com") &&
+        refEmail2 !== undefined &&
+        refEmail2 !== null &&
+        refEmail2 !== "" &&
+        refEmail2.includes("decathlon.com")
+      ) {
+        validEmail2 = true;
+      } else {
+        validEmail2 = false;
+      }
+    } else {
+      validEmail2 = true;
+    }
+    console.log("emp...", searchEmpData1);
+    console.log("emp2...", searchEmpData2);
+    console.log("sameemail..................", sameEmail);
+    console.log("validEmail1.......", validEmail1);
+    console.log("validEmail2.............", validEmail2);
+    if (
+      // firstNameError === false &&
+      // lastNameError === false
+
+      // // &&
+      validEmail1 === true &&
+      validEmail2 === true &&
+      sameEmail === false
     ) {
       editCandidate(updateData);
       setDisabled(true);
       setEditButton(true);
     } else {
-      toast.info("Please Enter Valid Input");
+      toast.info("Please Enter Valid Reference");
     }
   };
   const editHandler = () => {
     setDisabled(false);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      viewCandidateId(candidateData.candidateInformation.candidateId);
+    }
   };
   return (
     <Fragment>
@@ -460,6 +566,7 @@ const EditEmployeeForm = () => {
                     type="text"
                     value={refEmail1}
                     readOnly
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -471,6 +578,7 @@ const EditEmployeeForm = () => {
                     type="text"
                     value={desgination1}
                     readOnly
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -517,6 +625,7 @@ const EditEmployeeForm = () => {
                   className="form-input"
                   type="text"
                   readOnly
+                  required
                   value={empName2 === "" ? "" : refEmail2}
                 />
               </Form.Group>
@@ -529,6 +638,7 @@ const EditEmployeeForm = () => {
                   type="text"
                   value={empName2 === "" ? "" : desgination2}
                   readOnly
+                  required
                 />
               </Form.Group>
             </Col>
