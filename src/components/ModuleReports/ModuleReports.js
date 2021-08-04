@@ -1,20 +1,25 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { ToastContainer } from "react-toastify";
-import { Search } from "react-feather";
+import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MODULES_LIST from "./ModuleList";
-import { TransferContext } from "../../context/TransferState";
+import MultiSelect from "react-multi-select-component";
+import { AdminContext } from "../../context/AdminState";
+import { ModuleReportContext } from "../../context/ModuleReportState";
 
 const ModuleReports = () => {
-  const {
-    getCostCentreDetails,
-    costCentreData,
-    getTransferInitiationEmpData,
-    initiationEmpData,
-  } = useContext(TransferContext);
+  const { getModuleReport, reportStatus, setReportStatus } = useContext(ModuleReportContext);
+
+  const { CostCenter, costCenterList, employeeIdData, employeeIdList } =
+    useContext(AdminContext);
+
+  /* To calculate next and previous year */
+  const curDate = new Date();
+  const prevYear = curDate.getFullYear() - 1;
+  const nextYear = curDate.getFullYear() + 1;
 
   const [subModules, setSubModules] = useState({});
 
@@ -49,39 +54,105 @@ const ModuleReports = () => {
   });
 
   const [costCentre, setCostCentre] = useState({
-    value: "",
+    value: [],
     errMsg: "",
   });
 
   const [employee, setEmployee] = useState({
-    value: "",
-    search: "",
-    empId: "",
+    value: [],
     errMsg: "",
   });
 
   const [formValid, setFormValid] = useState(false);
 
+  /* To get the selected cost centers list */
+  const selectedCostCentersList = useMemo(() => {
+    if (costCentre.value !== null && costCentre.value.length > 0) {
+      return costCentre.value.map(({ value }) => value);
+    } else {
+      return null;
+    }
+  }, [costCentre.value]);
+
+  /* To get the selected employees list */
+  const selectedEmployeesList = useMemo(() => {
+    if (employee.value !== null && employee.value.length > 0) {
+      return employee.value.map(({ value }) => value);
+    } else {
+      return null;
+    }
+  }, [employee.value]);
+
+  /* To get the cost centre options */
+  const costCentreOptions = useMemo(() => {
+    return costCenterList !== null && costCenterList.length > 0
+      ? costCenterList.map((item) => {
+          return {
+            label: item.costCentreName,
+            value: item.costCentreName,
+          };
+        })
+      : [];
+  }, [costCenterList]);
+
+  /* To get the employee options */
+  const employeeOptions = useMemo(() => {
+    return employeeIdList !== null && employeeIdList.length > 0
+      ? employeeIdList.map((item) => {
+          return {
+            label: `${item.firstName} - ${item.employeeId}`,
+            value: item.employeeId,
+          };
+        })
+      : [];
+  }, [employeeIdList]);
+
+  /* Get cost center details */
   useEffect(() => {
-    getCostCentreDetails();
+    CostCenter();
   }, []);
 
+  /* Get the employee data based on cost centers */
   useEffect(() => {
-    if (employee.search !== "") {
-      getTransferInitiationEmpData(employee.search);
+    if (
+      selectedCostCentersList !== null &&
+      selectedCostCentersList.length > 0
+    ) {
+      employeeIdData(selectedCostCentersList);
     }
-  }, [employee.search]);
+  }, [selectedCostCentersList]);
+
+  /* Submit the download report data */
+  useEffect(() => {
+    if (formValid === true) {
+      setReportStatus(); // to set report status to false
+      const reportInfo = {
+        moduleName: parseInt(moduleName.value),
+        subModuleName: parseInt(subModuleName.value),
+        reportType: reportType.value === "monthly" ? 1 : 0,
+        fromDate:
+          reportType.value === "monthly"
+            ? moment(fromDate.value).format("YYYY-MM-DD")
+            : null,
+        toDate:
+          reportType.value === "monthly"
+            ? moment(toDate.value).format("YYYY-MM-DD")
+            : null,
+        year:
+          reportType.value === "monthly" ? null : parseInt(reportYear.value),
+        costCentre: selectedCostCentersList,
+        employeeId: selectedEmployeesList,
+      };
+
+      getModuleReport(reportInfo);
+    }
+  }, [formValid]);
 
   useEffect(() => {
-    initiationEmpData !== null &&
-      initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0 &&
-      setEmployee({
-        ...employee,
-        value: `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`,
-        empId: initiationEmpData.currentEmployeeId,
-      });
-  }, [initiationEmpData]);
+    if (reportStatus === true ) {
+      setFormValid(false);
+    }
+  }, [reportStatus]);
 
   const changeModuleNameHandler = (e) => {
     const module = e.target.value;
@@ -127,25 +198,17 @@ const ModuleReports = () => {
     });
   };
 
-  const changeCostCentreHandler = (e) => {
+  const changeCostCentreHandler = (option) => {
     setCostCentre({
-      value: e.target.value,
+      value: option,
       errMsg: "",
     });
   };
 
-  const searchInputHandler = (e) => {
+  const changeEmployeeHandler = (option) => {
     setEmployee({
-      ...employee,
-      value: e.target.value,
+      value: option,
       errMsg: "",
-    });
-  };
-
-  const searchValueHandler = (e) => {
-    setEmployee({
-      ...employee,
-      search: employee.value,
     });
   };
 
@@ -201,7 +264,7 @@ const ModuleReports = () => {
       });
     }
 
-    if (costCentre.value === "") {
+    if (costCentre.value === [] || costCentre.value.length <= 0) {
       validForm = false;
       setCostCentre({
         ...costCentre,
@@ -209,13 +272,13 @@ const ModuleReports = () => {
       });
     }
 
-    if (employee.empId === "") {
-      validForm = false;
-      setEmployee({
-        ...employee,
-        errMsg: "Please enter employee ID",
-      });
-    }
+    // if (employee.value === []) {
+    //   validForm = false;
+    //   setEmployee({
+    //     ...employee,
+    //     errMsg: "Please enter employee ID",
+    //   });
+    // }
 
     return validForm;
   };
@@ -341,7 +404,6 @@ const ModuleReports = () => {
                               <DatePicker
                                 className="text-primary form-control"
                                 selected={fromDate.value}
-                                minDate={fromDate.value}
                                 closeOnScroll={true}
                                 dateFormat="yyyy-MM-dd"
                                 onChange={(date) => {
@@ -365,7 +427,7 @@ const ModuleReports = () => {
                               <DatePicker
                                 className="text-primary form-control"
                                 selected={toDate.value}
-                                minDate={toDate.value}
+                                minDate={fromDate.value}
                                 closeOnScroll={true}
                                 dateFormat="yyyy-MM-dd"
                                 onChange={(date) => {
@@ -389,17 +451,15 @@ const ModuleReports = () => {
                           </Form.Label>
                           <Col md={{ span: 6, offset: 1 }}>
                             <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="reportYear"
+                              type="number"
+                              min={prevYear}
+                              max={nextYear}
+                              placeholder="YYYY"
+                              className="digit text-primary"
                               value={reportYear.value}
-                              placeholder="Year"
+                              required
                               onChange={changeReportYearHandler}
-                            >
-                              <option>Select Year</option>
-                              <option value="2021">2021</option>
-                              <option value="2020">2020</option>
-                            </Form.Control>
+                            />
                             {reportYear.errMsg !== "" && (
                               <span className="text-danger">
                                 {reportYear.errMsg}
@@ -424,29 +484,15 @@ const ModuleReports = () => {
                               : "col-md-6"
                           }`}
                         >
-                          <Form.Control
-                            as="select"
-                            className="text-primary"
-                            aria-label="reportCostCentre"
+                          <MultiSelect
+                            options={costCentreOptions}
                             value={costCentre.value}
-                            placeholder="Select Cost Centre"
+                            className="text-primary"
                             onChange={changeCostCentreHandler}
-                          >
-                            <option>Select Cost Centre</option>
-                            {costCentreData !== null &&
-                              costCentreData !== undefined &&
-                              costCentreData.length > 0 &&
-                              costCentreData.map((item) => {
-                                return (
-                                  <option
-                                    key={`cost_centre_${item.costCentreName}`}
-                                    value={item.costCentreName}
-                                  >
-                                    {item.costCentreName}
-                                  </option>
-                                );
-                              })}
-                          </Form.Control>
+                            labelledBy={"Select"}
+                            hasSelectAll={true}
+                            disableSearch={false}
+                          />
                           {costCentre.errMsg !== "" && (
                             <span className="text-danger">
                               {costCentre.errMsg}
@@ -470,17 +516,14 @@ const ModuleReports = () => {
                               : "col-md-6 offset-md-1"
                           }`}
                         >
-                          <Form.Control
-                            type="text"
-                            className="text-primary"
-                            placeholder="search employee"
+                          <MultiSelect
+                            options={employeeOptions}
                             value={employee.value}
-                            onChange={searchInputHandler}
-                          />
-                          <Search
-                            className="search-icon mr-1"
-                            style={{ color: "#313131" }}
-                            onClick={searchValueHandler}
+                            className="text-primary"
+                            onChange={changeEmployeeHandler}
+                            labelledBy={"Select Employee Id"}
+                            hasSelectAll={true}
+                            disableSearch={false}
                           />
                           {employee.errMsg !== "" && (
                             <span className="text-danger">

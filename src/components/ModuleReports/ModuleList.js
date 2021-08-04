@@ -1,42 +1,42 @@
 const MODULES_LIST = {
   modules: {
-    offers: "Offer and Onboarding",
-    superation: "Superation",
-    probation: "Probation",
-    promotion: "Promotion",
-    transfers: "Transfers",
-    disciplinary: "Disciplinary Action",
+    0: "Offer and Onboarding",
+    1: "Superation",
+    2: "Probation",
+    3: "Promotion",
+    4: "Disciplinary Action",
+    5: "Transfers",
   },
   subModules: {
-    offers: {
-      management: "Offer Management Report",
-      onboarding: "Onboarding Report",
+    0: {
+      0: "Offer Management Report",
+      1: "Onboarding Report",
     },
-    superation: {
-      exitPending: "Exit Pending Report",
-      superation: "Superation - F&F Report",
-      empDue: "Employee Dues Report",
-      exitCompletion: "Exit Completion Report",
-      reHire: "Re-hiring Report",
+    1: {
+      2: "Exit Pending Report",
+      3: "Superation - F&F Report",
+      4: "Employee Dues Report",
+      5: "Exit Completion Report",
+      6: "Re-hiring Report",
     },
-    probation: {
-      confirmation: "Probation Confirmation Report",
-      rejection: "Probation Rejection Report",
-      extension: "Probation Extension Report",
+    2: {
+      7: "Probation Confirmation Report",
+      8: "Probation Rejection Report",
+      9: "Probation Extension Report",
     },
-    promotion: {
-      salaryHike: "Promotion and Salary Hike Report",
-      promotion: "Promotion Report",
+    3: {
+      10: "Promotion and Salary Hike Report",
+      11: "Promotion Report",
     },
-    transfers: {
-      regular: "Regular Transfer Report",
-      entity: "Entity Transfer Report",
-      international: "International Transfer Report",
-      employment: "Change of Employment Transfer Report",
+    4: {
+      16: "Warning Report",
+      17: "Show Cause Notice Report",
     },
-    disciplinary: {
-      warning: "Warning Report",
-      causeNotice: "Show Cause Notice Report",
+    5: {
+      12: "Regular Transfer Report",
+      13: "Entity Transfer Report",
+      14: "International Transfer Report",
+      15: "Change of Employment Transfer Report",
     },
   },
 };
