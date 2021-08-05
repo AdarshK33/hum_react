@@ -119,7 +119,10 @@ const ProbationAction = () => {
         let d = new Date(probationData.dateOfJoining);
         console.log(d.toLocaleDateString());
         d.setMonth(d.getMonth() + probationData.probationPeriod);
-        state.probationPeriod = new Date(d.toLocaleDateString());
+        var AdjusteddateValue = new Date(
+          d.getTime() - d.getTimezoneOffset() * 60000
+        );
+        state.probationPeriod = new Date(AdjusteddateValue);
         console.log(d.toLocaleDateString(), new Date(d));
         setDateOfConfirmation(new Date(d.toLocaleDateString()));
 
@@ -130,7 +133,10 @@ const ProbationAction = () => {
         } else {
           d1.setMonth(d1.getMonth() + 6);
         }
-        setExtDate(new Date(d1.toLocaleDateString()));
+        var AdjusteddateValue = new Date(
+          d1.getTime() - d1.getTimezoneOffset() * 60000
+        );
+        setExtDate(new Date(AdjusteddateValue));
         console.log(d1.toLocaleDateString(), new Date(d1));
         setDateOfExtension(new Date(d1.toLocaleDateString()));
         setDateDisable(false);
@@ -422,7 +428,8 @@ const ProbationAction = () => {
         emailId: probationData.emailId,
         empId: probationData.empId,
         empName: probationData.empName,
-        probationConfirmationDate: dateOfConfirmation,
+        probationConfirmationDate:
+          moment(dateOfConfirmation).format("YYYY-MM-DD"),
         probationConfirmationLetter: probationData.probationConfirmationLetter,
         probationExtensionEndDate: dateOfExtension,
         probationExtensionPeriod:
@@ -457,7 +464,8 @@ const ProbationAction = () => {
         empName: probationData.empName,
         employeeConformationLetter: null,
         managerConformationLetter: null,
-        probationConfirmationDate: dateOfConfirmation,
+        probationConfirmationDate:
+          moment(dateOfConfirmation).format("YYYY-MM-DD"),
         probationEndDate: probationData.probationEndDate,
         probationExtension:
           probationStatus === "Confirmed"
@@ -986,7 +994,7 @@ const ProbationAction = () => {
                                           selected={dateOfExtension}
                                           // name="dateOfResignation"
                                           // minDate={moment().toDate()}
-                                          minDate={
+                                          maxDate={
                                             extDATE !== null &&
                                             extDATE !== undefined &&
                                             extDATE !== ""
