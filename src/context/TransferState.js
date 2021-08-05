@@ -112,10 +112,16 @@ export const TransferProvider = (props) => {
       });
   };
 
-  const getCostCentreDetails = () => {
+  const getCostCentreDetails = (entity, dept) => {
     setLoader(true);
     client
-      .get("/api/v1/cost_centre/view")
+
+      .get(
+        "/api/v1/cost_centre/view/company?company=" +
+          entity +
+          "&department=" +
+          dept
+      )
       .then((response) => {
         setLoader(false);
         return dispatch({
@@ -134,7 +140,8 @@ export const TransferProvider = (props) => {
   const getCostCentreManagersDetails = (costCentreId) => {
     setLoader(true);
     client
-      .get(`/api/v1/employee/view/${costCentreId}/managers`)
+
+      .get("/api/v1/employee/view/managers/" + costCentreId)
       .then((response) => {
         setLoader(false);
         return dispatch({
