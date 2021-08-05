@@ -13,7 +13,7 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 import "./probation.css";
-
+import moment from "moment";
 const ProbationList = () => {
   //   const { loader } = useContext(OfferContext);
   const {
@@ -75,13 +75,13 @@ const ProbationList = () => {
       //   ProbationListView(searchValue, pageNumber - 1);
       ProbationListView(0, searchValue, pageNumber - 1);
     } else if (firstBtn) {
-      ProbationListView(5, "all", pageNumber - 1,0);
+      ProbationListView(5, "all", pageNumber - 1, 0);
     } else if (secondBtn) {
-      ProbationListView(7, "all", pageNumber - 1,0);
+      ProbationListView(7, "all", pageNumber - 1, 0);
     } else if (thirdBtn) {
-      ProbationListView(10, "all", pageNumber - 1,0);
+      ProbationListView(10, "all", pageNumber - 1, 0);
     } else if (fourthBtn) {
-      ProbationListView(14, "all", pageNumber - 1,0);
+      ProbationListView(14, "all", pageNumber - 1, 0);
     } else if (probationStatus === "Confirmed") {
       ProbationListView(0, "all", pageNumber - 1, 1);
     } else if (probationStatus === "Extended") {
@@ -184,7 +184,7 @@ const ProbationList = () => {
 
       case 3:
         // ProbationListView(5, pageCount);
-        ProbationListView(3, "all", 0,0);
+        ProbationListView(3, "all", 0, 0);
         setFirstBtn(true);
         setSecondBtn(false);
         setThirdBtn(false);
@@ -194,7 +194,7 @@ const ProbationList = () => {
         break;
       case 7:
         // ProbationListView(7, pageCount);
-        ProbationListView(7, "all", 0,0);
+        ProbationListView(7, "all", 0, 0);
         setFirstBtn(false);
         setSecondBtn(true);
         setThirdBtn(false);
@@ -214,7 +214,7 @@ const ProbationList = () => {
         break;
       case 14:
         // ProbationListView(14, pageCount);
-        ProbationListView(14, "all", 0,0);
+        ProbationListView(14, "all", 0, 0);
         setFirstBtn(false);
         setSecondBtn(false);
         setThirdBtn(false);
@@ -500,7 +500,32 @@ const ProbationList = () => {
                             <td>{item.costCentre}</td>
                             <td>{item.empName}</td>
                             <td>{item.dateOfJoining}</td>
-                            <td>{(item.probationConfirmationDate !==null && item.probationConfirmationDate !== "" && item.probationConfirmationDate !==undefined)?item.probationConfirmationDate:"NA"}</td>
+                            <td>
+                              {
+                                item.probationConfirmationDate !== null &&
+                                item.probationConfirmationDate !== "" &&
+                                item.probationConfirmationDate !== undefined
+                                  ? item.probationConfirmationDate
+                                  : item.dateOfJoining !== null &&
+                                    item.dateOfJoining !== undefined &&
+                                    item.dateOfJoining !== "" &&
+                                    item.probationPeriod !== null &&
+                                    item.probationPeriod !== undefined &&
+                                    item.probationPeriod !== ""
+                                  ? moment(
+                                      new Date(
+                                        new Date(item.dateOfJoining).setMonth(
+                                          new Date(
+                                            item.dateOfJoining
+                                          ).getMonth() + item.probationPeriod
+                                        )
+                                      )
+                                    ).format("yyyy-MM-DD")
+                                  : "NA"
+
+                                // ).toLocaleDateString("en-IN")
+                              }
+                            </td>
                             <td>{item.dueDays}</td>
                             <td>{item.reminderSent}</td>
                             <td>
@@ -526,7 +551,7 @@ const ProbationList = () => {
 
                             <td>
                               {/* {false ? ( */}
-                              {item.status !== 0 ? (
+                              {item.status !== 0 || item.dueDays === 0 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to={"/probation-action/" + item.empId}>
