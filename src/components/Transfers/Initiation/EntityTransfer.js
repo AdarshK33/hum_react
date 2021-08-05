@@ -239,6 +239,10 @@ const EntityTransfer = () => {
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    if (newDept === "") {
+      validForm = false;
+      setDeptErrMsg("Please enter employee id or employee name");
+    }
 
     if (searchInput === "") {
       validForm = false;
