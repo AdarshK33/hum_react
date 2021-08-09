@@ -11,7 +11,8 @@ import { AdminContext } from "../../context/AdminState";
 import { ModuleReportContext } from "../../context/ModuleReportState";
 
 const ModuleReports = () => {
-  const { getModuleReport, reportStatus, setReportStatus } = useContext(ModuleReportContext);
+  const { getModuleReport, reportStatus, setReportStatus } =
+    useContext(ModuleReportContext);
 
   const { CostCenter, costCenterList, employeeIdData, employeeIdList } =
     useContext(AdminContext);
@@ -30,6 +31,7 @@ const ModuleReports = () => {
 
   const [subModuleName, setSubModuleName] = useState({
     value: "",
+    text: "",
     errMsg: "",
   });
 
@@ -127,21 +129,24 @@ const ModuleReports = () => {
     if (formValid === true) {
       setReportStatus(); // to set report status to false
       const reportInfo = {
-        moduleName: parseInt(moduleName.value),
-        subModuleName: parseInt(subModuleName.value),
-        reportType: reportType.value === "monthly" ? 1 : 0,
-        fromDate:
-          reportType.value === "monthly"
-            ? moment(fromDate.value).format("YYYY-MM-DD")
-            : null,
-        toDate:
-          reportType.value === "monthly"
-            ? moment(toDate.value).format("YYYY-MM-DD")
-            : null,
-        year:
-          reportType.value === "monthly" ? null : parseInt(reportYear.value),
-        costCentre: selectedCostCentersList,
-        employeeId: selectedEmployeesList,
+        apiInfo: {
+          moduleName: parseInt(moduleName.value),
+          subModuleName: parseInt(subModuleName.value),
+          reportType: reportType.value === "monthly" ? 1 : 0,
+          fromDate:
+            reportType.value === "monthly"
+              ? moment(fromDate.value).format("YYYY-MM-DD")
+              : null,
+          toDate:
+            reportType.value === "monthly"
+              ? moment(toDate.value).format("YYYY-MM-DD")
+              : null,
+          year:
+            reportType.value === "monthly" ? null : parseInt(reportYear.value),
+          costCentre: selectedCostCentersList,
+          employeeId: selectedEmployeesList,
+        },
+        fileName: subModuleName.text,
       };
 
       getModuleReport(reportInfo);
@@ -149,7 +154,7 @@ const ModuleReports = () => {
   }, [formValid]);
 
   useEffect(() => {
-    if (reportStatus === true ) {
+    if (reportStatus === true) {
       setFormValid(false);
     }
   }, [reportStatus]);
@@ -166,6 +171,7 @@ const ModuleReports = () => {
   const changeSubModuleNameHandler = (e) => {
     setSubModuleName({
       value: e.target.value,
+      text: e.target.options[e.target.selectedIndex].text,
       errMsg: "",
     });
   };

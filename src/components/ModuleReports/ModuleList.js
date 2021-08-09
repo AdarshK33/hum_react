@@ -1,7 +1,7 @@
 const MODULES_LIST = {
   modules: {
     0: "Offer and Onboarding",
-    1: "Superation",
+    1: "Separation",
     2: "Probation",
     3: "Promotion",
     4: "Disciplinary Action",
@@ -14,7 +14,7 @@ const MODULES_LIST = {
     },
     1: {
       2: "Exit Pending Report",
-      3: "Superation - F&F Report",
+      3: "Separation - F&F Report",
       4: "Employee Dues Report",
       5: "Exit Completion Report",
       6: "Re-hiring Report",
