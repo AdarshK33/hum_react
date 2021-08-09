@@ -19,6 +19,10 @@ const GroupReducer = (state, action) => {
       console.log("on reducer");
       return { ...state, extensionLetterData: action.payload };
 
+    case "PROBATION_END_LETTER":
+      console.log("on reducer");
+      return { ...state, endLetterData: action.payload };
+
     default:
       return state;
   }

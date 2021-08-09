@@ -11,6 +11,8 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import ConfirmationLetter from "./ConfirmationLetter";
 import ExtensionLetter from "./ExtensionLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
+import { useHistory } from "react-router-dom";
+import { SeparationContext } from "../../context/SepearationState";
 
 const ProbationAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -44,6 +46,7 @@ const ProbationAction = () => {
   const [dateOfExtension, setDateOfExtension] = useState("");
   const [dateDisable, setDateDisable] = useState(true);
   const [extDATE, setExtDate] = useState("");
+  const history = useHistory();
 
   const [state, setState] = useState({
     empName: "",
@@ -61,7 +64,9 @@ const ProbationAction = () => {
     UpdateEmplyoeeExist,
     fetchRelievingLetterData,
     relivingLetterData,
+    ModeOfSeparationView,
   } = useContext(EmployeeSeparationContext);
+
   const {
     updateProbation,
     probUpdateResponse,
@@ -74,6 +79,7 @@ const ProbationAction = () => {
     empId,
     loader,
   } = useContext(ProbationContext);
+  const { searchByCostCenter } = useContext(SeparationContext);
   console.log("employeeId", empId);
   useEffect(() => {
     ViewProbationDataById(empId);
@@ -119,7 +125,10 @@ const ProbationAction = () => {
         let d = new Date(probationData.dateOfJoining);
         console.log(d.toLocaleDateString());
         d.setMonth(d.getMonth() + probationData.probationPeriod);
-        state.probationPeriod = new Date(d.toLocaleDateString());
+        var AdjusteddateValue = new Date(
+          d.getTime() - d.getTimezoneOffset() * 60000
+        );
+        state.probationPeriod = new Date(AdjusteddateValue);
         console.log(d.toLocaleDateString(), new Date(d));
         setDateOfConfirmation(new Date(d.toLocaleDateString()));
 
@@ -130,7 +139,10 @@ const ProbationAction = () => {
         } else {
           d1.setMonth(d1.getMonth() + 6);
         }
-        setExtDate(new Date(d1.toLocaleDateString()));
+        var AdjusteddateValue = new Date(
+          d1.getTime() - d1.getTimezoneOffset() * 60000
+        );
+        setExtDate(new Date(AdjusteddateValue));
         console.log(d1.toLocaleDateString(), new Date(d1));
         setDateOfExtension(new Date(d1.toLocaleDateString()));
         setDateDisable(false);
@@ -183,8 +195,10 @@ const ProbationAction = () => {
   };
 
   const handleRelivingClose = () => {
-    setShowRej(false);
     setShow(false);
+  };
+  const handleRejectionClose = () => {
+    setShowRej(false);
   };
 
   const saveOfferLetter = () => {
@@ -407,13 +421,14 @@ const ProbationAction = () => {
       return false;
     }
   };
-
-  const submitHandler = (e) => {
-    console.log("submit handler");
-
-    e.preventDefault();
-    const value = checkValidations();
-    if (value === true) {
+  const GoToSeperation = () => {
+    if (
+      probationData &&
+      probationData &&
+      probationData !== null &&
+      probationData !== undefined &&
+      Object.keys(probationData).length !== 0
+    ) {
       const InfoData = {
         company: probationData.company,
         costCentre: probationData.costCentre,
@@ -422,7 +437,8 @@ const ProbationAction = () => {
         emailId: probationData.emailId,
         empId: probationData.empId,
         empName: probationData.empName,
-        probationConfirmationDate: dateOfConfirmation,
+        probationConfirmationDate:
+          moment(dateOfConfirmation).format("YYYY-MM-DD"),
         probationConfirmationLetter: probationData.probationConfirmationLetter,
         probationExtensionEndDate: dateOfExtension,
         probationExtensionPeriod:
@@ -447,78 +463,66 @@ const ProbationAction = () => {
             : 0,
       };
 
-      const InfoData1 = {
-        company: probationData.company,
-        costCentre: probationData.costCentre,
-        dateOfJoining: probationData.dateOfJoining,
-        dueDays: probationData.dueDays,
-        emailId: probationData.emailId,
-        empId: probationData.empId,
-        empName: probationData.empName,
-        employeeConformationLetter: null,
-        managerConformationLetter: null,
-        probationConfirmationDate: dateOfConfirmation,
-        probationEndDate: probationData.probationEndDate,
-        probationExtension:
-          probationStatus === "Confirmed"
-            ? null
-            : {
-                emailId: probationData.emailId,
-                empId: probationData.empId,
-                empName: probationData.empName,
-                probationExtensionEndDate: dateOfExtension,
-                probationExtensionId:
-                  probationData.probationExtension !== null &&
-                  probationData.probationExtension !== undefined &&
-                  probationData.probationExtension.probationExtensionId !== null
-                    ? probationData.probationExtension.probationExtensionId
-                    : 0,
-                probationExtensionPeriod:
-                  probationMonths === "3 Months"
-                    ? 3
-                    : probationMonths === "6 Months"
-                    ? 6
-                    : 0,
-                probationExtensionStartDate: null,
-                probationId: probationData.probationId,
-                reason: state.reason,
-                status:
-                  probationStatus === "Confirmed"
-                    ? 1
-                    : probationStatus === "Extended"
-                    ? 2
-                    : 0,
-              },
-        probationExtensionPeriod:
-          probationMonths === "3 Months"
-            ? 3
-            : probationMonths === "6 Months"
-            ? 6
-            : 0,
-        probationId: probationData.probationId,
-        probationPeriod: probationData.probationPeriod,
-        probationStartDate: probationData.probationStartDate,
-        remarks: probationStatus === "Rejected" ? state.remarks : null,
-        reminderSent: probationData.reminderSent,
-        status:
-          probationStatus === "Confirmed"
-            ? 1
-            : probationStatus === "Extended"
-            ? 2
-            : probationStatus === "Rejected"
-            ? 3
-            : 0,
-        //  PENDING(0),
-        // APPROVED(1),
-        // EXTENDED(2);
-      };
       console.log("InfoData", InfoData);
       updateProbation(InfoData, probationData.empId);
       ViewProbationDataById(empId);
+      // searchByCostCenter(probationData.empId);
+
       setSubmitted(true);
+      setShowRej(false);
+      ModeOfSeparationView();
+      history.push("../probation-separation");
+    }
+  };
+
+  const submitHandler = (e) => {
+    console.log("submit handler");
+
+    e.preventDefault();
+    const value = checkValidations();
+    if (value === true) {
       if (probationStatus === "Rejected") {
         setShowRej(true);
       } else {
+        const InfoData = {
+          company: probationData.company,
+          costCentre: probationData.costCentre,
+          dateOfJoining: probationData.dateOfJoining,
+          dueDays: probationData.dueDays,
+          emailId: probationData.emailId,
+          empId: probationData.empId,
+          empName: probationData.empName,
+          probationConfirmationDate:
+            moment(dateOfConfirmation).format("YYYY-MM-DD"),
+          probationConfirmationLetter:
+            probationData.probationConfirmationLetter,
+          probationExtensionEndDate: dateOfExtension,
+          probationExtensionPeriod:
+            probationMonths === "3 Months"
+              ? 3
+              : probationMonths === "6 Months"
+              ? 6
+              : 0,
+          probationExtensionStartDate: null,
+          probationId: probationData.probationId,
+          reason: state.reason,
+          probationPeriod: probationData.probationPeriod,
+          remarks: probationStatus === "Rejected" ? state.remarks : null,
+          reminderSent: probationData.reminderSent,
+          status:
+            probationStatus === "Confirmed"
+              ? 1
+              : probationStatus === "Extended"
+              ? 2
+              : probationStatus === "Rejected"
+              ? 3
+              : 0,
+        };
+
+        console.log("InfoData", InfoData);
+        updateProbation(InfoData, probationData.empId);
+        ViewProbationDataById(empId);
+        setSubmitted(true);
         setPreview(true);
       }
     }
@@ -526,12 +530,20 @@ const ProbationAction = () => {
 
   return (
     <Fragment>
-      <Modal show={showRej} onHide={handleRelivingClose} size="md">
+      <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
-          <label>The employee probation has been rejected</label>
+          <label>
+            Exit has been initated against the employee. Please go to separation
+            module for next steps of action
+          </label>
           <div className="text-center mb-2">
-            <Button onClick={handleRelivingClose}>Close</Button>
+            <Button onClick={handleRejectionClose}>Close</Button>
+            <></>
+
+            <Button onClick={GoToSeperation} style={{ marginLeft: "1rem" }}>
+              Next
+            </Button>
           </div>
         </Modal.Body>
       </Modal>
@@ -986,7 +998,7 @@ const ProbationAction = () => {
                                           selected={dateOfExtension}
                                           // name="dateOfResignation"
                                           // minDate={moment().toDate()}
-                                          minDate={
+                                          maxDate={
                                             extDATE !== null &&
                                             extDATE !== undefined &&
                                             extDATE !== ""

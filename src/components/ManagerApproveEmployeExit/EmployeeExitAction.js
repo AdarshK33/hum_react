@@ -302,6 +302,7 @@ const EmployeeExitAction = () => {
           status: 2,
           withdraw: employeeData.withdraw,
         };
+        console.log("save ",InfoData)
         UpdateEmplyoeeExist(InfoData);
              }
     }
@@ -327,7 +328,7 @@ const EmployeeExitAction = () => {
   const relivingLetterClick = (e) => {
     console.log(e.target.value,"999")
     e.preventDefault();
-    if(e.target.value == '1' || e.target.value == 'Resignation'){
+    if(e.target.value == '1' || e.target.value == 'Resignation'|| e.target.value == '4' || e.target.value == 'Employee Resignation'){
       fetchRelievingLetterData(employeeData.employeeId);
       handleShow();
       console.log("resignation")
@@ -469,10 +470,10 @@ const EmployeeExitAction = () => {
           status: 8,
           withdraw: employeeData.withdraw,
         };
-        UpdateEmplyoeeExist(InfoData);
+         UpdateEmplyoeeExist(InfoData);
         setSuccessModal(true);
         setPreview(true);
-        console.log("in else");
+        console.log("in else",InfoData);
       }
     }
   };
