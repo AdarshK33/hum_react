@@ -120,6 +120,18 @@ import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/Manage
 /* All module reports */
 import ModuleReports from "./components/ModuleReports/ModuleReports";
 
+/* Notice Period Module */
+import NoticePeriodListContainer from "./components/NoticePeriod/List/ListContainer";
+import AddNoticePeriod from "./components/NoticePeriod/AddNoticePeriod";
+import ViewNoticePeriod from "./components/NoticePeriod/ViewNoticePeriod";
+import EditNoticePeriod from "./components/NoticePeriod/EditNoticePeriod";
+
+/* Insurance List */
+import InsuranceListContainer from "./components/Insurance/List/ListContainer";
+import AddInsurance from "./components/Insurance/AddInsurance";
+import ViewInsurance from "./components/Insurance/ViewInsurance";
+import EditInsurance from "./components/Insurance/EditInsurance";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -400,6 +412,36 @@ const RoutePath = () => {
             component={ModuleReports}
           />
 
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/add-notice-period`}
+            component={AddNoticePeriod}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/view-notice-period/:noticePeriodId`}
+            component={ViewNoticePeriod}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/edit-notice-period/:noticePeriodId`}
+            component={EditNoticePeriod}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/add-insurance`}
+            component={AddInsurance}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/view-insurance/:insuranceNominationId`}
+            component={ViewInsurance}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/edit-insurance/:insuranceNominationId`}
+            component={EditInsurance}
+          />
+
           {state.MenuPermissionsRoute.map((e) => {
             return (
               <div>
@@ -588,6 +630,16 @@ const RoutePath = () => {
                     <Route
                       path={`${process.env.PUBLIC_URL}/master/bonus-structure`}
                       component={ViewBonus}
+                    />
+                  ) : e.path === "/master/notice-period" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/notice-period`}
+                      component={NoticePeriodListContainer}
+                    />
+                  ) : e.path === "/master/insurance" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/insurance`}
+                      component={InsuranceListContainer}
                     />
                   ) : (
                     ""
