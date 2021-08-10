@@ -934,12 +934,18 @@ const PromotionInitiate = () => {
                                             : { borderRadius: "5px" }
                                         }
                                         name="salaryEffectiveDate"
-                                        minDate={moment().toDate()}
+                                        // minDate={moment().toDate()}
                                         required
                                         onChange={(e) => dateOfBirthHandler1(e)}
                                         dateFormat="yyyy-MM-dd"
                                         placeholderText="YYYY-MM-DD"
-                                        minDate={new Date()}
+                                        minDate={
+                                          new Date(
+                                            new Date().setMonth(
+                                              new Date().getMonth() - 2
+                                            )
+                                          )
+                                        }
                                       />
                                     </div>
                                   </Form.Group>
@@ -983,12 +989,18 @@ const PromotionInitiate = () => {
                                     }
                                     selected={state.effectiveDate}
                                     name="effectiveDate"
-                                    minDate={moment().toDate()}
+                                    // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
+                                    minDate={
+                                      new Date(
+                                        new Date().setMonth(
+                                          new Date().getMonth() - 2
+                                        )
+                                      )
+                                    }
                                   />
                                 </div>
                               </Form.Group>

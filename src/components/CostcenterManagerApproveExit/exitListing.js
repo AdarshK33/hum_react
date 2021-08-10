@@ -160,7 +160,7 @@ console.log(user,"user")
                   className="title_bar"
                   style={{ textAlign: "center", fontSize: "larger" }}
                 >
-                  <b>EMPLOYEE SEPARATION LISTING</b>
+                  <b>EMPLOYEE SEPARATION LISTING ..</b>
 
                   {/* <div className="job-filter">
                   <div className="faq-form mr-2">
@@ -305,7 +305,8 @@ console.log(user,"user")
 
 
                                 {(item.status === 3||item.status === 5|| item.status === 6)?<Edit2/>:((
-                                ((user.loginType == 7 ||user.additionalRole == (7||3||9) )&& item.isManager == true)) && item.status == 2)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
+                                ((user.loginType == (7||3||9) ||user.additionalRole == (7||3||9) )&& item.isManager == true)) && item.status == 2||
+                                (user.loginType ==(0||2||3) ||user.additionalRole ==(0||2||3) && user.isManager == true && (item.isManager == null || item.isManager == "" || item.isManager == undefined ||item.isManager !== true)) && item.status == 2)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       fetchEmployeeDetails(item.employeeId);
