@@ -595,9 +595,9 @@ const PromotionInitiate = () => {
                           </Col>
 
                           <Col sm={6}>
-                            <label>Position:</label>
+                            <label>Employee Id:</label>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.oldPosition}
+                              &nbsp;&nbsp; {state.employeeId}
                             </label>
                           </Col>
                         </Row>
@@ -626,50 +626,18 @@ const PromotionInitiate = () => {
                             </label>
                           </Col>
                         </Row>
-
                         <Row
                           style={{
                             marginLeft: "2rem",
                             marginTop: "1rem",
-                            marginBottom: "1rem",
+                            marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={2}>
-                            <label>New Position </label>
-                          </Col>
-                          <Col sm={8}>
-                            <Form.Group>
-                              <Form.Control
-                                as="select"
-                                name="positionId"
-                                defaultValue={position}
-                                style={
-                                  positionIdError
-                                    ? { borderColor: "red" }
-                                    : { borderRadius: "5px" }
-                                }
-                                onChange={(e) => changeHandler(e)}
-                              >
-                                <option value="">Select Position</option>
-                                {positionNew !== null &&
-                                  positionNew !== undefined &&
-                                  positionNew.length > 0 &&
-                                  positionNew.map((item, index) => {
-                                    return (
-                                      <option key={index + 1}>
-                                        {item.position}
-                                      </option>
-                                    );
-                                  })}
-                              </Form.Control>
-                              {positionIdError ? (
-                                <p style={{ color: "red" }}>
-                                  {positionIdError}
-                                </p>
-                              ) : (
-                                ""
-                              )}
-                            </Form.Group>
+                          <Col sm={6}>
+                            <label>Position:</label>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.oldPosition}
+                            </label>
                           </Col>
                         </Row>
                         <Row
@@ -710,6 +678,51 @@ const PromotionInitiate = () => {
                               {departmentIdError ? (
                                 <p style={{ color: "red" }}>
                                   {departmentIdError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <label>New Position </label>
+                          </Col>
+                          <Col sm={8}>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="positionId"
+                                defaultValue={position}
+                                style={
+                                  positionIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Position</option>
+                                {positionNew !== null &&
+                                  positionNew !== undefined &&
+                                  positionNew.length > 0 &&
+                                  positionNew.map((item, index) => {
+                                    return (
+                                      <option key={index + 1}>
+                                        {item.position}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {positionIdError ? (
+                                <p style={{ color: "red" }}>
+                                  {positionIdError}
                                 </p>
                               ) : (
                                 ""

@@ -99,11 +99,13 @@ export const PromotionProvider = (props) => {
   };
   const generatePromotionLetter = (id) => {
     console.log("candidate id", id);
+    setLoader(true);
     return client
       .get("/api/v1/promotion/letter/" + id)
       .then((response) => {
         state.promotionLetterData = response.data.data;
         console.log("offer.message", state.promotionLetterData);
+        setLoader(false);
         return dispatch({
           type: "PROMOTION_LETTER_DATA",
           payload: state.promotionLetterData,
