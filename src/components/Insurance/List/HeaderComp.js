@@ -1,27 +1,35 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { Search } from "react-feather";
 import { Link } from "react-router-dom";
-import { JsonToExcel } from "react-json-excel";
-import { toast } from "react-toastify";
 
 const HeaderComp = ({
   searchInputHandler,
   searchDataHandler,
   searchInput,
   exportInsuranceNominations,
+  yearRange,
 }) => {
   return (
     <div className="OnBoardHeading">
       <Row className="m-1">
         <Col md={3}>
           <Form.Control
-            type="number"
+            as="select"
+            className="text-primary"
+            aria-label="insuranceYear"
             value={searchInput}
-            placeholder="Search"
-            className="form-control searchButton"
+            placeholder="Search by"
             onChange={searchInputHandler}
-          />
+          >
+            <option value="0">All</option>
+            {yearRange.length > 0 &&
+              yearRange.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+          </Form.Control>
           <Search
             className="search-icon mr-1"
             style={{ color: "#313131" }}

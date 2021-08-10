@@ -34,7 +34,7 @@ export const ModuleReportProvider = (props) => {
       })
       .catch(() => {
         setLoader(false);
-        toast.error(`Error in downloading ${reportData.fileName}`);
+        toast.error(`No data found in ${reportData.fileName}`);
         return dispatch({
           type: "FETCH_REPORT_ERR",
         });

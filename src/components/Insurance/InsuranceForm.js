@@ -13,6 +13,8 @@ const InsuranceForm = (props) => {
     insuranceDetails,
     loader,
     createInsuranceNomination,
+    getRange,
+    yearRange,
   } = useContext(InsuranceContext);
   const currentYear = new Date().getFullYear();
   const [year, setYear] = useState({
@@ -32,6 +34,7 @@ const InsuranceForm = (props) => {
 
   useEffect(() => {
     changeActionStatus();
+    getRange(currentYear, currentYear + 10, 1);
   }, []);
 
   useEffect(() => {
@@ -87,14 +90,6 @@ const InsuranceForm = (props) => {
     setModalShow(false);
     history.push("/master/insurance");
   };
-
-  const range = (start, stop, step) =>
-    Array.from(
-      { length: (stop - start) / step + 1 },
-      (_, i) => start + i * step
-    );
-
-  const yearRange = range(currentYear, currentYear + 10, 1);
 
   const changeYearHandler = (e) => {
     setYear({
