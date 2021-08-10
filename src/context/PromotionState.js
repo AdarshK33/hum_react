@@ -77,10 +77,10 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
-  const PositionNew = () => {
+  const PositionNew = (depId) => {
     setLoader(true);
     client
-      .get("/api/v1/position/view/")
+      .get("/api/v1/position/view/deptId?deptId=" + depId)
       .then((response) => {
         state.positionNew = response.data.data;
 
