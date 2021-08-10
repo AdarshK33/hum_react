@@ -249,6 +249,7 @@ const FinanaceAdminNoDueClearance = () => {
     setGridColumnApi(params.columnApi);
   };
   const handleUploadSettlement = () => {
+    console.log(fileUpload,"file999")
     if (fileUpload !== undefined && fileUpload !== null) {
       FinanceClearanceUploadSettlement(
         fileUpload,
