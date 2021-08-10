@@ -195,8 +195,9 @@ const PromotionInitiate = () => {
     var newFixedGross = state.newFixedGross;
     if (
       newFixedGross !== "" && contractType !== null && contractType !== undefined &&
-      newFixedGross !== null && newFixedGross !== undefined
+      newFixedGross !== null && newFixedGross !== undefined && state.oldFixedGross !== null && state.oldFixedGross !== undefined
     ) {
+     if(newFixedGross > parseInt(state.oldFixedGross)){
       if( contractType === "Parttime" ||contractType === "parttime"){
         if( newFixedGross < 90 || newFixedGross > 200){
           setNewFixedGrossError("Value should be between 90 - 200"); 
@@ -210,6 +211,9 @@ const PromotionInitiate = () => {
             setNewFixedGrossError('')
           }
       }
+    }else{
+      setNewFixedGrossError(" Please enter fixed gross more then old fixed");
+    }
     }else{
       setNewFixedGrossError(" Please add new fixed gross");
     }
@@ -567,9 +571,9 @@ console.log(newFixedGrossError,"newFixedGrossError")
                           </Col>
 
                           <Col sm={6}>
-                            <label>Position:</label>
+                            <label>Employee Id:</label>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.oldPosition}
+                              &nbsp;&nbsp; {state.employeeId}
                             </label>
                           </Col>
                         </Row>
@@ -598,52 +602,20 @@ console.log(newFixedGrossError,"newFixedGrossError")
                             </label>
                           </Col>
                         </Row>
-
                         <Row
                           style={{
                             marginLeft: "2rem",
                             marginTop: "1rem",
-                            marginBottom: "1rem",
+                            marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={2}>
-                            <label>New Position </label>
+                        <Col sm={6}>
+                            <label>Position:</label>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.oldPosition}
+                            </label>
                           </Col>
-                          <Col sm={8}>
-                            <Form.Group>
-                              <Form.Control
-                                as="select"
-                                name="positionId"
-                                defaultValue={position}
-                                style={
-                                  positionIdError
-                                    ? { borderColor: "red" }
-                                    : { borderRadius: "5px" }
-                                }
-                                onChange={(e) => changeHandler(e)}
-                              >
-                                <option value="">Select Position</option>
-                                {positionNew !== null &&
-                                  positionNew !== undefined &&
-                                  positionNew.length > 0 &&
-                                  positionNew.map((item, index) => {
-                                    return (
-                                      <option key={index + 1}>
-                                        {item.position}
-                                      </option>
-                                    );
-                                  })}
-                              </Form.Control>
-                              {positionIdError ? (
-                                <p style={{ color: "red" }}>
-                                  {positionIdError}
-                                </p>
-                              ) : (
-                                ""
-                              )}
-                            </Form.Group>
-                          </Col>
-                        </Row>
+                          </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -689,6 +661,52 @@ console.log(newFixedGrossError,"newFixedGrossError")
                             </Form.Group>
                           </Col>
                         </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <label>New Position </label>
+                          </Col>
+                          <Col sm={8}>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="positionId"
+                                defaultValue={position}
+                                style={
+                                  positionIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Position</option>
+                                {positionNew !== null &&
+                                  positionNew !== undefined &&
+                                  positionNew.length > 0 &&
+                                  positionNew.map((item, index) => {
+                                    return (
+                                      <option key={index + 1}>
+                                        {item.position}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {positionIdError ? (
+                                <p style={{ color: "red" }}>
+                                  {positionIdError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                    
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -890,12 +908,12 @@ console.log(newFixedGrossError,"newFixedGrossError")
                                       : { borderRadius: "5px" }
                                     }
                                     name="salaryEffectiveDate"
-                                    minDate={moment().toDate()}
+                                    // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
+                                    minDate={new Date(new Date().setMonth(new Date().getMonth()-2))}
                                   />
                                 </div>
                               </Form.Group>
@@ -919,7 +937,7 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         >
                           <Col sm={2}>
                             <div>
-                              <label> Effective Date :</label>
+                              <label> Promotion Effective Date :</label>
                             </div>
                           </Col>
 
@@ -936,12 +954,12 @@ console.log(newFixedGrossError,"newFixedGrossError")
                                     }
                                     selected={state.effectiveDate}
                                     name="effectiveDate"
-                                    minDate={moment().toDate()}
+                                   // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
+                                    minDate={new Date(new Date().setMonth(new Date().getMonth()-2))}
                                   />
                                 </div>
                               </Form.Group>
