@@ -58,8 +58,7 @@ const PromotionList = () => {
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
       promotionListView(searchValue, pageNumber - 1);
-    }
-    if (promotionStatus === "Pending") {
+    }else if (promotionStatus === "Pending") {
       promotionListView("all", pageNumber - 1, 0);
     } else if (promotionStatus === "In Progress") {
       promotionListView("all", pageNumber - 1, 1);
@@ -83,7 +82,7 @@ const PromotionList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      promotionListView(searchValue, 0);
+      promotionListView(searchValue, pageCount);
     } else {
       promotionListView("all", 0);
     }

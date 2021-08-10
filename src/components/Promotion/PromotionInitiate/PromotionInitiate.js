@@ -10,7 +10,7 @@ import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 
@@ -18,9 +18,9 @@ const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
-  const [contractType,setContractType] = useState('')
-  const [currentManager,SetCurrentManager] = useState('')
-  const [contractTypeStatus,setContractTypeStatus] = useState(false)
+  const [contractType, setContractType] = useState("");
+  const [currentManager, SetCurrentManager] = useState("");
+  const [contractTypeStatus, setContractTypeStatus] = useState(false);
 
   const [state, setState] = useState({
     validatedAdminId: "",
@@ -67,8 +67,8 @@ const PromotionInitiate = () => {
   const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
   const [promotionTypeError, setPromotionTypeError] = useState("");
   const [effectiveDateError, setEffectiveDateError] = useState("");
-  const [reportingManagerError,setReportingManagerError] =useState('')
-  const [modelStatus,setModelStatus] = useState(false)
+  const [reportingManagerError, setReportingManagerError] = useState("");
+  const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const {
     employeeData,
@@ -78,15 +78,29 @@ const PromotionInitiate = () => {
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw,managerList, searchByCostCenter, managerData,searchByCostData } =
-    useContext(SeparationContext);
+  const {
+    empResign,
+    withdraw,
+    managerList,
+    searchByCostCenter,
+    managerData,
+    searchByCostData,
+  } = useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
   const { PositionNew, positionNew, PromotionCreate } =
     useContext(PromotionContext);
   useEffect(() => {
-    PositionNew();
     departmentView();
   }, []);
+  useEffect(() => {
+    if (
+      state.departmentId !== "" &&
+      state.departmentId !== null &&
+      state.departmentId !== undefined
+    ) {
+      PositionNew(state.departmentId);
+    }
+  }, [departmentNew]);
 
   useEffect(() => {
     ViewEmployeeProfile();
@@ -121,21 +135,24 @@ const PromotionInitiate = () => {
       state.employeeId = searchByCostData.employeeId;
       state.empName = searchByCostData.firstName + " " + temp;
       setEmpName(searchByCostData.firstName + " " + temp);
-      state.contractType = searchByCostData.contractType
-      setContractType(searchByCostData.contractType)
-      managerData(searchByCostData.costCentre)
+      state.contractType = searchByCostData.contractType;
+      setContractType(searchByCostData.contractType);
+      managerData(searchByCostData.costCentre);
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
       state.oldDepartment = searchByCostData.department;
-     state.currentManagerId = searchByCostData.managerId;
+      state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
-    if(searchByCostData.contractType === "internship"||searchByCostData.contractType === "Internship"){
-      setContractTypeStatus(true)
+      if (
+        searchByCostData.contractType === "internship" ||
+        searchByCostData.contractType === "Internship"
+      ) {
+        setContractTypeStatus(true);
+      }
     }
-  
-  }}, [searchByCostData]);
-  
-  useEffect(()=>{
+  }, [searchByCostData]);
+
+  useEffect(() => {
     if (
       searchByCostData &&
       searchByCostData &&
@@ -148,20 +165,18 @@ const PromotionInitiate = () => {
       managerList !== undefined &&
       Object.keys(managerList).length !== 0
     ) {
-   managerList.map((item)=>{
-    if(item.employeeId == searchByCostData.managerId){
-      const temp =
-      item.lastName !== null &&
-      item.lastName !== undefined
-        ? item.lastName
-        : "";
-      state.currentManagerName = item.firstName + " " + temp
-      SetCurrentManager(item.firstName + " " + temp)
-    }})
-  
-  }
-  },[managerList,searchByCostData])
-
+      managerList.map((item) => {
+        if (item.employeeId == searchByCostData.managerId) {
+          const temp =
+            item.lastName !== null && item.lastName !== undefined
+              ? item.lastName
+              : "";
+          state.currentManagerName = item.firstName + " " + temp;
+          SetCurrentManager(item.firstName + " " + temp);
+        }
+      });
+    }
+  }, [managerList, searchByCostData]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -194,23 +209,26 @@ const PromotionInitiate = () => {
 
     var newFixedGross = state.newFixedGross;
     if (
-      newFixedGross !== "" && contractType !== null && contractType !== undefined &&
-      newFixedGross !== null && newFixedGross !== undefined
+      newFixedGross !== "" &&
+      contractType !== null &&
+      contractType !== undefined &&
+      newFixedGross !== null &&
+      newFixedGross !== undefined
     ) {
-      if( contractType === "Parttime" ||contractType === "parttime"){
-        if( newFixedGross < 90 || newFixedGross > 200){
-          setNewFixedGrossError("Value should be between 90 - 200"); 
-        }else{
-          setNewFixedGrossError('')
+      if (contractType === "Parttime" || contractType === "parttime") {
+        if (newFixedGross < 90 || newFixedGross > 200) {
+          setNewFixedGrossError("Value should be between 90 - 200");
+        } else {
+          setNewFixedGrossError("");
         }
-      }else if(contractType === "Permanent" ||contractType === "permanent"){
-          if(newFixedGross <18000){
-        setNewFixedGrossError("Value should be above 18000")
-          }else{
-            setNewFixedGrossError('')
-          }
+      } else if (contractType === "Permanent" || contractType === "permanent") {
+        if (newFixedGross < 18000) {
+          setNewFixedGrossError("Value should be above 18000");
+        } else {
+          setNewFixedGrossError("");
+        }
       }
-    }else{
+    } else {
       setNewFixedGrossError(" Please add new fixed gross");
     }
     var newDepartment = state.newDepartment;
@@ -238,15 +256,13 @@ const PromotionInitiate = () => {
       reportingManagerName == null ||
       reportingManagerName == undefined
     ) {
-      setReportingManagerError(
-        "Please select reporting manager "
-      );
+      setReportingManagerError("Please select reporting manager ");
     } else {
       setReportingManagerError("");
     }
     var effectiveDate = state.effectiveDate;
-    if (state.promotionType == 1 &&
-      effectiveDate == "" ||
+    if (
+      (state.promotionType == 1 && effectiveDate == "") ||
       effectiveDate == null ||
       effectiveDate == undefined
     ) {
@@ -255,8 +271,8 @@ const PromotionInitiate = () => {
       setEffectiveDateError("");
     }
     var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (state.promotionType == 1 &&
-      salaryEffectiveDate == "" ||
+    if (
+      (state.promotionType == 1 && salaryEffectiveDate == "") ||
       salaryEffectiveDate == null ||
       salaryEffectiveDate == undefined
     ) {
@@ -265,8 +281,7 @@ const PromotionInitiate = () => {
       setSalaryEffectiveDateError("");
     }
 
-   
-console.log(newFixedGrossError,"newFixedGrossError")
+    console.log(newFixedGrossError, "newFixedGrossError");
     if (
       newDepartment !== "" &&
       reason !== "" &&
@@ -289,9 +304,9 @@ console.log(newFixedGrossError,"newFixedGrossError")
     ) {
       const infoData = {
         validatedAdminId: null,
-    validatedAdminName: null,
-    validatedManagerId: null,
-    validatedManagerName: null,
+        validatedAdminName: null,
+        validatedManagerId: null,
+        validatedManagerName: null,
         bonus: 0,
         bonusInPercentage: 0,
         costCentre: state.costCentre,
@@ -306,7 +321,7 @@ console.log(newFixedGrossError,"newFixedGrossError")
         empName: state.empName,
         employeeId: state.employeeId,
         currentManagerId: state.currentManagerId,
-        currentManagerName:state.currentManagerName,
+        currentManagerName: state.currentManagerName,
         contractType: state.contractType,
         newDepartment: state.newDepartment,
         newFixedGross: state.newFixedGross,
@@ -324,37 +339,45 @@ console.log(newFixedGrossError,"newFixedGrossError")
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      if((contractType.toLowerCase()=="parttime") &&
-       state.newFixedGross >=90 && state.newFixedGross <=200){
-     PromotionCreate(infoData);
-      setModelStatus(true)
-       setSubmitted(true);
-    console.log("all okay1", infoData);
-      }else if((contractType.toLowerCase() == "permanent") && 
-      state.newFixedGross > 18000){
-      PromotionCreate(infoData);
-      setModelStatus(true)
-       setSubmitted(true);
-      console.log("all okay2", infoData);
-      }else if(state.promotionType == 0 && 
-        (contractType.toLowerCase()=="parttime"||contractType.toLowerCase()=="permanent")){
+      if (
+        contractType.toLowerCase() == "parttime" &&
+        state.newFixedGross >= 90 &&
+        state.newFixedGross <= 200
+      ) {
         PromotionCreate(infoData);
-      setModelStatus(true)
-       setSubmitted(true);
+        setModelStatus(true);
+        setSubmitted(true);
+        console.log("all okay1", infoData);
+      } else if (
+        contractType.toLowerCase() == "permanent" &&
+        state.newFixedGross > 18000
+      ) {
+        PromotionCreate(infoData);
+        setModelStatus(true);
+        setSubmitted(true);
+        console.log("all okay2", infoData);
+      } else if (
+        state.promotionType == 0 &&
+        (contractType.toLowerCase() == "parttime" ||
+          contractType.toLowerCase() == "permanent")
+      ) {
+        PromotionCreate(infoData);
+        setModelStatus(true);
+        setSubmitted(true);
         console.log("all okay3", infoData);
-      }else{
+      } else {
         console.log("NOT OK", infoData);
       }
-     }else {
+    } else {
       console.log("NOT OK", empName);
       // toast.error("Data is not filled Properly")
     }
   };
-  console.log(managerList,"managerList")
-  const handleCloseValue = ()=>{
-    setModelStatus(false)
-    setContractTypeStatus(false)
-  }
+  console.log(managerList, "managerList");
+  const handleCloseValue = () => {
+    setModelStatus(false);
+    setContractTypeStatus(false);
+  };
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -386,17 +409,26 @@ console.log(newFixedGrossError,"newFixedGrossError")
       if (state.promotionType == 0) {
         setState({ ...state, promotionType: 1 });
       } else {
-        setState({ ...state, promotionType: 0 ,salaryEffectiveDate:null,newFixedGross:0});
+        setState({
+          ...state,
+          promotionType: 0,
+          salaryEffectiveDate: null,
+          newFixedGross: 0,
+        });
       }
     }
   };
   const handlePromotionTypeNo = (e) => {
     if (e.target.value === "no") {
       if (state.promotionType == 0) {
-
         setState({ ...state, promotionType: 1 });
       } else {
-        setState({ ...state, promotionType: 0 ,salaryEffectiveDate:null,newFixedGross:0});
+        setState({
+          ...state,
+          promotionType: 0,
+          salaryEffectiveDate: null,
+          newFixedGross: 0,
+        });
       }
     }
   };
@@ -431,69 +463,65 @@ console.log(newFixedGrossError,"newFixedGrossError")
         }
       });
       console.log(e.target.value, state, "value666");
-    }else if (e.target.name === "reportingManagerId") {
+    } else if (e.target.name === "reportingManagerId") {
       managerList.map((item) => {
         const temp =
-        item.lastName !== null &&
-        item.lastName !== undefined
-          ? item.lastName
-          : "";
-        if ((item.firstName + " " + temp) === e.target.value) {
+          item.lastName !== null && item.lastName !== undefined
+            ? item.lastName
+            : "";
+        if (item.firstName + " " + temp === e.target.value) {
           setState({
             ...state,
             reportingManagerId: item.employeeId,
-    reportingManagerName:item.firstName + " " + temp,
+            reportingManagerName: item.firstName + " " + temp,
           });
         }
       });
       console.log(e.target.value, state, "value666");
-    }else{
+    } else {
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
     }
-  
+
     console.log(state, "state");
   };
 
   return (
     <Fragment>
-      <ToastContainer/>
+      <ToastContainer />
       <Modal
-          show={contractTypeStatus}
-           onHide={handleCloseValue}
-          size="md"
-          centered
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              This employee cannot be promoted.
-            
-            </label>
-            <div className="text-center mb-2">
-             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
-            </div>
-          </Modal.Body>
-        </Modal> 
-        <Modal
-          show={modelStatus}
-           onHide={handleCloseValue}
-          size="md"
-          centered
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              Your request has been sent to manager.
-            
-            </label>
-            <div className="text-center mb-2">
-             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
-            </div>
-          </Modal.Body>
-        </Modal> 
+        show={contractTypeStatus}
+        onHide={handleCloseValue}
+        size="md"
+        centered
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label className="text-center">
+            This employee cannot be promoted.
+          </label>
+          <div className="text-center mb-2">
+            <Link to={"/promotion-list"}>
+              <Button onClick={handleCloseValue}>Close</Button>
+            </Link>
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal show={modelStatus} onHide={handleCloseValue} size="md" centered>
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label className="text-center">
+            Your request has been sent to cost center manager.
+          </label>
+          <div className="text-center mb-2">
+            <Link to={"/promotion-list"}>
+              <Button onClick={handleCloseValue}>Close</Button>
+            </Link>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
       <div className="container-fluid">
         <div className="row">
@@ -567,9 +595,9 @@ console.log(newFixedGrossError,"newFixedGrossError")
                           </Col>
 
                           <Col sm={6}>
-                            <label>Position:</label>
+                            <label>Employee Id:</label>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.oldPosition}
+                              &nbsp;&nbsp; {state.employeeId}
                             </label>
                           </Col>
                         </Row>
@@ -598,50 +626,18 @@ console.log(newFixedGrossError,"newFixedGrossError")
                             </label>
                           </Col>
                         </Row>
-
                         <Row
                           style={{
                             marginLeft: "2rem",
                             marginTop: "1rem",
-                            marginBottom: "1rem",
+                            marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={2}>
-                            <label>New Position </label>
-                          </Col>
-                          <Col sm={8}>
-                            <Form.Group>
-                              <Form.Control
-                                as="select"
-                                name="positionId"
-                                defaultValue={position}
-                                style={
-                                  positionIdError
-                                    ? { borderColor: "red" }
-                                    : { borderRadius: "5px" }
-                                }
-                                onChange={(e) => changeHandler(e)}
-                              >
-                                <option value="">Select Position</option>
-                                {positionNew !== null &&
-                                  positionNew !== undefined &&
-                                  positionNew.length > 0 &&
-                                  positionNew.map((item, index) => {
-                                    return (
-                                      <option key={index + 1}>
-                                        {item.position}
-                                      </option>
-                                    );
-                                  })}
-                              </Form.Control>
-                              {positionIdError ? (
-                                <p style={{ color: "red" }}>
-                                  {positionIdError}
-                                </p>
-                              ) : (
-                                ""
-                              )}
-                            </Form.Group>
+                          <Col sm={6}>
+                            <label>Position:</label>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.oldPosition}
+                            </label>
                           </Col>
                         </Row>
                         <Row
@@ -696,17 +692,62 @@ console.log(newFixedGrossError,"newFixedGrossError")
                             marginBottom: "1rem",
                           }}
                         >
+                          <Col sm={2}>
+                            <label>New Position </label>
+                          </Col>
+                          <Col sm={8}>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="positionId"
+                                defaultValue={position}
+                                style={
+                                  positionIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Position</option>
+                                {positionNew !== null &&
+                                  positionNew !== undefined &&
+                                  positionNew.length > 0 &&
+                                  positionNew.map((item, index) => {
+                                    return (
+                                      <option key={index + 1}>
+                                        {item.position}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {positionIdError ? (
+                                <p style={{ color: "red" }}>
+                                  {positionIdError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
                           <Col sm={4}>
-                          <div>
-                            <label>
-                              {" "}
-                              Current Manager :
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{currentManager}
+                            <div>
+                              <label>
+                                {" "}
+                                Current Manager :
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{currentManager}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>   
+                            </div>
+                          </Col>
                           <Col sm={2}>
                             <label>Reporting Manager </label>
                           </Col>
@@ -729,10 +770,10 @@ console.log(newFixedGrossError,"newFixedGrossError")
                                   managerList.length > 0 &&
                                   managerList.map((item, index) => {
                                     const temp =
-                                    item.lastName !== null &&
-                                    item.lastName !== undefined
-                                      ? item.lastName
-                                      : "";
+                                      item.lastName !== null &&
+                                      item.lastName !== undefined
+                                        ? item.lastName
+                                        : "";
                                     return (
                                       <option key={index + 1}>
                                         {item.firstName + " " + temp}
@@ -749,7 +790,6 @@ console.log(newFixedGrossError,"newFixedGrossError")
                               )}
                             </Form.Group>
                           </Col>
-                         
                         </Row>
                         <Row
                           style={{
@@ -760,7 +800,7 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         >
                           <Col sm={5}>
                             <label>
-                            Is this employee is applicable for salary hike{" "}
+                              Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -818,7 +858,16 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         >
                           <Col sm={1}>
                             <div>
-                              <label>Fixed Gross{`${(contractType =="parttime" ||contractType =="Parttime")?"(per/hr)":''}`}:</label>
+                              <label>
+                                Fixed Gross
+                                {`${
+                                  contractType == "parttime" ||
+                                  contractType == "Parttime"
+                                    ? "(per/hr)"
+                                    : ""
+                                }`}
+                                :
+                              </label>
                             </div>
                           </Col>
                           <Col sm={1}>
@@ -826,89 +875,106 @@ console.log(newFixedGrossError,"newFixedGrossError")
                               &nbsp;&nbsp; {state.oldFixedGross}
                             </label>
                           </Col>
-                          {state.promotionType==1?(
-                           <>
-                          <Col sm={2}>
-                            <div>
-                              <label>New Fixed Gross{`${(contractType =="parttime" ||contractType =="Parttime")?"(per/hr)":''}`}:</label>
-                            </div>
-                          </Col>
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                    name="newFixedGross"
-                                    value={state.newFixedGross}
-                                    onChange={(e) => changeHandler(e)}
-                                    style={
-                                      newFixedGrossError
-                                        ? { borderColor: "red" }
-                                        : { borderRadius: "5px" }
-                                    }
-                                  />
-                                </Form.Group>
-                              )}
-                                 {/* <p style={{ color: "red" }}>
+                          {state.promotionType == 1 ? (
+                            <>
+                              <Col sm={2}>
+                                <div>
+                                  <label>
+                                    New Fixed Gross
+                                    {`${
+                                      contractType == "parttime" ||
+                                      contractType == "Parttime"
+                                        ? "(per/hr)"
+                                        : ""
+                                    }`}
+                                    :
+                                  </label>
+                                </div>
+                              </Col>
+                              <Col sm={2}>
+                                <div>
+                                  {false ? (
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {}
+                                    </label>
+                                  ) : (
+                                    <Form.Group>
+                                      <Form.Control
+                                        type="text"
+                                        placeholder=""
+                                        required
+                                        name="newFixedGross"
+                                        value={state.newFixedGross}
+                                        onChange={(e) => changeHandler(e)}
+                                        style={
+                                          newFixedGrossError
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
+                                      />
+                                    </Form.Group>
+                                  )}
+                                  {/* <p style={{ color: "red" }}>
                                {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >200)?"parttime invalid":
                                (contractType == "permanent" && state.newFixedGross < 18000)?"permanent":""}
                              </p>  */}
-                              {newFixedGrossError ? (
-                               <p style={{ color: "red" }}>
-                               {newFixedGrossError}
-                             </p>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </Col>
-                       
-
-                         <Col sm={2}>
-                            <div>
-                              <label>Salary Effective Date :</label>
-                            </div>
-                          </Col>
-
-                          <Col sm={2}>
-                            <div>
-                              <Form.Group>
-                                <div className={""}>
-                                  <DatePicker
-                                    className="form-control onBoard-view"
-                                    selected={state.salaryEffectiveDate}
-                                    style={
-                                      salaryEffectiveDateError
-                                      ? { borderColor: "red" }
-                                      : { borderRadius: "5px" }
-                                    }
-                                    name="salaryEffectiveDate"
-                                    minDate={moment().toDate()}
-                                    required
-                                    onChange={(e) => dateOfBirthHandler1(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
-                                  />
+                                  {newFixedGrossError ? (
+                                    <p style={{ color: "red" }}>
+                                      {newFixedGrossError}
+                                    </p>
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
-                              </Form.Group>
-                            </div>
-                            {salaryEffectiveDateError ? (
-                              <p style={{ color: "red" }}>
-                                {salaryEffectiveDateError}
-                              </p>
-                            ) : (
-                              ""
-                            )}
-                          </Col>
-                          </>):''}
+                              </Col>
+
+                              <Col sm={2}>
+                                <div>
+                                  <label>Salary Effective Date :</label>
+                                </div>
+                              </Col>
+
+                              <Col sm={2}>
+                                <div>
+                                  <Form.Group>
+                                    <div className={""}>
+                                      <DatePicker
+                                        className="form-control onBoard-view"
+                                        selected={state.salaryEffectiveDate}
+                                        style={
+                                          salaryEffectiveDateError
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
+                                        name="salaryEffectiveDate"
+                                        // minDate={moment().toDate()}
+                                        required
+                                        onChange={(e) => dateOfBirthHandler1(e)}
+                                        dateFormat="yyyy-MM-dd"
+                                        placeholderText="YYYY-MM-DD"
+                                        minDate={
+                                          new Date(
+                                            new Date().setMonth(
+                                              new Date().getMonth() - 2
+                                            )
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  </Form.Group>
+                                </div>
+                                {salaryEffectiveDateError ? (
+                                  <p style={{ color: "red" }}>
+                                    {salaryEffectiveDateError}
+                                  </p>
+                                ) : (
+                                  ""
+                                )}
+                              </Col>
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </Row>
                         <Row
                           style={{
@@ -931,17 +997,23 @@ console.log(newFixedGrossError,"newFixedGrossError")
                                     className="form-control onBoard-view"
                                     style={
                                       effectiveDateError
-                                      ? { borderColor: "red" }
-                                      : { borderRadius: "5px" }
+                                        ? { borderColor: "red" }
+                                        : { borderRadius: "5px" }
                                     }
                                     selected={state.effectiveDate}
                                     name="effectiveDate"
-                                    minDate={moment().toDate()}
+                                    // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
+                                    minDate={
+                                      new Date(
+                                        new Date().setMonth(
+                                          new Date().getMonth() - 2
+                                        )
+                                      )
+                                    }
                                   />
                                 </div>
                               </Form.Group>

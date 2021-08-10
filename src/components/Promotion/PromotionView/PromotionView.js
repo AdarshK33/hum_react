@@ -53,7 +53,7 @@ const PromotionView = (props) => {
     reason: "",
     relocationBonus: 0,
     remarks: "",
-    salaryEffectiveDate:"",
+    salaryEffectiveDate: "",
     status: 0,
   });
   const [stateError, setStateError] = useState({
@@ -79,7 +79,15 @@ const PromotionView = (props) => {
     promotionByEmployee,
   } = useContext(PromotionContext);
   useEffect(() => {
-    PositionNew();
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0 &&
+      promotionIdData.department !== null &&
+      promotionIdData.department !== undefined
+    ) {
+      PositionNew(promotionIdData.departmentId);
+    }
     departmentView();
   }, []);
 
@@ -93,8 +101,8 @@ const PromotionView = (props) => {
       setState({
         validatedAdminId: promotionIdData["validatedAdminId"],
         validatedAdminName: promotionIdData["validatedAdminName"],
-        validatedManagerId:promotionIdData["validatedManagerId"],
-        validatedManagerName:promotionIdData["validatedManagerName"],
+        validatedManagerId: promotionIdData["validatedManagerId"],
+        validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -123,7 +131,7 @@ const PromotionView = (props) => {
         reason: promotionIdData["reason"],
         relocationBonus: promotionIdData["relocationBonus"],
         remarks: promotionIdData["remarks"],
-        salaryEffectiveDate:promotionIdData["salaryEffectiveDate"],
+        salaryEffectiveDate: promotionIdData["salaryEffectiveDate"],
         status: promotionIdData["status"],
       });
     }
@@ -189,39 +197,33 @@ const PromotionView = (props) => {
                         }}
                       >
                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                              Emp Name/Id:
-                             
-                            </label>
-                          </div>
+                          <Col sm={2}>
+                            <div>
+                              <label>Emp Name/Id:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.empName}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
-                          <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Cost Center Name:                            
-                            </label>
-                          </div>
+                        </>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>Cost Center Name:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.costCentre}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
-                    
+                        </>
                       </Row>
                       <Row
                         style={{
@@ -230,37 +232,34 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Position:
-                            </label>
-                          </div>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>Position:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.oldPosition}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </> <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Department:                            
-                            </label>
-                          </div>
+                        </>{" "}
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>Department:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.oldDepartment}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
+                        </>
                       </Row>
 
                       <Row
@@ -270,198 +269,205 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            New Position :
-                            </label>
-                          </div>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>New Position :</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.promotedPosition}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
-                          <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            New Department:
-                            </label>
-                          </div>
+                        </>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>New Department:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.newDepartment}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
-                        </Row>
-                        <Row
+                        </>
+                      </Row>
+                      <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
                           marginBottom: "2rem",
                         }}
                       >
-                          <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Reporting Manager:
-                            </label>
-                          </div>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>Reporting Manager:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.reportingManagerName}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
-                     
+                        </>
+
                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Current Manager:
-                            </label>
-                          </div>
+                          <Col sm={2}>
+                            <div>
+                              <label>Current Manager:</label>
+                            </div>
                           </Col>
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.currentManagerName}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>
+                        </>
                       </Row>
-                        <Row
-                          style={{
-                            marginLeft: "2rem",
-                            marginTop: "1rem",
-                            marginBottom: "3rem",
-                          }}
-                        >
-                          <Col sm={4}>
-                            <label>
-                              Is this employee is applicable for salary hike{" "}
-                            </label>
-                          </Col>
-                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="yes"
-                                  disabled={true}
-                                  checked={
-                                    promotionIdData !== null &&
-                                    promotionIdData !== undefined &&
-                                    promotionIdData.promotionType === 1
-                                      ? true
-                                      : false
-                                  }
-                                  style={{ borderColor: "blue" }}
-                                />
-                                <label className="itemResult">Yes</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="no"
-                                  disabled={true}
-                                  checked={
-                                    promotionIdData !== null &&
-                                    promotionIdData !== undefined &&
-                                    promotionIdData.promotionType === 0
-                                      ? true
-                                      : false
-                                  }
-                                  style={{ borderColor: "blue" }}
-                                />
-                                <label className="itemResult">No</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-                        </Row>
-                        <Row
-                          style={{
-                            marginLeft: "2rem",
-                            marginTop: "1rem",
-                            marginBottom: "3rem",
-                          }}
-                        >  
-                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
-                            </label>
-                          </div>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={4}>
+                          <label>
+                            Is this employee is applicable for salary hike{" "}
+                          </label>
+                        </Col>
+                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                disabled={true}
+                                checked={
+                                  promotionIdData !== null &&
+                                  promotionIdData !== undefined &&
+                                  promotionIdData.promotionType === 1
+                                    ? true
+                                    : false
+                                }
+                                style={{ borderColor: "blue" }}
+                              />
+                              <label className="itemResult">Yes</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="no"
+                                disabled={true}
+                                checked={
+                                  promotionIdData !== null &&
+                                  promotionIdData !== undefined &&
+                                  promotionIdData.promotionType === 0
+                                    ? true
+                                    : false
+                                }
+                                style={{ borderColor: "blue" }}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>
+                                Fixed Gross{" "}
+                                {`${
+                                  state.contractType == "parttime" ||
+                                  state.contractType == "Parttime"
+                                    ? "(per/hr)"
+                                    : ""
+                                }`}
+                                :
+                              </label>
+                            </div>
                           </Col>
                           <Col sm={2}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.oldFixedGross}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>      
-                  
+                        </>
+
                         {promotionIdData !== null &&
-                          promotionIdData !== undefined &&
-                          promotionIdData.promotionType === 1
-                        ?<>
+                        promotionIdData !== undefined &&
+                        promotionIdData.promotionType === 1 ? (
                           <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
-                            </label>
-                          </div>
-                          </Col>
-                          <Col sm={2}>
-                          <div>
-                              <label className="itemResult">
-                                {state.newFixedGross}
-                              </label>
-                          </div>
-                          </Col>
-                          </>      
-                          <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Salary Effective Date :
-                            </label>
-                          </div>
-                          </Col>
-                          <Col sm={2}>
-                          <div>
-                              <label className="itemResult">
-                                {state.salaryEffectiveDate}
-                              </label>
-                          </div>
-                          </Col>
-                          </>      
-                            </>:''}
+                            <>
+                              <Col sm={2}>
+                                <div>
+                                  <label>
+                                    New Fixed Gross{" "}
+                                    {`${
+                                      state.contractType == "parttime" ||
+                                      state.contractType == "Parttime"
+                                        ? "(per/hr)"
+                                        : ""
+                                    }`}
+                                    :
+                                  </label>
+                                </div>
+                              </Col>
+                              <Col sm={2}>
+                                <div>
+                                  <label className="itemResult">
+                                    {state.newFixedGross}
+                                  </label>
+                                </div>
+                              </Col>
+                            </>
+                            <>
+                              <Col sm={2}>
+                                <div>
+                                  <label>Salary Effective Date :</label>
+                                </div>
+                              </Col>
+                              <Col sm={2}>
+                                <div>
+                                  <label className="itemResult">
+                                    {state.salaryEffectiveDate}
+                                  </label>
+                                </div>
+                              </Col>
+                            </>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </Row>
-                     
+
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -469,255 +475,238 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                           <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Relocation Bonus:
-                            </label>
-                          </div>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>Relocation Bonus:</label>
+                            </div>
                           </Col>
                           <Col sm={2}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.relocationBonus}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>      
-                          <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Effective Date :
-                            </label>
-                          </div>
+                        </>
+                        <>
+                          <Col sm={2}>
+                            <div>
+                              <label>Effective Date :</label>
+                            </div>
                           </Col>
                           <Col sm={2}>
-                          <div>
+                            <div>
                               <label className="itemResult">
                                 {state.effectiveDate}
                               </label>
-                          </div>
+                            </div>
                           </Col>
-                          </>      
-                      
+                        </>
                       </Row>
 
-                        <>
-                       {state.remarks && state.validatedAdminName && state.validatedManagerName?
-                       <>
+                      <>
+                        {
+                          state.remarks &&
+                          state.validatedAdminName &&
+                          state.validatedManagerName ? (
+                            <>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Validated By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedManagerName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Rejected By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedAdminName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
 
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Validated By:
-                            </label>
-                          </div>
-                          </Col>
-                          <Col sm={2}>
-                          <div>
-                              <label className="itemResult">
-                                {state.validatedManagerName}
-                              </label>
-                          </div>
-                          </Col>
-                          </>      
-                          <>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                            Rejected By:
-                            </label>
-                          </div>
-                          </Col>
-                          <Col sm={2}>
-                          <div>
-                              <label className="itemResult">
-                                {state.validatedAdminName}
-                              </label>
-                          </div>
-                          </Col>
-                          </>      
-                          </Row>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={3}>
+                                    <div>
+                                      <label>Reason For Rejection:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={7}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.remarks}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
+                            </>
+                          ) : state.remarks && state.validatedManagerName ? (
+                            <>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Rejected By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedManagerName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={3}>
+                                    <div>
+                                      <label>Reason For Rejection:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={7}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.remarks}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
+                            </>
+                          ) : (
+                            <>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Validated By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedManagerName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Validated By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedAdminName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
 
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                          <>
-                        <Col sm={3}>
-                          <div>
-                            <label>
-                            Reason For Rejection:
-                            </label>
-                          </div>
-                          </Col>
-                          <Col sm={7}>
-                          <div>
-                              <label className="itemResult">
-                                {state.remarks}
-                              </label>
-                          </div>
-                          </Col>
-                          </>    
-                          </Row>    
-                        </>
-                       :state.remarks && state.validatedManagerName?
-                       <>
-                                <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                                              <>
-                       <Col sm={2}>
-                         <div>
-                           <label>
-                           Rejected By:
-                           </label>
-                         </div>
-                         </Col>
-                         <Col sm={2}>
-                         <div>
-                             <label className="itemResult">
-                               {state.validatedManagerName}
-                             </label>
-                         </div>
-                         </Col>
-                         </>     
-                         </Row>    
-                         <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                         <>
-                       <Col sm={3}>
-                         <div>
-                           <label>
-                           Reason For Rejection:
-                           </label>
-                         </div>
-                         </Col>
-                         <Col sm={7}>
-                         <div>
-                             <label className="itemResult">
-                               {state.remarks}
-                             </label>
-                         </div>
-                         </Col>
-                         </>
-                         </Row>
-                         </>
-                       :<>
-                       <Row
-                         style={{
-                           marginLeft: "2rem",
-                           marginTop: "1rem",
-                           marginBottom: "3rem",
-                         }}
-                       >
-                          <>
-                         <Col sm={2}>
-                           <div>
-                             <label>
-                             Validated By:
-                             </label>
-                           </div>
-                           </Col>
-                           <Col sm={2}>
-                           <div>
-                               <label className="itemResult">
-                                 {state.validatedManagerName}
-                               </label>
-                           </div>
-                           </Col>
-                           </>      
-                           <>
-                         <Col sm={2}>
-                           <div>
-                             <label>
-                             Validated By:
-                             </label>
-                           </div>
-                           </Col>
-                           <Col sm={2}>
-                           <div>
-                               <label className="itemResult">
-                                 {state.validatedAdminName}
-                               </label>
-                           </div>
-                           </Col>
-                           </>      
-                           </Row>
- 
-                       <Row
-                         style={{
-                           marginLeft: "2rem",
-                           marginTop: "1rem",
-                           marginBottom: "3rem",
-                         }}
-                       >
-                           <>
-                         <Col sm={3}>
-                           <div>
-                             <label>
-                             Reason For Promotion:
-                             </label>
-                           </div>
-                           </Col>
-                           <Col sm={7}>
-                           <div>
-                               <label className="itemResult">
-                                 {state.reason}
-                               </label>
-                           </div>
-                           </Col>
-                           </>    
-                           </Row>    
-                         </>
-                      //  <>
-                      //     <Row
-                      //   style={{
-                      //     marginLeft: "2rem",
-                      //     marginTop: "1rem",
-                      //     marginBottom: "3rem",
-                      //   }}
-                      // >
-                      //  <Col sm={3}>
-                      //    <div>
-                      //      <label>
-                      //      Reason For Promotion:
-                      //      </label>
-                      //    </div>
-                      //    </Col>
-                      //    <Col sm={7}>
-                      //    <div>
-                      //        <label className="itemResult">
-                      //          {state.reason}
-                      //        </label>
-                      //    </div>
-                      //    </Col>
-                      //    </Row>
-                      //    </>        
-                     }
-                     </>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={3}>
+                                    <div>
+                                      <label>Reason For Promotion:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={7}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.reason}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
+                            </>
+                          )
+                          //  <>
+                          //     <Row
+                          //   style={{
+                          //     marginLeft: "2rem",
+                          //     marginTop: "1rem",
+                          //     marginBottom: "3rem",
+                          //   }}
+                          // >
+                          //  <Col sm={3}>
+                          //    <div>
+                          //      <label>
+                          //      Reason For Promotion:
+                          //      </label>
+                          //    </div>
+                          //    </Col>
+                          //    <Col sm={7}>
+                          //    <div>
+                          //        <label className="itemResult">
+                          //          {state.reason}
+                          //        </label>
+                          //    </div>
+                          //    </Col>
+                          //    </Row>
+                          //    </>
+                        }
+                      </>
                     </Col>
                   </Row>
                 </Form>

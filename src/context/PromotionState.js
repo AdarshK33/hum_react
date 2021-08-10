@@ -77,10 +77,10 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
-  const PositionNew = () => {
+  const PositionNew = (depId) => {
     setLoader(true);
     client
-      .get("/api/v1/position/view/")
+      .get("/api/v1/position/view/deptId?deptId=" + depId)
       .then((response) => {
         state.positionNew = response.data.data;
 
@@ -99,11 +99,13 @@ export const PromotionProvider = (props) => {
   };
   const generatePromotionLetter = (id) => {
     console.log("candidate id", id);
+    setLoader(true);
     return client
       .get("/api/v1/promotion/letter/" + id)
       .then((response) => {
         state.promotionLetterData = response.data.data;
         console.log("offer.message", state.promotionLetterData);
+        setLoader(false);
         return dispatch({
           type: "PROMOTION_LETTER_DATA",
           payload: state.promotionLetterData,
