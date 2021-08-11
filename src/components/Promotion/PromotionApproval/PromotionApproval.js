@@ -230,7 +230,7 @@ const PromotionApproval = (props) => {
             {user !== null &&
             user !== undefined &&
             (user.role === "ADMIN" || user.additionalRole === "1")
-              ? "Promotion details saved successfully, request sent to the manager"
+              ? "Promotion details saved successfully, request sent to the respective manager/ cost center manager"
               : user !== null &&
                 user !== undefined &&
                 (user.role === "COST_CENTER_MANAGER" ||
@@ -255,7 +255,8 @@ const PromotionApproval = (props) => {
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            Promotion rejected, the manager has been notified
+            Promotion rejected, the manager/cost center manager has been
+            notified
           </label>
           <div className="text-center mb-2">
             <Link to={"/promotion-list"}>

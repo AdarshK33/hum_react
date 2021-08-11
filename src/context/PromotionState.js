@@ -22,6 +22,7 @@ export const PromotionContext = createContext();
 export const PromotionProvider = (props) => {
   const [state, dispatch] = useReducer(PromotionReducer, initial_state);
   const [loader, setLoader] = useState(false);
+  const [createdPromotion, setCreatedPromotion] = useState(false);
 
   const promotionListView = (key, page, status = 5) => {
     console.log(key, page, client.defaults.headers, "promotion ");
@@ -43,6 +44,8 @@ export const PromotionProvider = (props) => {
         state.promotionList = response.data.data.data;
         state.data = response.data.data;
         state.total = state.data.total;
+        makeViewPromotionById();
+        setCreatedPromotion(false);
         setLoader(false);
         return dispatch({
           type: "PROMOTION_LIST",
@@ -56,7 +59,13 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
-
+  const makeViewPromotionById = () => {
+    state.promotionIdData = {};
+    return dispatch({
+      type: "PROMOTION_ID",
+      payload: state.promotionIdData,
+    });
+  };
   const ViewPromotionById = (promotionId) => {
     setLoader(true);
     client
@@ -77,6 +86,7 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
+
   const PositionNew = (depId) => {
     setLoader(true);
     client
@@ -115,7 +125,7 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
-  const PromotionCreate = (create) => {
+  const PromotionCreate = (create, Approve = 0) => {
     setLoader(true);
 
     console.log(create, "promotionCreate");
@@ -124,10 +134,24 @@ export const PromotionProvider = (props) => {
       .then((response) => {
         state.promotionCreate = response.data.data;
 
-        setLoader(false);
         console.log("--->", state.promotionCreate);
         console.log(response);
         toast.info(response.data.message);
+
+        if (
+          Approve > 0 &&
+          response.data !== null &&
+          response.data !== undefined &&
+          response.data.data !== null &&
+          response.data.data !== undefined &&
+          response.data.data.promotionId !== null &&
+          response.data.data.promotionId !== undefined
+        ) {
+          approvePromotion(response.data.data.promotionId, Approve);
+        } else {
+          setCreatedPromotion(true);
+        }
+        setLoader(false);
         return dispatch({
           type: "PROMOTION_CREATE",
           payload: state.promotionCreate,
@@ -157,11 +181,15 @@ export const PromotionProvider = (props) => {
   };
 
   const approvePromotion = (id, status) => {
+    setLoader(true);
     client
       .get("/api/v1/promotion/approve?promotionId=" + id + "&status=" + status)
       .then((response) => {
         state.approvePromotionData = response.data.data;
         toast.info(response.data.message);
+        ViewPromotionById(id);
+        setCreatedPromotion(true);
+        setLoader(false);
         return dispatch({
           type: "APPROVE_PROMOTION_DATA",
           payload: state.approvePromotionData,
@@ -200,12 +228,14 @@ export const PromotionProvider = (props) => {
         ViewPromotionByEmployee,
         approvePromotion,
         rejectPromotion,
+        makeViewPromotionById,
         total: state.total,
         promotionList: state.promotionList,
         positionNew: state.positionNew,
         promotionIdData: state.promotionIdData,
         promotionCreate: state.promotionCreate,
         loader: loader,
+        createdPromotion: createdPromotion,
         promotionLetterData: state.promotionLetterData,
         promotionByEmployee: state.promotionByEmployee,
         approvePromotionData: state.approvePromotionData,

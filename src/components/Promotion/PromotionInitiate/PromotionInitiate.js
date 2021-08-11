@@ -13,10 +13,14 @@ import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
+import { AppContext } from "../../../context/AppState";
+import calendarImage from "../../../assets/images/calendar-image.png";
+import PromotionLetters from "../PromotionLetter";
+import PromotionSalaryLetters from "../PromotionSalaryLetter";
 
 const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState("");
   const [departmentNew, setDepartmentNew] = useState();
   const [contractType, setContractType] = useState("");
   const [currentManager, SetCurrentManager] = useState("");
@@ -29,7 +33,7 @@ const PromotionInitiate = () => {
     validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
-    company:'',
+    company: "",
     costCentre: "",
     costCentreManagerEmail: "",
     costCentreManagerId: "",
@@ -71,6 +75,15 @@ const PromotionInitiate = () => {
   const [reportingManagerError, setReportingManagerError] = useState("");
   const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useContext(AppContext);
+  const [previewLetter, setPreviewLetter] = useState(false);
+  const [letterSent, setLetterSent] = useState(false);
+  const [showPreview, setPreview] = useState(false);
+  const [showSignature, setShowSignature] = useState(false);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [showRelivingModal, setShow] = useState(false);
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -88,8 +101,21 @@ const PromotionInitiate = () => {
     searchByCostData,
   } = useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
-  const { PositionNew, positionNew, PromotionCreate } =
-    useContext(PromotionContext);
+  const {
+    PositionNew,
+    positionNew,
+    PromotionCreate,
+    promotionIdData,
+    generatePromotionLetter,
+    createdPromotion,
+  } = useContext(PromotionContext);
+  useEffect(() => {
+    if (createdPromotion) {
+      setModelStatus(true);
+    } else {
+      setModelStatus(false);
+    }
+  }, [createdPromotion]);
   useEffect(() => {
     departmentView();
   }, []);
@@ -106,15 +132,18 @@ const PromotionInitiate = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-useEffect(()=>{
-  if (
-    state.costCentre !== "" &&
-    state.costCentre !== null &&
-    state.costCentre !== undefined
-  ) {
-  promotionManagerData(state.costCentre,departmentNew);
-  }
-},[departmentNew])
+  useEffect(() => {
+    if (
+      state.costCentre !== "" &&
+      state.costCentre !== null &&
+      state.costCentre !== undefined &&
+      departmentNew !== null &&
+      departmentNew !== undefined &&
+      departmentNew !== ""
+    ) {
+      promotionManagerData(state.costCentre, departmentNew);
+    }
+  }, [departmentNew]);
   useEffect(() => {
     console.log("state.empI", state.employeeId);
     if (
@@ -209,9 +238,9 @@ useEffect(()=>{
     }
     var positionId = state.positionId;
 
-    if (positionId == "" || positionId == null || positionId == undefined) {
+    if (positionId === "" || positionId === null || positionId === undefined) {
       setPositionIdError(" Please select the position ");
-      console.log(positionIdError);
+      console.log(positionIdError, positionId);
     } else {
       setPositionIdError("");
     }
@@ -346,33 +375,84 @@ useEffect(()=>{
         relocationBonus: state.relocationBonus,
         remarks: null,
         salaryEffectiveDate: state.salaryEffectiveDate,
-        status: 0,
+        status:
+          user !== null &&
+          user !== undefined &&
+          Object.keys(user).length !== 0 &&
+          (user.additionalRole === "1" || user.loginType == "1")
+            ? 3
+            : 0,
       };
       if (
         contractType.toLowerCase() == "parttime" &&
         state.newFixedGross >= 90 &&
         state.newFixedGross <= 200
       ) {
-        PromotionCreate(infoData);
-        setModelStatus(true);
+        // setModelStatus(true);
         setSubmitted(true);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole === "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
         console.log("all okay1", infoData);
       } else if (
         contractType.toLowerCase() == "permanent" &&
         state.newFixedGross > 18000
       ) {
-        PromotionCreate(infoData);
-        setModelStatus(true);
+        // setModelStatus(true);
         setSubmitted(true);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole === "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
         console.log("all okay2", infoData);
       } else if (
         state.promotionType == 0 &&
         (contractType.toLowerCase() == "parttime" ||
           contractType.toLowerCase() == "permanent")
       ) {
-        PromotionCreate(infoData);
-        setModelStatus(true);
+        // setModelStatus(true);
         setSubmitted(true);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole === "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
         console.log("all okay3", infoData);
       } else {
         console.log("NOT OK", infoData);
@@ -496,10 +576,175 @@ useEffect(()=>{
 
     console.log(state, "state");
   };
+  const submitfinalRelivingLetter = (e) => {
+    e.preventDefault();
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
+    ) {
+      const infoData = {
+        adminValidatedDate: promotionIdData["adminValidatedDate"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        managerValidatedDate: promotionIdData["managerValidatedDate"],
+        validatedManagerId: promotionIdData["validatedManagerId"],
+        validatedManagerName: promotionIdData["validatedManagerName"],
+        bonus: promotionIdData["bonus"],
+        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
+        effectiveDate: state.effectiveDate,
+        emailId: null,
+        empName: state.empName,
+        employeeId: state.employeeId,
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
+        newDepartment: state.newDepartment,
+        newFixedGross: state.newFixedGross,
+        oldDepartment: state.oldDepartment,
+        oldFixedGross: state.oldFixedGross,
+        oldPosition: state.oldPosition,
+        positionId: state.positionId,
+        promotedPosition: state.promotedPosition,
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: null,
+        reason: state.reason,
+        relocationBonus: state.relocationBonus,
+        salaryEffectiveDate: state.salaryEffectiveDate,
+        promotionType: state.promotionType,
+        remarks: promotionIdData["remarks"],
+        status: 3,
+      };
+      PromotionCreate(infoData);
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+      // setSuccessModal(true);
+      // finalSubmitOfferLetter(employeeData.employeeId);
+    }
+  };
+  const previewLetterViewing = (e) => {
+    e.preventDefault();
+    if (promotionIdData !== null && promotionIdData !== undefined) {
+      // fetchRelievingLetterData(employeeData.employeeId);
+      generatePromotionLetter(promotionIdData.promotionId);
+
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
+  };
+  const generateLetterClick = (e) => {
+    e.preventDefault();
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
+    ) {
+      generatePromotionLetter(promotionIdData.promotionId);
+      handleShow();
+      setPreviewGeneratedLetter(true);
+    } else {
+      console.log("promotionIdData->", promotionIdData);
+    }
+  };
+
+  const handleShow = () => {
+    console.log("inside show moodal");
+    setShow(true);
+  };
+  const handleRelivingClose = () => setShow(false);
+  const digitalSignature = () => {
+    setShowSignature(true);
+  };
+  const saveOfferLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
+  };
 
   return (
     <Fragment>
       <ToastContainer />
+
+      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body className="mx-auto">
+            <label>Promotion Letter has been sent to the employee</label>
+            <div className="text-center mb-2">
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleRelivingClose}>Close</Button>
+              </Link>
+            </div>
+          </Modal.Body>
+        ) : previewLetter || showRelivingModal ? (
+          <Modal.Body>
+            {true ? (
+              <div>
+                {promotionIdData.promotionType === 0 ? (
+                  <PromotionLetters />
+                ) : promotionIdData.promotionType === 1 ? (
+                  <PromotionSalaryLetters />
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            <br></br>
+            <Row>
+              {showSignature ? (
+                <Fragment>
+                  <br></br>
+                  <img
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                </Fragment>
+              ) : (
+                <>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={digitalSignature}
+                  >
+                    Add digital signature
+                  </button>
+                </>
+              )}
+            </Row>
+            {showSignature && !previewLetter ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={saveOfferLetter}
+                  >
+                    Save Changes
+                  </button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
       <Modal
         show={contractTypeStatus}
         onHide={handleCloseValue}
@@ -522,12 +767,29 @@ useEffect(()=>{
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            Your request has been sent to cost center manager.
+            {user !== null &&
+            user !== undefined &&
+            Object.keys(user).length !== 0 &&
+            (user.loginType == 7 || user.additionalRole === "7")
+              ? "Your request has been sent to admin."
+              : user !== null &&
+                user !== undefined &&
+                Object.keys(user).length !== 0 &&
+                (user.additionalRole === "1" || user.loginType == "1")
+              ? "Your request has been saved successfully."
+              : "Your request has been sent to cost center manager."}
           </label>
           <div className="text-center mb-2">
-            <Link to={"/promotion-list"}>
+            {user !== null &&
+            user !== undefined &&
+            Object.keys(user).length !== 0 &&
+            (user.additionalRole === "1" || user.loginType == "1") ? (
               <Button onClick={handleCloseValue}>Close</Button>
-            </Link>
+            ) : (
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleCloseValue}>Close</Button>
+              </Link>
+            )}
           </div>
         </Modal.Body>
       </Modal>
@@ -1102,19 +1364,106 @@ useEffect(()=>{
                         <Row>
                           <Col
                             style={{
-                              marginTop: "2rem",
                               marginBottom: "2rem",
                               textAlign: "center",
                             }}
                           >
-                            <button
-                              className={
-                                submitted ? "confirmButton" : "stepperButtons"
-                              }
-                              onClick={submitHandler}
+                            <div
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
-                              Submit
-                            </button>
+                              {true ? (
+                                <button
+                                  disabled={submitted}
+                                  className={
+                                    submitted
+                                      ? "confirmButton"
+                                      : "stepperButtons"
+                                  }
+                                  onClick={submitHandler}
+                                >
+                                  Submit
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {user !== null &&
+                              user !== undefined &&
+                              Object.keys(user).length !== 0 &&
+                              (user.additionalRole === "1" ||
+                                user.loginType == "1") &&
+                              !saveLetter &&
+                              promotionIdData !== null &&
+                              promotionIdData !== undefined &&
+                              Object.keys(promotionIdData).length !== 0 &&
+                              (promotionIdData.status === 1 ||
+                                promotionIdData.status === 3) &&
+                              showPreview === true ? (
+                                <button
+                                  // disabled={!submitted}
+                                  className={"LettersProbButtons"}
+                                  onClick={generateLetterClick}
+                                >
+                                  Generate Promotion Letter
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {user !== null &&
+                              user !== undefined &&
+                              Object.keys(user).length !== 0 &&
+                              (user.additionalRole === "1" ||
+                                user.loginType == "1") &&
+                              saveLetter &&
+                              previewGeneratedLetter &&
+                              showPreview ? (
+                                <button
+                                  className={"LettersProbButtons"}
+                                  onClick={previewLetterViewing}
+                                >
+                                  Preview Promotion Letter
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {user !== null &&
+                                user !== undefined &&
+                                Object.keys(user).length !== 0 &&
+                                (user.additionalRole === "1" ||
+                                  user.loginType == "1") &&
+                                saveLetter &&
+                                previewGeneratedLetter === true && (
+                                  <div className="preview-section">
+                                    <br></br>
+                                    <br></br>
+                                    <img
+                                      src={calendarImage}
+                                      alt="calendar"
+                                      width="200px"
+                                    />
+                                    <br></br>
+                                    <br></br>
+                                    {true ? (
+                                      <button
+                                        disabled={letterSent}
+                                        className={
+                                          letterSent
+                                            ? " confirmButton "
+                                            : "stepperButtons"
+                                        }
+                                        onClick={submitfinalRelivingLetter}
+                                      >
+                                        Submit
+                                      </button>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                )}
+                            </div>
                           </Col>
                         </Row>
                       </Col>

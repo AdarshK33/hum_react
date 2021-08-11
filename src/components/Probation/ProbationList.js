@@ -88,6 +88,8 @@ const ProbationList = () => {
       ProbationListView(0, "all", pageNumber - 1, 2);
     } else if (probationStatus === "Due for confirmation") {
       ProbationListView(0, "all", pageNumber - 1, 0);
+    } else if (probationStatus === "Probation In Progress") {
+      ProbationListView(0, "all", pageNumber - 1, 4);
     } else if (probationStatus === "Rejected") {
       ProbationListView(0, "all", pageNumber - 1, 3);
     } else {
@@ -128,6 +130,13 @@ const ProbationList = () => {
       setFifthBtn(false);
     } else if (e.target.value === "Rejected") {
       ProbationListView(0, "all", 0, 3);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else if (e.target.value === "Probation In Progress") {
+      ProbationListView(0, "all", 0, 4);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -301,6 +310,9 @@ const ProbationList = () => {
                             </option>
                             <option value="Due for confirmation">
                               Due for confirmation
+                            </option>
+                            <option value="Probation In Progress">
+                              Probation In Progress
                             </option>
                             <option value="Confirmed">Confirmed</option>
                             <option value="Extended">Extended</option>
@@ -537,8 +549,9 @@ const ProbationList = () => {
                                 ? "Extended"
                                 : item.status === 3
                                 ? "Rejected"
-                                :item.status === 4
-                                ? "Probation in progress": ""}
+                                : item.status === 4
+                                ? "Probation In Progress"
+                                : ""}
                             </td>
                             <td>
                               <Link to={"/probation-view/" + item.empId}>
