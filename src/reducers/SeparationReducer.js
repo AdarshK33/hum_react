@@ -55,10 +55,11 @@ const GroupReducer = (state, action) => {
 
     case "EMP_RESIGN":
       return { ...state, empResignData: action.payload, loader: action.loader };
-
+      
     case "MANAGER_LIST":
       return { ...state, managerList: action.payload };
-
+      case "PROMOTION_MANAGER_LIST":
+        return { ...state, promotioManagerList: action.payload };
     case "MODE_OF_SEPARATION":
       return { ...state, ...action.payload };
 

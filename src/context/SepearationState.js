@@ -26,6 +26,7 @@ const initial_state = {
   updateAdminFinanceClearanceList: [],
   empResignData: [],
   managerList: [],
+  promotioManagerList:[],
   modeOfResponse: [],
   reason: {},
   searchByCostData: [],
@@ -475,6 +476,16 @@ export const SeparationProvider = (props) => {
       });
   };
 
+  const promotionManagerData = (costCenter,department) => {
+    return client
+      .get(`api/v1/employee/view/managers/costCentre/department?department=${department}&storeId=${costCenter}`)
+      .then((response) => {
+        console.log(response, "managerData response");
+        state.promotioManagerList = response.data.data;
+        return dispatch({ type: "PROMOTION_MANAGER_LIST", payload: state.promotioManagerList });
+      });
+  };
+
   const modeOfSeparation = () => {
     return client
       .get("api/v1/mode-of-separation/view")
@@ -556,7 +567,8 @@ export const SeparationProvider = (props) => {
         NoDueClearanceClearanceExport,
         FinanceClearanceExport,
         searchByCostCenter,
-
+        promotionManagerData,
+        promotioManagerList:state.promotioManagerList,
         financeClearanceExport: state.financeClearanceExport,
 
         updateAdminFinanceClearance: state.updateAdminFinanceClearance,

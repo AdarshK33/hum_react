@@ -29,6 +29,7 @@ const PromotionInitiate = () => {
     validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
+    company:'',
     costCentre: "",
     costCentreManagerEmail: "",
     costCentreManagerId: "",
@@ -81,9 +82,9 @@ const PromotionInitiate = () => {
   const {
     empResign,
     withdraw,
-    managerList,
+    promotioManagerList,
     searchByCostCenter,
-    managerData,
+    promotionManagerData,
     searchByCostData,
   } = useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
@@ -105,7 +106,15 @@ const PromotionInitiate = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-
+useEffect(()=>{
+  if (
+    state.costCentre !== "" &&
+    state.costCentre !== null &&
+    state.costCentre !== undefined
+  ) {
+  promotionManagerData(state.costCentre,departmentNew);
+  }
+},[departmentNew])
   useEffect(() => {
     console.log("state.empI", state.employeeId);
     if (
@@ -133,11 +142,11 @@ const PromotionInitiate = () => {
           ? searchByCostData.lastName
           : "";
       state.employeeId = searchByCostData.employeeId;
+      state.company = searchByCostData.company;
       state.empName = searchByCostData.firstName + " " + temp;
       setEmpName(searchByCostData.firstName + " " + temp);
       state.contractType = searchByCostData.contractType;
       setContractType(searchByCostData.contractType);
-      managerData(searchByCostData.costCentre);
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
       state.oldDepartment = searchByCostData.department;
@@ -159,13 +168,13 @@ const PromotionInitiate = () => {
       searchByCostData !== null &&
       searchByCostData !== undefined &&
       Object.keys(searchByCostData).length !== 0 &&
-      managerList &&
-      managerList &&
-      managerList !== null &&
-      managerList !== undefined &&
-      Object.keys(managerList).length !== 0
+      promotioManagerList &&
+      promotioManagerList &&
+      promotioManagerList !== null &&
+      promotioManagerList !== undefined &&
+      Object.keys(promotioManagerList).length !== 0
     ) {
-      managerList.map((item) => {
+      promotioManagerList.map((item) => {
         if (item.employeeId == searchByCostData.managerId) {
           const temp =
             item.lastName !== null && item.lastName !== undefined
@@ -176,7 +185,7 @@ const PromotionInitiate = () => {
         }
       });
     }
-  }, [managerList, searchByCostData]);
+  }, [promotioManagerList, searchByCostData]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -373,7 +382,7 @@ const PromotionInitiate = () => {
       // toast.error("Data is not filled Properly")
     }
   };
-  console.log(managerList, "managerList");
+  console.log(promotioManagerList, "promotioManagerList");
   const handleCloseValue = () => {
     setModelStatus(false);
     setContractTypeStatus(false);
@@ -464,7 +473,7 @@ const PromotionInitiate = () => {
       });
       console.log(e.target.value, state, "value666");
     } else if (e.target.name === "reportingManagerId") {
-      managerList.map((item) => {
+      promotioManagerList.map((item) => {
         const temp =
           item.lastName !== null && item.lastName !== undefined
             ? item.lastName
@@ -765,10 +774,10 @@ const PromotionInitiate = () => {
                                 onChange={(e) => changeHandler(e)}
                               >
                                 <option value="">Select Manager</option>
-                                {managerList !== null &&
-                                  managerList !== undefined &&
-                                  managerList.length > 0 &&
-                                  managerList.map((item, index) => {
+                                {promotioManagerList !== null &&
+                                  promotioManagerList !== undefined &&
+                                  promotioManagerList.length > 0 &&
+                                  promotioManagerList.map((item, index) => {
                                     const temp =
                                       item.lastName !== null &&
                                       item.lastName !== undefined
