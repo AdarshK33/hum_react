@@ -33,7 +33,7 @@ const PromotionInitiate = () => {
     validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
-    company:'',
+    company: "",
     costCentre: "",
     costCentreManagerEmail: "",
     costCentreManagerId: "",
@@ -132,15 +132,18 @@ const PromotionInitiate = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-useEffect(()=>{
-  if (
-    state.costCentre !== "" &&
-    state.costCentre !== null &&
-    state.costCentre !== undefined
-  ) {
-  promotionManagerData(state.costCentre,departmentNew);
-  }
-},[departmentNew])
+  useEffect(() => {
+    if (
+      state.costCentre !== "" &&
+      state.costCentre !== null &&
+      state.costCentre !== undefined &&
+      departmentNew !== null &&
+      departmentNew !== undefined &&
+      departmentNew !== ""
+    ) {
+      promotionManagerData(state.costCentre, departmentNew);
+    }
+  }, [departmentNew]);
   useEffect(() => {
     console.log("state.empI", state.employeeId);
     if (
