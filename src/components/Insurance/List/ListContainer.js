@@ -18,12 +18,15 @@ const InsuranceListContainer = () => {
   };
   const recordsPerPage = 10;
   const pageRange = 10;
+  const currentYear = new Date().getFullYear();
   const {
     getInsuranceList,
     insuranceList,
     loader,
     total,
     exportInsuranceNominations,
+    getRange,
+    yearRange,
   } = useContext(InsuranceContext);
   const [tableBody, setTableBody] = useState([]);
   const [activePage, setActivePage] = useState(1);
@@ -38,6 +41,10 @@ const InsuranceListContainer = () => {
   useEffect(() => {
     getInsuranceList(apiUrl);
   }, [apiUrl]);
+
+  useEffect(() => {
+    getRange(currentYear, currentYear + 10, 1);
+  }, []);
 
   useEffect(() => {
     if (
@@ -103,6 +110,7 @@ const InsuranceListContainer = () => {
             searchInputHandler={searchInputHandler}
             searchDataHandler={searchDataHandler}
             exportInsuranceNominations={exportInsuranceNominations}
+            yearRange={yearRange}
           />
           <div className="table-list">
             {loader ? (

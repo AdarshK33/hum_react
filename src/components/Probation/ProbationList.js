@@ -537,7 +537,8 @@ const ProbationList = () => {
                                 ? "Extended"
                                 : item.status === 3
                                 ? "Rejected"
-                                : ""}
+                                :item.status === 4
+                                ? "Probation in progress": ""}
                             </td>
                             <td>
                               <Link to={"/probation-view/" + item.empId}>

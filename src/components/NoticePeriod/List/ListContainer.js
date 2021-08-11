@@ -6,6 +6,7 @@ import HeaderComp from "./HeaderComp";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import TableComponent from "../../table/Table.component";
 import { NoticePeriodContext } from "../../../context/NoticePeriodState";
+import { OfferContext } from "../../../context/OfferState";
 
 const NoticePeriodListContainer = () => {
   const TableHeaders = {
@@ -20,6 +21,7 @@ const NoticePeriodListContainer = () => {
   const pageRange = 10;
   const { getNoticePeriodList, noticePeriodList, loader, total } =
     useContext(NoticePeriodContext);
+  const { departmentView, departmentName } = useContext(OfferContext);
   const [tableBody, setTableBody] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const [searchValue, setSearchValue] = useState("All");
@@ -29,6 +31,10 @@ const NoticePeriodListContainer = () => {
       activePage - 1
     }&size=${recordsPerPage}`
   );
+
+  useEffect(() => {
+    departmentView();
+  }, []);
 
   useEffect(() => {
     getNoticePeriodList(apiUrl);
@@ -99,6 +105,7 @@ const NoticePeriodListContainer = () => {
             searchInput={searchInput}
             searchInputHandler={searchInputHandler}
             searchDataHandler={searchDataHandler}
+            departmentList={departmentName}
           />
           <div className="table-list">
             {loader ? (
