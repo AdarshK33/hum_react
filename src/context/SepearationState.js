@@ -140,15 +140,10 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const viewAdminITClearanceList = (
-    itStatus,
-    key,
-    page,
-    costCenter
-  ) => {
-      // financeStatus +
-          // "&itStatus=" +
-    console.log( itStatus, key, page, costCenter, "viewAdminIt");
+  const viewAdminITClearanceList = (itStatus, key, page, costCenter) => {
+    // financeStatus +
+    // "&itStatus=" +
+    console.log(itStatus, key, page, costCenter, "viewAdminIt");
     client
       .get(
         "/api/v1/separation/full-and-final/view/no-due-clearance?itStatus=" +

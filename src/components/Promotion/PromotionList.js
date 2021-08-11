@@ -58,7 +58,7 @@ const PromotionList = () => {
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
       promotionListView(searchValue, pageNumber - 1);
-    }else if (promotionStatus === "Pending") {
+    } else if (promotionStatus === "Pending") {
       promotionListView("all", pageNumber - 1, 0);
     } else if (promotionStatus === "In Progress") {
       promotionListView("all", pageNumber - 1, 1);
@@ -279,10 +279,34 @@ const PromotionList = () => {
                             <td>{item.oldPosition}</td>
                             <td>{item.promotedPosition}</td>
                             <td>{item.promotionDate}</td>
-                            <td>{item.validatedManagerName}</td>
-                            <td>{item.managerValidatedDate}</td>
-                            <td>{item.validatedAdminName}</td>
-                            <td>{item.adminValidatedDate}</td>
+                            <td>
+                              {item.validatedManagerName !== null &&
+                              item.validatedManagerName !== undefined &&
+                              item.validatedManagerName !== ""
+                                ? item.validatedManagerName
+                                : "NA"}
+                            </td>
+                            <td>
+                              {item.managerValidatedDate !== null &&
+                              item.managerValidatedDate !== undefined &&
+                              item.managerValidatedDate !== ""
+                                ? item.managerValidatedDate
+                                : "NA"}
+                            </td>
+                            <td>
+                              {item.validatedAdminName !== null &&
+                              item.validatedAdminName !== undefined &&
+                              item.validatedAdminName !== ""
+                                ? item.validatedAdminName
+                                : "NA"}
+                            </td>
+                            <td>
+                              {item.adminValidatedDate !== null &&
+                              item.adminValidatedDate !== undefined &&
+                              item.adminValidatedDate !== ""
+                                ? item.adminValidatedDate
+                                : "NA"}
+                            </td>
                             <td>
                               {/* {item.statusDesc} */}
                               {/* {item.status == 0?"Pending":item.status ==1? "Approved By Admin":
@@ -311,8 +335,25 @@ const PromotionList = () => {
 
                             {user !== null &&
                             user !== undefined &&
-                            (user.additionalRole === "1" ||
-                              user.loginType == "1") ? (
+                            user.employeeId === item.initiatedBy &&
+                            user.loginType !== "1" ? (
+                              <td>
+                                {item.status === 1 ? (
+                                  <Link to={"/promotion/" + item.employeeId}>
+                                    <Edit2
+                                      onClick={() => {
+                                        ViewPromotionById(item.promotionId);
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : user !== null &&
+                              user !== undefined &&
+                              (user.additionalRole === "1" ||
+                                user.loginType == "1") ? (
                               <td>
                                 {item.status === 2 ? (
                                   <Link
@@ -353,25 +394,10 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) : user !== null &&
-                              user !== undefined &&
-                              (user.additionalRole === "3" ||
-                                user.isManager === true) ? (
-                              <td>
-                                {item.status === 1 ? (
-                                  <Link to={"/promotion/" + item.employeeId}>
-                                    <Edit2
-                                      onClick={() => {
-                                        ViewPromotionById(item.promotionId);
-                                      }}
-                                    />
-                                  </Link>
-                                ) : (
-                                  <Edit2 />
-                                )}
-                              </td>
                             ) : (
-                              ""
+                              <td>
+                                <Edit2 />
+                              </td>
                             )}
                           </tr>
                         </tbody>
