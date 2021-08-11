@@ -37,6 +37,11 @@ const InsuranceReducer = (state, action) => {
         ...state,
         insuranceDetails: {},
       };
+    case "FETCH_YEAR_RANGE":
+      return {
+        ...state,
+        yearRange: action.payload,
+      };
     default:
       return state;
   }

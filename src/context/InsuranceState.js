@@ -9,6 +9,7 @@ const initialState = {
   total: 0,
   actionStatus: false,
   insuranceDetails: {},
+  yearRange: [],
 };
 
 export const InsuranceContext = createContext();
@@ -106,6 +107,17 @@ export const InsuranceProvider = (props) => {
       });
   };
 
+  const getRange = (start, stop, step) => {
+    const range = Array.from(
+      { length: (stop - start) / step + 1 },
+      (_, i) => start + i * step
+    );
+    return dispatch({
+      type: "FETCH_YEAR_RANGE",
+      payload: range,
+    });
+  };
+
   return (
     <InsuranceContext.Provider
       value={{
@@ -119,6 +131,8 @@ export const InsuranceProvider = (props) => {
         getInsuranceNominationDetails,
         insuranceDetails: state.insuranceDetails,
         exportInsuranceNominations,
+        getRange,
+        yearRange: state.yearRange,
       }}
     >
       {props.children}
