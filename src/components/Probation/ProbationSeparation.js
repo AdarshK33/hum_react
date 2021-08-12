@@ -94,6 +94,7 @@ const ProbationSeparation = () => {
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
+    UpdateEmplyoeeExist,
   } = useContext(EmployeeSeparationContext);
   const { probationData, ViewProbationEndLetter, endLetterData } =
     useContext(ProbationContext);
@@ -286,6 +287,10 @@ const ProbationSeparation = () => {
 
   //   reliving letter
   const handleRelivingClose = () => setShow(false);
+  const handleRelivingClose2 = () => {
+    history.push("./employee-separation-listing");
+    setShow(false);
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -297,11 +302,46 @@ const ProbationSeparation = () => {
   };
 
   const submitfinalRelivingLetter = () => {
-    if (probationData.empId !== null && probationData.empId !== undefined) {
+    if (employeeData.empId !== null && employeeData.empId !== undefined) {
+      const data2 = {
+        company: employeeData.company,
+        contractType: employeeData.contractType,
+        costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
+        costCentreManagerName: employeeData.costCentreManagerName,
+        costCentreName: employeeData.costCentreName,
+        dateOfResignation: employeeData.dateOfResignation,
+        emailId: employeeData.emailId,
+        empName: employeeData.empName,
+        employeeComment: employeeData.employeeComment,
+        employeeId: employeeData.employeeId,
+        employeeName: employeeData.employeeName,
+        exitId: employeeData.exitId,
+        hoursWorked: employeeData.hoursWorked,
+        lastWorkingDate: employeeData.lastWorkingDate,
+        location: employeeData.location,
+        managerCostCentre: employeeData.managerCostCentre,
+        managerEmailId: employeeData.managerEmailId,
+        managerId: employeeData.managerId,
+        managerName: employeeData.managerName,
+        managerPosition: employeeData.managerPosition,
+        modeOfSeparationId: employeeData.modeOfSeparationId,
+        modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
+        noticePeriod: employeeData.noticePeriod,
+        noticePeriodRecovery: employeeData.noticePeriodRecovery,
+        noticePeriodRecoveryDays: employeeData.noticePeriodRecoveryDays,
+        position: employeeData.position,
+        reHire: employeeData.reHire,
+        reason: employeeData.reason,
+        reasonForResignation: employeeData.reasonForResignation,
+        rehireRemark: employeeData.rehireRemark,
+        status: 7,
+      };
+
+      console.log("createExitData", data2);
+      UpdateEmplyoeeExist(data2);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
-      history.push("./employee-separation-listing");
 
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
@@ -597,7 +637,7 @@ const ProbationSeparation = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 7,
+            status: 8,
           };
 
           console.log("createExitData", data2);
@@ -685,7 +725,7 @@ const ProbationSeparation = () => {
                 : ""}
             </label>
             <div className="text-center">
-              <Button onClick={handleRelivingClose}>Close</Button>
+              <Button onClick={handleRelivingClose2}>Close</Button>
             </div>
           </Modal.Body>
         </Modal>
@@ -1235,17 +1275,34 @@ const ProbationSeparation = () => {
                           }}
                         >
                           <button
-                            disabled={submitted}
+                            disabled={
+                              submitted ||
+                              (employeeData &&
+                                employeeData !== null &&
+                                employeeData !== undefined &&
+                                Object.keys(employeeData).length !== 0 &&
+                                employeeData.status === 8)
+                            }
                             className={
-                              submitted ? "confirmButton" : "stepperButtons"
+                              submitted ||
+                              (employeeData &&
+                                employeeData !== null &&
+                                employeeData !== undefined &&
+                                Object.keys(employeeData).length !== 0 &&
+                                employeeData.status === 8)
+                                ? "confirmButton"
+                                : "stepperButtons"
                             }
                             onClick={submitHandler}
                           >
                             Save
                           </button>
-                          {submitted === false ? (
-                            ""
-                          ) : (
+                          {submitted ||
+                          (employeeData &&
+                            employeeData !== null &&
+                            employeeData !== undefined &&
+                            Object.keys(employeeData).length !== 0 &&
+                            employeeData.status === 8) ? (
                             <button
                               disabled={!submitted || letterSent}
                               className={
@@ -1257,17 +1314,19 @@ const ProbationSeparation = () => {
                             >
                               Withdraw
                             </button>
+                          ) : (
+                            ""
                           )}
 
-                          {!saveLetter &&
-                          employeeData &&
-                          employeeData &&
-                          employeeData !== null &&
-                          employeeData !== undefined &&
-                          Object.keys(employeeData).length !== 0 &&
-                          employeeData.status === 7 &&
-                          showPreview === true &&
-                          submitted === true ? (
+                          {(!saveLetter &&
+                            employeeData &&
+                            employeeData &&
+                            employeeData !== null &&
+                            employeeData !== undefined &&
+                            Object.keys(employeeData).length !== 0 &&
+                            (employeeData.status === 7 ||
+                              employeeData.status === 8)) ||
+                          (showPreview === true && submitted === true) ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtons"}
@@ -1278,9 +1337,7 @@ const ProbationSeparation = () => {
                           ) : (
                             ""
                           )}
-                          {saveLetter &&
-                          previewGeneratedLetter &&
-                          showPreview ? (
+                          {saveLetter && previewGeneratedLetter ? (
                             <button
                               className={"LettersButtons"}
                               onClick={previewRelivingLetter}
@@ -1291,7 +1348,7 @@ const ProbationSeparation = () => {
                             ""
                           )}
 
-                          {saveLetter && previewGeneratedLetter && showPreview && (
+                          {saveLetter && previewGeneratedLetter && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
