@@ -375,13 +375,7 @@ const PromotionInitiate = () => {
         relocationBonus: state.relocationBonus,
         remarks: null,
         salaryEffectiveDate: state.salaryEffectiveDate,
-        status:
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          (user.additionalRole === "1" || user.loginType == "1")
-            ? 3
-            : 0,
+        status: 0,
       };
       if (
         contractType.toLowerCase() == "parttime" &&
@@ -1377,9 +1371,21 @@ const PromotionInitiate = () => {
                             >
                               {true ? (
                                 <button
-                                  disabled={submitted}
+                                  disabled={
+                                    submitted ||
+                                    (promotionIdData !== null &&
+                                      promotionIdData !== undefined &&
+                                      Object.keys(promotionIdData).length !==
+                                        0 &&
+                                      promotionIdData.status === 5)
+                                  }
                                   className={
-                                    submitted
+                                    submitted ||
+                                    (promotionIdData !== null &&
+                                      promotionIdData !== undefined &&
+                                      Object.keys(promotionIdData).length !==
+                                        0 &&
+                                      promotionIdData.status === 5)
                                       ? "confirmButton"
                                       : "stepperButtons"
                                   }
@@ -1390,18 +1396,17 @@ const PromotionInitiate = () => {
                               ) : (
                                 ""
                               )}
-                              {user !== null &&
+                              {(showPreview === true || !saveLetter) &&
+                              user !== null &&
                               user !== undefined &&
                               Object.keys(user).length !== 0 &&
                               (user.additionalRole === "1" ||
                                 user.loginType == "1") &&
-                              !saveLetter &&
                               promotionIdData !== null &&
                               promotionIdData !== undefined &&
                               Object.keys(promotionIdData).length !== 0 &&
                               (promotionIdData.status === 1 ||
-                                promotionIdData.status === 3) &&
-                              showPreview === true ? (
+                                promotionIdData.status === 5) ? (
                                 <button
                                   // disabled={!submitted}
                                   className={"LettersProbButtons"}
@@ -1418,8 +1423,7 @@ const PromotionInitiate = () => {
                               (user.additionalRole === "1" ||
                                 user.loginType == "1") &&
                               saveLetter &&
-                              previewGeneratedLetter &&
-                              showPreview ? (
+                              previewGeneratedLetter ? (
                                 <button
                                   className={"LettersProbButtons"}
                                   onClick={previewLetterViewing}

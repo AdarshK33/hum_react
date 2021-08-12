@@ -962,7 +962,7 @@ const ProbationSeparation = () => {
                             <label>
                               Date of{" "}
                               {changeInSeparation === 5
-                                ? "End of Internship:"
+                                ? "End of Probation:"
                                 : "Termination:"}
                             </label>
                           </div>

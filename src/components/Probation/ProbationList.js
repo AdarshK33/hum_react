@@ -144,7 +144,7 @@ const ProbationList = () => {
       setThirdBtn(false);
       setFourthBtn(false);
       setFifthBtn(false);
-    }else if (e.target.value === "Not Confirmed") {
+    } else if (e.target.value === "Not Confirmed") {
       ProbationListView(0, "all", 0, 5);
       setFirstBtn(false);
       setSecondBtn(false);
@@ -326,8 +326,7 @@ const ProbationList = () => {
                             <option value="Confirmed">Confirmed</option>
                             <option value="Extended">Extended</option>
                             <option value="Rejected">Rejected</option>
-                            <option value="Not Confirmed">Not Confirmed</option>
-
+                            <option value="Not Confirmed">Action In Progress</option>
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -561,9 +560,9 @@ const ProbationList = () => {
                                 : item.status === 3
                                 ? "Rejected"
                                 : item.status === 4
-                                ? "Probation In Progress":
-                                item.status === 5
-                                ? "Not Confirmed"
+                                ? "Probation In Progress"
+                                : item.status === 5 || item.status === 6
+                                ? "Action In Progress"
                                 : ""}
                             </td>
                             <td>
@@ -578,9 +577,10 @@ const ProbationList = () => {
 
                             <td>
                               {/* {false ? ( */}
-                              {item.status !== 0 || item.dueDays === 0 ? (
-                                <Edit2 />
-                              ) : (
+                              {(item.status === 0 ||
+                                item.status === 5 ||
+                                item.status === 6) &&
+                              item.dueDays > 0 ? (
                                 <Link to={"/probation-action/" + item.empId}>
                                   <Edit2
                                     onClick={() => {
@@ -588,6 +588,8 @@ const ProbationList = () => {
                                     }}
                                   />
                                 </Link>
+                              ) : (
+                                <Edit2 />
                               )}
                             </td>
 

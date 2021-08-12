@@ -24,7 +24,7 @@ export const PromotionProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [createdPromotion, setCreatedPromotion] = useState(false);
 
-  const promotionListView = (key, page, status = 5) => {
+  const promotionListView = (key, page, status = 6) => {
     console.log(key, page, client.defaults.headers, "promotion ");
     console.log(key, page, "promotion ");
     setLoader(true);
@@ -139,7 +139,19 @@ export const PromotionProvider = (props) => {
         toast.info(response.data.message);
 
         if (
-          Approve > 0 &&
+          Approve === 1 &&
+          response.data !== null &&
+          response.data !== undefined &&
+          response.data.data !== null &&
+          response.data.data !== undefined &&
+          response.data.data.promotionId !== null &&
+          response.data.data.promotionId !== undefined
+        ) {
+          approvePromotion(response.data.data.promotionId, Approve);
+          approvePromotion(response.data.data.promotionId, 5);
+        }
+        if (
+          Approve === 2 &&
           response.data !== null &&
           response.data !== undefined &&
           response.data.data !== null &&
@@ -186,7 +198,9 @@ export const PromotionProvider = (props) => {
       .get("/api/v1/promotion/approve?promotionId=" + id + "&status=" + status)
       .then((response) => {
         state.approvePromotionData = response.data.data;
-        toast.info(response.data.message);
+        if (status !== 5) {
+          toast.info(response.data.message);
+        }
         ViewPromotionById(id);
         setCreatedPromotion(true);
         setLoader(false);
