@@ -218,6 +218,51 @@ const ProbationAction = () => {
       setShow(true);
       // setSuccessModal(true);
       // finalSubmitOfferLetter(employeeData.employeeId);
+      const value = checkValidations();
+      if (value === true) {
+        if (probationStatus === "Rejected") {
+          setShowRej(true);
+        } else {
+          const InfoData = {
+            company: probationData.company,
+            costCentre: probationData.costCentre,
+            dateOfJoining: probationData.dateOfJoining,
+            dueDays: probationData.dueDays,
+            emailId: probationData.emailId,
+            empId: probationData.empId,
+            empName: probationData.empName,
+            probationConfirmationDate:
+              moment(dateOfConfirmation).format("YYYY-MM-DD"),
+            probationConfirmationLetter:
+              probationData.probationConfirmationLetter,
+            probationExtensionEndDate: dateOfExtension,
+            probationExtensionPeriod:
+              probationMonths === "3 Months"
+                ? 3
+                : probationMonths === "6 Months"
+                ? 6
+                : 0,
+            probationExtensionStartDate: null,
+            probationId: probationData.probationId,
+            reason: state.reason,
+            probationPeriod: probationData.probationPeriod,
+            remarks: probationStatus === "Rejected" ? state.remarks : null,
+            reminderSent: probationData.reminderSent,
+            status:
+              probationStatus === "Confirmed"
+                ? 1
+                : probationStatus === "Extended"
+                ? 2
+                : probationStatus === "Rejected"
+                ? 3
+                : 0,
+          };
+  
+          console.log("InfoData", InfoData);
+          updateProbation(InfoData, probationData.empId);
+          ViewProbationDataById(empId);
+        }
+      }
     }
   };
 
@@ -509,14 +554,7 @@ const ProbationAction = () => {
           probationPeriod: probationData.probationPeriod,
           remarks: probationStatus === "Rejected" ? state.remarks : null,
           reminderSent: probationData.reminderSent,
-          status:
-            probationStatus === "Confirmed"
-              ? 1
-              : probationStatus === "Extended"
-              ? 2
-              : probationStatus === "Rejected"
-              ? 3
-              : 0,
+          status:5
         };
 
         console.log("InfoData", InfoData);

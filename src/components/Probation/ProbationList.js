@@ -92,6 +92,8 @@ const ProbationList = () => {
       ProbationListView(0, "all", pageNumber - 1, 4);
     } else if (probationStatus === "Rejected") {
       ProbationListView(0, "all", pageNumber - 1, 3);
+    } else if (probationStatus === "Not Confirmed") {
+      ProbationListView(0, "all", pageNumber - 1, 5);
     } else {
       ProbationListView(0, "all", pageNumber - 1);
     }
@@ -137,6 +139,13 @@ const ProbationList = () => {
       setFifthBtn(false);
     } else if (e.target.value === "Probation In Progress") {
       ProbationListView(0, "all", 0, 4);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    }else if (e.target.value === "Not Confirmed") {
+      ProbationListView(0, "all", 0, 5);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -317,6 +326,8 @@ const ProbationList = () => {
                             <option value="Confirmed">Confirmed</option>
                             <option value="Extended">Extended</option>
                             <option value="Rejected">Rejected</option>
+                            <option value="Not Confirmed">Not Confirmed</option>
+
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -550,7 +561,9 @@ const ProbationList = () => {
                                 : item.status === 3
                                 ? "Rejected"
                                 : item.status === 4
-                                ? "Probation In Progress"
+                                ? "Probation In Progress":
+                                item.status === 5
+                                ? "Not Confirmed"
                                 : ""}
                             </td>
                             <td>
