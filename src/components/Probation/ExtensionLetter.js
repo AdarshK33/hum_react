@@ -107,7 +107,7 @@ const ExtensionLetter = () => {
               <br />
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India Pvt Ltd,</b>
+              <b>For {extensionLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

@@ -66,6 +66,8 @@ const PromotionList = () => {
       promotionListView("all", pageNumber - 1, 3);
     } else if (promotionStatus === "Rejected") {
       promotionListView("all", pageNumber - 1, 4);
+    } else if (promotionStatus === "Approve In Progress") {
+      promotionListView("all", pageNumber - 1, 5);
     } else {
       promotionListView("all", pageNumber - 1);
     }
@@ -108,6 +110,8 @@ const PromotionList = () => {
       promotionListView("all", 0, 3);
     } else if (e.target.value === "Rejected") {
       promotionListView("all", 0, 4);
+    } else if (e.target.value === "Approve In Progress") {
+      promotionListView("all", 0, 5);
     } else {
       promotionListView("all", 0);
     }
@@ -196,6 +200,9 @@ const PromotionList = () => {
                             <option value="In Progress">In Progress</option>
                             <option value="Approved">Approved</option>
                             <option value="Rejected">Rejected</option>
+                            <option value="Approve In Progress">
+                              Approve In Progress
+                            </option>
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -321,6 +328,8 @@ const PromotionList = () => {
                                 ? "Approved"
                                 : item.status == 4
                                 ? "Rejected"
+                                : item.status == 5
+                                ? "Approve In Progress"
                                 : ""}
                             </td>
                             <td>
@@ -335,10 +344,9 @@ const PromotionList = () => {
 
                             {user !== null &&
                             user !== undefined &&
-                            user.employeeId === item.initiatedBy &&
-                            user.loginType !== "1" ? (
+                            user.employeeId === item.initiatedBy ? (
                               <td>
-                                {item.status === 1 ? (
+                                {item.status === 1 || item.status === 5 ? (
                                   <Link to={"/promotion/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
