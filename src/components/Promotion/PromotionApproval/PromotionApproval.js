@@ -31,6 +31,8 @@ const PromotionApproval = (props) => {
     validatedAdminName: "",
     validatedManagerId: "",
     validatedManagerName: "",
+    managerValidatedDate:"",
+    adminValidatedDate:"",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -112,6 +114,8 @@ const PromotionApproval = (props) => {
         validatedAdminName: promotionIdData["validatedAdminName"],
         validatedManagerId: promotionIdData["validatedManagerId"],
         validatedManagerName: promotionIdData["validatedManagerName"],
+        managerValidatedDate:promotionIdData["managerValidatedDate"],
+        adminValidatedDate:promotionIdData["adminValidatedDate"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -592,7 +596,78 @@ const PromotionApproval = (props) => {
                           </Col>
                         </>
                       </Row>
-
+                      <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Validated By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedManagerName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Date:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.managerValidatedDate}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Validated By:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.validatedAdminName}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Date:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.adminValidatedDate}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
                       <Row
                         style={{
                           marginLeft: "2rem",
