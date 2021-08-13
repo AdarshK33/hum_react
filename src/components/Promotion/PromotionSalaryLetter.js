@@ -53,7 +53,7 @@ const PromotionSalaryLetter = () => {
             <p>Please sign the copy of this letter as receipt of acceptance.</p>
             <p className="mt-5 ">
               <p>Yours Sincerely,</p>
-              <b>For Decathlon Sports India India Pvt Ltd,</b>
+              <b>For {promotionLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

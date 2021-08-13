@@ -269,7 +269,7 @@ const FinanaceAdminNoDueClearance = () => {
     } else if (checkedValue == true) {
       setCheckedValue(false);
     }
-    if (formData["disabled"] == true) {
+    if (formData["disabled"] == false) {
       let preValue = checkedData;
       let keyValues = [];
       preValue.map((item) => {
@@ -498,7 +498,8 @@ const FinanaceAdminNoDueClearance = () => {
                               rowNode.data.fullAndFinalCompleteStatus !==
                                 null &&
                               rowNode.data.fullAndFinalProcessDate !== null &&
-                              rowNode.data.fullAndFinalAmount !== null
+                              rowNode.data.fullAndFinalAmount !== null &&
+                              rowNode.data.disabled !== true
                           : false;
                       }}
                       // pagination={true}
