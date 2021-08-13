@@ -498,7 +498,8 @@ const FinanaceAdminNoDueClearance = () => {
                               rowNode.data.fullAndFinalCompleteStatus !==
                                 null &&
                               rowNode.data.fullAndFinalProcessDate !== null &&
-                              rowNode.data.fullAndFinalAmount !== null
+                              rowNode.data.fullAndFinalAmount !== null &&
+                              rowNode.data.disabled !== true
                           : false;
                       }}
                       // pagination={true}
