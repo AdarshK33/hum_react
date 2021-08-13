@@ -31,7 +31,7 @@ const InternShipLetter = () => {
             </p>
             <p>
             This is to certify that Mr/ Ms {relivingLetterData.employeeName} has 
-            completed internship at Decathlon Sports India Pvt Ltd, from  
+            completed internship at {relivingLetterData.company} Pvt Ltd, from  
             <b>{relivingLetterData.dateOfJoining}</b> to  <b>{relivingLetterData.lastWorkingDate}</b> on
            under the guidance of  {relivingLetterData.managerName}.
 
@@ -41,7 +41,7 @@ const InternShipLetter = () => {
             We wish her all the very best for her future endeavours.
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India India Pvt Ltd,</b>
+              <b>For {relivingLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

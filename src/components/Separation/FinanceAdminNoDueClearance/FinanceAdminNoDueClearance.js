@@ -269,7 +269,7 @@ const FinanaceAdminNoDueClearance = () => {
     } else if (checkedValue == true) {
       setCheckedValue(false);
     }
-    if (formData["disabled"] == true) {
+    if (formData["disabled"] == false) {
       let preValue = checkedData;
       let keyValues = [];
       preValue.map((item) => {
