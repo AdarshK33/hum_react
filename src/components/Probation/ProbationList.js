@@ -326,7 +326,9 @@ const ProbationList = () => {
                             <option value="Confirmed">Confirmed</option>
                             <option value="Extended">Extended</option>
                             <option value="Rejected">Rejected</option>
-                            <option value="Not Confirmed">Action In Progress</option>
+                            <option value="Not Confirmed">
+                              Action Required
+                            </option>
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -562,7 +564,7 @@ const ProbationList = () => {
                                 : item.status === 4
                                 ? "Probation In Progress"
                                 : item.status === 5 || item.status === 6
-                                ? "Action In Progress"
+                                ? "Action Required"
                                 : ""}
                             </td>
                             <td>

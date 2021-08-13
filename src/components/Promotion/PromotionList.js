@@ -201,7 +201,7 @@ const PromotionList = () => {
                             <option value="Approved">Approved</option>
                             <option value="Rejected">Rejected</option>
                             <option value="Approve In Progress">
-                              Approve In Progress
+                              Action Required
                             </option>
                           </Form.Control>
                         </Form.Group>
@@ -329,7 +329,7 @@ const PromotionList = () => {
                                 : item.status == 4
                                 ? "Rejected"
                                 : item.status == 5
-                                ? "Approve In Progress"
+                                ? "Action Required"
                                 : ""}
                             </td>
                             <td>

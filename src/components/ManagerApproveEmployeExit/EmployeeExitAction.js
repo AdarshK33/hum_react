@@ -7,7 +7,7 @@ import moment from "moment";
 import "./EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
-import TerminationLetter from "./TerminationLetter"
+import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 
@@ -33,7 +33,7 @@ const EmployeeExitAction = () => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [lastWorkingDateError, setLastWorkingDateError] = useState(false);
   const [emailError, setEmailError] = useState(false);
-  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
+  const [lastDateSelection, setLastDateSelection] = useState(new Date());
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
 
@@ -105,30 +105,51 @@ const EmployeeExitAction = () => {
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        employeeData.department == "AFS" ||
+        employeeData.department == "IT" ||
+        employeeData.department == "Legal" ||
+        employeeData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
-        state.lastWorkingDate = (new Date(employeeData.joiningDate).setMonth(new Date(employeeData.joiningDate).getMonth() + (((employeeData.internshipPeriod !== null && employeeData.internshipPeriod !== undefined)?employeeData.internshipPeriod:0))))
+        state.lastWorkingDate = new Date(employeeData.joiningDate).setMonth(
+          new Date(employeeData.joiningDate).getMonth() +
+            (employeeData.internshipPeriod !== null &&
+            employeeData.internshipPeriod !== undefined
+              ? employeeData.internshipPeriod
+              : 0)
+        );
       } else if (
         state.empContractType === "permanent" ||
-        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "Permanent" ||
+        state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
-              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
-        setLastDateSelection(aboveDateValue)
-        state.lastWorkingDate = dateValue
-
+        var dateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+        );
+        let aboveDateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+          )
+        );
+        setLastDateSelection(aboveDateValue);
+        state.lastWorkingDate = dateValue;
       } else {
-        state.lastWorkingDate = ""
+        state.lastWorkingDate = "";
       }
-      state.lastWorkingDate = (employeeData.lastWorkingDate !==null && employeeData.lastWorkingDate !== undefined)?new Date(employeeData.lastWorkingDate):new Date();
+      state.lastWorkingDate =
+        employeeData.lastWorkingDate !== null &&
+        employeeData.lastWorkingDate !== undefined
+          ? new Date(employeeData.lastWorkingDate)
+          : new Date();
       state.personalEmailId = employeeData.personalEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
@@ -136,10 +157,10 @@ const EmployeeExitAction = () => {
         employeeData.noticePeriodRecoveryDays !== undefined
           ? employeeData.noticePeriodRecoveryDays
           : "";
-          if(employeeData.status === 8){
-            // setSuccessModal(true);
-            setPreview(true);
-          }
+      if (employeeData.status === 8) {
+        // setSuccessModal(true);
+        setPreview(true);
+      }
 
       if (
         employeeData.noticePeriodRecovery !== null &&
@@ -241,7 +262,7 @@ const EmployeeExitAction = () => {
     setModal(false);
     state.remarks = "";
   };
-  
+
   const handleShowAddModalClose = () => setShowAddModal(false);
 
   const handleRelivingClose = () => setShow(false);
@@ -257,7 +278,6 @@ const EmployeeExitAction = () => {
   };
 
   const submitfinalRelivingLetter = (e) => {
-
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
@@ -302,9 +322,9 @@ const EmployeeExitAction = () => {
           status: 2,
           withdraw: employeeData.withdraw,
         };
-        console.log("save ",InfoData)
+        console.log("save ", InfoData);
         UpdateEmplyoeeExist(InfoData);
-             }
+      }
     }
     if (
       employeeData.employeeId !== null &&
@@ -314,8 +334,8 @@ const EmployeeExitAction = () => {
       setLetterSent(true);
       setShow(true);
       // finalSubmitOfferLetter(employeeData.employeeId);
+    }
   };
-}
   const previewRelivingLetter = (e) => {
     e.preventDefault();
     if (employeeData !== null && employeeData !== undefined) {
@@ -326,18 +346,23 @@ const EmployeeExitAction = () => {
     }
   };
   const relivingLetterClick = (e) => {
-    console.log(e.target.value,"999")
+    console.log(e.target.value, "999");
     e.preventDefault();
-    if(e.target.value == '1' || e.target.value == 'Resignation'|| e.target.value == '4' || e.target.value == 'Employee Resignation'){
+    if (
+      e.target.value == "1" ||
+      e.target.value == "Resignation" ||
+      e.target.value == "4" ||
+      e.target.value == "Employee Resignation"
+    ) {
       fetchRelievingLetterData(employeeData.employeeId);
       handleShow();
-      console.log("resignation")
-    }else if(e.target.value == '2' || e.target.value == 'Termination'){
-        fetchTerminationLetterData(employeeData.employeeId)
-        handleShow();
-        console.log("termination")
-
+      console.log("resignation");
+    } else if (e.target.value == "2" || e.target.value == "Termination") {
+      fetchTerminationLetterData(employeeData.employeeId);
+      handleShow();
+      console.log("termination");
     }
+
     // setPreviewGeneratedLetter(true);
   };
 
@@ -376,13 +401,14 @@ const EmployeeExitAction = () => {
   };
   const validateRcryDays = () => {
     const Valid = /^[0-9\b]+$/;
-    var noticeDays = state.noticePeriod * 30
-      if (RcryYes === true ) {
+    var noticeDays = state.noticePeriod * 30;
+    if (RcryYes === true) {
       if (
         state.noticePeriodRcryDays !== "" &&
         state.noticePeriodRcryDays !== null &&
         state.noticePeriodRcryDays !== undefined &&
-        Valid.test(state.noticePeriodRcryDays ) && state.noticePeriodRcryDays <= noticeDays
+        Valid.test(state.noticePeriodRcryDays) &&
+        state.noticePeriodRcryDays <= noticeDays
       ) {
         setRcryDaysError(false);
         return true;
@@ -416,12 +442,12 @@ const EmployeeExitAction = () => {
     setSubmitted(false);
     setPreview(false);
   };
-  const dateOfBirthHandler1 = (e,date) => {
-    e.preventDefault()
+  const dateOfBirthHandler1 = (e, date) => {
+    e.preventDefault();
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
-    state.lastWorkingDate = AdjusteddateValue
+    state.lastWorkingDate = AdjusteddateValue;
   };
   const submitHandler = (e) => {
     console.log("submit handler");
@@ -470,18 +496,20 @@ const EmployeeExitAction = () => {
           status: 8,
           withdraw: employeeData.withdraw,
         };
-         UpdateEmplyoeeExist(InfoData);
+        UpdateEmplyoeeExist(InfoData);
         setSuccessModal(true);
         setPreview(true);
-        console.log("in else",InfoData);
+        console.log("in else", InfoData);
       }
     }
   };
-console.log(state)
+  console.log(state);
   return (
     <Fragment>
       {employeeData !== null &&
-        employeeData !== undefined && employeeData.status === 8?<Modal
+      employeeData !== undefined &&
+      employeeData.status === 8 ? (
+        <Modal
           show={showAddModal}
           onHide={handleShowAddModalClose}
           size="md"
@@ -491,13 +519,16 @@ console.log(state)
           <Modal.Body className="mx-auto">
             <label className="text-center">
               Please Add the Digital Signature.
-              <br />            
+              <br />
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleShowAddModalClose}>Close</Button>
             </div>
           </Modal.Body>
-        </Modal>:''}
+        </Modal>
+      ) : (
+        ""
+      )}
       {submitLetter ? (
         <Modal
           show={showRelivingModal}
@@ -511,8 +542,18 @@ console.log(state)
               The details have been saved successfully.
               <br />
               The relieving letter will be sent to the employee on{" "}
-              {moment(((terminationLetterData !== null && terminationLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
-              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1)?relivingLetterData.lastWorkingDate:new Date(), "YYYY-MM-DD")
+              {moment(
+                terminationLetterData !== null &&
+                  terminationLetterData !== undefined &&
+                  (modeOfSeparation == "Termination" || modeOfSeparation == 2)
+                  ? terminationLetterData.lastWorkingDate
+                  : relivingLetterData !== null &&
+                    relivingLetterData !== undefined &&
+                    (modeOfSeparation == "Resignation" || modeOfSeparation == 1)
+                  ? relivingLetterData.lastWorkingDate
+                  : new Date(),
+                "YYYY-MM-DD"
+              )
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
             </label>
@@ -809,7 +850,8 @@ console.log(state)
                           <label>
                             <b>Notice Period:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.empName?state.noticePeriod:''}
+                              &nbsp;&nbsp;{" "}
+                              {state.empName ? state.noticePeriod : ""}
                             </label>
                           </label>
                         </div>
@@ -826,54 +868,54 @@ console.log(state)
                       </Col> */}
 
                       <Col sm={2}>
-                          <div>
-                            <label>Preffered Last Working Date:</label>
-                          </div>
-                        </Col>
+                        <div>
+                          <label>Preffered Last Working Date:</label>
+                        </div>
+                      </Col>
 
-                        <Col sm={2}>
-                          <div>
-                            {false ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.lastWorkingDate}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <div
-                                  className={
-                                    lastWorkingDateError
-                                      ? "onBoard-date-error"
-                                      : "onBoard-date"
-                                  }
-                                >
-                                  <DatePicker
-                                    className="form-control onBoard-view"
-                                    value={state.lastWorkingDate}
-                                    selected={state.lastWorkingDate}
-                                    name="lastWorkingDate"
-                                    minDate={new Date()}
-                                    minDate={moment().toDate()}
-                                       maxDate={lastDateSelection}
-                                    // required
-                                    onChange={(e) => dateOfBirthHandler1(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
-                                    
-                                    // disabled={disabled}
-                                  />
-                                </div>
-                                {lastWorkingDateError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please enter valid date
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </div>
-                        </Col>
+                      <Col sm={2}>
+                        <div>
+                          {false ? (
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.lastWorkingDate}
+                            </label>
+                          ) : (
+                            <Form.Group>
+                              <div
+                                className={
+                                  lastWorkingDateError
+                                    ? "onBoard-date-error"
+                                    : "onBoard-date"
+                                }
+                              >
+                                <DatePicker
+                                  className="form-control onBoard-view"
+                                  value={state.lastWorkingDate}
+                                  selected={state.lastWorkingDate}
+                                  name="lastWorkingDate"
+                                  minDate={new Date()}
+                                  minDate={moment().toDate()}
+                                  maxDate={lastDateSelection}
+                                  // required
+                                  onChange={(e) => dateOfBirthHandler1(e)}
+                                  dateFormat="yyyy-MM-dd"
+                                  placeholderText="YYYY-MM-DD"
+
+                                  // disabled={disabled}
+                                />
+                              </div>
+                              {lastWorkingDateError ? (
+                                <p style={{ color: "red" }}>
+                                  {" "}
+                                  &nbsp; *Please enter valid date
+                                </p>
+                              ) : (
+                                <p></p>
+                              )}
+                            </Form.Group>
+                          )}
+                        </div>
+                      </Col>
                       {/* <Col sm={4}>
                         <div>
                           <label>
@@ -884,47 +926,45 @@ console.log(state)
                           </label>
                         </div>
                       </Col> */}
-                         <Col sm={2}>
-                          <div>
-                            <label>Personal Email Id:</label>
-                          </div>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            {false ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.personalEmailId}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
-                                  //   disabled={!RcryYes}
-                                  name="personalEmailId"
-                                  value={state.personalEmailId}
-                                  onChange={(e) => changeHandler(e)}
-                                  style={
-                                    emailError ? { borderColor: "red" } : {}
-                                  }
-                                />
+                      <Col sm={2}>
+                        <div>
+                          <label>Personal Email Id:</label>
+                        </div>
+                      </Col>
+                      <Col sm={2}>
+                        <div>
+                          {false ? (
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.personalEmailId}
+                            </label>
+                          ) : (
+                            <Form.Group>
+                              <Form.Control
+                                type="text"
+                                placeholder=""
+                                required
+                                style={{
+                                  borderColor: "#006ebb",
+                                }}
+                                //   disabled={!RcryYes}
+                                name="personalEmailId"
+                                value={state.personalEmailId}
+                                onChange={(e) => changeHandler(e)}
+                                style={emailError ? { borderColor: "red" } : {}}
+                              />
 
-                                {emailError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please provide valid email
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </div>
-                        </Col>
+                              {emailError ? (
+                                <p style={{ color: "red" }}>
+                                  {" "}
+                                  &nbsp; *Please provide valid email
+                                </p>
+                              ) : (
+                                <p></p>
+                              )}
+                            </Form.Group>
+                          )}
+                        </div>
+                      </Col>
                     </Row>
                     <Row
                       style={{
@@ -946,7 +986,10 @@ console.log(state)
                       <Col sm={2}>
                         <div>
                           <label className="itemResult">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="itemResult">
+                            <a
+                              href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
+                              className="itemResult"
+                            >
                               <u>Click here</u>
                             </a>
                           </label>
@@ -1162,21 +1205,23 @@ console.log(state)
                       ) : (
                         ""
                       )}
-                         {(submitted === false || modeOfSeparation == "Termination" || modeOfSeparation == 2)? (
-                            ""
-                          ) : (
-                            <button
-                              disabled={!submitted || letterSent}
-                              className={
-                                !submitted || letterSent
-                                  ? "LetterCnfButton"
-                                  : "LettersButtons"
-                              }
-                              onClick={withdrawHandler}
-                            >
-                              Withdraw
-                            </button>
-                          )}
+                      {submitted === false ||
+                      modeOfSeparation == "Termination" ||
+                      modeOfSeparation == 2 ? (
+                        ""
+                      ) : (
+                        <button
+                          disabled={!submitted || letterSent}
+                          className={
+                            !submitted || letterSent
+                              ? "LetterCnfButton"
+                              : "LettersButtons"
+                          }
+                          onClick={withdrawHandler}
+                        >
+                          Withdraw
+                        </button>
+                      )}
                       {!saveLetter &&
                       (employeeData.status === 2 || showPreview === true) ? (
                         <button
