@@ -4,11 +4,20 @@ import UserMenu from "./userMenu";
 import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppState";
 import { AlignLeft, Maximize, MoreHorizontal } from "react-feather";
-
+import { Row, Col, Form, Button } from "react-bootstrap";
+import { PermissionContext } from "../../../context/PermissionState";
+import { useHistory } from "react-router-dom";
 const Header = () => {
   const [sidebar, setSidebar] = useState(false);
   const [headerbar, setHeaderbar] = useState(true);
-  const { user } = useContext(AppContext);
+  const [adminChecked, setAdminChecked] = useState(false);
+  const [scChecked, setScChecked] = useState(false);
+  const [costChecked, setCostChecked] = useState(false);
+  const [managerChecked, setManagerChecked] = useState(false);
+  const { user, getUserMenu } = useContext(AppContext);
+  let history = useHistory();
+  const { viewServiceGroup, groupList, permissionRoleAccess, rolePermission } =
+    useContext(PermissionContext);
   const openCloseSidebar = () => {
     if (sidebar) {
       setSidebar(!sidebar);
@@ -56,10 +65,61 @@ const Header = () => {
       }
     }
   }
+  const adminHandler = () => {
+    localStorage.setItem("loginRole", "admin");
+    setAdminChecked(true);
+    setScChecked(false);
+    setCostChecked(false);
+    setManagerChecked(false);
+    permissionRoleAccess(localStorage.getItem("loginRole"));
+    getUserMenu(user.adminMenus);
+    localStorage.setItem("type", "admin");
+    localStorage.setItem("flag", "0");
+    history.push("/dashboard/storedashboard#admin");
+  };
+
+  const scHandler = () => {
+    localStorage.setItem("loginRole", "superCostCenterManager");
+    setAdminChecked(false);
+    setScChecked(true);
+    setCostChecked(false);
+    setManagerChecked(false);
+    permissionRoleAccess(localStorage.getItem("loginRole"));
+    getUserMenu(user.managerMenus);
+    localStorage.setItem("type", "team");
+    localStorage.setItem("flag", "0");
+    history.push("/dashboard/storedashboard#team");
+  };
+
+  const costHandler = () => {
+    localStorage.setItem("loginRole", "costCenterManager");
+    setAdminChecked(false);
+    setScChecked(false);
+    setCostChecked(true);
+    setManagerChecked(false);
+    permissionRoleAccess(localStorage.getItem("loginRole"));
+    getUserMenu(user.managerMenus);
+    localStorage.setItem("type", "team");
+    localStorage.setItem("flag", "0");
+    history.push("/dashboard/storedashboard#team");
+  };
+
+  const managerHandler = () => {
+    localStorage.setItem("loginRole", "manager");
+    setAdminChecked(false);
+    setScChecked(false);
+    setCostChecked(false);
+    setManagerChecked(true);
+    permissionRoleAccess(localStorage.getItem("loginRole"));
+    getUserMenu(user.managerMenus);
+    localStorage.setItem("type", "team");
+    localStorage.setItem("flag", "0");
+    history.push("/dashboard/storedashboard#team");
+  };
 
   return (
     <Fragment>
-      <div className="page-main-header">
+      <div className="page-main-header page-main-header-height">
         <div className="main-header-right row">
           <div className="main-header-left d-lg-none">
             <div className="logo-wrapper">
@@ -82,6 +142,7 @@ const Header = () => {
               {/* <li>
                 <SearchHeader />
               </li> */}
+
               <li>
                 <a onClick={goFull} className="text-dark" href="#!">
                   <Maximize />
@@ -135,7 +196,69 @@ const Header = () => {
 
               <UserMenu />
             </ul>
+            <Row>
+              <Col sm={12} className="role-text-center">
+                {user.loginType == "1" || user.additionalRole == "1" ? (
+                  <React.Fragment>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      name="admin"
+                      checked={adminChecked}
+                      onChange={adminHandler}
+                    />{" "}
+                    <Form.Label>Admin &nbsp; </Form.Label>
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
+                {(user.loginType == "9" || user.additionalRole == "9") &&
+                user.isManager === true ? (
+                  <React.Fragment>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      name="scManager"
+                      checked={scChecked}
+                      onChange={scHandler}
+                    />{" "}
+                    <Form.Label>Super Cost Center Manager &nbsp; </Form.Label>
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
 
+                {(user.loginType == "7" || user.additionalRole == "7") &&
+                user.isManager === true ? (
+                  <React.Fragment>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      name="costManager"
+                      checked={costChecked}
+                      onChange={costHandler}
+                    />{" "}
+                    <Form.Label>Cost Center Manager &nbsp; </Form.Label>
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
+                {user.isManager === true ? (
+                  <React.Fragment>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      name="manager"
+                      checked={managerChecked}
+                      onChange={managerHandler}
+                    />{" "}
+                    <Form.Label> Manager &nbsp; </Form.Label>
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
+              </Col>
+            </Row>
             <div
               className="d-lg-none mobile-toggle pull-right"
               onClick={() => setHeaderbar(!headerbar)}

@@ -1,14 +1,15 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import man from "../../../assets/images/dashboard/userImage.png";
 import { User, LogOut, Users, UserPlus } from "react-feather";
 import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
-
+import { Row, Col, Form, Button } from "react-bootstrap";
 // const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
   const { user, getUserMenu, userLogout } = useContext(AppContext);
-  const { viewServiceGroup, groupList } = useContext(PermissionContext);
+  const { viewServiceGroup, groupList, permissionRoleAccess, rolePermission } =
+    useContext(PermissionContext);
   let history = useHistory();
 
   useEffect(() => {
@@ -63,11 +64,12 @@ const UserMenu = () => {
             src={man}
             alt="header-user"
           />
-          {/* <div className="dotted-animation">
+        </div>
+        {/* <div className="dotted-animation">
                         <span className="animate-circle"></span>
                         <span className="main-circle"></span>
                     </div> */}
-        </div>
+
         <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
           <li onClick={handleMenuListProfile}>
             <a href="#profile">
@@ -76,7 +78,7 @@ const UserMenu = () => {
             </a>
           </li>
           {
-            user.adminMenus !== null && (
+            user.adminMenus !== null && rolePermission == "admin" && (
               <li onClick={handleMenuListAdmin}>
                 <a href="#admin">
                   <UserPlus />
@@ -89,14 +91,17 @@ const UserMenu = () => {
             //     <li onClick={handleMenuListTeam}><a href="#javascript"><Users />My Team</a></li>
             // </Fragment>
           }
-          {user.managerMenus !== null && (
-            <li onClick={handleMenuListTeam}>
-              <a href="#team">
-                <Users />
-                My Team
-              </a>
-            </li>
-          )}
+          {user.managerMenus !== null &&
+            (rolePermission == "superCostCenterManager" ||
+              rolePermission == "costCenterManager" ||
+              rolePermission == "manager") && (
+              <li onClick={handleMenuListTeam}>
+                <a href="#team">
+                  <Users />
+                  My Team
+                </a>
+              </li>
+            )}
           {user.clusterManagerMenus !== null && (
             <li onClick={handleMenuListCluster}>
               <a href="#leader">

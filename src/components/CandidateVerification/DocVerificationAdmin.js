@@ -13,6 +13,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { OfferContext } from "../../context/OfferState";
+import { PermissionContext } from "../../context/PermissionState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -65,6 +66,7 @@ const DocVerification = () => {
     adhaarVerificationNotification,
   } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
@@ -350,7 +352,8 @@ const DocVerification = () => {
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </label>
-                        ) : item.documentType === 1 && user.role === "ADMIN" ? (
+                        ) : item.documentType === 1 &&
+                          rolePermission == "admin" ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               AadhaarID
@@ -446,7 +449,7 @@ const DocVerification = () => {
                       <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : (
                       <td className=" buttonMargin1">
-                        {user.role === "ADMIN" &&
+                        {rolePermission == "admin" &&
                         item.documentType === 1 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -463,7 +466,7 @@ const DocVerification = () => {
                         ) : (
                           ""
                         )}
-                        {user.role === "ADMIN" &&
+                        {rolePermission == "admin" &&
                         item.documentType === 5 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -481,7 +484,7 @@ const DocVerification = () => {
                         ) : (
                           ""
                         )}
-                        {user.role === "ADMIN" &&
+                        {rolePermission == "admin" &&
                         item.documentType === 4 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -499,7 +502,7 @@ const DocVerification = () => {
                         ) : (
                           ""
                         )}
-                        {user.role === "ADMIN" &&
+                        {rolePermission == "admin" &&
                         item.documentType === 1 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -522,7 +525,7 @@ const DocVerification = () => {
                           >
                             Disapprove
                           </button>
-                        ) : user.role === "ADMIN" &&
+                        ) : rolePermission == "admin" &&
                           item.documentType === 5 &&
                           item.adminStatus === 0 ? (
                           <button
@@ -548,7 +551,7 @@ const DocVerification = () => {
                         ) : (
                           ""
                         )}
-                        {user.role === "ADMIN" &&
+                        {rolePermission == "admin" &&
                         item.documentType === 4 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -751,7 +754,7 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" &&
+      {rolePermission == "admin" &&
         personalInfoData.contractType !== "Internship" &&
         (state.adminVerificationStatus === 1 ||
           state.adminVerificationStatus === 2) && (
@@ -789,7 +792,7 @@ const DocVerification = () => {
           </Row>
         )}
       {(UANYes || UANNo) &&
-        user.role === "ADMIN" &&
+        rolePermission == "admin" &&
         personalInfoData.contractType !== "Internship" &&
         (state.adminVerificationStatus === 1 ||
           state.adminVerificationStatus === 2) &&

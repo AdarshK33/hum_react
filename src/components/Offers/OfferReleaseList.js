@@ -10,11 +10,14 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
+
 const OfferReleaseList = () => {
   const { candidateView, candidateList, loader, total, viewCandidateId } =
     useContext(OfferContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -123,7 +126,7 @@ const OfferReleaseList = () => {
                       <th scope="col">View</th>
                       {user !== null &&
                       user !== undefined &&
-                      user.role !== "ADMIN" ? (
+                      rolePermission !== "admin" ? (
                         <th scope="col">Action</th>
                       ) : (
                         ""
@@ -170,7 +173,8 @@ const OfferReleaseList = () => {
                               {item.status === 5 ||
                               item.status === 6 ||
                               item.status === 2 ||
-                              item.status === 3 ? (
+                              item.status === 3 ||
+                              item.status === 7 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to="/edit-offer-release">
@@ -194,7 +198,7 @@ const OfferReleaseList = () => {
                             </td>
                             {user !== null &&
                             user !== undefined &&
-                            user.role !== "ADMIN" ? (
+                            rolePermission !== "admin" ? (
                               <td>
                                 {item.overallStatus === 1 &&
                                 item.status === 2 ? (

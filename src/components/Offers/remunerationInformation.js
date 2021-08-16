@@ -130,8 +130,7 @@ const RemunerationInformation = (props) => {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);
     } else if (
-      ((user.role === "ADMIN" &&
-        workInfoViewData.contractType !== "Internship" &&
+      ((workInfoViewData.contractType !== "Internship" &&
         (typeof fixedGross === "undefined" ||
           fixedGross === "" ||
           stipened <= 0 ||
@@ -443,13 +442,13 @@ const RemunerationInformation = (props) => {
               ""
             ) : (
               <Fragment>
-                {user ? (
+                {/* {user ? (
                   user.role === "ADMIN" ? (
                     <Col sm={6}>
-                      <Form.Group as={Row} controlId="formHorizontalEmail">
-                        {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus ( % ){/* </Form.Label> */}
-                        <Col sm={6}>
+                      <Form.Group as={Row} controlId="formHorizontalEmail"> */}
+                {/* <Form.Label column sm={3}> */}
+                {/* Monthly Bonus ( % )</Form.Label> */}
+                {/* <Col sm={6}>
                           <Form.Control
                             className="form-input"
                             type="number"
@@ -474,35 +473,31 @@ const RemunerationInformation = (props) => {
                         </Col>
                       </Form.Group>
                     </Col>
-                  ) : (
+                  ) : ( */}
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    {/* <Form.Label column sm={3}> */}
+                    Monthly Bonus ( % ){/* </Form.Label> */}
                     <Col sm={6}>
-                      <Form.Group as={Row} controlId="formHorizontalEmail">
-                        {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus ( % ){/* </Form.Label> */}
-                        <Col sm={6}>
-                          <Form.Control
-                            className="form-input"
-                            value={monthlyBonus}
-                            type="number"
-                            name="monthlyBonus"
-                            placeholder="0"
-                            readOnly
-                            disabled={disabled}
-                          />
-                          {/* {monthlyBonusError ? (
+                      <Form.Control
+                        className="form-input"
+                        value={monthlyBonus}
+                        type="number"
+                        name="monthlyBonus"
+                        placeholder="0"
+                        readOnly
+                        disabled="true"
+                      />
+                      {/* {monthlyBonusError ? (
                             <p style={{ color: "red" }}>
                               Please Enter the valid Input
                             </p>
                           ) : (
                             ""
                           )} */}
-                        </Col>
-                      </Form.Group>
                     </Col>
-                  )
-                ) : (
-                  ""
-                )}
+                  </Form.Group>
+                </Col>
               </Fragment>
             )}
           </Fragment>
