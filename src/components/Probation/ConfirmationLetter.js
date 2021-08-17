@@ -14,11 +14,21 @@ const ConfirmationLetter = () => {
     cnfLetterData,
     ViewExtensionLetter,
     ViewConfirmationLetter,
+    loader,
   } = useContext(ProbationContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {typeof cnfLetterData !== undefined ? (
+      {loader ? (
+        <div className="loader-box loader" style={{ width: "100% !important" }}>
+          <div className="loader">
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+          </div>
+        </div>
+      ) : typeof cnfLetterData !== undefined ? (
         // {true ? (
         <Fragment>
           <p className="">
@@ -56,7 +66,7 @@ const ConfirmationLetter = () => {
               Thanking You,
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India Pvt Ltd,</b>
+              <b>For {cnfLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

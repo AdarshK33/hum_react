@@ -13,13 +13,14 @@ const initial_state = {
   probationData: {},
   extensionLetterData: {},
   cnfLetterData: {},
+  endLetterData: {},
 };
 
 export const ProbationProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [state, dispatch] = useReducer(ProbationReducer, initial_state);
 
-  const ProbationListView = (days, key, pageNumber, status = 4) => {
+  const ProbationListView = (days, key, pageNumber, status = 7) => {
     setLoader(true);
     client
       .get(
@@ -137,6 +138,26 @@ export const ProbationProvider = (props) => {
         console.log(error);
       });
   };
+
+  const ViewProbationEndLetter = (employeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/probation/end-letter/" + employeeId)
+      .then((response) => {
+        state.endLetterData = response.data.data;
+        setLoader(false);
+        console.log(state.endLetterData);
+        console.log("duesearch", response);
+
+        return dispatch({
+          type: "PROBATION_END_LETTER",
+          payload: state.endLetterData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const changeEmpId = (employeeId) => {
     setLoader(true);
     state.empId = employeeId;
@@ -155,6 +176,8 @@ export const ProbationProvider = (props) => {
         ViewProbationDataById,
         ViewExtensionLetter,
         ViewConfirmationLetter,
+        ViewProbationEndLetter,
+        endLetterData: state.endLetterData,
         extensionLetterData: state.extensionLetterData,
         cnfLetterData: state.cnfLetterData,
         probationData: state.probationData,

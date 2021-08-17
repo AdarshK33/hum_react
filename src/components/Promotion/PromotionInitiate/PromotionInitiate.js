@@ -10,17 +10,21 @@ import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
+import { AppContext } from "../../../context/AppState";
+import calendarImage from "../../../assets/images/calendar-image.png";
+import PromotionLetters from "../PromotionLetter";
+import PromotionSalaryLetters from "../PromotionSalaryLetter";
 
 const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
-  const [position, setPosition] = useState();
+  const [position, setPosition] = useState("");
   const [departmentNew, setDepartmentNew] = useState();
-  const [contractType,setContractType] = useState('')
-  const [currentManager,SetCurrentManager] = useState('')
-  const [contractTypeStatus,setContractTypeStatus] = useState(false)
+  const [contractType, setContractType] = useState("");
+  const [currentManager, SetCurrentManager] = useState("");
+  const [contractTypeStatus, setContractTypeStatus] = useState(false);
 
   const [state, setState] = useState({
     validatedAdminId: "",
@@ -29,6 +33,7 @@ const PromotionInitiate = () => {
     validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
+    company: "",
     costCentre: "",
     costCentreManagerEmail: "",
     costCentreManagerId: "",
@@ -67,9 +72,18 @@ const PromotionInitiate = () => {
   const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
   const [promotionTypeError, setPromotionTypeError] = useState("");
   const [effectiveDateError, setEffectiveDateError] = useState("");
-  const [reportingManagerError,setReportingManagerError] =useState('')
-  const [modelStatus,setModelStatus] = useState(false)
+  const [reportingManagerError, setReportingManagerError] = useState("");
+  const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useContext(AppContext);
+  const [previewLetter, setPreviewLetter] = useState(false);
+  const [letterSent, setLetterSent] = useState(false);
+  const [showPreview, setPreview] = useState(false);
+  const [showSignature, setShowSignature] = useState(false);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [showRelivingModal, setShow] = useState(false);
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -78,20 +92,58 @@ const PromotionInitiate = () => {
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw,managerList, searchByCostCenter, managerData,searchByCostData } =
-    useContext(SeparationContext);
+  const {
+    empResign,
+    withdraw,
+    promotioManagerList,
+    searchByCostCenter,
+    promotionManagerData,
+    searchByCostData,
+  } = useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
-  const { PositionNew, positionNew, PromotionCreate } =
-    useContext(PromotionContext);
+  const {
+    PositionNew,
+    positionNew,
+    PromotionCreate,
+    promotionIdData,
+    generatePromotionLetter,
+    createdPromotion,
+  } = useContext(PromotionContext);
   useEffect(() => {
-    PositionNew();
+    if (createdPromotion) {
+      setModelStatus(true);
+    } else {
+      setModelStatus(false);
+    }
+  }, [createdPromotion]);
+  useEffect(() => {
     departmentView();
   }, []);
+  useEffect(() => {
+    if (
+      state.departmentId !== "" &&
+      state.departmentId !== null &&
+      state.departmentId !== undefined
+    ) {
+      PositionNew(state.departmentId);
+    }
+  }, [departmentNew]);
 
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-
+  useEffect(() => {
+    if (
+      state.costCentre !== "" &&
+      state.costCentre !== null &&
+      state.costCentre !== undefined &&
+      departmentNew !== null &&
+      departmentNew !== undefined &&
+      departmentNew !== ""
+    ) {
+      promotionManagerData(state.costCentre, departmentNew);
+    }
+  }, [departmentNew]);
   useEffect(() => {
     console.log("state.empI", state.employeeId);
     if (
@@ -119,49 +171,50 @@ const PromotionInitiate = () => {
           ? searchByCostData.lastName
           : "";
       state.employeeId = searchByCostData.employeeId;
+      state.company = searchByCostData.company;
       state.empName = searchByCostData.firstName + " " + temp;
       setEmpName(searchByCostData.firstName + " " + temp);
-      state.contractType = searchByCostData.contractType
-      setContractType(searchByCostData.contractType)
-      managerData(searchByCostData.costCentre)
+      state.contractType = searchByCostData.contractType;
+      setContractType(searchByCostData.contractType);
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
       state.oldDepartment = searchByCostData.department;
-     state.currentManagerId = searchByCostData.managerId;
+      state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
-    if(searchByCostData.contractType === "internship"||searchByCostData.contractType === "Internship"){
-      setContractTypeStatus(true)
+      if (
+        searchByCostData.contractType === "internship" ||
+        searchByCostData.contractType === "Internship"
+      ) {
+        setContractTypeStatus(true);
+      }
     }
-  
-  }}, [searchByCostData]);
-  
-  useEffect(()=>{
+  }, [searchByCostData]);
+
+  useEffect(() => {
     if (
       searchByCostData &&
       searchByCostData &&
       searchByCostData !== null &&
       searchByCostData !== undefined &&
       Object.keys(searchByCostData).length !== 0 &&
-      managerList &&
-      managerList &&
-      managerList !== null &&
-      managerList !== undefined &&
-      Object.keys(managerList).length !== 0
+      promotioManagerList &&
+      promotioManagerList &&
+      promotioManagerList !== null &&
+      promotioManagerList !== undefined &&
+      Object.keys(promotioManagerList).length !== 0
     ) {
-   managerList.map((item)=>{
-    if(item.employeeId == searchByCostData.managerId){
-      const temp =
-      item.lastName !== null &&
-      item.lastName !== undefined
-        ? item.lastName
-        : "";
-      state.currentManagerName = item.firstName + " " + temp
-      SetCurrentManager(item.firstName + " " + temp)
-    }})
-  
-  }
-  },[managerList,searchByCostData])
-
+      promotioManagerList.map((item) => {
+        if (item.employeeId == searchByCostData.managerId) {
+          const temp =
+            item.lastName !== null && item.lastName !== undefined
+              ? item.lastName
+              : "";
+          state.currentManagerName = item.firstName + " " + temp;
+          SetCurrentManager(item.firstName + " " + temp);
+        }
+      });
+    }
+  }, [promotioManagerList, searchByCostData]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -185,32 +238,35 @@ const PromotionInitiate = () => {
     }
     var positionId = state.positionId;
 
-    if (positionId == "" || positionId == null || positionId == undefined) {
+    if (positionId === "" || positionId === null || positionId === undefined) {
       setPositionIdError(" Please select the position ");
-      console.log(positionIdError);
+      console.log(positionIdError, positionId);
     } else {
       setPositionIdError("");
     }
 
     var newFixedGross = state.newFixedGross;
     if (
-      newFixedGross !== "" && contractType !== null && contractType !== undefined &&
-      newFixedGross !== null && newFixedGross !== undefined
+      newFixedGross !== "" &&
+      contractType !== null &&
+      contractType !== undefined &&
+      newFixedGross !== null &&
+      newFixedGross !== undefined
     ) {
-      if( contractType === "Parttime" ||contractType === "parttime"){
-        if( newFixedGross < 90 || newFixedGross > 200){
-          setNewFixedGrossError("Value should be between 90 - 200"); 
-        }else{
-          setNewFixedGrossError('')
+      if (contractType === "Parttime" || contractType === "parttime") {
+        if (newFixedGross < 90 || newFixedGross > 200) {
+          setNewFixedGrossError("Value should be between 90 - 200");
+        } else {
+          setNewFixedGrossError("");
         }
-      }else if(contractType === "Permanent" ||contractType === "permanent"){
-          if(newFixedGross <18000){
-        setNewFixedGrossError("Value should be above 18000")
-          }else{
-            setNewFixedGrossError('')
-          }
+      } else if (contractType === "Permanent" || contractType === "permanent") {
+        if (newFixedGross < 18000) {
+          setNewFixedGrossError("Value should be above 18000");
+        } else {
+          setNewFixedGrossError("");
+        }
       }
-    }else{
+    } else {
       setNewFixedGrossError(" Please add new fixed gross");
     }
     var newDepartment = state.newDepartment;
@@ -238,25 +294,23 @@ const PromotionInitiate = () => {
       reportingManagerName == null ||
       reportingManagerName == undefined
     ) {
-      setReportingManagerError(
-        "Please select reporting manager "
-      );
+      setReportingManagerError("Please select reporting manager ");
     } else {
       setReportingManagerError("");
     }
     var effectiveDate = state.effectiveDate;
-    if (state.promotionType == 1 &&
-      effectiveDate == "" ||
+    if (
+      (state.promotionType == 1 && effectiveDate == "") ||
       effectiveDate == null ||
       effectiveDate == undefined
     ) {
-      setEffectiveDateError("Please add  effective date");
+      setEffectiveDateError("Please add promotion effective date");
     } else {
       setEffectiveDateError("");
     }
     var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (state.promotionType == 1 &&
-      salaryEffectiveDate == "" ||
+    if (
+      (state.promotionType == 1 && salaryEffectiveDate == "") ||
       salaryEffectiveDate == null ||
       salaryEffectiveDate == undefined
     ) {
@@ -265,8 +319,7 @@ const PromotionInitiate = () => {
       setSalaryEffectiveDateError("");
     }
 
-   
-console.log(newFixedGrossError,"newFixedGrossError")
+    console.log(newFixedGrossError, "newFixedGrossError");
     if (
       newDepartment !== "" &&
       reason !== "" &&
@@ -289,9 +342,9 @@ console.log(newFixedGrossError,"newFixedGrossError")
     ) {
       const infoData = {
         validatedAdminId: null,
-    validatedAdminName: null,
-    validatedManagerId: null,
-    validatedManagerName: null,
+        validatedAdminName: null,
+        validatedManagerId: null,
+        validatedManagerName: null,
         bonus: 0,
         bonusInPercentage: 0,
         costCentre: state.costCentre,
@@ -306,7 +359,7 @@ console.log(newFixedGrossError,"newFixedGrossError")
         empName: state.empName,
         employeeId: state.employeeId,
         currentManagerId: state.currentManagerId,
-        currentManagerName:state.currentManagerName,
+        currentManagerName: state.currentManagerName,
         contractType: state.contractType,
         newDepartment: state.newDepartment,
         newFixedGross: state.newFixedGross,
@@ -324,37 +377,90 @@ console.log(newFixedGrossError,"newFixedGrossError")
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      if((contractType.toLowerCase()=="parttime") &&
-       state.newFixedGross >=90 && state.newFixedGross <=200){
-     PromotionCreate(infoData);
-      setModelStatus(true)
-       setSubmitted(true);
-    console.log("all okay1", infoData);
-      }else if((contractType.toLowerCase() == "permanent") && 
-      state.newFixedGross > 18000){
-      PromotionCreate(infoData);
-      setModelStatus(true)
-       setSubmitted(true);
-      console.log("all okay2", infoData);
-      }else if(state.promotionType == 0 && 
-        (contractType.toLowerCase()=="parttime"||contractType.toLowerCase()=="permanent")){
-        PromotionCreate(infoData);
-      setModelStatus(true)
-       setSubmitted(true);
+      if (
+        contractType.toLowerCase() == "parttime" &&
+        state.newFixedGross >= 90 &&
+        state.newFixedGross <= 200
+      ) {
+        // setModelStatus(true);
+        setSubmitted(true);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole === "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
+        console.log("all okay1", infoData);
+      } else if (
+        contractType.toLowerCase() == "permanent" &&
+        state.newFixedGross > 18000
+      ) {
+        // setModelStatus(true);
+        setSubmitted(true);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole === "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
+        console.log("all okay2", infoData);
+      } else if (
+        state.promotionType == 0 &&
+        (contractType.toLowerCase() == "parttime" ||
+          contractType.toLowerCase() == "permanent")
+      ) {
+        // setModelStatus(true);
+        setSubmitted(true);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole === "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
         console.log("all okay3", infoData);
-      }else{
+      } else {
         console.log("NOT OK", infoData);
       }
-     }else {
+    } else {
       console.log("NOT OK", empName);
       // toast.error("Data is not filled Properly")
     }
   };
-  console.log(managerList,"managerList")
-  const handleCloseValue = ()=>{
-    setModelStatus(false)
-    setContractTypeStatus(false)
-  }
+  console.log(promotioManagerList, "promotioManagerList");
+  const handleCloseValue = () => {
+    setModelStatus(false);
+    setContractTypeStatus(false);
+  };
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -386,17 +492,26 @@ console.log(newFixedGrossError,"newFixedGrossError")
       if (state.promotionType == 0) {
         setState({ ...state, promotionType: 1 });
       } else {
-        setState({ ...state, promotionType: 0 ,salaryEffectiveDate:null,newFixedGross:0});
+        setState({
+          ...state,
+          promotionType: 0,
+          salaryEffectiveDate: null,
+          newFixedGross: 0,
+        });
       }
     }
   };
   const handlePromotionTypeNo = (e) => {
     if (e.target.value === "no") {
       if (state.promotionType == 0) {
-
         setState({ ...state, promotionType: 1 });
       } else {
-        setState({ ...state, promotionType: 0 ,salaryEffectiveDate:null,newFixedGross:0});
+        setState({
+          ...state,
+          promotionType: 0,
+          salaryEffectiveDate: null,
+          newFixedGross: 0,
+        });
       }
     }
   };
@@ -431,69 +546,247 @@ console.log(newFixedGrossError,"newFixedGrossError")
         }
       });
       console.log(e.target.value, state, "value666");
-    }else if (e.target.name === "reportingManagerId") {
-      managerList.map((item) => {
+    } else if (e.target.name === "reportingManagerId") {
+      promotioManagerList.map((item) => {
         const temp =
-        item.lastName !== null &&
-        item.lastName !== undefined
-          ? item.lastName
-          : "";
-        if ((item.firstName + " " + temp) === e.target.value) {
+          item.lastName !== null && item.lastName !== undefined
+            ? item.lastName
+            : "";
+        if (item.firstName + " " + temp === e.target.value) {
           setState({
             ...state,
             reportingManagerId: item.employeeId,
-    reportingManagerName:item.firstName + " " + temp,
+            reportingManagerName: item.firstName + " " + temp,
           });
         }
       });
       console.log(e.target.value, state, "value666");
-    }else{
+    } else {
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
     }
-  
+
     console.log(state, "state");
+  };
+  const submitfinalRelivingLetter = (e) => {
+    e.preventDefault();
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
+    ) {
+      const infoData = {
+        adminValidatedDate: promotionIdData["adminValidatedDate"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        managerValidatedDate: promotionIdData["managerValidatedDate"],
+        validatedManagerId: promotionIdData["validatedManagerId"],
+        validatedManagerName: promotionIdData["validatedManagerName"],
+        bonus: promotionIdData["bonus"],
+        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
+        effectiveDate: state.effectiveDate,
+        emailId: null,
+        empName: state.empName,
+        employeeId: state.employeeId,
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
+        newDepartment: state.newDepartment,
+        newFixedGross: state.newFixedGross,
+        oldDepartment: state.oldDepartment,
+        oldFixedGross: state.oldFixedGross,
+        oldPosition: state.oldPosition,
+        positionId: state.positionId,
+        promotedPosition: state.promotedPosition,
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: null,
+        reason: state.reason,
+        relocationBonus: state.relocationBonus,
+        salaryEffectiveDate: state.salaryEffectiveDate,
+        promotionType: state.promotionType,
+        remarks: promotionIdData["remarks"],
+        status: 3,
+      };
+      PromotionCreate(infoData);
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+      // setSuccessModal(true);
+      // finalSubmitOfferLetter(employeeData.employeeId);
+    }
+  };
+  const previewLetterViewing = (e) => {
+    e.preventDefault();
+    if (promotionIdData !== null && promotionIdData !== undefined) {
+      // fetchRelievingLetterData(employeeData.employeeId);
+      generatePromotionLetter(promotionIdData.promotionId);
+
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
+  };
+  const generateLetterClick = (e) => {
+    e.preventDefault();
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
+    ) {
+      generatePromotionLetter(promotionIdData.promotionId);
+      handleShow();
+      setPreviewGeneratedLetter(true);
+    } else {
+      console.log("promotionIdData->", promotionIdData);
+    }
+  };
+
+  const handleShow = () => {
+    console.log("inside show moodal");
+    setShow(true);
+  };
+  const handleRelivingClose = () => setShow(false);
+  const digitalSignature = () => {
+    setShowSignature(true);
+  };
+  const saveOfferLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
   };
 
   return (
     <Fragment>
-      <ToastContainer/>
+      <ToastContainer />
+
+      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body className="mx-auto">
+            <label>Promotion Letter has been sent to the employee</label>
+            <div className="text-center mb-2">
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleRelivingClose}>Close</Button>
+              </Link>
+            </div>
+          </Modal.Body>
+        ) : previewLetter || showRelivingModal ? (
+          <Modal.Body>
+            {true ? (
+              <div>
+                {promotionIdData.promotionType === 0 ? (
+                  <PromotionLetters />
+                ) : promotionIdData.promotionType === 1 ? (
+                  <PromotionSalaryLetters />
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            <br></br>
+            <Row>
+              {showSignature ? (
+                <Fragment>
+                  <br></br>
+                  <img
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                </Fragment>
+              ) : (
+                <>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={digitalSignature}
+                  >
+                    Add digital signature
+                  </button>
+                </>
+              )}
+            </Row>
+            {showSignature && !previewLetter ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={saveOfferLetter}
+                  >
+                    Save Changes
+                  </button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
       <Modal
-          show={contractTypeStatus}
-           onHide={handleCloseValue}
-          size="md"
-          centered
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              This employee cannot be promoted.
-            
-            </label>
-            <div className="text-center mb-2">
-             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
-            </div>
-          </Modal.Body>
-        </Modal> 
-        <Modal
-          show={modelStatus}
-           onHide={handleCloseValue}
-          size="md"
-          centered
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              Your request has been sent to manager.
-            
-            </label>
-            <div className="text-center mb-2">
-             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
-            </div>
-          </Modal.Body>
-        </Modal> 
+        show={contractTypeStatus}
+        onHide={handleCloseValue}
+        size="md"
+        centered
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label className="text-center">
+            This employee cannot be promoted.
+          </label>
+          <div className="text-center mb-2">
+            <Link to={"/promotion-list"}>
+              <Button onClick={handleCloseValue}>Close</Button>
+            </Link>
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal show={modelStatus} onHide={handleCloseValue} size="md" centered>
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label className="text-center">
+            {user !== null &&
+            user !== undefined &&
+            Object.keys(user).length !== 0 &&
+            (user.loginType == 7 || user.additionalRole === "7")
+              ? "Your request has been sent to admin."
+              : user !== null &&
+                user !== undefined &&
+                Object.keys(user).length !== 0 &&
+                (user.additionalRole === "1" || user.loginType == "1")
+              ? "Your request has been saved successfully."
+              : "Your request has been sent to cost center manager."}
+          </label>
+          <div className="text-center mb-2">
+            {user !== null &&
+            user !== undefined &&
+            Object.keys(user).length !== 0 &&
+            (user.additionalRole === "1" || user.loginType == "1") ? (
+              <Button onClick={handleCloseValue}>Close</Button>
+            ) : (
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleCloseValue}>Close</Button>
+              </Link>
+            )}
+          </div>
+        </Modal.Body>
+      </Modal>
       <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
       <div className="container-fluid">
         <div className="row">
@@ -567,9 +860,9 @@ console.log(newFixedGrossError,"newFixedGrossError")
                           </Col>
 
                           <Col sm={6}>
-                            <label>Position:</label>
+                            <label>Employee Id:</label>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.oldPosition}
+                              &nbsp;&nbsp; {state.employeeId}
                             </label>
                           </Col>
                         </Row>
@@ -598,50 +891,18 @@ console.log(newFixedGrossError,"newFixedGrossError")
                             </label>
                           </Col>
                         </Row>
-
                         <Row
                           style={{
                             marginLeft: "2rem",
                             marginTop: "1rem",
-                            marginBottom: "1rem",
+                            marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={2}>
-                            <label>New Position </label>
-                          </Col>
-                          <Col sm={8}>
-                            <Form.Group>
-                              <Form.Control
-                                as="select"
-                                name="positionId"
-                                defaultValue={position}
-                                style={
-                                  positionIdError
-                                    ? { borderColor: "red" }
-                                    : { borderRadius: "5px" }
-                                }
-                                onChange={(e) => changeHandler(e)}
-                              >
-                                <option value="">Select Position</option>
-                                {positionNew !== null &&
-                                  positionNew !== undefined &&
-                                  positionNew.length > 0 &&
-                                  positionNew.map((item, index) => {
-                                    return (
-                                      <option key={index + 1}>
-                                        {item.position}
-                                      </option>
-                                    );
-                                  })}
-                              </Form.Control>
-                              {positionIdError ? (
-                                <p style={{ color: "red" }}>
-                                  {positionIdError}
-                                </p>
-                              ) : (
-                                ""
-                              )}
-                            </Form.Group>
+                          <Col sm={6}>
+                            <label>Position:</label>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.oldPosition}
+                            </label>
                           </Col>
                         </Row>
                         <Row
@@ -696,17 +957,62 @@ console.log(newFixedGrossError,"newFixedGrossError")
                             marginBottom: "1rem",
                           }}
                         >
+                          <Col sm={2}>
+                            <label>New Position </label>
+                          </Col>
+                          <Col sm={8}>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="positionId"
+                                defaultValue={position}
+                                style={
+                                  positionIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Position</option>
+                                {positionNew !== null &&
+                                  positionNew !== undefined &&
+                                  positionNew.length > 0 &&
+                                  positionNew.map((item, index) => {
+                                    return (
+                                      <option key={index + 1}>
+                                        {item.position}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {positionIdError ? (
+                                <p style={{ color: "red" }}>
+                                  {positionIdError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
                           <Col sm={4}>
-                          <div>
-                            <label>
-                              {" "}
-                              Current Manager :
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{currentManager}
+                            <div>
+                              <label>
+                                {" "}
+                                Current Manager :
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{currentManager}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>   
+                            </div>
+                          </Col>
                           <Col sm={2}>
                             <label>Reporting Manager </label>
                           </Col>
@@ -724,15 +1030,15 @@ console.log(newFixedGrossError,"newFixedGrossError")
                                 onChange={(e) => changeHandler(e)}
                               >
                                 <option value="">Select Manager</option>
-                                {managerList !== null &&
-                                  managerList !== undefined &&
-                                  managerList.length > 0 &&
-                                  managerList.map((item, index) => {
+                                {promotioManagerList !== null &&
+                                  promotioManagerList !== undefined &&
+                                  promotioManagerList.length > 0 &&
+                                  promotioManagerList.map((item, index) => {
                                     const temp =
-                                    item.lastName !== null &&
-                                    item.lastName !== undefined
-                                      ? item.lastName
-                                      : "";
+                                      item.lastName !== null &&
+                                      item.lastName !== undefined
+                                        ? item.lastName
+                                        : "";
                                     return (
                                       <option key={index + 1}>
                                         {item.firstName + " " + temp}
@@ -749,7 +1055,6 @@ console.log(newFixedGrossError,"newFixedGrossError")
                               )}
                             </Form.Group>
                           </Col>
-                         
                         </Row>
                         <Row
                           style={{
@@ -760,7 +1065,7 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         >
                           <Col sm={5}>
                             <label>
-                            Is this employee is applicable for salary hike{" "}
+                              Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -818,7 +1123,16 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         >
                           <Col sm={1}>
                             <div>
-                              <label>Fixed Gross{`${(contractType =="parttime" ||contractType =="Parttime")?"(per/hr)":''}`}:</label>
+                              <label>
+                                Fixed Gross
+                                {`${
+                                  contractType == "parttime" ||
+                                  contractType == "Parttime"
+                                    ? "(per/hr)"
+                                    : ""
+                                }`}
+                                :
+                              </label>
                             </div>
                           </Col>
                           <Col sm={1}>
@@ -826,89 +1140,106 @@ console.log(newFixedGrossError,"newFixedGrossError")
                               &nbsp;&nbsp; {state.oldFixedGross}
                             </label>
                           </Col>
-                          {state.promotionType==1?(
-                           <>
-                          <Col sm={2}>
-                            <div>
-                              <label>New Fixed Gross{`${(contractType =="parttime" ||contractType =="Parttime")?"(per/hr)":''}`}:</label>
-                            </div>
-                          </Col>
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    type="text"
-                                    placeholder=""
-                                    required
-                                    name="newFixedGross"
-                                    value={state.newFixedGross}
-                                    onChange={(e) => changeHandler(e)}
-                                    style={
-                                      newFixedGrossError
-                                        ? { borderColor: "red" }
-                                        : { borderRadius: "5px" }
-                                    }
-                                  />
-                                </Form.Group>
-                              )}
-                                 {/* <p style={{ color: "red" }}>
+                          {state.promotionType == 1 ? (
+                            <>
+                              <Col sm={2}>
+                                <div>
+                                  <label>
+                                    New Fixed Gross
+                                    {`${
+                                      contractType == "parttime" ||
+                                      contractType == "Parttime"
+                                        ? "(per/hr)"
+                                        : ""
+                                    }`}
+                                    :
+                                  </label>
+                                </div>
+                              </Col>
+                              <Col sm={2}>
+                                <div>
+                                  {false ? (
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {}
+                                    </label>
+                                  ) : (
+                                    <Form.Group>
+                                      <Form.Control
+                                        type="text"
+                                        placeholder=""
+                                        required
+                                        name="newFixedGross"
+                                        value={state.newFixedGross}
+                                        onChange={(e) => changeHandler(e)}
+                                        style={
+                                          newFixedGrossError
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
+                                      />
+                                    </Form.Group>
+                                  )}
+                                  {/* <p style={{ color: "red" }}>
                                {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >200)?"parttime invalid":
                                (contractType == "permanent" && state.newFixedGross < 18000)?"permanent":""}
                              </p>  */}
-                              {newFixedGrossError ? (
-                               <p style={{ color: "red" }}>
-                               {newFixedGrossError}
-                             </p>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          </Col>
-                       
-
-                         <Col sm={2}>
-                            <div>
-                              <label>Salary Effective Date :</label>
-                            </div>
-                          </Col>
-
-                          <Col sm={2}>
-                            <div>
-                              <Form.Group>
-                                <div className={""}>
-                                  <DatePicker
-                                    className="form-control onBoard-view"
-                                    selected={state.salaryEffectiveDate}
-                                    style={
-                                      salaryEffectiveDateError
-                                      ? { borderColor: "red" }
-                                      : { borderRadius: "5px" }
-                                    }
-                                    name="salaryEffectiveDate"
-                                    minDate={moment().toDate()}
-                                    required
-                                    onChange={(e) => dateOfBirthHandler1(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
-                                  />
+                                  {newFixedGrossError ? (
+                                    <p style={{ color: "red" }}>
+                                      {newFixedGrossError}
+                                    </p>
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
-                              </Form.Group>
-                            </div>
-                            {salaryEffectiveDateError ? (
-                              <p style={{ color: "red" }}>
-                                {salaryEffectiveDateError}
-                              </p>
-                            ) : (
-                              ""
-                            )}
-                          </Col>
-                          </>):''}
+                              </Col>
+
+                              <Col sm={2}>
+                                <div>
+                                  <label>Salary Effective Date :</label>
+                                </div>
+                              </Col>
+
+                              <Col sm={2}>
+                                <div>
+                                  <Form.Group>
+                                    <div className={""}>
+                                      <DatePicker
+                                        className="form-control onBoard-view"
+                                        selected={state.salaryEffectiveDate}
+                                        style={
+                                          salaryEffectiveDateError
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
+                                        name="salaryEffectiveDate"
+                                        // minDate={moment().toDate()}
+                                        required
+                                        onChange={(e) => dateOfBirthHandler1(e)}
+                                        dateFormat="yyyy-MM-dd"
+                                        placeholderText="YYYY-MM-DD"
+                                        minDate={
+                                          new Date(
+                                            new Date().setMonth(
+                                              new Date().getMonth() - 2
+                                            )
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  </Form.Group>
+                                </div>
+                                {salaryEffectiveDateError ? (
+                                  <p style={{ color: "red" }}>
+                                    {salaryEffectiveDateError}
+                                  </p>
+                                ) : (
+                                  ""
+                                )}
+                              </Col>
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </Row>
                         <Row
                           style={{
@@ -919,7 +1250,7 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         >
                           <Col sm={2}>
                             <div>
-                              <label> Effective Date :</label>
+                              <label>Promotion Effective Date :</label>
                             </div>
                           </Col>
 
@@ -931,17 +1262,23 @@ console.log(newFixedGrossError,"newFixedGrossError")
                                     className="form-control onBoard-view"
                                     style={
                                       effectiveDateError
-                                      ? { borderColor: "red" }
-                                      : { borderRadius: "5px" }
+                                        ? { borderColor: "red" }
+                                        : { borderRadius: "5px" }
                                     }
                                     selected={state.effectiveDate}
                                     name="effectiveDate"
-                                    minDate={moment().toDate()}
+                                    // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
+                                    minDate={
+                                      new Date(
+                                        new Date().setMonth(
+                                          new Date().getMonth() - 2
+                                        )
+                                      )
+                                    }
                                   />
                                 </div>
                               </Form.Group>
@@ -1021,19 +1358,116 @@ console.log(newFixedGrossError,"newFixedGrossError")
                         <Row>
                           <Col
                             style={{
-                              marginTop: "2rem",
                               marginBottom: "2rem",
                               textAlign: "center",
                             }}
                           >
-                            <button
-                              className={
-                                submitted ? "confirmButton" : "stepperButtons"
-                              }
-                              onClick={submitHandler}
+                            <div
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
-                              Submit
-                            </button>
+                              {true ? (
+                                <button
+                                  disabled={
+                                    submitted ||
+                                    (promotionIdData !== null &&
+                                      promotionIdData !== undefined &&
+                                      Object.keys(promotionIdData).length !==
+                                        0 &&
+                                      promotionIdData.status === 5)
+                                  }
+                                  className={
+                                    submitted ||
+                                    (promotionIdData !== null &&
+                                      promotionIdData !== undefined &&
+                                      Object.keys(promotionIdData).length !==
+                                        0 &&
+                                      promotionIdData.status === 5)
+                                      ? "confirmButton"
+                                      : "stepperButtons"
+                                  }
+                                  onClick={submitHandler}
+                                >
+                                  Submit
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {(showPreview === true || !saveLetter) &&
+                              user !== null &&
+                              user !== undefined &&
+                              Object.keys(user).length !== 0 &&
+                              (user.additionalRole === "1" ||
+                                user.loginType == "1") &&
+                              promotionIdData !== null &&
+                              promotionIdData !== undefined &&
+                              Object.keys(promotionIdData).length !== 0 &&
+                              (promotionIdData.status === 1 ||
+                                promotionIdData.status === 5) ? (
+                                <button
+                                  // disabled={!submitted}
+                                  className={"LettersProbButtons"}
+                                  onClick={generateLetterClick}
+                                >
+                                  Generate Promotion Letter
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {user !== null &&
+                              user !== undefined &&
+                              Object.keys(user).length !== 0 &&
+                              (user.additionalRole === "1" ||
+                                user.loginType == "1") &&
+                              saveLetter &&
+                              previewGeneratedLetter ? (
+                                <button
+                                  className={"LettersProbButtons"}
+                                  onClick={previewLetterViewing}
+                                >
+                                  Preview Promotion Letter
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {user !== null &&
+                                user !== undefined &&
+                                Object.keys(user).length !== 0 &&
+                                (user.additionalRole === "1" ||
+                                  user.loginType == "1") &&
+                                saveLetter &&
+                                previewGeneratedLetter === true && (
+                                  <div className="preview-section">
+                                    <br></br>
+                                    <br></br>
+                                    <img
+                                      src={calendarImage}
+                                      alt="calendar"
+                                      width="200px"
+                                    />
+                                    <br></br>
+                                    <br></br>
+                                    {true ? (
+                                      <button
+                                        disabled={letterSent}
+                                        className={
+                                          letterSent
+                                            ? " confirmButton "
+                                            : "stepperButtons"
+                                        }
+                                        onClick={submitfinalRelivingLetter}
+                                      >
+                                        Submit
+                                      </button>
+                                    ) : (
+                                      ""
+                                    )}
+                                  </div>
+                                )}
+                            </div>
                           </Col>
                         </Row>
                       </Col>

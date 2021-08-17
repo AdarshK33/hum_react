@@ -26,6 +26,7 @@ const initial_state = {
   updateAdminFinanceClearanceList: [],
   empResignData: [],
   managerList: [],
+  promotioManagerList:[],
   modeOfResponse: [],
   reason: {},
   searchByCostData: [],
@@ -140,15 +141,10 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const viewAdminITClearanceList = (
-    itStatus,
-    key,
-    page,
-    costCenter
-  ) => {
-      // financeStatus +
-          // "&itStatus=" +
-    console.log( itStatus, key, page, costCenter, "viewAdminIt");
+  const viewAdminITClearanceList = (itStatus, key, page, costCenter) => {
+    // financeStatus +
+    // "&itStatus=" +
+    console.log(itStatus, key, page, costCenter, "viewAdminIt");
     client
       .get(
         "/api/v1/separation/full-and-final/view/no-due-clearance?itStatus=" +
@@ -475,6 +471,16 @@ export const SeparationProvider = (props) => {
       });
   };
 
+  const promotionManagerData = (costCenter,department) => {
+    return client
+      .get(`api/v1/employee/view/managers/costCentre/department?department=${department}&storeId=${costCenter}`)
+      .then((response) => {
+        console.log(response, "managerData response");
+        state.promotioManagerList = response.data.data;
+        return dispatch({ type: "PROMOTION_MANAGER_LIST", payload: state.promotioManagerList });
+      });
+  };
+
   const modeOfSeparation = () => {
     return client
       .get("api/v1/mode-of-separation/view")
@@ -532,7 +538,7 @@ export const SeparationProvider = (props) => {
   };
 
   const MakeCostCenterDataNull = () => {
-    state.searchByCostData = null;
+    state.searchByCostData = {};
     return dispatch({
       type: "SEARCH_BY_COST_DATA",
       payload: state.searchByCostData,
@@ -556,7 +562,8 @@ export const SeparationProvider = (props) => {
         NoDueClearanceClearanceExport,
         FinanceClearanceExport,
         searchByCostCenter,
-
+        promotionManagerData,
+        promotioManagerList:state.promotioManagerList,
         financeClearanceExport: state.financeClearanceExport,
 
         updateAdminFinanceClearance: state.updateAdminFinanceClearance,

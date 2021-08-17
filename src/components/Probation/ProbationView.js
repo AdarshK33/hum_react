@@ -239,9 +239,11 @@ const ProbationView = () => {
                                   className="itemResult"
                                 >
                                   {/* &nbsp;&nbsp;{" "} */}
-                                  {probationData.status == 1
+                                  {probationData.status == 1 ||
+                                  probationData.status == 5
                                     ? "Confirmed"
-                                    : probationData.status == 2
+                                    : probationData.status == 2 ||
+                                      probationData.status == 6
                                     ? "Extended"
                                     : probationData.status == 3
                                     ? "Rejected"

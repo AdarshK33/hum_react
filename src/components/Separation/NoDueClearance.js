@@ -202,11 +202,12 @@ const NoDueClearance = () => {
           costCenter
         );
       } else if (
-        formData.itClearanceStatus == 1
+        formData.itClearanceStatus == 1 &&
+        formData.itAmount == 0
       ) {
         console.log(formData,"1")
 
-        formData['disabled'] = true
+        formData['disabled'] = false
         setCleranceData(formData);
         updateITClearanceList(
           formData,
@@ -230,7 +231,7 @@ const NoDueClearance = () => {
           costCenter
         );
       } else {
-        toast.error("Please enter IT-remarks");
+        toast.error(formData.itClearanceStatus == 1?"Please enter IT-remarks and ItAmount should be zero":"Please enter IT-remarks");
       }
     } else {
       toast.error("please enter IT status and remarks");

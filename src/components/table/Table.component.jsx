@@ -43,7 +43,7 @@ const TableComponent = ({ tableHeaders, tableBody }) => {
                   } else if (key === "action") {
                     return (
                       <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                        <Row>
+                        <Row className="text-center">
                           {Object.entries(value).map(([actKey, actValue]) => {
                             if (actValue.link !== "") {
                               return (

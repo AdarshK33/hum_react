@@ -61,8 +61,7 @@ const PromotionList = () => {
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
       promotionListView(searchValue, pageNumber - 1);
-    }
-    if (promotionStatus === "Pending") {
+    } else if (promotionStatus === "Pending") {
       promotionListView("all", pageNumber - 1, 0);
     } else if (promotionStatus === "In Progress") {
       promotionListView("all", pageNumber - 1, 1);
@@ -70,6 +69,8 @@ const PromotionList = () => {
       promotionListView("all", pageNumber - 1, 3);
     } else if (promotionStatus === "Rejected") {
       promotionListView("all", pageNumber - 1, 4);
+    } else if (promotionStatus === "Approve In Progress") {
+      promotionListView("all", pageNumber - 1, 5);
     } else {
       promotionListView("all", pageNumber - 1);
     }
@@ -86,7 +87,7 @@ const PromotionList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      promotionListView(searchValue, 0);
+      promotionListView(searchValue, pageCount);
     } else {
       promotionListView("all", 0);
     }
@@ -112,6 +113,8 @@ const PromotionList = () => {
       promotionListView("all", 0, 3);
     } else if (e.target.value === "Rejected") {
       promotionListView("all", 0, 4);
+    } else if (e.target.value === "Approve In Progress") {
+      promotionListView("all", 0, 5);
     } else {
       promotionListView("all", 0);
     }
@@ -200,6 +203,9 @@ const PromotionList = () => {
                             <option value="In Progress">In Progress</option>
                             <option value="Approved">Approved</option>
                             <option value="Rejected">Rejected</option>
+                            <option value="Approve In Progress">
+                              Action Required
+                            </option>
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -283,10 +289,34 @@ const PromotionList = () => {
                             <td>{item.oldPosition}</td>
                             <td>{item.promotedPosition}</td>
                             <td>{item.promotionDate}</td>
-                            <td>{item.validatedManagerName}</td>
-                            <td>{item.managerValidatedDate}</td>
-                            <td>{item.validatedAdminName}</td>
-                            <td>{item.adminValidatedDate}</td>
+                            <td>
+                              {item.validatedManagerName !== null &&
+                              item.validatedManagerName !== undefined &&
+                              item.validatedManagerName !== ""
+                                ? item.validatedManagerName
+                                : "NA"}
+                            </td>
+                            <td>
+                              {item.managerValidatedDate !== null &&
+                              item.managerValidatedDate !== undefined &&
+                              item.managerValidatedDate !== ""
+                                ? item.managerValidatedDate
+                                : "NA"}
+                            </td>
+                            <td>
+                              {item.validatedAdminName !== null &&
+                              item.validatedAdminName !== undefined &&
+                              item.validatedAdminName !== ""
+                                ? item.validatedAdminName
+                                : "NA"}
+                            </td>
+                            <td>
+                              {item.adminValidatedDate !== null &&
+                              item.adminValidatedDate !== undefined &&
+                              item.adminValidatedDate !== ""
+                                ? item.adminValidatedDate
+                                : "NA"}
+                            </td>
                             <td>
                               {/* {item.statusDesc} */}
                               {/* {item.status == 0?"Pending":item.status ==1? "Approved By Admin":
@@ -301,6 +331,8 @@ const PromotionList = () => {
                                 ? "Approved"
                                 : item.status == 4
                                 ? "Rejected"
+                                : item.status == 5
+                                ? "Action Required"
                                 : ""}
                             </td>
                             <td>
@@ -315,7 +347,23 @@ const PromotionList = () => {
 
                             {user !== null &&
                             user !== undefined &&
-                            rolePermission == "admin" ? (
+                            user.employeeId === item.initiatedBy ? (
+                              <td>
+                                {item.status === 1 || item.status === 5 ? (
+                                  <Link to={"/promotion/" + item.employeeId}>
+                                    <Edit2
+                                      onClick={() => {
+                                        ViewPromotionById(item.promotionId);
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : user !== null &&
+                              user !== undefined &&
+                              rolePermission == "admin" ? (
                               <td>
                                 {item.status === 2 ? (
                                   <Link
@@ -354,24 +402,10 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) : user !== null &&
-                              user !== undefined &&
-                              rolePermission == "manager" ? (
-                              <td>
-                                {item.status === 1 ? (
-                                  <Link to={"/promotion/" + item.employeeId}>
-                                    <Edit2
-                                      onClick={() => {
-                                        ViewPromotionById(item.promotionId);
-                                      }}
-                                    />
-                                  </Link>
-                                ) : (
-                                  <Edit2 />
-                                )}
-                              </td>
                             ) : (
-                              ""
+                              <td>
+                                <Edit2 />
+                              </td>
                             )}
                           </tr>
                         </tbody>

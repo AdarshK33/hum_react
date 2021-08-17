@@ -7,7 +7,7 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
-
+import {AppContext} from "../../context/AppState"
 const ExitListing = () => {
   const {
     EmployeeSeparationExitList,
@@ -19,14 +19,16 @@ const ExitListing = () => {
     loader,
     total,
     changeEmployeeId,
+    ViewEmployeeProfile
   } = useContext(EmployeeSeparationContext);
+  const { user } = useContext(AppContext);
 
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListExitView("all", pageCount,9);
+    EmployeeSeparationListExitView("all", pageCount, 9);
   }, []);
 
   console.log("---->", EmployeeSeparationExitList);
@@ -71,7 +73,9 @@ const ExitListing = () => {
 
             ModeOfSeparationData[i].modeOfSeparationReasonList.map(
               (item1, j) => {
-                if (EmployeeSeparationExitList[r].modeOfSeparationReasonId === 0) {
+                if (
+                  EmployeeSeparationExitList[r].modeOfSeparationReasonId === 0
+                ) {
                   EmployeeSeparationExitList[r].modeOfSeparationReasonId = "";
                 } else if (
                   EmployeeSeparationExitList[r].modeOfSeparationReasonId ===
@@ -96,7 +100,7 @@ const ExitListing = () => {
       setCurrentRecords(EmployeeSeparationExitList);
     }
   }, [EmployeeSeparationExitList, ModeOfSeparationData]);
-
+console.log(user,"user")
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -110,9 +114,9 @@ const ExitListing = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListExitView(searchValue, pageNumber - 1,9);
+      EmployeeSeparationListExitView(searchValue, pageNumber - 1, 9);
     } else {
-      EmployeeSeparationListExitView("all", pageNumber - 1,9);
+      EmployeeSeparationListExitView("all", pageNumber - 1, 9);
     }
     setCurrentRecords(EmployeeSeparationExitList);
   };
@@ -124,9 +128,9 @@ const ExitListing = () => {
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      EmployeeSeparationListExitView(searchValue, pageCount,9);
+      EmployeeSeparationListExitView(searchValue, pageCount, 9);
     } else {
-      EmployeeSeparationListExitView("all", pageCount,9);
+      EmployeeSeparationListExitView("all", pageCount, 9);
     }
   };
 
@@ -156,7 +160,7 @@ const ExitListing = () => {
                   className="title_bar"
                   style={{ textAlign: "center", fontSize: "larger" }}
                 >
-                  <b>EMPLOYEE SEPARATION LISTING</b>
+                  <b>EMPLOYEE SEPARATION LISTING ..</b>
 
                   {/* <div className="job-filter">
                   <div className="faq-form mr-2">
@@ -239,11 +243,70 @@ const ExitListing = () => {
                               <td>{item.lastWorkingDate}</td>
                               <td>{item.reasonForResignation}</td>
                               <td>{item.managerName}</td>
-                              <td>{item.contractType.toLowerCase() === 'internship' ?"NA":
-                            (item.department == "AFS" ||item.department == "IT" ||item.department == "Legal" ||item.department == "Finance")?2:1}</td>
+                              <td>
+                                {item.contractType.toLowerCase() ===
+                                "internship"
+                                  ? "NA"
+                                  : item.department == "AFS" ||
+                                    item.department == "IT" ||
+                                    item.department == "Legal" ||
+                                    item.department == "Finance"
+                                  ? 2
+                                  : 1}
+                              </td>
 
                               <td>
-                                {(item.status === 3||item.status === 5)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
+                              {/* {(item !== null &&
+                                item !== undefined &&
+                                Object.keys(item).length !== 0)?(
+                                (item.loginType == 7 || item.additionalRole == 7) && item.isManager === true?(
+                                  (item.status === 2 ||
+                                    item.status === 3 ||
+                                      item.status === 5)?(
+                                        <Edit2 />
+                                            ) : (
+                                                <Link
+                        to={"/exit-action/" + item.employeeId}
+                                    >
+                                        <Edit2
+                                            onClick={() => {
+                                        fetchEmployeeDetails(
+                          item.employeeId
+                                        );
+                                            }}
+                          />
+                      </Link>
+                      )
+                    ) : (item.status === 0 || item.status === 8) ? (
+                        <Link
+              to={"/exit-action/" + item.employeeId}
+                >
+                            <Edit2  
+                      onClick={() => {
+                        fetchEmployeeDetails(item.employeeId);
+                                          }}
+                                            />
+                                </Link>
+                                  ) : (
+                                  <Link
+                                  to={"/employee-info/" + item.employeeId}
+                                  >
+                                  <Edit2
+                                  onClick={() => {
+                                  fetchEmployeeDetails(item.employeeId);
+                                  }}
+                                  />
+                                  </Link>
+                                  )
+                                  ) : (
+                                  <Edit2 />
+                                  )}         */}
+
+
+
+                                {(item.status === 3||item.status === 5|| item.status === 6)?<Edit2/>:((
+                                ((user.loginType == (7||3||9) ||user.additionalRole == (7||3||9) )&& item.isManager == true)) && item.status == 2||
+                                (user.loginType ==(0||2||3) ||user.additionalRole ==(0||2||3) && user.isManager == true && (item.isManager == null || item.isManager == "" || item.isManager == undefined ||item.isManager !== true)) && item.status == 2)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       fetchEmployeeDetails(item.employeeId);

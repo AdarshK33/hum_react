@@ -32,6 +32,9 @@ import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
 import { BonusProvider } from "./context/BonusState";
 import { TransferProvider } from "./context/TransferState";
+import { ModuleReportProvider } from "./context/ModuleReportState";
+import { NoticePeriodProvider } from "./context/NoticePeriodState";
+import { InsuranceProvider } from "./context/InsuranceState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -78,17 +81,23 @@ function Root() {
                                                     <PromotionProvider>
                                                       <BonusProvider>
                                                         <TransferProvider>
-                                                          <BrowserRouter
-                                                            basename={"/"}
-                                                          >
-                                                            <ScrollContext>
-                                                              <WithAxios>
-                                                                <CandidateWithAxios>
-                                                                  <RoutePath />
-                                                                </CandidateWithAxios>
-                                                              </WithAxios>
-                                                            </ScrollContext>
-                                                          </BrowserRouter>
+                                                          <ModuleReportProvider>
+                                                            <NoticePeriodProvider>
+                                                              <InsuranceProvider>
+                                                                <BrowserRouter
+                                                                  basename={"/"}
+                                                                >
+                                                                  <ScrollContext>
+                                                                    <WithAxios>
+                                                                      <CandidateWithAxios>
+                                                                        <RoutePath />
+                                                                      </CandidateWithAxios>
+                                                                    </WithAxios>
+                                                                  </ScrollContext>
+                                                                </BrowserRouter>
+                                                              </InsuranceProvider>
+                                                            </NoticePeriodProvider>
+                                                          </ModuleReportProvider>
                                                         </TransferProvider>
                                                       </BonusProvider>
                                                     </PromotionProvider>

@@ -5,11 +5,20 @@ import moment from "moment";
 import { PromotionContext } from "../../context/PromotionState";
 
 const PromotionSalaryLetter = () => {
-  const { promotionLetterData } = useContext(PromotionContext);
+  const { promotionLetterData, loader } = useContext(PromotionContext);
 
   return (
     <Fragment>
-      {typeof promotionLetterData !== undefined ? (
+      {loader ? (
+        <div className="loader-box loader" style={{ width: "100% !important" }}>
+          <div className="loader">
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+          </div>
+        </div>
+      ) : typeof promotionLetterData !== undefined ? (
         <Fragment>
           <p className="">
             {" "}
@@ -34,17 +43,17 @@ const PromotionSalaryLetter = () => {
               We are pleased to promote you as{" "}
               <b>{promotionLetterData.promotedPosition}</b> and your new gross
               salary will be INR. <b>{promotionLetterData.newFixedGross}</b>/-
-              with effect from <b>{promotionLetterData.effectiveDate}</b>. You
+              with effect from <b>{promotionLetterData.salaryEffectiveDate}</b>. You
               will be reporting to Ms./Mr.{" "}
-              <b>{promotionLetterData.reportingManagerName},</b>. All the other terms and
-              conditions of your appointment letter dated{" "}
+              <b>{promotionLetterData.reportingManagerName},</b>. All the other
+              terms and conditions of your appointment letter dated{" "}
               <b>{promotionLetterData.appointmentLetterDate}</b> shall remain
               the same.
             </p>
             <p>Please sign the copy of this letter as receipt of acceptance.</p>
             <p className="mt-5 ">
               <p>Yours Sincerely,</p>
-              <b>For Decathlon Sports India India Pvt Ltd,</b>
+              <b>For {promotionLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

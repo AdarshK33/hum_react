@@ -492,6 +492,18 @@ const RegularTransferAcceptance = () => {
                           </Col>
                         </Row>
                         <Row className="mb-4">
+                          <Col md={2}>Department</Col>
+                          <Col md={4} className="text-primary">
+                            {transferData.currentDepartment}
+                          </Col>
+                          <Col
+                            md={{ span: 4, offset: 2 }}
+                            className="text-primary"
+                          >
+                            {transferData.promotedDepartment}
+                          </Col>
+                        </Row>
+                        <Row className="mb-4">
                           <Col md={2}>Cost Centre</Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentCostCentre}
@@ -515,18 +527,7 @@ const RegularTransferAcceptance = () => {
                             {transferData.promotedManagerName}
                           </Col>
                         </Row>
-                        <Row className="mb-4">
-                          <Col md={2}>Department</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentDepartment}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedDepartment}
-                          </Col>
-                        </Row>
+
                         <Row className="mb-4">
                           <Col md={2}>Position</Col>
                           <Col md={4} className="text-primary">
@@ -564,13 +565,14 @@ const RegularTransferAcceptance = () => {
                               {costCentreLocationData !== null &&
                                 costCentreLocationData !== undefined &&
                                 Object.keys(costCentreLocationData).length !==
-                                  0 && (
-                                  <option
-                                    value={costCentreLocationData.locationId}
-                                  >
-                                    {costCentreLocationData.locationName}
-                                  </option>
-                                )}
+                                  0 &&
+                                costCentreLocationData.map((item) => {
+                                  return (
+                                    <option value={item.stateId}>
+                                      {item.stateName}
+                                    </option>
+                                  );
+                                })}
                             </Form.Control>
                             {locationErrMsg !== "" && (
                               <span className="text-danger">

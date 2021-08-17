@@ -1,11 +1,8 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer,useContext,useState } from "react";
 import EmployeeSeparationReducer from "../reducers/EmployeeSeparationReducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
-import { SeparationContext } from "./SepearationState";
-export const EmployeeSeparationContext = createContext();
-// const {MakeCostCenterDataNull} = useContext(SeparationContext)
-
+// import { SeparationContext } from "./SepearationState";
 const initial_state = {
   EmployeeSeparationList: [],
   EmployeeSeparationExitList:[],
@@ -21,13 +18,18 @@ const initial_state = {
   resignationConfirmationStatus: "",
 };
 
-export const EmploeeSeparationProvider = (props) => {
+export const EmployeeSeparationContext = createContext();
+
+
+export const EmploeeSeparationProvider = ({children}) => {
   const [loader, setLoader] = useState(false);
   const [DisciplinaryTermination, setDisciplinarytermination] = useState(false);
   const [state, dispatch] = useReducer(
     EmployeeSeparationReducer,
     initial_state
   );
+  // const {MakeCostCenterDataNull} = useContext(SeparationContext)
+
   const changeEmployeeId = (employeeId) => {
     setLoader(true);
     state.employeeId = employeeId;
@@ -105,7 +107,8 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(state.total);
         console.log(response);
         ModeOfSeparationView();
-
+        // makeEmployeeDataNull()
+        // MakeCostCenterDataNull()
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING",
           payload: state.EmployeeSeparationList,
@@ -194,6 +197,8 @@ export const EmploeeSeparationProvider = (props) => {
           type: "FETCH_RELIEVING_LETTER_DATA",
           payload: state.relivingLetterData,
         });
+      }) .catch((error) => {
+        console.log(error);
       });
   };
   const fetchTerminationLetterData = (empId) => {
@@ -207,6 +212,8 @@ export const EmploeeSeparationProvider = (props) => {
           type: "FETCH_TERMINATION_LETTER_DATA",
           payload: state.terminationLetterData,
         });
+      }) .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -311,7 +318,7 @@ export const EmploeeSeparationProvider = (props) => {
         total: state.total,
       }}
     >
-      {props.children}
+      {children}
     </EmployeeSeparationContext.Provider>
   );
 };

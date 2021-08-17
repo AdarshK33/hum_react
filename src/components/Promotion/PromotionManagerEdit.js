@@ -45,12 +45,12 @@ const PromotionManagerEdit = (props) => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
-    adminValidatedDate:null,
+    adminValidatedDate: null,
     validatedAdminId: "",
     validatedAdminName: "",
-    managerValidatedDate:null,
-    validatedManagerId:"",
-    validatedManagerName:"",
+    managerValidatedDate: null,
+    validatedManagerId: "",
+    validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -66,7 +66,7 @@ const PromotionManagerEdit = (props) => {
     employeeId: "",
     currentManagerId: "",
     currentManagerName: "",
-    contractType:"",
+    contractType: "",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -108,19 +108,16 @@ const PromotionManagerEdit = (props) => {
     generatePromotionLetter,
     promotionLetterData,
   } = useContext(PromotionContext);
-  const {
-    updateProbation,
-    probUpdateResponse,
-    ViewExtensionLetter,
-    ViewConfirmationLetter,
-    extensionLetterData,
-    cnfLetterData,
-    ViewProbationDataById,
-    probationData,
-    empId,
-  } = useContext(ProbationContext);
   useEffect(() => {
-    PositionNew();
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0 &&
+      promotionIdData.department !== null &&
+      promotionIdData.department !== undefined
+    ) {
+      PositionNew(promotionIdData.departmentId);
+    }
     departmentView();
   }, []);
 
@@ -132,12 +129,12 @@ const PromotionManagerEdit = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        adminValidatedDate:promotionIdData['adminValidatedDate'],
+        adminValidatedDate: promotionIdData["adminValidatedDate"],
         validatedAdminId: promotionIdData["validatedAdminId"],
         validatedAdminName: promotionIdData["validatedAdminName"],
-        managerValidatedDate:promotionIdData['managerValidatedDate'],
-        validatedManagerId:promotionIdData["validatedManagerId"],
-        validatedManagerName:promotionIdData["validatedManagerName"],
+        managerValidatedDate: promotionIdData["managerValidatedDate"],
+        validatedManagerId: promotionIdData["validatedManagerId"],
+        validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -147,7 +144,10 @@ const PromotionManagerEdit = (props) => {
         departmentId: promotionIdData["departmentId"],
         reportingManagerId: promotionIdData["reportingManagerId"],
         reportingManagerName: promotionIdData["reportingManagerName"],
-        effectiveDate:promotionIdData["effectiveDate"] !== null?new Date(promotionIdData["effectiveDate"]): null,
+        effectiveDate:
+          promotionIdData["effectiveDate"] !== null
+            ? new Date(promotionIdData["effectiveDate"])
+            : null,
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
@@ -206,7 +206,51 @@ const PromotionManagerEdit = (props) => {
 
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
-    if (probationData !== null && probationData !== undefined) {
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
+    ) {
+      const infoData = {
+        adminValidatedDate: promotionIdData["adminValidatedDate"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        managerValidatedDate: promotionIdData["managerValidatedDate"],
+        validatedManagerId: promotionIdData["validatedManagerId"],
+        validatedManagerName: promotionIdData["validatedManagerName"],
+        bonus: promotionIdData["bonus"],
+        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
+        effectiveDate: promotionIdData["effectiveDate"],
+        emailId: null,
+        empName: promotionIdData["empName"],
+        employeeId: promotionIdData["employeeId"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
+        newDepartment: promotionIdData["newDepartment"],
+        newFixedGross: promotionIdData["newFixedGross"],
+        oldDepartment: promotionIdData["oldDepartment"],
+        oldFixedGross: promotionIdData["oldFixedGross"],
+        oldPosition: promotionIdData["oldPosition"],
+        positionId: promotionIdData["positionId"],
+        promotedPosition: promotionIdData["promotedPosition"],
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: null,
+        reason: promotionIdData["reason"],
+        relocationBonus: promotionIdData["relocationBonus"],
+        salaryEffectiveDate: promotionIdData["salaryEffectiveDate"],
+        promotionType: promotionIdData["promotionType"],
+        remarks: promotionIdData["remarks"],
+        status: 3,
+      };
+      PromotionCreate(infoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
@@ -217,14 +261,8 @@ const PromotionManagerEdit = (props) => {
 
   const previewLetterViewing = (e) => {
     e.preventDefault();
-    if (probationData !== null && probationData !== undefined) {
-      // fetchRelievingLetterData(employeeData.employeeId);
-      if (probationData.status === 1) {
-        ViewConfirmationLetter(empId);
-      } else if (probationData.status === 2) {
-        ViewExtensionLetter(empId);
-      }
-
+    if (promotionIdData !== null && promotionIdData !== undefined) {
+      generatePromotionLetter(promotionIdData.promotionId);
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
@@ -288,12 +326,12 @@ const PromotionManagerEdit = (props) => {
       setEffectiveDateError("");
     }
     const infoData = {
-      adminValidatedDate:promotionIdData['adminValidatedDate'],
+      adminValidatedDate: promotionIdData["adminValidatedDate"],
       validatedAdminId: promotionIdData["validatedAdminId"],
       validatedAdminName: promotionIdData["validatedAdminName"],
-      managerValidatedDate:promotionIdData['managerValidatedDate'],
-      validatedManagerId:promotionIdData["validatedManagerId"],
-      validatedManagerName:promotionIdData["validatedManagerName"],
+      managerValidatedDate: promotionIdData["managerValidatedDate"],
+      validatedManagerId: promotionIdData["validatedManagerId"],
+      validatedManagerName: promotionIdData["validatedManagerName"],
       bonus: promotionIdData["bonus"],
       bonusInPercentage: promotionIdData["bonusInPercentage"],
       costCentre: promotionIdData["costCentre"],
@@ -324,7 +362,7 @@ const PromotionManagerEdit = (props) => {
       salaryEffectiveDate: state.salaryEffectiveDate,
       promotionType: state.promotionType,
       remarks: promotionIdData["remarks"],
-      status: 3,
+      status: 5,
     };
     if (
       state.effectiveDate !== "" &&
@@ -358,7 +396,9 @@ const PromotionManagerEdit = (props) => {
           <Modal.Body className="mx-auto">
             <label>Promotion Letter has been sent to the employee</label>
             <div className="text-center mb-2">
-            <Link to={"/promotion-list"}><Button onClick={handleRelivingClose}>Close</Button></Link>
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleRelivingClose}>Close</Button>
+              </Link>
             </div>
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
@@ -534,7 +574,14 @@ const PromotionManagerEdit = (props) => {
                           <Col sm={6}>
                             <div>
                               <label>
-                                Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
+                                Fixed Gross{" "}
+                                {`${
+                                  state.contractType == "parttime" ||
+                                  state.contractType == "Parttime"
+                                    ? "(per/hr)"
+                                    : ""
+                                }`}
+                                :
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.oldFixedGross}
                                 </label>
@@ -565,7 +612,14 @@ const PromotionManagerEdit = (props) => {
                             <Col sm={6}>
                               <div>
                                 <label>
-                                  New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
+                                  New Fixed Gross{" "}
+                                  {`${
+                                    state.contractType == "parttime" ||
+                                    state.contractType == "Parttime"
+                                      ? "(per/hr)"
+                                      : ""
+                                  }`}
+                                  :
                                   <label className="itemResult">
                                     &nbsp;&nbsp; {state.newFixedGross}
                                   </label>
@@ -577,34 +631,34 @@ const PromotionManagerEdit = (props) => {
                           )}
                         </Row>
                         <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "2rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Reporting Manager:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reportingManagerName}
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "2rem",
+                          }}
+                        >
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Reporting Manager:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reportingManagerName}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
+                            </div>
+                          </Col>
 
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Current Manager:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.currentManagerName}
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Current Manager:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.currentManagerName}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
+                            </div>
+                          </Col>
+                        </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -614,7 +668,7 @@ const PromotionManagerEdit = (props) => {
                         >
                           <Col sm={5}>
                             <label>
-                            Is this employee is applicable for salary hike{" "}
+                              Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -790,9 +844,21 @@ const PromotionManagerEdit = (props) => {
                             >
                               {true ? (
                                 <button
-                                  disabled={showPreview}
+                                  disabled={
+                                    showPreview ||
+                                    (promotionIdData !== null &&
+                                      promotionIdData !== undefined &&
+                                      Object.keys(promotionIdData).length !==
+                                        0 &&
+                                      promotionIdData.status === 5)
+                                  }
                                   className={
-                                    showPreview
+                                    showPreview ||
+                                    (promotionIdData !== null &&
+                                      promotionIdData !== undefined &&
+                                      Object.keys(promotionIdData).length !==
+                                        0 &&
+                                      promotionIdData.status === 5)
                                       ? "confirmButton"
                                       : "stepperButtons"
                                   }
@@ -803,15 +869,14 @@ const PromotionManagerEdit = (props) => {
                               ) : (
                                 ""
                               )}
-                              {!saveLetter &&
-                              ((probationData &&
-                                probationData &&
-                                probationData !== null &&
-                                probationData !== undefined &&
-                                Object.keys(probationData).length !== 0 &&
-                                probationData.status === 2) ||
-                                probationData.status === 1 ||
-                                showPreview === true) ? (
+                              {(!saveLetter &&
+                                promotionIdData &&
+                                promotionIdData &&
+                                promotionIdData !== null &&
+                                promotionIdData !== undefined &&
+                                Object.keys(promotionIdData).length !== 0 &&
+                                promotionIdData.status === 5) ||
+                              showPreview === true ? (
                                 <button
                                   // disabled={!submitted}
                                   className={"LettersProbButtons"}
@@ -822,9 +887,7 @@ const PromotionManagerEdit = (props) => {
                               ) : (
                                 ""
                               )}
-                              {saveLetter &&
-                              previewGeneratedLetter &&
-                              showPreview ? (
+                              {saveLetter && previewGeneratedLetter ? (
                                 <button
                                   className={"LettersProbButtons"}
                                   onClick={previewLetterViewing}

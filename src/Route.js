@@ -99,6 +99,7 @@ import IssueShowCauseNotice from "./components/Disciplinary/Manager/IssueShowCau
 import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView";
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
 import DisciplinarySeparation from "./components/Disciplinary/Manager/DiscplinarySeparation";
+import ProbationSeparation from "./components/Probation/ProbationSeparation";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 import EmployeeDocementsList from "./components/EmployeeLetters/MyDocsList";
@@ -115,6 +116,21 @@ import RegularTransferAcceptance from "./components/Transfers/Acceptance/Regular
 import EntityTransferAcceptance from "./components/Transfers/Acceptance/EntityTransferAcceptance";
 import InternationalTransferAcceptance from "./components/Transfers/Acceptance/InternationalTransferAcceptance";
 import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/ManagerInitiateAction";
+
+/* All module reports */
+import ModuleReports from "./components/ModuleReports/ModuleReports";
+
+/* Notice Period Module */
+import NoticePeriodListContainer from "./components/NoticePeriod/List/ListContainer";
+import AddNoticePeriod from "./components/NoticePeriod/AddNoticePeriod";
+import ViewNoticePeriod from "./components/NoticePeriod/ViewNoticePeriod";
+import EditNoticePeriod from "./components/NoticePeriod/EditNoticePeriod";
+
+/* Insurance List */
+import InsuranceListContainer from "./components/Insurance/List/ListContainer";
+import AddInsurance from "./components/Insurance/AddInsurance";
+import ViewInsurance from "./components/Insurance/ViewInsurance";
+import EditInsurance from "./components/Insurance/EditInsurance";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -333,6 +349,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/disciplinary-separation`}
             component={DisciplinarySeparation}
           />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/probation-separation`}
+            component={ProbationSeparation}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}
             component={CostCenterManagerExitListing}
@@ -385,14 +406,41 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/international-transfer/:transferId`}
             component={InternationalTransferAcceptance}
           />
-          {/* <Route
-            path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
-            component={PromotionManagerEdit}
-          /> */}
-          {/* <Route
-            path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
-            component={PromotionApproval}
-          /> */}
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/reports/module-reports`}
+            component={ModuleReports}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/add-notice-period`}
+            component={AddNoticePeriod}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/view-notice-period/:noticePeriodId`}
+            component={ViewNoticePeriod}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/edit-notice-period/:noticePeriodId`}
+            component={EditNoticePeriod}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/add-insurance`}
+            component={AddInsurance}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/view-insurance/:insuranceNominationId`}
+            component={ViewInsurance}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/master/edit-insurance/:insuranceNominationId`}
+            component={EditInsurance}
+          />
 
           {state.MenuPermissionsRoute.map((e) => {
             return (
@@ -582,6 +630,16 @@ const RoutePath = () => {
                     <Route
                       path={`${process.env.PUBLIC_URL}/master/bonus-structure`}
                       component={ViewBonus}
+                    />
+                  ) : e.path === "/master/notice-period" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/notice-period`}
+                      component={NoticePeriodListContainer}
+                    />
+                  ) : e.path === "/master/insurance" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/insurance`}
+                      component={InsuranceListContainer}
                     />
                   ) : (
                     ""

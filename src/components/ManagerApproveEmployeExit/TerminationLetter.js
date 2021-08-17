@@ -31,7 +31,7 @@ const TerminationLetter = () => {
               Dear <b>{terminationLetterData.employeeName},</b>{" "}
             </p>
             <p>
-            You have been associated Decathlon Sports India Private Limited
+            You have been associated {terminationLetterData.company} Private Limited
                (“Decathlon/Company”) at its XXXXXXXX located at {terminationLetterData.location?terminationLetterData.location:''} 
                {terminationLetterData.company}. It has come to our notice that you were working 
                as {terminationLetterData.designation}.  This is reference to the Show
@@ -49,7 +49,7 @@ const TerminationLetter = () => {
 
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India India Pvt Ltd,</b>
+              <b>For {terminationLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

@@ -330,7 +330,7 @@ const EmployeeExitAction = () => {
                 The details have been saved successfully.
                 <br /> The relieving letter will be sent to the employee on{" "}
                 {moment(((terminationLetterData !== null && terminationLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
-              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1)?relivingLetterData.lastWorkingDate:'', "YYYY-MM-DD")
+              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1 || modeOfSeparation == "Employee Resignation" || modeOfSeparation == 4)?relivingLetterData.lastWorkingDate:'', "YYYY-MM-DD")
                   .add(1, "days")
                   .format("YYYY-MM-DD")}
               </p>
