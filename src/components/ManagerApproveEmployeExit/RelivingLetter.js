@@ -48,7 +48,7 @@ const RelivingLetter = () => {
               endeavours.
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India India Pvt Ltd,</b>
+              <b>For {relivingLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

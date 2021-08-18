@@ -66,7 +66,7 @@ const ConfirmationLetter = () => {
               Thanking You,
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India Pvt Ltd,</b>
+              <b>For {cnfLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

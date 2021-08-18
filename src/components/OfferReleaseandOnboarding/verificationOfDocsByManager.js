@@ -3,7 +3,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { AppContext } from "../../context/AppState";
 import { useParams } from "react-router-dom";
 import "../CandidateVerification/ManageCandidate.css";
-
+import { PermissionContext } from "../../context/PermissionState";
 import {
   Button,
   Container,
@@ -58,6 +58,7 @@ const DocVerification = () => {
     adhaarVerificationNotification,
   } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     setState(personalInfoData);
   }, [user]);
@@ -362,7 +363,10 @@ const DocVerification = () => {
                         <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
                         <td className="row text-center buttonMargin">
-                          {user.role === "MANAGER" && (
+                          {/* {(((user.loginType == 7 ||
+                            user.additionalRole === "7") &&
+                            user.isManager === true) ||
+                            user.isManager === true) && (
                             <button
                               className="approveButton"
                               onClick={() =>
@@ -373,7 +377,10 @@ const DocVerification = () => {
                             </button>
                           )}
 
-                          {user.role === "MANAGER" && (
+                          {(((user.loginType == 7 ||
+                            user.additionalRole === "7") &&
+                            user.isManager === true) ||
+                            user.isManager === true) && (
                             <button
                               className="approveButton ml-4"
                               style={
@@ -398,13 +405,14 @@ const DocVerification = () => {
                             >
                               Disapprove
                             </button>
-                          )}
+                          )} */}
                           {/* {rejectStatus === "FAIL" &&
                           docType === item.documentType && (
                             <p style={{ color: "red" }}>
                               Maximum attempst had reached
                             </p>
                           )} */}
+                          NA
                         </td>
                       )}
                       <td className="buttonMargin1">
@@ -561,7 +569,7 @@ const DocVerification = () => {
                         item.documentType > 5 &&
                         item.documentType !== 24 && (
                           <td className="row text-center buttonMargin">
-                            <button
+                            {/* <button
                               className="approveButton"
                               onClick={() =>
                                 handleApproveDocument(item.documentId)
@@ -569,7 +577,10 @@ const DocVerification = () => {
                             >
                               Approve
                             </button>
-                            {user.role === "MANAGER" && (
+                            {(((user.loginType == 7 ||
+                              user.additionalRole === "7") &&
+                              user.isManager === true) ||
+                              user.isManager === true) && (
                               <button
                                 className="approveButton ml-4"
                                 style={
@@ -600,7 +611,8 @@ const DocVerification = () => {
                                 <p style={{ color: "red" }}>
                                   Maximum attempst had reached
                                 </p>
-                              )}
+                              )} */}
+                            NA
                           </td>
                         )
                       )}
@@ -641,7 +653,7 @@ const DocVerification = () => {
             )}
           </Table>
         </div>
-        {user.role === "ADMIN" && (
+        {rolePermission == "admin" && (
           <Row className="mx-2">
             <label>Is UAN Number Generated ?</label>
             <Col sm={2}>

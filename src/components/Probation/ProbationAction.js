@@ -194,6 +194,11 @@ const ProbationAction = () => {
     state.remarks = "";
   };
 
+  const handleRelivingClose1 = () => {
+    history.push("../probation");
+
+    setShow(false);
+  };
   const handleRelivingClose = () => {
     setShow(false);
   };
@@ -218,6 +223,43 @@ const ProbationAction = () => {
       setShow(true);
       // setSuccessModal(true);
       // finalSubmitOfferLetter(employeeData.employeeId);
+      const value = checkValidations();
+      if (value === true) {
+        if (probationStatus === "Rejected") {
+          setShowRej(true);
+        } else {
+          const InfoData = {
+            company: probationData.company,
+            costCentre: probationData.costCentre,
+            dateOfJoining: probationData.dateOfJoining,
+            dueDays: probationData.dueDays,
+            emailId: probationData.emailId,
+            empId: probationData.empId,
+            empName: probationData.empName,
+            probationConfirmationDate: probationData.probationConfirmationDate,
+            probationConfirmationLetter:
+              probationData.probationConfirmationLetter,
+            probationExtensionEndDate: probationData.probationExtensionEndDate,
+            probationExtensionPeriod: probationData.probationExtensionPeriod,
+            probationExtensionStartDate: null,
+            probationId: probationData.probationId,
+            reason: probationData.reason,
+            probationPeriod: probationData.probationPeriod,
+            remarks: probationData.remarks,
+            reminderSent: probationData.reminderSent,
+            status:
+              probationData.status === 5
+                ? 1
+                : probationData.status === 6
+                ? 2
+                : 3,
+          };
+
+          console.log("InfoData", InfoData);
+          updateProbation(InfoData, probationData.empId);
+          ViewProbationDataById(empId);
+        }
+      }
     }
   };
 
@@ -240,9 +282,9 @@ const ProbationAction = () => {
     e.preventDefault();
     // fetchRelievingLetterData(employeeData.employeeId);
     if (probationData !== null && probationData !== undefined) {
-      if (probationData.status === 1) {
+      if (probationData.status === 5 || probationData.status === 1) {
         ViewConfirmationLetter(empId);
-      } else if (probationData.status === 2) {
+      } else if (probationData.status === 6 || probationData.status === 2) {
         ViewExtensionLetter(empId);
       }
       handleShow();
@@ -511,9 +553,9 @@ const ProbationAction = () => {
           reminderSent: probationData.reminderSent,
           status:
             probationStatus === "Confirmed"
-              ? 1
+              ? 5
               : probationStatus === "Extended"
-              ? 2
+              ? 6
               : probationStatus === "Rejected"
               ? 3
               : 0,
@@ -552,23 +594,43 @@ const ProbationAction = () => {
         {submitLetter ? (
           <Modal.Body className="mx-auto">
             <label>
-              {probationStatus === "Confirmed"
+              {probationData &&
+              probationData &&
+              probationData !== null &&
+              probationData !== undefined &&
+              Object.keys(probationData).length !== 0 &&
+              (probationData.status === 5 || probationData.status === 1)
                 ? "Confirmation letter sent to the employee"
-                : probationStatus === "Extended"
+                : probationData &&
+                  probationData &&
+                  probationData !== null &&
+                  probationData !== undefined &&
+                  Object.keys(probationData).length !== 0 &&
+                  (probationData.status === 6 || probationData.status === 2)
                 ? "Extension letter sent to the employee"
                 : ""}
             </label>
             <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose}>Close</Button>
+              <Button onClick={handleRelivingClose1}>Close</Button>
             </div>
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
           <Modal.Body>
             {true ? (
               <div>
-                {probationStatus === "Confirmed" ? (
+                {probationData &&
+                probationData &&
+                probationData !== null &&
+                probationData !== undefined &&
+                Object.keys(probationData).length !== 0 &&
+                (probationData.status === 5 || probationData.status === 1) ? (
                   <ConfirmationLetter />
-                ) : probationStatus === "Extended" ? (
+                ) : probationData &&
+                  probationData &&
+                  probationData !== null &&
+                  probationData !== undefined &&
+                  Object.keys(probationData).length !== 0 &&
+                  (probationData.status === 6 || probationData.status === 2) ? (
                   <ExtensionLetter />
                 ) : (
                   ""
@@ -853,9 +915,11 @@ const ProbationAction = () => {
                               probationData.status !== undefined ? (
                                 <label className="itemResult">
                                   {/* &nbsp;&nbsp;{" "} */}
-                                  {probationData.status == 1
+                                  {probationData.status == 1 ||
+                                  probationData.status == 5
                                     ? "Confirmed"
-                                    : probationData.status == 2
+                                    : probationData.status == 2 ||
+                                      probationData.status == 6
                                     ? "Extended"
                                     : probationData.status == 3
                                     ? "Rejected"
@@ -901,7 +965,13 @@ const ProbationAction = () => {
                           </Col>
                         </Row>
 
-                        {probationStatus === "Extended" ? (
+                        {probationStatus === "Extended" ||
+                        (probationData &&
+                          probationData &&
+                          probationData !== null &&
+                          probationData !== undefined &&
+                          Object.keys(probationData).length !== 0 &&
+                          probationData.status === 6) ? (
                           <div>
                             <Row
                               style={{
@@ -1032,7 +1102,13 @@ const ProbationAction = () => {
                           ""
                         )}
 
-                        {probationStatus === "Extended" ? (
+                        {probationStatus === "Extended" ||
+                        (probationData &&
+                          probationData &&
+                          probationData !== null &&
+                          probationData !== undefined &&
+                          Object.keys(probationData).length !== 0 &&
+                          probationData.status === 6) ? (
                           <div>
                             <Row
                               style={{
@@ -1152,9 +1228,23 @@ const ProbationAction = () => {
                         >
                           {true ? (
                             <button
-                              disabled={submitted}
+                              disabled={
+                                submitted ||
+                                (probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.status === 5) ||
+                                probationData.status === 6
+                              }
                               className={
-                                submitted ? "confirmButton" : "stepperButtons"
+                                submitted ||
+                                (probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.status === 5) ||
+                                probationData.status === 6
+                                  ? "confirmButton"
+                                  : "stepperButtons"
                               }
                               onClick={submitHandler}
                             >
@@ -1170,18 +1260,30 @@ const ProbationAction = () => {
                             probationData !== null &&
                             probationData !== undefined &&
                             Object.keys(probationData).length !== 0 &&
-                            probationData.status === 2) ||
-                            probationData.status === 1 ||
+                            probationData.status === 5) ||
+                            probationData.status === 6 ||
                             showPreview === true) ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersProbButtons"}
                               onClick={generateLetterClick}
                             >
-                              {probationStatus === "Extended"
-                                ? "Generate Extension Letter"
-                                : probationStatus === "Confirmed"
+                              {probationData &&
+                              probationData &&
+                              probationData !== null &&
+                              probationData !== undefined &&
+                              Object.keys(probationData).length !== 0 &&
+                              (probationData.status === 5 ||
+                                probationData.status === 1)
                                 ? "Generate Confirmation Letter"
+                                : probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  (probationData.status === 6 ||
+                                    probationData.status === 2)
+                                ? "Generate Extension Letter"
                                 : ""}
                               {/* Generate Reliving Letter */}
                             </button>
@@ -1190,14 +1292,34 @@ const ProbationAction = () => {
                           )}
                           {saveLetter &&
                           previewGeneratedLetter &&
-                          showPreview ? (
+                          probationData &&
+                          probationData &&
+                          probationData !== null &&
+                          probationData !== undefined &&
+                          Object.keys(probationData).length !== 0 &&
+                          (probationData.status === 6 ||
+                            probationData.status === 5 ||
+                            probationData.status === 1 ||
+                            probationData.status === 2) ? (
                             <button
                               className={"LettersProbButtons"}
                               onClick={previewLetterViewing}
                             >
-                              {probationStatus === "Extended"
+                              {probationData &&
+                              probationData &&
+                              probationData !== null &&
+                              probationData !== undefined &&
+                              Object.keys(probationData).length !== 0 &&
+                              (probationData.status === 6 ||
+                                probationData.status === 2)
                                 ? "Preview Extension Letter"
-                                : probationStatus === "Confirmed"
+                                : probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  (probationData.status === 5 ||
+                                    probationData.status === 1)
                                 ? "Preview Confirmation Letter"
                                 : ""}
                             </button>

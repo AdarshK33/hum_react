@@ -1,84 +1,90 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
-import { Modal } from 'react-bootstrap';
+import React, { Fragment, useState, useContext, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import { ClusterContext } from "../../context/ClusterState";
-import { Multiselect } from 'multiselect-react-dropdown';
+import { Multiselect } from "multiselect-react-dropdown";
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
+import { PermissionContext } from "../../context/PermissionState";
+
 const EditClusterModal = (props) => {
-
-
   const [clusterName, setClusterName] = useState("");
   const [description, setDescription] = useState("");
-  const [clusterLeader, setClusterLeader] = useState('');
-  const [clusterId, setClusterId] = useState('');
+  const [clusterLeader, setClusterLeader] = useState("");
+  const [clusterId, setClusterId] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const [employee, setEmployee] = useState([])
+  const [employee, setEmployee] = useState([]);
   const [errormsg, setErrorMsg] = useState(false);
-  const [sportsList, setSportsList] = useState([])
+  const [sportsList, setSportsList] = useState([]);
   const [clustertButton, setClusterButton] = useState(false);
-  const [costCenterName, setCostCenterName] = useState('');
+  const [costCenterName, setCostCenterName] = useState("");
   const [status, setStatus] = useState(0);
   //const [clusterLeaderName, setClusterLeaderName] = useState('')
 
-
-
-
   const setClear = () => {
-    setClusterName('')
-    setDescription('')
-    setClusterLeader('')
-    setClusterButton('')
-    setErrorMsg('')
-    setSuccessMsg('')
-    setSportsList('');
-    setSuccessMsg('');
-    setEmployee('')
-  }
+    setClusterName("");
+    setDescription("");
+    setClusterLeader("");
+    setClusterButton("");
+    setErrorMsg("");
+    setSuccessMsg("");
+    setSportsList("");
+    setSuccessMsg("");
+    setEmployee("");
+  };
 
-
-  const { updateAdminEditCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, callClusterEmployees, callClusterLeaders
-    , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
+  const {
+    updateAdminEditCluster,
+    getSingleCluster,
+    viewSports,
+    costCenterEmpAndMgrList,
+    sportsNames,
+    callClusterEmployees,
+    callClusterLeaders,
+    getSingleCluster1,
+    getEmployeesNames,
+  } = useContext(ClusterContext);
   const { user } = useContext(AppContext);
   const { costCenter } = useContext(RosterContext);
-
-  console.log("getEmployeesNames", getEmployeesNames)
-
-  useEffect(() => {
-    viewSports()
-  }, [])
+  const { rolePermission } = useContext(PermissionContext);
+  console.log("getEmployeesNames", getEmployeesNames);
 
   useEffect(() => {
-    setClusterName(getSingleCluster.clusterName)
-    setDescription(getSingleCluster.description)
-    setClusterLeader(getSingleCluster.clusterLeader)
-    setStatus(getSingleCluster.status)
-    setCostCenterName(getSingleCluster.storeId)
-  }, [props])
+    viewSports();
+  }, []);
 
   useEffect(() => {
-    setClusterId(props.clusterId)
-  }, [props.clusterId])
+    setClusterName(getSingleCluster.clusterName);
+    setDescription(getSingleCluster.description);
+    setClusterLeader(getSingleCluster.clusterLeader);
+    setStatus(getSingleCluster.status);
+    setCostCenterName(getSingleCluster.storeId);
+  }, [props]);
 
   useEffect(() => {
-    setSportsList(props.clusterData)
-  }, [props.clusterData])
-
-
-  useEffect(() => {
-    setEmployee(props.clusterData1)
-  }, [props.clusterData1])
-
+    setClusterId(props.clusterId);
+  }, [props.clusterId]);
 
   useEffect(() => {
-    costCenter()
-    if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
-      user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
-      setCostCenterName(user.costCentre)
+    setSportsList(props.clusterData);
+  }, [props.clusterData]);
+
+  useEffect(() => {
+    setEmployee(props.clusterData1);
+  }, [props.clusterData1]);
+
+  useEffect(() => {
+    costCenter();
+    if (
+      rolePermission !== "superCostCenterManager" ||
+      rolePermission !== "costCenterManager" ||
+      rolePermission !== "manager" ||
+      rolePermission !== "admin"
+    ) {
+      setCostCenterName(user.costCentre);
     }
   }, [user.costCentre, user.loginType]);
-
 
   // const getCostCenterName = (e) => {
   //   let data = e.target.value
@@ -88,11 +94,11 @@ const EditClusterModal = (props) => {
   //   //selectClusterLeader(data1)
   // }
   const getCostCenterName = (options) => {
-    let data = options !== null ? options.value : ''
-    setCostCenterName(data)
-    callClusterEmployees(data, user.employeeId)
-    callClusterLeaders(data, user.employeeId)
-  }
+    let data = options !== null ? options.value : "";
+    setCostCenterName(data);
+    callClusterEmployees(data, user.employeeId);
+    callClusterLeaders(data, user.employeeId);
+  };
 
   //cost center name
 
@@ -100,7 +106,6 @@ const EditClusterModal = (props) => {
     event.preventDefault();
     const validate = validation();
     const editCluster = {
-
       clusterId: getSingleCluster.clusterId,
       clusterLeader,
       clusterName: clusterName.trim(),
@@ -108,111 +113,98 @@ const EditClusterModal = (props) => {
       storeId: costCenterName,
       sportIds: sportsList.map((e) => e.sportId),
       employeeIds: employee.map((e) => e.employeeId),
-      status: status
-    }
+      status: status,
+    };
     if (validate) {
-      updateAdminEditCluster(editCluster)
+      updateAdminEditCluster(editCluster);
 
-      props.handleEditClose()
+      props.handleEditClose();
     }
-  }
+  };
 
   const validation = () => {
-    let flag = true
+    let flag = true;
     if (employee.length === 0) {
-      toast.error("Select employee is mandatory")
+      toast.error("Select employee is mandatory");
       flag = false;
       return;
     }
 
     if (sportsList.length === 0) {
-      toast.error("Select sports is mandatory")
+      toast.error("Select sports is mandatory");
       flag = false;
       return;
     }
 
     return flag;
-  }
+  };
 
-
-
-  const clusterLeaderSelect = event => {
+  const clusterLeaderSelect = (event) => {
     setClusterLeader(event.target.value);
     if (employee.length === 0) {
-      setClusterButton(true)
+      setClusterButton(true);
       setErrorMsg("All the fields are required");
-    }
-    else {
-      setClusterButton(false)
-
+    } else {
+      setClusterButton(false);
     }
   };
 
-  const onChangeHandler = event => {
+  const onChangeHandler = (event) => {
     setClusterName(event.target.value);
     if (sportsList.length === 0) {
-      setClusterButton(true)
+      setClusterButton(true);
       setErrorMsg("All the fields are required");
-    }
-    else {
-      setClusterButton(false)
-      setErrorMsg(false)
+    } else {
+      setClusterButton(false);
+      setErrorMsg(false);
     }
   };
-  const onDescprtion = event => {
+  const onDescprtion = (event) => {
     setDescription(event.target.value);
     if (sportsList.length > 0) {
-      setClusterButton(false)
-      setErrorMsg(false)
-    }
-    else {
-      setClusterButton(true)
-
+      setClusterButton(false);
+      setErrorMsg(false);
+    } else {
+      setClusterButton(true);
     }
   };
 
-
   const handleMultiChange = (option) => {
-    setClusterButton(false)
-    setSportsList(option)
+    setClusterButton(false);
+    setSportsList(option);
     console.log(sportsList);
-    setErrorMsg(false)
-  }
+    setErrorMsg(false);
+  };
 
   const onRemove = (option) => {
-    setSportsList(option)
+    setSportsList(option);
     console.log(sportsList);
-  }
+  };
 
   const handleMultiChange1 = (options) => {
-    setEmployee(options)
+    setEmployee(options);
     console.log("--------" + employee);
-    setClusterButton(false)
-    setErrorMsg(false)
-  }
-
+    setClusterButton(false);
+    setErrorMsg(false);
+  };
 
   const onRemoveEmployee = (options) => {
-    setEmployee(options)
+    setEmployee(options);
     console.log(employee);
-  }
+  };
 
-
-
-
-  //Timer to close modal 
+  //Timer to close modal
   const callTimer = () => {
     const setModal = props.handleEditClose;
-    setClear()
-    setModal()
-  }
+    setClear();
+    setModal();
+  };
 
-  // edit api need to integrate 
+  // edit api need to integrate
 
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleEditClose} centered>
-
         <Modal.Header closeButton>
           <Modal.Title>Edit Cluster</Modal.Title>
         </Modal.Header>
@@ -220,8 +212,11 @@ const EditClusterModal = (props) => {
           <form onSubmit={onSubmit}>
             <div className="row">
               <div className="col-sm-12">
-                <div className="form-group" >
-                  <label htmlFor="exampleFormControlInput1"> Select Sports</label>
+                <div className="form-group">
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Select Sports
+                  </label>
 
                   <Multiselect
                     options={sportsNames}
@@ -233,7 +228,6 @@ const EditClusterModal = (props) => {
                     onSelect={handleMultiChange}
                     isMulti
                   />
-
                 </div>
               </div>
             </div>
@@ -242,31 +236,55 @@ const EditClusterModal = (props) => {
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput">Cluster Name</label>
-                  <input type="text"
+                  <input
+                    type="text"
                     value={clusterName}
                     className="form-control"
                     defaultValue={getSingleCluster.clusterName}
                     required
-                    onChange={onChangeHandler} />
+                    onChange={onChangeHandler}
+                  />
                 </div>
               </div>
             </div>
 
-            <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "5px" }}>{errormsg}</h6>
+            <h6
+              style={{
+                color: "red",
+                fontFamily: "work-Sans, sans-serif",
+                fontSize: "14px",
+                marginLeft: "5px",
+              }}
+            >
+              {errormsg}
+            </h6>
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1">Cluster Description</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    Cluster Description
+                  </label>
 
-                  <input type="text" className="form-control digit" required placeholder="Desc" defaultValue={getSingleCluster.description} value={description} onChange={onDescprtion} />
+                  <input
+                    type="text"
+                    className="form-control digit"
+                    required
+                    placeholder="Desc"
+                    defaultValue={getSingleCluster.description}
+                    value={description}
+                    onChange={onDescprtion}
+                  />
                 </div>
               </div>
             </div>
 
-
-
             {(() => {
-              if (user.loginType === "1" || user.loginType === "9" || user.loginType === "3" || user.loginType === "7" || user.additionalRole === "1" || user.additionalRole === "9" || user.additionalRole === "7" || user.additionalRole === "3") {
+              if (
+                rolePermission == "superCostCenterManager" ||
+                rolePermission == "costCenterManager" ||
+                rolePermission == "manager" ||
+                rolePermission == "admin"
+              ) {
                 return (
                   <div className="row">
                     <div className="col-sm-12">
@@ -287,7 +305,6 @@ const EditClusterModal = (props) => {
 
                         </select> */}
 
-
                       {/* <Select
                         name="filters"
                         placeholder={getSingleCluster.storeId}
@@ -300,8 +317,11 @@ const EditClusterModal = (props) => {
                       <div className="row">
                         <div className="col-sm-12">
                           <div className="form-group">
-                            <label htmlFor="exampleFormControlInput1">Cost Center</label>
-                            <input type="text"
+                            <label htmlFor="exampleFormControlInput1">
+                              Cost Center
+                            </label>
+                            <input
+                              type="text"
                               placeholder={getSingleCluster.storeId}
                               className="form-control"
                               readOnly
@@ -312,7 +332,7 @@ const EditClusterModal = (props) => {
                     </div>
                   </div>
                   // </div>
-                )
+                );
               }
             })()}
             {/* <h3>{getSingleCluster.employeeIds}</h3> */}
@@ -320,7 +340,10 @@ const EditClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Select Employee</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Select Employee
+                  </label>
 
                   <Multiselect
                     placeholder="Select Employee"
@@ -339,56 +362,72 @@ const EditClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Cluster Leader</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Cluster Leader
+                  </label>
                   <select
                     className="form-control"
                     required
                     defaultValue={getSingleCluster.employeeId}
                     value={clusterLeader}
-                    onChange={clusterLeaderSelect}>
-                    <option selected>{getSingleCluster.clusterLeaderName}</option>
-                    {costCenterEmpAndMgrList !== null && costCenterEmpAndMgrList.map((e, i) => {
-                      return (
-
-                        <option key={e.employeeId} value={e.employeeId}>
-                          {e.firstName}&nbsp;{e.lastName}
-                        </option>
-                      );
-                    })}
-
+                    onChange={clusterLeaderSelect}
+                  >
+                    <option selected>
+                      {getSingleCluster.clusterLeaderName}
+                    </option>
+                    {costCenterEmpAndMgrList !== null &&
+                      costCenterEmpAndMgrList.map((e, i) => {
+                        return (
+                          <option key={e.employeeId} value={e.employeeId}>
+                            {e.firstName}&nbsp;{e.lastName}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
             </div>
-
-
 
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Cluster Status</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Cluster Status
+                  </label>
                   <select
                     className="form-control"
                     value={status}
                     defaultValue={getSingleCluster.status}
-                    onChange={(e) => setStatus(e.target.value)}>
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
                     <option value="0">Active</option>
                     <option value="1">Inactive</option>
-
                   </select>
                 </div>
               </div>
             </div>
 
-            <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
+            <button
+              className="myclass mb-2 mr-2"
+              type="submit"
+              disabled={clustertButton}
+              value="Submit"
+            >
+              Save
+            </button>
 
-            <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
+            <h5>
+              {successMsg.length !== 0 && (
+                <div className="text-success">{successMsg}</div>
+              )}
+            </h5>
           </form>
         </Modal.Body>
-
       </Modal>
-    </Fragment >
-  )
-}
+    </Fragment>
+  );
+};
 
-export default EditClusterModal
+export default EditClusterModal;

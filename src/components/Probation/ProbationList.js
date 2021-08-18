@@ -88,8 +88,12 @@ const ProbationList = () => {
       ProbationListView(0, "all", pageNumber - 1, 2);
     } else if (probationStatus === "Due for confirmation") {
       ProbationListView(0, "all", pageNumber - 1, 0);
+    } else if (probationStatus === "Probation In Progress") {
+      ProbationListView(0, "all", pageNumber - 1, 4);
     } else if (probationStatus === "Rejected") {
       ProbationListView(0, "all", pageNumber - 1, 3);
+    } else if (probationStatus === "Not Confirmed") {
+      ProbationListView(0, "all", pageNumber - 1, 5);
     } else {
       ProbationListView(0, "all", pageNumber - 1);
     }
@@ -128,6 +132,20 @@ const ProbationList = () => {
       setFifthBtn(false);
     } else if (e.target.value === "Rejected") {
       ProbationListView(0, "all", 0, 3);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else if (e.target.value === "Probation In Progress") {
+      ProbationListView(0, "all", 0, 4);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else if (e.target.value === "Not Confirmed") {
+      ProbationListView(0, "all", 0, 5);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -302,9 +320,15 @@ const ProbationList = () => {
                             <option value="Due for confirmation">
                               Due for confirmation
                             </option>
+                            <option value="Probation In Progress">
+                              Probation In Progress
+                            </option>
                             <option value="Confirmed">Confirmed</option>
                             <option value="Extended">Extended</option>
                             <option value="Rejected">Rejected</option>
+                            <option value="Not Confirmed">
+                              Action Required
+                            </option>
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -537,6 +561,10 @@ const ProbationList = () => {
                                 ? "Extended"
                                 : item.status === 3
                                 ? "Rejected"
+                                : item.status === 4
+                                ? "Probation In Progress"
+                                : item.status === 5 || item.status === 6
+                                ? "Action Required"
                                 : ""}
                             </td>
                             <td>
@@ -551,9 +579,10 @@ const ProbationList = () => {
 
                             <td>
                               {/* {false ? ( */}
-                              {item.status !== 0 || item.dueDays === 0 ? (
-                                <Edit2 />
-                              ) : (
+                              {(item.status === 0 ||
+                                item.status === 5 ||
+                                item.status === 6) &&
+                              item.dueDays > 0 ? (
                                 <Link to={"/probation-action/" + item.empId}>
                                   <Edit2
                                     onClick={() => {
@@ -561,6 +590,8 @@ const ProbationList = () => {
                                     }}
                                   />
                                 </Link>
+                              ) : (
+                                <Edit2 />
                               )}
                             </td>
 

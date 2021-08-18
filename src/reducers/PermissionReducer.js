@@ -21,6 +21,8 @@ const PermissionReducer = (state, action) => {
 
     case "CREATE_GROUP":
       return { ...state, groupList: action.payload };
+    case "ROLE_ACCESS_PERMISSION":
+      return { ...state, rolePermission: action.payload };
 
     default:
       return state;

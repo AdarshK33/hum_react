@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { AppContext } from "../../context/AppState";
 import "./ManageCandidate.css";
+import { PermissionContext } from "../../context/PermissionState";
 
 import DocVerificationAdmin from "./DocVerificationAdmin";
 import DocVerificationManager from "./DocVerificationManager";
@@ -10,16 +11,17 @@ import DocVerificationManager from "./DocVerificationManager";
 const DocVerification = () => {
   const { getUserInfo, user } = useContext(AppContext);
 
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     getUserInfo();
   }, []);
 
   return (
     <Fragment>
-      {user.role === "ADMIN" && <DocVerificationAdmin />}
-      {(user.role === "MANAGER" || user.role === "COST_CENTER_MANAGER") && (
-        <DocVerificationManager />
-      )}
+      {rolePermission === "admin" && <DocVerificationAdmin />}
+      {(rolePermission == "superCostCenterManager" ||
+        rolePermission == "costCenterManager" ||
+        rolePermission == "manager") && <DocVerificationManager />}
     </Fragment>
   );
 };

@@ -11,6 +11,8 @@ import { DocsVerifyContext } from "../../../context/DocverificationState";
 import { RoleManagementContext } from "../../../context/RoleManagementState";
 import { AdminContext } from "../../../context/AdminState";
 import { AppContext } from "../../../context/AppState";
+import { PermissionContext } from "../../../context/PermissionState";
+
 import moment from "moment";
 const ManagerDisciplinaryList = () => {
   const { candidateView, candidateList, viewCandidateId } =
@@ -26,6 +28,7 @@ const ManagerDisciplinaryList = () => {
     disciplinarySearchData,
     MakedisciplinaryEmployeeSearchNull,
   } = useContext(DisciplinaryContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -242,8 +245,7 @@ const ManagerDisciplinaryList = () => {
                             </td>
                             {user !== null &&
                             user !== undefined &&
-                            (user.role === "COST_CENTER_MANAGER" ||
-                              user.additionalRole === "7") ? (
+                            rolePermission == "costCenterManager" ? (
                               <td>
                                 {
                                   // item.disciplinaryAction.status !== 2

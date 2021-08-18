@@ -10,6 +10,7 @@ import TableComponent from "../../table/Table.component";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import { AppContext } from "../../../context/AppState";
 import { BonusContext } from "../../../context/BonusState";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const TransferPage = () => {
   const recordsPerPage = 10;
@@ -22,6 +23,7 @@ const TransferPage = () => {
     chnageTransferType,
     TRANSFERtype,
   } = useContext(TransferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
   const { user } = useContext(AppContext);
   const [transferType, setTransferType] = useState(TRANSFERtype);
@@ -186,13 +188,9 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  (user.additionalRole === "1" || user.loginType == "1") &&
-                  item.status === 0
-                    ? true
-                    : false,
+                  rolePermission == "admin" && item.status === 0 ? true : false,
                 link:
-                  (user.additionalRole === "1" || user.loginType == "1") &&
-                  item.status === 0
+                  rolePermission == "admin" && item.status === 0
                     ? `/international-transfer/${item.transferId}`
                     : "",
               },

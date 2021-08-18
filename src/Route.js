@@ -131,6 +131,7 @@ import InsuranceListContainer from "./components/Insurance/List/ListContainer";
 import AddInsurance from "./components/Insurance/AddInsurance";
 import ViewInsurance from "./components/Insurance/ViewInsurance";
 import EditInsurance from "./components/Insurance/EditInsurance";
+import Pdfsample from "./components/PdfLetters/pdfsample";
 
 /* Document Management Module */
 import DocumentContainer from "./components/DocumentManagement/DocumentContainer";
@@ -238,6 +239,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/offer-release-list`}
             component={OfferReleaseList}
           />
+          {/* <Route
+            path={`${process.env.PUBLIC_URL}/offer-release-list`}
+            component={Pdfsample}
+          /> */}
 
           <Route
             path={`${process.env.PUBLIC_URL}/edit-offer-release`}

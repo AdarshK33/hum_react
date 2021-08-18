@@ -25,6 +25,8 @@ const PromotionView = (props) => {
     validatedAdminName: "",
     validatedManagerId: "",
     validatedManagerName: "",
+    managerValidatedDate:"",
+    adminValidatedDate:"",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -104,6 +106,8 @@ const PromotionView = (props) => {
         validatedManagerId: promotionIdData["validatedManagerId"],
         validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
+        managerValidatedDate:promotionIdData["managerValidatedDate"],
+        adminValidatedDate:promotionIdData["adminValidatedDate"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
@@ -492,7 +496,7 @@ const PromotionView = (props) => {
                         <>
                           <Col sm={2}>
                             <div>
-                              <label>Effective Date :</label>
+                              <label>Promotion Effective Date :</label>
                             </div>
                           </Col>
                           <Col sm={2}>
@@ -644,6 +648,28 @@ const PromotionView = (props) => {
                                 <>
                                   <Col sm={2}>
                                     <div>
+                                      <label>Date:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.managerValidatedDate}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
+                              </Row>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
                                       <label>Validated By:</label>
                                     </div>
                                   </Col>
@@ -655,8 +681,21 @@ const PromotionView = (props) => {
                                     </div>
                                   </Col>
                                 </>
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>Date:</label>
+                                    </div>
+                                  </Col>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label className="itemResult">
+                                        {state.adminValidatedDate}
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </>
                               </Row>
-
                               <Row
                                 style={{
                                   marginLeft: "2rem",

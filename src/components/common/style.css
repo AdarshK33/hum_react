@@ -59,3 +59,14 @@ input.form-control.non-disable.blueTextData {
 .readTextBlue {
   color: #006ebb !important;
 }
+
+div.page-main-header-height {
+  height: 120px !important;
+}
+
+div.page-header-margin-top {
+  margin-top: 110px;
+}
+div.role-text-center {
+  text-align: center;
+}

@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 import ReactExport from "react-data-export";
+import { PermissionContext } from "../../context/PermissionState";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -31,7 +32,7 @@ function ViewShift() {
   const { viewCostCentre } = useContext(DashboardContext);
   const { viewSalary, salaryList, salaryApproval, loader } =
     useContext(ClusterContext);
-
+  const { rolePermission } = useContext(PermissionContext);
   const [editModal, setEditModal] = useState(false);
   const [employeeId, setEmployeeId] = useState();
   const [firstName, setFirstName] = useState();
@@ -302,12 +303,9 @@ function ViewShift() {
                 </Button>
               )}
 
-              {(user.loginType === "1" ||
-                user.additionalRole === "1" ||
-                user.loginType === "7" ||
-                user.additionalRole === "7" ||
-                user.loginType === "9" ||
-                user.additionalRole === "9") &&
+              {(rolePermission == "superCostCenterManager" ||
+                rolePermission == "costCenterManager" ||
+                rolePermission == "admin") &&
               currentRecords !== null &&
               currentRecords !== undefined &&
               currentRecords.length > 0 ? (
@@ -364,7 +362,7 @@ function ViewShift() {
                     style={{ backgroundColor: "#2f3c4e" }}
                   >
                     <tr>
-                      {user.loginType === "7" || user.additionalRole === "7" ? (
+                      {rolePermission == "costCenterManager" ? (
                         <th>Select</th>
                       ) : (
                         <th></th>
@@ -409,18 +407,14 @@ function ViewShift() {
                   ) : currentRecords !== null &&
                     currentRecords !== undefined &&
                     currentRecords.length > 0 &&
-                    (user.loginType === "7" ||
-                      user.additionalRole === "7" ||
-                      user.loginType === "3" ||
-                      user.additionalRole === "3" ||
-                      (user.role !== "MANAGER" &&
-                        user.isClusterManager === 1)) ? (
+                    (rolePermission == "costCenterManager" ||
+                      rolePermission == "manager") &&
+                    user.isClusterManager === 1 ? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            {user.loginType === "7" ||
-                            user.additionalRole === "7" ? (
+                            {rolePermission == "costCenterManager" ? (
                               <td>
                                 {" "}
                                 {item.statusDesc === "Pending" ? (
@@ -455,8 +449,7 @@ function ViewShift() {
                             <td>{item.additionalHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            {user.loginType === "7" ||
-                            user.additionalRole === "7" ? (
+                            {rolePermission == "costCenterManager" ? (
                               <td>
                                 {item.statusDesc === "Pending" ? (
                                   <Edit2
