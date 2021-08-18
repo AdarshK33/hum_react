@@ -132,6 +132,9 @@ import AddInsurance from "./components/Insurance/AddInsurance";
 import ViewInsurance from "./components/Insurance/ViewInsurance";
 import EditInsurance from "./components/Insurance/EditInsurance";
 
+/* Document Management Module */
+import DocumentContainer from "./components/DocumentManagement/DocumentContainer";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -440,6 +443,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/master/edit-insurance/:insuranceNominationId`}
             component={EditInsurance}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/document-management`}
+            component={DocumentContainer}
           />
 
           {state.MenuPermissionsRoute.map((e) => {
