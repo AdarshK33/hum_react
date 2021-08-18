@@ -9,6 +9,7 @@ import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const ViewWorkInformation = () => {
   const [state, setState] = useState({
@@ -37,7 +38,7 @@ const ViewWorkInformation = () => {
   const { viewCountries, countryList } = useContext(MasterFilesContext);
   const [dateOfIssue, setDateOfIssue] = useState();
   const [dateOfValidity, setDateOfValidity] = useState();
-
+  const { rolePermission } = useContext(PermissionContext);
   const {
     departmentView,
     departmentName,
@@ -118,7 +119,7 @@ const ViewWorkInformation = () => {
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Company Name</Form.Label>
-              {user.role === "ADMIN" || user.additionalRole == 1 ? (
+              {rolePermission == "admin" ? (
                 <Form.Control
                   as="select"
                   value={state.adminCompany}

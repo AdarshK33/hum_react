@@ -9,6 +9,7 @@ const initial_state = {
   monthlyQtyDetailsList: [],
   permissionList: [],
   groupList: [],
+  rolePermission: "",
 };
 
 export const PermissionContext = createContext();
@@ -157,6 +158,15 @@ export const PermissionProvider = ({ children }) => {
     }
   };
 
+  const permissionRoleAccess = (role) => {
+    console.log("roleAccess", role);
+    state.rolePermission = role;
+    return dispatch({
+      type: "ROLE_ACCESS_PERMISSION",
+      payload: state.rolePermission,
+    });
+  };
+
   //Service group permission get api
   //   const viewServiceGroup = async() => {
   //     try {
@@ -200,12 +210,14 @@ export const PermissionProvider = ({ children }) => {
         uploadMonthFile,
         viewServiceGroup,
         createServiceGroup,
+        permissionRoleAccess,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,
         permissionList: state.permissionList,
         loader: loader,
         groupList: state.groupList,
+        rolePermission: state.rolePermission,
       }}
     >
       {children}

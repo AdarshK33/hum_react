@@ -304,7 +304,7 @@ const PromotionInitiate = () => {
       effectiveDate == null ||
       effectiveDate == undefined
     ) {
-      setEffectiveDateError("Please add  effective date");
+      setEffectiveDateError("Please add promotion effective date");
     } else {
       setEffectiveDateError("");
     }
@@ -1250,7 +1250,7 @@ const PromotionInitiate = () => {
                         >
                           <Col sm={2}>
                             <div>
-                              <label> Effective Date :</label>
+                              <label>Promotion Effective Date :</label>
                             </div>
                           </Col>
 

@@ -496,7 +496,7 @@ const PromotionView = (props) => {
                         <>
                           <Col sm={2}>
                             <div>
-                              <label>Effective Date :</label>
+                              <label>Promotion Effective Date :</label>
                             </div>
                           </Col>
                           <Col sm={2}>

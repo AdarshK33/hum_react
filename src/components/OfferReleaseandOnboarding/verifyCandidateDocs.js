@@ -5,20 +5,21 @@ import "../CandidateVerification/ManageCandidate.css";
 
 import VerificationDocsByAdmin from "./verificationDocsByAdmin";
 import VerificationDocsByManager from "./verificationOfDocsByManager";
+import { PermissionContext } from "../../context/PermissionState";
 
 const VerifyCandidateDocs = () => {
   const { getUserInfo, user } = useContext(AppContext);
-
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     getUserInfo();
   }, []);
 
   return (
     <Fragment>
-      {user.role === "ADMIN" && <VerificationDocsByAdmin />}
-      {(user.role === "MANAGER" || user.role === "COST_CENTER_MANAGER") && (
-        <VerificationDocsByManager />
-      )}
+      {rolePermission == "admin" && <VerificationDocsByAdmin />}
+      {(rolePermission == "superCostCenterManager" ||
+        rolePermission == "costCenterManager" ||
+        rolePermission == "manager") && <VerificationDocsByManager />}
     </Fragment>
   );
 };

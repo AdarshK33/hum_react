@@ -6,6 +6,7 @@ import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 import "../Offers/offers.css";
 import "./offerReleaseandOnboarding.css";
+import { PermissionContext } from "../../context/PermissionState";
 
 const ViewRemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState();
@@ -32,7 +33,7 @@ const ViewRemunerationInformation = (props) => {
     workInfoView,
     workInfoViewData,
   } = useContext(OfferContext);
-
+  const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
 
   useEffect(() => {
@@ -72,7 +73,7 @@ const ViewRemunerationInformation = (props) => {
       candidateData.remuneration;
     e.preventDefault();
     if (
-      user.role === "ADMIN" &&
+      rolePermission == "admin" &&
       (typeof fixedGross === "undefined" ||
         fixedGross === "" ||
         (fixedGross + "").includes(" ", "-", ".", "/", "+") ||
@@ -193,7 +194,7 @@ const ViewRemunerationInformation = (props) => {
         setParmanentGrossLimit(false);
       }
     } else if (
-      user.role === "ADMIN" &&
+      rolePermission == "admin" &&
       (typeof monthlyBonus === "undefined" ||
         monthlyBonus === "" ||
         (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
