@@ -13,6 +13,7 @@ import {
   Table,
 } from "react-bootstrap";
 import { OfferContext } from "../../context/OfferState";
+import { PermissionContext } from "../../context/PermissionState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -53,6 +54,8 @@ const DocVerification = () => {
     rejectMessage,
     documentRejectComplete,
   } = useContext(DocsVerifyContext);
+
+  const { rolePermission } = useContext(PermissionContext);
   const {
     candidateData,
     aadhaarNotificationData,
@@ -353,8 +356,9 @@ const DocVerification = () => {
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="buttonMargin1">
-                        {(user.role === "MANAGER" ||
-                          user.role === "COST_CENTER_MANAGER") &&
+                        {(rolePermission == "superCostCenterManager" ||
+                          rolePermission == "costCenterManager" ||
+                          rolePermission == "manager") &&
                           item.documentType !== 4 &&
                           item.documentType !== 5 && (
                             <button
@@ -369,8 +373,9 @@ const DocVerification = () => {
                             </button>
                           )}
 
-                        {(user.role === "MANAGER" ||
-                          user.role === "COST_CENTER_MANAGER") &&
+                        {(rolePermission == "superCostCenterManager" ||
+                          rolePermission == "costCenterManager" ||
+                          rolePermission == "manager") &&
                           item.documentType !== 4 &&
                           item.documentType !== 5 && (
                             <button
@@ -579,8 +584,9 @@ const DocVerification = () => {
                         >
                           Approve
                         </button>
-                        {(user.role === "MANAGER" ||
-                          user.role === "COST_CENTER_MANAGER") && (
+                        {(rolePermission == "superCostCenterManager" ||
+                          rolePermission == "costCenterManager" ||
+                          rolePermission == "manager") && (
                           <button
                             className="approveButton ml-4"
                             style={
@@ -654,7 +660,7 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" && (
+      {/* {user.role === "ADMIN" && (
         <Row className="mx-2">
           <label>Is UAN Number Generated ?</label>
           <Col sm={2}>
@@ -688,8 +694,8 @@ const DocVerification = () => {
             </Form.Group>
           </Col>
         </Row>
-      )}
-      {UANNo && (
+      )} */}
+      {/* {UANNo && (
         <Row>
           <Col sm={6}>
             <Form.Group>
@@ -708,7 +714,7 @@ const DocVerification = () => {
             </Form.Group>
           </Col>
         </Row>
-      )}
+      )} */}
       <div
         style={{
           marginTop: "2rem",

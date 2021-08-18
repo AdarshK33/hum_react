@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../common/style.css";
 import { PlusCircle, MinusCircle } from "react-feather";
 import { client } from "../../utils/axios";
+import { PermissionContext } from "../../context/PermissionState";
 
 const ViewTicket = () => {
   const {
@@ -26,7 +27,7 @@ const ViewTicket = () => {
   } = useContext(SupportContext);
   const { serviceGroupView, serviceGroupList } = useContext(GroupContext);
   const { user } = useContext(AppContext);
-
+  const { rolePermission } = useContext(PermissionContext);
   const [compStatus, setCompStatus] = useState();
   const [tickStatus, setTickStatus] = useState();
   const [resolution, setResolution] = useState("");
@@ -754,10 +755,8 @@ const ViewTicket = () => {
                         className="disabledValue"
                         value={ticketIdList.serviceGroup}
                       />
-                    ) : user.loginType === "1" ||
-                      user.loginType === "9" ||
-                      user.additionalRole === "1" ||
-                      user.additionalRole === "9" ? (
+                    ) : rolePermission == "admin" ||
+                      rolePermission == "superCostCenterManager" ? (
                       <Form.Control
                         as="select"
                         value={serviceGroup}
@@ -835,10 +834,8 @@ const ViewTicket = () => {
                             : ""
                         }
                       />
-                    ) : user.loginType === "1" ||
-                      user.loginType === "9" ||
-                      user.additionalRole === "1" ||
-                      user.additionalRole === "9" ? (
+                    ) : rolePermission == "admin" ||
+                      rolePermission == "superCostCenterManager" ? (
                       <Form.Control
                         as="select"
                         value={compStatus}
@@ -926,10 +923,8 @@ const ViewTicket = () => {
                             : ""
                         }
                       />
-                    ) : user.loginType === "1" ||
-                      user.loginType === "9" ||
-                      user.additionalRole === "1" ||
-                      user.additionalRole === "9" ? (
+                    ) : rolePermission == "admin" ||
+                      rolePermission == "superCostCenterManager" ? (
                       <Form.Control
                         as="select"
                         value={tickStatus}

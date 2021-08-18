@@ -12,6 +12,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import "./Promotion.css";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
+
 const PromotionList = () => {
   const {
     promotionListView,
@@ -25,6 +27,7 @@ const PromotionList = () => {
   } = useContext(PromotionContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const [pageCount, setPageCount] = useState(0);
@@ -360,8 +363,7 @@ const PromotionList = () => {
                               </td>
                             ) : user !== null &&
                               user !== undefined &&
-                              (user.additionalRole === "1" ||
-                                user.loginType == "1") ? (
+                              rolePermission == "admin" ? (
                               <td>
                                 {item.status === 2 ? (
                                   <Link
@@ -382,9 +384,7 @@ const PromotionList = () => {
                               </td>
                             ) : user !== null &&
                               user !== undefined &&
-                              (user.loginType == 7 ||
-                                user.additionalRole === "7") &&
-                              user.isManager === true ? (
+                              rolePermission == "costCenterManager" ? (
                               <td>
                                 {item.status === 0 ? (
                                   <Link

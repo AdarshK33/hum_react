@@ -14,6 +14,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { PermissionContext } from "../../context/PermissionState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -51,6 +52,7 @@ const DocVerification = () => {
     disapproveAadharByAdmin,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     getUserInfo();
     setState(personalInfoData);
@@ -236,7 +238,7 @@ const DocVerification = () => {
                               <span style={{ color: "red" }}>*</span>
                             </label>
                           ) : item.documentType === 1 &&
-                            user.role === "ADMIN" ? (
+                            rolePermission == "admin" ? (
                             <label>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
@@ -318,48 +320,56 @@ const DocVerification = () => {
                         <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
                         <td className="row text-center buttonMargin">
-                          {user.role === "ADMIN" && item.documentType === 1 && (
-                            <button
-                              className="approveButton ml-4"
-                              onClick={() =>
-                                handleApproveDocument(
-                                  item.documentId,
-                                  candidateData.candidateInformation.candidateId
-                                )
-                              }
-                            >
-                              Approve
-                            </button>
-                          )}
-                          {user.role === "ADMIN" && item.documentType === 1 && (
-                            <button
-                              className="approveButton ml-4"
-                              disabled={
-                                rejectStatus !== undefined &&
-                                rejectStatus === "FAIL"
-                                  ? true
-                                  : false
-                              }
-                              style={
-                                rejectStatus !== undefined &&
-                                rejectStatus === "FAIL"
-                                  ? { opacity: "0.6" }
-                                  : { opacity: "1" }
-                              }
-                              onClick={() =>
-                                handleDisApproveDocument(item.documentId)
-                              }
-                            >
-                              Disapprove
-                            </button>
-                          )}
+                          {/* {(user.role === "ADMIN" ||
+                            user.additionalRole === "1" ||
+                            user.loginType == 1) &&
+                            item.documentType === 1 && (
+                              <button
+                                className="approveButton ml-4"
+                                onClick={() =>
+                                  handleApproveDocument(
+                                    item.documentId,
+                                    candidateData.candidateInformation
+                                      .candidateId
+                                  )
+                                }
+                              >
+                                Approve
+                              </button>
+                            )}
+                          {(user.role === "ADMIN" ||
+                            user.additionalRole === "1" ||
+                            user.loginType == 1) &&
+                            item.documentType === 1 && (
+                              <button
+                                className="approveButton ml-4"
+                                disabled={
+                                  rejectStatus !== undefined &&
+                                  rejectStatus === "FAIL"
+                                    ? true
+                                    : false
+                                }
+                                style={
+                                  rejectStatus !== undefined &&
+                                  rejectStatus === "FAIL"
+                                    ? { opacity: "0.6" }
+                                    : { opacity: "1" }
+                                }
+                                onClick={() =>
+                                  handleDisApproveDocument(item.documentId)
+                                }
+                              >
+                                Disapprove
+                              </button>
+                            )}
                           {item.documentType === 1 &&
                             rejectStatus !== undefined &&
                             rejectStatus === "FAIL" && (
                               <p style={{ color: "red" }}>
                                 Attempt has reached
                               </p>
-                            )}
+                            )} */}
+                          NA
                         </td>
                       )}
                       {item.documentType === 1 && (

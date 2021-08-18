@@ -11,6 +11,7 @@ import { AppContext } from "../../context/AppState";
 import moment from "moment";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import { BonusContext } from "../../context/BonusState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const WorkInformation = (props) => {
   const [state, setState] = useState({
@@ -66,6 +67,7 @@ const WorkInformation = (props) => {
     cityList,
     managerList,
   } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
   const [stateValue, setStateValue] = useState();
@@ -300,9 +302,7 @@ const WorkInformation = (props) => {
         cityId: cityId,
         collegeName: college,
         companyName:
-          user.role === "ADMIN" || user.additionalRole == 1
-            ? state.adminCompany
-            : user.company,
+          rolePermission == "admin" ? state.adminCompany : user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
         dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -346,9 +346,7 @@ const WorkInformation = (props) => {
         cityId: cityId,
         collegeName: college,
         companyName:
-          user.role === "ADMIN" || user.additionalRole == 1
-            ? state.adminCompany
-            : user.company,
+          rolePermission == "admin" ? state.adminCompany : user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
         dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -414,7 +412,7 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Company Name</Form.Label>
-                {user.role === "ADMIN" || user.additionalRole == 1 ? (
+                {rolePermission == "admin" ? (
                   <Form.Control
                     as="select"
                     value={state.adminCompany}

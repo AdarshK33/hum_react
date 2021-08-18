@@ -1,58 +1,65 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
-import { Modal } from 'react-bootstrap';
+import React, { Fragment, useState, useContext, useEffect } from "react";
+import { Modal } from "react-bootstrap";
 import { ClusterContext } from "../../context/ClusterState";
-import { Multiselect } from 'multiselect-react-dropdown';
+import { Multiselect } from "multiselect-react-dropdown";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from 'react-select'
+import Select from "react-select";
 import { AppContext } from "../../context/AppState";
 import { RosterContext } from "../../context/RosterState";
+import { PermissionContext } from "../../context/PermissionState";
+
 const CreateClusterModal = (props) => {
-
-
   const [clusterName, setClusterName] = useState("");
   const [description, setDescription] = useState("");
-  const [clusterLeader, setClusterLeader] = useState('');
+  const [clusterLeader, setClusterLeader] = useState("");
   const [clustertButton, setClusterButton] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-  const [sportsList, setSportsList] = useState([])
-  const [employee, setEmployee] = useState([])
-  const [costCenterName, setCostCenterName] = useState('');
+  const [sportsList, setSportsList] = useState([]);
+  const [employee, setEmployee] = useState([]);
+  const [costCenterName, setCostCenterName] = useState("");
 
   const setClear = () => {
+    setClusterName("");
+    setDescription("");
+    setClusterLeader("");
+    setClusterButton("");
+    setErrorMsg("");
+    setSuccessMsg("");
+    setSportsList("");
+    setCostCenterName();
+    setSuccessMsg("");
+    setEmployee("");
+    props.handleClose();
+  };
 
-    setClusterName("")
-    setDescription("")
-    setClusterLeader('')
-    setClusterButton('')
-    setErrorMsg('')
-    setSuccessMsg('')
-    setSportsList('');
-    setCostCenterName()
-    setSuccessMsg('');
-    setEmployee('')
-    props.handleClose()
-  }
-
-
-
-  const { updateAdminaddCluster, viewSports, sportsNames,
-    callClusterLeadersList, callClusterEmployeesList,
-    callClusterEmployees, callClusterLeaders,
+  const {
+    updateAdminaddCluster,
+    viewSports,
+    sportsNames,
+    callClusterLeadersList,
+    callClusterEmployeesList,
+    callClusterEmployees,
+    callClusterLeaders,
   } = useContext(ClusterContext);
-  const { user, } = useContext(AppContext);
+  const { user } = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
   useEffect(() => {
-    viewSports()
-    callClusterEmployees()
-  }, [])
+    viewSports();
+    callClusterEmployees();
+  }, []);
 
   useEffect(() => {
-    costCenter()
-    if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
-      user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
-      setCostCenterName(user.costCentre)
+    costCenter();
+    if (
+      rolePermission !== "superCostCenterManager" ||
+      rolePermission !== "costCenterManager" ||
+      rolePermission !== "manager" ||
+      rolePermission !== "admin"
+    ) {
+      setCostCenterName(user.costCentre);
     }
   }, []);
 
@@ -66,65 +73,59 @@ const CreateClusterModal = (props) => {
       description: description.trim(),
       storeId: costCenterName,
       sportIds: sportsList.map((e) => e.sportId),
-      employeeIds: employee.map((e) => e.employeeId)
-    }
+      employeeIds: employee.map((e) => e.employeeId),
+    };
 
     if (validate) {
-      updateAdminaddCluster(newCluster)
-      setClear()
-      props.handleClose()
+      updateAdminaddCluster(newCluster);
+      setClear();
+      props.handleClose();
     }
-
-  }
+  };
   const validation = () => {
-    let flag = true
+    let flag = true;
     if (employee.length === 0) {
-      toast.error("Select employee is mandatory")
+      toast.error("Select employee is mandatory");
       flag = false;
       return;
     }
 
     if (sportsList.length === 0) {
-      toast.error("Select sports is mandatory")
+      toast.error("Select sports is mandatory");
       flag = false;
       return;
     }
 
     return flag;
-  }
+  };
 
-  const onChangeHandler = event => {
+  const onChangeHandler = (event) => {
     setClusterName(event.target.value);
     if (sportsList.length === 0) {
-      setClusterButton(true)
+      setClusterButton(true);
       setErrorMsg("All the fields are required");
-    }
-    else {
-      setClusterButton(false)
-      setErrorMsg(false)
+    } else {
+      setClusterButton(false);
+      setErrorMsg(false);
     }
   };
 
-  const onDescprtion = event => {
+  const onDescprtion = (event) => {
     setDescription(event.target.value);
     if (sportsList.length > 0) {
-      setClusterButton(false)
-      setErrorMsg(false)
-    }
-    else {
-      setClusterButton(true)
-
+      setClusterButton(false);
+      setErrorMsg(false);
+    } else {
+      setClusterButton(true);
     }
   };
-  const clusterLeaderSelect = event => {
+  const clusterLeaderSelect = (event) => {
     setClusterLeader(event.target.value);
     if (employee.length === 0) {
-      setClusterButton(true)
+      setClusterButton(true);
       setErrorMsg("All the fields are required");
-    }
-    else {
-      setClusterButton(false)
-
+    } else {
+      setClusterButton(false);
     }
   };
   // const getCostCenterName = (e) => {
@@ -134,38 +135,40 @@ const CreateClusterModal = (props) => {
   //   callClusterLeaders(data, user.employeeId)
   // }
   const getCostCenterName = (options) => {
-    let data = options !== null ? options.value : ''
-    setCostCenterName(data)
-    callClusterEmployees(data, user.employeeId)
-    callClusterLeaders(data, user.employeeId)
-  }
+    let data = options !== null ? options.value : "";
+    setCostCenterName(data);
+    callClusterEmployees(data, user.employeeId);
+    callClusterLeaders(data, user.employeeId);
+  };
 
   const handleMultiChange = (option) => {
-    setClusterButton(false)
-    setSportsList(option)
-    setErrorMsg(false)
-  }
-
+    setClusterButton(false);
+    setSportsList(option);
+    setErrorMsg(false);
+  };
 
   const handleMultiChange1 = (options) => {
-    setEmployee(options)
-    setClusterButton(false)
-    setErrorMsg(false)
-  }
-
+    setEmployee(options);
+    setClusterButton(false);
+    setErrorMsg(false);
+  };
 
   const clearAndClose = () => {
     setClear();
     props.handleClose();
-  }
+  };
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
-
         <Modal.Header>
           <Modal.Title>Create Cluster</Modal.Title>
-          <button type="button" className="close" data-dismiss="modal" aria-label="Close"
-            onClick={setClear}>
+          <button
+            type="button"
+            className="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            onClick={setClear}
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </Modal.Header>
@@ -175,8 +178,10 @@ const CreateClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Select Sports</label>
-
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Select Sports
+                  </label>
 
                   <Multiselect
                     required
@@ -195,9 +200,15 @@ const CreateClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Name</label>
 
-                  <input type="text" style={{ fontSize: "0.8rem" }} className="form-control" 
-                  placeholder="Cluster Name" required value={clusterName} onChange={onChangeHandler} />
-
+                  <input
+                    type="text"
+                    style={{ fontSize: "0.8rem" }}
+                    className="form-control"
+                    placeholder="Cluster Name"
+                    required
+                    value={clusterName}
+                    onChange={onChangeHandler}
+                  />
                 </div>
               </div>
             </div>
@@ -205,22 +216,37 @@ const CreateClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1">Cluster Description</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    Cluster Description
+                  </label>
 
-                  <input type="text" style={{ fontSize: "0.8rem" }} className="form-control digit" 
-                  placeholder="Cluster Description" required value={description} onChange={onDescprtion} />
+                  <input
+                    type="text"
+                    style={{ fontSize: "0.8rem" }}
+                    className="form-control digit"
+                    placeholder="Cluster Description"
+                    required
+                    value={description}
+                    onChange={onDescprtion}
+                  />
                 </div>
               </div>
             </div>
 
-
             {(() => {
-              if (user.loginType === "1" || user.loginType === "9" || user.loginType === "3" || user.loginType === "7" || user.additionalRole === "1" || user.additionalRole === "9" || user.additionalRole === "7" || user.additionalRole === "3") {
+              if (
+                rolePermission == "superCostCenterManager" ||
+                rolePermission == "costCenterManager" ||
+                rolePermission == "manager" ||
+                rolePermission == "admin"
+              ) {
                 return (
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
+                        <label htmlFor="exampleFormControlInput1">
+                          Select Cost Center
+                        </label>
                         {/* <select
 
                           className="form-control"
@@ -239,23 +265,43 @@ const CreateClusterModal = (props) => {
                           placeholder="Cost Center"
                           //value={costCenter1}
                           style={{ fontSize: "0.9rem" }}
-                          options={costCenterList !== null && costCenterList !== undefined ?
-                             costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })):[]}
+                          options={
+                            costCenterList !== null &&
+                            costCenterList !== undefined
+                              ? costCenterList.map((e) => ({
+                                  label: e.costCentreName,
+                                  value: e.costCentreName,
+                                }))
+                              : []
+                          }
                           onChange={getCostCenterName}
-                          required isSearchable />
+                          required
+                          isSearchable
+                        />
                       </div>
                     </div>
                   </div>
-                )
+                );
               }
             })()}
-            <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "5px" }}>{errormsg}</h6>
+            <h6
+              style={{
+                color: "red",
+                fontFamily: "work-Sans, sans-serif",
+                fontSize: "14px",
+                marginLeft: "5px",
+              }}
+            >
+              {errormsg}
+            </h6>
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Select Employee</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Select Employee
+                  </label>
                   <Multiselect
-
                     placeholder="Select Employee"
                     options={callClusterEmployeesList}
                     value={employee}
@@ -263,7 +309,6 @@ const CreateClusterModal = (props) => {
                     onSelect={handleMultiChange1}
                     isMulti
                   />
-
                 </div>
               </div>
             </div>
@@ -271,18 +316,21 @@ const CreateClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Cluster Leader</label>
+                  <label htmlFor="exampleFormControlInput1">
+                    {" "}
+                    Cluster Leader
+                  </label>
 
                   <select
                     className="form-control"
                     required
                     style={{ fontSize: "0.8rem" }}
-                    onChange={clusterLeaderSelect}>
+                    onChange={clusterLeaderSelect}
+                  >
                     <option value="">Select Cluster Leader</option>
-                    {callClusterLeadersList !== null
-                      && callClusterLeadersList.map((e, i) => {
+                    {callClusterLeadersList !== null &&
+                      callClusterLeadersList.map((e, i) => {
                         return (
-
                           <option key={e.employeeId} value={e.employeeId}>
                             {e.firstName}&nbsp;{e.lastName}
                           </option>
@@ -293,22 +341,33 @@ const CreateClusterModal = (props) => {
               </div>
             </div>
 
-            <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
-            <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
+            <button
+              className="myclass mb-2 mr-2"
+              type="submit"
+              disabled={clustertButton}
+              value="Submit"
+            >
+              Save
+            </button>
+            <button
+              className="myclass mb-2 mr-2"
+              onClick={() => {
+                clearAndClose();
+              }}
+            >
+              Close
+            </button>
 
-
-            <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
+            <h5>
+              {successMsg.length !== 0 && (
+                <div className="text-success">{successMsg}</div>
+              )}
+            </h5>
           </form>
         </Modal.Body>
-
       </Modal>
     </Fragment>
-  )
-}
+  );
+};
 
-export default CreateClusterModal
-
-
-
-
-
+export default CreateClusterModal;

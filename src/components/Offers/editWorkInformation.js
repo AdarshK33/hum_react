@@ -11,6 +11,8 @@ import { AppContext } from "../../context/AppState";
 import moment from "moment";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import { BonusContext } from "../../context/BonusState";
+import { PermissionContext } from "../../context/PermissionState";
+
 const EditWorkInformation = () => {
   const [state, setState] = useState({
     employmentType: "",
@@ -30,6 +32,7 @@ const EditWorkInformation = () => {
     adminCompany: "",
   });
   const { viewCountries, countryList } = useContext(MasterFilesContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
   const [dateOfJoining, setDateOFJoining] = useState();
@@ -275,9 +278,7 @@ const EditWorkInformation = () => {
       cityId: cityId,
       collegeName: college,
       companyName:
-        user.role === "ADMIN" || user.additionalRole == 1
-          ? state.adminCompany
-          : user.company,
+        rolePermission == "admin" ? state.adminCompany : user.company,
       contractType: state.employmentType,
       costCentre: costCenter,
       dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -343,7 +344,7 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Company Name</Form.Label>
-                {user.role === "ADMIN" || user.additionalRole == 1 ? (
+                {rolePermission == "admin" ? (
                   <Form.Control
                     as="select"
                     value={state.adminCompany}

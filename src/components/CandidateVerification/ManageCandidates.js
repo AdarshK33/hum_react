@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import "./ManageCandidate.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const CandidateList = () => {
   const [pageCount, setPageCount] = useState(0);
@@ -16,7 +17,7 @@ const CandidateList = () => {
   const [docStatus, setDocStatus] = useState("");
   const { candidateView, candidateList, loader, total, viewCandidateId } =
     useContext(OfferContext);
-
+  const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
 
   const {
@@ -245,7 +246,7 @@ const CandidateList = () => {
                       <td>
                         {user !== null &&
                         user !== undefined &&
-                        user.role === "ADMIN" &&
+                        rolePermission == "admin" &&
                         (item.adminVerificationStatus === 0 ||
                           item.adminVerificationStatus === 3) ? (
                           <Link to={"/verification/" + item.candidateId}>
@@ -257,7 +258,7 @@ const CandidateList = () => {
                           </Link>
                         ) : user !== null &&
                           user !== undefined &&
-                          user.role !== "ADMIN" &&
+                          rolePermission !== "admin" &&
                           (item.verificationStatus === 0 ||
                             item.verificationStatus === 3) ? (
                           <Link to={"/verification/" + item.candidateId}>
