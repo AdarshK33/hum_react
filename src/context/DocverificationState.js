@@ -4,6 +4,7 @@ import DocsVerificationReducer from "../reducers/DocVerificationReducer";
 import { toast } from "react-toastify";
 import Axios from "axios";
 import { access_token } from "../auth/signin";
+import html2canvas from "html2canvas";
 var fileDownload = require("js-file-download");
 
 const initial_state = {
@@ -460,7 +461,7 @@ export const DocsVerificationProvider = (props) => {
   const uploadBase64Image = (base64Data) => {
     console.log("base64...........", base64Data);
     return client
-      .post("/api/v1/file/upload", base64Data)
+      .post("/api/v1/candidate/file/upload", base64Data)
       .then((response) => {
         console.log(response);
         state.imageData = response.data.data;
@@ -469,6 +470,26 @@ export const DocsVerificationProvider = (props) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const ExportPDFandUpload = (RefData, candidateId = 2362, fileType = 9) => {
+    html2canvas(RefData).then((canvas) => {
+      // document.body.appendChild(canvas); // if you want see your screenshot in body.
+      const imgData = canvas.toDataURL("image/png");
+      var imageData = imgData;
+      imageData = imgData.slice(22) + imgData.slice(23);
+      var data = {
+        base64String: imageData,
+        candidateId: candidateId,
+        fileType: fileType,
+      };
+      uploadBase64Image(data);
+      console.log("base64 data", imageData);
+      // setImage(imgData);
+      //   const pdf = new jsPDF();
+      //   pdf.addImage(imgData, "PNG", 0, 0);
+      //   console.log(pdf);
+      //   pdf.save("download.pdf");
+    });
   };
 
   return (
@@ -498,6 +519,7 @@ export const DocsVerificationProvider = (props) => {
           viewStatesVerification,
           viewCityVerification,
           viewPermanentCityVerification,
+          ExportPDFandUpload,
           uploadBase64Image,
           documentRejectComplete,
           adminRejectComplete,
