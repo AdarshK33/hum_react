@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const HeaderComp = ({
   searchInputHandler,
-  searchDataHandler,
   searchInput,
   exportInsuranceNominations,
   yearRange,
@@ -30,11 +29,6 @@ const HeaderComp = ({
                 </option>
               ))}
           </Form.Control>
-          <Search
-            className="search-icon mr-1"
-            style={{ color: "#313131" }}
-            onClick={searchDataHandler}
-          />
         </Col>
         <Col md={5}>
           <b className="text-uppercase text-center">Insurance Listing</b>
