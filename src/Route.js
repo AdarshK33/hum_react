@@ -135,6 +135,7 @@ import Pdfsample from "./components/PdfLetters/pdfsample";
 
 /* Document Management Module */
 import DocumentContainer from "./components/DocumentManagement/DocumentContainer";
+import ModuleDocumentList from "./components/DocumentManagement/ModuleDocumentList";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -453,6 +454,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/document-management`}
             component={DocumentContainer}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/module-docs`}
+            component={ModuleDocumentList}
           />
 
           {state.MenuPermissionsRoute.map((e) => {
