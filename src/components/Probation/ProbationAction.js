@@ -13,6 +13,8 @@ import ExtensionLetter from "./ExtensionLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
 import { SeparationContext } from "../../context/SepearationState";
+import ConfirmationLetter1 from "./UpdatedConfirmationLetter";
+// import ExtensionLetter1 from "./UpdatedExtensionLetter";
 
 const ProbationAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -30,6 +32,7 @@ const ProbationAction = () => {
   const [showModal, setModal] = useState(false);
   const [showRelivingModal, setShow] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
+  const [ViewLetter, setViewLetter] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
@@ -208,6 +211,7 @@ const ProbationAction = () => {
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
+    setViewLetter(false);
     setShow(false);
   };
 
@@ -284,8 +288,10 @@ const ProbationAction = () => {
     if (probationData !== null && probationData !== undefined) {
       if (probationData.status === 5 || probationData.status === 1) {
         ViewConfirmationLetter(empId);
+        setViewLetter(true);
       } else if (probationData.status === 6 || probationData.status === 2) {
         ViewExtensionLetter(empId);
+        setViewLetter(true);
       }
       handleShow();
       setPreviewGeneratedLetter(true);
@@ -572,6 +578,22 @@ const ProbationAction = () => {
 
   return (
     <Fragment>
+      {/* // {ViewLetter ? <ConfirmationLetter1 ViewLetter={setViewLetter} /> : ""}
+       {ViewLetter &&
+      // probationData !== null &&
+      // probationData !== undefined &&
+      // Object.keys(probationData).length !== 0 &&
+      // (probationData.status === 5 || probationData.status === 1) ? (
+      //   <ConfirmationLetter1 saveCnfetter={saveOfferLetter} />
+      // ) : ViewLetter &&
+      //   probationData !== null &&
+      //   probationData !== undefined &&
+      //   Object.keys(probationData).length !== 0 &&
+      //   (probationData.status === 6 || probationData.status === 2) ? (
+      //   <ExtensionLetter1 saveCnfetter={saveOfferLetter} />
+      // ) : (
+      //   ""
+      // )} */}
       <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
