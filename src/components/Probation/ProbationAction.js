@@ -14,7 +14,8 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
 import { SeparationContext } from "../../context/SepearationState";
 import ConfirmationLetter1 from "./UpdatedConfirmationLetter";
-// import ExtensionLetter1 from "./UpdatedExtensionLetter";
+import ExtensionLetter1 from "./UpdatedExtensionLetter";
+import PdfView from "./ViewLetter";
 
 const ProbationAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -81,6 +82,12 @@ const ProbationAction = () => {
     probationData,
     empId,
     loader,
+    setLetterView,
+    setLetterPreView,
+    ShowViewLetterModel,
+    ShowPreViewLetterModel,
+    setSaveTheLetter,
+    LetterSaved,
   } = useContext(ProbationContext);
   const { searchByCostCenter } = useContext(SeparationContext);
   console.log("employeeId", empId);
@@ -88,6 +95,7 @@ const ProbationAction = () => {
     ViewProbationDataById(empId);
   }, [empId]);
   console.log("probationData->", probationData);
+
   useEffect(() => {
     if (
       probationData &&
@@ -212,7 +220,7 @@ const ProbationAction = () => {
   const saveOfferLetter = () => {
     setSaveLetter(true);
     setViewLetter(false);
-    setShow(false);
+    // setShow(false); commented for updated letter
   };
 
   const digitalSignature = () => {
@@ -270,16 +278,25 @@ const ProbationAction = () => {
   const previewLetterViewing = (e) => {
     e.preventDefault();
     if (probationData !== null && probationData !== undefined) {
-      // fetchRelievingLetterData(employeeData.employeeId);
-      if (probationData.status === 1) {
-        ViewConfirmationLetter(empId);
-      } else if (probationData.status === 2) {
-        ViewExtensionLetter(empId);
-      }
+      console.log(
+        "ShowPreViewLetterModel",
+        ShowPreViewLetterModel,
+        previewLetter
+      );
+      setPreviewLetter(false);
+      setLetterPreView(true);
+      setLetterView(false);
+      // if (probationData.status === 5 || probationData.status === 1) {
+      //   // ViewConfirmationLetter(empId);
+
+      // } else if (probationData.status === 6 || probationData.status === 2) {
+      //   // ViewExtensionLetter(empId);
+
+      // }
 
       setSubmitLetter(false);
       setPreviewLetter(true);
-      setShow(true);
+      // setShow(true);
     }
   };
   const generateLetterClick = (e) => {
@@ -289,11 +306,13 @@ const ProbationAction = () => {
       if (probationData.status === 5 || probationData.status === 1) {
         ViewConfirmationLetter(empId);
         setViewLetter(true);
+        setLetterView(true);
       } else if (probationData.status === 6 || probationData.status === 2) {
         ViewExtensionLetter(empId);
         setViewLetter(true);
+        setLetterView(true);
       }
-      handleShow();
+      // handleShow(); comment for updated letter
       setPreviewGeneratedLetter(true);
     }
   };
@@ -578,22 +597,35 @@ const ProbationAction = () => {
 
   return (
     <Fragment>
-      {/* // {ViewLetter ? <ConfirmationLetter1 ViewLetter={setViewLetter} /> : ""}
-       {ViewLetter &&
-      // probationData !== null &&
-      // probationData !== undefined &&
-      // Object.keys(probationData).length !== 0 &&
-      // (probationData.status === 5 || probationData.status === 1) ? (
-      //   <ConfirmationLetter1 saveCnfetter={saveOfferLetter} />
-      // ) : ViewLetter &&
-      //   probationData !== null &&
-      //   probationData !== undefined &&
-      //   Object.keys(probationData).length !== 0 &&
-      //   (probationData.status === 6 || probationData.status === 2) ? (
-      //   <ExtensionLetter1 saveCnfetter={saveOfferLetter} />
-      // ) : (
-      //   ""
-      // )} */}
+      {probationData !== null &&
+      probationData !== undefined &&
+      Object.keys(probationData).length !== 0 &&
+      probationData.probationConfirmationLetter !== null &&
+      probationData.probationConfirmationLetter !== undefined &&
+      probationData.probationConfirmationLetter !== "" &&
+      (ShowPreViewLetterModel || previewLetter) ? (
+        <PdfView letter={probationData.probationConfirmationLetter} />
+      ) : (
+        ""
+      )}
+      {ViewLetter &&
+      ShowViewLetterModel &&
+      probationData !== null &&
+      probationData !== undefined &&
+      Object.keys(probationData).length !== 0 &&
+      (probationData.status === 5 || probationData.status === 1) ? (
+        <ConfirmationLetter1 />
+      ) : ViewLetter &&
+        ShowViewLetterModel &&
+        probationData !== null &&
+        probationData !== undefined &&
+        Object.keys(probationData).length !== 0 &&
+        (probationData.status === 6 || probationData.status === 2) ? (
+        <ExtensionLetter1 />
+      ) : (
+        ""
+      )}
+
       <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
@@ -613,99 +645,29 @@ const ProbationAction = () => {
       </Modal>
       <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        {submitLetter ? (
-          <Modal.Body className="mx-auto">
-            <label>
-              {probationData &&
-              probationData &&
-              probationData !== null &&
-              probationData !== undefined &&
-              Object.keys(probationData).length !== 0 &&
-              (probationData.status === 5 || probationData.status === 1)
-                ? "Confirmation letter sent to the employee"
-                : probationData &&
-                  probationData &&
-                  probationData !== null &&
-                  probationData !== undefined &&
-                  Object.keys(probationData).length !== 0 &&
-                  (probationData.status === 6 || probationData.status === 2)
-                ? "Extension letter sent to the employee"
-                : ""}
-            </label>
-            <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose1}>Close</Button>
-            </div>
-          </Modal.Body>
-        ) : previewLetter || showRelivingModal ? (
-          <Modal.Body>
-            {true ? (
-              <div>
-                {probationData &&
+
+        <Modal.Body className="mx-auto">
+          <label>
+            {probationData &&
+            probationData &&
+            probationData !== null &&
+            probationData !== undefined &&
+            Object.keys(probationData).length !== 0 &&
+            (probationData.status === 5 || probationData.status === 1)
+              ? "Confirmation letter sent to the employee"
+              : probationData &&
                 probationData &&
                 probationData !== null &&
                 probationData !== undefined &&
                 Object.keys(probationData).length !== 0 &&
-                (probationData.status === 5 || probationData.status === 1) ? (
-                  <ConfirmationLetter />
-                ) : probationData &&
-                  probationData &&
-                  probationData !== null &&
-                  probationData !== undefined &&
-                  Object.keys(probationData).length !== 0 &&
-                  (probationData.status === 6 || probationData.status === 2) ? (
-                  <ExtensionLetter />
-                ) : (
-                  ""
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            <br></br>
-            <Row>
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        ) : (
-          ""
-        )}
+                (probationData.status === 6 || probationData.status === 2)
+              ? "Extension letter sent to the employee"
+              : ""}
+          </label>
+          <div className="text-center mb-2">
+            <Button onClick={handleRelivingClose1}>Close</Button>
+          </div>
+        </Modal.Body>
       </Modal>
       <Modal show={showModal} onHide={() => handleClose1()} centered>
         <Container>
@@ -1276,7 +1238,7 @@ const ProbationAction = () => {
                             ""
                           )}
 
-                          {!saveLetter &&
+                          {!LetterSaved &&
                           ((probationData &&
                             probationData &&
                             probationData !== null &&
@@ -1312,7 +1274,7 @@ const ProbationAction = () => {
                           ) : (
                             ""
                           )}
-                          {saveLetter &&
+                          {LetterSaved &&
                           previewGeneratedLetter &&
                           probationData &&
                           probationData &&
@@ -1348,7 +1310,7 @@ const ProbationAction = () => {
                           ) : (
                             ""
                           )}
-                          {saveLetter && previewGeneratedLetter === true && (
+                          {LetterSaved && previewGeneratedLetter === true && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
