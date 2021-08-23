@@ -6,7 +6,14 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { ProbationContext } from "../../context/ProbationState";
 
 const ConfirmationLetter1 = () => {
-  const { cnfLetterData, loader } = useContext(ProbationContext);
+  const {
+    cnfLetterData,
+    loader,
+    setLetterView,
+    setSaveTheLetter,
+    LetterSaved,
+    ViewProbationDataById,
+  } = useContext(ProbationContext);
   const [show, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
   const { uploadBase64Image, ExportPDFandUpload } =
@@ -15,12 +22,15 @@ const ConfirmationLetter1 = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
+    setLetterView(false);
   };
+  console.log("ShowCNF->", show);
   const HandleSaveLetter = () => {
-    ExportPDFandUpload(inputRef.current);
+    setSaveLetter(true);
+    ExportPDFandUpload(inputRef.current, cnfLetterData.empId, 2);
     console.log("inputRef.current-->", inputRef.current);
     setShow(false);
-    setSaveLetter(true);
+    setSaveTheLetter(true);
   };
   return (
     <Fragment>
