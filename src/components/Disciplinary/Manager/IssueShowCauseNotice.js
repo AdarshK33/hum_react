@@ -158,6 +158,7 @@ const IssueShowCauseNotice = () => {
   const searchDataHandler = () => {
     if (EmpName !== null) {
       EmployeeSearchWithKey(EmpName);
+      setEmpName('')
       setCheckForExist(true);
       state.clickOnsubmit = false;
     }
@@ -171,7 +172,7 @@ const IssueShowCauseNotice = () => {
       value: 1,
     });
     tempArr.push({
-      label: "Others",
+      label: "Misconduct",
       value: 2,
     });
     setdisciplinaryReasonList(tempArr);

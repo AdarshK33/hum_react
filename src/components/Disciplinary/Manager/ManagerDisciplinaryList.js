@@ -151,7 +151,7 @@ const ManagerDisciplinaryList = () => {
                     style={{ backgroundColor: "#2f3c4e" }}
                   >
                     <tr>
-                      <th scope="col">S. No</th>
+                      <th scope="col">SL. No</th>
                       <th scope="col">Emp ID</th>
                       <th scope="col">Emp Name</th>
                       <th scope="col">Cost Center Name</th>
@@ -188,7 +188,7 @@ const ManagerDisciplinaryList = () => {
                     </tbody>
                   ) : currentRecords !== undefined &&
                     currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                    currentRecords.length > 0 && Object.keys(currentRecords).length !== 0 && total !== 0? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={item.employeeId}>
