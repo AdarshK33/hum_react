@@ -394,6 +394,21 @@ export const DocsVerificationProvider = (props) => {
       fileDownload(response.data, name);
     });
   };
+  const downloadFile = (name) => {
+    Axios({
+      url: `${process.env.REACT_APP_BASEURL}api/v1/document/download?name=${name}`,
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    }).then((response) => {
+      console.log(response);
+      fileDownload(response.data, name);
+    });
+  };
 
   const step5suscessStatus = (val) => {
     state.step5Status = val;
@@ -460,18 +475,31 @@ export const DocsVerificationProvider = (props) => {
 
   const uploadBase64Image = (base64Data) => {
     console.log("base64...........", base64Data);
-    return client
-      .post("/api/v1/candidate/file/upload", base64Data)
-      .then((response) => {
-        console.log(response);
-        state.imageData = response.data.data;
-        return dispatch({ type: "BASE64_UPLOAD", payload: state.imageData });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return (
+      client
+
+        .post("/api/v1/document/file/upload", base64Data)
+        // .post("/api/v1/candidate/file/upload", base64Data)
+        .then((response) => {
+          console.log(response);
+          state.imageData = response.data.data;
+          return dispatch({ type: "BASE64_UPLOAD", payload: state.imageData });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
   };
-  const ExportPDFandUpload = (RefData, candidateId = 2362, fileType = 9) => {
+  const ExportPDFandUpload = (
+    RefData,
+    employeeId = 0,
+    fileType = 0,
+    candidateId = 0,
+    exitId = 0,
+    disciplinaryId = 0,
+    promotionId = 0,
+    transferId = 0
+  ) => {
     html2canvas(RefData).then((canvas) => {
       // document.body.appendChild(canvas); // if you want see your screenshot in body.
       const imgData = canvas.toDataURL("image/png");
@@ -481,6 +509,16 @@ export const DocsVerificationProvider = (props) => {
         base64String: imageData,
         candidateId: candidateId,
         fileType: fileType,
+      };
+      var data = {
+        base64String: imageData,
+        candidateId: candidateId,
+        disciplinaryId: disciplinaryId,
+        employeeId: employeeId,
+        exitId: exitId,
+        fileType: fileType,
+        promotionId: promotionId,
+        transferId: transferId,
       };
       uploadBase64Image(data);
       console.log("base64 data", imageData);
@@ -523,6 +561,7 @@ export const DocsVerificationProvider = (props) => {
           uploadBase64Image,
           documentRejectComplete,
           adminRejectComplete,
+          downloadFile,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
           step5Status: state.step5Status,

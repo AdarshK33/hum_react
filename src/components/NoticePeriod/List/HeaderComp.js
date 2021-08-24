@@ -3,12 +3,7 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { Search } from "react-feather";
 import { Link } from "react-router-dom";
 
-const HeaderComp = ({
-  searchInputHandler,
-  searchDataHandler,
-  searchInput,
-  departmentList,
-}) => {
+const HeaderComp = ({ searchInputHandler, searchInput, departmentList }) => {
   return (
     <div className="OnBoardHeading">
       <Row className="m-1">
@@ -33,11 +28,6 @@ const HeaderComp = ({
                 );
               })}
           </Form.Control>
-          <Search
-            className="search-icon mr-1"
-            style={{ color: "#313131" }}
-            onClick={searchDataHandler}
-          />
         </Col>
         <Col md={6}>
           <b className="text-uppercase text-center">Notice Period Listing</b>

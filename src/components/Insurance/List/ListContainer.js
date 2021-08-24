@@ -30,12 +30,11 @@ const InsuranceListContainer = () => {
   } = useContext(InsuranceContext);
   const [tableBody, setTableBody] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  const [searchValue, setSearchValue] = useState(0);
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(0);
   const [apiUrl, setApiUrl] = useState(
     `/api/v1/insurance/view?page=${
       activePage - 1
-    }&size=${recordsPerPage}&year=${searchValue}`
+    }&size=${recordsPerPage}&year=${searchInput}`
   );
 
   useEffect(() => {
@@ -77,12 +76,8 @@ const InsuranceListContainer = () => {
   }, [insuranceList]);
 
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
-  };
-
-  const searchDataHandler = () => {
-    const searchText = searchInput !== "" ? parseInt(searchInput) : 0;
-    setSearchValue(searchText);
+    const searchText = e.target.value;
+    setSearchInput(searchText);
     setActivePage(1);
     setApiUrl(
       `/api/v1/insurance/view?page=${
@@ -96,7 +91,7 @@ const InsuranceListContainer = () => {
     setApiUrl(
       `/api/v1/insurance/view?page=${
         activePage - 1
-      }&size=${recordsPerPage}&year=${searchValue}`
+      }&size=${recordsPerPage}&year=${searchInput}`
     );
   };
 
@@ -108,7 +103,6 @@ const InsuranceListContainer = () => {
           <HeaderComp
             searchInput={searchInput}
             searchInputHandler={searchInputHandler}
-            searchDataHandler={searchDataHandler}
             exportInsuranceNominations={exportInsuranceNominations}
             yearRange={yearRange}
           />

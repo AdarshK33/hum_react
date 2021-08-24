@@ -35,6 +35,7 @@ import { TransferProvider } from "./context/TransferState";
 import { ModuleReportProvider } from "./context/ModuleReportState";
 import { NoticePeriodProvider } from "./context/NoticePeriodState";
 import { InsuranceProvider } from "./context/InsuranceState";
+import { DocumentManagementProvider } from "./context/DocumentManagementState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -84,17 +85,21 @@ function Root() {
                                                           <ModuleReportProvider>
                                                             <NoticePeriodProvider>
                                                               <InsuranceProvider>
-                                                                <BrowserRouter
-                                                                  basename={"/"}
-                                                                >
-                                                                  <ScrollContext>
-                                                                    <WithAxios>
-                                                                      <CandidateWithAxios>
-                                                                        <RoutePath />
-                                                                      </CandidateWithAxios>
-                                                                    </WithAxios>
-                                                                  </ScrollContext>
-                                                                </BrowserRouter>
+                                                                <DocumentManagementProvider>
+                                                                  <BrowserRouter
+                                                                    basename={
+                                                                      "/"
+                                                                    }
+                                                                  >
+                                                                    <ScrollContext>
+                                                                      <WithAxios>
+                                                                        <CandidateWithAxios>
+                                                                          <RoutePath />
+                                                                        </CandidateWithAxios>
+                                                                      </WithAxios>
+                                                                    </ScrollContext>
+                                                                  </BrowserRouter>
+                                                                </DocumentManagementProvider>
                                                               </InsuranceProvider>
                                                             </NoticePeriodProvider>
                                                           </ModuleReportProvider>
