@@ -10,6 +10,7 @@ import NonPerformanceLetter from "./NonPerformanceLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const IssueShowCauseNotice = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
@@ -40,6 +41,7 @@ const IssueShowCauseNotice = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const { rolePermission } = useContext(PermissionContext);
 
   const [state, setState] = useState({
     empId: "",
@@ -158,6 +160,7 @@ const IssueShowCauseNotice = () => {
   const searchDataHandler = () => {
     if (EmpName !== null) {
       EmployeeSearchWithKey(EmpName);
+      setEmpName("");
       setCheckForExist(true);
       state.clickOnsubmit = false;
     }
@@ -171,7 +174,7 @@ const IssueShowCauseNotice = () => {
       value: 1,
     });
     tempArr.push({
-      label: "Others",
+      label: "Misconduct",
       value: 2,
     });
     setdisciplinaryReasonList(tempArr);
@@ -412,7 +415,7 @@ const IssueShowCauseNotice = () => {
             changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
-          status: 0,
+          status: rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: null,
           warningIssued: false,
         },
@@ -466,8 +469,9 @@ const IssueShowCauseNotice = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause notice details saved successfully, sent for manager
-              confirmation.
+              {rolePermission == "costCenterManager"
+                ? "Show cause notice details saved successfully"
+                : "Show cause notice details saved successfully, sent for manager confirmation."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -502,7 +506,7 @@ const IssueShowCauseNotice = () => {
                 <p>{employeeData.managerName}</p>
               </Col> */}
 
-              {showSignature && !previewLetter ? (
+              {showSignature ? (
                 <Fragment>
                   <br></br>
                   <img
@@ -555,8 +559,9 @@ const IssueShowCauseNotice = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label>
-              Show cause notice details saved successfully, sent for manager
-              confirmation.
+              {rolePermission == "costCenterManager"
+                ? "Show cause notice details saved successfully,the employee has been notified"
+                : "Show cause notice details saved successfully, sent for manager confirmation."}
             </label>
 
             <div className="text-center mb-2">

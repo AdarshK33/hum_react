@@ -137,12 +137,12 @@ const EmployeeDocementsList = () => {
                     style={{ backgroundColor: "#2f3c4e" }}
                   >
                     <tr>
-                      <th scope="col">S. No</th>
-                      <th scope="col">Emloyee Name</th>
+                      <th scope="col">SL. No</th>
+                      <th scope="col">Employee Name</th>
                       <th scope="col">Show Cause Notice Issued Date</th>
                       {/* <th scope="col">Signed On</th> */}
                       <th scope="col">Due Days</th>
-                      <th scope="col">Show Cause Issue Status</th>
+                      <th scope="col">Show Cause Status</th>
                       <th scope="col">Warning Letter Issue Date</th>
                       <th scope="col">PIP Start Date</th>
                       <th scope="col">PIP End Date</th>
