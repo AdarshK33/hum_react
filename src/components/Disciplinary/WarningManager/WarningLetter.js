@@ -11,12 +11,12 @@ const WarningLetter = () => {
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
         <Fragment>
+          <h5 className="text-center"> WARNING LETTER </h5>
           <p className="">
             {" "}
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
           <br></br>
-          <h5 className="text-center"> WARNING LETTER </h5>
 
           <p>To ,</p>
           <p>
@@ -29,16 +29,16 @@ const WarningLetter = () => {
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
           </p>
-
+          <p>
+            <b>Sub:</b> Warning Notice
+          </p>
           <div className=" ">
             <p className="mt-5 ">
               {" "}
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
             </p>
             <br></br>
-            <p>
-              <b>Sub:</b> Warning Notice
-            </p>
+
             <p>
               You have been associated Decathlon Sports India Private Limited
               (“Decathlon/Company”), having its registered office at{" "}

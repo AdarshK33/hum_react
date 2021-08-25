@@ -16,7 +16,6 @@ const NonPerformanceLetter = () => {
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
           <br></br>
-          <h5 className="text-center"> LETTER OF SHOW CAUSE NOTICE </h5>
 
           <p>To ,</p>
           <p>
@@ -29,6 +28,9 @@ const NonPerformanceLetter = () => {
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
           </p>
+          <p>
+            <b>Sub:</b> Show Cause Notice
+          </p>
 
           <div className=" ">
             <p className="mt-5 ">
@@ -36,9 +38,7 @@ const NonPerformanceLetter = () => {
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
             </p>
             <br></br>
-            <p>
-              <b>Sub:</b> Show Cause Notice
-            </p>
+
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}
               Private Limited (“Decathlon/{disciplinarySearchData.company}),
@@ -50,31 +50,34 @@ const NonPerformanceLetter = () => {
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <br />
-              <p>It is reported against you that you have been not been performing
-                   the assigned tasks. Thus, on verifying your performances as detailed below,
-                    it demonstrates very clearly that your performance has been much 
-                    below the performance levels expected by the Company.</p>
-        
-            <p>
-{  disciplinarySearchData.disciplinaryAction !== null &&
-disciplinarySearchData.disciplinaryAction !== undefined &&
-disciplinarySearchData.disciplinaryAction !== "" ?
-  disciplinarySearchData.disciplinaryAction.managerComment:''
-}            </p>
-            <p>
-            We have viewed acts of wilful performance lapses very seriously and such 
-            instances cannot be tolerated by the company.
-            </p>
+              <p>
+                It is reported against you that you have been not been
+                performing the assigned tasks. Thus, on verifying your
+                performances as detailed below, it demonstrates very clearly
+                that your performance has been much below the performance levels
+                expected by the Company.
+              </p>
+              <p>
+                {disciplinarySearchData.disciplinaryAction !== null &&
+                disciplinarySearchData.disciplinaryAction !== undefined &&
+                disciplinarySearchData.disciplinaryAction !== ""
+                  ? disciplinarySearchData.disciplinaryAction.managerComment
+                  : ""}{" "}
+              </p>
+              <p>
+                We have viewed acts of wilful performance lapses very seriously
+                and such instances cannot be tolerated by the company.
+              </p>
               <br />
-             <p>
-             Hence, you are hereby called upon to show cause as to why appropriate 
-             disciplinary actions should not be initiated against you in respect of 
-             acts narrated as above. Your explanation, if any, must be submitted in 
-             writing within 5 days of receipt of this notice, failing which it will be 
-             presumed that you have no explanation to show cause and the company will 
-             initiate further actions, as deemed fit, based on the materials available.
-             </p>
-            
+              <p>
+                Hence, you are hereby called upon to show cause as to why
+                appropriate disciplinary actions should not be initiated against
+                you in respect of acts narrated as above. Your explanation, if
+                any, must be submitted in writing within 5 days of receipt of
+                this notice, failing which it will be presumed that you have no
+                explanation to show cause and the company will initiate further
+                actions, as deemed fit, based on the materials available.
+              </p>
               <br />
               The receipt of this letter should be acknowledged.
               <br />

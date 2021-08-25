@@ -16,7 +16,6 @@ const ShowCauseNotice = () => {
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
           <br></br>
-          <h5 className="text-center"> LETTER OF SHOW CAUSE NOTICE </h5>
 
           <p>To ,</p>
           <p>
@@ -29,16 +28,16 @@ const ShowCauseNotice = () => {
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
           </p>
-
+          <p>
+            <b>Sub:</b> Show Cause Notice
+          </p>
           <div className=" ">
             <p className="mt-5 ">
               {" "}
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
             </p>
             <br></br>
-            <p>
-              <b>Sub:</b> Show Cause Notice
-            </p>
+
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}
               Private Limited (“Decathlon/{disciplinarySearchData.company}),
@@ -49,6 +48,10 @@ const ShowCauseNotice = () => {
               Decathlon <b>{disciplinarySearchData.department}</b> as{" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
+              <p>
+                It is reported against you that you have indulged in Gross
+                Negligence and Misconduct{" "}
+              </p>
               <br />
               <b>
                 {disciplinarySearchData !== null &&
