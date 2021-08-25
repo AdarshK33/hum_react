@@ -318,7 +318,7 @@ const IssueShowCauseNotice = () => {
   };
   const DisciplinaryReasonHandler = (e) => {
     setShowCauseReason(e.target.value);
-    if (e.target.value === "Others") {
+    if (e.target.value === "Misconduct") {
       disciplinaryResonsView(2);
       setChangeInReason(2);
       state.reasonForCause = "";
@@ -467,7 +467,7 @@ const IssueShowCauseNotice = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause notice details saved successfully, sent for manager
+              Show cause notice details saved successfully, sent for cost center manager
               confirmation.
             </label>
             <div className="text-center">
@@ -503,7 +503,7 @@ const IssueShowCauseNotice = () => {
                 <p>{employeeData.managerName}</p>
               </Col> */}
 
-              {showSignature && !previewLetter ? (
+              {showSignature ? (
                 <Fragment>
                   <br></br>
                   <img

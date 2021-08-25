@@ -300,7 +300,7 @@ const ManagerWarningAction = (props) => {
         if (disciplinarySearchData.disciplinaryWarning.reasonId === 1) {
           setShowCauseReason("Non-Performance");
         } else if (disciplinarySearchData.disciplinaryWarning.reasonId === 2) {
-          setShowCauseReason("Others");
+          setShowCauseReason("Misconduct");
         }
       } else {
         // setIssueWarningStatus("no");
