@@ -23,7 +23,7 @@ const DocsListTableBody = ({ doc, index }) => {
         <Download
           data-doc={doc}
           onClick={downloadDoc}
-          style={{ color: "#007bff" }}
+          style={{ color: "#007bff", cursor: "pointer" }}
         />
       </td>
     </tr>
