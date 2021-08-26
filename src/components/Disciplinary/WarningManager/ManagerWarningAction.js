@@ -302,7 +302,7 @@ const ManagerWarningAction = (props) => {
         if (disciplinarySearchData.disciplinaryWarning.reasonId === 1) {
           setShowCauseReason("Non-Performance");
         } else if (disciplinarySearchData.disciplinaryWarning.reasonId === 2) {
-          setShowCauseReason("Others");
+          setShowCauseReason("Misconduct");
         }
       } else {
         // setIssueWarningStatus("no");
@@ -901,10 +901,8 @@ const ManagerWarningAction = (props) => {
             ) : (
               <label className="text-center">
                 {/* Warning letter has been issued to the employee */}
-
-                {rolePermission == "costCenterManager"
-                  ? "Warning letter details saved successfully,the employee has been notified."
-                  : "Warning letter details saved successfully, sent for manager confirmation."}
+                Warning letter details saved successfully, sent for cost center manager
+                confirmation.
               </label>
             )}
             <div className="text-center">
