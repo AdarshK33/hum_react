@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import Select from "react-select";
 import { AdminContext } from "../../context/AdminState";
 import { DocumentManagementContext } from "../../context/DocumentManagementState";
 import { AppContext } from "../../context/AppState";
@@ -41,28 +42,87 @@ const DocumentForm = () => {
 
   const [formValid, setFormValid] = useState(false);
 
-  const changeCostCentreHandler = (e) => {
+  /* To get the cost centre options */
+  const costCentreOptions = useMemo(() => {
+    return costCenterList !== null && costCenterList.length > 0
+      ? costCenterList.map((item) => {
+          return {
+            label: item.costCentreName,
+            value: item.costCentreName,
+          };
+        })
+      : [];
+  }, [costCenterList]);
+
+  /* To get the module list options */
+  const moduleOptions = useMemo(() => {
+    return moduleList !== null && moduleList.length > 0
+      ? moduleList.map((item) => {
+          return {
+            label: item.name,
+            value: item.id,
+          };
+        })
+      : [];
+  }, [moduleList]);
+
+  /* To get the employee list options */
+  const employeeOptions = useMemo(() => {
+    return employeeIdList !== null && employeeIdList.length > 0
+      ? employeeIdList.map((item) => {
+          return {
+            label: `${item.firstName} - ${item.employeeId}`,
+            value: item.employeeId,
+          };
+        })
+      : [];
+  }, [employeeIdList]);
+
+  /* To get the selected cost center value */
+  const selectedCostCenterValue = useMemo(() => {
+    if (typeof costCentre.value === "object" && costCentre.value !== null) {
+      return costCentre.value.value;
+    } else {
+      return costCentre.value;
+    }
+  }, [costCentre.value]);
+
+  /* To get the selected employee value */
+  const selectedEmployeeValue = useMemo(() => {
+    if (typeof employee.value === "object" && employee.value !== null) {
+      return employee.value.value;
+    } else {
+      return employee.value;
+    }
+  }, [employee.value]);
+
+  /* To get the selected module value */
+  const selectedModuleValue = useMemo(() => {
+    return module.value.value;
+  }, [module.value]);
+
+  const changeCostCentreHandler = (option) => {
     setCostCentre({
       ...costCentre,
-      value: e.target.value,
+      value: option,
       errMsg: "",
     });
     setFormValid(false);
   };
 
-  const changeModuleHandler = (e) => {
+  const changeModuleHandler = (option) => {
     setModule({
       ...module,
-      value: e.target.value,
+      value: option,
       errMsg: "",
     });
     setFormValid(false);
   };
 
-  const changeEmployeeHandler = (e) => {
+  const changeEmployeeHandler = (option) => {
     setEmployee({
       ...employee,
-      value: e.target.value,
+      value: option,
       errMsg: "",
     });
     setFormValid(false);
@@ -81,10 +141,14 @@ const DocumentForm = () => {
 
   /* Get the employee data based on cost center and loginUser role */
   useEffect(() => {
-    if (costCentre.value !== "" && loginRole !== "Employee") {
-      employeeIdData(costCentre.value);
+    if (
+      selectedCostCenterValue !== null &&
+      selectedCostCenterValue !== "" &&
+      loginRole !== "Employee"
+    ) {
+      employeeIdData(selectedCostCenterValue);
     }
-  }, [costCentre.value, loginRole]);
+  }, [selectedCostCenterValue, loginRole]);
 
   /* Add Cost Center and Employee info based on login type */
   useEffect(() => {
@@ -113,9 +177,9 @@ const DocumentForm = () => {
   useEffect(() => {
     if (formValid === true) {
       const apiInfo = {
-        costCentre: costCentre.value,
-        employeeId: employee.value,
-        module: parseInt(module.value),
+        costCentre: selectedCostCenterValue,
+        employeeId: selectedEmployeeValue,
+        module: parseInt(selectedModuleValue),
       };
       getModuleDocuments(apiInfo);
     }
@@ -187,29 +251,14 @@ const DocumentForm = () => {
                     <span>{costCentre.value}</span>
                   ) : (
                     <>
-                      <Form.Control
-                        as="select"
+                      <Select
+                        options={costCentreOptions}
                         className="text-primary"
                         aria-label="documentsCostCentre"
                         value={costCentre.value}
                         placeholder="Cost Centre"
                         onChange={changeCostCentreHandler}
-                      >
-                        <option value="">Select Cost Centre</option>
-                        {costCenterList !== null &&
-                          costCenterList !== undefined &&
-                          costCenterList.length > 0 &&
-                          costCenterList.map((item) => {
-                            return (
-                              <option
-                                key={`costCentre_${item.costCentreName}`}
-                                value={item.costCentreName}
-                              >
-                                {item.costCentreName}
-                              </option>
-                            );
-                          })}
-                      </Form.Control>
+                      />
                       {costCentre.errMsg !== "" && (
                         <div className="text-danger">{costCentre.errMsg}</div>
                       )}
@@ -224,26 +273,14 @@ const DocumentForm = () => {
                   Module:
                 </Form.Label>
                 <Col md={8}>
-                  <Form.Control
-                    as="select"
+                  <Select
+                    options={moduleOptions}
                     className="text-primary"
                     aria-label="documentsModule"
                     value={module.value}
                     placeholder="Module"
                     onChange={changeModuleHandler}
-                  >
-                    <option>Select Module</option>
-                    {moduleList !== null &&
-                      moduleList !== undefined &&
-                      moduleList.length > 0 &&
-                      moduleList.map((item) => {
-                        return (
-                          <option key={`module_${item.id}`} value={item.id}>
-                            {item.name}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
+                  />
                   {module.errMsg !== "" && (
                     <div className="text-danger">{module.errMsg}</div>
                   )}
@@ -256,35 +293,20 @@ const DocumentForm = () => {
               <Form.Group
                 as={Row}
                 controlId="documentsEmployee"
-                className="mb-3"
+                className="mt-3"
               >
                 <Form.Label column md={2}>
                   Employee:
                 </Form.Label>
                 <Col md={10}>
-                  <Form.Control
-                    as="select"
+                  <Select
+                    options={employeeOptions}
                     className="text-primary"
                     aria-label="documentsEmployee"
                     value={employee.value}
                     placeholder="Employee"
                     onChange={changeEmployeeHandler}
-                  >
-                    <option value="">Select Employee</option>
-                    {employeeIdList !== null &&
-                      employeeIdList !== undefined &&
-                      employeeIdList.length > 0 &&
-                      employeeIdList.map((item) => {
-                        return (
-                          <option
-                            key={`emp_${item.employeeId}`}
-                            value={item.employeeId}
-                          >
-                            {`${item.firstName} - ${item.employeeId}`}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
+                  />
                   {employee.errMsg !== "" && (
                     <div className="text-danger">{employee.errMsg}</div>
                   )}
