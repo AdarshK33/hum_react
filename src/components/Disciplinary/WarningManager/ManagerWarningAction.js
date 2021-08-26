@@ -20,6 +20,7 @@ import { useHistory } from "react-router-dom";
 import { SeparationContext } from "../../../context/SepearationState";
 import StateManager from "react-select";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+import { PermissionContext } from "../../../context/PermissionState";
 const ManagerWarningAction = (props) => {
   const [reasonError, setReasonError] = useState("");
   const [improvementPeriodError, setImprovementPeriodError] = useState("");
@@ -124,6 +125,7 @@ const ManagerWarningAction = (props) => {
   const { ModeOfSeparationView, TerminationFromDesciplinary } = useContext(
     EmployeeSeparationContext
   );
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     disciplinaryResonsView(2);
     if (
@@ -465,7 +467,7 @@ const ManagerWarningAction = (props) => {
                 reasonDetails: state.disciplinaryWarning.reasonDetails,
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
                 reasonId: state.disciplinaryWarning.reasonId,
-                status: 0,
+                status: rolePermission == "costCenterManager" ? 2 : 0,
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
                 warningId: state.disciplinaryWarning.warningId,
@@ -485,7 +487,7 @@ const ManagerWarningAction = (props) => {
                 reasonDetails: null,
                 reasonDetailsId: 0,
                 reasonId: state.inputReasonId,
-                status: 0,
+                status: rolePermission == "costCenterManager" ? 2 : 0,
                 statusDesc: null,
                 warningDueDays: 0,
                 warningId: 0,
@@ -899,8 +901,10 @@ const ManagerWarningAction = (props) => {
             ) : (
               <label className="text-center">
                 {/* Warning letter has been issued to the employee */}
-                Warning letter details saved successfully, sent for manager
-                confirmation.
+
+                {rolePermission == "costCenterManager"
+                  ? "Warning letter details saved successfully,the employee has been notified."
+                  : "Warning letter details saved successfully, sent for manager confirmation."}
               </label>
             )}
             <div className="text-center">
