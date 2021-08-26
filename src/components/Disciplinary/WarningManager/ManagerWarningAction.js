@@ -899,7 +899,7 @@ const ManagerWarningAction = (props) => {
             ) : (
               <label className="text-center">
                 {/* Warning letter has been issued to the employee */}
-                Warning letter details saved successfully, sent for manager
+                Warning letter details saved successfully, sent for cost center manager
                 confirmation.
               </label>
             )}

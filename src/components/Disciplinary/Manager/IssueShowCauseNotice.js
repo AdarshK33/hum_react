@@ -471,7 +471,7 @@ const IssueShowCauseNotice = () => {
             <label className="text-center">
               {rolePermission == "costCenterManager"
                 ? "Show cause notice details saved successfully"
-                : "Show cause notice details saved successfully, sent for manager confirmation."}
+                : "Show cause notice details saved successfully, sent for costCenterManager confirmation."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>

@@ -28,7 +28,7 @@ const ReasonByEmployee = () => {
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
+              Dear <b>{disciplinarySearchData.managerName},</b>{" "}
             </p>
             <br></br>
             <p>

@@ -602,7 +602,7 @@ const DisciplinaryView = () => {
                           >
                             <Col sm={2}>
                               <div>
-                                <label>Preview Warning Letter:</label>
+                                <label>View Warning Letter:</label>
                               </div>
                             </Col>
                             <Col sm={6}>
