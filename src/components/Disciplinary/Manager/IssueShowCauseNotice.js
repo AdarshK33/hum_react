@@ -80,7 +80,48 @@ const IssueShowCauseNotice = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
+  useEffect(() => {
+    if (
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0
+    ) {
+      state.empId = disciplinarySearchData.employeeId;
+      state.empName = disciplinarySearchData.employeeName;
+      setEmpName(
+        disciplinarySearchData.employeeName +
+          " " +
+          disciplinarySearchData.employeeId
+      );
 
+      state.empContractType = disciplinarySearchData.contractType;
+      state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
+      state.empAddress = disciplinarySearchData.employeeAddress;
+      state.employeePosition = disciplinarySearchData.employeePosition;
+      state.mngrId = disciplinarySearchData.managerId;
+      state.mngrName = disciplinarySearchData.managerName;
+      state.mngrPosition = disciplinarySearchData.managerPosition;
+      state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
+
+      if (
+        disciplinarySearchData.disciplinaryAction !== null &&
+        disciplinarySearchData.disciplinaryAction !== undefined &&
+        disciplinarySearchData.disciplinaryAction !== ""
+      ) {
+        state.remarks =
+          disciplinarySearchData.disciplinaryAction.employeeComment;
+        state.reason =
+          disciplinarySearchData.disciplinaryAction.managerComment;
+          setChangeInReason(disciplinarySearchData.disciplinaryAction.reasonId)
+      }
+      setSubmitted(true);
+      state.clickOnsubmit = true;
+      setPreview(true);
+      setSuccessModal(true);
+    }
+  }, [disciplinarySearchData]);
   useEffect(() => {
     if (
       disciplinaryEmpSearchData &&
@@ -229,10 +270,65 @@ const IssueShowCauseNotice = () => {
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
-      setSubmitLetter(true);
-      setLetterSent(true);
-      setShow(true);
+      const value = checkValidations();
+      if (value === true) {
+        console.log("INSIDE");
+        var reasonDetailsId = 0;
+        resonsForShowCauseList.map((item, i) => {
+          if (resonsForShowCauseList[i].label === state.reasonForCause) {
+            reasonDetailsId = resonsForShowCauseList[i].value;
+            console.log(resonsForShowCauseList[i].value);
+          }
+        });
+        if(disciplinarySearchData !== undefined && 
+          disciplinarySearchData !== "" &&
+           disciplinarySearchData !== null && 
+           disciplinarySearchData.disciplinaryAction !== undefined 
+           && disciplinarySearchData.disciplinaryAction !== "" && 
+           disciplinarySearchData.disciplinaryAction !== null){
 
+        const InfoData = {
+          contractType: disciplinarySearchData.empContractType,
+          disciplinaryAction: {
+            actionDueDays: disciplinarySearchData.disciplinaryAction.actionDueDays,
+            actionIssuedDate: disciplinarySearchData.disciplinaryAction.actionIssuedDate,
+            disciplinaryId: disciplinarySearchData.disciplinaryAction.disciplinaryId,
+            employeeActionStatus: disciplinarySearchData.disciplinaryAction.employeeActionStatus,
+            employeeComment: disciplinarySearchData.disciplinaryAction.employeeComment,
+            employeeId: disciplinarySearchData.disciplinaryAction.employeeId,
+            managerComment: disciplinarySearchData.disciplinaryAction.managerComment,
+            reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
+            reasonDetailsId:disciplinarySearchData.disciplinaryAction.reasonDetailsId,
+            showCauseLetter: disciplinarySearchData.disciplinaryAction.showCauseLetter,
+            showCauseNotice: disciplinarySearchData.disciplinaryAction.showCauseNotice,
+            status: rolePermission == "costCenterManager" ? 2 : 0,
+            statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
+            warningIssued: disciplinarySearchData.disciplinaryAction.warningIssued,
+          },
+          disciplinaryWarning: disciplinarySearchData.disciplinaryWarning,
+          employeeAddress: disciplinarySearchData.employeeAddress,
+          employeePosition: disciplinarySearchData.employeePosition,
+          employeeCostCentre: disciplinarySearchData.employeeCostCentre,
+          employeeId: disciplinarySearchData.employeeId,
+          employeeName: disciplinarySearchData.employeeName,
+          managerCostCentre: disciplinarySearchData.managerCostCentre,
+          managerDesignation: disciplinarySearchData.managerDesignation,
+          managerId: disciplinarySearchData.managerId,
+          managerName: disciplinarySearchData.managerName,
+        };
+        console.log("createShowCauseData role",rolePermission, InfoData);
+        setSubmitted(true);
+        state.clickOnsubmit = true;
+        createShowCauseIssue(InfoData,disciplinarySearchData.employeeId);
+        setPreview(true);
+        setSuccessModal(true);
+
+        setSubmitLetter(true);
+        setLetterSent(true);
+        setShow(true);
+      }
+
+    }
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
@@ -415,7 +511,7 @@ const IssueShowCauseNotice = () => {
             changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
-          status: rolePermission == "costCenterManager" ? 2 : 0,
+          status: rolePermission == "costCenterManager" ? 11 : 10,
           statusDesc: null,
           warningIssued: false,
         },
@@ -446,10 +542,10 @@ const IssueShowCauseNotice = () => {
         // },
       };
 
-      console.log("createShowCauseData", InfoData);
+      console.log("createShowCauseData",InfoData,rolePermission);
       setSubmitted(true);
       state.clickOnsubmit = true;
-      createShowCauseIssue(InfoData, state.empId);
+     createShowCauseIssue(InfoData, state.empId);
       setPreview(true);
       setSuccessModal(true);
     }
