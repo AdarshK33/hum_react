@@ -16,6 +16,7 @@ const GenerateOfferLetter = () => {
   const [submitLetter, setSubmitLetter] = useState(false);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
+  const [offerButtonEnable, setOfferButtonEnable] = useState(false);
 
   const {
     createCandidateResponse,
@@ -29,7 +30,27 @@ const GenerateOfferLetter = () => {
 
   useEffect(() => {
     console.log("candidateData useeffect", candidateData);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      Object.keys(candidateData).length !== 0 &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      Object.keys(candidateData.candidateInformation).length !== 0 &&
+      candidateData.workInformation !== "" &&
+      candidateData.workInformation !== null &&
+      candidateData.workInformation !== undefined &&
+      Object.keys(candidateData.workInformation).length !== 0 &&
+      candidateData.remuneration !== null &&
+      candidateData.remuneration !== undefined &&
+      Object.keys(candidateData.remuneration).length !== 0
+    ) {
+      setOfferButtonEnable(true);
+    } else {
+      setOfferButtonEnable(false);
+    }
   }, [candidateData]);
+
   const offerLetterClick = () => {
     console.log("offer candidate id", createCandidateResponse.candidateId);
     console.log("candidateData id", candidateData);
@@ -90,19 +111,7 @@ const GenerateOfferLetter = () => {
   };
   return (
     <Fragment>
-      {candidateData !== null &&
-      candidateData !== undefined &&
-      Object.keys(candidateData).length !== 0 &&
-      candidateData.candidateInformation !== null &&
-      candidateData.candidateInformation !== undefined &&
-      Object.keys(candidateData.candidateInformation).length !== 0 &&
-      candidateData.workInformation !== "" &&
-      candidateData.workInformation !== null &&
-      candidateData.workInformation !== undefined &&
-      Object.keys(candidateData.workInformation).length !== 0 &&
-      candidateData.remuneration !== null &&
-      candidateData.remuneration !== undefined &&
-      Object.keys(candidateData.remuneration) !== 0 ? (
+      {offerButtonEnable === true ? (
         <Fragment>
           <Form onSubmit={submitHandler}>
             {!saveLetter ? (
