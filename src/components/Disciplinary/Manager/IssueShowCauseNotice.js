@@ -320,7 +320,7 @@ const IssueShowCauseNotice = () => {
   };
   const DisciplinaryReasonHandler = (e) => {
     setShowCauseReason(e.target.value);
-    if (e.target.value === "Others") {
+    if (e.target.value === "Misconduct") {
       disciplinaryResonsView(2);
       setChangeInReason(2);
       state.reasonForCause = "";
