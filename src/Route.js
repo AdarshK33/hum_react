@@ -100,7 +100,7 @@ import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
 import DisciplinarySeparation from "./components/Disciplinary/Manager/DiscplinarySeparation";
 import ProbationSeparation from "./components/Probation/ProbationSeparation";
-
+import ShowCauseNoticeAction from "./components/Disciplinary/Manager/showCauseNoticeAction"
 import ViewBonus from "./components/Bonus/ViewBonus";
 import EmployeeDocementsList from "./components/EmployeeLetters/MyDocsList";
 import EmployeShowCaseLetter from "./components/EmployeeLetters/ShowCauseLetter";
@@ -132,6 +132,10 @@ import AddInsurance from "./components/Insurance/AddInsurance";
 import ViewInsurance from "./components/Insurance/ViewInsurance";
 import EditInsurance from "./components/Insurance/EditInsurance";
 import Pdfsample from "./components/PdfLetters/pdfsample";
+
+/* Document Management Module */
+import DocumentContainer from "./components/DocumentManagement/DocumentContainer";
+import ModuleDocumentList from "./components/DocumentManagement/ModuleDocumentList";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -341,6 +345,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
             component={IssueShowCauseNotice}
           />
+            <Route
+            path={`${process.env.PUBLIC_URL}/show-cause-notice/:employeeid`}
+            component={ShowCauseNoticeAction}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary-view/:employeeid`}
             component={DisciplinaryView}
@@ -445,6 +453,16 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/master/edit-insurance/:insuranceNominationId`}
             component={EditInsurance}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/document-management`}
+            component={DocumentContainer}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/module-docs`}
+            component={ModuleDocumentList}
           />
 
           {state.MenuPermissionsRoute.map((e) => {

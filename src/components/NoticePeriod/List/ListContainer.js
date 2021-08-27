@@ -24,10 +24,9 @@ const NoticePeriodListContainer = () => {
   const { departmentView, departmentName } = useContext(OfferContext);
   const [tableBody, setTableBody] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  const [searchValue, setSearchValue] = useState("All");
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState("All");
   const [apiUrl, setApiUrl] = useState(
-    `/api/v1/notice/view?department=${searchValue}&page=${
+    `/api/v1/notice/view?department=${searchInput}&page=${
       activePage - 1
     }&size=${recordsPerPage}`
   );
@@ -73,12 +72,8 @@ const NoticePeriodListContainer = () => {
   }, [noticePeriodList]);
 
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
-  };
-
-  const searchDataHandler = () => {
-    const searchText = searchInput !== "" ? searchInput : "All";
-    setSearchValue(searchText);
+    const searchText = e.target.value;
+    setSearchInput(searchText);
     setActivePage(1);
     setApiUrl(
       `/api/v1/notice/view?department=${searchText}&page=${
@@ -90,7 +85,7 @@ const NoticePeriodListContainer = () => {
   const handlePageChange = (page) => {
     setActivePage(page);
     setApiUrl(
-      `/api/v1/notice/view?department=${searchValue}&page=${
+      `/api/v1/notice/view?department=${searchInput}&page=${
         activePage - 1
       }&size=${recordsPerPage}`
     );
@@ -104,7 +99,6 @@ const NoticePeriodListContainer = () => {
           <HeaderComp
             searchInput={searchInput}
             searchInputHandler={searchInputHandler}
-            searchDataHandler={searchDataHandler}
             departmentList={departmentName}
           />
           <div className="table-list">

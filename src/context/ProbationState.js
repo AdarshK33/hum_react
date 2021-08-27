@@ -14,6 +14,9 @@ const initial_state = {
   extensionLetterData: {},
   cnfLetterData: {},
   endLetterData: {},
+  ShowViewLetterModel: false,
+  ShowPreViewLetterModel: false,
+  LetterSaved: false,
 };
 
 export const ProbationProvider = (props) => {
@@ -41,6 +44,7 @@ export const ProbationProvider = (props) => {
         setLoader(false);
         console.log(state.total);
         console.log(response);
+        setSaveTheLetter(false);
 
         return dispatch({
           type: "PROBATION_LISTING",
@@ -167,6 +171,28 @@ export const ProbationProvider = (props) => {
       payload: state.empId,
     });
   };
+
+  const setLetterView = (val) => {
+    state.ShowViewLetterModel = val;
+    return dispatch({
+      type: "LETTER_VIEW",
+      payload: state.ShowViewLetterModel,
+    });
+  };
+  const setLetterPreView = (val) => {
+    state.ShowPreViewLetterModel = val;
+    return dispatch({
+      type: "LETTER_PREVIEW",
+      payload: state.ShowPreViewLetterModel,
+    });
+  };
+  const setSaveTheLetter = (val) => {
+    state.LetterSaved = val;
+    return dispatch({
+      type: "LETTER_SAVE",
+      payload: state.LetterSaved,
+    });
+  };
   return (
     <ProbationContext.Provider
       value={{
@@ -177,6 +203,12 @@ export const ProbationProvider = (props) => {
         ViewExtensionLetter,
         ViewConfirmationLetter,
         ViewProbationEndLetter,
+        setLetterView,
+        setLetterPreView,
+        setSaveTheLetter,
+        LetterSaved: state.LetterSaved,
+        ShowViewLetterModel: state.ShowViewLetterModel,
+        ShowPreViewLetterModel: state.ShowPreViewLetterModel,
         endLetterData: state.endLetterData,
         extensionLetterData: state.extensionLetterData,
         cnfLetterData: state.cnfLetterData,

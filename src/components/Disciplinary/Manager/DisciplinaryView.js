@@ -324,7 +324,7 @@ const DisciplinaryView = () => {
                             </label>
                           </div>
                         </Col>
-                        {showCauseReason === "Other" ? (
+                        {showCauseReason === "Misconduct" ? (
                           <Col sm={6}>
                             <div>
                               <label>
@@ -368,7 +368,7 @@ const DisciplinaryView = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label>Preview Show Cause Notice:</label>
+                            <label>View Show Cause Notice:</label>
                           </div>
                         </Col>
                         <Col sm={6}>
@@ -521,7 +521,7 @@ const DisciplinaryView = () => {
                                 </label>
                               </div>
                             </Col>
-                            {showCauseReason === "Other" ? (
+                            {showCauseReason === "Misconduct" ? (
                               ""
                             ) : (
                               <Col sm={6}>
@@ -541,7 +541,7 @@ const DisciplinaryView = () => {
                               </Col>
                             )}
                           </Row>
-                          {showCauseReason === "Other" ? (
+                          {showCauseReason === "Misconduct" ? (
                             ""
                           ) : (
                             <Row
@@ -602,7 +602,7 @@ const DisciplinaryView = () => {
                           >
                             <Col sm={2}>
                               <div>
-                                <label>Preview Warning Letter:</label>
+                                <label>View Warning Letter:</label>
                               </div>
                             </Col>
                             <Col sm={6}>

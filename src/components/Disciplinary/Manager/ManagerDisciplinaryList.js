@@ -151,7 +151,7 @@ const ManagerDisciplinaryList = () => {
                     style={{ backgroundColor: "#2f3c4e" }}
                   >
                     <tr>
-                      <th scope="col">S. No</th>
+                      <th scope="col">SL. No</th>
                       <th scope="col">Emp ID</th>
                       <th scope="col">Emp Name</th>
                       <th scope="col">Cost Center Name</th>
@@ -188,7 +188,9 @@ const ManagerDisciplinaryList = () => {
                     </tbody>
                   ) : currentRecords !== undefined &&
                     currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                    currentRecords.length > 0 &&
+                    Object.keys(currentRecords).length !== 0 &&
+                    total !== 0 ? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={item.employeeId}>
@@ -243,7 +245,94 @@ const ManagerDisciplinaryList = () => {
                                 />
                               </Link>
                             </td>
-                            {user !== null &&
+                            {(user !== null &&
+                              user !== undefined &&
+                              user.employeeId === item.initiatedBy &&
+                              item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&
+                              item.disciplinaryAction !== "" &&
+                              item.disciplinaryAction.statusDesc !==
+                                "Action Required By Employee" &&
+                              (item.disciplinaryAction.employeeActionStatus ===
+                                "Responded" ||
+                                item.disciplinaryAction.actionDueDays === 0)) ||
+                            (user !== null &&
+                              user !== undefined &&
+                              user.employeeId === item.initiatedBy &&
+                              item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined &&
+                              item.disciplinaryWarning !== "" &&
+                              (item.disciplinaryWarning.statusDesc ===
+                                "Warning Letter Issued" ||
+                                item.disciplinaryWarning.statusDesc ===
+                                  "Warning Letter Approved") &&
+                              item.disciplinaryWarning.pipDueDays === 0) ? (
+                              <td>
+                                <Link
+                                  to={
+                                    `/manager-warning-action-view/` +
+                                    item.employeeId
+                                  }
+                                >
+                                  <Edit2
+                                    onClick={() => {
+                                      disciplinaryEmployeeSearch(
+                                        item.disciplinaryAction.disciplinaryId
+                                      );
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : rolePermission == "costCenterManager" &&
+                              item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&
+                              item.disciplinaryAction !== "" &&
+                              (item.disciplinaryAction.statusDesc ===
+                                "Warning Letter Issued" ||
+                                item.disciplinaryAction.statusDesc ===
+                                  "Show Cause Notice Issued") ? (
+                              <td>
+                                {" "}
+                                <Link
+                                  to={"/disciplinary-action/" + item.employeeId}
+                                >
+                                  <Edit2
+                                    onClick={() => {
+                                      disciplinaryEmployeeSearch(
+                                        item.disciplinaryAction.disciplinaryId
+                                      );
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : 
+                            item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined &&
+                            item.disciplinaryAction !== "" &&
+                            (item.disciplinaryAction.status ===
+                              10 ||
+                              item.disciplinaryAction.status ===
+                                11) ? (
+                            <td>
+                              {" "}
+                              <Link
+                                to={"/show-cause-notice/" + item.employeeId}
+                              >
+                                <Edit2
+                                  onClick={() => {
+                                    disciplinaryEmployeeSearch(
+                                      item.disciplinaryAction.disciplinaryId
+                                    );
+                                  }}
+                                />
+                              </Link>
+                            </td>
+                          ):(
+                              <td>
+                                <Edit2 />
+                              </td>
+                            )}
+                            {/* {user !== null &&
                             user !== undefined &&
                             rolePermission == "costCenterManager" ? (
                               <td>
@@ -370,7 +459,7 @@ const ManagerDisciplinaryList = () => {
                                   // </Link>
                                 )}
                               </td>
-                            )}
+                            )} */}
                             {/* <td>
                               <Link
                                 to={
