@@ -12,7 +12,7 @@ import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 
-const IssueShowCauseNotice = () => {
+const ShowCauseNoticeAction = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [changeInReason, setChangeInReason] = useState(0);
   const [remarkError, setRemarkError] = useState(false);
@@ -57,7 +57,15 @@ const IssueShowCauseNotice = () => {
     reasonForCause: "",
     reason: "",
     remarks: "",
+    empRemark: "",
+    warningReason: "",
+    pip: "",
+    warningComment: "",
+    employeeCommentDW: "",
+    pipEndDate: "",
+    warningIssuedDateDW: "",
     clickOnsubmit: false,
+
   });
   const [disciplinaryReasonList, setdisciplinaryReasonList] = useState([]);
   const [resonsForShowCauseList, setResonsForShowCauseList] = useState([]);
@@ -80,49 +88,66 @@ const IssueShowCauseNotice = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-  // useEffect(() => {
-  //   if (
-  //     disciplinarySearchData &&
-  //     disciplinarySearchData &&
-  //     disciplinarySearchData !== null &&
-  //     disciplinarySearchData !== undefined &&
-  //     Object.keys(disciplinarySearchData).length !== 0
-  //   ) {
-  //     state.empId = disciplinarySearchData.employeeId;
-  //     state.empName = disciplinarySearchData.employeeName;
-  //     setEmpName(
-  //       disciplinarySearchData.employeeName +
-  //         " " +
-  //         disciplinarySearchData.employeeId
-  //     );
+  useEffect(() => {
+    if (
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0
+    ) {
+      state.empId = disciplinarySearchData.employeeId;
+      setEmpName(
+        disciplinarySearchData.employeeName +
+          " " +
+          disciplinarySearchData.employeeId
+      );
 
-  //     state.empContractType = disciplinarySearchData.contractType;
-  //     state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
-  //     state.empAddress = disciplinarySearchData.employeeAddress;
-  //     state.employeePosition = disciplinarySearchData.employeePosition;
-  //     state.mngrId = disciplinarySearchData.managerId;
-  //     state.mngrName = disciplinarySearchData.managerName;
-  //     state.mngrPosition = disciplinarySearchData.managerPosition;
-  //     state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
+      state.empContractType = disciplinarySearchData.contractType;
+      state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
+      state.empAddress = disciplinarySearchData.employeeAddress;
+      state.employeePosition = disciplinarySearchData.employeePosition;
+      state.mngrId = disciplinarySearchData.managerId;
+      state.mngrName = disciplinarySearchData.managerName;
+      state.mngrPosition = disciplinarySearchData.managerPosition;
+      state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
 
-  //     if (
-  //       disciplinarySearchData.disciplinaryAction !== null &&
-  //       disciplinarySearchData.disciplinaryAction !== undefined &&
-  //       disciplinarySearchData.disciplinaryAction !== ""
-  //     ) {
-  //       state.remarks =
-  //         disciplinarySearchData.disciplinaryAction.employeeComment;
-  //       state.reason =
-  //         disciplinarySearchData.disciplinaryAction.managerComment;
-  //         setChangeInReason(disciplinarySearchData.disciplinaryAction.reasonId)
-  //     }
-  //     setSubmitted(true);
-  //     state.clickOnsubmit = true;
-  //     setPreview(true);
-  //     setSuccessModal(true);
-  //   }
-  // }, [disciplinarySearchData]);
+      if (
+        disciplinarySearchData.disciplinaryAction !== null &&
+        disciplinarySearchData.disciplinaryAction !== undefined &&
+        disciplinarySearchData.disciplinaryAction !== ""
+      ) {
+        state.empRemark =
+          disciplinarySearchData.disciplinaryAction.employeeComment;
+        state.reasons =
+          disciplinarySearchData.disciplinaryAction.managerComment;
+        state.reasonForCause =
+          disciplinarySearchData.disciplinaryAction.reasonDetails;
+        setShowCauseReason(disciplinarySearchData.disciplinaryAction.reason);
+      }
+      if (
+        disciplinarySearchData.disciplinaryWarning !== null &&
+        disciplinarySearchData.disciplinaryWarning !== undefined &&
+        disciplinarySearchData.disciplinaryWarning !== ""
+      ) {
+        state.employeeCommentDW =
+          disciplinarySearchData.disciplinaryWarning.employeeComment;
+        state.warningReason = disciplinarySearchData.disciplinaryWarning.reason;
+        state.warningComment =
+          disciplinarySearchData.disciplinaryWarning.managerComment;
+        state.pip =
+          disciplinarySearchData.disciplinaryWarning.improvementPeriod;
+        state.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
+        state.warningIssuedDateDW =
+          disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
+      }
+    }
+    setSubmitted(true);
+    state.clickOnsubmit = true;
+    setPreview(true);
 
+  }, [disciplinarySearchData]);
   useEffect(() => {
     if (
       disciplinaryEmpSearchData &&
@@ -258,7 +283,8 @@ const IssueShowCauseNotice = () => {
   };
 
   const submitfinalShowCauseLetter = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+
     if (
       disciplinarySearchData &&
       disciplinarySearchData &&
@@ -269,22 +295,6 @@ const IssueShowCauseNotice = () => {
       disciplinarySearchData.disciplinaryAction !== undefined &&
       disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      const value = checkValidations();
-      if (value === true) {
-        console.log("INSIDE");
-        var reasonDetailsId = 0;
-        resonsForShowCauseList.map((item, i) => {
-          if (resonsForShowCauseList[i].label === state.reasonForCause) {
-            reasonDetailsId = resonsForShowCauseList[i].value;
-            console.log(resonsForShowCauseList[i].value);
-          }
-        });
-        if(disciplinarySearchData !== undefined && 
-          disciplinarySearchData !== "" &&
-           disciplinarySearchData !== null && 
-           disciplinarySearchData.disciplinaryAction !== undefined 
-           && disciplinarySearchData.disciplinaryAction !== "" && 
-           disciplinarySearchData.disciplinaryAction !== null){
 
         const InfoData = {
           contractType: disciplinarySearchData.empContractType,
@@ -316,17 +326,15 @@ const IssueShowCauseNotice = () => {
           managerName: disciplinarySearchData.managerName,
         };
         console.log("createShowCauseData role",rolePermission, InfoData);
-  
-        createShowCauseIssue(InfoData,state.empId);
-        SubmitDisciplinaryLetter(
-          disciplinarySearchData.disciplinaryAction.disciplinaryId
-        );
-        setSubmitLetter(true);
-        setLetterSent(true);
-        setShow(true);
-      }
-
-    }
+        createShowCauseIssue(InfoData);
+        
+      SubmitDisciplinaryLetter(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+    
     }
   };
 
@@ -711,7 +719,8 @@ const IssueShowCauseNotice = () => {
                           </div>
                         </Col>
                         <Col sm={2}>
-                          <Form.Group>
+                            <label className="itemResult">{EmpName}</label>
+                          {/* <Form.Group>
                             <div className="faq-form ">
                               <input
                                 className="form-control"
@@ -733,7 +742,7 @@ const IssueShowCauseNotice = () => {
                                 onClick={searchDataHandler}
                               />
                             </div>
-                          </Form.Group>
+                          </Form.Group> */}
                         </Col>
 
                         <Col sm={4}>
@@ -941,7 +950,7 @@ const IssueShowCauseNotice = () => {
                           </Col>
                         )}
                       </Row>
-                      <Row
+                      {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "2rem",
@@ -985,7 +994,7 @@ const IssueShowCauseNotice = () => {
                             )}
                           </div>
                         </Col>
-                      </Row>
+                      </Row> */}
 
                       <Row>
                         <Col
@@ -1085,4 +1094,4 @@ const IssueShowCauseNotice = () => {
   );
 };
 
-export default IssueShowCauseNotice;
+export default ShowCauseNoticeAction;
