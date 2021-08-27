@@ -16,7 +16,6 @@ const ReasonByEmployee = () => {
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
           <br></br>
-          <h5 className="text-center"> LETTER </h5>
 
           <p>To ,</p>
           <p>
@@ -24,17 +23,18 @@ const ReasonByEmployee = () => {
             <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.managerName}
           </p>
           <p>Decathlon Sports India</p>
+          <br />
+          <p>
+            <b>Sub:</b> Reply to the Show Cause Notice issue Date{" "}
+            {moment().format("DD-MM-YYYY")}
+          </p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
+              Dear <b>{disciplinarySearchData.managerName},</b>{" "}
             </p>
             <br></br>
-            <p>
-              <b>Sub:</b> Reply to the Show Cause Notice issue Date{" "}
-              {moment().format("DD-MM-YYYY")}
-            </p>
             <p>
               I would to explain my response towards the show cause issued on{" "}
               {disciplinarySearchData.disciplinaryAction.actionIssuedDate} and

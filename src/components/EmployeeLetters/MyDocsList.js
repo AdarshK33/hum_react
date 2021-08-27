@@ -197,7 +197,11 @@ const EmployeeDocementsList = () => {
                             {item.disciplinaryAction !== null &&
                             item.disciplinaryAction !== undefined ? (
                               <td>
-                                {item.disciplinaryAction.employeeActionStatus}
+                                {item.disciplinaryAction.statusDesc ===
+                                "Action Required By Employee"
+                                  ? item.disciplinaryAction.statusDesc
+                                  : item.disciplinaryAction
+                                      .employeeActionStatus}
                               </td>
                             ) : (
                               <td></td>
@@ -281,7 +285,27 @@ const EmployeeDocementsList = () => {
                               </Link>
                             </td>
                             <td>
-                              {item.disciplinaryWarning !== null &&
+                              {item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&
+                              (item.disciplinaryAction.statusDesc ===
+                                "Action Required By Employee" ||
+                                item.disciplinaryAction.employeeActionStatus !==
+                                  "Responded") &&
+                              item.disciplinaryAction.statusDesc !==
+                                "Exit Initiated" ? (
+                                <Link to="/letters/show-cause">
+                                  <Edit2
+                                    onClick={() => {
+                                      disciplinaryEmployeeSearch(
+                                        item.disciplinaryAction.disciplinaryId
+                                      );
+                                    }}
+                                  />
+                                </Link>
+                              ) : (
+                                <Edit2 />
+                              )}
+                              {/* {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined ? (
                                 <Edit2 />
                               ) : item.disciplinaryAction !== null &&
@@ -301,7 +325,7 @@ const EmployeeDocementsList = () => {
                                 </Link>
                               ) : (
                                 <Edit2 />
-                              )}
+                              )} */}
                             </td>
                           </tr>
                         </tbody>
