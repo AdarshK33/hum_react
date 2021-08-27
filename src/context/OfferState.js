@@ -26,6 +26,7 @@ const initial_state = {
   managerList: [],
   aadhaarNotificationData: {},
   submitAppointmentLetter: {},
+  noticePeriodViewData: {},
 };
 
 export const OfferContext = createContext();
@@ -470,6 +471,28 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+  const noticePeriodView = (contractType, department) => {
+    console.log("contractType,department", contractType, department);
+    return client
+      .get(
+        "/api/v1/notice/view/department?contractType=" +
+          contractType +
+          "&department=" +
+          department
+      )
+      .then((response) => {
+        state.noticePeriodViewData = response.data.data;
+        console.log("noticePeriodViewData.message", state.noticePeriodViewData);
+        return dispatch({
+          type: "NOTICE_PERIOD_VIEW",
+          payload: state.noticePeriodViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <OfferContext.Provider
       value={{
@@ -496,6 +519,7 @@ export const OfferProvider = (props) => {
         adhaarVerificationNotification,
         finalSubmitAppointmentLetter,
         makeSearchEmp1DataNull,
+        noticePeriodView,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -518,6 +542,7 @@ export const OfferProvider = (props) => {
         workInformationData: state.workInformationData,
         aadhaarNotificationData: state.aadhaarNotificationData,
         submitAppointmentLetter: state.submitAppointmentLetter,
+        noticePeriodViewData: state.noticePeriodViewData,
       }}
     >
       {props.children}

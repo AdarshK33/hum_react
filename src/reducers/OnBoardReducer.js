@@ -73,6 +73,8 @@ const GroupReducer = (state, action) => {
       return { ...state, documentViewData: action.payload };
     case "DOCUMENT_UPLOAD_DATA":
       return { ...state, documentUploadData: action.payload };
+    case "INSURANCE_TOPUP_DATA":
+      return { ...state, insuranceTopUpData: action.payload };
     default:
       return state;
   }

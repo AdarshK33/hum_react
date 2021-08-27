@@ -78,7 +78,7 @@ const RemunerationInformation = (props) => {
     ) {
       setMonthlyBonus(getBonusByContractType.bonus);
     }
-  }, [candidateData.workInformation]);
+  }, [candidateData.workInformation, getBonusByContractType]);
 
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
@@ -104,7 +104,7 @@ const RemunerationInformation = (props) => {
     ) {
       setMonthlyBonus(getBonusByContractType.bonus);
     }
-  }, [candidateData.workInformation]);
+  }, [candidateData.workInformation, getBonusByContractType]);
 
   const submitHandler = (e) => {
     // alert("in sumbit handler");
@@ -506,7 +506,9 @@ const RemunerationInformation = (props) => {
         <Row>
           <Col sm={5}></Col>
           <Col sm={2}>
-            <Button onClick={submitHandler}>Save</Button>
+            <Button onClick={submitHandler} disabled={disabled}>
+              Save
+            </Button>
           </Col>
           {editButton === true ? (
             <Col sm={2}>
