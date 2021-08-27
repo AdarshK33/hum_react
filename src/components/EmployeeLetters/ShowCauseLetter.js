@@ -223,14 +223,70 @@ const EmployeShowCaseLetter = () => {
 
   const submitfinalShowCauseLetter = () => {
     if (
-      disciplinarySearchData.employeeId !== null &&
-      disciplinarySearchData.employeeId !== undefined
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0
     ) {
+      const InfoData = {
+        contractType: state.empContractType,
+        disciplinaryAction: {
+          actionDueDays: state.actionDueDaysSCIN,
+          actionIssuedDate: state.actionIssuedDateSCIN,
+          disciplinaryId: state.disciplinaryId,
+          employeeActionStatus: state.employeeActionStatusSCIN,
+          employeeComment: state.empRemark,
+          employeeId: state.empId,
+          managerComment: state.managerCommentSCIN,
+          reasonId: state.reasonIdSCIN,
+          reasonDetailsId: state.reasonDetailsIdSCIN,
+          reason: state.reasonSCIN,
+          reasonDetails: state.reasonDetailsSCIN,
+          showCauseLetter: state.showCauseLetterSCIN,
+          showCauseNotice: state.showCauseNoticeSCIN,
+          status: 2,
+          statusDesc: state.statusDescSCIN,
+          warningIssued: state.warningIssuedSCIN,
+        },
+        disciplinaryWarning:
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== " "
+            ? {
+                disciplinaryId: state.disciplinaryId,
+                employeeComment: state.employeeCommentDW,
+                employeeWarningStatus: state.employeeWarningStatusDW,
+                improvementPeriod: state.pip,
+                managerComment: state.managerCommentDW,
+                reason: state.reasonDW,
+                reasonDetails: state.reasonDetailsDW,
+                reasonId: state.reasonIdDW,
+                reasonDetailsId: state.reasonDetailsIdDW,
+                status: state.statusDW,
+                statusDesc: state.statusDescDW,
+                warningDueDays: state.warningDueDaysDW,
+                warningId: state.warningIdDW,
+                warningIssuedDate: state.warningIssuedDateDW,
+                warningLetter: state.warningLetterDW,
+              }
+            : null,
+
+        employeeAddress: state.empAddress,
+        employeePosition: state.employeePosition,
+        employeeCostCentre: state.empCostCenterName,
+        employeeId: state.empId,
+        employeeName: state.empName,
+        managerCostCentre: state.mngrCostCenterName,
+        managerPosition: state.mngrPosition,
+        managerId: state.mngrId,
+        managerName: state.mngrName,
+      };
+      console.log("InfoData", InfoData);
+      createShowCauseIssue(InfoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
-
-      // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
 
@@ -326,7 +382,8 @@ const EmployeShowCaseLetter = () => {
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
-          status: state.statusSCIN,
+          status: 9,
+          //  state.statusSCIN
           statusDesc: state.statusDescSCIN,
           warningIssued: state.warningIssuedSCIN,
         },
@@ -441,7 +498,8 @@ const EmployeShowCaseLetter = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause details saved successfully, manager has been notified.
+              Show cause details saved successfully, respective manager/cost
+              center manager has been notified.
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -527,7 +585,8 @@ const EmployeShowCaseLetter = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label>
-              Show cause details saved successfully, manager has been notified.
+              Show cause details saved successfully, respective manager/cost
+              center manager has been notified.
             </label>
 
             <div className="text-center mb-2">
@@ -804,16 +863,17 @@ const EmployeShowCaseLetter = () => {
                           <button
                             disabled={submitted}
                             className={
-                              submitted ? "confirmButton" : "stepperButtons"
+                              submitted || state.statusSCIN === 9
+                                ? "confirmButton"
+                                : "stepperButtons"
                             }
                             onClick={submitHandler}
                           >
                             Save
                           </button>
 
-                          {!saveLetter &&
-                          showPreview === true &&
-                          submitted === true ? (
+                          {(state.statusSCIN === 9 && !saveLetter) ||
+                          (showPreview === true && submitted === true) ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtonsExtra"}
@@ -824,9 +884,8 @@ const EmployeShowCaseLetter = () => {
                           ) : (
                             ""
                           )}
-                          {saveLetter &&
-                          previewGeneratedLetter &&
-                          showPreview ? (
+                          {saveLetter ||
+                          (previewGeneratedLetter && showPreview) ? (
                             <button
                               className={"LettersButtonsExtra"}
                               onClick={previewShowCauseLetter}
@@ -837,7 +896,8 @@ const EmployeShowCaseLetter = () => {
                             ""
                           )}
 
-                          {saveLetter && previewGeneratedLetter && showPreview && (
+                          {saveLetter ||
+                          (previewGeneratedLetter && showPreview) ? (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
@@ -865,6 +925,8 @@ const EmployeShowCaseLetter = () => {
                                 ""
                               )}
                             </div>
+                          ) : (
+                            ""
                           )}
                         </Col>
                       </Row>

@@ -320,7 +320,7 @@ const IssueShowCauseNotice = () => {
   };
   const DisciplinaryReasonHandler = (e) => {
     setShowCauseReason(e.target.value);
-    if (e.target.value === "Others") {
+    if (e.target.value === "Misconduct") {
       disciplinaryResonsView(2);
       setChangeInReason(2);
       state.reasonForCause = "";
@@ -471,7 +471,7 @@ const IssueShowCauseNotice = () => {
             <label className="text-center">
               {rolePermission == "costCenterManager"
                 ? "Show cause notice details saved successfully"
-                : "Show cause notice details saved successfully, sent for manager confirmation."}
+                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -561,7 +561,7 @@ const IssueShowCauseNotice = () => {
             <label>
               {rolePermission == "costCenterManager"
                 ? "Show cause notice details saved successfully,the employee has been notified"
-                : "Show cause notice details saved successfully, sent for manager confirmation."}
+                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
             </label>
 
             <div className="text-center mb-2">
