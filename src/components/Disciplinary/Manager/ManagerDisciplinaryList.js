@@ -251,6 +251,8 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
                               item.disciplinaryAction !== "" &&
+                              item.disciplinaryAction.statusDesc !==
+                                "Action Required By Employee" &&
                               (item.disciplinaryAction.employeeActionStatus ===
                                 "Responded" ||
                                 item.disciplinaryAction.actionDueDays === 0)) ||
