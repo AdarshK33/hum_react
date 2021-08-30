@@ -100,7 +100,8 @@ import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
 import DisciplinarySeparation from "./components/Disciplinary/Manager/DiscplinarySeparation";
 import ProbationSeparation from "./components/Probation/ProbationSeparation";
-import ShowCauseNoticeAction from "./components/Disciplinary/Manager/showCauseNoticeAction"
+import ActionPage from "./components/Disciplinary/Manager/ActionPage";
+
 import ViewBonus from "./components/Bonus/ViewBonus";
 import EmployeeDocementsList from "./components/EmployeeLetters/MyDocsList";
 import EmployeShowCaseLetter from "./components/EmployeeLetters/ShowCauseLetter";
@@ -192,6 +193,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
             component={ManagerWarningAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager-action-view/:employeeId`}
+            component={ActionPage}
           />
 
           <Route
@@ -345,10 +350,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
             component={IssueShowCauseNotice}
           />
-            <Route
-            path={`${process.env.PUBLIC_URL}/show-cause-notice/:employeeid`}
-            component={ShowCauseNoticeAction}
-          />
+
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary-view/:employeeid`}
             component={DisciplinaryView}
