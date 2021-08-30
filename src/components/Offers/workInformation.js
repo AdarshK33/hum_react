@@ -24,7 +24,6 @@ const WorkInformation = (props) => {
     recuritment: "",
     ngoDetail: "",
     internship: "",
-    noticePeriod: "",
     managerId: null,
     expatUser: "",
     passportNumber: "",
@@ -66,6 +65,8 @@ const WorkInformation = (props) => {
     cityData,
     cityList,
     managerList,
+    noticePeriodView,
+    noticePeriodViewData,
   } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -74,6 +75,7 @@ const WorkInformation = (props) => {
   const [city, setCity] = useState();
   const [cityId, setCityId] = useState();
   const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
+  const [noticePeriod, setNoticePeriod] = useState("");
   useEffect(() => {
     viewSports();
     CostCenter();
@@ -150,6 +152,34 @@ const WorkInformation = (props) => {
       }
     }
   }, [locationName]);
+  useEffect(() => {
+    if (state.employmentType !== "" && state.department !== null) {
+      noticePeriodView(state.employmentType, state.department);
+    }
+  }, [state.employmentType, state.department]);
+  useEffect(() => {
+    if (
+      noticePeriodViewData !== null &&
+      Object.keys(noticePeriodViewData).length !== 0
+    ) {
+      setNoticePeriod(noticePeriodViewData.noticePeriod);
+    } else {
+      setNoticePeriod(0);
+    }
+  }, [noticePeriodViewData]);
+  useEffect(() => {
+    if (
+      state.employmentType !== "" &&
+      state.department !== "" &&
+      state.position !== ""
+    ) {
+      viewBonusByContarctType(
+        state.employmentType,
+        state.department,
+        state.position
+      );
+    }
+  }, [state.employmentType, state.department, state.position]);
   // useEffect(() => {
   //   console.log("inside candidateData", candidateData);
   //   if (
@@ -265,6 +295,7 @@ const WorkInformation = (props) => {
       internship: monthCount,
     });
   };
+
   const monthDiff = (dateFrom, dateTo) => {
     return (
       dateTo.getMonth() -
@@ -327,8 +358,7 @@ const WorkInformation = (props) => {
         relievingLetter: null,
         workId: 0,
         ngoDetails: state.ngoDetail,
-        noticePeriod:
-          state.employmentType === "Internship" ? 0 : state.noticePeriod,
+        noticePeriod: state.employmentType === "Internship" ? 0 : noticePeriod,
         sportId: state.sports,
         expatUser: 0,
         nationality: state.nationality,
@@ -371,8 +401,7 @@ const WorkInformation = (props) => {
         relievingLetter: null,
         workId: workInfoViewData.workId,
         ngoDetails: state.ngoDetail,
-        noticePeriod:
-          state.employmentType === "Internship" ? 0 : state.noticePeriod,
+        noticePeriod: state.employmentType === "Internship" ? 0 : noticePeriod,
         sportId: state.sports,
         expatUser: 0,
         nationality: state.nationality,
@@ -811,14 +840,15 @@ const WorkInformation = (props) => {
                   <Form.Label>Notice Period</Form.Label>
                   <Form.Control
                     as="select"
-                    value={state.noticePeriod}
-                    className="form-input"
+                    value={noticePeriod}
+                    className="form-input disable-arrow"
                     name="noticePeriod"
                     onChange={changeHandler}
-                    disabled={disabled}
+                    disabled="true"
                     required
                   >
                     <option value="">Select Notice Period</option>
+                    <option value="0">0 Month</option>
                     <option value="1">1 Month</option>
                     <option value="2">2 Month</option>
                     <option value="3">3 Month</option>
@@ -972,7 +1002,9 @@ const WorkInformation = (props) => {
           <Row>
             <Col sm={4}></Col>
             <Col sm={2}>
-              <Button type="submit">Save</Button>
+              <Button type="submit" disabled={disabled}>
+                Save
+              </Button>
             </Col>
             {editButton === true ? (
               <Col sm={2}>

@@ -350,6 +350,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
             component={IssueShowCauseNotice}
           />
+
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary-view/:employeeid`}
             component={DisciplinaryView}

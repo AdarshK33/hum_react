@@ -345,7 +345,29 @@ const ManagerDisciplinaryList = () => {
                                   />
                                 </Link>
                               </td>
-                            ) : (
+                            ) : 
+                            item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined &&
+                            item.disciplinaryAction !== "" &&
+                            (item.disciplinaryAction.status ===
+                              10 ||
+                              item.disciplinaryAction.status ===
+                                11) ? (
+                            <td>
+                              {" "}
+                              <Link
+                                to={"/show-cause-notice/" + item.employeeId}
+                              >
+                                <Edit2
+                                  onClick={() => {
+                                    disciplinaryEmployeeSearch(
+                                      item.disciplinaryAction.disciplinaryId
+                                    );
+                                  }}
+                                />
+                              </Link>
+                            </td>
+                          ):(
                               <td>
                                 <Edit2 />
                               </td>

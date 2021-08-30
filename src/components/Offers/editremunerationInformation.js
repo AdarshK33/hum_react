@@ -71,7 +71,7 @@ const EditRemunerationInformation = (props) => {
       setMonthlyBonus(remunerationDataInfo.monthlyBonus);
       setStipened(remunerationDataInfo.stipend);
     }
-  }, [candidateData]);
+  }, [candidateData, getBonusByContractType]);
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
 
@@ -97,7 +97,7 @@ const EditRemunerationInformation = (props) => {
     // ) {
     //   setMonthlyBonus(getBonusByContractType.bonus);
     // }
-  }, [candidateData.workInformation]);
+  }, [candidateData.workInformation, getBonusByContractType]);
 
   useEffect(() => {
     console.log("candidateData getBonusByContractType", getBonusByContractType);
@@ -898,7 +898,9 @@ const EditRemunerationInformation = (props) => {
           <Row>
             <Col sm={5}></Col>
             <Col sm={2}>
-              <Button onClick={submitHandler}>Save</Button>
+              <Button onClick={submitHandler} disabled={disabled}>
+                Save
+              </Button>
             </Col>
             {editButton === true ? (
               <Col sm={2}>

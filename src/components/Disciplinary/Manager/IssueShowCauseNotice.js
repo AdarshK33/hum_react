@@ -80,6 +80,48 @@ const IssueShowCauseNotice = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
+  // useEffect(() => {
+  //   if (
+  //     disciplinarySearchData &&
+  //     disciplinarySearchData &&
+  //     disciplinarySearchData !== null &&
+  //     disciplinarySearchData !== undefined &&
+  //     Object.keys(disciplinarySearchData).length !== 0
+  //   ) {
+  //     state.empId = disciplinarySearchData.employeeId;
+  //     state.empName = disciplinarySearchData.employeeName;
+  //     setEmpName(
+  //       disciplinarySearchData.employeeName +
+  //         " " +
+  //         disciplinarySearchData.employeeId
+  //     );
+
+  //     state.empContractType = disciplinarySearchData.contractType;
+  //     state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
+  //     state.empAddress = disciplinarySearchData.employeeAddress;
+  //     state.employeePosition = disciplinarySearchData.employeePosition;
+  //     state.mngrId = disciplinarySearchData.managerId;
+  //     state.mngrName = disciplinarySearchData.managerName;
+  //     state.mngrPosition = disciplinarySearchData.managerPosition;
+  //     state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
+
+  //     if (
+  //       disciplinarySearchData.disciplinaryAction !== null &&
+  //       disciplinarySearchData.disciplinaryAction !== undefined &&
+  //       disciplinarySearchData.disciplinaryAction !== ""
+  //     ) {
+  //       state.remarks =
+  //         disciplinarySearchData.disciplinaryAction.employeeComment;
+  //       state.reason =
+  //         disciplinarySearchData.disciplinaryAction.managerComment;
+  //         setChangeInReason(disciplinarySearchData.disciplinaryAction.reasonId)
+  //     }
+  //     setSubmitted(true);
+  //     state.clickOnsubmit = true;
+  //     setPreview(true);
+  //     setSuccessModal(true);
+  //   }
+  // }, [disciplinarySearchData]);
 
   useEffect(() => {
     if (
@@ -215,7 +257,8 @@ const IssueShowCauseNotice = () => {
     setShowSignature(true);
   };
 
-  const submitfinalShowCauseLetter = () => {
+  const submitfinalShowCauseLetter = (e) => {
+    e.preventDefault();
     if (
       disciplinarySearchData &&
       disciplinarySearchData &&
@@ -290,8 +333,6 @@ const IssueShowCauseNotice = () => {
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
-
-      // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
 
@@ -504,7 +545,7 @@ const IssueShowCauseNotice = () => {
         // },
       };
 
-      console.log("createShowCauseData", InfoData);
+      console.log("createShowCauseData", InfoData, rolePermission);
       setSubmitted(true);
       state.clickOnsubmit = true;
       createShowCauseIssue(InfoData, state.empId);
