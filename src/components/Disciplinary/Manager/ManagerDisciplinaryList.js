@@ -39,7 +39,7 @@ const ManagerDisciplinaryList = () => {
     disciplinaryListView("all", pageCount);
     console.log("user role", user);
   }, []);
-
+  console.log("ROLEEE", rolePermission);
   // useEffect(() => {
   //   MakedisciplinaryEmployeeSearchNull();
   // }, []);
@@ -164,6 +164,7 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">PIP</th>
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
+                      <th scope="col">Edit</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -245,6 +246,44 @@ const ManagerDisciplinaryList = () => {
                                 />
                               </Link>
                             </td>
+                            {(rolePermission == "costCenterManager" &&
+                              item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&
+                              item.disciplinaryAction !== "" &&
+                              item.disciplinaryAction.status === 11) ||
+                            (rolePermission == "costCenterManager" &&
+                              item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined &&
+                              item.disciplinaryWarning !== "" &&
+                              item.disciplinaryWarning.status === 12) ||
+                            (rolePermission == "manager" &&
+                              item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&
+                              item.disciplinaryAction !== "" &&
+                              item.disciplinaryAction.status === 10) ||
+                            (rolePermission == "manager" &&
+                              item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined &&
+                              item.disciplinaryWarning !== "" &&
+                              item.disciplinaryWarning.status === 11) ? (
+                              <td>
+                                <Link
+                                  to={`/manager-action-view/` + item.employeeId}
+                                >
+                                  <AlertCircle
+                                    onClick={() => {
+                                      disciplinaryEmployeeSearch(
+                                        item.disciplinaryAction.disciplinaryId
+                                      );
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
+                              </td>
+                            )}
                             {(user !== null &&
                               user !== undefined &&
                               user.employeeId === item.initiatedBy &&
@@ -253,6 +292,7 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction !== "" &&
                               item.disciplinaryAction.statusDesc !==
                                 "Action Required By Employee" &&
+                              item.disciplinaryWarning === null &&
                               (item.disciplinaryAction.employeeActionStatus ===
                                 "Responded" ||
                                 item.disciplinaryAction.actionDueDays === 0)) ||

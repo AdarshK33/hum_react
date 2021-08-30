@@ -100,6 +100,7 @@ import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
 import DisciplinarySeparation from "./components/Disciplinary/Manager/DiscplinarySeparation";
 import ProbationSeparation from "./components/Probation/ProbationSeparation";
+import ActionPage from "./components/Disciplinary/Manager/ActionPage";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 import EmployeeDocementsList from "./components/EmployeeLetters/MyDocsList";
@@ -192,6 +193,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
             component={ManagerWarningAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager-action-view/:employeeId`}
+            component={ActionPage}
           />
 
           <Route

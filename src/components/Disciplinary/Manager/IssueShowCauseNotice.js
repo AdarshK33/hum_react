@@ -226,6 +226,64 @@ const IssueShowCauseNotice = () => {
       disciplinarySearchData.disciplinaryAction !== undefined &&
       disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
+      console.log("INSIDE");
+      var reasonDetailsId = 0;
+      resonsForShowCauseList.map((item, i) => {
+        if (resonsForShowCauseList[i].label === state.reasonForCause) {
+          reasonDetailsId = resonsForShowCauseList[i].value;
+          console.log(resonsForShowCauseList[i].value);
+        }
+      });
+      const InfoData = {
+        contractType: state.empContractType,
+        disciplinaryAction: {
+          actionDueDays: 0,
+          actionIssuedDate: null,
+          disciplinaryId:
+            disciplinarySearchData.disciplinaryAction.disciplinaryId,
+          employeeActionStatus: null,
+          employeeComment: null,
+          employeeId: state.empId,
+          managerComment:
+            disciplinarySearchData.disciplinaryAction.managerComment,
+          reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
+          reasonDetailsId:
+            disciplinarySearchData.disciplinaryAction.reasonDetailsId,
+          showCauseLetter: "ShowCauseLetter.pdf",
+          showCauseNotice: null,
+          status: rolePermission == "costCenterManager" ? 2 : 0,
+          statusDesc: null,
+          warningIssued: false,
+        },
+        disciplinaryWarning: null,
+        employeeAddress: state.empAddress,
+        employeePosition: state.employeePosition,
+        employeeCostCentre: state.empCostCenterName,
+        employeeId: state.empId,
+        employeeName: disciplinaryEmpSearchData.employeeName,
+        managerCostCentre: null,
+        managerDesignation: null,
+        managerId: null,
+        managerName: null,
+        // {
+        //   "disciplinaryId": 0,
+        //   "employeeComment": "string",
+        //   "employeeWarningStatus": "string",
+        //   "improvementPeriod": 0,
+        //   "managerComment": "string",
+        //   "reason": "string",
+        //   "reasonDetails": "string",
+        //   "status": 0,
+        //   "statusDesc": "string",
+        //   "warningDueDays": 0,
+        //   "warningId": 0,
+        //   "warningIssuedDate": "string",
+        //   "warningLetter": "string"
+        // },
+      };
+
+      console.log("createShowCauseData", InfoData);
+      createShowCauseIssue(InfoData, state.empId);
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
@@ -415,7 +473,7 @@ const IssueShowCauseNotice = () => {
             changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
-          status: rolePermission == "costCenterManager" ? 2 : 0,
+          status: rolePermission == "costCenterManager" ? 11 : 10,
           statusDesc: null,
           warningIssued: false,
         },
@@ -468,11 +526,18 @@ const IssueShowCauseNotice = () => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label className="text-center">
-              {rolePermission == "costCenterManager"
-                ? "Show cause notice details saved successfully"
-                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
-            </label>
+            {rolePermission == "costCenterManager" ? (
+              <label className="text-center">
+                Show cause notice details saved successfully, employee has been
+                notified.
+              </label>
+            ) : (
+              <label className="text-center">
+                Show cause notice details saved successfully, sent for cost
+                center manager confirmation.{" "}
+              </label>
+            )}
+
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>
@@ -558,10 +623,8 @@ const IssueShowCauseNotice = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>
-              {rolePermission == "costCenterManager"
-                ? "Show cause notice details saved successfully,the employee has been notified"
-                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
+            <label className="text-center">
+              Show cause notice details saved successfully
             </label>
 
             <div className="text-center mb-2">

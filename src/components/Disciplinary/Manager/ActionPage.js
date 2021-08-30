@@ -1,18 +1,19 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
-import Breadcrumb from "../common/breadcrumb";
+import Breadcrumb from "../../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import ShowCauseNotice from "../Disciplinary/Manager/ShowCauseNoticeLetter";
-import calendarImage from "../../assets/images/calendar-image.png";
-import { DisciplinaryContext } from "../../context/DisciplinaryState";
+import ShowCauseNotice from "./ShowCauseNoticeLetter";
+import NonPerformanceLetter from "./NonPerformanceLetter";
+import WarningLetter from "../WarningManager/WarningLetter";
+import calendarImage from "../../../assets/images/calendar-image.png";
+import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
-import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee";
-import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
+import { PermissionContext } from "../../../context/PermissionState";
 
 // view-----
-const EmployeShowCaseLetter = () => {
+const ActionPage = () => {
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -21,6 +22,7 @@ const EmployeShowCaseLetter = () => {
   const history = useHistory();
   const [showShowCauseNoticeModal, setShow] = useState(false);
   const [showShowCauseNoticeModalLink, setShowLink] = useState(false);
+  const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
@@ -28,11 +30,10 @@ const EmployeShowCaseLetter = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
-  const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
-  const [remarksError, setRemarkError] = useState(false);
+  const { rolePermission } = useContext(PermissionContext);
 
   const [state, setState] = useState({
     empId: "",
@@ -69,7 +70,6 @@ const EmployeShowCaseLetter = () => {
     showCauseNoticeSCIN: "",
     statusDescSCIN: "",
     warningIssuedSCIN: "",
-    statusSCIN: "",
     employeeCommentDW: "",
     employeeWarningStatusDW: "",
     managerCommentDW: "",
@@ -81,8 +81,8 @@ const EmployeShowCaseLetter = () => {
     warningDueDaysDW: "",
     warningIdDW: "",
     warningIssuedDateDW: "",
+    pipEndDate: "",
     warningLetterDW: "",
-    statusDW: "",
   });
   const {
     disciplinaryEmployeeSearch,
@@ -156,7 +156,8 @@ const EmployeShowCaseLetter = () => {
           disciplinarySearchData.disciplinaryAction.statusDesc;
         state.warningIssuedSCIN =
           disciplinarySearchData.disciplinaryAction.warningIssued;
-        state.statusSCIN = disciplinarySearchData.disciplinaryAction.status;
+        state.employeeReasonAccepted =
+          disciplinarySearchData.disciplinaryAction.employeeReasonAccepted;
       }
       if (
         disciplinarySearchData.disciplinaryWarning !== null &&
@@ -193,9 +194,10 @@ const EmployeShowCaseLetter = () => {
           disciplinarySearchData.disciplinaryWarning.warningId;
         state.warningIssuedDateDW =
           disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
+        state.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
         state.warningLetterDW =
           disciplinarySearchData.disciplinaryWarning.warningLetter;
-        state.statusDW = disciplinarySearchData.disciplinaryWarning.status;
       }
     }
   }, [disciplinarySearchData]);
@@ -204,13 +206,21 @@ const EmployeShowCaseLetter = () => {
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("../my_disciplinary");
+    history.push("../disciplinary");
   };
   const LetterShow = () => {
     console.log(";;;;;");
     setShowLink(true);
   };
-  const handleShowCauseLetterCloseLink = () => setShowLink(false);
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setShowLink1(true);
+  };
+  const handleShowCauseLetterCloseLink = () => {
+    setShow(false);
+    setShowLink1(false);
+    setShowLink(false);
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -221,72 +231,17 @@ const EmployeShowCaseLetter = () => {
     setShowSignature(true);
   };
 
-  const submitfinalShowCauseLetter = () => {
+  const submitfinalShowCauseLetter = (e) => {
     if (
-      disciplinarySearchData &&
-      disciplinarySearchData &&
-      disciplinarySearchData !== null &&
-      disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0
+      disciplinarySearchData.employeeId !== null &&
+      disciplinarySearchData.employeeId !== undefined
     ) {
-      const InfoData = {
-        contractType: state.empContractType,
-        disciplinaryAction: {
-          actionDueDays: state.actionDueDaysSCIN,
-          actionIssuedDate: state.actionIssuedDateSCIN,
-          disciplinaryId: state.disciplinaryId,
-          employeeActionStatus: state.employeeActionStatusSCIN,
-          employeeComment: state.empRemark,
-          employeeId: state.empId,
-          managerComment: state.managerCommentSCIN,
-          reasonId: state.reasonIdSCIN,
-          reasonDetailsId: state.reasonDetailsIdSCIN,
-          reason: state.reasonSCIN,
-          reasonDetails: state.reasonDetailsSCIN,
-          showCauseLetter: state.showCauseLetterSCIN,
-          showCauseNotice: state.showCauseNoticeSCIN,
-          status: 2,
-          statusDesc: state.statusDescSCIN,
-          warningIssued: state.warningIssuedSCIN,
-        },
-        disciplinaryWarning:
-          disciplinarySearchData.disciplinaryWarning !== null &&
-          disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== " "
-            ? {
-                disciplinaryId: state.disciplinaryId,
-                employeeComment: state.employeeCommentDW,
-                employeeWarningStatus: state.employeeWarningStatusDW,
-                improvementPeriod: state.pip,
-                managerComment: state.managerCommentDW,
-                reason: state.reasonDW,
-                reasonDetails: state.reasonDetailsDW,
-                reasonId: state.reasonIdDW,
-                reasonDetailsId: state.reasonDetailsIdDW,
-                status: state.statusDW,
-                statusDesc: state.statusDescDW,
-                warningDueDays: state.warningDueDaysDW,
-                warningId: state.warningIdDW,
-                warningIssuedDate: state.warningIssuedDateDW,
-                warningLetter: state.warningLetterDW,
-              }
-            : null,
-
-        employeeAddress: state.empAddress,
-        employeePosition: state.employeePosition,
-        employeeCostCentre: state.empCostCenterName,
-        employeeId: state.empId,
-        employeeName: state.empName,
-        managerCostCentre: state.mngrCostCenterName,
-        managerPosition: state.mngrPosition,
-        managerId: state.mngrId,
-        managerName: state.mngrName,
-      };
-      console.log("InfoData", InfoData);
-      createShowCauseIssue(InfoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
+      submitHandler(e);
+
+      // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
 
@@ -338,33 +293,17 @@ const EmployeShowCaseLetter = () => {
     setModal(false);
     setSuccessModal(false);
   };
-  const validateRemark = () => {
-    if (
-      state.empRemark !== "" &&
-      state.empRemark !== null &&
-      state.empRemark !== undefined
-    ) {
-      console.log(state.empRemark, "state.empRemark");
-      setRemarkError(false);
-      return true;
-    } else {
-      setRemarkError(true);
-      return false;
-    }
-  };
 
   const submitHandler = (e) => {
     console.log("submit handler");
     e.preventDefault();
-    const value = validateRemark();
 
     if (
       disciplinarySearchData &&
       disciplinarySearchData &&
       disciplinarySearchData !== null &&
       disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0 &&
-      value === true
+      Object.keys(disciplinarySearchData).length !== 0
     ) {
       const InfoData = {
         contractType: state.empContractType,
@@ -373,7 +312,7 @@ const EmployeShowCaseLetter = () => {
           actionIssuedDate: state.actionIssuedDateSCIN,
           disciplinaryId: state.disciplinaryId,
           employeeActionStatus: state.employeeActionStatusSCIN,
-          employeeComment: state.empRemark,
+          employeeComment: state.employeeCommentSCIN,
           employeeId: state.empId,
           managerComment: state.managerCommentSCIN,
           reasonId: state.reasonIdSCIN,
@@ -382,8 +321,7 @@ const EmployeShowCaseLetter = () => {
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
-          status: 9,
-          //  state.statusSCIN
+          status: rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: state.statusDescSCIN,
           warningIssued: state.warningIssuedSCIN,
         },
@@ -401,11 +339,12 @@ const EmployeShowCaseLetter = () => {
                 reasonDetails: state.reasonDetailsDW,
                 reasonId: state.reasonIdDW,
                 reasonDetailsId: state.reasonDetailsIdDW,
-                status: state.statusDW,
+                status: rolePermission == "costCenterManager" ? 2 : 0,
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
                 warningIssuedDate: state.warningIssuedDateDW,
+                pipEndDate: state.pipEndDate,
                 warningLetter: state.warningLetterDW,
               }
             : null,
@@ -425,46 +364,15 @@ const EmployeShowCaseLetter = () => {
       setSubmitted(true);
       state.clickOnsubmit = true;
       setPreview(true);
-      //   setSuccessModal(true);
+      // setSuccessModal(true);
     } else {
       console.log("search data is null");
     }
   };
-  const changeHandler = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
 
-    console.log(state);
-  };
-
-  const employeeReason = () => {
-    console.log(";;;;;");
-    setEmployeeReasonShow(true);
-  };
-
-  const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <Fragment>
       {/* letter */}
-      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {disciplinarySearchData &&
-          disciplinarySearchData &&
-          disciplinarySearchData !== null &&
-          disciplinarySearchData !== undefined &&
-          Object.keys(disciplinarySearchData).length !== 0 &&
-          disciplinarySearchData.disciplinaryAction !== null &&
-          disciplinarySearchData.disciplinaryAction !== undefined &&
-          disciplinarySearchData.disciplinaryAction !== "" ? (
-            <ReasonByEmployee />
-          ) : (
-            ""
-          )}
-        </Modal.Body>
-      </Modal>
       <Modal
         show={showShowCauseNoticeModalLink}
         onHide={handleShowCauseLetterCloseLink}
@@ -487,6 +395,27 @@ const EmployeShowCaseLetter = () => {
           )}
         </Modal.Body>
       </Modal>
+      <Modal
+        show={showShowCauseNoticeModalLink1}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
 
       {submitLetter ? (
         <Modal
@@ -498,8 +427,20 @@ const EmployeShowCaseLetter = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause details saved successfully, respective manager/cost
-              center manager has been notified.
+              {disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryWarning !== undefined &&
+              disciplinarySearchData.disciplinaryWarning !== "" &&
+              disciplinarySearchData.disciplinaryWarning !== null
+                ? rolePermission == "costCenterManager"
+                  ? "Warning letter issued successfully , the employee has been notified."
+                  : "Warning letter issued successfully ,sent for cost center manager confirmation."
+                : rolePermission == "costCenterManager"
+                ? "Show cause notice details saved successfully,the employee has been notified"
+                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -515,15 +456,26 @@ const EmployeShowCaseLetter = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {disciplinarySearchData &&
+            disciplinarySearchData &&
             disciplinarySearchData !== null &&
             disciplinarySearchData !== undefined &&
             Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined &&
-            disciplinarySearchData.disciplinaryAction !== "" ? (
-              <ReasonByEmployee />
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning !== "" ? (
+              <WarningLetter />
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction !== "" &&
+              disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
+              <ShowCauseNotice />
             ) : (
-              ""
+              <NonPerformanceLetter />
             )}
             <br></br>
             <Row>
@@ -585,8 +537,20 @@ const EmployeShowCaseLetter = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label>
-              Show cause details saved successfully, respective manager/cost
-              center manager has been notified.
+              {disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryWarning !== null &&
+              disciplinarySearchData.disciplinaryWarning !== undefined &&
+              disciplinarySearchData.disciplinaryWarning !== ""
+                ? rolePermission == "costCenterManager"
+                  ? "Warning letter issued successfully , the employee has been notified."
+                  : "Warning letter issued successfully ,sent for cost center manager confirmation."
+                : rolePermission == "costCenterManager"
+                ? "Show cause notice details saved successfully,the employee has been notified"
+                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
             </label>
 
             <div className="text-center mb-2">
@@ -770,7 +734,7 @@ const EmployeShowCaseLetter = () => {
                           </div>
                         </Col>
                       </Row>
-                      <Row
+                      {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "2rem",
@@ -779,7 +743,7 @@ const EmployeShowCaseLetter = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label>View Show Cause Notice:</label>
+                            <label>Preview Show Cause Notice:</label>
                           </div>
                         </Col>
                         <Col sm={6}>
@@ -792,28 +756,22 @@ const EmployeShowCaseLetter = () => {
                             </a>
                           </div>
                         </Col>
-                      </Row>
-
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                              {" "}
-                              Respond To Show Cause Notice:
-                              <span style={{ color: "red" }}>*</span>
-                            </label>
-                          </div>
-                        </Col>
-                        {submitted === true ||
-                        (state.employeeCommentSCIN !== null &&
-                          state.employeeCommentSCIN !== undefined &&
-                          state.employeeCommentSCIN !== "") ? (
+                      </Row> */}
+                      {state.empRemark !== null &&
+                      state.empRemark !== undefined &&
+                      state.empRemark !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <div>
+                              <label>Respond To Show Cause Notice:</label>
+                            </div>
+                          </Col>
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">
@@ -821,37 +779,292 @@ const EmployeShowCaseLetter = () => {
                               </label>
                             </div>
                           </Col>
-                        ) : (
-                          <Col sm={10}>
-                            {" "}
+                        </Row>
+                      ) : (
+                        ""
+                      )}
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.disciplinaryAction !== null &&
+                      disciplinarySearchData.disciplinaryAction !== undefined &&
+                      disciplinarySearchData.disciplinaryAction !== "" &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeReasonAccepted !== null &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeReasonAccepted !== undefined &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeReasonAccepted !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={3}>
+                            <label>
+                              Do you accept the reason submitted by the
+                              employee?{" "}
+                            </label>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
                             <Form.Group>
-                              <Form.Control
-                                style={
-                                  remarksError
-                                    ? { borderColor: "red" }
-                                    : { borderRadius: "5px" }
-                                }
-                                as="textarea"
-                                rows={4}
-                                name="empRemark"
-                                value={state.empRemark}
-                                placeholder="Write here.."
-                                onChange={(e) => changeHandler(e)}
-                                required
-                              />
-
-                              {remarksError ? (
-                                <p style={{ color: "red" }}>
-                                  &nbsp; *Please add remarks
-                                </p>
-                              ) : (
-                                ""
-                              )}
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  checked={
+                                    disciplinarySearchData.disciplinaryAction
+                                      .employeeReasonAccepted === "true"
+                                      ? true
+                                      : false
+                                  }
+                                  disabled={true}
+                                  style={{ borderColor: "blue" }}
+                                  // onChange={handleAcceptEmployeeReason}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
                             </Form.Group>
                           </Col>
-                        )}
-                      </Row>
-
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  checked={
+                                    disciplinarySearchData.disciplinaryAction
+                                      .employeeReasonAccepted === "false"
+                                      ? true
+                                      : false
+                                  }
+                                  disabled={true}
+                                  style={{ borderColor: "blue" }}
+                                  // onChange={handleAcceptEmployeeReason}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.disciplinaryWarning !== null &&
+                      disciplinarySearchData.disciplinaryWarning !==
+                        undefined &&
+                      disciplinarySearchData.disciplinaryWarning !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={3}>
+                            <label>Issue Warning Letter </label>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  disabled={true}
+                                  checked={
+                                    disciplinarySearchData &&
+                                    disciplinarySearchData &&
+                                    disciplinarySearchData !== null &&
+                                    disciplinarySearchData !== undefined &&
+                                    Object.keys(disciplinarySearchData)
+                                      .length !== 0 &&
+                                    disciplinarySearchData.disciplinaryWarning !==
+                                      null &&
+                                    disciplinarySearchData.disciplinaryWarning !==
+                                      undefined &&
+                                    disciplinarySearchData.disciplinaryWarning !==
+                                      ""
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  disabled={true}
+                                  checked={
+                                    (disciplinarySearchData &&
+                                      disciplinarySearchData &&
+                                      disciplinarySearchData !== null &&
+                                      disciplinarySearchData !== undefined &&
+                                      Object.keys(disciplinarySearchData)
+                                        .length !== 0 &&
+                                      disciplinarySearchData.disciplinaryWarning ===
+                                        null) ||
+                                    disciplinarySearchData.disciplinaryWarning ===
+                                      undefined ||
+                                    disciplinarySearchData.disciplinaryWarning ===
+                                      ""
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.disciplinaryWarning !== null &&
+                      disciplinarySearchData.disciplinaryWarning !==
+                        undefined &&
+                      disciplinarySearchData.disciplinaryWarning !== "" ? (
+                        <div>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Reason for warning:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.warningReason}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                            {showCauseReason === "Other" ? (
+                              ""
+                            ) : (
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    Performance improvement period:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp;{" "}
+                                      {state.pip !== 0
+                                        ? state.pip === 1
+                                          ? state.pip + " Month"
+                                          : state.pip + " Months"
+                                        : ""}
+                                    </label>
+                                  </label>
+                                </div>
+                              </Col>
+                            )}
+                          </Row>
+                          {showCauseReason === "Other" ? (
+                            ""
+                          ) : (
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "2rem",
+                                marginBottom: "1rem",
+                              }}
+                            >
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP Start Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                    </label>
+                                  </label>
+                                </div>
+                              </Col>
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP End Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.pipEndDate}
+                                    </label>
+                                  </label>
+                                </div>
+                              </Col>
+                            </Row>
+                          )}
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>State detailed reason:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.warningComment}
+                                </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>View Warning Letter:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={LetterShow1}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    View Warning Letter
+                                  </u>
+                                </a>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                       <Row>
                         <Col
                           style={{
@@ -860,44 +1073,52 @@ const EmployeShowCaseLetter = () => {
                             textAlign: "center",
                           }}
                         >
-                          <button
+                          {/* <button
                             disabled={submitted}
                             className={
-                              submitted || state.statusSCIN === 9
-                                ? "confirmButton"
-                                : "stepperButtons"
+                              submitted ? "confirmButton" : "stepperButtons"
                             }
                             onClick={submitHandler}
                           >
-                            Save
-                          </button>
+                            Confirm
+                          </button> */}
 
-                          {(state.statusSCIN === 9 || submitted) &&
-                          !saveLetter ? (
+                          {!saveLetter ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtonsExtra"}
                               onClick={ShowCauseLetterClick}
                             >
-                              View Show Cause Notice
+                              Add Digital Signature
                             </button>
                           ) : (
                             ""
                           )}
-                          {saveLetter ||
-                          (previewGeneratedLetter && showPreview) ? (
+                          {saveLetter ? (
                             <button
+                              style={{ marginLeft: "-4px" }}
                               className={"LettersButtonsExtra"}
                               onClick={previewShowCauseLetter}
                             >
-                              Preview Show Cause Notice
+                              {disciplinarySearchData &&
+                              disciplinarySearchData &&
+                              disciplinarySearchData !== null &&
+                              disciplinarySearchData !== undefined &&
+                              Object.keys(disciplinarySearchData).length !==
+                                0 &&
+                              disciplinarySearchData.disciplinaryWarning !==
+                                null &&
+                              disciplinarySearchData.disciplinaryWarning !==
+                                undefined &&
+                              disciplinarySearchData.disciplinaryWarning !== ""
+                                ? "Preview Warning Letter"
+                                : " Preview Show Cause Notice"}
                             </button>
                           ) : (
                             ""
                           )}
 
-                          {saveLetter ||
-                          (previewGeneratedLetter && showPreview) ? (
+                          {saveLetter && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
@@ -925,8 +1146,6 @@ const EmployeShowCaseLetter = () => {
                                 ""
                               )}
                             </div>
-                          ) : (
-                            ""
                           )}
                         </Col>
                       </Row>
@@ -942,4 +1161,4 @@ const EmployeShowCaseLetter = () => {
   );
 };
 
-export default EmployeShowCaseLetter;
+export default ActionPage;
