@@ -6,6 +6,7 @@ const MODULES_LIST = {
     3: "Promotion",
     4: "Disciplinary Action",
     5: "Transfers",
+    6: "User",
   },
   subModules: {
     0: {
@@ -37,6 +38,16 @@ const MODULES_LIST = {
       13: "Entity Transfer Report",
       14: "International Transfer Report",
       15: "Change of Employment Transfer Report",
+    },
+    6: {
+      18: "Employee Master",
+      19: "Relocation Bonus Report",
+      20: "VPF Report",
+      21: "Holiday Working Bonus Report",
+      22: "Ethics and IT Declaration",
+      23: "Sports Details",
+      24: "PF and UAN Upload",
+      25: "Employee Insurance Data Report",
     },
   },
 };

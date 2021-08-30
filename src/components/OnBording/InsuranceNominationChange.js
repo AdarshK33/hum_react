@@ -36,6 +36,8 @@ const InsuranceNomination = (props) => {
     documentView,
     documentViewData,
     uploadFile,
+    insuranceTopUpView,
+    insuranceTopUpData,
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
   const [showEdit, SetShowEdit] = useState(false);
@@ -162,7 +164,7 @@ const InsuranceNomination = (props) => {
 
   const [buttonOne, setButtonOne] = useState(false);
   const [buttonTwo, setButtonTwo] = useState(false);
-  const [topupYes, setTopupYes] = useState(false);
+  const [topupYes, setTopupYes] = useState(true);
   const [topupNo, setTopupNo] = useState(false);
   const [topupError, setTopupError] = useState(false);
   const [sumInsured, setSumInsured] = useState("");
@@ -189,6 +191,7 @@ const InsuranceNomination = (props) => {
   });
   const [nomineuploade, setNomineUploade] = useState(false);
   const [insuranceError, setInsuranceError] = useState(false);
+  const [premiumAmnt, setPremiumAmnt] = useState("");
   const [nominee, setNominee] = useState({
     nomineeName: "",
     nomineeRelationship: "",
@@ -296,7 +299,15 @@ const InsuranceNomination = (props) => {
     }
   }, [candidateProfileData]);
   console.log("personal information candidateViewInfo-->", candidateViewInfo);
+
   // console.log("contract type-->", candidateViewInfo.contractType);
+  useEffect(() => {
+    console.log("current year", moment().format("YYYY"));
+    let currentYear = moment().format("YYYY");
+    if (currentYear !== "") {
+      insuranceTopUpView(currentYear);
+    }
+  }, [candidateProfileData]);
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateProfileData);
@@ -1036,7 +1047,44 @@ const InsuranceNomination = (props) => {
     documentView(candidateProfileData.candidateId);
   }, [candidateProfileData]);
   console.log("documentViewData", documentViewData);
-
+  useEffect(() => {
+    if (
+      insuranceTopUpData !== null &&
+      insuranceTopUpData !== undefined &&
+      Object.keys(insuranceTopUpData).length !== 0
+    ) {
+      console.log("insuranceTopUpData", insuranceTopUpData);
+      if (sumInsured !== "") {
+        var premiumValue = insuranceTopUpData.filter(
+          (item) => item.sum == sumInsured
+        );
+        console.log("premiumAmnt", premiumValue[0]);
+        setPremiumAmnt(premiumValue[0].premiumAmt);
+      }
+    }
+  }, [insuranceTopUpData, sumInsured]);
+  useEffect(() => {
+    if (
+      candidateInsuranceNominationData !== undefined &&
+      candidateInsuranceNominationData !== null &&
+      Object.keys(candidateInsuranceNominationData).length !== 0
+    ) {
+      candidateInsuranceNominationData.map((item) => {
+        console.log("TopupYesChange", item.topUpInsured);
+        if (item.topUpInsured == true) {
+          setTopupYes(true);
+          setTopupNo(false);
+          setSumInsured(item.sumInsured);
+          setPremiumAmnt(item.premiumAmount);
+        } else {
+          setTopupYes(false);
+          setTopupNo(true);
+          setSumInsured("");
+          setPremiumAmnt("");
+        }
+      });
+    }
+  }, [candidateInsuranceNominationData]);
   useEffect(() => {
     // if (
     //   candidateInsuranceNominationData !== undefined &&
@@ -1125,6 +1173,8 @@ const InsuranceNomination = (props) => {
     console.log("TopupNoChange");
     setTopupNo(true);
     setTopupYes(false);
+    setSumInsured("");
+    setPremiumAmnt("");
   };
 
   const nomineeHandler = (e) => {
@@ -1269,7 +1319,7 @@ const InsuranceNomination = (props) => {
     }
   };
   const sumInsuredChange = (e) => {
-    console.log("sumInsuredChange", e);
+    console.log("sumInsuredChange", e.target.value);
     setSumInsured(e.target.value);
   };
   const NomineeNameValidation = (itemState, setError) => {
@@ -2132,6 +2182,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominiId,
           nominiName: state.nominiName !== null ? state.nominiName : null,
           relationship: state.relationship !== null ? state.relationship : null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2165,6 +2218,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee2NominiId,
           nominiName: state.nominee2NominiName,
           relationship: state.nominee2Relationship,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2198,6 +2254,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee3NominiId,
           nominiName: state.nominee3NominiName,
           relationship: state.nominee3Relationship,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2232,6 +2291,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee4NominiId,
           nominiName: state.nominee4NominiName,
           relationship: state.nominee4Relationship,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2265,6 +2327,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee5NominiId,
           nominiName: state.nominee5NominiName,
           relationship: state.nominee5Relationship,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2299,6 +2364,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.In_law_nominee1NominiId,
           nominiName: state.In_law_nominee1NominiName,
           relationship: state.In_law_nominee1Relationship,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2332,6 +2400,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.In_law_nominee2NominiId,
           nominiName: state.In_law_nominee2NominiName,
           relationship: state.In_law_nominee2Relationship,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2369,6 +2440,9 @@ const InsuranceNomination = (props) => {
             state.extra1nominiName !== null ? state.extra1nominiName : null,
           relationship:
             state.extra1relationship !== null ? state.extra1relationship : null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2405,6 +2479,9 @@ const InsuranceNomination = (props) => {
             state.extra2nominiName !== null ? state.extra2nominiName : null,
           relationship:
             state.extra2relationship !== null ? state.extra2relationship : null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -2439,6 +2516,9 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee5NominiId1,
           nominiName: state.nominee5NominiName1,
           relationship: state.nominee5Relationship1,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
@@ -5880,13 +5960,20 @@ const InsuranceNomination = (props) => {
                 name="insuredAmount"
                 value={sumInsured}
                 onChange={sumInsuredChange}
+                required
                 style={topupValueError ? { borderColor: "red" } : {}}
               >
                 <option value="">--Select--</option>
-                <option value="1000000">10 Lac</option>
-                <option value="2000000">20 Lac</option>
-                <option value="3000000">30 Lac</option>
-                <option value="4000000">40 Lac</option>
+                {insuranceTopUpData !== null &&
+                  insuranceTopUpData !== undefined &&
+                  insuranceTopUpData.length > 0 &&
+                  insuranceTopUpData.map((item) => {
+                    return (
+                      <option key={item.insuranceNominationId}>
+                        {item.sum}
+                      </option>
+                    );
+                  })}
               </Form.Control>
 
               {topupValueError ? (
@@ -5898,7 +5985,7 @@ const InsuranceNomination = (props) => {
           </Col>
           <Col sm={11}>
             <div>
-              <label>* Premium amount to be changed = 22420</label>
+              <label>* Premium amount to be changed = {premiumAmnt}</label>
             </div>
           </Col>
         </Row>
