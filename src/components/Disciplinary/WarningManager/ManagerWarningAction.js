@@ -998,7 +998,7 @@ const ManagerWarningAction = (props) => {
             ) : (
               <label className="text-center">
                 {/* Warning letter has been issued to the employee */}
-                Warning letter details saved successfully, sent for cost center
+                Warning letter issued successfully, sent for cost center
                 manager confirmation.
               </label>
             )}
@@ -1394,14 +1394,14 @@ const ManagerWarningAction = (props) => {
                         >
                           <Col sm={2}>
                             <div>
-                              <label>Reason By Employee:</label>
+                              <label>Response to show cause notice:</label>
                             </div>
                           </Col>
                           <Col sm={6}>
                             <div>
                               <a onClick={employeeReason}>
                                 {" "}
-                                <u className="itemResult">Reason By Employee</u>
+                                <u className="itemResult">Response to show cause notice</u>
                               </a>
                             </div>
                           </Col>
@@ -1632,7 +1632,7 @@ const ManagerWarningAction = (props) => {
                                     <label className="itemResult">
                                       {state.disciplinaryWarning.reasonId == 1
                                         ? "Non-Performance"
-                                        : "Other"}
+                                        : "Misconduct"}
                                     </label>
                                   </div>
                                 </Col>
