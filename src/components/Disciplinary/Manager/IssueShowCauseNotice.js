@@ -168,6 +168,11 @@ const IssueShowCauseNotice = () => {
       state.empAddress = disciplinaryEmpSearchData.employeeAddress;
       state.employeePosition = disciplinaryEmpSearchData.employeePosition;
 
+      state.mngrName = disciplinaryEmpSearchData.managerName;
+      state.mngrId = disciplinaryEmpSearchData.managerId;
+      state.mngrCostCenterName = disciplinaryEmpSearchData.managerCostCentre;
+      state.mngrPosition = disciplinaryEmpSearchData.managerPosition;
+
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -179,24 +184,6 @@ const IssueShowCauseNotice = () => {
     }
   }, [disciplinaryEmpSearchData]);
 
-  useEffect(() => {
-    if (
-      employeeProfileData &&
-      employeeProfileData &&
-      employeeProfileData !== null &&
-      employeeProfileData !== undefined &&
-      Object.keys(employeeProfileData).length !== 0
-    ) {
-      state.mngrName =
-        employeeProfileData.lastName !== null &&
-        employeeProfileData.lastName !== undefined
-          ? employeeProfileData.firstName + " " + employeeProfileData.lastName
-          : employeeProfileData.firstName;
-      state.mngrId = employeeProfileData.employeeId;
-      state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.position;
-    }
-  }, [employeeProfileData]);
   console.log("disciplinaryResonsData", disciplinaryResonsData);
   console.log("disciplinaryEmpSearchData", disciplinaryEmpSearchData);
   const searchDataHandler = () => {
@@ -232,10 +219,12 @@ const IssueShowCauseNotice = () => {
     ) {
       let tempArray = [];
       disciplinaryResonsData.map((item, i) => {
-        tempArray.push({
-          label: disciplinaryResonsData[i].reason,
-          value: disciplinaryResonsData[i].reasonId,
-        });
+        if (disciplinaryResonsData[i].reasonId !== 4) {
+          tempArray.push({
+            label: disciplinaryResonsData[i].reason,
+            value: disciplinaryResonsData[i].reasonId,
+          });
+        }
       });
       setResonsForShowCauseList(tempArray);
     }
@@ -294,7 +283,8 @@ const IssueShowCauseNotice = () => {
             disciplinarySearchData.disciplinaryAction.reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
-          status: rolePermission == "costCenterManager" ? 2 : 0,
+          status: 0,
+          // rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: null,
           warningIssued: false,
         },

@@ -20,7 +20,7 @@ export const DisciplinaryProvider = (props) => {
   const [state, dispatch] = useReducer(DisciplinaryReducer, initial_state);
   const [loader, setLoader] = useState(false);
 
-  const disciplinaryListView = (key, pageNumber) => {
+  const disciplinaryListView = (key, pageNumber, role) => {
     setLoader(true);
     client
       .get(
@@ -28,7 +28,8 @@ export const DisciplinaryProvider = (props) => {
           key +
           "&page=" +
           pageNumber +
-          "&size=10"
+          "&size=10&superManager=" +
+          role
       )
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;
