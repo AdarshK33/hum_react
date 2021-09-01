@@ -35,15 +35,26 @@ const ManagerDisciplinaryList = () => {
   const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
+  const [role, setRole] = useState(0);
   useEffect(() => {
-    disciplinaryListView("all", pageCount);
+    disciplinaryListView(
+      "all",
+      pageCount,
+      rolePermission == "superCostCenterManager" ? 1 : 0
+    );
     console.log("user role", user);
   }, []);
   console.log("ROLEEE", rolePermission);
   // useEffect(() => {
   //   MakedisciplinaryEmployeeSearchNull();
   // }, []);
-
+  useEffect(() => {
+    if (rolePermission == "superCostCenterManager") {
+      setRole(1);
+    } else {
+      setRole(0);
+    }
+  }, [rolePermission]);
   useEffect(() => {
     if (disciplinaryListData !== null && disciplinaryListData !== undefined) {
       setCurrentRecords(disciplinaryListData);
@@ -63,9 +74,9 @@ const ManagerDisciplinaryList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      disciplinaryListView(searchValue, pageNumber - 1);
+      disciplinaryListView(searchValue, pageNumber - 1, role);
     } else {
-      disciplinaryListView("all", pageNumber - 1);
+      disciplinaryListView("all", pageNumber - 1, role);
     }
     setCurrentRecords(disciplinaryListData);
   };
@@ -79,9 +90,9 @@ const ManagerDisciplinaryList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      disciplinaryListView(searchValue, 0);
+      disciplinaryListView(searchValue, 0, role);
     } else {
-      disciplinaryListView("all", 0);
+      disciplinaryListView("all", 0, role);
     }
   };
 
@@ -156,12 +167,12 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">Emp Name</th>
                       <th scope="col">Cost Center Name</th>
                       <th scope="col">Show Cause Date</th>
-                      <th scope="col">Warning Issue Date</th>
                       <th scope="col">Issued For</th>
                       <th scope="col">Due Days</th>
                       <th scope="col">Employee Action</th>
-                      <th scope="col">Status</th>
+                      <th scope="col">Warning Issue Date</th>
                       <th scope="col">PIP</th>
+                      <th scope="col">Status</th>
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
                       <th scope="col">Edit</th>
@@ -201,12 +212,7 @@ const ManagerDisciplinaryList = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.employeeCostCentre}</td>
                             <td>{item.disciplinaryAction.actionIssuedDate}</td>
-                            <td>
-                              {item.disciplinaryWarning !== null &&
-                              item.disciplinaryWarning !== undefined
-                                ? item.disciplinaryWarning.warningIssuedDate
-                                : "NA"}
-                            </td>
+
                             <td>{item.disciplinaryAction.reason}</td>
                             <td>{item.disciplinaryAction.actionDueDays}</td>
                             <td>
@@ -223,14 +229,21 @@ const ManagerDisciplinaryList = () => {
                             <td>
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined
-                                ? item.disciplinaryWarning.statusDesc
-                                : item.disciplinaryAction.statusDesc}
+                                ? item.disciplinaryWarning.warningIssuedDate
+                                : "NA"}
                             </td>
+
                             <td>
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined
                                 ? item.disciplinaryWarning.improvementPeriod
                                 : "NA"}
+                            </td>
+                            <td>
+                              {item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined
+                                ? item.disciplinaryWarning.statusDesc
+                                : item.disciplinaryAction.statusDesc}
                             </td>
                             <td>
                               <Link
@@ -246,22 +259,34 @@ const ManagerDisciplinaryList = () => {
                                 />
                               </Link>
                             </td>
-                            {(rolePermission == "costCenterManager" &&
+                            {(user !== null &&
+                              user !== undefined &&
+                              user.employeeId === item.initiatedBy &&
+                              rolePermission == "costCenterManager" &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
                               item.disciplinaryAction !== "" &&
                               item.disciplinaryAction.status === 11) ||
-                            (rolePermission == "costCenterManager" &&
+                            (user !== null &&
+                              user !== undefined &&
+                              user.employeeId === item.initiatedBy &&
+                              rolePermission == "costCenterManager" &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
                               item.disciplinaryWarning !== "" &&
                               item.disciplinaryWarning.status === 12) ||
-                            (rolePermission == "manager" &&
+                            (user !== null &&
+                              user !== undefined &&
+                              user.employeeId === item.initiatedBy &&
+                              rolePermission == "manager" &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
                               item.disciplinaryAction !== "" &&
                               item.disciplinaryAction.status === 10) ||
-                            (rolePermission == "manager" &&
+                            (user !== null &&
+                              user !== undefined &&
+                              user.employeeId === item.initiatedBy &&
+                              rolePermission == "manager" &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
                               item.disciplinaryWarning !== "" &&
@@ -292,6 +317,8 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction !== "" &&
                               item.disciplinaryAction.statusDesc !==
                                 "Action Required By Employee" &&
+                              item.disciplinaryAction.statusDesc !==
+                                "Exit Initiated" &&
                               item.disciplinaryWarning === null &&
                               (item.disciplinaryAction.employeeActionStatus ===
                                 "Responded" ||
@@ -302,6 +329,8 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
                               item.disciplinaryWarning !== "" &&
+                              item.disciplinaryWarning.statusDesc !==
+                                "Exit Initiated" &&
                               (item.disciplinaryWarning.statusDesc ===
                                 "Warning Letter Issued" ||
                                 item.disciplinaryWarning.statusDesc ===
@@ -323,14 +352,28 @@ const ManagerDisciplinaryList = () => {
                                   />
                                 </Link>
                               </td>
-                            ) : rolePermission == "costCenterManager" &&
-                              item.disciplinaryAction !== null &&
-                              item.disciplinaryAction !== undefined &&
-                              item.disciplinaryAction !== "" &&
-                              (item.disciplinaryAction.statusDesc ===
-                                "Warning Letter Issued" ||
-                                item.disciplinaryAction.statusDesc ===
-                                  "Show Cause Notice Issued") ? (
+                            ) : (user !== null &&
+                                user !== undefined &&
+                                user.employeeId !== item.initiatedBy &&
+                                rolePermission == "costCenterManager" &&
+                                item.disciplinaryAction !== null &&
+                                item.disciplinaryAction !== undefined &&
+                                item.disciplinaryAction !== "" &&
+                                (item.disciplinaryAction.statusDesc ===
+                                  "Warning Letter Issued" ||
+                                  item.disciplinaryAction.statusDesc ===
+                                    "Show Cause Notice Issued")) ||
+                              (user !== null &&
+                                user !== undefined &&
+                                user.employeeId !== item.initiatedBy &&
+                                rolePermission == "superCostCenterManager" &&
+                                item.disciplinaryAction !== null &&
+                                item.disciplinaryAction !== undefined &&
+                                item.disciplinaryAction !== "" &&
+                                (item.disciplinaryAction.statusDesc ===
+                                  "Warning Letter Issued" ||
+                                  item.disciplinaryAction.statusDesc ===
+                                    "Show Cause Notice Issued")) ? (
                               <td>
                                 {" "}
                                 <Link
@@ -345,29 +388,7 @@ const ManagerDisciplinaryList = () => {
                                   />
                                 </Link>
                               </td>
-                            ) : 
-                            item.disciplinaryAction !== null &&
-                            item.disciplinaryAction !== undefined &&
-                            item.disciplinaryAction !== "" &&
-                            (item.disciplinaryAction.status ===
-                              10 ||
-                              item.disciplinaryAction.status ===
-                                11) ? (
-                            <td>
-                              {" "}
-                              <Link
-                                to={"/show-cause-notice/" + item.employeeId}
-                              >
-                                <Edit2
-                                  onClick={() => {
-                                    disciplinaryEmployeeSearch(
-                                      item.disciplinaryAction.disciplinaryId
-                                    );
-                                  }}
-                                />
-                              </Link>
-                            </td>
-                          ):(
+                            ) : (
                               <td>
                                 <Edit2 />
                               </td>
