@@ -90,6 +90,7 @@ const ActionPage = () => {
     IssueShowCauseNoticeLetter,
     issueShowCauseNoticeData,
     createShowCauseIssue,
+    loader,
   } = useContext(DisciplinaryContext);
 
   useEffect(() => {
@@ -316,12 +317,13 @@ const ActionPage = () => {
           employeeId: state.empId,
           managerComment: state.managerCommentSCIN,
           reasonId: state.reasonIdSCIN,
+          initiatedRole: rolePermission !== null ? rolePermission : null,
           reasonDetailsId: state.reasonDetailsIdSCIN,
           reason: state.reasonSCIN,
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
-          status: rolePermission == "costCenterManager" ? 2 : 0,
+          status: 0,
           statusDesc: state.statusDescSCIN,
           warningIssued: state.warningIssuedSCIN,
         },
@@ -336,10 +338,11 @@ const ActionPage = () => {
                 improvementPeriod: state.pip,
                 managerComment: state.managerCommentDW,
                 reason: state.reasonDW,
+                initiatedRole: rolePermission !== null ? rolePermission : null,
                 reasonDetails: state.reasonDetailsDW,
                 reasonId: state.reasonIdDW,
                 reasonDetailsId: state.reasonDetailsIdDW,
-                status: rolePermission == "costCenterManager" ? 2 : 0,
+                status: 0,
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
@@ -426,22 +429,96 @@ const ActionPage = () => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label className="text-center">
-              {disciplinarySearchData &&
+            {loader ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
+              </div>
+            ) : disciplinarySearchData &&
               disciplinarySearchData &&
               disciplinarySearchData !== null &&
               disciplinarySearchData !== undefined &&
               Object.keys(disciplinarySearchData).length !== 0 &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== "" &&
-              disciplinarySearchData.disciplinaryWarning !== null
-                ? rolePermission == "costCenterManager"
-                  ? "Warning letter issued successfully , the employee has been notified."
-                  : "Warning letter issued successfully ,sent for cost center manager confirmation."
-                : rolePermission == "costCenterManager"
-                ? "Show cause notice details saved successfully,the employee has been notified"
-                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
-            </label>
+              disciplinarySearchData.disciplinaryWarning !== null &&
+              disciplinarySearchData.disciplinaryWarning.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryWarning.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryWarning.reportingType === 1 ? (
+                <label className="text-center">
+                  Warning details saved successfully , the employee has been
+                  notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, cost center manager has
+                  been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, super cost center manager
+                  has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, admin has been notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Warning details saved successfully.
+                </label>
+              )
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryAction.reportingType === 1 ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, employee has
+                  been notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, cost center
+                  manager has been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, super cost
+                  center manager has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, admin has been
+                  notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Show cause notice details saved successfully.
+                </label>
+              )
+            ) : (
+              <label className="text-center">
+                Show cause notice details saved successfully.
+              </label>
+            )}
+
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>

@@ -71,6 +71,7 @@ const ManagerWarningAction = (props) => {
       managerComment: null,
       reason: null,
       reasonDetails: null,
+      initiatedRole: null,
       reasonDetailsId: 0,
       reasonId: 0,
       showCauseLetter: null,
@@ -90,6 +91,7 @@ const ManagerWarningAction = (props) => {
       reason: null,
       reasonDetails: null,
       reasonDetailsId: 0,
+      initiatedRole: null,
       reasonId: 0,
       status: 0,
       statusDesc: null,
@@ -120,6 +122,7 @@ const ManagerWarningAction = (props) => {
     createShowCauseIssue,
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
+    loader,
   } = useContext(DisciplinaryContext);
   console.log(issueShowCauseNoticeData, "issueShowCauseNoticeData");
   const { searchByCostCenter } = useContext(SeparationContext);
@@ -190,6 +193,8 @@ const ManagerWarningAction = (props) => {
           disciplinarySearchData.disciplinaryAction.employeeActionStatus;
         state.disciplinaryAction.employeeComment =
           disciplinarySearchData.disciplinaryAction.employeeComment;
+        state.disciplinaryAction.initiatedRole =
+          disciplinarySearchData.disciplinaryAction.initiatedRole;
         state.disciplinaryAction.employeeId =
           disciplinarySearchData.disciplinaryAction.employeeId;
         state.disciplinaryAction.managerComment =
@@ -279,6 +284,8 @@ const ManagerWarningAction = (props) => {
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.disciplinaryWarning.pipEndDate =
           disciplinarySearchData.disciplinaryWarning.pipEndDate;
+        state.disciplinaryWarning.initiatedRole =
+          disciplinarySearchData.disciplinaryWarning.initiatedRole;
         state.disciplinaryWarning.reason =
           disciplinarySearchData.disciplinaryWarning.reason;
         state.disciplinaryWarning.reasonDetails =
@@ -340,6 +347,7 @@ const ManagerWarningAction = (props) => {
         employeeId: state.disciplinaryAction.employeeId,
         managerComment: state.disciplinaryAction.managerComment,
         reason: state.disciplinaryAction.reason,
+        initiatedRole: state.disciplinaryAction.initiatedRole,
         employeeReasonAccepted: state.disciplinaryAction.employeeReasonAccepted,
         reasonDetails: state.disciplinaryAction.reasonDetails,
         reasonDetailsId: state.disciplinaryAction.reasonDetailsId,
@@ -362,6 +370,7 @@ const ManagerWarningAction = (props) => {
               managerComment: state.disciplinaryWarning.managerComment,
               pipEndDate: state.disciplinaryWarning.pipEndDate,
               reason: state.disciplinaryWarning.reason,
+              initiatedRole: state.disciplinaryWarning.initiatedRole,
               reasonDetails: state.disciplinaryWarning.reasonDetails,
               reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
               reasonId: state.disciplinaryWarning.reasonId,
@@ -446,6 +455,7 @@ const ManagerWarningAction = (props) => {
           employeeComment: state.disciplinaryAction.employeeComment,
           employeeId: state.disciplinaryAction.employeeId,
           managerComment: state.disciplinaryAction.managerComment,
+          initiatedRole: state.disciplinaryAction.initiatedRole,
           employeeReasonAccepted:
             acceptEmployeeReason == "yes"
               ? true
@@ -477,7 +487,16 @@ const ManagerWarningAction = (props) => {
                 reasonDetails: state.disciplinaryWarning.reasonDetails,
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
                 reasonId: state.disciplinaryWarning.reasonId,
-                status: rolePermission == "costCenterManager" ? 12 : 11,
+                initiatedRole: state.disciplinaryAction.initiatedRole,
+                status:
+                  rolePermission == "admin"
+                    ? 14
+                    : rolePermission == "superCostCenterManager"
+                    ? 13
+                    : rolePermission == "costCenterManager"
+                    ? 12
+                    : 11,
+
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
                 warningId: state.disciplinaryWarning.warningId,
@@ -493,11 +512,20 @@ const ManagerWarningAction = (props) => {
                 //  state.InputImprovementPeriod,
                 managerComment: managerComment,
                 // warningManagerReason,
+
                 reason: null,
                 reasonDetails: null,
                 reasonDetailsId: 0,
                 reasonId: state.inputReasonId,
-                status: rolePermission == "costCenterManager" ? 12 : 11,
+                initiatedRole: rolePermission !== null ? rolePermission : null,
+                status:
+                  rolePermission == "admin"
+                    ? 14
+                    : rolePermission == "superCostCenterManager"
+                    ? 13
+                    : rolePermission == "costCenterManager"
+                    ? 12
+                    : 11,
                 statusDesc: null,
                 warningDueDays: 0,
                 warningId: 0,
@@ -624,6 +652,7 @@ const ManagerWarningAction = (props) => {
           disciplinaryId: state.disciplinaryAction.disciplinaryId,
           employeeActionStatus: state.disciplinaryAction.employeeActionStatus,
           employeeComment: state.disciplinaryAction.employeeComment,
+          initiatedRole: state.disciplinaryAction.initiatedRole,
           employeeId: state.disciplinaryAction.employeeId,
           managerComment: state.disciplinaryAction.managerComment,
           employeeReasonAccepted:
@@ -659,6 +688,7 @@ const ManagerWarningAction = (props) => {
                 reasonId: state.disciplinaryWarning.reasonId,
                 status: rolePermission == "costCenterManager" ? 2 : 0,
                 statusDesc: state.disciplinaryWarning.statusDesc,
+                initiatedRole: state.disciplinaryWarning.initiatedRole,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
                 warningId: state.disciplinaryWarning.warningId,
                 warningIssuedDate: state.disciplinaryWarning.warningIssuedDate,
@@ -675,6 +705,7 @@ const ManagerWarningAction = (props) => {
                 managerComment:
                   disciplinarySearchData.disciplinaryAction.managerComment,
                 // warningManagerReason,
+                initiatedRole: rolePermission !== null ? rolePermission : null,
                 reason: null,
                 reasonDetails: null,
                 reasonDetailsId: 0,
@@ -995,11 +1026,56 @@ const ManagerWarningAction = (props) => {
                 The reason submitted by the employee has been saved
                 successfully.
               </label>
+            ) : loader ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
+              </div>
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryWarning !== null &&
+              disciplinarySearchData.disciplinaryWarning !== undefined &&
+              disciplinarySearchData.disciplinaryWarning.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryWarning.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryWarning.reportingType === 1 ? (
+                <label className="text-center">
+                  Warning details saved successfully, employee has been
+                  notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, cost center manager has
+                  been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, super cost center manager
+                  has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, admin has been notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Warning details saved successfully.
+                </label>
+              )
             ) : (
               <label className="text-center">
-                {/* Warning letter has been issued to the employee */}
-                Warning letter issued successfully, sent for cost center
-                manager confirmation.
+                Warning details saved successfully.
               </label>
             )}
             <div className="text-center">
@@ -1077,7 +1153,7 @@ const ManagerWarningAction = (props) => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Warning letter has been issued to the employee
+              Warning details saved successfully.
             </label>
 
             <div className="text-center mb-2">
@@ -1401,7 +1477,9 @@ const ManagerWarningAction = (props) => {
                             <div>
                               <a onClick={employeeReason}>
                                 {" "}
-                                <u className="itemResult">Response to show cause notice</u>
+                                <u className="itemResult">
+                                  Response to show cause notice
+                                </u>
                               </a>
                             </div>
                           </Col>

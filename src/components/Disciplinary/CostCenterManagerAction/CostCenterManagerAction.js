@@ -68,6 +68,7 @@ const CostCenterManagerAction = () => {
     showCauseNoticeSCIN: "",
     statusDescSCIN: "",
     warningIssuedSCIN: "",
+    initiatedRoleSCIN: "",
     employeeCommentDW: "",
     employeeWarningStatusDW: "",
     managerCommentDW: "",
@@ -78,6 +79,7 @@ const CostCenterManagerAction = () => {
     statusDescDW: "",
     warningDueDaysDW: "",
     warningIdDW: "",
+    initiatedRoleDW: "",
     warningIssuedDateDW: "",
     pipEndDate: "",
     warningLetterDW: "",
@@ -135,6 +137,8 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction.disciplinaryId;
         state.employeeActionStatusSCIN =
           disciplinarySearchData.disciplinaryAction.employeeActionStatus;
+        state.initiatedRoleSCIN =
+          disciplinarySearchData.disciplinaryAction.initiatedRole;
         state.employeeCommentSCIN =
           disciplinarySearchData.disciplinaryAction.employeeComment;
         state.empId = disciplinarySearchData.disciplinaryAction.employeeId;
@@ -172,7 +176,8 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.employeeWarningStatusDW =
           disciplinarySearchData.disciplinaryWarning.employeeWarningStatus;
-
+        state.initiatedRoleDW =
+          disciplinarySearchData.disciplinaryAction.initiatedRole;
         state.managerCommentDW =
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.reasonDW = disciplinarySearchData.disciplinaryWarning.reason;
@@ -310,6 +315,7 @@ const CostCenterManagerAction = () => {
           employeeActionStatus: state.employeeActionStatusSCIN,
           employeeComment: state.employeeCommentSCIN,
           employeeId: state.empId,
+          initiatedRole: state.initiatedRoleSCIN,
           managerComment: state.managerCommentSCIN,
           reasonId: state.reasonIdSCIN,
           reasonDetailsId: state.reasonDetailsIdSCIN,
@@ -339,6 +345,7 @@ const CostCenterManagerAction = () => {
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
+                initiatedRole: state.initiatedRoleDW,
                 warningIssuedDate: state.warningIssuedDateDW,
                 pipEndDate: state.pipEndDate,
                 warningLetter: state.warningLetterDW,
