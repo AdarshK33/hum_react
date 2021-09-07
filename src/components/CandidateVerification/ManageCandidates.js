@@ -247,8 +247,25 @@ const CandidateList = () => {
                         {user !== null &&
                         user !== undefined &&
                         rolePermission == "admin" &&
+                        item.contractType !== "Internship" &&
                         (item.adminVerificationStatus === 0 ||
-                          item.adminVerificationStatus === 3) ? (
+                          item.adminVerificationStatus === 3 ||
+                          item.adminVerificationStatus === 1) &&
+                        item.uanStatus === 0 ? (
+                          <Link to={"/verification/" + item.candidateId}>
+                            <AlertCircle
+                              onClick={() => {
+                                FetchCandidateData(item.candidateId);
+                              }}
+                            />
+                          </Link>
+                        ) : user !== null &&
+                          user !== undefined &&
+                          rolePermission == "admin" &&
+                          item.contractType === "Internship" &&
+                          (item.adminVerificationStatus === 0 ||
+                            item.adminVerificationStatus === 3) &&
+                          item.uanStatus === 4 ? (
                           <Link to={"/verification/" + item.candidateId}>
                             <AlertCircle
                               onClick={() => {

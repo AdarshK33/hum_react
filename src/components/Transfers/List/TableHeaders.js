@@ -1,6 +1,6 @@
 const TRANSFER_TABLE_HEADERS = {
   regular: {
-    sno: "SNo",
+    sno: "S.No",
     empId: "Emp ID",
     empName: "Emp Name",
     curDept: "Current Department",
@@ -18,7 +18,7 @@ const TRANSFER_TABLE_HEADERS = {
     action: "Action",
   },
   entity: {
-    sno: "SNo",
+    sno: "S.No",
     empId: "Old Emp ID",
     empName: "Emp Name",
     oldEntity: "Old Entity",
@@ -31,7 +31,7 @@ const TRANSFER_TABLE_HEADERS = {
     action: "Action",
   },
   international: {
-    sno: "SNo",
+    sno: "S.No",
     empId: "Emp ID",
     empName: "Emp Name",
     oldCountry: "Old Country",
@@ -47,11 +47,11 @@ const TRANSFER_TABLE_HEADERS = {
     action: "Action",
   },
   employment: {
-    sno: "SNo",
+    sno: "S.No",
     empId: "Emp ID",
     empName: "Emp Name",
-    oldEmpContractType: "Old Employement Contract Type",
-    newEmpContractType: "New Employement Contract Type",
+    oldEmpContractType: "Old Employment Contract Type",
+    newEmpContractType: "New Employment Contract Type",
     effectiveDate: "Effective Date",
     status: "Status",
     view: "View",

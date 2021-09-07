@@ -737,7 +737,9 @@ const EmployeeForm = (props) => {
         <Row>
           <Col sm={4}></Col>
           <Col sm={2}>
-            <Button type="submit">Save</Button>
+            <Button type="submit" disabled={disabled}>
+              Save
+            </Button>
           </Col>
           {editButton === true && createCandidateResponse !== null ? (
             <Col sm={2}>

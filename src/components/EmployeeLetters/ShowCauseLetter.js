@@ -69,12 +69,14 @@ const EmployeShowCaseLetter = () => {
     showCauseNoticeSCIN: "",
     statusDescSCIN: "",
     warningIssuedSCIN: "",
+    initiatedRoleSCIN: "",
     statusSCIN: "",
     employeeCommentDW: "",
     employeeWarningStatusDW: "",
     managerCommentDW: "",
     reasonDW: "",
     reasonDetailsDW: "",
+    initiatedRoleDW: "",
     reasonIdDW: "",
     reasonDetailsIdDW: "",
     statusDescDW: "",
@@ -137,6 +139,8 @@ const EmployeShowCaseLetter = () => {
           disciplinarySearchData.disciplinaryAction.disciplinaryId;
         state.employeeActionStatusSCIN =
           disciplinarySearchData.disciplinaryAction.employeeActionStatus;
+        state.initiatedRoleSCIN =
+          disciplinarySearchData.disciplinaryAction.initiatedRole;
         state.employeeCommentSCIN =
           disciplinarySearchData.disciplinaryAction.employeeComment;
         state.empId = disciplinarySearchData.disciplinaryAction.employeeId;
@@ -175,7 +179,8 @@ const EmployeShowCaseLetter = () => {
           disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.employeeWarningStatusDW =
           disciplinarySearchData.disciplinaryWarning.employeeWarningStatus;
-
+        state.initiatedRoleDW =
+          disciplinarySearchData.disciplinaryAction.initiatedRole;
         state.managerCommentDW =
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.reasonDW = disciplinarySearchData.disciplinaryWarning.reason;
@@ -242,6 +247,8 @@ const EmployeShowCaseLetter = () => {
           reasonId: state.reasonIdSCIN,
           reasonDetailsId: state.reasonDetailsIdSCIN,
           reason: state.reasonSCIN,
+          initiatedRole: state.initiatedRoleSCIN,
+
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
@@ -264,6 +271,7 @@ const EmployeShowCaseLetter = () => {
                 reasonId: state.reasonIdDW,
                 reasonDetailsId: state.reasonDetailsIdDW,
                 status: state.statusDW,
+                initiatedRole: state.initiatedRoleDW,
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
@@ -382,6 +390,7 @@ const EmployeShowCaseLetter = () => {
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
+          initiatedRole: state.initiatedRoleSCIN,
           status: 9,
           //  state.statusSCIN
           statusDesc: state.statusDescSCIN,
@@ -404,6 +413,7 @@ const EmployeShowCaseLetter = () => {
                 status: state.statusDW,
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
+                initiatedRole: state.initiatedRoleDW,
                 warningId: state.warningIdDW,
                 warningIssuedDate: state.warningIssuedDateDW,
                 warningLetter: state.warningLetterDW,
@@ -498,8 +508,25 @@ const EmployeShowCaseLetter = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause details saved successfully, respective manager/cost
-              center manager has been notified.
+              {disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction !== "" &&
+              disciplinarySearchData.disciplinaryAction.initiatedRole !== null
+                ? disciplinarySearchData.disciplinaryAction.initiatedRole ==
+                  "costCentermanager"
+                  ? " Show cause details saved successfully, cost center manager has been notified."
+                  : disciplinarySearchData.disciplinaryAction.initiatedRole ==
+                    "superCostCentermanager"
+                  ? " Show cause details saved successfully, super cost center manager has been notified."
+                  : " Show cause details saved successfully, " +
+                    disciplinarySearchData.disciplinaryAction.initiatedRole +
+                    " has been notified."
+                : " Show cause details saved successfully, respective person has been notified."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -872,8 +899,8 @@ const EmployeShowCaseLetter = () => {
                             Save
                           </button>
 
-                          {(state.statusSCIN === 9 && !saveLetter) ||
-                          (showPreview === true && submitted === true) ? (
+                          {(state.statusSCIN === 9 || submitted) &&
+                          !saveLetter ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtonsExtra"}

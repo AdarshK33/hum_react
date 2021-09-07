@@ -72,6 +72,7 @@ const IssueShowCauseNotice = () => {
     issueShowCauseNoticeData,
     EmployeeSearchWithKey,
     disciplinaryEmpSearchData,
+    loader,
   } = useContext(DisciplinaryContext);
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
@@ -168,6 +169,11 @@ const IssueShowCauseNotice = () => {
       state.empAddress = disciplinaryEmpSearchData.employeeAddress;
       state.employeePosition = disciplinaryEmpSearchData.employeePosition;
 
+      state.mngrName = disciplinaryEmpSearchData.managerName;
+      state.mngrId = disciplinaryEmpSearchData.managerId;
+      state.mngrCostCenterName = disciplinaryEmpSearchData.managerCostCentre;
+      state.mngrPosition = disciplinaryEmpSearchData.managerPosition;
+
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -179,24 +185,6 @@ const IssueShowCauseNotice = () => {
     }
   }, [disciplinaryEmpSearchData]);
 
-  useEffect(() => {
-    if (
-      employeeProfileData &&
-      employeeProfileData &&
-      employeeProfileData !== null &&
-      employeeProfileData !== undefined &&
-      Object.keys(employeeProfileData).length !== 0
-    ) {
-      state.mngrName =
-        employeeProfileData.lastName !== null &&
-        employeeProfileData.lastName !== undefined
-          ? employeeProfileData.firstName + " " + employeeProfileData.lastName
-          : employeeProfileData.firstName;
-      state.mngrId = employeeProfileData.employeeId;
-      state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.position;
-    }
-  }, [employeeProfileData]);
   console.log("disciplinaryResonsData", disciplinaryResonsData);
   console.log("disciplinaryEmpSearchData", disciplinaryEmpSearchData);
   const searchDataHandler = () => {
@@ -232,10 +220,12 @@ const IssueShowCauseNotice = () => {
     ) {
       let tempArray = [];
       disciplinaryResonsData.map((item, i) => {
-        tempArray.push({
-          label: disciplinaryResonsData[i].reason,
-          value: disciplinaryResonsData[i].reasonId,
-        });
+        if (disciplinaryResonsData[i].reasonId !== 4) {
+          tempArray.push({
+            label: disciplinaryResonsData[i].reason,
+            value: disciplinaryResonsData[i].reasonId,
+          });
+        }
       });
       setResonsForShowCauseList(tempArray);
     }
@@ -258,7 +248,7 @@ const IssueShowCauseNotice = () => {
   };
 
   const submitfinalShowCauseLetter = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (
       disciplinarySearchData &&
       disciplinarySearchData &&
@@ -269,64 +259,72 @@ const IssueShowCauseNotice = () => {
       disciplinarySearchData.disciplinaryAction !== undefined &&
       disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      const value = checkValidations();
-      if (value === true) {
-        console.log("INSIDE");
-        var reasonDetailsId = 0;
-        resonsForShowCauseList.map((item, i) => {
-          if (resonsForShowCauseList[i].label === state.reasonForCause) {
-            reasonDetailsId = resonsForShowCauseList[i].value;
-            console.log(resonsForShowCauseList[i].value);
-          }
-        });
-        if(disciplinarySearchData !== undefined && 
-          disciplinarySearchData !== "" &&
-           disciplinarySearchData !== null && 
-           disciplinarySearchData.disciplinaryAction !== undefined 
-           && disciplinarySearchData.disciplinaryAction !== "" && 
-           disciplinarySearchData.disciplinaryAction !== null){
+      console.log("INSIDE");
+      var reasonDetailsId = 0;
+      resonsForShowCauseList.map((item, i) => {
+        if (resonsForShowCauseList[i].label === state.reasonForCause) {
+          reasonDetailsId = resonsForShowCauseList[i].value;
+          console.log(resonsForShowCauseList[i].value);
+        }
+      });
+      const InfoData = {
+        contractType: state.empContractType,
+        disciplinaryAction: {
+          actionDueDays: 0,
+          actionIssuedDate: null,
+          disciplinaryId:
+            disciplinarySearchData.disciplinaryAction.disciplinaryId,
+          employeeActionStatus: null,
+          employeeComment: null,
+          employeeId: state.empId,
+          initiatedRole: rolePermission !== null ? rolePermission : null,
+          managerComment:
+            disciplinarySearchData.disciplinaryAction.managerComment,
+          reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
+          reasonDetailsId:
+            disciplinarySearchData.disciplinaryAction.reasonDetailsId,
+          showCauseLetter: "ShowCauseLetter.pdf",
+          showCauseNotice: null,
+          status: 0,
+          // rolePermission == "costCenterManager" ? 2 : 0,
+          statusDesc: null,
+          warningIssued: false,
+        },
+        disciplinaryWarning: null,
+        employeeAddress: state.empAddress,
+        employeePosition: state.employeePosition,
+        employeeCostCentre: state.empCostCenterName,
+        employeeId: state.empId,
+        employeeName: disciplinaryEmpSearchData.employeeName,
+        managerCostCentre: null,
+        managerDesignation: null,
+        managerId: null,
+        managerName: null,
+        // {
+        //   "disciplinaryId": 0,
+        //   "employeeComment": "string",
+        //   "employeeWarningStatus": "string",
+        //   "improvementPeriod": 0,
+        //   "managerComment": "string",
+        //   "reason": "string",
+        //   "reasonDetails": "string",
+        //   "status": 0,
+        //   "statusDesc": "string",
+        //   "warningDueDays": 0,
+        //   "warningId": 0,
+        //   "warningIssuedDate": "string",
+        //   "warningLetter": "string"
+        // },
+      };
 
-        const InfoData = {
-          contractType: disciplinarySearchData.empContractType,
-          disciplinaryAction: {
-            actionDueDays: disciplinarySearchData.disciplinaryAction.actionDueDays,
-            actionIssuedDate: disciplinarySearchData.disciplinaryAction.actionIssuedDate,
-            disciplinaryId: disciplinarySearchData.disciplinaryAction.disciplinaryId,
-            employeeActionStatus: disciplinarySearchData.disciplinaryAction.employeeActionStatus,
-            employeeComment: disciplinarySearchData.disciplinaryAction.employeeComment,
-            employeeId: disciplinarySearchData.disciplinaryAction.employeeId,
-            managerComment: disciplinarySearchData.disciplinaryAction.managerComment,
-            reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
-            reasonDetailsId:disciplinarySearchData.disciplinaryAction.reasonDetailsId,
-            showCauseLetter: disciplinarySearchData.disciplinaryAction.showCauseLetter,
-            showCauseNotice: disciplinarySearchData.disciplinaryAction.showCauseNotice,
-            status: rolePermission == "costCenterManager" ? 2 : 0,
-            statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
-            warningIssued: disciplinarySearchData.disciplinaryAction.warningIssued,
-          },
-          disciplinaryWarning: disciplinarySearchData.disciplinaryWarning,
-          employeeAddress: disciplinarySearchData.employeeAddress,
-          employeePosition: disciplinarySearchData.employeePosition,
-          employeeCostCentre: disciplinarySearchData.employeeCostCentre,
-          employeeId: disciplinarySearchData.employeeId,
-          employeeName: disciplinarySearchData.employeeName,
-          managerCostCentre: disciplinarySearchData.managerCostCentre,
-          managerDesignation: disciplinarySearchData.managerDesignation,
-          managerId: disciplinarySearchData.managerId,
-          managerName: disciplinarySearchData.managerName,
-        };
-        console.log("createShowCauseData role",rolePermission, InfoData);
-  
-        createShowCauseIssue(InfoData,state.empId);
-        SubmitDisciplinaryLetter(
-          disciplinarySearchData.disciplinaryAction.disciplinaryId
-        );
-        setSubmitLetter(true);
-        setLetterSent(true);
-        setShow(true);
-      }
-
-    }
+      console.log("createShowCauseData", InfoData);
+      createShowCauseIssue(InfoData, state.empId);
+      SubmitDisciplinaryLetter(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
     }
   };
 
@@ -504,11 +502,19 @@ const IssueShowCauseNotice = () => {
           employeeId: state.empId,
           managerComment: state.reason,
           reasonId: changeInReason,
+          initiatedRole: rolePermission !== null ? rolePermission : null,
           reasonDetailsId:
             changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
-          status: rolePermission == "costCenterManager" ? 11 : 10,
+          status:
+            rolePermission == "admin"
+              ? 13
+              : rolePermission == "superCostCenterManager"
+              ? 12
+              : rolePermission == "costCenterManager"
+              ? 11
+              : 10,
           statusDesc: null,
           warningIssued: false,
         },
@@ -539,10 +545,10 @@ const IssueShowCauseNotice = () => {
         // },
       };
 
-      console.log("createShowCauseData",InfoData,rolePermission);
+      console.log("createShowCauseData", InfoData, rolePermission);
       setSubmitted(true);
       state.clickOnsubmit = true;
-     createShowCauseIssue(InfoData, state.empId);
+      createShowCauseIssue(InfoData, state.empId);
       setPreview(true);
       setSuccessModal(true);
     }
@@ -561,11 +567,72 @@ const IssueShowCauseNotice = () => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label className="text-center">
-              {rolePermission == "costCenterManager"
-                ? "Show cause notice details saved successfully"
-                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
-            </label>
+            {loader ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
+              </div>
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryAction.reportingType === 1 ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, employee has
+                  been notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, cost center
+                  manager has been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, super cost
+                  center manager has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, admin has been
+                  notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Show cause notice details saved successfully.
+                </label>
+              )
+            ) : (
+              <label className="text-center">
+                Show cause notice details saved successfully.
+              </label>
+            )}
+
+            {/* {rolePermission == "costCenterManager" ? (
+              <label className="text-center">
+                Show cause notice details saved successfully, employee has been
+                notified.
+              </label>
+            ) : (
+              <label className="text-center">
+                Show cause notice details saved successfully, sent for cost
+                center manager confirmation.{" "}
+              </label>
+            )} */}
+
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>
@@ -651,10 +718,8 @@ const IssueShowCauseNotice = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>
-              {rolePermission == "costCenterManager"
-                ? "Show cause notice details saved successfully,the employee has been notified"
-                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
+            <label className="text-center">
+              Show cause notice details saved successfully
             </label>
 
             <div className="text-center mb-2">

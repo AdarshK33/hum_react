@@ -29,9 +29,7 @@ const WarningLetter = () => {
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
           </p>
-          <p>
-            <b>Sub:</b> Warning Notice
-          </p>
+
           <div className=" ">
             <p className="mt-5 ">
               {" "}

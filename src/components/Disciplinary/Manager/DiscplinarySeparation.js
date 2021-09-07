@@ -13,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { SeparationContext } from "../../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "../../ManagerApproveEmployeExit/RelivingLetter";
+import TerminationLetter from "../../ManagerApproveEmployeExit/TerminationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
@@ -86,8 +87,9 @@ const DisciplinarySeparation = () => {
     CreateEmplyoeeExist,
     makeEmployeeDataNull,
     fetchRelievingLetterData,
+    fetchTerminationLetterData,
     relivingLetterData,
-    terminationConfirmation,
+    terminationLetterData,
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
@@ -511,7 +513,7 @@ const DisciplinarySeparation = () => {
   const previewRelivingLetter = (e) => {
     e.preventDefault();
     if (employeeData !== null && employeeData !== undefined) {
-      fetchRelievingLetterData(employeeData.employeeId);
+      fetchTerminationLetterData(employeeData.employeeId);
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
@@ -519,7 +521,7 @@ const DisciplinarySeparation = () => {
   };
   const relivingLetterClick = (e) => {
     e.preventDefault();
-    fetchRelievingLetterData(employeeData.employeeId);
+    fetchTerminationLetterData(employeeData.employeeId);
     handleShow();
     setPreviewGeneratedLetter(true);
   };
@@ -912,7 +914,7 @@ const DisciplinarySeparation = () => {
             <label className="text-center">
               The details have been saved successfully <br />
               The relieving letter will be sent to the employee on{" "}
-              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+              {moment(terminationLetterData.lastWorkingDate, "YYYY-MM-DD")
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
             </label>
@@ -925,10 +927,10 @@ const DisciplinarySeparation = () => {
         <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
-            {relivingLetterData &&
-            relivingLetterData !== undefined &&
-            relivingLetterData !== null ? (
-              <RelievingLetter />
+            {terminationLetterData &&
+            terminationLetterData !== undefined &&
+            terminationLetterData !== null ? (
+              <TerminationLetter />
             ) : (
               ""
             )}
@@ -1475,21 +1477,6 @@ const DisciplinarySeparation = () => {
                           >
                             Save
                           </button>
-                          {submitted === false ? (
-                            ""
-                          ) : (
-                            <button
-                              disabled={!submitted || letterSent}
-                              className={
-                                !submitted || letterSent
-                                  ? "LetterCnfButton"
-                                  : "LettersButtons"
-                              }
-                              onClick={withdrawHandler}
-                            >
-                              Withdraw
-                            </button>
-                          )}
 
                           {!saveLetter &&
                           employeeData &&

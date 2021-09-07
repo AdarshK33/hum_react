@@ -290,7 +290,7 @@ const TransferPage = () => {
                           International Transfer
                         </option>
                         <option value="Employment Type Transfer">
-                          Change In Employement Type Transfer
+                          Change In Employment Type Transfer
                         </option>
                       </Form.Control>
                     </Col>
@@ -314,7 +314,7 @@ const TransferPage = () => {
                       className="font-weight-bold text-uppercase text-center my-auto"
                     >
                       {transferType === "Employment Type Transfer"
-                        ? "Change In Employement Type Transfer"
+                        ? "Change In Employment Type Transfer"
                         : listHeading}
                     </Col>
                     <Col md={2}>

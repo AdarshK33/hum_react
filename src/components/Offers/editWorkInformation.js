@@ -24,7 +24,6 @@ const EditWorkInformation = () => {
     recuritment: "",
     ngoDetail: "",
     internship: "",
-    noticePeriod: "",
     managerId: null,
     expatUser: "",
     passportNumber: "",
@@ -63,6 +62,8 @@ const EditWorkInformation = () => {
     cityList,
     managerList,
     workInfoView,
+    noticePeriodView,
+    noticePeriodViewData,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -70,6 +71,7 @@ const EditWorkInformation = () => {
   const [city, setCity] = useState();
   const [cityId, setCityId] = useState();
   const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
+  const [noticePeriod, setNoticePeriod] = useState("");
   useEffect(() => {
     viewSports();
     CostCenter();
@@ -105,7 +107,6 @@ const EditWorkInformation = () => {
         recuritment: workData.recruitmentSource,
         ngoDetail: workData.ngoDetails !== null ? workData.ngoDetails : "",
         internship: workData.internshipPeriod,
-        noticePeriod: workData.noticePeriod,
         managerId: workData.managerId,
         nationality: workData.nationality,
         expatUser: workData.expatUser,
@@ -119,6 +120,7 @@ const EditWorkInformation = () => {
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
+      setNoticePeriod(workData.noticePeriod);
       viewBonusByContarctType(
         state.employmentType,
         state.department,
@@ -126,6 +128,35 @@ const EditWorkInformation = () => {
       );
     }
   }, [candidateData]);
+
+  useEffect(() => {
+    if (
+      state.employmentType !== "" &&
+      state.department !== "" &&
+      state.position !== ""
+    ) {
+      viewBonusByContarctType(
+        state.employmentType,
+        state.department,
+        state.position
+      );
+    }
+  }, [state.employmentType, state.department, state.position]);
+  useEffect(() => {
+    if (state.employmentType !== "" && state.department !== null) {
+      noticePeriodView(state.employmentType, state.department);
+    }
+  }, [state.employmentType, state.department]);
+  useEffect(() => {
+    if (
+      noticePeriodViewData !== null &&
+      Object.keys(noticePeriodViewData).length !== 0
+    ) {
+      setNoticePeriod(noticePeriodViewData.noticePeriod);
+    } else {
+      setNoticePeriod(0);
+    }
+  }, [noticePeriodViewData]);
 
   // useEffect(() => {
   //   console.log("inside candidateData", candidateData);
@@ -306,8 +337,7 @@ const EditWorkInformation = () => {
         ? candidateData.workInformation.workId
         : 0,
       ngoDetails: state.ngoDetail,
-      noticePeriod:
-        state.employmentType === "Internship" ? 0 : state.noticePeriod,
+      noticePeriod: state.employmentType === "Internship" ? 0 : noticePeriod,
       sportId: state.sports,
       expatUser: 0,
       nationality: state.nationality,
@@ -748,14 +778,15 @@ const EditWorkInformation = () => {
                   <Form.Label>Notice Period</Form.Label>
                   <Form.Control
                     as="select"
-                    value={state.noticePeriod}
-                    className="form-input"
+                    value={noticePeriod}
+                    className="form-input disable-arrow"
                     name="noticePeriod"
                     onChange={changeHandler}
-                    disabled={disabled}
+                    disabled="true"
                     required
                   >
                     <option value="">Select Notice Period</option>
+                    <option value="0">0 Month</option>
                     <option value="1">1 Month</option>
                     <option value="2">2 Month</option>
                     <option value="3">3 Month</option>
@@ -908,7 +939,9 @@ const EditWorkInformation = () => {
           <Row>
             <Col sm={4}></Col>
             <Col sm={2}>
-              <Button type="submit">Save</Button>
+              <Button type="submit" disabled={disabled}>
+                Save
+              </Button>
             </Col>
             {editButton === true ? (
               <Col sm={2}>

@@ -36,7 +36,7 @@ const TransferInitationLetter = ({ transferId }) => {
 
             <p>
               This is bring to your kind notice that your position has been
-              changes to <b>{transferData.promotedPosition}</b> and working
+              changed to <b>{transferData.promotedPosition}</b> and working
               location to <b>{transferData.promotedLocationName}</b> effective
               from <b>{transferData.promotedJoiningDate}</b>.
               <br />

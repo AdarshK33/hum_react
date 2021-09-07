@@ -4,15 +4,16 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
-import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
+import ShowCauseNotice from "./ShowCauseNoticeLetter";
+import NonPerformanceLetter from "./NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
+import { PermissionContext } from "../../../context/PermissionState";
 
 // view-----
-const CostCenterManagerAction = () => {
+const ActionPage = () => {
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -32,6 +33,7 @@ const CostCenterManagerAction = () => {
 
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
+  const { rolePermission } = useContext(PermissionContext);
 
   const [state, setState] = useState({
     empId: "",
@@ -68,7 +70,6 @@ const CostCenterManagerAction = () => {
     showCauseNoticeSCIN: "",
     statusDescSCIN: "",
     warningIssuedSCIN: "",
-    initiatedRoleSCIN: "",
     employeeCommentDW: "",
     employeeWarningStatusDW: "",
     managerCommentDW: "",
@@ -79,7 +80,6 @@ const CostCenterManagerAction = () => {
     statusDescDW: "",
     warningDueDaysDW: "",
     warningIdDW: "",
-    initiatedRoleDW: "",
     warningIssuedDateDW: "",
     pipEndDate: "",
     warningLetterDW: "",
@@ -90,6 +90,7 @@ const CostCenterManagerAction = () => {
     IssueShowCauseNoticeLetter,
     issueShowCauseNoticeData,
     createShowCauseIssue,
+    loader,
   } = useContext(DisciplinaryContext);
 
   useEffect(() => {
@@ -137,8 +138,6 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction.disciplinaryId;
         state.employeeActionStatusSCIN =
           disciplinarySearchData.disciplinaryAction.employeeActionStatus;
-        state.initiatedRoleSCIN =
-          disciplinarySearchData.disciplinaryAction.initiatedRole;
         state.employeeCommentSCIN =
           disciplinarySearchData.disciplinaryAction.employeeComment;
         state.empId = disciplinarySearchData.disciplinaryAction.employeeId;
@@ -158,6 +157,8 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction.statusDesc;
         state.warningIssuedSCIN =
           disciplinarySearchData.disciplinaryAction.warningIssued;
+        state.employeeReasonAccepted =
+          disciplinarySearchData.disciplinaryAction.employeeReasonAccepted;
       }
       if (
         disciplinarySearchData.disciplinaryWarning !== null &&
@@ -176,8 +177,7 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.employeeWarningStatusDW =
           disciplinarySearchData.disciplinaryWarning.employeeWarningStatus;
-        state.initiatedRoleDW =
-          disciplinarySearchData.disciplinaryAction.initiatedRole;
+
         state.managerCommentDW =
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.reasonDW = disciplinarySearchData.disciplinaryWarning.reason;
@@ -315,15 +315,15 @@ const CostCenterManagerAction = () => {
           employeeActionStatus: state.employeeActionStatusSCIN,
           employeeComment: state.employeeCommentSCIN,
           employeeId: state.empId,
-          initiatedRole: state.initiatedRoleSCIN,
           managerComment: state.managerCommentSCIN,
           reasonId: state.reasonIdSCIN,
+          initiatedRole: rolePermission !== null ? rolePermission : null,
           reasonDetailsId: state.reasonDetailsIdSCIN,
           reason: state.reasonSCIN,
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
-          status: 2,
+          status: 0,
           statusDesc: state.statusDescSCIN,
           warningIssued: state.warningIssuedSCIN,
         },
@@ -338,14 +338,14 @@ const CostCenterManagerAction = () => {
                 improvementPeriod: state.pip,
                 managerComment: state.managerCommentDW,
                 reason: state.reasonDW,
+                initiatedRole: rolePermission !== null ? rolePermission : null,
                 reasonDetails: state.reasonDetailsDW,
                 reasonId: state.reasonIdDW,
                 reasonDetailsId: state.reasonDetailsIdDW,
-                status: 2,
+                status: 0,
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
-                initiatedRole: state.initiatedRoleDW,
                 warningIssuedDate: state.warningIssuedDateDW,
                 pipEndDate: state.pipEndDate,
                 warningLetter: state.warningLetterDW,
@@ -429,18 +429,96 @@ const CostCenterManagerAction = () => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label className="text-center">
-              {disciplinarySearchData &&
+            {loader ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
+              </div>
+            ) : disciplinarySearchData &&
               disciplinarySearchData &&
               disciplinarySearchData !== null &&
               disciplinarySearchData !== undefined &&
               Object.keys(disciplinarySearchData).length !== 0 &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== "" &&
-              disciplinarySearchData.disciplinaryWarning !== null
-                ? "Warning letter issued successfully , the employee has been notified."
-                : "Show cause notice issued successfully , the employee has been notified."}
-            </label>
+              disciplinarySearchData.disciplinaryWarning !== null &&
+              disciplinarySearchData.disciplinaryWarning.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryWarning.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryWarning.reportingType === 1 ? (
+                <label className="text-center">
+                  Warning details saved successfully , the employee has been
+                  notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, cost center manager has
+                  been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, super cost center manager
+                  has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Warning details saved successfully, admin has been notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Warning details saved successfully.
+                </label>
+              )
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryAction.reportingType === 1 ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, employee has
+                  been notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, cost center
+                  manager has been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, super cost
+                  center manager has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, admin has been
+                  notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Show cause notice details saved successfully.
+                </label>
+              )
+            ) : (
+              <label className="text-center">
+                Show cause notice details saved successfully.
+              </label>
+            )}
+
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>
@@ -544,8 +622,12 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData.disciplinaryWarning !== null &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== ""
-                ? "Warning letter issued successfully , the employee has been notified."
-                : "Show cause notice issued successfully , the employee has been notified."}
+                ? rolePermission == "costCenterManager"
+                  ? "Warning letter issued successfully , the employee has been notified."
+                  : "Warning letter issued successfully ,sent for cost center manager confirmation."
+                : rolePermission == "costCenterManager"
+                ? "Show cause notice details saved successfully,the employee has been notified"
+                : "Show cause notice details saved successfully, sent for cost center manager confirmation."}
             </label>
 
             <div className="text-center mb-2">
@@ -773,6 +855,79 @@ const CostCenterManagerAction = () => {
                                 &nbsp;&nbsp; {state.empRemark}
                               </label>
                             </div>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.disciplinaryAction !== null &&
+                      disciplinarySearchData.disciplinaryAction !== undefined &&
+                      disciplinarySearchData.disciplinaryAction !== "" &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeReasonAccepted !== null &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeReasonAccepted !== undefined &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeReasonAccepted !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={3}>
+                            <label>
+                              Do you accept the reason submitted by the
+                              employee?{" "}
+                            </label>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  checked={
+                                    disciplinarySearchData.disciplinaryAction
+                                      .employeeReasonAccepted === "true"
+                                      ? true
+                                      : false
+                                  }
+                                  disabled={true}
+                                  style={{ borderColor: "blue" }}
+                                  // onChange={handleAcceptEmployeeReason}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  checked={
+                                    disciplinarySearchData.disciplinaryAction
+                                      .employeeReasonAccepted === "false"
+                                      ? true
+                                      : false
+                                  }
+                                  disabled={true}
+                                  style={{ borderColor: "blue" }}
+                                  // onChange={handleAcceptEmployeeReason}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
                           </Col>
                         </Row>
                       ) : (
@@ -1083,4 +1238,4 @@ const CostCenterManagerAction = () => {
   );
 };
 
-export default CostCenterManagerAction;
+export default ActionPage;

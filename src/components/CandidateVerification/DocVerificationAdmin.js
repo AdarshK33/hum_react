@@ -685,20 +685,27 @@ const DocVerification = () => {
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </p>
+                        ) : item.documentType === 16 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              CollegeId
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
                         ) : (
-                          item.documentType === 16 && (
+                          item.documentType === 17 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                CollegeId
+                                FRRO
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
                           )
                         )}
                       </p>
-                      {item.documentType >= 6 && (
+                      {item.documentType >= 6 && item.documentType !== 24 ? (
                         <React.Fragment>
                           <a
                             href={
@@ -718,16 +725,22 @@ const DocVerification = () => {
                             Download
                           </button> */}
                         </React.Fragment>
+                      ) : (
+                        ""
                       )}
                     </td>
-                    <td className="buttonMargin1">
-                      <button
-                        className="downloadButton"
-                        onClick={() => downloadDocument(item.documentName)}
-                      >
-                        Download
-                      </button>
-                    </td>
+                    {item.documentType >= 6 && item.documentType !== 24 ? (
+                      <td className="buttonMargin1">
+                        <button
+                          className="downloadButton"
+                          onClick={() => downloadDocument(item.documentName)}
+                        >
+                          Download
+                        </button>
+                      </td>
+                    ) : (
+                      ""
+                    )}
                     {/* {item.reviewStatus !== null && item.documentType >= 6 && (
                       <td>{item.reviewStatus}</td>
                     )} */}
