@@ -1,11 +1,18 @@
 import { startOfQuarter } from "date-fns";
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { ToastContainer, toast } from "react-toastify";
+import BANK_NAMES from "./BankNamesList";
 import "react-toastify/dist/ReactToastify.css";
 const BankDetails = (props) => {
   const {
@@ -47,14 +54,29 @@ const BankDetails = (props) => {
     ifscCode: "",
   });
 
+  /* To get the bank name options */
+  const bankNameOptions = useMemo(() => {
+    return BANK_NAMES.map((item) => {
+      return {
+        label: item,
+        value: item,
+      };
+    });
+  }, [BANK_NAMES]);
+
+  /* To get the selected bank value */
+  const selectedBankName = useMemo(() => {
+    if (typeof state.bankName === "object" && state.bankName !== null) {
+      return state.bankName.value;
+    } else {
+      return state.bankName;
+    }
+  }, [state.bankName]);
+
   const BankNameErrorValidation = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (
-      state.bankName !== "" &&
-      state.bankName !== null &&
-      state.bankName !== undefined &&
-      nameValid.test(state.bankName.replace(/ +/g, ""))
-    ) {
+    // const nameValid = /^[a-zA-Z\b]+$/;
+    // nameValid.test(state.bankName.replace(/ +/g, ""))
+    if (selectedBankName !== "" && selectedBankName !== null) {
       setBankNameError(false);
       console.log("bankNameSuccess");
       return true;
@@ -130,7 +152,7 @@ const BankDetails = (props) => {
       const bankInfo = {
         accountNumber: state.accountNumber,
         bankId: bankIdValue,
-        bankName: state.bankName,
+        bankName: selectedBankName,
         candidateId: candidateProfileData.candidateId,
         ifscCode: state.ifscCode,
       };
@@ -160,6 +182,14 @@ const BankDetails = (props) => {
     });
     console.log(state);
   };
+
+  const changeBankHandler = (option) => {
+    setState({
+      ...state,
+      bankName: option,
+    });
+  };
+
   return (
     <Fragment>
       <ToastContainer />
@@ -170,11 +200,11 @@ const BankDetails = (props) => {
               <Form.Label>
                 Bank Name<span style={{ color: "red" }}>*</span>
               </Form.Label>
-              <Form.Control
-                type="text"
+              <Select
+                options={bankNameOptions}
                 name="bankName"
                 value={state.bankName}
-                onChange={changeHandler}
+                onChange={changeBankHandler}
                 required
                 placeholder="Bank Name"
                 disabled={disabled}
