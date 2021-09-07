@@ -75,10 +75,7 @@ const ManagerOfferRelease = () => {
     ) {
       viewCandidateId(candidateData.candidateInformation.candidateId);
     }
-  };
 
-  const generatebonusClick = (e) => {
-    console.log("inside generateOfferClick");
     if (
       candidateData !== null &&
       candidateData !== undefined &&
@@ -93,6 +90,23 @@ const ManagerOfferRelease = () => {
       );
     }
   };
+
+  // const generatebonusClick = (e) => {
+  //   console.log("inside generateOfferClick");
+  //   if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     Object.keys(candidateData.workInformation).length !== 0
+  //   ) {
+  //     viewBonusByContarctType(
+  //       candidateData.workInformation.contractType,
+  //       candidateData.workInformation.department,
+  //       candidateData.workInformation.position
+  //     );
+  //   }
+  // };
   // const workInformationClick = (e) => {
   //   console.log("inside workInformationClick");
   //   if (
@@ -169,7 +183,7 @@ const ManagerOfferRelease = () => {
               </AccordionItemPanel>
             </AccordionItem>
 
-            <AccordionItem onClick={(generateOfferClick, generatebonusClick)}>
+            <AccordionItem onClick={generateOfferClick}>
               <AccordionItemHeading>
                 <AccordionItemButton>
                   Step 4: Generate Offer Letter
