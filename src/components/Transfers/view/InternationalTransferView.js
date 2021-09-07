@@ -47,7 +47,7 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="my-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Coutry Moving To:</Col>
+            <Col md={5}>Country Moving To:</Col>
             <Col md={7} className="text-primary">
               {transferData.promotedCountry}
             </Col>

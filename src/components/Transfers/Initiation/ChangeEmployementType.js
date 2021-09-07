@@ -212,7 +212,7 @@ const ChangeEmployementType = () => {
 
     if (newEmployement === "") {
       validForm = false;
-      setNewEmployementErrMsg("Please select new Employement");
+      setNewEmployementErrMsg("Please select new Employment");
     }
     // if (newCostCentre === "") {
     //   validForm = false;
@@ -571,7 +571,7 @@ const ChangeEmployementType = () => {
                       placeholder="Select Position"
                       onChange={changeEmployementHandler}
                     >
-                      <option value="">Select Change Employement</option>
+                      <option value="">Select Change Employment</option>
 
                       <option value="From Part Time to Full Time">
                         From Part Time to Full Time

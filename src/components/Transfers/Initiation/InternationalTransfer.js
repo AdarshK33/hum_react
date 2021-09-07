@@ -478,7 +478,7 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCountry">
                   <Form.Label column md={5}>
-                    Coutry Moving To:
+                    Country Moving To:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control

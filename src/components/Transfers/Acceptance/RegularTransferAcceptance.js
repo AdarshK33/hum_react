@@ -428,7 +428,8 @@ const RegularTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer letter details saved successfully, employee has notified
+              Tansfer letter details saved successfully, employee has been
+              notified
             </label>
 
             <div className="text-center mb-2">
@@ -602,7 +603,7 @@ const RegularTransferAcceptance = () => {
                             transferData.promotedRelocationBonus !==
                               undefined &&
                             transferData.promotedRelocationBonus !== ""
-                              ? transferData.promotedRelocationBonus + "%"
+                              ? transferData.promotedRelocationBonus
                               : "NA"}
                           </Col>
                         </Form.Group>
