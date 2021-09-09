@@ -99,6 +99,23 @@ const ManagerOfferRelease = () => {
       );
     }
   };
+
+  // const generatebonusClick = (e) => {
+  //   console.log("inside generateOfferClick");
+  //   if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     Object.keys(candidateData.workInformation).length !== 0
+  //   ) {
+  //     viewBonusByContarctType(
+  //       candidateData.workInformation.contractType,
+  //       candidateData.workInformation.department,
+  //       candidateData.workInformation.position
+  //     );
+  //   }
+  // };
   // const workInformationClick = (e) => {
   //   console.log("inside workInformationClick");
   //   if (
