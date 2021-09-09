@@ -850,7 +850,7 @@ const PFDeclaration = (props) => {
                   value="yes"
                   checked={contributingPrevOrgYes}
                   required={required}
-                  disabled={contributingPrevOrgNo}
+                  disabled={firstJobYes}
                   onChange={handleContributingPrevOrgYesChange}
                 />
                 <label>Yes</label>
@@ -865,6 +865,7 @@ const PFDeclaration = (props) => {
                   value="no"
                   checked={contributingPrevOrgNo}
                   required={required}
+                  disabled={firstJobYes}
                   onChange={handleContributingPrevOrgNoChange}
                 />
                 <label>No </label>
@@ -939,7 +940,7 @@ const PFDeclaration = (props) => {
                   value="yes"
                   checked={memberOfPensionSchemeYes}
                   required={required}
-                  disabled={memberOfPensionSchemeNo}
+                  disabled={firstJobYes}
                   onChange={handleMemberOfPensionSchemeYesChange}
                 />
                 <label>Yes</label>
@@ -955,6 +956,7 @@ const PFDeclaration = (props) => {
                   value="no"
                   checked={memberOfPensionSchemeNo}
                   required={required}
+                  disabled={firstJobYes}
                   onChange={handleMemberOfPensionSchemeNoChange}
                 />
                 <label>No </label>

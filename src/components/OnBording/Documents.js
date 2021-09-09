@@ -93,7 +93,6 @@ const Documents = (props) => {
   useEffect(() => {
     PFDeclarationView(candidateProfileData.candidateId);
   }, [candidateProfileData]);
-  // console.log(pfDeclarationView, "<------pfDeclarationViewuse");
 
   useEffect(() => {
     if (
@@ -103,13 +102,16 @@ const Documents = (props) => {
       pfDeclarationView.firstJob !== null &&
       pfDeclarationView.firstJob !== undefined
     ) {
-      if (pfDeclarationView.firstJob === true) {
-        setCandidateFirstJob(false);
-      } else {
+      console.log(pfDeclarationView, "<------pfDeclarationViewuse");
+      if (pfDeclarationView.firstJob === false) {
+        console.log("IFFF");
         setCandidateFirstJob(true);
+      } else {
+        console.log("ELSEE");
+        setCandidateFirstJob(false);
       }
     }
-  }, [candidateProfileData, pfDeclarationView]);
+  }, [pfDeclarationView]);
 
   useEffect(() => {
     if (
@@ -1076,6 +1078,7 @@ const Documents = (props) => {
     setOnDocumentProceed(false);
     setOnDocumentPopup(true);
   };
+  console.log("before return", CandidateFirstJob);
   return (
     <Fragment>
       <Row>

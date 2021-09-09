@@ -157,6 +157,7 @@ export const OnBoardProvider = (props) => {
       .then((response) => {
         toast.info(response.data.message);
         console.log(response.data.message);
+        PFDeclarationView(response.data.data.candidateId);
         return dispatch({
           type: "PFDECLARATION_CREATE",
           payload: state.pfDeclarationCreate,
@@ -174,6 +175,7 @@ export const OnBoardProvider = (props) => {
       .then((response) => {
         toast.info(response.data.message);
         console.log(response.data.message);
+        PFDeclarationView(response.data.data.candidateId);
         return dispatch({
           type: "PFDECLARATION_UPDATE",
           payload: state.pfDeclarationUpdate,
@@ -336,6 +338,7 @@ export const OnBoardProvider = (props) => {
           state.deleteAllNomineeData
         );
         setLoader(false);
+        InsuranceNominationView(candidteId);
         return dispatch({
           type: "DELETE_ALL_NOMINEE_DATA",
           payload: state.deleteAllNomineeData,

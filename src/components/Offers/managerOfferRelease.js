@@ -71,11 +71,20 @@ const ManagerOfferRelease = () => {
       candidateData !== undefined &&
       candidateData.candidateInformation !== null &&
       candidateData.candidateInformation !== undefined &&
-      Object.keys(candidateData.candidateInformation).length !== 0
+      candidateData.candidateInformation !== "" &&
+      candidateData.candidateInformation.candidateId !== null &&
+      candidateData.candidateInformation.candidateId !== undefined &&
+      candidateData.candidateInformation.candidateId !== "" &&
+      candidateData.candidateInformation.candidateId !== 0
     ) {
+      console.log("api is calling");
       viewCandidateId(candidateData.candidateInformation.candidateId);
     }
+    generatebonusClick(e);
+  };
 
+  const generatebonusClick = (e) => {
+    console.log("inside bonus click");
     if (
       candidateData !== null &&
       candidateData !== undefined &&
