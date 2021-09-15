@@ -493,6 +493,20 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+  const noShowCandidate = (candidateId, searchValue, pageCount) => {
+    setLoader(true);
+    return client
+      .get("/api/v1/candidate/" + candidateId + "/noShow")
+      .then((response) => {
+        console.log("NoShow", response.data);
+        candidateView(searchValue, pageCount);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <OfferContext.Provider
       value={{
@@ -520,6 +534,7 @@ export const OfferProvider = (props) => {
         finalSubmitAppointmentLetter,
         makeSearchEmp1DataNull,
         noticePeriodView,
+        noShowCandidate,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,

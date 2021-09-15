@@ -13,8 +13,14 @@ import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
 
 const OfferReleaseList = () => {
-  const { candidateView, candidateList, loader, total, viewCandidateId } =
-    useContext(OfferContext);
+  const {
+    candidateView,
+    candidateList,
+    loader,
+    total,
+    viewCandidateId,
+    noShowCandidate,
+  } = useContext(OfferContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -75,6 +81,20 @@ const OfferReleaseList = () => {
     viewRole();
     CostCenter();
   };
+  const noShowHandler = (e) => {
+    console.log("no show candidate", e.target.name);
+    setPageCount(currentPage - 1);
+    setCurrentPage(currentPage);
+    if (searchValue !== "") {
+      noShowCandidate(e.target.name, searchValue, pageCount);
+    } else {
+      noShowCandidate(e.target.name, "all", pageCount);
+    }
+  };
+
+  const dummyFun = (e) => {
+    console.log("no show candidate", e.target.name);
+  };
   return (
     <Fragment>
       <Breadcrumb title="Offers" parent="Offer Release" />
@@ -131,6 +151,7 @@ const OfferReleaseList = () => {
                       ) : (
                         ""
                       )}
+                      <th scope="col">No Show</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -158,7 +179,14 @@ const OfferReleaseList = () => {
                     candidateList.length > 0 ? (
                     candidateList.map((item, i) => {
                       return (
-                        <tbody key={item.candidateId}>
+                        <tbody
+                          style={
+                            item.noShow === true
+                              ? { backgroundColor: "rgb(130 127 127)" }
+                              : {}
+                          }
+                          key={item.candidateId}
+                        >
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.candidateId}</td>
@@ -170,11 +198,13 @@ const OfferReleaseList = () => {
                             <td>{item.statusDesc}</td>
 
                             <td>
-                              {item.status === 5 ||
-                              item.status === 6 ||
-                              item.status === 2 ||
-                              item.status === 3 ||
-                              item.status === 7 ? (
+                              {item.noShow === true ? (
+                                <Edit2 />
+                              ) : item.status === 5 ||
+                                item.status === 6 ||
+                                item.status === 2 ||
+                                item.status === 3 ||
+                                item.status === 7 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to="/edit-offer-release">
@@ -188,20 +218,25 @@ const OfferReleaseList = () => {
                             </td>
 
                             <td>
-                              <Link to="/view-offer-release">
-                                <Eye
-                                  onClick={() => {
-                                    viewCandidateId(item.candidateId);
-                                  }}
-                                />
-                              </Link>
+                              {item.noShow === false ? (
+                                <Link to="/view-offer-release">
+                                  <Eye
+                                    onClick={() => {
+                                      viewCandidateId(item.candidateId);
+                                    }}
+                                  />
+                                </Link>
+                              ) : (
+                                <Eye />
+                              )}
                             </td>
                             {user !== null &&
                             user !== undefined &&
                             rolePermission !== "admin" ? (
                               <td>
                                 {item.overallStatus === 1 &&
-                                item.status === 2 ? (
+                                item.status === 2 &&
+                                item.noShow === false ? (
                                   <Link to="/offer-relase-and-onboard">
                                     <AlertCircle
                                       onClick={() => {
@@ -209,9 +244,10 @@ const OfferReleaseList = () => {
                                       }}
                                     />
                                   </Link>
-                                ) : item.overallStatus === 0 ||
-                                  item.overallStatus === 2 ||
-                                  item.status === 6 ? (
+                                ) : item.noShow === false &&
+                                  (item.overallStatus === 0 ||
+                                    item.overallStatus === 2 ||
+                                    item.status === 6) ? (
                                   <AlertCircle />
                                 ) : (
                                   <AlertCircle />
@@ -227,6 +263,21 @@ const OfferReleaseList = () => {
                             ) : (
                               ""
                             )}
+                            <td>
+                              <div className="boxField input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  name={item.candidateId}
+                                  checked={item.noShow}
+                                  // disabled={item.noShow}
+                                  onChange={
+                                    item.noShow ? dummyFun : noShowHandler
+                                  }
+                                />
+                              </div>
+                            </td>
                           </tr>
                         </tbody>
                       );

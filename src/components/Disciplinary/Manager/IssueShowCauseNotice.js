@@ -72,6 +72,7 @@ const IssueShowCauseNotice = () => {
     issueShowCauseNoticeData,
     EmployeeSearchWithKey,
     disciplinaryEmpSearchData,
+    loader,
   } = useContext(DisciplinaryContext);
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
@@ -276,6 +277,7 @@ const IssueShowCauseNotice = () => {
           employeeActionStatus: null,
           employeeComment: null,
           employeeId: state.empId,
+          initiatedRole: rolePermission !== null ? rolePermission : null,
           managerComment:
             disciplinarySearchData.disciplinaryAction.managerComment,
           reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
@@ -500,11 +502,19 @@ const IssueShowCauseNotice = () => {
           employeeId: state.empId,
           managerComment: state.reason,
           reasonId: changeInReason,
+          initiatedRole: rolePermission !== null ? rolePermission : null,
           reasonDetailsId:
             changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
-          status: rolePermission == "costCenterManager" ? 11 : 10,
+          status:
+            rolePermission == "admin"
+              ? 13
+              : rolePermission == "superCostCenterManager"
+              ? 12
+              : rolePermission == "costCenterManager"
+              ? 11
+              : 10,
           statusDesc: null,
           warningIssued: false,
         },
@@ -557,7 +567,61 @@ const IssueShowCauseNotice = () => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            {rolePermission == "costCenterManager" ? (
+            {loader ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
+              </div>
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                null &&
+              disciplinarySearchData.disciplinaryAction.reportingType !==
+                undefined ? (
+              disciplinarySearchData.disciplinaryAction.reportingType === 1 ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, employee has
+                  been notified.
+                </label>
+              ) : rolePermission == "manager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, cost center
+                  manager has been notified.
+                </label>
+              ) : rolePermission == "costCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, super cost
+                  center manager has been notified.
+                </label>
+              ) : rolePermission == "superCostCenterManager" ? (
+                <label className="text-center">
+                  Show cause notice details saved successfully, admin has been
+                  notified.
+                </label>
+              ) : (
+                <label className="text-center">
+                  Show cause notice details saved successfully.
+                </label>
+              )
+            ) : (
+              <label className="text-center">
+                Show cause notice details saved successfully.
+              </label>
+            )}
+
+            {/* {rolePermission == "costCenterManager" ? (
               <label className="text-center">
                 Show cause notice details saved successfully, employee has been
                 notified.
@@ -567,7 +631,7 @@ const IssueShowCauseNotice = () => {
                 Show cause notice details saved successfully, sent for cost
                 center manager confirmation.{" "}
               </label>
-            )}
+            )} */}
 
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>

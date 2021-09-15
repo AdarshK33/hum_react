@@ -71,14 +71,20 @@ const ManagerOfferRelease = () => {
       candidateData !== undefined &&
       candidateData.candidateInformation !== null &&
       candidateData.candidateInformation !== undefined &&
-      Object.keys(candidateData.candidateInformation).length !== 0
+      candidateData.candidateInformation !== "" &&
+      candidateData.candidateInformation.candidateId !== null &&
+      candidateData.candidateInformation.candidateId !== undefined &&
+      candidateData.candidateInformation.candidateId !== "" &&
+      candidateData.candidateInformation.candidateId !== 0
     ) {
+      console.log("api is calling");
       viewCandidateId(candidateData.candidateInformation.candidateId);
     }
+    generatebonusClick(e);
   };
 
   const generatebonusClick = (e) => {
-    console.log("inside generateOfferClick");
+    console.log("inside bonus click");
     if (
       candidateData !== null &&
       candidateData !== undefined &&
@@ -93,6 +99,23 @@ const ManagerOfferRelease = () => {
       );
     }
   };
+
+  // const generatebonusClick = (e) => {
+  //   console.log("inside generateOfferClick");
+  //   if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     Object.keys(candidateData.workInformation).length !== 0
+  //   ) {
+  //     viewBonusByContarctType(
+  //       candidateData.workInformation.contractType,
+  //       candidateData.workInformation.department,
+  //       candidateData.workInformation.position
+  //     );
+  //   }
+  // };
   // const workInformationClick = (e) => {
   //   console.log("inside workInformationClick");
   //   if (
@@ -169,7 +192,7 @@ const ManagerOfferRelease = () => {
               </AccordionItemPanel>
             </AccordionItem>
 
-            <AccordionItem onClick={(generateOfferClick, generatebonusClick)}>
+            <AccordionItem onClick={generateOfferClick}>
               <AccordionItemHeading>
                 <AccordionItemButton>
                   Step 4: Generate Offer Letter

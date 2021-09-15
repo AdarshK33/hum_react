@@ -44,6 +44,7 @@ const PersonalInformation = (props) => {
     documentView,
     documentViewData,
     DeleteAllInsuranceNominations,
+    UpdateNomineeStatus,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -792,6 +793,7 @@ const PersonalInformation = (props) => {
         ) {
           if (candidateProfileData.maritalStatus !== maritalStatus) {
             DeleteAllInsuranceNominations(candidateProfileData.candidateId);
+            UpdateNomineeStatus(candidateProfileData.candidateId, false);
             const doInsuranceNomineeFalse = props.MakeFalse;
             doInsuranceNomineeFalse(false);
           }
