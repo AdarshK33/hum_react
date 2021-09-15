@@ -221,6 +221,7 @@ const EmployeeExitAction = () => {
           setModeOfSeparation(
             ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
           );
+              state.modeOfSeparationId = ModeOfSeparationData[i].modeOfSeparation.separationId
 
           ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
             if (
@@ -845,7 +846,7 @@ const EmployeeExitAction = () => {
                         marginBottom: "3rem",
                       }}
                     >
-                      <Col sm={2}>
+                     {state.empContractType !== "internship"? <Col sm={2}>
                         <div>
                           <label>
                             <b>Notice Period:</b>
@@ -855,7 +856,16 @@ const EmployeeExitAction = () => {
                             </label>
                           </label>
                         </div>
-                      </Col>
+                      </Col>:<Col sm={2}>
+                        <div>
+                            <label>
+                            <b>Internship contract end date:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                              </label>
+                            </label>
+                          </div>
+                </Col>}
                       {/* <Col sm={4}>
                         <div>
                           <label>
@@ -875,11 +885,11 @@ const EmployeeExitAction = () => {
 
                       <Col sm={2}>
                         <div>
-                          {false ? (
+                          {/* {false ? (
                             <label className="itemResult">
                               &nbsp;&nbsp; {state.lastWorkingDate}
                             </label>
-                          ) : (
+                          ) : ( */}
                             <Form.Group>
                               <div
                                 className={
@@ -913,7 +923,7 @@ const EmployeeExitAction = () => {
                                 <p></p>
                               )}
                             </Form.Group>
-                          )}
+                          {/* )} */}
                         </div>
                       </Col>
                       {/* <Col sm={4}>
@@ -966,7 +976,7 @@ const EmployeeExitAction = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Row
+                    {state.modeOfSeparationId == 4?<Row
                       style={{
                         marginLeft: "2rem",
                         marginTop: "1rem",
@@ -986,7 +996,7 @@ const EmployeeExitAction = () => {
                       <Col sm={2}>
                         <div>
                           <label className="itemResult">
-                            <a
+                            <a  target="_blank"
                               href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
                               className="itemResult"
                             >
@@ -995,7 +1005,7 @@ const EmployeeExitAction = () => {
                           </label>
                         </div>
                       </Col>
-                    </Row>
+                    </Row>:""}
                     <Row
                       style={{
                         marginLeft: "2rem",

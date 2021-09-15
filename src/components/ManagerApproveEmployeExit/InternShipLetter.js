@@ -5,13 +5,22 @@ import moment from "moment";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const InternShipLetter = () => {
-  const { fetchRelievingLetterData, relivingLetterData } = useContext(
+  const { fetchRelievingLetterData,loader, relivingLetterData } = useContext(
     EmployeeSeparationContext
   );
      console.log(relivingLetterData,"relivingLetterData");
   return (
     <Fragment>
-      {typeof relivingLetterData !== undefined ? (
+      {loader ? (
+        <div className="loader-box loader" style={{ width: "100% !important" }}>
+          <div className="loader">
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+          </div>
+        </div>
+      ) : typeof relivingLetterData !== undefined ? (
         <Fragment>
           <p className="">
             {" "}

@@ -160,7 +160,7 @@ console.log(user,"user")
                   className="title_bar"
                   style={{ textAlign: "center", fontSize: "larger" }}
                 >
-                  <b>EMPLOYEE SEPARATION LISTING ..</b>
+                  <b>EMPLOYEE SEPARATION LISTING </b>
 
                   {/* <div className="job-filter">
                   <div className="faq-form mr-2">

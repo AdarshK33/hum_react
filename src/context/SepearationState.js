@@ -141,14 +141,15 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const viewAdminITClearanceList = (itStatus, key, page, costCenter) => {
+ 
+  const viewAdminITClearanceList = (finalStatus, key, page, costCenter) => {
     // financeStatus +
-    // "&itStatus=" +
-    console.log(itStatus, key, page, costCenter, "viewAdminIt");
+    // "&finalStatus=" +
+    console.log(finalStatus, key, page, costCenter, "viewAdminIt");
     client
       .get(
-        "/api/v1/separation/full-and-final/view/no-due-clearance?itStatus=" +
-          itStatus +
+        "/api/v1/separation/full-and-final/view/no-due-clearance?finalStatus=" +
+          finalStatus +
           "&key=" +
           key +
           "&page=" +
@@ -511,7 +512,31 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-
+//search by employee name and id and search for disciplianary action is taken or not 
+const searchByEmployee =(key)=>{
+  client
+  .get("/api/v1/separation/employee-exit/search?key=" + key)
+  .then((response) => {
+    console.log(response,"response88")
+    if (response.data.data === null) {
+      state.searchByCostData = response.data.data;
+      console.log("response.data.data", response.data.data);
+      toast.info(response.data.message);
+    } else {
+      state.searchByCostData = response.data.data;
+      console.log("response.data.data[0]", response.data.data);
+    }
+    console.log("response", response);
+    console.log("search Emp response", state.searchEmpData1);
+    return dispatch({
+      type: "SEARCH_BY_COST_DATA",
+      payload: state.searchByCostData,
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}
   //Search by reference emp name1 or emp id
   const searchByCostCenter = (key) => {
     client
@@ -560,6 +585,7 @@ export const SeparationProvider = (props) => {
         UpdateAdminFinanceClearanceList,
         NoDueClearanceAdminClearanceExport,
         NoDueClearanceClearanceExport,
+        searchByEmployee,
         FinanceClearanceExport,
         searchByCostCenter,
         promotionManagerData,

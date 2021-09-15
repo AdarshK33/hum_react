@@ -9,6 +9,7 @@ import "./EmployeeExit.css";
 import moment, { months } from "moment";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
@@ -56,10 +57,13 @@ const ManagerInitiateExit = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
+  const [termination, setTermination] = useState(false);
+
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [lastDateSelection ,setLastDateSelection] = useState(new Date())
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const history = useHistory();
 
   const [state, setState] = useState({
     exitId: "",
@@ -101,7 +105,7 @@ const ManagerInitiateExit = () => {
     TerminationFromDesciplinary,
     DisciplinaryTermination,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter, searchByCostData } =
+  const { empResign, withdraw, searchByCostCenter,searchByEmployee, searchByCostData } =
     useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
     useContext(OfferContext);
@@ -337,6 +341,7 @@ const ManagerInitiateExit = () => {
   }, [EmpName, employeeData, checkForExist]);
 
   useEffect(() => {
+    console.log(searchByCostData,"searchByCostData")
     if (
       searchByCostData &&
       searchByCostData &&
@@ -364,7 +369,7 @@ const ManagerInitiateExit = () => {
       searchByCostData !== undefined &&
       Object.keys(searchByCostData).length !== 0
     ) {
-      // state.empName = searchEmpData1.firstName;
+    //  state.empName = searchEmpData1.firstName;
       const temp =
         searchByCostData.lastName !== null &&
         searchByCostData.lastName !== undefined
@@ -441,7 +446,7 @@ const ManagerInitiateExit = () => {
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
     if (EmpName !== null) {
-      searchByCostCenter(EmpName);
+      searchByEmployee(EmpName);
       setCheckForExist(true);
       if (
         employeeData &&
@@ -543,6 +548,10 @@ const ManagerInitiateExit = () => {
         label: "Termination",
         value: 2,
       });
+      tempArr.push({
+        label: "End of Contract",
+        value: 6,
+      });
       setModeOfSeparationList(tempArr);
     }
   }, [ModeOfSeparationData]);
@@ -557,6 +566,8 @@ const ManagerInitiateExit = () => {
     ) {
       let tempArray = [];
       ModeOfSeparationData.map((item, i) => {
+        console.log(ModeOfSeparationData[i].modeOfSeparation.separationId,
+          changeInSeparation,"separation")
         if (
           ModeOfSeparationData[i].modeOfSeparation.separationId ===
           changeInSeparation
@@ -643,6 +654,9 @@ const ManagerInitiateExit = () => {
   const digitalSignature = () => {
     setShowSignature(true);
   };
+  const handleTermination = () =>{
+    setTermination(false)
+  }
   const handleShowAddModalClose = () => setShowAddModal(false);
 
   const submitfinalRelivingLetter = (e) => {
@@ -700,7 +714,9 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status:(modeOfSeparation == 1 || modeOfSeparation == "Resignation")?2:4,
+            status:9
+            // status:employeeData.status === 3 ? 3 :
+            // (modeOfSeparation == 1 || modeOfSeparation == "Resignation")?2:4,
           };
 
           console.log("createExitData", data2);
@@ -768,6 +784,10 @@ const ManagerInitiateExit = () => {
       setShow(true);
     }
   };
+  const handleDisciplinary =()=>{
+    history.push("../issue-show-cause-notice");
+
+  }
   const relivingLetterClick = (e) => {
     console.log(e.target.value,"999")
     e.preventDefault();
@@ -835,10 +855,15 @@ const ManagerInitiateExit = () => {
   const ModeOfSepchangeHandler = (e) => {
     setModeOfSeparation(e.target.value);
     modeOfSeparationList.map((item, i) => {
-      if (modeOfSeparationList[i].label === e.target.value) {
+      console.log(item,e.target.value,'item')
+          if(e.target.value == "Termination" && state.empContractType !== "internship"){
+            setTermination(true)
+          }else{
+      if (modeOfSeparationList[i].label === e.target.value){
         setChangeInSeparation(modeOfSeparationList[i].value);
         console.log(modeOfSeparationList[i].value);
       }
+    }
     });
 
     console.log(e.target.value);
@@ -1165,6 +1190,27 @@ const ManagerInitiateExit = () => {
 console.log(intern,"8098709809808")
   return (
     <Fragment>
+      {termination?<Modal
+          show={termination}
+          onHide={handleTermination}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              Disciplinary action has to be taken before termination.
+              <br />            
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleTermination}>Close</Button>
+              <Button onClick={handleDisciplinary} style={{ marginLeft: "1rem" }}>
+              Next
+            </Button>
+
+            </div>
+          </Modal.Body>
+        </Modal>:""}
       {/* reliving letter */}
       {employeeData !== null &&
         employeeData !== undefined && employeeData.status === 8?<Modal
@@ -1458,7 +1504,16 @@ console.log(intern,"8098709809808")
                               </label>
                             </label>
                           </div>
-                </Col>:''}
+                </Col>: <Col sm={4}>
+                        <div>
+                            <label>
+                            <b>Internship contract end date:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                              </label>
+                            </label>
+                          </div>
+                </Col>}
                       </Row>
                       <Row
                         style={{
@@ -1511,7 +1566,7 @@ console.log(intern,"8098709809808")
                             <label>Type of Separation:</label>
                           </div>
                         </Col>
-                        {intern ? (
+                        {/* {intern ? (
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1525,7 +1580,7 @@ console.log(intern,"8098709809808")
                               )}
                             </div>
                           </Col>
-                        ) : (
+                        ) : ( */}
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1549,12 +1604,21 @@ console.log(intern,"8098709809808")
                                   >
                                     <option value=""></option>
                                     {modeOfSeparationList.map((item) => {
+                                      console.log(state.empContractType,"state.empContractType")
+                                      if(state.empContractType == "internship" && item.label !== "Resignation"){
                                       return (
                                         <option key={item.value}>
                                           {item.label}
                                         </option>
                                       );
-                                    })}
+                                      }else if(state.empContractType.toLowerCase() == "permanent" || state.empContractType == "parttime"){
+                                        return (
+                                          <option key={item.value}>
+                                            {item.label}
+                                          </option>
+                                        ); 
+                                      
+                                    }})}
                                   </Form.Control>
                                   {modOfSepError ? (
                                     <p style={{ color: "red" }}>
@@ -1568,7 +1632,8 @@ console.log(intern,"8098709809808")
                               )}
                             </div>
                           </Col>
-                        )}
+                        
+                         {/* } */}
                         {intern ? (
                           ""
                         ) : (
@@ -1737,9 +1802,10 @@ console.log(intern,"8098709809808")
                             <label>Reason of Separation:</label>
                           </div>
                         </Col>
-                        {intern ? (
+                        {/* {intern ? (
                           <Col sm={2}>
                             <div>
+                              
                               {false ? (
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.modeOfSeparationReasonId}
@@ -1751,7 +1817,8 @@ console.log(intern,"8098709809808")
                               )}
                             </div>
                           </Col>
-                        ) : (
+                        ) :
+                         ( */}
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1794,7 +1861,8 @@ console.log(intern,"8098709809808")
                               )}
                             </div>
                           </Col>
-                        )}
+                        
+                        {/* } */}
 
                         <Col sm={2}>
                           <div>
@@ -1903,7 +1971,7 @@ console.log(intern,"8098709809808")
                     <Col sm={2}>
                       <div>
                         <label>
-                          <a href="~/address">
+                          <a  target="_blank" href="~/address">
                             <u>Exit Feedback Form</u>
                           </a>
                         </label>
@@ -2075,7 +2143,7 @@ console.log(intern,"8098709809808")
                           employeeData !== null &&
                           employeeData !== undefined &&
                           Object.keys(employeeData).length !== 0 &&
-                          (employeeData.status === 2 ||employeeData.status === 8 || employeeData.status === 6) &&
+                          (employeeData.status === 3 || employeeData.status === 2 ||employeeData.status === 8 || employeeData.status === 6) &&
                           showPreview === true &&
                           submitted === true ? (
                             <button

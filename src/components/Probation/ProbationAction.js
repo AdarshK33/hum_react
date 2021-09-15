@@ -624,7 +624,7 @@ const ProbationAction = () => {
         <ExtensionLetter1 />
       ) : (
         ""
-      )}
+      )}    
 
       <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
