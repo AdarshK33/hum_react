@@ -187,12 +187,14 @@ export const EmploeeSeparationProvider = ({children}) => {
       });
   };
   const fetchRelievingLetterData = (empId) => {
+    setLoader(true);
     console.log(empId, "empId000000777");
     client
       .get("/api/v1/separation/employee-exit/letter/" + empId)
       .then((response) => {
         console.log(response.data.data);
         state.relivingLetterData = response.data.data;
+        setLoader(false);
         return dispatch({
           type: "FETCH_RELIEVING_LETTER_DATA",
           payload: state.relivingLetterData,
@@ -202,12 +204,14 @@ export const EmploeeSeparationProvider = ({children}) => {
       });
   };
   const fetchTerminationLetterData = (empId) => {
+    setLoader(true);
     console.log(empId, "empId000000777");
     client
       .get("/api/v1/separation/employee-exit/termination/" + empId)
       .then((response) => {
         console.log(response.data.data);
         state.terminationLetterData = response.data.data;
+        setLoader(false);
         return dispatch({
           type: "FETCH_TERMINATION_LETTER_DATA",
           payload: state.terminationLetterData,
@@ -239,6 +243,7 @@ export const EmploeeSeparationProvider = ({children}) => {
   };
 
   const terminationConfirmation = (exitId, empId) => {
+    setLoader(true);
     client
       .get(
         "/api/v1/separation/employee-exit/termination-confirmation?exitId=" +
@@ -248,6 +253,7 @@ export const EmploeeSeparationProvider = ({children}) => {
         state.terminationConfirmationStatus = response.data.data;
         toast.info(response.data.message);
         ViewEmployeeDataById(empId);
+        setLoader(false);
         return dispatch({
           type: "TERMINATION_CONFIRMATION",
           payload: state.terminationConfirmationStatus,
@@ -259,6 +265,7 @@ export const EmploeeSeparationProvider = ({children}) => {
   };
 
   const resignationConfirmation = (exitId, empId) => {
+    setLoader(true);
     client
       .get(
         "api/v1/separation/employee-exit/resignation-confirmation?exitId=" +
@@ -268,6 +275,7 @@ export const EmploeeSeparationProvider = ({children}) => {
         state.resignationConfirmationStatus = response.data.data;
         toast.info(response.data.message);
         ViewEmployeeDataById(empId);
+        setLoader(false);
         return dispatch({
           type: "RESIGNATION_CONFIRMATION",
           payload: state.resignationConfirmationStatus,

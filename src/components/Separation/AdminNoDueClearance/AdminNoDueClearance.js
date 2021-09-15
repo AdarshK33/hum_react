@@ -12,7 +12,7 @@ const AdminNoDueClearance =()=> {
   const { total,loader,viewAdminITClearanceList,adminNoDueClearanceList,NoDueClearanceAdminClearanceExport } = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
 const [pageCount, setPageCount] = useState(0);
-const [itStatus,SetITStatus] =useState("3")
+const [finalStatus,SetFinalStatus] =useState("3")
 const [financeStatus,SetFinanceStatus] =useState("3")
 
 const [costCenter, setCostCenter] = useState("all")
@@ -42,8 +42,8 @@ const handlePageChange = (pageNumber) => {
   console.log("page change",pageNumber,pageCount)
 
     setCurrentPage(pageNumber);
-    if (searchValue !== "all" || costCenter !== "all" || itStatus !== "3" || financeStatus !== "3") {
-      viewAdminITClearanceList(itStatus,searchValue,pageNumber-1,costCenter);
+    if (searchValue !== "all" || costCenter !== "all" || finalStatus !== "3" || financeStatus !== "3") {
+      viewAdminITClearanceList(finalStatus,searchValue,pageNumber-1,costCenter);
     } else {
       viewAdminITClearanceList("3","all",pageNumber-1,"all");
     }
@@ -59,7 +59,7 @@ useEffect(() => {
   }
   const searchDataHandler = () => {
     if (searchValue !== "" && searchValue !== "all") {
-      viewAdminITClearanceList(itStatus,searchValue,pageCount,costCenter);
+      viewAdminITClearanceList(finalStatus,searchValue,pageCount,costCenter);
     }else{
       viewAdminITClearanceList("3",searchValue,pageCount,"all");
 
@@ -76,7 +76,7 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-     viewAdminITClearanceList(itStatus,searchValue,pageCount,data2);
+     viewAdminITClearanceList(finalStatus,searchValue,pageCount,data2);
   }else{
      viewAdminITClearanceList("3","all",pageCount,data2);
   }
@@ -86,32 +86,30 @@ const handleCostCenter = (options) => {
 //   console.log(finance)
 //   SetFinanceStatus(finance)
 //   if (financeStatus !== "" && financeStatus !== "3") {
-//      viewAdminITClearanceList(itStatus,searchValue,pageCount,costCenter);
+//      viewAdminITClearanceList(finalStatus,searchValue,pageCount,costCenter);
 //   }else{
 //      viewAdminITClearanceList("3","all",pageCount,"all");
 //   }
 // } 
-const handleITStatus = (options) => {
-  let itvalue = options !== null?options.value:''
-  console.log(itvalue)
-  SetITStatus(itvalue)
-  if (itStatus !== "" && itStatus !== "3") {
-     viewAdminITClearanceList(itvalue,searchValue,pageCount,costCenter);
+const handleFinalStatus = (options) => {
+  let finalvalue = options !== null?options.value:''
+  console.log(finalvalue)
+  SetFinalStatus(finalvalue)
+  if (finalStatus !== "" && finalStatus !== "3") {
+     viewAdminITClearanceList(finalvalue,searchValue,pageCount,costCenter);
   }else{
-     viewAdminITClearanceList(itvalue,"all",pageCount,"all");
+     viewAdminITClearanceList(finalvalue,"all",pageCount,"all");
   }
 } 
 useEffect(() => {
   console.log(pageCount,"pageCount")
-  viewAdminITClearanceList(itStatus,searchValue, pageCount,costCenter);
-},[costCenter,searchValue,itStatus,pageCount]);
+  viewAdminITClearanceList(finalStatus,searchValue, pageCount,costCenter);
+},[costCenter,searchValue,finalStatus,pageCount]);
 
 const options1 = [
   { value: "3", label: "All" },
-  { value: "4", label: "Yet to Approve" },
   { value: "0", label: "Due" },
   { value: "1", label: "No Due" },
-  { value: "2", label: "On Hold" },
 ];
 const options2 = [
   { value: "3", label: "All" },
@@ -162,14 +160,14 @@ const options2 = [
           <div className="col-sm-4">
           <Col className="selectList">
             <br/>
-            <label className="title" style={{padding:"6px"}}>IT Clearance Status</label> &nbsp;&nbsp;
+            <label className="title" style={{padding:"6px"}}>Final Status</label> &nbsp;&nbsp;
              
           <Select
           className="selectInputWrapper"
            name="filters"
-          placeholder="IT Clearance "
+          placeholder="Final Status"
             options={options1}
-            onChange={handleITStatus}
+            onChange={handleFinalStatus}
                required isSearchable />
           </Col>
           </div>
@@ -213,6 +211,7 @@ const options2 = [
                       <th className="rowStyle">Finance Clearance</th>
                       <th className="rowStyle">Finance Clearance Remarks</th>
                       <th className="rowStyle">Finance Clearance UpdatedBy</th>
+                      <th className="rowStyle">Final Status</th>
                     </tr>
                   </thead>
 
@@ -236,6 +235,8 @@ const options2 = [
                             <td className="rowStyle">{e.financeClearanceStatus }</td>
                             <td className="rowStyle">{e.financeClearanceRemarks}</td>
                             <td className="rowStyle">{e.financeClearanceUpdatedBy}</td>
+                            <td className="rowStyle">{e.finalStatus}</td>
+
                           </tr>
                         </tbody>
                       );
