@@ -71,8 +71,8 @@ const TerminationLetter = (props) => {
                 <p>
                   Name:&nbsp;&nbsp;
                   {terminationLetterData !== undefined &&
-                  terminationLetterData.gender.toLowerCase() == "male"?`Mr.${terminationLetterData.employeeName}`
-                  :(terminationLetterData.gender.toLowerCase() == "female" && terminationLetterData.maritalStatus.toLowerCase() == "single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`}
+                  terminationLetterData.gender == "MALE"?`Mr.${terminationLetterData.employeeName}`
+                  :(terminationLetterData.gender == "FEMALE" && terminationLetterData.maritalStatus == "Single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`}
                 </p>
                 <p>
                   EmployeeId:&nbsp;&nbsp;
@@ -97,10 +97,10 @@ const TerminationLetter = (props) => {
                 Dear{" "}
                 <b>
                   {terminationLetterData !== undefined &&
-                  terminationLetterData.gender.toLowerCase() == "male"?
+                  terminationLetterData.gender == "MALE"?
                   `Mr.${terminationLetterData.employeeName}`
-                  :(terminationLetterData.gender.toLowerCase() == "female" && 
-                  terminationLetterData.maritalStatus.toLowerCase() == "single")?
+                  :(terminationLetterData.gender == "FEMALE" && 
+                  terminationLetterData.maritalStatus == "Single")?
                   `Miss. ${terminationLetterData.employeeName}`
                   :`Mrs.${terminationLetterData.employeeName}`}
                   
@@ -152,9 +152,15 @@ const TerminationLetter = (props) => {
             </p>
             <div style={{ textAlign: "left" }}>
                   {showSignature && (
-                    <div>
-                      <img src={calendarImage} alt="calendar" width="100px" />
-                    </div>
+                  <Fragment>
+                  <br></br>
+                  <img style={{float:"left"}}
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                    </Fragment>
                   )}
                   {!showSignature && (
                     <div className="mt-3">

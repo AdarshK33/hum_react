@@ -85,10 +85,10 @@ const RelievingLetter = (props) => {
                     <p>
                       Name:&nbsp;&nbsp;
                       {relivingLetterData !== undefined &&
-                  relivingLetterData.gender.toLowerCase() == "male"?
+                  relivingLetterData.gender == "MALE"?
                   `Mr.${relivingLetterData.employeeName}`
-                  :(relivingLetterData.gender.toLowerCase() == "female" && 
-                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  :(relivingLetterData.gender == "FEMALE" && 
+                  relivingLetterData.maritalStatus == "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`}
                     </p>
@@ -110,10 +110,10 @@ const RelievingLetter = (props) => {
                     Dear{" "}
                     <b>
                     {relivingLetterData !== undefined &&
-                  relivingLetterData.gender.toLowerCase() == "male"?
+                  relivingLetterData.gender == "MALE"?
                   `Mr.${relivingLetterData.employeeName}`
-                  :(relivingLetterData.gender.toLowerCase() == "female" && 
-                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  :(relivingLetterData.gender == "FEMALE" && 
+                  relivingLetterData.maritalStatus == "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`}
                       ,
@@ -143,16 +143,16 @@ const RelievingLetter = (props) => {
             </p>
                 </div>
 
-                <div style={{ textAlign: "end" }}>
+                <div style={{ float: "left" }}>
                   {showSignature && (
                    <Fragment>
                    <br></br>
-                   <img
-                     src={calendarImage}
-                     alt="calendar"
-                     width="50px"
-                     className="digital-signature"
-                   />
+                   <img style={{float:"left"}}
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
                  </Fragment>
                   )}
                   {!showSignature && (
