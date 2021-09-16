@@ -30,10 +30,10 @@ const RelivingLetter = () => {
           <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
 
           <p>Name:{relivingLetterData !== undefined &&
-                  relivingLetterData.gender.toLowerCase() == "male"?
+                  relivingLetterData.gender == "MALE"?
                   `Mr.${relivingLetterData.employeeName}`
-                  :(relivingLetterData.gender.toLowerCase() == "female" && 
-                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  :(relivingLetterData.gender == "FEMALE" && 
+                  relivingLetterData.maritalStatus == "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`}</p>
           <p>EmployeeId:{relivingLetterData !== undefined && relivingLetterData.employeeId}</p>
@@ -43,10 +43,10 @@ const RelivingLetter = () => {
             <p className="mt-5 ">
               {" "}
               Dear <b>{relivingLetterData !== undefined &&
-                  relivingLetterData.gender.toLowerCase() == "male"?
+                  relivingLetterData.gender == "MALE"?
                   `Mr.${relivingLetterData.employeeName}`
-                  :(relivingLetterData.gender.toLowerCase() == "female" && 
-                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  :(relivingLetterData.gender == "FEMALE" && 
+                  relivingLetterData.maritalStatus == "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`}</b>{" "}
             </p>
