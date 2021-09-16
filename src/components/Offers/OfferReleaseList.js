@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
-import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
+import { Container, Modal, Row, Col, Table, Button } from "react-bootstrap";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
@@ -30,6 +30,8 @@ const OfferReleaseList = () => {
   const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
+  const [infoModalShow, setInfoModelShow] = useState(false);
+  const [noShowId, setNoShowId] = useState();
   useEffect(() => {
     candidateView("all", pageCount);
     console.log("user role", user);
@@ -81,22 +83,48 @@ const OfferReleaseList = () => {
     viewRole();
     CostCenter();
   };
-  const noShowHandler = (e) => {
-    console.log("no show candidate", e.target.name);
+  const noShowHandler = () => {
+    console.log("no show candidate", noShowId);
     setPageCount(currentPage - 1);
     setCurrentPage(currentPage);
     if (searchValue !== "") {
-      noShowCandidate(e.target.name, searchValue, pageCount);
+      noShowCandidate(noShowId, searchValue, pageCount);
     } else {
-      noShowCandidate(e.target.name, "all", pageCount);
+      noShowCandidate(noShowId, "all", pageCount);
     }
+    setInfoModelShow(false);
   };
 
   const dummyFun = (e) => {
     console.log("no show candidate", e.target.name);
   };
+  const handleModalClose = () => {
+    setInfoModelShow(false);
+  };
+  const handleModalOpen = (e) => {
+    setNoShowId(e.target.name);
+    setInfoModelShow(true);
+  };
   return (
     <Fragment>
+      <Modal show={infoModalShow} onHide={handleModalClose} size="md" centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              Do you want to make this employe as a no show
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={noShowHandler}>Proceed</Button>
+
+              <Button style={{ marginLeft: "2rem" }} onClick={handleModalClose}>
+                Close
+              </Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
       <Breadcrumb title="Offers" parent="Offer Release" />
       <Container fluid>
         <Row>
@@ -273,7 +301,7 @@ const OfferReleaseList = () => {
                                   checked={item.noShow}
                                   // disabled={item.noShow}
                                   onChange={
-                                    item.noShow ? dummyFun : noShowHandler
+                                    item.noShow ? dummyFun : handleModalOpen
                                   }
                                 />
                               </div>

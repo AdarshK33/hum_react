@@ -371,7 +371,7 @@ const EntityTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation details saved successfully, manager has
+              Tansfer initiation details saved successfully, manager has been
               notified
             </label>
 
@@ -561,7 +561,7 @@ const EntityTransfer = () => {
                   <Form.Label>Department:</Form.Label>
                 </Col>
                 <Col md={4} className="text-primary">
-                  {initiationEmpData.currentCompany}
+                  {initiationEmpData.currentDepartment}
                 </Col>
                 <Col md={2}>
                   <Form.Label>Department:</Form.Label>

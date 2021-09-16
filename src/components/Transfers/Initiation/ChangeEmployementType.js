@@ -247,9 +247,9 @@ const ChangeEmployementType = () => {
       newEmployement === "From Full Time to Part Time"
     ) {
       if (Valid.test(newGross)) {
-        if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+        if (parseInt(newGross) < 90 || parseInt(newGross) > 400) {
           validForm = false;
-          setGrossErrMsg("Value should be between 90 - 200");
+          setGrossErrMsg("Value should be between 90 - 400");
           console.log("validForm", validForm);
         }
       } else {
@@ -572,13 +572,18 @@ const ChangeEmployementType = () => {
                       onChange={changeEmployementHandler}
                     >
                       <option value="">Select Change Employment</option>
-
-                      <option value="From Part Time to Full Time">
-                        From Part Time to Full Time
-                      </option>
-                      <option value="From Full Time to Part Time">
-                        From Full Time to Part Time
-                      </option>
+                      {initiationEmpData !== null &&
+                      initiationEmpData !== undefined &&
+                      initiationEmpData !== "" &&
+                      initiationEmpData.currentContractType === "permanent" ? (
+                        <option value="From Full Time to Part Time">
+                          From Full Time to Part Time
+                        </option>
+                      ) : (
+                        <option value="From Part Time to Full Time">
+                          From Part Time to Full Time
+                        </option>
+                      )}
                     </Form.Control>
                     {newEmployementErrMsg !== "" && (
                       <span className="text-danger">
