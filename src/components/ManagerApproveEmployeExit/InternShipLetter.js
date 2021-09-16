@@ -29,17 +29,35 @@ const InternShipLetter = () => {
           <br></br>
           <h5 className="text-center"> INTERNSHIP EXPERIENCE LETTER</h5>
 
-          <p>Name:{relivingLetterData.employeeName}</p>
+          <p>Name:{relivingLetterData !== undefined &&
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`}</p>
           <p>EmployeeId:{relivingLetterData.employeeId}</p>
           <p>Designation:{relivingLetterData.designation}</p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{relivingLetterData.employeeName},</b>{" "}
+              Dear <b>{relivingLetterData !== undefined &&
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`},</b>{" "}
             </p>
             <p>
-            This is to certify that Mr/ Ms {relivingLetterData.employeeName} has 
+            This is to certify that  {relivingLetterData !== undefined &&
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`} has 
             completed internship at {relivingLetterData.company} Pvt Ltd, from  
             <b>{relivingLetterData.dateOfJoining}</b> to  <b>{relivingLetterData.lastWorkingDate}</b> on
            under the guidance of  {relivingLetterData.managerName}.
@@ -53,6 +71,10 @@ const InternShipLetter = () => {
               <b>For {relivingLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
+            <p className="mt-5 ">
+              <b>Authorised Signatory</b>
+            </p>
+
           </div>
         </Fragment>
       ) : (

@@ -35,7 +35,8 @@ const TerminationLetter = () => {
                 <p>
                   Name:&nbsp;&nbsp;
                   {terminationLetterData !== undefined &&
-                    terminationLetterData.employeeName}
+                  terminationLetterData.gender.toLowerCase() == "male"?`Mr.${terminationLetterData.employeeName}`
+                  :(terminationLetterData.gender.toLowerCase() == "female" && terminationLetterData.maritalStatus.toLowerCase() == "single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`}
                 </p>
                 <p>
                   EmployeeId:&nbsp;&nbsp;
@@ -49,6 +50,7 @@ const TerminationLetter = () => {
                 </p>
               </div>
             </div>
+            <br/>
             <p>
               {" "}
               <b>Sub:</b>Termination of your employment{" "}
@@ -59,11 +61,44 @@ const TerminationLetter = () => {
                 Dear{" "}
                 <b>
                   {terminationLetterData !== undefined &&
-                    terminationLetterData.employeeName}
-                  ,
+                  terminationLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${terminationLetterData.employeeName}`
+                  :(terminationLetterData.gender.toLowerCase() == "female" && 
+                  terminationLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${terminationLetterData.employeeName}`
+                  :`Mrs.${terminationLetterData.employeeName}`}
+                  
                 </b>{" "}
               </p>
               <p>
+              You have been associated Decathlon Sports India Private Limited 
+                You have been associated Decathlon Sports India Private Limited
+              You have been associated Decathlon Sports India Private Limited 
+              (“entity name/prodin/indeca”) as{" "}{terminationLetterData !== 
+              undefined && terminationLetterData.position}.
+              This is reference to the Show Cause letter dated on{" "}
+                {terminationLetterData !== undefined &&
+                  terminationLetterData.dateOfResignation}. It has come 
+              to our knowledge that you have indulged in act of misconduct{" "}
+                {terminationLetterData !== undefined &&
+                  terminationLetterData.reason}{" "}
+                at in {terminationLetterData.company}. 
+            The facts of the same are as below – (below details to be entered by the manager)
+                                        -
+                                        -
+                                        -
+
+            Hence the above acts of yours have constituted serious misconduct in
+            connection with the employer’s business or property.
+             Therefore, you are hereby terminated from your employment with Decathlon
+             Sports India Pvt Ltd / Prodin / Indeca with immediate effect as on{" "}
+            {terminationLetterData !== undefined &&
+            terminationLetterData.lastWorkingDate}. Your full and final
+            settlement post calculations of any dues from you will be 
+            recovered and shall be paid to you during the next payroll cycle.
+                   </p>
+
+              {/* <p>
                 You have been associated Decathlon Sports India Private Limited
                 (“Decathlon/Company”) at its XXXXXXXX located at{" "}
                 {terminationLetterData !== undefined &&
@@ -90,10 +125,28 @@ const TerminationLetter = () => {
                 . Your full and final settlement post calculations of any dues
                 from you will be recovered and shall be paid to you during the
                 next payroll cycle.
-              </p>
-              <p className="mt-5 mb-5">
+              </p> */}
+              <p>
+            Thanking you,
+            </p>		<br/>
+            <p className="mt-5 mb-5">
                 <b>For {terminationLetterData.company} Pvt Ltd,</b>
               </p>
+                <Row>
+             <Col sm="8"></Col>
+              <Col sm="4">
+              <p> Accepted By
+          Mr.{terminationLetterData !== undefined &&
+          terminationLetterData.costCentreManagerName}.
+          </p>
+              </Col>
+              </Row>
+              <p>
+            Authorised Signatory <br/>
+              Manager<br/>
+            Name:  {terminationLetterData !== undefined &&
+            terminationLetterData.managerName} 
+            </p>
             </div>
           </div>
         </Fragment>

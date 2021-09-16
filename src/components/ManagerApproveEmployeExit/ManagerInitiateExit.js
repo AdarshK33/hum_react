@@ -1273,7 +1273,6 @@ console.log(intern,"8098709809808")
                 <p>Thanking you</p>
                 <p>{employeeData.managerName}</p>
               </Col> */}
-
               {showSignature ? (
                 <Fragment>
                   <br></br>
