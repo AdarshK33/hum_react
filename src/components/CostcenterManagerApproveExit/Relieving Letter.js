@@ -145,12 +145,15 @@ const RelievingLetter = (props) => {
                  </Fragment>
                   )}
                   {!showSignature && (
+                    <>
+                    <br/>
                       <button
                         className="signatureButtons"
                         onClick={() => addSignature()}
                       >
                         Add Signature
                       </button>
+                      </>
                   )}
                 </div>
               </div>

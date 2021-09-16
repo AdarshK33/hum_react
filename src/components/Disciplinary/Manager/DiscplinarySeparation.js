@@ -839,7 +839,7 @@ const DisciplinarySeparation = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 2,
+            status: 9,
           };
 
           console.log("createExitData", data2);
