@@ -1372,7 +1372,16 @@ const ManagerInitiateAction = () => {
                             </div>
                           </Col>
                         ) : (
-                          ""
+                          <Col sm={4}>
+                          <div>
+                              <label>
+                              <b>Internship contract end date:</b>
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                                </label>
+                              </label>
+                            </div>
+                  </Col> 
                         )}
                       </Row>
                       <Row
@@ -1560,11 +1569,11 @@ const ManagerInitiateAction = () => {
                         {modeOfSeparation !== 5 ? (
                           <Col sm={2}>
                             <div>
-                              {false ? (
+                              {/* {false ? (
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {lastWorkingDate}
                                 </label>
-                              ) : (
+                              ) : ( */}
                                 <Form.Group>
                                   <div
                                     className={
@@ -1597,7 +1606,7 @@ const ManagerInitiateAction = () => {
                                     <p></p>
                                   )}
                                 </Form.Group>
-                              )}
+                              {/* )} */}
                             </div>
                           </Col>
                         ) : (
@@ -1847,7 +1856,7 @@ const ManagerInitiateAction = () => {
                     <Col sm={2}>
                       <div>
                         <label>
-                          <a href="~/address">
+                          <a  target="_blank" href="~/address">
                             <u>Exit Feedback Form</u>
                           </a>
                         </label>

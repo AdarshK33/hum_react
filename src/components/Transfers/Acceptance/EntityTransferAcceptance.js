@@ -359,9 +359,9 @@ const EntityTransferAcceptance = () => {
         transferData.currentContractType === "parttime")
     ) {
       if (Valid.test(newGross)) {
-        if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+        if (parseInt(newGross) < 90 || parseInt(newGross) > 400) {
           validForm = false;
-          setGrossErrMsg("Value should be between 90 - 200");
+          setGrossErrMsg("Value should be between 90 - 400");
           console.log("validForm", validForm);
         }
       } else {
@@ -550,7 +550,8 @@ const EntityTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer letter details saved successfully, employee has notified
+              Tansfer letter details saved successfully, employee has been
+              notified
             </label>
 
             <div className="text-center mb-2">

@@ -249,7 +249,9 @@ const FinanaceAdminNoDueClearance = () => {
     setGridColumnApi(params.columnApi);
   };
   const handleUploadSettlement = () => {
-    console.log(fileUpload,"file999")
+    console.log(fileUpload,fileUpload.size,"file999")
+    if(fileUpload.size/1024 < 500|| fileUpload.size/1024 == 500){
+
     if (fileUpload !== undefined && fileUpload !== null) {
       FinanceClearanceUploadSettlement(
         fileUpload,
@@ -260,6 +262,9 @@ const FinanaceAdminNoDueClearance = () => {
     } else {
       toast.error("Please select a file to upload");
     }
+  }else{
+    toast.error("File size should not exceed 500kb ");
+  }
   };
   const onSelectionChanged = (e) => {
     let formData = e.data;
@@ -279,8 +284,8 @@ const FinanaceAdminNoDueClearance = () => {
       if (
         formData["deactivateProfile"] !== null &&
         formData["fullAndFinalCompleteStatus"] !== null &&
-        formData["fullAndFinalProcessDate"] !== null &&
-        formData["fullAndFinalAmount"] !== null
+        formData["fullAndFinalProcessDate"] !== null 
+        // formData["fullAndFinalAmount"] !== null
       ) {
         if (!keyValues.includes(formData.employeeId)) {
           console.log(formData, "push");
@@ -453,7 +458,7 @@ const FinanaceAdminNoDueClearance = () => {
                     </Button>
                     <input
                       type="file"
-                      accept=".xlsx, .xls, .csv"
+                      accept=".xlsx, .xls"
                       style={{
                         marginTop: "2px",
                         float: "right",
@@ -498,7 +503,7 @@ const FinanaceAdminNoDueClearance = () => {
                               rowNode.data.fullAndFinalCompleteStatus !==
                                 null &&
                               rowNode.data.fullAndFinalProcessDate !== null &&
-                              rowNode.data.fullAndFinalAmount !== null &&
+                              // rowNode.data.fullAndFinalAmount !== null &&
                               rowNode.data.disabled !== true
                           : false;
                       }}
@@ -573,11 +578,11 @@ const FinanaceAdminNoDueClearance = () => {
                           cellRenderer: { statusRender },
                         }}
                       ></AgGridColumn>
-                      <AgGridColumn
+                      {/* <AgGridColumn
                         className="columnColor"
                         headerName="F & F Amount"
                         field="fullAndFinalAmount"
-                      ></AgGridColumn>
+                      ></AgGridColumn> */}
                       <AgGridColumn
                         className="columnColor"
                         type="dateColumn"

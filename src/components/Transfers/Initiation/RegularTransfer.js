@@ -194,25 +194,78 @@ const RegularTransfer = () => {
   };
 
   const departmentChangeHandler = (e) => {
+    console.log(e.target.value);
     setNewDept(e.target.value);
-    setNewDeptName(e.target.options[e.target.selectedIndex].text);
+    {
+      e.target.value !== ""
+        ? setNewDeptName(e.target.options[e.target.selectedIndex].text)
+        : setNewDeptName("");
+    }
     setDeptErrMsg("");
+    MakeDepartmentDependienciesNull();
   };
-
-  const changePositionHandler = (e) => {
-    setNewPosition(e.target.value);
-    setNewPositionName(e.target.options[e.target.selectedIndex].text);
+  const MakeDepartmentDependienciesNull = () => {
+    setNewPosition("");
+    setNewPositionName("");
     setPositionErrMsg("");
+    setNewCostCentre("");
+    setCostCentreErrMsg("");
+    setNewManager("");
+    setManagerErrMsg("");
+    setNewLocation("");
+    setLocationErrMsg("");
+    setPositionNoChange(false);
+    setCostCentreNoChange(false);
+    setManagerNoChange(false);
+    setLocationNoChange(false);
   };
 
   const changeCostCentreHandler = (e) => {
     setNewCostCentre(e.target.value);
     setCostCentreErrMsg("");
+    MakeCostCenterDependienciesNull();
+  };
+  const MakeCostCenterDependienciesNull = () => {
+    setNewPosition("");
+    setNewPositionName("");
+    setPositionErrMsg("");
+    setNewManager("");
+    setManagerErrMsg("");
+    setNewLocation("");
+    setLocationErrMsg("");
+    setPositionNoChange(false);
+    setManagerNoChange(false);
+    setLocationNoChange(false);
   };
 
   const changeManagerHandler = (e) => {
     setNewManager(e.target.value);
     setManagerErrMsg("");
+    MakeManagerDependienciesNull();
+  };
+  const MakeManagerDependienciesNull = () => {
+    setNewPosition("");
+    setNewPositionName("");
+    setPositionErrMsg("");
+    setNewLocation("");
+    setLocationErrMsg("");
+    setPositionNoChange(false);
+    setLocationNoChange(false);
+  };
+  const changePositionHandler = (e) => {
+    setNewPosition(e.target.value);
+    {
+      e.target.value !== ""
+        ? setNewPositionName(e.target.options[e.target.selectedIndex].text)
+        : setNewPositionName("");
+    }
+    setPositionErrMsg("");
+    MakePositionDependienciesNull();
+  };
+  const MakePositionDependienciesNull = () => {
+    setNewLocation("");
+    setLocationErrMsg("");
+    setLocationNoChange(false);
   };
 
   const changeLocationHandler = (e) => {
@@ -279,6 +332,7 @@ const RegularTransfer = () => {
       setDepNoChange(false);
       setNewDept("");
       setNewDeptName("");
+      MakeDepartmentDependienciesNull();
       // setPositionNoChange(false);
     }
   };
@@ -301,6 +355,7 @@ const RegularTransfer = () => {
       setPositionNoChange(false);
       setNewPosition("");
       setNewPositionName("");
+      MakePositionDependienciesNull();
     }
   };
 
@@ -316,6 +371,7 @@ const RegularTransfer = () => {
     } else {
       setCostCentreNoChange(false);
       setNewCostCentre("");
+      MakeCostCenterDependienciesNull();
     }
   };
 
@@ -329,6 +385,7 @@ const RegularTransfer = () => {
       setManagerNoChange(true);
       setNewManager(initiationEmpData.currentManagerId);
     } else {
+      MakeManagerDependienciesNull();
       setManagerNoChange(false);
       setNewManager("");
     }
@@ -629,7 +686,7 @@ const RegularTransfer = () => {
                 disabled={depNoChange}
                 onChange={departmentChangeHandler}
               >
-                <option>Select Department</option>
+                <option value="">Select Department</option>
                 {deptDetails !== null &&
                   deptDetails !== undefined &&
                   deptDetails.length > 0 &&
@@ -663,6 +720,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-costcentre-change"
+                  disabled={newDeptName === "" ? true : false}
                   checked={costCentreNoChange}
                   onChange={noChangeCostCentreHandler}
                 />
@@ -675,10 +733,12 @@ const RegularTransfer = () => {
                 aria-label="transferInitiationCostCentre"
                 value={newCostCentre}
                 placeholder="Select Cost Centre"
-                disabled={costCentreNoChange}
+                disabled={
+                  costCentreNoChange || newDeptName === "" ? true : false
+                }
                 onChange={changeCostCentreHandler}
               >
-                <option>Select Cost Centre</option>
+                <option value="">Select Cost Centre</option>
                 {costCentreData !== null &&
                   costCentreData !== undefined &&
                   costCentreData.length > 0 &&
@@ -715,6 +775,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-manager-change"
+                  disabled={newCostCentre === "" ? true : false}
                   checked={managerNoChange}
                   onChange={noChangeManagerHandler}
                 />
@@ -727,10 +788,12 @@ const RegularTransfer = () => {
                 aria-label="transferInitiationManager"
                 value={newManager}
                 placeholder="Select Manager"
-                disabled={managerNoChange}
+                disabled={
+                  managerNoChange || newCostCentre === "" ? true : false
+                }
                 onChange={changeManagerHandler}
               >
-                <option>Select Manager</option>
+                <option value="">Select Manager</option>
                 {costCentreManagersData !== null &&
                   costCentreManagersData !== undefined &&
                   costCentreManagersData.length !== 0 &&
@@ -767,6 +830,7 @@ const RegularTransfer = () => {
                   type="checkbox"
                   id="no-position-change"
                   checked={positionNoChange}
+                  disabled={newManager === "" ? true : false}
                   onChange={noChangePositionHandler}
                 />
               </div>
@@ -778,10 +842,10 @@ const RegularTransfer = () => {
                 aria-label="transferInitiationPosition"
                 value={newPosition}
                 placeholder="Select Position"
-                disabled={positionNoChange}
+                disabled={positionNoChange || newManager === "" ? true : false}
                 onChange={changePositionHandler}
               >
-                <option>Select Position</option>
+                <option value="">Select Position</option>
                 {deptPositionData !== null &&
                   deptPositionData !== undefined &&
                   deptPositionData.length > 0 &&
@@ -820,6 +884,7 @@ const RegularTransfer = () => {
                   type="checkbox"
                   id="no-location-change"
                   checked={locationNoChange}
+                  disabled={newPositionName === "" ? true : false}
                   onChange={noChangeLocationHandler}
                 />
               </div>
@@ -831,10 +896,12 @@ const RegularTransfer = () => {
                 aria-label="transferInitiationLocation"
                 value={newLocation}
                 placeholder="Select Location"
-                disabled={locationNoChange}
+                disabled={
+                  locationNoChange || newPositionName === "" ? true : false
+                }
                 onChange={changeLocationHandler}
               >
-                <option>Select Location</option>
+                <option value="">Select Location</option>
                 {costCentreLocationData !== null &&
                   costCentreLocationData !== undefined &&
                   Object.keys(costCentreLocationData).length !== 0 &&

@@ -11,7 +11,7 @@ const ref = React.createRef();
 
 const RelievingLetter = (props) => {
   const [showLetter, setLetter] = useState(false);
-  const { relivingLetterData } = useContext(EmployeeSeparationContext);
+  const { relivingLetterData ,loader} = useContext(EmployeeSeparationContext);
   const [showSignature, setSignature] = useState(false);
   const [message, setMessage] = useState(false);
   const handleClose = () => {
@@ -53,6 +53,17 @@ const RelievingLetter = (props) => {
             </Modal.Body>
           </Container>
         </Modal> */}
+          {loader ? (
+        <div className="loader-box loader" style={{ width: "100% !important" }}>
+          <div className="loader">
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+          </div>
+        </div>
+      ) : typeof relivingLetterData !== undefined ? (
+        <Fragment>
         <Modal
           show={showLetter}
           onHide={() => handleClose()}
@@ -123,23 +134,30 @@ const RelievingLetter = (props) => {
                 </div>
                 <div style={{ textAlign: "end" }}>
                   {showSignature && (
-                    <div>
-                      <img src={calendarImage} alt="calendar" width="100px" />
-                    </div>
+                   <Fragment>
+                   <br></br>
+                   <img
+                     src={calendarImage}
+                     alt="calendar"
+                     width="50px"
+                     className="digital-signature"
+                   />
+                 </Fragment>
                   )}
                   {!showSignature && (
-                    <div className="mt-3">
+                    <>
+                    <br/>
                       <button
                         className="signatureButtons"
                         onClick={() => addSignature()}
                       >
                         Add Signature
                       </button>
-                    </div>
+                      </>
                   )}
                 </div>
               </div>
-              <div className="text-center mt-5 mb-5">
+              {/* <div className="text-center mt-5 mb-5">
                 {showSignature && (
                   <button
                     className="signatureButtons"
@@ -148,13 +166,29 @@ const RelievingLetter = (props) => {
                     Save
                   </button>
                 )}
-              </div>
-              {/* <Pdf targetRef={ref} filename="relieving-letter.pdf">
-                {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
-              </Pdf> */}
+              </div> */}
+                {showSignature  ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={() => handleSave()}
+                  >
+                    Save Changes
+                  </button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
             </Modal.Body>
           </Container>
         </Modal>
+        </Fragment>):""}
+
       </Fragment>
     )
   );

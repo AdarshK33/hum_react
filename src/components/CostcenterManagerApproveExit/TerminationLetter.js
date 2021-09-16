@@ -11,7 +11,7 @@ const ref = React.createRef();
 
 const TerminationLetter = (props) => {
   const [showLetter, setLetter] = useState(false);
-  const { terminationLetterData, fetchTerminationLetterData } = useContext(
+  const { terminationLetterData, loader,fetchTerminationLetterData } = useContext(
     EmployeeSeparationContext
   );
   const [showSignature, setSignature] = useState(false);
@@ -43,6 +43,17 @@ const TerminationLetter = (props) => {
     console.log("letterData", terminationLetterData),
     (
       <Fragment>
+          {loader ? (
+        <div className="loader-box loader" style={{ width: "100% !important" }}>
+          <div className="loader">
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+          </div>
+        </div>
+      ) : typeof relivingLetterData !== undefined ? (
+        <Fragment>
         <Modal show={showLetter} onHide={() => handleClose()} size="md">
           <Container className="mb-5">
             <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
@@ -129,12 +140,15 @@ const TerminationLetter = (props) => {
                   )}
                   {!showSignature && (
                     <div className="mt-3">
+                           <>
+                    <br/>
                       <button
                         className="signatureButtons"
                         onClick={() => addSignature()}
                       >
                         Add Signature
                       </button>
+                      </>
                     </div>
                   )}
                 </div>
@@ -155,6 +169,7 @@ const TerminationLetter = (props) => {
             </Modal.Body>
           </Container>
         </Modal>
+        </Fragment>):""}
       </Fragment>
     )
   );

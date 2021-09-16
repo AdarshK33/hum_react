@@ -2,7 +2,10 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 import RelievingLetter from "./Relieving Letter";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import TerminationLetter from "./TerminationLetter"
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { Link } from "react-router-dom";
@@ -26,6 +29,11 @@ const EmployeeExitAction = () => {
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [terminationLetter, setTerminationLetter] = useState(false);
+  const [lastWorkingDate, setLastWorkingDate] = useState(new Date());
+  const [lastWorkingDateError, setLastWorkingDateError] = useState(false);
+  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
+  const [submitted, setSubmitted] = useState(false);
+  const [intern, setIntern] = useState(false);
 
   const [submit, setSubmit] = useState(false);
   const [message, setMessage] = useState(false);
@@ -36,31 +44,40 @@ const EmployeeExitAction = () => {
 
   const [state, setState] = useState({
     exitId: "",
-    empName: "",
-    empId: "",
-    empContractType: "",
-    empCostCenterName: "",
-    empLocation: "",
-    empPosition: "",
-    mngrName: "",
-    mngrId: "",
-    mngrCostCenterName: "",
-    mngrPosition: "",
+    company:"",
+    contractType: "",
+    costCentreManagerEmailId:"",
+    costCentreName: "",
+    hoursWorked:"",
+    employeeName: "",
+    employeeComment:"",
+    managerEmailId:"",
+    employeeId: "",
+    location: "",
+    position: "",
+    reason:"",
+    managerName: "",
+    managerId: "",
+    managerCostCentre: "",
+    managerPosition: "",
     modeOfSeparationId: "",
     modeOfSeparationReasonId: "",
     dateOfResignation: "",
     noticePeriod: "",
-    lastWorkingDate: "",
+    lastWorkingDate:new Date(),
     emailId: "",
     personalEmailId:"",
-    comments: "",
     noticePeriodRcryDays: "",
+    reasonForResignation:"",
+    noticePeriodRecovery:"",
     remarks: "",
     status: "",
+    withdraw:"",
   });
   const {
     EmployeeSeparationListView,
     EmployeeSeparationList,
+    CreateEmplyoeeExist,
     ViewEmployeeDataById,
     employeeData,
     ModeOfSeparationData,
@@ -74,6 +91,8 @@ const EmployeeExitAction = () => {
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
+  const { empResign, withdraw, searchByCostCenter,searchByEmployee, searchByCostData } =
+  useContext(SeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
@@ -90,21 +109,32 @@ const EmployeeExitAction = () => {
       Object.keys(employeeData).length !== 0
     ) {
       console.log("employeeData................", employeeData);
+      state.company = employeeData.company;
+      state.withdraw = employeeData.withdraw
+      state.contractType = employeeData.contractType;
+      state.costCentreManagerEmailId= employeeData.costCentreManagerEmailId;
+      state.costCentreManagerName=employeeData.costCentreManagerName
+      state.costCentreName= employeeData.costCentreName
+      state.dateOfResignation = employeeData.dateOfResignation;
+      state.managerEmailId = employeeData.managerEmailId
+      state.reason = employeeData.reason;
       state.exitId = employeeData.exitId;
-      state.empName = employeeData.employeeName;
-      state.empId = employeeData.employeeId;
-      state.empContractType = employeeData.contractType;
-      state.empCostCenterName = employeeData.costCentreName;
-      state.empLocation = employeeData.location;
-      state.empPosition = employeeData.position;
-      state.mngrName = employeeData.managerName;
-      state.mngrId = employeeData.managerId;
-      state.mngrCostCenterName = employeeData.managerCostCentre;
-      state.mngrPosition = employeeData.managerPosition;
+      state.employeeName = employeeData.employeeName;
+      state.employeeComment = employeeData.employeeComment;
+      state.employeeId = employeeData.employeeId;
+      state.hoursWorked =employeeData.hoursWorked
+      state.noticePeriodRcryDays = employeeData.noticePeriodRecoveryDays
+      state.reasonForResignation = employeeData.reasonForResignation
+      state.noticePeriod = employeeData.noticePeriod
+      state.location = employeeData.location;
+      state.position = employeeData.position;
+      state.managerName = employeeData.managerName;
+      state.managerId = employeeData.managerId;
+      state.managerCostCentre = employeeData.managerCostCentre;
+      state.managerPosition = employeeData.managerPosition;
       state.status = employeeData.status;
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
-      // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
-      state.dateOfResignation = employeeData.dateOfResignation;
+       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.personalEmailId = employeeData.personalEmailId;
       if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
         state.noticePeriod = 2
@@ -112,9 +142,49 @@ const EmployeeExitAction = () => {
         state.noticePeriod = 1
       }
       // state.noticePeriod = employeeData.noticePeriod;
-      state.lastWorkingDate = employeeData.lastWorkingDate;
+      if(employeeData.lastWorkingDate !== null && employeeData.lastWorkingDate !== undefined && employeeData.lastWorkingDate !== ""){
+        setLastWorkingDate(new Date(employeeData.lastWorkingDate))
+      }
+      state.lastWorkingDate =employeeData.lastWorkingDate
       state.emailId = employeeData.emailId;
-      state.comments = employeeData.employeeComment;
+      console.log(employeeData.lastWorkingDate,"employeedat444")
+
+      if (
+        state.contractType === "internship" ||
+        state.contractType === "Internship"
+      ) {
+        setIntern(true);
+        setLastWorkingDate(
+          new Date(searchByCostData.joiningDate).setMonth(
+            new Date(searchByCostData.joiningDate).getMonth() +
+              (searchByCostData.internshipPeriod !== null &&
+              searchByCostData.internshipPeriod !== undefined
+                ? searchByCostData.internshipPeriod
+                : 0)
+          )
+        );
+      } else if (
+        state.contractType === "permanent" ||
+        state.contractType === "Permanent" ||
+        state.contractType === "parttime" ||
+        state.contractType === "PartTime"
+      ) {
+        var dateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+        );
+        let aboveDateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+          )
+        );
+        setIntern(false);
+        setLastDateSelection(aboveDateValue);
+        setLastWorkingDate(dateValue);
+      } else {
+        setIntern(false);
+        setLastWorkingDate("");
+      }
+
       state.noticePeriodRcryDays =
         employeeData.noticePeriodRecoveryDays !== null &&
         employeeData.noticePeriodRecoveryDays !== undefined
@@ -283,18 +353,22 @@ const EmployeeExitAction = () => {
     }
   };
 
+  const dateOfBirthHandler1 = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    setLastWorkingDate(AdjusteddateValue);
+  };
+
   const handleConfirmation = (exitId, employeeId) => {
-    console.log(state.modeOfSeparationId, "deepika");
     if (state.modeOfSeparationId == 2) {
-      console.log(state.modeOfSeparationId, "rajashekar");
       terminationConfirmation(exitId, employeeId);
       viewTermination()
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
-      console.log(state.modeOfSeparationId, "sachin");
       resignationConfirmation(exitId, employeeId);
       viewResignation()
     }
-    console.log(state.modeOfSeparationId, "sravani");
+    // console.log(state.modeOfSeparationId, "sravani");
 
     setModal(true);
   };
@@ -317,15 +391,98 @@ const EmployeeExitAction = () => {
       setSubmit(true);
     }
   };
+  const submitHandler = (e) => {
+    console.log("submit handler");
 
+    e.preventDefault();
+    const value = checkValidations();
+    if (value === true) {
+    if(intern == false){
+          // const InfoData = {
+          //   company: state.company,
+          //   contractType: state.contractType,
+          //   costCentreManagerEmailId: state.costCentreManagerEmailId,
+          //   costCentreManagerName: state.costCentreManagerName,
+          //   costCentreName: state.costCentreName,
+          //   dateOfResignation: state.dateOfResignation,
+          //   personalEmailId: state.emailId,
+          //   employeeName: state.employeeName,
+          //   employeeComment: state.employeeComment,
+          //   employeeId: state.employeeId,
+          //   exitId: state.exitId,
+          //   hoursWorked: state.hoursWorked,
+          //   lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+          //   location: state.location,
+          //   managerCostCentre: state.managerCostCentre,
+          //   managerEmailId: state.managerEmailId,
+          //   managerId: state.managerId ? state.managerId : "",
+          //   managerName: state.managerName,
+          //   managerPosition: state.managerPosition,
+          //   modeOfSeparationId: state.modeOfSeparationId,
+          //   modeOfSeparationReasonId: state.modeOfSeparationReasonId,
+          //   noticePeriod: state.noticePeriod,
+          //   noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+          //   noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+          //   position: state.position,
+          //   reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+          //   reason: state.reason,
+          //   reasonForResignation: state.reasonForResignation,
+          //   rehireRemark: state.remarks !== "" ? state.remarks : null,
+          //   status: 9,
+          //   withdraw:state.withdraw
+          // };
+          const InfoData = {
+            company: employeeData.company,
+            contractType: employeeData.contractType,
+            costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
+            costCentreManagerName: employeeData.costCentreManagerName,
+            costCentreName: employeeData.costCentreName,
+            dateOfResignation: employeeData.dateOfResignation,
+            personalEmailId: state.emailId,
+            empName: employeeData.empName,
+            employeeComment: employeeData.employeeComment,
+            employeeId: employeeData.employeeId,
+            employeeName: employeeData.employeeName,
+            exitId: employeeData.exitId,
+            hoursWorked: employeeData.hoursWorked,
+            lastWorkingDate: lastWorkingDate,
+            location: employeeData.location,
+            managerCostCentre: employeeData.managerCostCentre,
+            managerEmailId: employeeData.managerEmailId,
+            managerId: employeeData.managerId ? employeeData.managerId : "",
+            managerName: employeeData.managerName,
+            managerPosition: employeeData.managerPosition,
+            modeOfSeparationId: employeeData.modeOfSeparationId,
+            modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
+            noticePeriodRecoveryDays: state.noticePeriodRcryDays,
+            noticePeriod: employeeData.noticePeriod,
+            noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+            position: employeeData.position,
+            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+            reason: employeeData.reason,
+            reasonForResignation: employeeData.reasonForResignation,
+            rehireRemark: state.remarks !== "" ? state.remarks : null,
+            status: 9,
+            withdraw: employeeData.withdraw,
+          };
+          console.log("createExitData", InfoData);
+          setSubmitted(true);
+          UpdateEmplyoeeExist(InfoData);
+          // setPreview(true);
+          // setSuccessModal(true);
+        }
+
+    }
+  };
   return (
     console.log(state.status),
     (
       <Fragment>
-        <Modal show={message} onHide={() => handleClosePopup()} centered>
-          <Container style={{ textAlign: "center", margin: "2rem 0 2rem 0" }}>
-            <Modal.Body>
-              <p style={{ marginBottom: "2rem" }}>
+        <Modal show={message} size="md" onHide={() => handleClosePopup()} centered>
+        
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
                 {" "} 
                 The details have been saved successfully.
                 <br /> The relieving letter will be sent to the employee on{" "}
@@ -333,27 +490,28 @@ const EmployeeExitAction = () => {
               terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1 || modeOfSeparation == "Employee Resignation" || modeOfSeparation == 4)?relivingLetterData.lastWorkingDate:'', "YYYY-MM-DD")
                   .add(1, "days")
                   .format("YYYY-MM-DD")}
-              </p>
+              </label>
+              <div className="text-center mb-2">
+
               <Link to={"/exit-approval"}> <Button onClick={() => handleClosePopup()}>OK</Button></Link>
+              </div>
             </Modal.Body>
-          </Container>
         </Modal>
         <Modal show={showModal} onHide={() => handleClose1()} centered>
           <Container style={{ textAlign: "center", margin: "1rem 0 1rem 0" }}>
             <Modal.Body style={{ marginBottom: "1rem" }}>
-              <p>
+            <label className="text-center">
                 {modeOfSeparation === "Termination"
                   ? "Thank you for confirming the Termination details"
                   : "Thank you for confirming the Resignation details"}
-              </p>
+              </label>
               <Button
-                style={{ marginTop: "1rem" }}
                 onClick={() => handleClose1()}
               >
                 OK
               </Button>
             </Modal.Body>
-          </Container>
+            </Container>
         </Modal>
         <RelievingLetter previewLetter={previewLetter} />
         <TerminationLetter terminationLetter={terminationLetter} />
@@ -366,20 +524,7 @@ const EmployeeExitAction = () => {
                 <div>
                   <div className="OnBoardHeading">
                     <b>EMPLOYEE SEPARATION LISTING</b>
-                  </div>
-                  {loader === true ? (
-                    <div
-                      className="loader-box loader"
-                      style={{ width: "100% !important" }}
-                    >
-                      <div className="loader">
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                      </div>
-                    </div>
-                  ) : (
+                  </div>                
                     <div>
                       <Row
                         style={{
@@ -394,7 +539,7 @@ const EmployeeExitAction = () => {
                               <b>Emp Name/Id:</b>
                               <label className="itemResult">
                                 {" "}
-                                &nbsp;&nbsp; {state.empName} &nbsp;{state.empId}
+                                &nbsp;&nbsp; {state.employeeName} &nbsp;{state.employeeId}
                               </label>
                             </label>
                           </div>
@@ -404,7 +549,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Contract Type:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empContractType}
+                                &nbsp;&nbsp; {state.contractType}
                               </label>
                             </label>
                           </div>
@@ -414,7 +559,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Cost Center Name:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empCostCenterName}
+                                &nbsp;&nbsp; {state.costCenterName}
                               </label>
                             </label>
                           </div>
@@ -432,7 +577,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Location:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empLocation}
+                                &nbsp;&nbsp; {state.location}
                               </label>
                             </label>
                           </div>
@@ -442,7 +587,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Position:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empPosition}
+                                &nbsp;&nbsp; {state.position}
                               </label>
                             </label>
                           </div>
@@ -460,8 +605,8 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Manager Name/Id:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.mngrName}
-                                &nbsp; {state.mngrId}
+                                &nbsp;&nbsp; {state.managerName}
+                                &nbsp; {state.managerId}
                               </label>
                             </label>
                           </div>
@@ -471,7 +616,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Position:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.mngrPosition}
+                                &nbsp;&nbsp; {state.managerPosition}
                               </label>
                             </label>
                           </div>
@@ -481,7 +626,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Cost Center Name:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.mngrCostCenterName}
+                                &nbsp;&nbsp; {state.managerCostCentre}
                               </label>
                             </label>
                           </div>
@@ -536,21 +681,58 @@ const EmployeeExitAction = () => {
                           <div>
                             <label>
                               <b>Notice Period:</b>
-                              <label className="itemResult">
+                              {/* <label className="itemResult">
                                 &nbsp;&nbsp; {state.noticePeriod}
                               </label>
+                            </label> */}
+                              <label className="itemResult">
+                              &nbsp;&nbsp; {state.noticePeriod == 1?`${state.noticePeriod} Month`:state.noticePeriod >1?`${state.noticePeriod} Months`:''}
                             </label>
+                          </label>
                           </div>
                         </Col>
-                        <Col sm={4}>
+                        <Col sm={2}>
                           <div>
                             <label>
                               <b>Preffered Last Working Date:</b>
-                              <label className="itemResult">
+                              {/* <label className="itemResult">
                                 &nbsp;&nbsp; {state.lastWorkingDate}
-                              </label>
+                              </label> */}
                             </label>
+                            
                           </div>
+                          </Col>
+                          <Col sm={2}>
+                          <Form.Group>
+                                  <div
+                                    className={
+                                      lastWorkingDateError
+                                        ? "onBoard-date-error"
+                                        : "onBoard-date"
+                                    }
+                                  >
+                                    <DatePicker
+                                      className="form-control onBoard-view"
+                                      selected={lastWorkingDate}
+                                      name="lastWorkingDate"
+                                      minDate={new Date()}
+                                     maxDate={lastDateSelection}
+                                     minDate={moment().toDate()}
+                                      onChange={(e) => dateOfBirthHandler1(e)}
+                                      dateFormat="yyyy-MM-dd"
+                                      placeholderText="YYYY-MM-DD"
+                                      // disabled={disabled}
+                                    />
+                                  </div>
+                                  {lastWorkingDateError ? (
+                                    <p style={{ color: "red" }}>
+                                      {" "}
+                                      &nbsp; *Please enter valid date
+                                    </p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                </Form.Group>
                         </Col>
                         <Col sm={4}>
                           <div>
@@ -563,7 +745,7 @@ const EmployeeExitAction = () => {
                           </div>
                         </Col>
                       </Row>
-                      <Row
+                     {state.modeOfSeparationId == 4?<Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -575,7 +757,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Exit Feedback Form:</b>
                               <label className="itemResult">
-                                {/* &nbsp;&nbsp; {InfoState.empName} */}
+                                {/* &nbsp;&nbsp; {InfoState.employeeName} */}
                               </label>
                             </label>
                           </div>
@@ -583,13 +765,13 @@ const EmployeeExitAction = () => {
                         <Col sm={2}>
                           <div>
                             <label>
-                              <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform">
+                              <a  target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform">
                                 <u>Click here</u>
                               </a>
                             </label>
                           </div>
                         </Col>
-                      </Row>
+                      </Row>:""}
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -600,9 +782,9 @@ const EmployeeExitAction = () => {
                         <Col sm={12}>
                           <div>
                             <label>
-                              <b>Comments:</b>
+                              <b>Comment:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.comments}
+                                &nbsp;&nbsp; {state.employeeComment}
                               </label>
                             </label>
                           </div>
@@ -788,25 +970,17 @@ const EmployeeExitAction = () => {
                           textAlign: "center",
                         }}
                       >
-                        {/* <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button> */}
-
-                        {/* <button
-                          disabled={state.status === 4 || state.status === 3}
-                          className={
-                            state.status === 4 || state.status === 3
-                              ? "confirmButton"
-                              : "stepperButtons"
-                          }
-                          onClick={() =>
-                            handleConfirmation(state.exitId, paramsemployeeId)
-                          }
-                        >
-                          Confirm
-                        </button> */}
+                     <button
+                            disabled={submitted}
+                            className={
+                              submitted ? "confirmButton" : "stepperButtons"
+                            }
+                            onClick={submitHandler}
+                          >
+                            Save
+                          </button>
                        
-                          <button
+                          {submitted?<button
                             // disabled={previewLetter | showSuccessModal}
                             className="resignationButton"
                             onClick={() => {
@@ -815,7 +989,7 @@ const EmployeeExitAction = () => {
                             {modeOfSeparation === "Termination"
                               ? "View Letter"
                               : "View Letter"}
-                          </button>
+                          </button>:""}
                         
                       </div>
                       {submit === true && (
@@ -842,8 +1016,11 @@ const EmployeeExitAction = () => {
                           </button>
                         </div>
                       )}
+
+                  
+                       
                     </div>
-                  )}
+                  
                 </div>
               </div>
             </div>

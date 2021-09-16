@@ -72,6 +72,7 @@ const FullTimeToPartTimeLetter = () => {
           </div>
           <div className="mt-5 mb-5">
             <p>{offerLetterData.candidateName}</p>
+            <p>{offerLetterData.employeeId}</p>
             <p>{offerLetterData.address}</p>
             <p>{offerLetterData.cityName}</p>
           </div>
@@ -133,9 +134,9 @@ const FullTimeToPartTimeLetter = () => {
               Company goals as specified by your manager from time to time.
             </p>
             <p>
-              <b>{offerLetterData.managerName}</b> will be responsible to mentor
-              and guide you in this phase of your professional journey or any
-              such manager assigned by the later.
+              <b>Kamala Nagaraj</b> will be responsible to mentor and guide you
+              in this phase of your professional journey or any such manager
+              assigned by the later.
             </p>
             <p>
               We at Decathlon strongly believe in your ability to manage
