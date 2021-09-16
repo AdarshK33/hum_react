@@ -35,8 +35,8 @@ const TerminationLetter = () => {
                 <p>
                   Name:&nbsp;&nbsp;
                   {terminationLetterData !== undefined &&
-                  terminationLetterData.gender.toLowerCase() == "male"?`Mr.${terminationLetterData.employeeName}`
-                  :(terminationLetterData.gender.toLowerCase() == "female" && terminationLetterData.maritalStatus.toLowerCase() == "single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`}
+                  terminationLetterData.gender == "MALE"?`Mr.${terminationLetterData.employeeName}`
+                  :(terminationLetterData.gender == "FEMALE" && terminationLetterData.maritalStatus == "Single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`}
                 </p>
                 <p>
                   EmployeeId:&nbsp;&nbsp;
@@ -61,10 +61,10 @@ const TerminationLetter = () => {
                 Dear{" "}
                 <b>
                   {terminationLetterData !== undefined &&
-                  terminationLetterData.gender.toLowerCase() == "male"?
+                  terminationLetterData.gender == "MALE"?
                   `Mr.${terminationLetterData.employeeName}`
-                  :(terminationLetterData.gender.toLowerCase() == "female" && 
-                  terminationLetterData.maritalStatus.toLowerCase() == "single")?
+                  :(terminationLetterData.gender == "FEMALE" && 
+                  terminationLetterData.maritalStatus == "Single")?
                   `Miss. ${terminationLetterData.employeeName}`
                   :`Mrs.${terminationLetterData.employeeName}`}
                   
@@ -83,11 +83,9 @@ const TerminationLetter = () => {
                 {terminationLetterData !== undefined &&
                   terminationLetterData.reason}{" "}
                 at in {terminationLetterData.company}. 
-            The facts of the same are as below – (below details to be entered by the manager)
-                                        -
-                                        -
-                                        -
-
+            The facts of the same are as below 
+              </p>
+              <p>
             Hence the above acts of yours have constituted serious misconduct in
             connection with the employer’s business or property.
              Therefore, you are hereby terminated from your employment with Decathlon
@@ -137,7 +135,7 @@ const TerminationLetter = () => {
               <Col sm="4">
               <p> Accepted By
           Mr.{terminationLetterData !== undefined &&
-          terminationLetterData.costCentreManagerName}.
+          terminationLetterData.costCentreManagerName}
           </p>
               </Col>
               </Row>

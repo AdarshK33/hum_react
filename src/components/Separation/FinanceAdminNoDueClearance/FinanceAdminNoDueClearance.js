@@ -158,7 +158,9 @@ const FinanaceAdminNoDueClearance = () => {
     let fileObj = event.target.files[0];
 
     console.log("clicked", fileObj);
-    if(fileObj.name.includes(".xlsx")||fileObj.name.includes(".xls")){
+    if(fileObj !== undefined && fileObj !== null && fileObj !== "" && 
+    fileObj.name !== undefined && fileObj.name !== null && fileObj.name !== "" && 
+      (fileObj.name.includes(".xlsx")||fileObj.name.includes(".xls"))){
       setFileUpload(fileObj);
     }else{
       toast.error("Please select a valid file to upload")
@@ -256,7 +258,9 @@ const FinanaceAdminNoDueClearance = () => {
   };
   const handleUploadSettlement = () => {
     console.log(fileUpload,fileUpload.size,"file999")
-    if(fileUpload.name.includes(".xlsx")||fileUpload.name.includes(".xls")){
+    if(fileUpload !== undefined && fileUpload !== null && fileUpload !== "" && 
+    fileUpload.name !== undefined && fileUpload.name !== null && fileUpload.name !== "" && 
+      (fileUpload.name.includes(".xlsx")||fileUpload.name.includes(".xls"))){
     if(fileUpload.size/1024 < 500|| fileUpload.size/1024 == 500){
     if (fileUpload !== undefined && fileUpload !== null) {
       FinanceClearanceUploadSettlement(
