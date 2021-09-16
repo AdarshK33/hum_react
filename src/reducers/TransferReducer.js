@@ -4,6 +4,7 @@ const TransferReducer = (state, action) => {
       return {
         ...state,
         TRANSFERtype: action.payload,
+        initiationEmpData: null,
         initiationStatus: false,
       };
     case "FETCH_TRANSFER_LIST":
