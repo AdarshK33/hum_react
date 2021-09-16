@@ -334,10 +334,25 @@ const ProbationAction = () => {
     }
   };
   const changeHandler = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    let valid = /[^A-Za-z0-9'.,-_ ]/;
+    if (
+      (e.target.name === "remarks" || e.target.name === "reason") &&
+      e.target.value !== ""
+    ) {
+      if (valid.test(e.target.value) === true) {
+        console.log("do nothing");
+      } else {
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+        });
+      }
+    } else {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+    }
     console.log(state);
   };
   const dateOfBirthHandler = (date) => {
@@ -624,7 +639,7 @@ const ProbationAction = () => {
         <ExtensionLetter1 />
       ) : (
         ""
-      )}    
+      )}
 
       <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -1125,6 +1140,7 @@ const ProbationAction = () => {
                                         as="textarea"
                                         rows={4}
                                         name="reason"
+                                        maxlength="500"
                                         className="non-disable blueTextData"
                                         value={state.reason}
                                         onChange={changeHandler}
@@ -1181,6 +1197,7 @@ const ProbationAction = () => {
                                         rows={4}
                                         name="remarks"
                                         className="non-disable blueTextData"
+                                        maxlength="500"
                                         value={state.remarks}
                                         onChange={changeHandler}
                                         required
