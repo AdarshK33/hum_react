@@ -30,7 +30,12 @@ const OfferAccept = (props) => {
   const [yesChecked, setYesChecked] = useState(false);
   const [noChecked, setNoChecked] = useState(false);
 
-  const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
+  const {
+    CandidateProfile,
+    candidateProfileData,
+    generateCandidateLetter,
+    candidateLetterData,
+  } = useContext(OnBoardContext);
   const { candidateRejectOffer, candidateAcceptOffer, offerAcceptData } =
     useContext(CandidateContext);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
@@ -62,9 +67,11 @@ const OfferAccept = (props) => {
   useEffect(() => {
     console.log("candidateProfileData offer accept", candidateProfileData);
     viewCandidateId(candidateProfileData.candidateId);
+    generateCandidateLetter(candidateProfileData.candidateId);
   }, [candidateProfileData]);
 
   const showLetterClick = (e) => {
+    console.log("candidate Offer", candidateLetterData);
     setShowLetter(true);
   };
 

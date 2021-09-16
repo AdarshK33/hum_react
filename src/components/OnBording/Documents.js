@@ -406,7 +406,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = false;
       tempArray[0].ReqCollegeId = false;
       tempArray[0].ReqCollegeLetter = false;
-      tempArray[0].HigestEducationLetter = true;
+      tempArray[0].HigestEducationLetter = false;
       setFandP_Required(tempArray);
     }
     if (localExpact === true) {
@@ -569,9 +569,11 @@ const Documents = (props) => {
       console.log("releivingSuccess");
       return true;
     } else {
-      setRelievingLetterError(true);
+      // setRelievingLetterError(true);
+      setRelievingLetterError(false);
       console.log("releivingFail");
-      return false;
+      // return false;
+      return true;
     }
   };
   const PaySlipsValidation = () => {
@@ -583,9 +585,11 @@ const Documents = (props) => {
     } else {
       console.log("in else Validation");
 
-      setLatestPaySlipsError(true);
+      // setLatestPaySlipsError(true);
+      setLatestPaySlipsError(false);
       console.log("paySlipsFail");
-      return false;
+      // return false;
+      return true;
     }
   };
 
@@ -758,37 +762,37 @@ const Documents = (props) => {
     }
   };
   const RelivingLetterUploadValidation = () => {
-    if (CandidateFirstJob === true) {
-      if (UploadedArray[0].ULRelivingLetter === false) {
-        if (RelievingLetterValidation() === true) {
-          setRelievingLetterError(true);
-          return false;
-        }
-      } else {
-        return true;
+    // if (CandidateFirstJob === true) {
+    if (UploadedArray[0].ULRelivingLetter === false) {
+      if (RelievingLetterValidation() === true) {
+        setRelievingLetterError(true);
+        return false;
       }
     } else {
       return true;
     }
+    // } else {
+    //   return true;
+    // }
   };
   const LatestPaySlipsUploadValidation = () => {
-    if (CandidateFirstJob === true) {
-      if (UploadedArray[0].ULLatestPaySlip === false) {
-        console.log("Upload in if");
+    // if (CandidateFirstJob === true) {
+    if (UploadedArray[0].ULLatestPaySlip === false) {
+      console.log("Upload in if");
 
-        if (PaySlipsValidation() === true) {
-          console.log("Upload in nested if");
+      if (PaySlipsValidation() === true) {
+        console.log("Upload in nested if");
 
-          setLatestPaySlipsError(true);
-          return false;
-        }
-      } else {
-        console.log("Upload in else");
-        return true;
+        setLatestPaySlipsError(true);
+        return false;
       }
     } else {
+      console.log("Upload in else");
       return true;
     }
+    // } else {
+    //   return true;
+    // }
   };
 
   const isAllFilesUploaded1 = () => {
@@ -936,42 +940,55 @@ const Documents = (props) => {
     console.log("changeHandler", event.target.name);
     let fileObj = event.target.files[0];
     console.log("photoIdChangeHandler", fileObj);
-    setState({
-      ...state,
-      [event.target.name]: fileObj,
-    });
-    setStateOfNames({
-      ...stateOfName,
-      [event.target.name]: fileObj.name,
-    });
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setState({
+          ...state,
+          [event.target.name]: fileObj,
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: fileObj.name,
+        });
 
-    if (event.target.name === "photoId") {
-      UploadedArray[0].ULPhotoId = false;
-    } else if (event.target.name === "aadharId") {
-      UploadedArray[0].ULAdharId = false;
-    } else if (event.target.name === "panId") {
-      UploadedArray[0].ULPanId = false;
-    } else if (event.target.name === "addressProof") {
-      UploadedArray[0].ULAddressProof = false;
-    } else if (event.target.name === "passport") {
-      UploadedArray[0].ULPassport = false;
-    } else if (event.target.name === "frro") {
-      UploadedArray[0].ULFrro = false;
-    } else if (event.target.name === "epfPassBook") {
-      UploadedArray[0].ULEpfPassBook = false;
-    } else if (event.target.name === "cancelledCheque") {
-      UploadedArray[0].ULCancelledCheque = false;
-    } else if (event.target.name === "collegeLetter") {
-      UploadedArray[0].ULCollegeLetter = false;
-    } else if (event.target.name === "collegeId") {
-      UploadedArray[0].ULCollegeId = false;
-    } else if (event.target.name === "educationCertificate") {
-      UploadedArray[0].ULEducationCer = false;
-    } else if (event.target.name === "relievingLetter") {
-      UploadedArray[0].ULRelivingLetter = false;
-    } else if (event.target.name === "latestPaySlips") {
-      console.log("uploading payslip");
-      UploadedArray[0].ULLatestPaySlip = false;
+        if (event.target.name === "photoId") {
+          UploadedArray[0].ULPhotoId = false;
+        } else if (event.target.name === "aadharId") {
+          UploadedArray[0].ULAdharId = false;
+        } else if (event.target.name === "panId") {
+          UploadedArray[0].ULPanId = false;
+        } else if (event.target.name === "addressProof") {
+          UploadedArray[0].ULAddressProof = false;
+        } else if (event.target.name === "passport") {
+          UploadedArray[0].ULPassport = false;
+        } else if (event.target.name === "frro") {
+          UploadedArray[0].ULFrro = false;
+        } else if (event.target.name === "epfPassBook") {
+          UploadedArray[0].ULEpfPassBook = false;
+        } else if (event.target.name === "cancelledCheque") {
+          UploadedArray[0].ULCancelledCheque = false;
+        } else if (event.target.name === "collegeLetter") {
+          UploadedArray[0].ULCollegeLetter = false;
+        } else if (event.target.name === "collegeId") {
+          UploadedArray[0].ULCollegeId = false;
+        } else if (event.target.name === "educationCertificate") {
+          UploadedArray[0].ULEducationCer = false;
+        } else if (event.target.name === "relievingLetter") {
+          UploadedArray[0].ULRelivingLetter = false;
+        } else if (event.target.name === "latestPaySlips") {
+          console.log("uploading payslip");
+          UploadedArray[0].ULLatestPaySlip = false;
+        }
+      } else {
+        toast.info("File size should not exceed 500kb");
+      }
+    } else {
+      toast.info("Please select jpg png and pdf formats");
     }
   };
 
@@ -1192,7 +1209,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="photoId"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -1295,7 +1312,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="aadharId"
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
@@ -1406,7 +1423,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="panId"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -1503,7 +1520,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="addressProof"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -1599,7 +1616,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="passport"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -1695,7 +1712,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="frro"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -1809,7 +1826,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="epfPassBook"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -1919,7 +1936,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="cancelledCheque"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -2028,7 +2045,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="collegeLetter"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -2125,7 +2142,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="collegeId"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -2222,7 +2239,7 @@ const Documents = (props) => {
                       : "Select File Here"}
                     <input
                       type="file"
-                      accept="image/jpeg,.pdf"
+                      accept="image/*,.pdf"
                       name="educationCertificate"
                       style={{ display: "none" }}
                       onChange={(e) => {
@@ -2298,11 +2315,7 @@ const Documents = (props) => {
               <Row>
                 <Col>
                   <Form.Group>
-                    <div
-                      className={
-                        CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
-                      }
-                    >
+                    <div className="FileInputWithOutStar">
                       <label>Relieving Letter</label>
                     </div>
                     <div className="parentInput">
@@ -2313,7 +2326,7 @@ const Documents = (props) => {
                           : "Select File Here"}
                         <input
                           type="file"
-                          accept="image/jpeg,.pdf"
+                          accept="image/*,.pdf"
                           name="relievingLetter"
                           style={{ display: "none" }}
                           onChange={(e) => {
@@ -2387,11 +2400,7 @@ const Documents = (props) => {
               <Row>
                 <Col>
                   <Form.Group>
-                    <div
-                      className={
-                        CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
-                      }
-                    >
+                    <div className="FileInputWithOutStar">
                       <label>Latest Payslips</label>
                     </div>
                     <div className="parentInput">
@@ -2402,7 +2411,7 @@ const Documents = (props) => {
                           : "Select File Here"}
                         <input
                           type="file"
-                          accept="image/jpeg,.pdf"
+                          accept="image/*,.pdf"
                           name="latestPaySlips"
                           style={{ display: "none" }}
                           onChange={(e) => {

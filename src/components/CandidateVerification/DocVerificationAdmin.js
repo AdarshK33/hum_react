@@ -224,19 +224,47 @@ const DocVerification = () => {
     }
     // setOnboardPopup(true);
   };
+  var educationDocuments = "";
   var documents =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType <= 5)
+      .filter(
+        (personal) =>
+          personal.documentType <= 5 ||
+          personal.documentType === 14 ||
+          personal.documentType === 17
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
-  var educationDocuments =
+  educationDocuments =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType >= 6)
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType !== 14
+      )
+      .map((filteredResult) => {
+        return filteredResult;
+      });
+  educationDocuments =
+    educationDocuments !== undefined &&
+    educationDocuments !== null &&
+    educationDocuments
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType !== 17
+      )
+      .map((filteredResult) => {
+        return filteredResult;
+      });
+  educationDocuments =
+    educationDocuments !== undefined &&
+    educationDocuments !== null &&
+    educationDocuments
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType !== 24
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -309,6 +337,7 @@ const DocVerification = () => {
           <thead>
             <tr>
               <th></th>
+              <th>View</th>
               <th>Download</th>
               <th>Status</th>
               <th>Remarks</th>
@@ -396,6 +425,20 @@ const DocVerification = () => {
                               (First page of the book)
                             </span>
                           </label>
+                        ) : item.documentType === 14 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Passport
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 17 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              FRRO
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
                         ) : (
                           item.documentType === 5 && (
                             <label>
@@ -426,6 +469,15 @@ const DocVerification = () => {
                       >
                         Download
                       </button> */}
+                    </td>
+
+                    <td className="buttonMargin1">
+                      <a
+                        href={process.env.REACT_APP_S3_URL + item.documentName}
+                        target="_blank"
+                      >
+                        <button className="downloadButton">View</button>
+                      </a>
                     </td>
                     <td className="buttonMargin1">
                       <button
@@ -671,13 +723,6 @@ const DocVerification = () => {
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </p>
-                        ) : item.documentType === 14 ? (
-                          <p>
-                            <span style={{ color: "black", fontSize: "16px" }}>
-                              Passport
-                            </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </p>
                         ) : item.documentType === 15 ? (
                           <p>
                             <span style={{ color: "black", fontSize: "16px" }}>
@@ -685,27 +730,35 @@ const DocVerification = () => {
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </p>
-                        ) : item.documentType === 16 ? (
-                          <p>
-                            <span style={{ color: "black", fontSize: "16px" }}>
-                              CollegeId
-                            </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
-                          </p>
                         ) : (
-                          item.documentType === 17 && (
+                          item.documentType === 16 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                FRRO
+                                CollegeId
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
                           )
                         )}
+                        {/* : ( */}
+                        {/* item.documentType === 17 && ( */}
+                        {/* <p> */}
+                        {/* <span */}
+                        {/* style={{ color: "black", fontSize: "16px" }} */}
+                        {/* > */}
+                        {/* FRRO */}
+                        {/* </span>{" "} */}
+                        {/* <span style={{ color: "red" }}>*</span> */}
+                        {/* </p> */}
+                        {/* ) */}
+                        {/* ) */}
                       </p>
-                      {item.documentType >= 6 && item.documentType !== 24 ? (
+                      {item.documentType >= 6 &&
+                      item.documentType !== 24 &&
+                      item.documentType !== 14 &&
+                      item.documentType !== 17 ? (
                         <React.Fragment>
                           <a
                             href={
@@ -729,17 +782,196 @@ const DocVerification = () => {
                         ""
                       )}
                     </td>
-                    {item.documentType >= 6 && item.documentType !== 24 ? (
-                      <td className="buttonMargin1">
-                        <button
-                          className="downloadButton"
-                          onClick={() => downloadDocument(item.documentName)}
-                        >
-                          Download
-                        </button>
-                      </td>
+
+                    {item.documentType >= 6 &&
+                    item.documentType !== 24 &&
+                    item.documentType !== 14 &&
+                    item.documentType !== 17 ? (
+                      <React.Fragment>
+                        <td className="buttonMargin1">
+                          <a
+                            href={
+                              process.env.REACT_APP_S3_URL + item.documentName
+                            }
+                            target="_blank"
+                          >
+                            <button className="downloadButton">View</button>
+                          </a>
+                        </td>
+                        <td className="buttonMargin1">
+                          <button
+                            className="downloadButton"
+                            onClick={() => downloadDocument(item.documentName)}
+                          >
+                            Download
+                          </button>
+                        </td>
+                      </React.Fragment>
                     ) : (
                       ""
+                    )}
+                    {item.statusDesc !== null &&
+                    item.documentType === 10 &&
+                    (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                    ) : item.statusDesc !== null &&
+                      item.documentType === 11 &&
+                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                    ) : item.statusDesc !== null &&
+                      item.documentType === 12 &&
+                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                    ) : (
+                      <td className=" buttonMargin1">
+                        {rolePermission == "admin" &&
+                        item.documentType === 10 &&
+                        item.adminStatus === 0 ? (
+                          <button
+                            className="approveButton ml-4"
+                            disabled={rejectStatus === "FAIL" ? true : false}
+                            onClick={() =>
+                              handleApproveDocument(
+                                item.documentId,
+                                candidateId
+                              )
+                            }
+                          >
+                            Approve
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {rolePermission == "admin" &&
+                        item.documentType === 11 &&
+                        item.adminStatus === 0 ? (
+                          <button
+                            className="approveButton ml-4"
+                            disabled={rejectStatus === "FAIL" ? true : false}
+                            onClick={() =>
+                              handleApproveDocument(
+                                item.documentId,
+                                candidateId
+                              )
+                            }
+                          >
+                            Approve
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                        {rolePermission == "admin" &&
+                        item.documentType === 12 &&
+                        item.adminStatus === 0 ? (
+                          <button
+                            className="approveButton ml-4"
+                            disabled={rejectStatus === "FAIL" ? true : false}
+                            onClick={() =>
+                              handleApproveDocument(
+                                item.documentId,
+                                candidateId
+                              )
+                            }
+                          >
+                            Approve
+                          </button>
+                        ) : (
+                          ""
+                        )}
+
+                        {rolePermission == "admin" &&
+                        item.documentType === 10 &&
+                        item.adminStatus === 0 ? (
+                          <button
+                            className="approveButton ml-4"
+                            disabled={
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
+                                ? true
+                                : false
+                            }
+                            style={
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
+                                ? { opacity: "0.6" }
+                                : { opacity: "1" }
+                            }
+                            onClick={() =>
+                              handleDisApproveDocument(item.documentId)
+                            }
+                          >
+                            Disapprove
+                          </button>
+                        ) : (
+                          <div></div>
+                        )}
+                        {rolePermission == "admin" &&
+                        item.documentType === 11 &&
+                        item.adminStatus === 0 ? (
+                          <button
+                            className="approveButton ml-4"
+                            disabled={
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
+                                ? true
+                                : false
+                            }
+                            style={
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
+                                ? { opacity: "0.6" }
+                                : { opacity: "1" }
+                            }
+                            onClick={() =>
+                              handleDisApproveDocument(item.documentId)
+                            }
+                          >
+                            Disapprove
+                          </button>
+                        ) : (
+                          <div></div>
+                        )}
+                        {rolePermission == "admin" &&
+                        item.documentType === 12 &&
+                        item.adminStatus === 0 ? (
+                          <button
+                            className="approveButton ml-4"
+                            disabled={
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
+                                ? true
+                                : false
+                            }
+                            style={
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
+                                ? { opacity: "0.6" }
+                                : { opacity: "1" }
+                            }
+                            onClick={() =>
+                              handleDisApproveDocument(item.documentId)
+                            }
+                          >
+                            Disapprove
+                          </button>
+                        ) : (
+                          <div></div>
+                        )}
+                      </td>
+                    )}
+                    {(item.documentType === 10 ||
+                      item.documentType === 11 ||
+                      item.documentType === 12) && (
+                      <td className="buttonMargin1">
+                        {item.remark !== null ? item.remark : "N/A"}
+                      </td>
+                    )}
+                    {(item.documentType === 10 ||
+                      item.documentType === 11 ||
+                      item.documentType === 12) && (
+                      <td className="buttonMargin1">
+                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
+                      </td>
                     )}
                     {/* {item.reviewStatus !== null && item.documentType >= 6 && (
                       <td>{item.reviewStatus}</td>

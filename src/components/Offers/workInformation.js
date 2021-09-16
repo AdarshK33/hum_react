@@ -44,7 +44,7 @@ const WorkInformation = (props) => {
   const [workInformationData, setWorkInformationData] = useState({});
   const [dateOfIssue, setDateOfIssue] = useState();
   const [dateOfValidity, setDateOfValidity] = useState();
-
+  const [nationalityList, setNationalityList] = useState();
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
   const {
@@ -85,6 +85,14 @@ const WorkInformation = (props) => {
     stateData();
     viewCountries();
   }, []);
+
+  useEffect(() => {
+    let nationList = countryList.filter(
+      (item) => item.nationality !== "Indian"
+    );
+    console.log("contract list", nationList);
+    setNationalityList(nationList);
+  }, [countryList]);
   // useEffect(() => {
   //   let data =
   //     workInfoViewData !== undefined &&
@@ -363,8 +371,8 @@ const WorkInformation = (props) => {
         expatUser: 0,
         nationality: state.nationality,
         passportNumber: state.passportNumber,
-        passportExpiryDate: moment(dateOfValidity).format("YYYY-MM-DD"),
-        passportIssuedDate: moment(dateOfIssue).format("YYYY-MM-DD"),
+        passportExpiryDate: "",
+        passportIssuedDate: "",
       };
     } else if (
       createCandidateResponse.candidateId &&
@@ -405,9 +413,9 @@ const WorkInformation = (props) => {
         sportId: state.sports,
         expatUser: 0,
         nationality: state.nationality,
-        passportNumber: state.passportNumber,
-        passportExpiryDate: moment(dateOfValidity).format("YYYY-MM-DD"),
-        passportIssuedDate: moment(dateOfIssue).format("YYYY-MM-DD"),
+        passportNumber: "",
+        passportExpiryDate: "",
+        passportIssuedDate: "",
       };
     }
     console.log("createData", createData);
@@ -900,7 +908,7 @@ const WorkInformation = (props) => {
                 </Form.Group>
               </Col>
             )} */}
-            {state.employmentType === "Local Expat" && (
+            {/* {state.employmentType === "Local Expat" && (
               <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Passport Number</Form.Label>
@@ -916,7 +924,7 @@ const WorkInformation = (props) => {
                   />
                 </Form.Group>
               </Col>
-            )}
+            )} */}
 
             {state.employmentType === "Local Expat" && (
               <React.Fragment>
@@ -933,9 +941,9 @@ const WorkInformation = (props) => {
                       required
                     >
                       <option value="">Select Nationality</option>
-                      {countryList !== null &&
-                        countryList !== undefined &&
-                        countryList.map((item) => {
+                      {nationalityList !== null &&
+                        nationalityList !== undefined &&
+                        nationalityList.map((item) => {
                           return (
                             <option key={item.countryId}>
                               {item.nationality}
@@ -945,7 +953,7 @@ const WorkInformation = (props) => {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-                <Col sm={3}>
+                {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date of Issue</Form.Label>
                     <DatePicker
@@ -958,8 +966,8 @@ const WorkInformation = (props) => {
                       disabled={disabled}
                     />
                   </Form.Group>
-                </Col>
-                <Col sm={3}>
+                </Col> */}
+                {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date Of Validity</Form.Label>
                     <DatePicker
@@ -973,7 +981,7 @@ const WorkInformation = (props) => {
                       disabled={disabled}
                     />
                   </Form.Group>
-                </Col>
+                </Col> */}
               </React.Fragment>
             )}
           </Row>
