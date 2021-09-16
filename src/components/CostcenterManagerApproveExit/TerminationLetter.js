@@ -140,12 +140,15 @@ const TerminationLetter = (props) => {
                   )}
                   {!showSignature && (
                     <div className="mt-3">
+                           <>
+                    <br/>
                       <button
                         className="signatureButtons"
                         onClick={() => addSignature()}
                       >
                         Add Signature
                       </button>
+                      </>
                     </div>
                   )}
                 </div>
