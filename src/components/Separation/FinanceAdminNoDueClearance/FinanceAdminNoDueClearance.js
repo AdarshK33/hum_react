@@ -249,7 +249,9 @@ const FinanaceAdminNoDueClearance = () => {
     setGridColumnApi(params.columnApi);
   };
   const handleUploadSettlement = () => {
-    console.log(fileUpload,"file999")
+    console.log(fileUpload,fileUpload.size,"file999")
+    if(fileUpload.size/1024 < 500|| fileUpload.size/1024 == 500){
+
     if (fileUpload !== undefined && fileUpload !== null) {
       FinanceClearanceUploadSettlement(
         fileUpload,
@@ -260,6 +262,9 @@ const FinanaceAdminNoDueClearance = () => {
     } else {
       toast.error("Please select a file to upload");
     }
+  }else{
+    toast.error("File size should not exceed 500kb ");
+  }
   };
   const onSelectionChanged = (e) => {
     let formData = e.data;
@@ -453,7 +458,7 @@ const FinanaceAdminNoDueClearance = () => {
                     </Button>
                     <input
                       type="file"
-                      accept=".xlsx, .xls, .csv"
+                      accept=".xlsx, .xls"
                       style={{
                         marginTop: "2px",
                         float: "right",
