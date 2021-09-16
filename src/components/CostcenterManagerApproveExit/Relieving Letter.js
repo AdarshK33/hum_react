@@ -85,7 +85,12 @@ const RelievingLetter = (props) => {
                     <p>
                       Name:&nbsp;&nbsp;
                       {relivingLetterData !== undefined &&
-                        relivingLetterData.employeeName}
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`}
                     </p>
                     <p>
                       EmployeeId:&nbsp;&nbsp;
@@ -104,8 +109,13 @@ const RelievingLetter = (props) => {
                     {" "}
                     Dear{" "}
                     <b>
-                      {relivingLetterData !== undefined &&
-                        relivingLetterData.employeeName}
+                    {relivingLetterData !== undefined &&
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`}
                       ,
                     </b>{" "}
                   </p>
@@ -129,9 +139,10 @@ const RelievingLetter = (props) => {
                     accord. We wish him all the best in his future endeavours.
                   </p>
                   <p className="mt-5 mb-5">
-                    <b>For Decathlon Sports India India Pvt Ltd,</b>
-                  </p>
+              <b>For {relivingLetterData.company} Pvt Ltd,</b>
+            </p>
                 </div>
+
                 <div style={{ textAlign: "end" }}>
                   {showSignature && (
                    <Fragment>
@@ -157,16 +168,6 @@ const RelievingLetter = (props) => {
                   )}
                 </div>
               </div>
-              {/* <div className="text-center mt-5 mb-5">
-                {showSignature && (
-                  <button
-                    className="signatureButtons"
-                    onClick={() => handleSave()}
-                  >
-                    Save
-                  </button>
-                )}
-              </div> */}
                 {showSignature  ? (
               <Row>
                 <Col sm={4}></Col>

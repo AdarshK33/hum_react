@@ -156,8 +156,14 @@ const FinanaceAdminNoDueClearance = () => {
   };
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
+
     console.log("clicked", fileObj);
-    setFileUpload(fileObj);
+    if(fileObj.name.includes(".xlsx")||fileObj.name.includes(".xls")){
+      setFileUpload(fileObj);
+    }else{
+      toast.error("Please select a valid file to upload")
+
+    }
     // uploadFile(fileObj)
     // setTimeout(()=>{
     //   window.location.reload()
@@ -250,8 +256,8 @@ const FinanaceAdminNoDueClearance = () => {
   };
   const handleUploadSettlement = () => {
     console.log(fileUpload,fileUpload.size,"file999")
+    if(fileUpload.name.includes(".xlsx")||fileUpload.name.includes(".xls")){
     if(fileUpload.size/1024 < 500|| fileUpload.size/1024 == 500){
-
     if (fileUpload !== undefined && fileUpload !== null) {
       FinanceClearanceUploadSettlement(
         fileUpload,
@@ -265,6 +271,9 @@ const FinanaceAdminNoDueClearance = () => {
   }else{
     toast.error("File size should not exceed 500kb ");
   }
+}else{
+  toast.error("Please select a valid file to upload")
+}
   };
   const onSelectionChanged = (e) => {
     let formData = e.data;
@@ -458,7 +467,7 @@ const FinanaceAdminNoDueClearance = () => {
                     </Button>
                     <input
                       type="file"
-                      accept=".xlsx, .xls"
+                       accept=".xlsx, .xls"
                       style={{
                         marginTop: "2px",
                         float: "right",
