@@ -87,7 +87,7 @@ const EmployeeExitView = () => {
       state.mngrId = employeeData.managerId ? employeeData.managerId : "";
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
-      // state.modeOfSeparationId = employeeData.modeOfSeparationId;
+       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
@@ -674,16 +674,25 @@ const EmployeeExitView = () => {
                         marginBottom: "3rem",
                       }}
                     >
-                      <Col sm={4}>
+                     { state.empContractType !== "internship" ?<Col sm={4}>
                         <div>
                           <label>
                             <b>Notice Period:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.noticePeriod}
+                              &nbsp;&nbsp; {state.noticePeriod == 1?`${state.noticePeriod} Month`:state.noticePeriod >1?`${state.noticePeriod} Months`:''}
                             </label>
                           </label>
                         </div>
-                      </Col>
+                      </Col>:(<Col sm={4}>
+                                    <div>
+                                    <label>
+                                <b>Internship contract end date:</b>
+                                 <label className="itemResult">
+                          &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                                    </label>
+                                   </label>
+                              </div>
+                               </Col> )}
                       <Col sm={4}>
                         <div>
                           <label>
@@ -705,7 +714,7 @@ const EmployeeExitView = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Row
+                    {state.modeOfSeparationId == 4?<> <Row
                       style={{
                         marginLeft: "2rem",
                         marginTop: "1rem",
@@ -725,7 +734,7 @@ const EmployeeExitView = () => {
                       <Col sm={2}>
                         <div>
                           <label className="itemResult">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="itemResult">
+                            <a  target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="itemResult">
                               <u>Click here</u>
                             </a>
                           </label>
@@ -749,8 +758,11 @@ const EmployeeExitView = () => {
                           </label>
                         </div>
                       </Col>
-                    </Row>
-                    <Row
+                    </Row></>:""}
+                   {state.empContractType !== "" &&
+                   state.empContractType !== null &&
+                   state.empContractType !== undefined &&
+                   state.empContractType !== "internship" ? <Row
                       style={{
                         marginTop: "2rem",
                         marginLeft: "2rem",
@@ -898,7 +910,7 @@ const EmployeeExitView = () => {
                           </div>
                         </Form.Group>
                       </Col>
-                    </Row>
+                    </Row>:''}
                     {state.remarks !== "" &&
                     state.remarks !== null &&
                     state.remarks !== undefined ? (

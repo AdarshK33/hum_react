@@ -5,6 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { AppContext } from "../../context/AppState";
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css";
 import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
@@ -304,6 +306,10 @@ console.log(employeeData)
         console.log(reasonOfSeparationList[i].value);
       }
     });
+    console.log(user,"user888")
+    if(user.contractType == "internship"){
+      toast.error("internship employee cannot raise self resignation")
+    }else{
     const data1 = {
       company: user.company,
       contractType: user.contractType,
@@ -354,6 +360,7 @@ console.log(employeeData)
     CreateEmplyoeeExist(data1, user.employeeId);
     // ViewEmployeeDataById(user.employeeId);
     setSubmitted(true);
+  }
   };
 
   const withdrawHandler = (e) => {

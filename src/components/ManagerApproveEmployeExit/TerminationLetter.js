@@ -5,13 +5,22 @@ import moment from "moment";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const TerminationLetter = () => {
-  const { terminationLetterData, fetchTerminationLetterData } = useContext(
+  const { terminationLetterData,loader, fetchTerminationLetterData } = useContext(
     EmployeeSeparationContext
   );
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {typeof terminationLetterData !== undefined ? (
+      {loader ? (
+        <div className="loader-box loader" style={{ width: "100% !important" }}>
+          <div className="loader">
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+            <div className="line bg-primary"></div>
+          </div>
+        </div>
+      ):typeof terminationLetterData !== undefined ? (
         <Fragment>
           <div>
             <p className="float-left mb-5">
