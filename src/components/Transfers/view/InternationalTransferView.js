@@ -17,7 +17,7 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="mb-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Empployee Name:</Col>
+            <Col md={5}>Employee Name:</Col>
             <Col md={7} className="text-primary">
               {transferData.employeeName} {transferData.currentEmployeeId}
             </Col>
