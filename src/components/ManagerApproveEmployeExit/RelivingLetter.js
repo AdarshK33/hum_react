@@ -29,14 +29,26 @@ const RelivingLetter = () => {
           <br></br>
           <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
 
-          <p>Name:{relivingLetterData !== undefined && relivingLetterData.employeeName}</p>
+          <p>Name:{relivingLetterData !== undefined &&
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`}</p>
           <p>EmployeeId:{relivingLetterData !== undefined && relivingLetterData.employeeId}</p>
           <p>Designation:{relivingLetterData !== undefined && relivingLetterData.designation}</p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{relivingLetterData !== undefined && relivingLetterData.employeeName},</b>{" "}
+              Dear <b>{relivingLetterData !== undefined &&
+                  relivingLetterData.gender.toLowerCase() == "male"?
+                  `Mr.${relivingLetterData.employeeName}`
+                  :(relivingLetterData.gender.toLowerCase() == "female" && 
+                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  `Miss. ${relivingLetterData.employeeName}`
+                  :`Mrs.${relivingLetterData.employeeName}`}</b>{" "}
             </p>
             <p>
               With reference to your resignation. We would like to inform you
