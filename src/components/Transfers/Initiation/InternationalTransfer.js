@@ -361,9 +361,9 @@ const InternationalTransfer = () => {
         initiationEmpData.currentContractType === "parttime")
     ) {
       if (Valid.test(newGross)) {
-        if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+        if (parseInt(newGross) < 90 || parseInt(newGross) > 400) {
           validForm = false;
-          setNewGrossErrMsg("Value should be between 90 - 200");
+          setNewGrossErrMsg("Value should be between 90 - 400");
           console.log("validForm", validForm);
         }
       } else {
@@ -413,7 +413,8 @@ const InternationalTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation details saved successfully, Admin has notified
+              Tansfer initiation details saved successfully, Admin has been
+              notified
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleModalClose}>Close</Button>
