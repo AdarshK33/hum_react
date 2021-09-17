@@ -441,10 +441,26 @@ const EmployeShowCaseLetter = () => {
     }
   };
   const changeHandler = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
+    let valid = /[^A-Za-z0-9'.,-_ ]/;
+    if (e.target.name === "empRemark" && e.target.value !== "") {
+      if (valid.test(e.target.value) === true) {
+        console.log("do nothing");
+      } else {
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+        });
+      }
+    } else {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+    }
+    // setState({
+    //   ...state,
+    //   [e.target.name]: e.target.value,
+    // });
 
     console.log(state);
   };
@@ -860,6 +876,7 @@ const EmployeShowCaseLetter = () => {
                                 }
                                 as="textarea"
                                 rows={4}
+                                maxLength="500"
                                 name="empRemark"
                                 value={state.empRemark}
                                 placeholder="Write here.."

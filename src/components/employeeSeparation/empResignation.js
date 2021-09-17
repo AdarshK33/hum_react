@@ -5,14 +5,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { AppContext } from "../../context/AppState";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 const EmpResignation = () => {
   const [regDate, setRegDate] = useState(new Date());
-  const [noticePeriod,setNoticePeriod] = useState(0)
+  const [noticePeriod, setNoticePeriod] = useState(0);
   const [lastDate, setLastDate] = useState();
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
@@ -22,10 +22,9 @@ const EmpResignation = () => {
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
-  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
-  const { locationDetails, locationDetailsList } = useContext(
-    PermissionContext
-  );
+  const [lastDateSelection, setLastDateSelection] = useState(new Date());
+  const { locationDetails, locationDetailsList } =
+    useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const {
     employeeData,
@@ -44,7 +43,7 @@ const EmpResignation = () => {
     withdraw,
     loader,
   } = useContext(SeparationContext);
-  console.log("employeeData",user, employeeData);
+  console.log("employeeData", user, employeeData);
   useEffect(() => {
     locationDetails();
   }, []);
@@ -67,13 +66,13 @@ const EmpResignation = () => {
   }, [user.costCentre]);
   console.log(user, "user");
   useEffect(() => {
-    if(employeeData == null){
-    ViewEmployeeDataById(user.employeeId);
-    setSubmitted(false)
-    setReasonOfSepration("");
-      setComments()
-    modeOfSeparation();
-    ModeOfSeparationView(); 
+    if (employeeData == null) {
+      ViewEmployeeDataById(user.employeeId);
+      setSubmitted(false);
+      setReasonOfSepration("");
+      setComments();
+      modeOfSeparation();
+      ModeOfSeparationView();
     }
   }, [employeeData]);
   useEffect(() => {
@@ -101,13 +100,13 @@ const EmpResignation = () => {
         Object.keys(managerNames).length !== 0
       ) {
         setApprover(managerNames[0].firstName + " " + managerNames[0].lastName);
-        setApproverId(managerNames[0].employeeId)
+        setApproverId(managerNames[0].employeeId);
       }
     }
   }, [managerList]);
 
   useEffect(() => {
-    console.log("profile data", user,"profile data1", employeeData);
+    console.log("profile data", user, "profile data1", employeeData);
     if (
       user !== null &&
       user !== undefined &&
@@ -122,27 +121,35 @@ const EmpResignation = () => {
       // }else{
       //   setNoticePeriod(1)
       // }
-     
     }
-    if((user !== null &&
-      user !== undefined) && (user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance") && (user.contractType === "permanent" ||user.contractType === "parttime" )){
-      setNoticePeriod(2)
-      var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (2)))
-      let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1)))
-    ;
-      setLastDateSelection(aboveDateValue)
+    if (
+      user !== null &&
+      user !== undefined &&
+      (user.department == "AFS" ||
+        user.department == "IT" ||
+        user.department == "Legal" ||
+        user.department == "Finance") &&
+      (user.contractType === "permanent" || user.contractType === "parttime")
+    ) {
+      setNoticePeriod(2);
+      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 2));
+      let aboveDateValue = new Date(
+        new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
+      );
+      setLastDateSelection(aboveDateValue);
       setEmailId(user.personalEmail);
-      setLastDate(dateValue)
-      console.log(dateValue,aboveDateValue,"2")
-    }else{
-      setNoticePeriod(1)
-      var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (1)))
-      let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1)))
-      setLastDateSelection(aboveDateValue)
-      setLastDate(dateValue)
+      setLastDate(dateValue);
+      console.log(dateValue, aboveDateValue, "2");
+    } else {
+      setNoticePeriod(1);
+      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 1));
+      let aboveDateValue = new Date(
+        new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
+      );
+      setLastDateSelection(aboveDateValue);
+      setLastDate(dateValue);
       setEmailId(user.personalEmail);
-      console.log(dateValue,aboveDateValue,"1")
-
+      console.log(dateValue, aboveDateValue, "1");
     }
   }, [user]);
 
@@ -154,36 +161,47 @@ const EmpResignation = () => {
       employeeData !== undefined &&
       Object.keys(employeeData).length !== 0
     ) {
-      console.log(employeeData,"inuse")
+      console.log(employeeData, "inuse");
       setRegDate(new Date(employeeData.dateOfResignation));
-      var noticeValue = 0
+      var noticeValue = 0;
       // setLastDate(new Date(employeeData.lastWorkingDate));
-      if(employeeData.department == "AFS" || employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        setNoticePeriod(2)
-        var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (2)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1)))
-      ;
-        setLastDateSelection(aboveDateValue)
-        setLastDate(dateValue)
-        console.log(dateValue,aboveDateValue,"2")
-      }else{
-        setNoticePeriod(1)
-        var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (1)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1)))
-        setLastDateSelection(aboveDateValue)
-        setLastDate(dateValue)
-        console.log(dateValue,aboveDateValue,"1")
-
+      if (
+        employeeData.department == "AFS" ||
+        employeeData.department == "IT" ||
+        employeeData.department == "Legal" ||
+        employeeData.department == "Finance"
+      ) {
+        setNoticePeriod(2);
+        var dateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + 2)
+        );
+        let aboveDateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
+        );
+        setLastDateSelection(aboveDateValue);
+        setLastDate(dateValue);
+        console.log(dateValue, aboveDateValue, "2");
+      } else {
+        setNoticePeriod(1);
+        var dateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + 1)
+        );
+        let aboveDateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
+        );
+        setLastDateSelection(aboveDateValue);
+        setLastDate(dateValue);
+        console.log(dateValue, aboveDateValue, "1");
       }
-     
+
       setReasonOfSepration("");
       setEmailId(employeeData.personalEmailId);
       setSubmitted(true);
       setComments(employeeData.employeeComment);
-      console.log(employeeData,"98098098098")
+      console.log(employeeData, "98098098098");
     }
   }, [employeeData]);
-console.log(employeeData)
+  console.log(employeeData);
   useEffect(() => {
     if (
       employeeData &&
@@ -296,7 +314,7 @@ console.log(employeeData)
     }
   }, [ModeOfSeparationData]);
   console.log("reasonOfSeparationList", reasonOfSeparationList);
-  console.log(lastDate,regDate,"lastDate")
+  console.log(lastDate, regDate, "lastDate");
   const SubmitHandler = (e) => {
     e.preventDefault();
     var reasonId = 0;
@@ -306,71 +324,80 @@ console.log(employeeData)
         console.log(reasonOfSeparationList[i].value);
       }
     });
-    console.log(user,"user888")
-    if(user.contractType == "internship"){
-      toast.error("internship employee cannot raise self resignation")
-    }else{
-    const data1 = {
-      company: user.company,
-      contractType: user.contractType,
-      costCentreManagerEmailId: null,
-      costCentreManagerName: null,
-      costCentreName: user.costCentre,
-      dateOfResignation: regDate,
-      personalEmail: emailId,
-      empName: user.firstName + user.lastName,
-      employeeComment: comments,
-      employeeId: user.employeeId,
-      employeeName: user.firstName + user.lastName,
-      exitId: 0,
-      hoursWorked: 0,
-      lastWorkingDate: lastDate,
-      location: user.locationId,
-      managerCostCentre: null,
-      managerEmailId: null,
-      managerId: user.managerId ? user.managerId : "",
-      managerName: approver,
-      managerPosition: null,
-      modeOfSeparationId: 4,
-      modeOfSeparationReasonId: reasonId,
-      noticePeriod: noticePeriod,
-      noticePeriodRecovery: 0,
-      noticePeriodRecoveryDays: 0,
-      position: user.position,
-      reHire: 0,
-      reason: null,
-      reasonForResignation: reasonOfSepration,
-      rehireRemark: null,
-      status: 0,
-    };
-    console.log(data1, "dtat1");
-    // const create = {
-    //   emailId: emailId,
-    //   employeeComment: comments,
-    //   employeeId: user.employeeId,
-    //   exitId: 0,
-    //   lastWorkingDate: moment(lastDate).format("YYYY-MM-DD"),
-    //   managerId: approver,
-    //   modeOfSeparationId: 1,
-    //   modeOfSeparationReasonId: 1,
-    //   withdraw: "string",
-    // };
-    // console.log("create", create);
-    // empResign(data1);
-    CreateEmplyoeeExist(data1, user.employeeId);
-    // ViewEmployeeDataById(user.employeeId);
-    setSubmitted(true);
-  }
+    console.log(user, "user888");
+    if (user.contractType == "internship") {
+      toast.error("internship employee cannot raise self resignation");
+    } else {
+      const data1 = {
+        company: user.company,
+        contractType: user.contractType,
+        costCentreManagerEmailId: null,
+        costCentreManagerName: null,
+        costCentreName: user.costCentre,
+        dateOfResignation: regDate,
+        personalEmail: emailId,
+        empName: user.firstName + user.lastName,
+        employeeComment: comments,
+        employeeId: user.employeeId,
+        employeeName: user.firstName + user.lastName,
+        exitId: 0,
+        hoursWorked: 0,
+        lastWorkingDate: lastDate,
+        location: user.locationId,
+        managerCostCentre: null,
+        managerEmailId: null,
+        managerId: user.managerId ? user.managerId : "",
+        managerName: approver,
+        managerPosition: null,
+        modeOfSeparationId: 4,
+        modeOfSeparationReasonId: reasonId,
+        noticePeriod: noticePeriod,
+        noticePeriodRecovery: 0,
+        noticePeriodRecoveryDays: 0,
+        position: user.position,
+        reHire: 0,
+        reason: null,
+        reasonForResignation: reasonOfSepration,
+        rehireRemark: null,
+        status: 0,
+      };
+      console.log(data1, "dtat1");
+      // const create = {
+      //   emailId: emailId,
+      //   employeeComment: comments,
+      //   employeeId: user.employeeId,
+      //   exitId: 0,
+      //   lastWorkingDate: moment(lastDate).format("YYYY-MM-DD"),
+      //   managerId: approver,
+      //   modeOfSeparationId: 1,
+      //   modeOfSeparationReasonId: 1,
+      //   withdraw: "string",
+      // };
+      // console.log("create", create);
+      // empResign(data1);
+      CreateEmplyoeeExist(data1, user.employeeId);
+      // ViewEmployeeDataById(user.employeeId);
+      setSubmitted(true);
+    }
   };
-
+  const changeHandler = (e) => {
+    let valid = /[^A-Za-z0-9'.,-_ ]/;
+    if (e.target.name === "comments" && e.target.value !== "") {
+      if (valid.test(e.target.value) === true) {
+        console.log("do nothing");
+      } else {
+        setComments(e.target.value);
+      }
+    }
+  };
   const withdrawHandler = (e) => {
     setWithdrawThis(true);
     ViewEmployeeDataById(user.employeeId);
     managerData(user.costCentre);
     setReasonOfSepration("");
-  
-      setComments("");
-     setReasonOfSepration("");
+
+    setComments("");
+    setReasonOfSepration("");
 
     // if (
     //   employeeData &&
@@ -609,7 +636,13 @@ console.log(employeeData)
                     <Col sm="8">
                       <Form.Control
                         type="text"
-                        value={`${noticePeriod ==1?`${noticePeriod} Month`:noticePeriod>1?`${noticePeriod} Months`:""}`}
+                        value={`${
+                          noticePeriod == 1
+                            ? `${noticePeriod} Month`
+                            : noticePeriod > 1
+                            ? `${noticePeriod} Months`
+                            : ""
+                        }`}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -672,7 +705,6 @@ console.log(employeeData)
                       </Form.Label>
                       <Col sm="8">
                         <DatePicker
-                      
                           value={moment(lastDate).format("DD/MM/YYYY")}
                           selected={lastDate}
                           minDate={moment().toDate()}
@@ -704,7 +736,15 @@ console.log(employeeData)
                           readOnly
                           className="disabledValue readTextBlue"
                         />
-                        <label style={{color:'#006ebb',textAlign:"center",paddingLeft:"10px"}}>{approverId}</label>
+                        <label
+                          style={{
+                            color: "#006ebb",
+                            textAlign: "center",
+                            paddingLeft: "10px",
+                          }}
+                        >
+                          {approverId}
+                        </label>
                       </Col>
                     </Form.Group>
                   ) : (
@@ -740,7 +780,15 @@ console.log(employeeData)
                           readOnly
                           className="disabledValue readTextBlue"
                         />
-                        <label style={{color:'#006ebb',textAlign:"center",paddingLeft:"10px"}}>{approverId}</label>
+                        <label
+                          style={{
+                            color: "#006ebb",
+                            textAlign: "center",
+                            paddingLeft: "10px",
+                          }}
+                        >
+                          {approverId}
+                        </label>
                       </Col>
                     </Form.Group>
                   )}
@@ -751,7 +799,10 @@ console.log(employeeData)
                       Exit Feedback Form:
                     </Form.Label>
                     <Col sm="7">
-                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="readTextBlue">
+                      <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
+                        className="readTextBlue"
+                      >
                         Click here
                       </a>
                     </Col>
@@ -787,7 +838,9 @@ console.log(employeeData)
                           rows={3}
                           className="non-disable readTextBlue"
                           value={comments}
-                          onChange={(e) => setComments(e.target.value)}
+                          maxLength="500"
+                          name="comments"
+                          onChange={(e) => changeHandler(e)}
                           required
                         />
                       </Col>
