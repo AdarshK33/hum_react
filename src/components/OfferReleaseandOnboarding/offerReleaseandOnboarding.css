@@ -40,7 +40,7 @@
 }
 
 .joiningField {
-  width: 250% !important;
+  /* width: 250% !important; */
   border-color: rgb(0, 110, 187) !important;
   display: block;
   height: calc(1.5em + 0.75rem + 2px);
@@ -54,4 +54,16 @@
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

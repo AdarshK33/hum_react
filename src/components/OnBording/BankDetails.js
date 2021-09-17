@@ -40,9 +40,13 @@ const BankDetails = (props) => {
     if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
       setState({
         accountNumber: bankViewData.accountNumber,
-        bankName: bankViewData.bankName,
+        bankName: {
+          label: bankViewData.bankName,
+          value: bankViewData.bankName,
+        },
         ifscCode: bankViewData.ifscCode,
       });
+
       setBankIdVlue(bankViewData.bankId);
     }
     console.log("bankViewData", bankViewData);
@@ -292,8 +296,8 @@ const BankDetails = (props) => {
               </label>
               <br></br>
               <label>
-                2. If name of the candidate is not present then you can upload
-                the bank statement or passbook
+                2. If name of the candidate is not present in the cancelled
+                cheque then you can upload the bank statement or passbook
               </label>
               <br></br>
               <label>

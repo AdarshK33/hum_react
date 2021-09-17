@@ -184,6 +184,7 @@ const PromotionApproval = (props) => {
     }
   };
   const changeHandler = (e) => {
+    let valid = /[^A-Za-z0-9'.,-_ ]/;
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
     } else if (e.target.name === "departmentId") {
@@ -210,10 +211,21 @@ const PromotionApproval = (props) => {
       });
       console.log(e.target.value, state, "value666");
     } else {
-      setState({
-        ...state,
-        [e.target.name]: e.target.value,
-      });
+      if (e.target.name === "remarks" && e.target.value !== "") {
+        if (valid.test(e.target.value) === true) {
+          console.log("do nothing");
+        } else {
+          setState({
+            ...state,
+            [e.target.name]: e.target.value,
+          });
+        }
+      } else {
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+        });
+      }
     }
     console.log(state, "state");
   };
@@ -699,6 +711,7 @@ const PromotionApproval = (props) => {
                                   as="textarea"
                                   rows={4}
                                   name="remarks"
+                                  maxLength="500"
                                   value={state.remarks}
                                   placeholder="Write here.."
                                   onChange={(e) => changeHandler(e)}

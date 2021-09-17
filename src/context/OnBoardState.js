@@ -38,6 +38,7 @@ const initial_state = {
   deleteNomineeData: {},
   deleteAllNomineeData: {},
   insuranceTopUpData: {},
+  candidateLetterData: {},
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -653,6 +654,26 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const generateCandidateLetter = (id) => {
+    console.log("state offer id", id);
+    return (
+      candidate
+        // .get("/api/v1/candidate/offer/54")
+        .get("/api/v2/candidate/offer/" + id)
+        .then((response) => {
+          state.candidateLetterData = response.data.data;
+          console.log("offer.message", state.candidateLetterData);
+          return dispatch({
+            type: "CANDIDATE_LETTER_DATA",
+            payload: state.candidateLetterData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+
   return (
     <OnBoardContext.Provider
       value={{
@@ -688,6 +709,7 @@ export const OnBoardProvider = (props) => {
         DeleteAllInsuranceNominations,
         UpdateNomineeStatus,
         insuranceTopUpView,
+        generateCandidateLetter,
         deleteAllNomineeData: state.deleteAllNomineeData,
         deleteNomineeData: state.deleteNomineeData,
         emergencyContactData: state.emergencyContactData,
@@ -720,6 +742,7 @@ export const OnBoardProvider = (props) => {
         documentViewData: state.documentViewData,
         documentUploadData: state.documentUploadData,
         insuranceTopUpData: state.insuranceTopUpData,
+        candidateLetterData: state.candidateLetterData,
       }}
     >
       {props.children}

@@ -29,11 +29,8 @@ import { JsonToExcel } from "react-json-excel";
 import ReactExport from "react-data-export";
 
 const FinanaceAdminNoDueClearance = () => {
-  const {
-    ViewEmployeeDataById,
-    changeEmployeeId,
-    ModeOfSeparationView,
-  } = useContext(EmployeeSeparationContext);
+  const { ViewEmployeeDataById, changeEmployeeId, ModeOfSeparationView } =
+    useContext(EmployeeSeparationContext);
   const {
     total,
     loader,
@@ -158,13 +155,18 @@ const FinanaceAdminNoDueClearance = () => {
     let fileObj = event.target.files[0];
 
     console.log("clicked", fileObj);
-    if(fileObj !== undefined && fileObj !== null && fileObj !== "" && 
-    fileObj.name !== undefined && fileObj.name !== null && fileObj.name !== "" && 
-      (fileObj.name.includes(".xlsx")||fileObj.name.includes(".xls"))){
+    if (
+      fileObj !== undefined &&
+      fileObj !== null &&
+      fileObj !== "" &&
+      fileObj.name !== undefined &&
+      fileObj.name !== null &&
+      fileObj.name !== "" &&
+      (fileObj.name.includes(".xlsx") || fileObj.name.includes(".xls"))
+    ) {
       setFileUpload(fileObj);
-    }else{
-      toast.error("Please select a valid file to upload")
-
+    } else {
+      toast.error("Please select a valid file to upload");
     }
     // uploadFile(fileObj)
     // setTimeout(()=>{
@@ -257,31 +259,45 @@ const FinanaceAdminNoDueClearance = () => {
     setGridColumnApi(params.columnApi);
   };
   const handleUploadSettlement = () => {
-    console.log(fileUpload,fileUpload.size,"file999")
-    if(fileUpload !== undefined && fileUpload !== null && fileUpload !== "" && 
-    fileUpload.name !== undefined && fileUpload.name !== null && fileUpload.name !== "" && 
-      (fileUpload.name.includes(".xlsx")||fileUpload.name.includes(".xls"))){
-    if(fileUpload.size/1024 < 500|| fileUpload.size/1024 == 500){
-    if (fileUpload !== undefined && fileUpload !== null) {
-      FinanceClearanceUploadSettlement(
-        fileUpload,
-        searchValue,
-        pageCount,
-        costCenter
-      );
+    // console.log(fileUpload, fileUpload.size, "file999");
+    if (
+      fileUpload !== undefined &&
+      fileUpload !== null &&
+      fileUpload !== "" &&
+      fileUpload.name !== undefined &&
+      fileUpload.name !== null &&
+      fileUpload.name !== "" &&
+      (fileUpload.name.includes(".xlsx") || fileUpload.name.includes(".xls"))
+    ) {
+      if (
+        fileUpload !== undefined &&
+        fileUpload !== null &&
+        fileUpload !== "" &&
+        fileUpload.size !== undefined &&
+        fileUpload.size !== null &&
+        fileUpload.size !== "" &&
+        (fileUpload.size / 1024 < 500 || fileUpload.size / 1024 == 500)
+      ) {
+        if (fileUpload !== undefined && fileUpload !== null) {
+          FinanceClearanceUploadSettlement(
+            fileUpload,
+            searchValue,
+            pageCount,
+            costCenter
+          );
+        } else {
+          toast.error("Please select a file to upload");
+        }
+      } else {
+        toast.error("File size should not exceed 500kb ");
+      }
     } else {
-      toast.error("Please select a file to upload");
+      toast.error("Please select a valid file to upload");
     }
-  }else{
-    toast.error("File size should not exceed 500kb ");
-  }
-}else{
-  toast.error("Please select a valid file to upload")
-}
   };
   const onSelectionChanged = (e) => {
     let formData = e.data;
-    console.log(e.data,"formData");
+    console.log(e.data, "formData");
     if (checkedValue == false) {
       setCheckedValue(true);
     } else if (checkedValue == true) {
@@ -297,7 +313,7 @@ const FinanaceAdminNoDueClearance = () => {
       if (
         formData["deactivateProfile"] !== null &&
         formData["fullAndFinalCompleteStatus"] !== null &&
-        formData["fullAndFinalProcessDate"] !== null 
+        formData["fullAndFinalProcessDate"] !== null
         // formData["fullAndFinalAmount"] !== null
       ) {
         if (!keyValues.includes(formData.employeeId)) {
@@ -471,7 +487,7 @@ const FinanaceAdminNoDueClearance = () => {
                     </Button>
                     <input
                       type="file"
-                       accept=".xlsx, .xls"
+                      accept=".xlsx, .xls"
                       style={{
                         marginTop: "2px",
                         float: "right",
@@ -510,7 +526,7 @@ const FinanaceAdminNoDueClearance = () => {
                         cellRendererParams: { checkbox: true },
                       }}
                       isRowSelectable={function (rowNode) {
-                        console.log(rowNode,"rownode****")
+                        console.log(rowNode, "rownode****");
                         return rowNode.data
                           ? rowNode.data.deactivateProfile !== null &&
                               rowNode.data.fullAndFinalCompleteStatus !==

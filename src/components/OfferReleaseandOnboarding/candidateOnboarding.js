@@ -637,7 +637,7 @@ const CandidateOnboarding = () => {
                 }
                 required
                 onChange={(e) => dateOfJoiningHandler(e)}
-                minDate={new Date()}
+                minDate={subDays(new Date(), 7)}
                 dateFormat="yyyy-MM-dd"
                 placeholderText="Date of Joining"
               />
@@ -648,7 +648,7 @@ const CandidateOnboarding = () => {
           </Row>
           <Row className="mt-4">
             <Col sm={3}>
-              <Form.Label>Email ID</Form.Label>
+              <Form.Label>Offical Email ID</Form.Label>
             </Col>
             <Col sm={6}>
               <Form.Control
