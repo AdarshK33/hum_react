@@ -37,6 +37,16 @@ const TransferPage = () => {
       activePage - 1
     }&size=${recordsPerPage}&status=${status}&transferType=${transferType}`
   );
+  const isDateBeforeToday = (date) => {
+    console.log("yes");
+    if (date !== null && date !== undefined && date !== "") {
+      console.log("oooooo", new Date(date) < new Date());
+      return new Date(date) < new Date();
+    } else {
+      console.log("no");
+      return false;
+    }
+  };
   const TableHeaders =
     transferType === "Regular Transfer"
       ? TRANSFER_TABLE_HEADERS.regular
@@ -188,7 +198,11 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  rolePermission == "admin" && item.status === 0 ? true : false,
+                  rolePermission == "admin" &&
+                  (item.status === 0 ||
+                    isDateBeforeToday(item.promotedDateOfReturn))
+                    ? true
+                    : false,
                 link:
                   rolePermission == "admin" && item.status === 0
                     ? `/international-transfer/${item.transferId}`
