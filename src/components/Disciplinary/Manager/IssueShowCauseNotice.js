@@ -399,7 +399,17 @@ const IssueShowCauseNotice = () => {
     }
   };
   const changeHandler = (e) => {
-    if (e.target.name === "empName") {
+    let valid = /[^A-Za-z0-9'.,-_ ]/;
+    if (e.target.name === "reason" && e.target.value !== "") {
+      if (valid.test(e.target.value) === true) {
+        console.log("do nothing");
+      } else {
+        setState({
+          ...state,
+          [e.target.name]: e.target.value,
+        });
+      }
+    } else if (e.target.name === "empName") {
       setEmpName(e.target.value);
     } else {
       setState({
@@ -1033,6 +1043,7 @@ const IssueShowCauseNotice = () => {
                                   as="textarea"
                                   rows={4}
                                   name="reason"
+                                  maxLength="500"
                                   value={state.reason}
                                   placeholder="Write here.."
                                   onChange={(e) => changeHandler(e)}

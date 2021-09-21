@@ -698,7 +698,7 @@ const ManagerInitiateExit = () => {
             exitId: state.exitId,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId,
+            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
@@ -739,7 +739,7 @@ const ManagerInitiateExit = () => {
             exitId: state.exitId,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId,
+            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
@@ -1113,7 +1113,7 @@ const ManagerInitiateExit = () => {
             exitId: 0,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId,
+            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
@@ -1155,7 +1155,7 @@ const ManagerInitiateExit = () => {
             exitId: 0,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId,
+            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
@@ -1273,11 +1273,10 @@ console.log(intern,"8098709809808")
                 <p>Thanking you</p>
                 <p>{employeeData.managerName}</p>
               </Col> */}
-
               {showSignature ? (
                 <Fragment>
                   <br></br>
-                  <img
+                  <img style={{float:"left"}}
                     src={calendarImage}
                     alt="calendar"
                     width="50px"

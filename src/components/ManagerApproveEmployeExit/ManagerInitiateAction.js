@@ -1194,6 +1194,7 @@ const ManagerInitiateAction = () => {
             <textarea
               className="remarkText rounded"
               name="remarks"
+              maxLength="500"
               value={state.remarks}
               placeholder="Write here.."
               onChange={(e) => changeHandler(e)}
@@ -1373,15 +1374,20 @@ const ManagerInitiateAction = () => {
                           </Col>
                         ) : (
                           <Col sm={4}>
-                          <div>
+                            <div>
                               <label>
-                              <b>Internship contract end date:</b>
+                                <b>Internship contract end date:</b>
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                                  &nbsp;&nbsp;{" "}
+                                  {state.noticePeriod === 1
+                                    ? `${state.noticePeriod} Month`
+                                    : state.noticePeriod > 1
+                                    ? `${state.noticePeriod} Months`
+                                    : state.noticePeriod}
                                 </label>
                               </label>
                             </div>
-                  </Col> 
+                          </Col>
                         )}
                       </Row>
                       <Row
@@ -1574,38 +1580,38 @@ const ManagerInitiateAction = () => {
                                   &nbsp;&nbsp; {lastWorkingDate}
                                 </label>
                               ) : ( */}
-                                <Form.Group>
-                                  <div
-                                    className={
-                                      lastWorkingDateError
-                                        ? "onBoard-date-error"
-                                        : "onBoard-date"
-                                    }
-                                  >
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={lastWorkingDate}
-                                      name="lastWorkingDate"
-                                      minDate={new Date()}
-                                      minDate={moment().toDate()}
-                                      maxDate={lastDateSelection}
-                                      // required
-                                      onChange={(e) => dateOfBirthHandler1(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
+                              <Form.Group>
+                                <div
+                                  className={
+                                    lastWorkingDateError
+                                      ? "onBoard-date-error"
+                                      : "onBoard-date"
+                                  }
+                                >
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    selected={lastWorkingDate}
+                                    name="lastWorkingDate"
+                                    minDate={new Date()}
+                                    minDate={moment().toDate()}
+                                    maxDate={lastDateSelection}
+                                    // required
+                                    onChange={(e) => dateOfBirthHandler1(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
 
-                                      // disabled={disabled}
-                                    />
-                                  </div>
-                                  {lastWorkingDateError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please enter valid date
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
+                                    // disabled={disabled}
+                                  />
+                                </div>
+                                {lastWorkingDateError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please enter valid date
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
                               {/* )} */}
                             </div>
                           </Col>

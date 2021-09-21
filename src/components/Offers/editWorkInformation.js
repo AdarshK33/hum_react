@@ -72,6 +72,7 @@ const EditWorkInformation = () => {
   const [cityId, setCityId] = useState();
   const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
   const [noticePeriod, setNoticePeriod] = useState("");
+  const [nationalityList, setNationalityList] = useState();
   useEffect(() => {
     viewSports();
     CostCenter();
@@ -81,6 +82,14 @@ const EditWorkInformation = () => {
     stateData();
     viewCountries();
   }, []);
+
+  useEffect(() => {
+    let nationList = countryList.filter(
+      (item) => item.nationality !== "Indian"
+    );
+    console.log("contract list", nationList);
+    setNationalityList(nationList);
+  }, [countryList]);
 
   useEffect(() => {
     if (
@@ -110,13 +119,14 @@ const EditWorkInformation = () => {
         managerId: workData.managerId,
         nationality: workData.nationality,
         expatUser: workData.expatUser,
-        passportNumber: workData.passportNumber,
+        passportNumber:
+          workData.passportNumber !== null ? workData.passportNumber : "",
         adminCompany: workData.companyName,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
-      setDateOfIssue(new Date(workData.passportIssuedDate));
-      setDateOfValidity(new Date(workData.passportExpiryDate));
+      // setDateOfIssue(new Date(workData.passportIssuedDate));
+      // setDateOfValidity(new Date(workData.passportExpiryDate));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
@@ -342,8 +352,8 @@ const EditWorkInformation = () => {
       expatUser: 0,
       nationality: state.nationality,
       passportNumber: state.passportNumber,
-      passportExpiryDate: moment(dateOfValidity).format("YYYY-MM-DD"),
-      passportIssuedDate: moment(dateOfIssue).format("YYYY-MM-DD"),
+      passportExpiryDate: "",
+      passportIssuedDate: "",
     };
     console.log("update data", updateData);
     if (dateOfLeavingError === false) {
@@ -871,9 +881,9 @@ const EditWorkInformation = () => {
                       required
                     >
                       <option value="">Select Nationality</option>
-                      {countryList !== null &&
-                        countryList !== undefined &&
-                        countryList.map((item) => {
+                      {nationalityList !== null &&
+                        nationalityList !== undefined &&
+                        nationalityList.map((item) => {
                           return (
                             <option key={item.countryId}>
                               {item.nationality}
@@ -883,7 +893,7 @@ const EditWorkInformation = () => {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-                <Col sm={3}>
+                {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date of Issue</Form.Label>
                     <DatePicker
@@ -911,7 +921,7 @@ const EditWorkInformation = () => {
                       disabled={disabled}
                     />
                   </Form.Group>
-                </Col>
+                </Col> */}
               </React.Fragment>
             )}
           </Row>

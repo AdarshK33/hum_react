@@ -394,12 +394,12 @@ const PFDeclaration = (props) => {
       validateCheckBoxes(firstJobYes, firstJobNo, setFirstJobError) === true
     ) {
       if (
-        (validateCheckBoxes(
-          pfNominationHoldDeathYes,
-          pfNominationHoldDeathNo,
-          setPfNominationHoldDeathError
-        ) ===
-          true) &
+        // (validateCheckBoxes(
+        //   pfNominationHoldDeathYes,
+        //   pfNominationHoldDeathNo,
+        //   setPfNominationHoldDeathError
+        // ) ===
+        //   true) &
         (validateCheckBoxes(
           memberOfPensionSchemeYes,
           memberOfPensionSchemeNo,
@@ -414,11 +414,12 @@ const PFDeclaration = (props) => {
           true) &
         (Form11UploadValidation() === true) &
         (Form2EpfUploadValidation() === true) &
-        (FormFUploadValidation() === true) &
-        (nomineeNameValidation() === true) &
-        (nomineeDobValidation() === true) &
-        (nomineeAddressValidation() === true) &
-        (nomineeRelationValidation() === true)
+        (FormFUploadValidation() === true)
+        // &
+        // (nomineeNameValidation() === true) &
+        // (nomineeDobValidation() === true) &
+        // (nomineeAddressValidation() === true) &
+        // (nomineeRelationValidation() === true)
       ) {
         if (firstJobNo === true) {
           console.log("i am hear");
@@ -668,75 +669,88 @@ const PFDeclaration = (props) => {
     }
   };
   const Form11UploadValidation = () => {
-    if (
-      pfNominationHoldDeathYes === true ||
-      pfNominationHoldDeathYes === false
-    ) {
-      if (Form11uploade === false) {
-        if (Form11Validation() === true) {
-          setForm11Error(true);
-          return false;
-        }
-      } else {
-        return true;
+    // if (
+    //   pfNominationHoldDeathYes === true ||
+    //   pfNominationHoldDeathYes === false
+    // ) {
+    if (Form11uploade === false) {
+      if (Form11Validation() === true) {
+        setForm11Error(true);
+        return false;
       }
     } else {
       return true;
     }
+    // } else {
+    //   return true;
+    // }
   };
   const Form2EpfUploadValidation = () => {
-    if (
-      pfNominationHoldDeathYes === true ||
-      pfNominationHoldDeathYes === false
-    ) {
-      if (Form2Epfuploade === false) {
-        if (Form2EpfValidation() === true) {
-          setForm2EpfError(true);
-          return false;
-        }
-      } else {
-        return true;
+    // if (
+    //   pfNominationHoldDeathYes === true ||
+    //   pfNominationHoldDeathYes === false
+    // ) {
+    if (Form2Epfuploade === false) {
+      if (Form2EpfValidation() === true) {
+        setForm2EpfError(true);
+        return false;
       }
     } else {
       return true;
     }
+    // } else {
+    //   return true;
+    // }
   };
   const FormFUploadValidation = () => {
-    if (
-      pfNominationHoldDeathYes === true ||
-      pfNominationHoldDeathYes === false
-    ) {
-      if (FormFuploade === false) {
-        if (FormFValidation() === true) {
-          setFormFError(true);
-          return false;
-        }
-      } else {
-        return true;
+    // if (
+    //   pfNominationHoldDeathYes === true ||
+    //   pfNominationHoldDeathYes === false
+    // ) {
+    if (FormFuploade === false) {
+      if (FormFValidation() === true) {
+        setFormFError(true);
+        return false;
       }
     } else {
       return true;
     }
+    // } else {
+    //   return true;
+    // }
   };
 
   const DocChangeHandler = (event) => {
     console.log("changeHandler", event.target.name);
     let fileObj = event.target.files[0];
     console.log("photoIdChangeHandler", fileObj);
-    setState({
-      ...state,
-      [event.target.name]: fileObj.name,
-    });
-    setObjState({
-      ...ObjState,
-      [event.target.name]: fileObj,
-    });
-    if (event.target.name === "form11") {
-      setForm11Uploade(false);
-    } else if (event.target.name === "form2epf") {
-      setForm2EpfUploade(false);
-    } else if (event.target.name === "formf") {
-      setFormFUploade(false);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setState({
+          ...state,
+          [event.target.name]: fileObj.name,
+        });
+        setObjState({
+          ...ObjState,
+          [event.target.name]: fileObj,
+        });
+        if (event.target.name === "form11") {
+          setForm11Uploade(false);
+        } else if (event.target.name === "form2epf") {
+          setForm2EpfUploade(false);
+        } else if (event.target.name === "formf") {
+          setFormFUploade(false);
+        }
+      } else {
+        toast.info("File size should not exceed 500kb");
+      }
+    } else {
+      toast.info("Please select jpg png and pdf formats");
     }
   };
 
@@ -964,8 +978,8 @@ const PFDeclaration = (props) => {
             </Form.Group>
           </Col>
         </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          <Col sm={5}>
+        {/* <Row style={{ marginBottom: "2rem" }}> */}
+        {/* <Col sm={5}>
             <div>
               <label>Does the PF nomination hold good in case of Death ?</label>
               {pfNominationHoldDeathError ? (
@@ -977,8 +991,8 @@ const PFDeclaration = (props) => {
                 <p></p>
               )}
             </div>
-          </Col>
-          <Col sm={2}>
+          </Col> */}
+        {/* <Col sm={2}>
             <Form.Group>
               <div className="boxField input">
                 <input
@@ -992,8 +1006,8 @@ const PFDeclaration = (props) => {
                 <label>Yes</label>
               </div>
             </Form.Group>
-          </Col>
-          <Col sm={2}>
+          </Col> */}
+        {/* <Col sm={2}>
             <Form.Group>
               <div className="boxField input">
                 <input
@@ -1007,18 +1021,18 @@ const PFDeclaration = (props) => {
                 <label>No </label>
               </div>
             </Form.Group>
-          </Col>
-          {/* <Col sm={2}>
+          </Col> */}
+        {/* <Col sm={2}>
             <div>
               <label>
                 <a href="~/address">Add</a> Details here
               </label>
             </div>
           </Col> */}
-        </Row>
-        {pfNominationHoldDeathYes === true ? (
+        {/* </Row> */}
+        {/* {pfNominationHoldDeathYes === true ? (
           <div>
-            {/* first Nominee */}
+            
             <label>
               <b>Dependent</b>
             </label>
@@ -1163,7 +1177,7 @@ const PFDeclaration = (props) => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
         <Row>
           <Col sm={5}>
             <label>Please fill the forms below</label>

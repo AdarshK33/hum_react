@@ -92,6 +92,8 @@ const PersonalInformation = (props) => {
   const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [saveClick, setSaveClick] = useState(false);
   const [disabilityStatus, setDisabilityStatus] = useState(false);
+  const [dateOfIssue, setDateOfIssue] = useState();
+  const [dateOfValidity, setDateOfValidity] = useState();
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -262,6 +264,18 @@ const PersonalInformation = (props) => {
         candidatePersonalInfoData.dateOfBirth !== null &&
           candidatePersonalInfoData.dateOfBirth !== undefined
           ? new Date(candidatePersonalInfoData.dateOfBirth)
+          : ""
+      );
+      setDateOfIssue(
+        candidatePersonalInfoData.passportIssuedDate !== null &&
+          candidatePersonalInfoData.passportIssuedDate !== undefined
+          ? new Date(candidatePersonalInfoData.passportIssuedDate)
+          : ""
+      );
+      setDateOfValidity(
+        candidatePersonalInfoData.passportExpiryDate !== null &&
+          candidatePersonalInfoData.passportExpiryDate !== undefined
+          ? new Date(candidatePersonalInfoData.passportExpiryDate)
           : ""
       );
       if (
@@ -493,6 +507,12 @@ const PersonalInformation = (props) => {
     } else {
       return true;
     }
+  };
+  const dateOfIssueHandler = (date) => {
+    setDateOfIssue(date);
+  };
+  const validityHandler = (date) => {
+    setDateOfValidity(date);
   };
   const DOBValidation = () => {
     console.log("Dob");
@@ -774,6 +794,8 @@ const PersonalInformation = (props) => {
               : null,
           photo: null,
           passportNumber: state.passPortNo !== null ? state.passPortNo : null,
+          passportExpiryDate: dateOfValidity !== null ? dateOfValidity : null,
+          passportIssuedDate: dateOfIssue !== null ? dateOfIssue : null,
           referred: true,
           status:
             candidateProfileData.status !== null
@@ -894,9 +916,22 @@ const PersonalInformation = (props) => {
     let fileObj = e.target.files[0];
     console.log("fileObject", fileObj);
     console.log("photoIdChangeHandler", fileObj);
-    setDocName(fileObj.name);
-    setDisabilityUploaded(false);
-    setDisabilityDocObj(fileObj);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setDocName(fileObj.name);
+        setDisabilityUploaded(false);
+        setDisabilityDocObj(fileObj);
+      } else {
+        toast.info("File size should not exceed 500kb");
+      }
+    } else {
+      toast.info("Please select jpg png and pdf formats");
+    }
   };
 
   const changeHandler = (e) => {
@@ -1252,12 +1287,12 @@ const PersonalInformation = (props) => {
               ""
             )}{" "}
           </div>
-          <div className="col-sm-4">
-            {candidateViewInfo !== null &&
-            candidateViewInfo !== undefined &&
-            Object.keys(candidateViewInfo).length !== 0 &&
-            (candidateViewInfo.contractType === "Parttime") |
-              (candidateViewInfo.contractType === "Permanent") ? (
+          {candidateViewInfo !== null &&
+          candidateViewInfo !== undefined &&
+          Object.keys(candidateViewInfo).length !== 0 &&
+          (candidateViewInfo.contractType === "Parttime") |
+            (candidateViewInfo.contractType === "Permanent") ? (
+            <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>
                   Pan Number
@@ -1288,6 +1323,68 @@ const PersonalInformation = (props) => {
                 ) : (
                   <p></p>
                 )}
+              </Form.Group>
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="col-sm-4">
+            {candidateViewInfo !== null &&
+            candidateViewInfo !== undefined &&
+            Object.keys(candidateViewInfo).length !== 0 &&
+            candidateViewInfo.contractType === "Local Expat" ? (
+              <Form.Group className="reactDate">
+                <Form.Label>
+                  Date of Issue<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <DatePicker
+                  className="form-control form-input"
+                  selected={dateOfIssue}
+                  required
+                  onChange={(e) => dateOfIssueHandler(e)}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Date of Issue"
+                  disabled={disabled}
+                />
+                {/* {passDOIError ? (
+                  <p style={{ color: "red" }}>
+                    Please enter valid passport number
+                  </p>
+                ) : (
+                  <p></p>
+                )} */}
+              </Form.Group>
+            ) : (
+              ""
+            )}
+          </div>
+        </Row>
+        <Row>
+          <div className="col-sm-4">
+            {candidateViewInfo !== null &&
+            candidateViewInfo !== undefined &&
+            Object.keys(candidateViewInfo).length !== 0 &&
+            candidateViewInfo.contractType === "Local Expat" ? (
+              <Form.Group className="reactDate">
+                <Form.Label>Date Of Validity</Form.Label>
+                <DatePicker
+                  className="form-control form-input"
+                  selected={dateOfValidity}
+                  required
+                  onChange={(e) => validityHandler(e)}
+                  minDate={dateOfIssue}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Date of Validity"
+                  disabled={disabled}
+                />
+
+                {/* {passDOVError ? (
+                  <p style={{ color: "red" }}>
+                    Please enter valid passport number
+                  </p>
+                ) : (
+                  <p></p>
+                )} */}
               </Form.Group>
             ) : (
               ""
@@ -1438,7 +1535,7 @@ const PersonalInformation = (props) => {
                           : "Select File Here"}
                         <input
                           type="file"
-                          accept="image/jpeg,.pdf"
+                          accept="image/*,.pdf"
                           style={{ display: "none" }}
                           disabled={
                             (candidateProfileData.documentUploaded === 1 &&
