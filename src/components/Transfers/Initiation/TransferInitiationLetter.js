@@ -38,7 +38,16 @@ const TransferInitationLetter = ({ transferId }) => {
               This is bring to your kind notice that your position has been
               changed to <b>{transferData.promotedPosition}</b> and working
               location to <b>{transferData.promotedLocationName}</b> effective
-              from <b>{transferData.promotedJoiningDate}</b>.
+              from{" "}
+              <b>
+                {transferData.promotedJoiningDate !== null &&
+                transferData.promotedJoiningDate !== undefined
+                  ? moment(new Date(transferData.promotedJoiningDate)).format(
+                      "DD-MM-YYYY"
+                    )
+                  : ""}
+              </b>
+              .
               <br />
               <br />
               All the rules mentioned in your appointment letter will remain
