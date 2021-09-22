@@ -10,6 +10,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { SeparationContext } from "../../context/SepearationState";
 import "./Promotion.css";
+import moment from "moment";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
@@ -288,7 +289,11 @@ const PromotionList = () => {
                             <td>{item.empName}</td>
                             <td>{item.oldPosition}</td>
                             <td>{item.promotedPosition}</td>
-                            <td>{item.promotionDate}</td>
+                            <td>{item.effectiveDate !== null && 
+                            item.effectiveDate !== undefined 
+                             && item.effectiveDate !== ""?
+                            moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""
+                            }</td>
                             <td>
                               {item.validatedManagerName !== null &&
                               item.validatedManagerName !== undefined &&
@@ -300,7 +305,7 @@ const PromotionList = () => {
                               {item.managerValidatedDate !== null &&
                               item.managerValidatedDate !== undefined &&
                               item.managerValidatedDate !== ""
-                                ? item.managerValidatedDate
+                                ? moment(item.managerValidatedDate).format("DD-MM-YYYY")
                                 : "NA"}
                             </td>
                             <td>
@@ -314,7 +319,7 @@ const PromotionList = () => {
                               {item.adminValidatedDate !== null &&
                               item.adminValidatedDate !== undefined &&
                               item.adminValidatedDate !== ""
-                                ? item.adminValidatedDate
+                                ? moment(new Date(item.adminValidatedDate)).format("DD-MM-YYYY")
                                 : "NA"}
                             </td>
                             <td>

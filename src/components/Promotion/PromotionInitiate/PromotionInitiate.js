@@ -254,8 +254,8 @@ const PromotionInitiate = () => {
       newFixedGross !== undefined
     ) {
       if (contractType === "Parttime" || contractType === "parttime") {
-        if (newFixedGross < 90 || newFixedGross > 200) {
-          setNewFixedGrossError("Value should be between 90 - 200");
+        if (newFixedGross < 90 || newFixedGross > 400) {
+          setNewFixedGrossError("Value should be between 90 - 400");
         } else {
           setNewFixedGrossError("");
         }
@@ -308,16 +308,16 @@ const PromotionInitiate = () => {
     } else {
       setEffectiveDateError("");
     }
-    var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (
-      (state.promotionType == 1 && salaryEffectiveDate == "") ||
-      salaryEffectiveDate == null ||
-      salaryEffectiveDate == undefined
-    ) {
-      setSalaryEffectiveDateError("Please add salary effective date");
-    } else {
-      setSalaryEffectiveDateError("");
-    }
+    // var salaryEffectiveDate = state.salaryEffectiveDate;
+    // if (
+    //   (state.promotionType == 1 && salaryEffectiveDate == "") ||
+    //   salaryEffectiveDate == null ||
+    //   salaryEffectiveDate == undefined
+    // ) {
+    //   setSalaryEffectiveDateError("Please add salary effective date");
+    // } else {
+    //   setSalaryEffectiveDateError("");
+    // }
 
     console.log(newFixedGrossError, "newFixedGrossError");
     if (
@@ -380,7 +380,7 @@ const PromotionInitiate = () => {
       if (
         contractType.toLowerCase() == "parttime" &&
         state.newFixedGross >= 90 &&
-        state.newFixedGross <= 200
+        state.newFixedGross <= 400
       ) {
         // setModelStatus(true);
         setSubmitted(true);
@@ -1180,7 +1180,7 @@ const PromotionInitiate = () => {
                                     </Form.Group>
                                   )}
                                   {/* <p style={{ color: "red" }}>
-                               {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >200)?"parttime invalid":
+                               {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >400)?"parttime invalid":
                                (contractType == "permanent" && state.newFixedGross < 18000)?"permanent":""}
                              </p>  */}
                                   {newFixedGrossError ? (
@@ -1193,7 +1193,7 @@ const PromotionInitiate = () => {
                                 </div>
                               </Col>
 
-                              <Col sm={2}>
+                              {/* <Col sm={2}>
                                 <div>
                                   <label>Salary Effective Date :</label>
                                 </div>
@@ -1235,7 +1235,7 @@ const PromotionInitiate = () => {
                                 ) : (
                                   ""
                                 )}
-                              </Col>
+                              </Col> */}
                             </>
                           ) : (
                             ""
@@ -1270,8 +1270,8 @@ const PromotionInitiate = () => {
                                     // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
+                                    dateFormat="dd-MM-yyyy"
+                                    placeholderText="DD-MM-YYYY"
                                     minDate={
                                       new Date(
                                         new Date().setMonth(
