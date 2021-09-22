@@ -501,7 +501,7 @@ export const RosterProvider = ({ children }) => {
     // eslint-disable-next-line no-useless-concat
     client
       .get(
-        "/roster/utilisation?storeId=" +
+        "/api/v1/roster/utilisation?storeId=" +
           storeId +
           "&year=" +
           year +
@@ -540,7 +540,7 @@ export const RosterProvider = ({ children }) => {
     // eslint-disable-next-line no-useless-concat
     client
       .get(
-        "/roster/dashboard?date=" +
+        "/api/v1/roster/dashboard?date=" +
           date +
           "&endDate=" +
           endDate +

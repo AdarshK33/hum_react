@@ -71,8 +71,8 @@ const PartTimeAppointmentLetter = () => {
             <b>{offerLetterData.companyName}</b>. As we believe your passion for
             sport and your values match those of our Company, we, at{" "}
             <b>{offerLetterData.companyName}</b>, are pleased to appoint you as
-            a Decathlon Permanent Employee on a part time basis, and your
-            responsibilities would be those of a{" "}
+            a {offerLetterData.companyName} Permanent Employee on a part time
+            basis, and your responsibilities would be those of a{" "}
             <b>{offerLetterData.position}</b> at our{" "}
             <b>{offerLetterData.location}</b> location effective{" "}
             <b>{offerLetterData.partTimeCandidateOffer.effectiveDate}</b>.{" "}
@@ -101,13 +101,13 @@ const PartTimeAppointmentLetter = () => {
           </p>
 
           <p>
-            We at Decathlon strongly believe in your ability to manage yourself
-            in the best interest of the Company. Fewer the rules better the
-            productivity as far as we are concerned.
+            We at {offerLetterData.companyName} strongly believe in your ability
+            to manage yourself in the best interest of the Company. Fewer the
+            rules better the productivity as far as we are concerned.
           </p>
           <p>
-            We trust you will enjoy working with Decathlon and take the utmost
-            autonomy to complete your responsibilities-
+            We trust you will enjoy working with {offerLetterData.companyName}{" "}
+            and take the utmost autonomy to complete your responsibilities-
           </p>
           <ol>
             <li>
@@ -121,10 +121,11 @@ const PartTimeAppointmentLetter = () => {
               incorporated from time to time
             </li>
             <li>
-              When you are happy being a part of the Decathlon family, we expect
-              you will be open to relocate to any location where the Company
-              currently has stores or may be established or any other Group
-              companies as deemed necessary
+              When you are happy being a part of the{" "}
+              {offerLetterData.companyName} family, we expect you will be open
+              to relocate to any location where the Company currently has stores
+              or may be established or any other Group companies as deemed
+              necessary
             </li>
             <li>
               Your salary and its components are strictly confidential and we
@@ -133,8 +134,8 @@ const PartTimeAppointmentLetter = () => {
             <li>
               We hold transparency in high regard. You cannot involve yourself
               in taking or giving bribe, gambling, theft, fraudulent practices
-              or any such act that might affect Decathlon reputation or damage
-              to property
+              or any such act that might affect {offerLetterData.companyName}{" "}
+              reputation or damage to property
             </li>
             <li>
               We at DSIPL, have a strict policy against sexual harassment. We
@@ -190,14 +191,17 @@ const PartTimeAppointmentLetter = () => {
               </li>
             </ul>
             <li>
-              Any image taken of you during a Decathlon event or during a
-              photo-shoot shall be the property of Decathlon and you consent to
-              Decathlon's use of the such image in communication.
+              Any image taken of you during a {offerLetterData.companyName}{" "}
+              event or during a photo-shoot shall be the property of{" "}
+              {offerLetterData.companyName} and you consent to
+              {offerLetterData.companyName}'s use of the such image in
+              communication.
             </li>
             <li>
               Apart from the above mentioned rules all rules specified under the
-              certified standing orders of Decathlon will be applicable to you
-              from the date of your joining Decathlon
+              certified standing orders of {offerLetterData.companyName} will be
+              applicable to you from the date of your joining{" "}
+              {offerLetterData.companyName}
             </li>
             <li>
               Clause 4 of this employment contract shall continue to survive
@@ -216,13 +220,13 @@ const PartTimeAppointmentLetter = () => {
             duplicate copy of this appointment letter
           </p>
           <p>
-            <b>We welcome you to the Decathlon Family!</b>
+            <b>We welcome you to the {offerLetterData.companyName} Family!</b>
           </p>
           {/* </Modal.Body> */}
           <div className="mb-3">
             <Row>
               <Col>
-                <p>For Decathlon Sports India Pvt Ltd</p>
+                <p>For {offerLetterData.companyName}</p>
                 <p>Authorised Signatory</p>
                 {/* <button
                         className="signatureButtons"

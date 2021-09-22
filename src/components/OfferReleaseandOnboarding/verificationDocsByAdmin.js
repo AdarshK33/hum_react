@@ -108,7 +108,12 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType <= 5)
+      .filter(
+        (personal) =>
+          personal.documentType <= 5 ||
+          personal.documentType === 14 ||
+          personal.documentType === 17
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -116,7 +121,12 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType > 5)
+      .filter(
+        (personal) =>
+          personal.documentType > 5 ||
+          personal.documentType !== 14 ||
+          personal.documentType !== 17
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -291,6 +301,24 @@ const DocVerification = () => {
                                 (First page of the book)
                               </span>
                             </label>
+                          ) : item.documentType === 14 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Passport
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 17 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                FRRO
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
                           ) : (
                             item.documentType === 5 && (
                               <label>
@@ -310,12 +338,17 @@ const DocVerification = () => {
                           {downloadedFile && (
                             <img src={downloadedFile} alt="" />
                           )}
-                          {item.documentType <= 5 && item.documentName}
+                          {(item.documentType <= 5 ||
+                            item.documentType === 14 ||
+                            item.documentType === 17) &&
+                            item.documentName}
                         </p>
                       </td>
                       {item.statusDesc !== null &&
-                      item.documentType === 1 &&
                       item.statusDesc !== "Pending" &&
+                      (item.documentType === 1 ||
+                        (item.documentType === 14 &&
+                          item.documentType === 17)) &&
                       state.adminVerificationStatus === 1 ? (
                         <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
@@ -479,16 +512,17 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
-                          ) : item.documentType === 14 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "16px" }}
-                              >
-                                Passport
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
-                          ) : item.documentType === 15 ? (
+                          ) : //  item.documentType === 14 ? (
+                          //   <p>
+                          //     <span
+                          //       style={{ color: "black", fontSize: "16px" }}
+                          //     >
+                          //       Passport
+                          //     </span>{" "}
+                          //     <span style={{ color: "red" }}>*</span>
+                          //   </p>
+                          // )
+                          item.documentType === 15 ? (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}

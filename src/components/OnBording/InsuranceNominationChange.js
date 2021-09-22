@@ -168,7 +168,6 @@ const InsuranceNomination = (props) => {
   const [topupNo, setTopupNo] = useState(false);
   const [topupError, setTopupError] = useState(false);
   const [sumInsured, setSumInsured] = useState("");
-  const [topupValueError, setTopupValueError] = useState(false);
   const [insuranceHoldDeathYes, setInsuranceHoldDeathYes] = useState(true);
   const [insuranceHoldDeathNo, setInsuranceHoldDeathNo] = useState(false);
   const [required, setRequired] = useState(true);
@@ -192,6 +191,7 @@ const InsuranceNomination = (props) => {
   const [nomineuploade, setNomineUploade] = useState(false);
   const [insuranceError, setInsuranceError] = useState(false);
   const [premiumAmnt, setPremiumAmnt] = useState("");
+  const [sumValueError, setSumValueError] = useState(false);
   const [nominee, setNominee] = useState({
     nomineeName: "",
     nomineeRelationship: "",
@@ -1064,8 +1064,8 @@ const InsuranceNomination = (props) => {
       insuranceTopUpData !== undefined &&
       Object.keys(insuranceTopUpData).length !== 0
     ) {
-      console.log("insuranceTopUpData", insuranceTopUpData);
-      if (sumInsured !== "") {
+      console.log("insuranceTopUpData", insuranceTopUpData, sumInsured);
+      if (sumInsured !== "" && sumInsured !== null) {
         var premiumValue = insuranceTopUpData.filter(
           (item) => item.sum == sumInsured
         );
@@ -1290,16 +1290,29 @@ const InsuranceNomination = (props) => {
     console.log("changeHandler", event.target.name);
     let fileObj = event.target.files[0];
     console.log("photoIdChangeHandler", fileObj);
-    setStateNomine({
-      ...stateNomine,
-      [event.target.name]: fileObj.name,
-    });
-    setObjNomineState({
-      ...ObjNomineState,
-      [event.target.name]: fileObj,
-    });
-    if (event.target.name === "insurenceForm") {
-      setNomineUploade(false);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setStateNomine({
+          ...stateNomine,
+          [event.target.name]: fileObj.name,
+        });
+        setObjNomineState({
+          ...ObjNomineState,
+          [event.target.name]: fileObj,
+        });
+        if (event.target.name === "insurenceForm") {
+          setNomineUploade(false);
+        }
+      } else {
+        toast.error("File size should not exceed 500kb");
+      }
+    } else {
+      toast.error("Please select jpg, jpeg, png and pdf formats");
     }
   };
 
@@ -2058,6 +2071,17 @@ const InsuranceNomination = (props) => {
     // }
 
     // for unmarried
+    let sumInsuredError = false;
+    if (topupYes === true) {
+      if (sumInsured === "" || sumInsured === null) {
+        sumInsuredError = true;
+        setSumValueError(true);
+      } else {
+        sumInsuredError = false;
+        setSumValueError(false);
+      }
+    }
+
     console.log("submit", insuranceHoldDeathYes, insuranceHoldDeathNo);
     if (NAcheck2 === true) {
       if (
@@ -2107,9 +2131,11 @@ const InsuranceNomination = (props) => {
             relationship: nominee.nomineeRelationship,
           },
         };
-        CreateNominee([NAInfo]);
-        const nextPage = props.NextStep;
-        nextPage(true);
+        if (sumInsuredError === false) {
+          CreateNominee([NAInfo]);
+          const nextPage = props.NextStep;
+          nextPage(true);
+        }
       }
     } else {
       state.extra2relationship = "Mother";
@@ -2660,10 +2686,12 @@ const InsuranceNomination = (props) => {
           // }
         }
         console.log(NominiInfo);
-        CreateNominee(NominiInfo);
-        UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
-        const nextPage = props.NextStep;
-        nextPage(true);
+        if (sumInsuredError === false) {
+          CreateNominee(NominiInfo);
+          UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
+          const nextPage = props.NextStep;
+          nextPage(true);
+        }
       }
     }
   };
@@ -3195,7 +3223,7 @@ const InsuranceNomination = (props) => {
         <Col sm={5}>
           <div>
             <label>
-              <b>Enroll Dependents for Insurance Nomination</b>
+              <b>Enroll your dependants for group medical insurance policy</b>
             </label>
             <label>
               <b></b>
@@ -5692,11 +5720,11 @@ const InsuranceNomination = (props) => {
         ""
       )}
       <Row style={{ marginTop: "2rem" }}>
-        <Col sm={5}>
+        {/* <Col sm={5}>
           <div>
             <label>Dependent for insurance hold good in case of Death </label>
           </div>
-        </Col>
+        </Col> */}
       </Row>
 
       {/* <Row style={{ marginTop: "2rem" }}>
@@ -5745,7 +5773,7 @@ const InsuranceNomination = (props) => {
         <div>
           {/* first Nominee */}
           <label>
-            <b>Dependent</b>
+            <b> Nominee</b>
           </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
@@ -5753,7 +5781,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Dependent Name
+                      Nominee Name
                       <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
@@ -5778,7 +5806,8 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Relationship <span style={{ color: "red" }}>*</span>
+                      Nominee Relationship{" "}
+                      <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -5811,7 +5840,8 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Date Of Birth<span style={{ color: "red" }}>*</span>
+                      Nominee Date Of Birth
+                      <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
                       className={
@@ -5848,7 +5878,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Address<span style={{ color: "red" }}>*</span>
+                      Nominee Address<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
                       className={
@@ -5885,7 +5915,9 @@ const InsuranceNomination = (props) => {
           </Row>
           <Row>
             <Col sm={5}>
-              <label>Please fill the forms below</label>
+              <label>
+                Kindly fill and upload the nomination declaration form
+              </label>
               <br />
               <a
                 href={require("../../forms/Nomine_Nomination.pdf")}
@@ -5990,7 +6022,7 @@ const InsuranceNomination = (props) => {
       <Row style={{ marginBottom: "2rem" }}>
         <Col sm={5}>
           <div>
-            <label>Do you want Topup ?</label>
+            <label>Do you want to opt for a top-up policy ?</label>
             {topupError ? (
               <p style={{ color: "red" }}> *Please select one of the option</p>
             ) : (
@@ -6045,7 +6077,7 @@ const InsuranceNomination = (props) => {
                 value={sumInsured}
                 onChange={sumInsuredChange}
                 required
-                style={topupValueError ? { borderColor: "red" } : {}}
+                style={sumValueError ? { borderColor: "red" } : {}}
               >
                 <option value="">--Select--</option>
                 {insuranceTopUpData !== null &&
@@ -6060,7 +6092,7 @@ const InsuranceNomination = (props) => {
                   })}
               </Form.Control>
 
-              {topupValueError ? (
+              {sumValueError ? (
                 <p style={{ color: "red" }}> &nbsp; *Please select Value</p>
               ) : (
                 <p></p>
@@ -6069,7 +6101,9 @@ const InsuranceNomination = (props) => {
           </Col>
           <Col sm={11}>
             <div>
-              <label>* Premium amount to be changed = {premiumAmnt}</label>
+              <label>
+                * Premium amount deducted from salary = {premiumAmnt}
+              </label>
             </div>
           </Col>
         </Row>

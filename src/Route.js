@@ -120,6 +120,8 @@ import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/Manage
 
 /* All module reports */
 import ModuleReports from "./components/ModuleReports/ModuleReports";
+/* MIT reports */
+import MitReports from "./components/MitReports/MitReports";
 
 /* Notice Period Module */
 import NoticePeriodListContainer from "./components/NoticePeriod/List/ListContainer";
@@ -424,6 +426,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/reports/module-reports`}
             component={ModuleReports}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/reports/mit-reports`}
+            component={MitReports}
           />
 
           <Route

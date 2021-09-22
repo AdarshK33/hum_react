@@ -152,19 +152,47 @@ const DocVerification = () => {
     step5suscessStatus(true);
     setOnboardPopup(true);
   };
+  var educationDocuments = "";
   var documents =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType <= 5)
+      .filter(
+        (personal) =>
+          personal.documentType <= 5 ||
+          personal.documentType === 14 ||
+          personal.documentType === 17
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
-  var educationDocuments =
+  educationDocuments =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType > 5)
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType !== 14
+      )
+      .map((filteredResult) => {
+        return filteredResult;
+      });
+  educationDocuments =
+    educationDocuments !== undefined &&
+    educationDocuments !== null &&
+    educationDocuments
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType !== 17
+      )
+      .map((filteredResult) => {
+        return filteredResult;
+      });
+  educationDocuments =
+    educationDocuments !== undefined &&
+    educationDocuments !== null &&
+    educationDocuments
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType !== 24
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -336,6 +364,24 @@ const DocVerification = () => {
                                 (First page of the book)
                               </span>
                             </label>
+                          ) : item.documentType === 14 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Passport
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 17 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                FRRO
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
                           ) : (
                             item.documentType === 5 && (
                               <p>
@@ -515,16 +561,17 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
-                          ) : item.documentType === 14 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "16px" }}
-                              >
-                                Passport
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
-                          ) : item.documentType === 15 ? (
+                          ) : // : item.documentType === 14 ? (
+                          //   <p>
+                          //     <span
+                          //       style={{ color: "black", fontSize: "16px" }}
+                          //     >
+                          //       Passport
+                          //     </span>{" "}
+                          //     <span style={{ color: "red" }}>*</span>
+                          //   </p>
+                          // )
+                          item.documentType === 15 ? (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
@@ -533,16 +580,17 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
-                          ) : item.documentType === 17 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "16px" }}
-                              >
-                                FRRO
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
                           ) : (
+                            //  :item.documentType === 17 ? (
+                            //   <p>
+                            //     <span
+                            //       style={{ color: "black", fontSize: "16px" }}
+                            //     >
+                            //       FRRO
+                            //     </span>{" "}
+                            //     <span style={{ color: "red" }}>*</span>
+                            //   </p>
+                            // )
                             item.documentType === 16 && (
                               <p>
                                 <span
@@ -557,17 +605,23 @@ const DocVerification = () => {
                         </p>
                         {item.documentType > 5 &&
                           item.documentType !== 24 &&
+                          item.documentType !== 14 &&
+                          item.documentType !== 17 &&
                           item.documentName}
                       </td>
 
                       {item.statusDesc !== null &&
                       item.statusDesc !== "Pending" &&
                       item.documentType > 5 &&
-                      item.documentType !== 24 ? (
+                      item.documentType !== 24 &&
+                      item.documentType !== 14 &&
+                      item.documentType !== 17 ? (
                         <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
                         item.documentType > 5 &&
-                        item.documentType !== 24 && (
+                        item.documentType !== 24 &&
+                        item.documentType !== 14 &&
+                        item.documentType !== 17 && (
                           <td className="row text-center buttonMargin">
                             {/* <button
                               className="approveButton"
@@ -620,11 +674,15 @@ const DocVerification = () => {
                         <td className="buttonMargin1">
                           {item.documentType > 5 &&
                             item.documentType !== 24 &&
+                            item.documentType !== 14 &&
+                            item.documentType !== 17 &&
                             item.remark}
                         </td>
                       ) : (
                         item.documentType > 5 &&
-                        item.documentType !== 24 && (
+                        item.documentType !== 24 &&
+                        item.documentType !== 14 &&
+                        item.documentType !== 17 && (
                           <td className="buttonMargin1">NA</td>
                         )
                       )}
@@ -632,11 +690,15 @@ const DocVerification = () => {
                         <td className="buttonMargin1">
                           {item.documentType > 5 &&
                             item.documentType !== 24 &&
+                            item.documentType !== 14 &&
+                            item.documentType !== 17 &&
                             item.verifiedDate}
                         </td>
                       ) : (
                         item.documentType > 5 &&
-                        item.documentType !== 24 && (
+                        item.documentType !== 24 &&
+                        item.documentType !== 14 &&
+                        item.documentType !== 17 && (
                           <td className="buttonMargin1">NA</td>
                         )
                       )}

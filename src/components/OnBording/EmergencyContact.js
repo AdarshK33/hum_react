@@ -249,7 +249,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Relationships<span style={{ color: "red" }}>*</span>
+                Relationship<span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 as="select"
@@ -263,7 +263,7 @@ const EmergencyContact = (props) => {
                   stateError.relationshipError ? { borderColor: "red" } : {}
                 }
               >
-                <option value="">Relationships</option>
+                <option value="">Relationship</option>
                 <option value="Mother">Mother</option>
                 <option value="Father">Father</option>
                 <option value="Brother">Brother</option>

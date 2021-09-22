@@ -694,6 +694,7 @@ const ProbationAction = () => {
             <textarea
               className="remarkText rounded"
               name="remarks"
+              maxLength="500"
               value={state.remarks}
               placeholder="Write here.."
               onChange={(e) => changeHandler(e)}
@@ -1140,7 +1141,7 @@ const ProbationAction = () => {
                                         as="textarea"
                                         rows={4}
                                         name="reason"
-                                        maxlength="500"
+                                        maxLength="500"
                                         className="non-disable blueTextData"
                                         value={state.reason}
                                         onChange={changeHandler}
@@ -1197,7 +1198,7 @@ const ProbationAction = () => {
                                         rows={4}
                                         name="remarks"
                                         className="non-disable blueTextData"
-                                        maxlength="500"
+                                        maxLength="500"
                                         value={state.remarks}
                                         onChange={changeHandler}
                                         required
