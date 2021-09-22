@@ -985,10 +985,10 @@ const Documents = (props) => {
           UploadedArray[0].ULLatestPaySlip = false;
         }
       } else {
-        toast.info("File size should not exceed 500kb");
+        toast.error("File size should not exceed 500kb");
       }
     } else {
-      toast.info("Please select jpg png and pdf formats");
+      toast.error("Please select jpg, jpeg, png and pdf formats");
     }
   };
 

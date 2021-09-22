@@ -536,6 +536,8 @@ const AdminRoster = () => {
             Date={date.date}
             empData={adminWeekOffDataList}
             cid={clusterId}
+            endDate={endDate}
+            startDate={startDate}
           />
         )}
       </div>
