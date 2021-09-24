@@ -151,6 +151,7 @@ const PromotionApproval = (props) => {
       });
     }
   }, [promotionIdData]);
+  console.log(state,"state1")
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -266,7 +267,7 @@ const PromotionApproval = (props) => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Promotion rejected, the manager/cost center manager has been
+              Promotion rejected,the Manager/Admin has been
               notified
             </label>
             <div className="text-center mb-2">
@@ -548,7 +549,7 @@ const PromotionApproval = (props) => {
                                 </Col>
                               </>
                               <>
-                                <Col sm={2}>
+                                {/* <Col sm={2}>
                                   <div>
                                     <label>Salary Effective Date :</label>
                                   </div>
@@ -559,7 +560,7 @@ const PromotionApproval = (props) => {
                                       {state.salaryEffectiveDate}
                                     </label>
                                   </div>
-                                </Col>
+                                </Col> */}
                               </>
                             </>
                           ) : (
@@ -597,7 +598,8 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.effectiveDate}
+                                  {state.effectiveDate !== null && state.effectiveDate !== undefined && state.effectiveDate !== ""
+                                  ?moment(state.effectiveDate).format("DD-MM-YYYY"):""}
                                 </label>
                               </div>
                             </Col>
@@ -613,7 +615,7 @@ const PromotionApproval = (props) => {
                           <>
                             <Col sm={2}>
                               <div>
-                                <label>Validated By:</label>
+                                <label>Validated by Costcenter Leader:</label>
                               </div>
                             </Col>
                             <Col sm={2}>
@@ -633,7 +635,8 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.managerValidatedDate}
+                                  {state.managerValidatedDate !== null && state.managerValidatedDate !== undefined && state.managerValidatedDate !== ""
+                                  ?moment(state.managerValidatedDate).format("DD-MM-YYYY"):""}
                                 </label>
                               </div>
                             </Col>
@@ -649,7 +652,7 @@ const PromotionApproval = (props) => {
                           <>
                             <Col sm={2}>
                               <div>
-                                <label>Validated By:</label>
+                                <label>Validated by Admin:</label>
                               </div>
                             </Col>
                             <Col sm={2}>
@@ -669,7 +672,8 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.adminValidatedDate}
+                                  {state.adminValidatedDate !== null && state.adminValidatedDate !== undefined && state.adminValidatedDate !== ""
+                                  ?moment(state.adminValidatedDate).format("DD-MM-YYYY"):""}
                                 </label>
                               </div>
                             </Col>

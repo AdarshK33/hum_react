@@ -75,6 +75,7 @@ const PromotionInitiate = () => {
   const [reportingManagerError, setReportingManagerError] = useState("");
   const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [directing,setDirecting] = useState(true)
   const { user } = useContext(AppContext);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
@@ -254,8 +255,8 @@ const PromotionInitiate = () => {
       newFixedGross !== undefined
     ) {
       if (contractType === "Parttime" || contractType === "parttime") {
-        if (newFixedGross < 90 || newFixedGross > 200) {
-          setNewFixedGrossError("Value should be between 90 - 200");
+        if (newFixedGross < 90 || newFixedGross > 400) {
+          setNewFixedGrossError("Value should be between 90 - 400");
         } else {
           setNewFixedGrossError("");
         }
@@ -308,16 +309,16 @@ const PromotionInitiate = () => {
     } else {
       setEffectiveDateError("");
     }
-    var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (
-      (state.promotionType == 1 && salaryEffectiveDate == "") ||
-      salaryEffectiveDate == null ||
-      salaryEffectiveDate == undefined
-    ) {
-      setSalaryEffectiveDateError("Please add salary effective date");
-    } else {
-      setSalaryEffectiveDateError("");
-    }
+    // var salaryEffectiveDate = state.salaryEffectiveDate;
+    // if (
+    //   (state.promotionType == 1 && salaryEffectiveDate == "") ||
+    //   salaryEffectiveDate == null ||
+    //   salaryEffectiveDate == undefined
+    // ) {
+    //   setSalaryEffectiveDateError("Please add salary effective date");
+    // } else {
+    //   setSalaryEffectiveDateError("");
+    // }
 
     console.log(newFixedGrossError, "newFixedGrossError");
     if (
@@ -380,26 +381,27 @@ const PromotionInitiate = () => {
       if (
         contractType.toLowerCase() == "parttime" &&
         state.newFixedGross >= 90 &&
-        state.newFixedGross <= 200
+        state.newFixedGross <= 400
       ) {
-        // setModelStatus(true);
         setSubmitted(true);
-        if (
-          user !== null &&
-          user !== undefined &&
-          (user.loginType == 7 || user.additionalRole === "7")
-        ) {
-          PromotionCreate(infoData, 2);
-        } else if (
-          user !== null &&
-          user !== undefined &&
-          (user.additionalRole === "1" || user.loginType == "1")
-        ) {
-          PromotionCreate(infoData, 1);
-          setPreview(true);
-        } else {
-          PromotionCreate(infoData);
-        }
+        setDirecting(false)
+        // if (
+        //   user !== null &&
+        //   user !== undefined &&
+        //   (user.loginType == 7 || user.additionalRole === "7")
+        // ) {
+        //   PromotionCreate(infoData, 2);
+        // } else if (
+        //   user !== null &&
+        //   user !== undefined &&
+        //   (user.additionalRole === "1" || user.loginType == "1")
+        // ) {
+        //   PromotionCreate(infoData, 1);
+        //   setPreview(true);
+        // } else {
+        //   PromotionCreate(infoData);
+        // }
+        PromotionCreate(infoData);
         console.log("all okay1", infoData);
       } else if (
         contractType.toLowerCase() == "permanent" &&
@@ -407,22 +409,25 @@ const PromotionInitiate = () => {
       ) {
         // setModelStatus(true);
         setSubmitted(true);
-        if (
-          user !== null &&
-          user !== undefined &&
-          (user.loginType == 7 || user.additionalRole === "7")
-        ) {
-          PromotionCreate(infoData, 2);
-        } else if (
-          user !== null &&
-          user !== undefined &&
-          (user.additionalRole === "1" || user.loginType == "1")
-        ) {
-          PromotionCreate(infoData, 1);
-          setPreview(true);
-        } else {
-          PromotionCreate(infoData);
-        }
+        setDirecting(false)
+
+        // if (
+        //   user !== null &&
+        //   user !== undefined &&
+        //   (user.loginType == 7 || user.additionalRole === "7")
+        // ) {
+        //   PromotionCreate(infoData, 2);
+        // } else if (
+        //   user !== null &&
+        //   user !== undefined &&
+        //   (user.additionalRole === "1" || user.loginType == "1")
+        // ) {
+        //   PromotionCreate(infoData, 1);
+        //   setPreview(true);
+        // } else {
+        //   PromotionCreate(infoData);
+        // }
+        PromotionCreate(infoData);
         console.log("all okay2", infoData);
       } else if (
         state.promotionType == 0 &&
@@ -431,23 +436,24 @@ const PromotionInitiate = () => {
       ) {
         // setModelStatus(true);
         setSubmitted(true);
-        if (
-          user !== null &&
-          user !== undefined &&
-          (user.loginType == 7 || user.additionalRole === "7")
-        ) {
-          PromotionCreate(infoData, 2);
-        } else if (
-          user !== null &&
-          user !== undefined &&
-          (user.additionalRole === "1" || user.loginType == "1")
-        ) {
-          PromotionCreate(infoData, 1);
-          setPreview(true);
-        } else {
-          PromotionCreate(infoData);
-        }
-        console.log("all okay3", infoData);
+        PromotionCreate(infoData);
+        // if (
+        //   user !== null &&
+        //   user !== undefined &&
+        //   (user.loginType == 7 || user.additionalRole === "7")
+        // ) {
+        //   PromotionCreate(infoData, 2);
+        // } else if (
+        //   user !== null &&
+        //   user !== undefined &&
+        //   (user.additionalRole === "1" || user.loginType == "1")
+        // ) {
+        //   PromotionCreate(infoData, 1);
+        //   setPreview(true);
+        // } else {
+        //   PromotionCreate(infoData);
+        // }
+        // console.log("all okay3", infoData);
       } else {
         console.log("NOT OK", infoData);
       }
@@ -584,7 +590,7 @@ const PromotionInitiate = () => {
       // });
     }
 
-    console.log(state, "state");
+    console.log(state,promotionIdData, "state");
   };
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
@@ -780,11 +786,11 @@ const PromotionInitiate = () => {
             {user !== null &&
             user !== undefined &&
             Object.keys(user).length !== 0 &&
-            (user.loginType == 7 || user.additionalRole === "7")
-              ? "Your request has been sent to admin."
-              : user !== null &&
-                user !== undefined &&
-                Object.keys(user).length !== 0 &&
+            (user.loginType == 7 || user.additionalRole === "7")||
+              // ? "Your request has been sent to admin."
+              // : user !== null &&
+              //   user !== undefined &&
+              //   Object.keys(user).length !== 0 &&
                 (user.additionalRole === "1" || user.loginType == "1")
               ? "Your request has been saved successfully."
               : "Your request has been sent to cost center manager."}
@@ -796,9 +802,10 @@ const PromotionInitiate = () => {
             (user.additionalRole === "1" || user.loginType == "1") ? (
               <Button onClick={handleCloseValue}>Close</Button>
             ) : (
-              <Link to={"/promotion-list"}>
-                <Button onClick={handleCloseValue}>Close</Button>
-              </Link>
+              // <Link to={"/promotion-list"}>
+              //   <Button onClick={handleCloseValue}>Close</Button>
+              // </Link>
+             <Button onClick={handleCloseValue}>Close</Button>
             )}
           </div>
         </Modal.Body>
@@ -1196,7 +1203,7 @@ const PromotionInitiate = () => {
                                     </Form.Group>
                                   )}
                                   {/* <p style={{ color: "red" }}>
-                               {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >200)?"parttime invalid":
+                               {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >400)?"parttime invalid":
                                (contractType == "permanent" && state.newFixedGross < 18000)?"permanent":""}
                              </p>  */}
                                   {newFixedGrossError ? (
@@ -1209,7 +1216,7 @@ const PromotionInitiate = () => {
                                 </div>
                               </Col>
 
-                              <Col sm={2}>
+                              {/* <Col sm={2}>
                                 <div>
                                   <label>Salary Effective Date :</label>
                                 </div>
@@ -1251,7 +1258,7 @@ const PromotionInitiate = () => {
                                 ) : (
                                   ""
                                 )}
-                              </Col>
+                              </Col> */}
                             </>
                           ) : (
                             ""
@@ -1286,8 +1293,8 @@ const PromotionInitiate = () => {
                                     // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
+                                    dateFormat="dd-MM-yyyy"
+                                    placeholderText="DD-MM-YYYY"
                                     minDate={
                                       new Date(
                                         new Date().setMonth(
@@ -1386,7 +1393,7 @@ const PromotionInitiate = () => {
                                 textAlign: "center",
                               }}
                             >
-                              {true ? (
+                              {/* {directing ? ( */}
                                 <button
                                   disabled={
                                     submitted ||
@@ -1408,17 +1415,18 @@ const PromotionInitiate = () => {
                                   }
                                   onClick={submitHandler}
                                 >
-                                  Submit
+                                  Save
                                 </button>
-                              ) : (
+                              {/* ) : (
                                 ""
-                              )}
-                              {(showPreview === true || !saveLetter) &&
-                              user !== null &&
-                              user !== undefined &&
-                              Object.keys(user).length !== 0 &&
-                              (user.additionalRole === "1" ||
-                                user.loginType == "1") &&
+                              )} */}
+                              {
+                              //(showPreview === true || !saveLetter) &&
+                              // user !== null &&
+                              // user !== undefined &&
+                              // Object.keys(user).length !== 0 &&
+                              // (user.additionalRole === "1" ||
+                              //   user.loginType == "1") &&
                               promotionIdData !== null &&
                               promotionIdData !== undefined &&
                               Object.keys(promotionIdData).length !== 0 &&
@@ -1434,12 +1442,13 @@ const PromotionInitiate = () => {
                               ) : (
                                 ""
                               )}
-                              {user !== null &&
-                              user !== undefined &&
-                              Object.keys(user).length !== 0 &&
-                              (user.additionalRole === "1" ||
-                                user.loginType == "1") &&
-                              saveLetter &&
+                              {
+                              // user !== null &&
+                              // user !== undefined &&
+                              // Object.keys(user).length !== 0 &&
+                              // (user.additionalRole === "1" ||
+                              //   user.loginType == "1") &&
+                              //saveLetter &&
                               previewGeneratedLetter ? (
                                 <button
                                   className={"LettersProbButtons"}
@@ -1450,12 +1459,13 @@ const PromotionInitiate = () => {
                               ) : (
                                 ""
                               )}
-                              {user !== null &&
-                                user !== undefined &&
-                                Object.keys(user).length !== 0 &&
-                                (user.additionalRole === "1" ||
-                                  user.loginType == "1") &&
-                                saveLetter &&
+                              {
+                              // user !== null &&
+                              //   user !== undefined &&
+                              //   Object.keys(user).length !== 0 &&
+                              //   (user.additionalRole === "1" ||
+                              //     user.loginType == "1") &&
+                               // saveLetter &&
                                 previewGeneratedLetter === true && (
                                   <div className="preview-section">
                                     <br></br>
