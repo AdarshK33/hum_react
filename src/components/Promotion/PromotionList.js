@@ -37,6 +37,7 @@ const PromotionList = () => {
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
   const [promotionStatus, setPromotionStatus] = useState("");
+  const [role, setRole] = useState(0);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,23 +58,30 @@ const PromotionList = () => {
   useEffect(() => {
     MakeCostCenterDataNull();
   }, []);
+  useEffect(() => {
+    if (rolePermission == "superCostCenterManager") {
+      setRole(1);
+    } else {
+      setRole(0);
+    }
+  }, [rolePermission]);
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageNumber - 1);
+      promotionListView(searchValue, pageNumber - 1,6,role);
     } else if (promotionStatus === "Pending") {
-      promotionListView("all", pageNumber - 1, 0);
+      promotionListView("all", pageNumber - 1, 0,role);
     } else if (promotionStatus === "In Progress") {
-      promotionListView("all", pageNumber - 1, 1);
+      promotionListView("all", pageNumber - 1, 1,role);
     } else if (promotionStatus === "Approved") {
-      promotionListView("all", pageNumber - 1, 3);
+      promotionListView("all", pageNumber - 1, 3,role);
     } else if (promotionStatus === "Rejected") {
-      promotionListView("all", pageNumber - 1, 4);
+      promotionListView("all", pageNumber - 1, 4,role);
     } else if (promotionStatus === "Approve In Progress") {
-      promotionListView("all", pageNumber - 1, 5);
+      promotionListView("all", pageNumber - 1, 5,role);
     } else {
-      promotionListView("all", pageNumber - 1);
+      promotionListView("all", pageNumber - 1,6,role);
     }
     setCurrentRecords(promotionList);
   };
@@ -88,18 +96,19 @@ const PromotionList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageCount);
+      promotionListView(searchValue, pageCount,6,role);
     } else {
-      promotionListView("all", 0);
+      promotionListView("all", 0,6,role);
     }
   };
 
   useEffect(() => {
-    promotionListView(searchValue, pageCount);
+    promotionListView(searchValue, pageCount,6,rolePermission == "superCostCenterManager" ? 1 : 0
+    );
     console.log("user role------>", user);
   }, []);
 
-  console.log(promotionList, "promotionlist3");
+  console.log(rolePermission,promotionList, "promotionlist3");
 
   const statusHandler = (e) => {
     setPromotionStatus(e.target.value);
@@ -107,17 +116,17 @@ const PromotionList = () => {
     setCurrentPage(1);
     setSearchValue("");
     if (e.target.value === "Pending") {
-      promotionListView("all", 0, 0);
+      promotionListView("all", 0, 0,role);
     } else if (e.target.value === "In Progress") {
-      promotionListView("all", 0, 1);
+      promotionListView("all", 0, 1,role);
     } else if (e.target.value === "Approved") {
-      promotionListView("all", 0, 3);
+      promotionListView("all", 0, 3,role);
     } else if (e.target.value === "Rejected") {
-      promotionListView("all", 0, 4);
+      promotionListView("all", 0, 4,role);
     } else if (e.target.value === "Approve In Progress") {
-      promotionListView("all", 0, 5);
+      promotionListView("all", 0, 5,role);
     } else {
-      promotionListView("all", 0);
+      promotionListView("all", 0,6,role);
     }
   };
 
@@ -407,7 +416,27 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) : (
+                            ) :user !== null &&
+                            user !== undefined &&
+                            rolePermission == "superCostCenterManager" ? (
+                            <td>
+                              {item.status === 0 ? (
+                                <Link
+                                  to={
+                                    "/promotion-approval/" + item.employeeId
+                                  }
+                                >
+                                  <Edit2
+                                    onClick={() => {
+                                      ViewPromotionById(item.promotionId);
+                                    }}
+                                  />
+                                </Link>
+                              ) : (
+                                <Edit2 />
+                              )}
+                            </td>
+                          ): (
                               <td>
                                 <Edit2 />
                               </td>

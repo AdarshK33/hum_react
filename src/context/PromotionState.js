@@ -24,7 +24,7 @@ export const PromotionProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [createdPromotion, setCreatedPromotion] = useState(false);
 
-  const promotionListView = (key, page, status = 6) => {
+  const promotionListView = (key, page, status = 6,role) => {
     console.log(key, page, client.defaults.headers, "promotion ");
     console.log(key, page, "promotion ");
     setLoader(true);
@@ -37,7 +37,9 @@ export const PromotionProvider = (props) => {
           "&size=" +
           10 +
           "&status=" +
-          status
+          status +
+          "&superManager=" +
+          role
       )
       .then((response) => {
         console.log("response", response.data.data.data);

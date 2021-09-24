@@ -166,6 +166,13 @@ const PromotionApproval = (props) => {
     ) {
       approvePromotion(state.promotionId, 2);
       setModelStatus(true);
+    }else if (
+      user !== null &&
+      user !== undefined &&
+      rolePermission == "superCostCenterManager"
+    ) {
+      approvePromotion(state.promotionId, 2);
+      setModelStatus(true);
     }
   };
   const cancelHandler = (e) => {
@@ -248,7 +255,10 @@ const PromotionApproval = (props) => {
                   user !== undefined &&
                   rolePermission == "costCenterManager"
                 ? "Promotion confirmed successfully, request sent to Admin"
-                : ""}
+                :user !== null &&
+                user !== undefined &&
+                rolePermission == "superCostCenterManager"
+              ? "Promotion confirmed successfully, request sent to Admin": ""}
             </label>
             <div className="text-center mb-2">
               <Link to={"/promotion-list"}>
