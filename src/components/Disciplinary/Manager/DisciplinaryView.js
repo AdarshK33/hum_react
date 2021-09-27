@@ -402,7 +402,9 @@ const DisciplinaryView = () => {
                             <div>
                               <a onClick={employeeReason}>
                                 {" "}
-                                <u className="itemResult">Response to show cause notice</u>
+                                <u className="itemResult">
+                                  Response to show cause notice
+                                </u>
                               </a>
                             </div>
                           </Col>
@@ -514,7 +516,7 @@ const DisciplinaryView = () => {
                             <Col sm={6}>
                               <div>
                                 <label>
-                                Response to show cause notice:
+                                  Reason for Warning:
                                   <label className="itemResult">
                                     &nbsp;&nbsp; {state.warningReason}
                                   </label>

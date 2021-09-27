@@ -284,6 +284,7 @@ const ProbationAction = () => {
         previewLetter
       );
       setPreviewLetter(false);
+      setViewLetter(true);
       setLetterPreView(true);
       setLetterView(false);
       // if (probationData.status === 5 || probationData.status === 1) {
@@ -522,12 +523,15 @@ const ProbationAction = () => {
         probationConfirmationDate:
           moment(dateOfConfirmation).format("YYYY-MM-DD"),
         probationConfirmationLetter: probationData.probationConfirmationLetter,
-        probationExtensionEndDate: dateOfExtension,
+        probationExtensionEndDate:
+          probationStatus === "Extended" ? dateOfExtension : null,
         probationExtensionPeriod:
-          probationMonths === "3 Months"
-            ? 3
-            : probationMonths === "6 Months"
-            ? 6
+          probationStatus === "Extended"
+            ? probationMonths === "3 Months"
+              ? 3
+              : probationMonths === "6 Months"
+              ? 6
+              : 0
             : 0,
         probationExtensionStartDate: null,
         probationId: probationData.probationId,
@@ -578,12 +582,15 @@ const ProbationAction = () => {
             moment(dateOfConfirmation).format("YYYY-MM-DD"),
           probationConfirmationLetter:
             probationData.probationConfirmationLetter,
-          probationExtensionEndDate: dateOfExtension,
+          probationExtensionEndDate:
+            probationStatus === "Extended" ? dateOfExtension : null,
           probationExtensionPeriod:
-            probationMonths === "3 Months"
-              ? 3
-              : probationMonths === "6 Months"
-              ? 6
+            probationStatus === "Extended"
+              ? probationMonths === "3 Months"
+                ? 3
+                : probationMonths === "6 Months"
+                ? 6
+                : 0
               : 0,
           probationExtensionStartDate: null,
           probationId: probationData.probationId,
@@ -609,10 +616,13 @@ const ProbationAction = () => {
       }
     }
   };
+  const closeTheLetter = () => {
+    setViewLetter(false);
+  };
 
   return (
     <Fragment>
-      {probationData !== null &&
+      {/* {probationData !== null &&
       probationData !== undefined &&
       Object.keys(probationData).length !== 0 &&
       probationData.probationConfirmationLetter !== null &&
@@ -629,17 +639,76 @@ const ProbationAction = () => {
       probationData !== undefined &&
       Object.keys(probationData).length !== 0 &&
       (probationData.status === 5 || probationData.status === 1) ? (
-        <ConfirmationLetter1 />
+        <ConfirmationLetter />
       ) : ViewLetter &&
         ShowViewLetterModel &&
         probationData !== null &&
         probationData !== undefined &&
         Object.keys(probationData).length !== 0 &&
         (probationData.status === 6 || probationData.status === 2) ? (
-        <ExtensionLetter1 />
+        <ExtensionLetter />
       ) : (
         ""
-      )}
+      )} */}
+
+      <Modal show={ViewLetter} onHide={closeTheLetter} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {probationData !== null &&
+          probationData !== undefined &&
+          Object.keys(probationData).length !== 0 &&
+          (probationData.status === 5 || probationData.status === 1) ? (
+            <ConfirmationLetter />
+          ) : probationData !== null &&
+            probationData !== undefined &&
+            Object.keys(probationData).length !== 0 &&
+            (probationData.status === 6 || probationData.status === 2) ? (
+            <ExtensionLetter />
+          ) : (
+            ""
+          )}
+          <br></br>
+          <Row>
+            {/* <Col sm={6}>
+                <p>Thanking you</p>
+                <p>{employeeData.managerName}</p>
+              </Col> */}
+
+            {showSignature ? (
+              <Fragment>
+                <br></br>
+                <img
+                  src={calendarImage}
+                  alt="calendar"
+                  width="50px"
+                  className="digital-signature"
+                />
+              </Fragment>
+            ) : (
+              <>
+                <br></br>
+                <button className={"stepperButtons"} onClick={digitalSignature}>
+                  Add digital signature
+                </button>
+              </>
+            )}
+          </Row>
+          {showSignature && !previewLetter ? (
+            <Row>
+              <Col sm={4}></Col>
+              <Col sm={5}>
+                <br></br>
+                <br></br>
+                <button className={"stepperButtons"} onClick={saveOfferLetter}>
+                  Save Changes
+                </button>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
 
       <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -917,12 +986,12 @@ const ProbationAction = () => {
                                   {/* &nbsp;&nbsp;{" "} */}
                                   {probationData.status == 1 ||
                                   probationData.status == 5
-                                    ? "Confirmed"
+                                    ? "Confirm"
                                     : probationData.status == 2 ||
                                       probationData.status == 6
-                                    ? "Extended"
+                                    ? "Extend"
                                     : probationData.status == 3
-                                    ? "Rejected"
+                                    ? "Reject"
                                     : ""}
                                 </label>
                               ) : (
@@ -939,7 +1008,7 @@ const ProbationAction = () => {
                                     style={false ? { borderColor: "red" } : {}}
                                   >
                                     {/* <option value=""></option> */}
-                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="Confirmed">Confirm</option>
                                     {probationData &&
                                     probationData &&
                                     probationData !== null &&
@@ -953,11 +1022,11 @@ const ProbationAction = () => {
                                         undefined ||
                                       probationData.probationExtensionPeriod ===
                                         0) ? (
-                                      <option value="Extended">Extended</option>
+                                      <option value="Extended">Extend</option>
                                     ) : (
                                       ""
                                     )}
-                                    <option value="Rejected">Rejected</option>
+                                    <option value="Rejected">Reject</option>
                                   </Form.Control>
                                 </Form.Group>
                               )}
@@ -1256,7 +1325,7 @@ const ProbationAction = () => {
                             ""
                           )}
 
-                          {!LetterSaved &&
+                          {!previewGeneratedLetter &&
                           ((probationData &&
                             probationData &&
                             probationData !== null &&
@@ -1292,8 +1361,7 @@ const ProbationAction = () => {
                           ) : (
                             ""
                           )}
-                          {LetterSaved &&
-                          previewGeneratedLetter &&
+                          {previewGeneratedLetter &&
                           probationData &&
                           probationData &&
                           probationData !== null &&
@@ -1328,7 +1396,7 @@ const ProbationAction = () => {
                           ) : (
                             ""
                           )}
-                          {LetterSaved && previewGeneratedLetter === true && (
+                          {showSignature && previewGeneratedLetter === true && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>

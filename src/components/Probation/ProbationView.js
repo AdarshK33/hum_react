@@ -241,12 +241,12 @@ const ProbationView = () => {
                                   {/* &nbsp;&nbsp;{" "} */}
                                   {probationData.status == 1 ||
                                   probationData.status == 5
-                                    ? "Confirmed"
+                                    ? "Confirm"
                                     : probationData.status == 2 ||
                                       probationData.status == 6
-                                    ? "Extended"
+                                    ? "Extend"
                                     : probationData.status == 3
-                                    ? "Rejected"
+                                    ? "Reject"
                                     : ""}
                                 </label>
                               ) : (

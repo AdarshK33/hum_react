@@ -526,9 +526,14 @@ const ProbationList = () => {
                             <td>{item.dateOfJoining}</td>
                             <td>
                               {
-                                item.probationConfirmationDate !== null &&
-                                item.probationConfirmationDate !== "" &&
-                                item.probationConfirmationDate !== undefined
+                                item.status === 2 &&
+                                item.probationExtensionEndDate !== null &&
+                                item.probationExtensionEndDate !== "" &&
+                                item.probationExtensionEndDate !== undefined
+                                  ? item.probationExtensionEndDate
+                                  : item.probationConfirmationDate !== null &&
+                                    item.probationConfirmationDate !== "" &&
+                                    item.probationConfirmationDate !== undefined
                                   ? item.probationConfirmationDate
                                   : item.dateOfJoining !== null &&
                                     item.dateOfJoining !== undefined &&

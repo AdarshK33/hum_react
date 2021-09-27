@@ -37,13 +37,13 @@ const ConfirmationLetter = () => {
           </p>
           <br></br>
           <p>
-            To Ms./Mr. &nbsp;<b>{cnfLetterData.empName}</b>
+            <b>To Ms./Mr. &nbsp;{cnfLetterData.empName}</b>
           </p>
           <p>Address :</p>
           <p>
             <b>{cnfLetterData.address}</b>
           </p>
-          <p className="mt-5 ">
+          <p className="mt-4 ">
             {" "}
             <b>Dear &nbsp;{cnfLetterData.empName},</b>{" "}
           </p>
@@ -55,17 +55,27 @@ const ConfirmationLetter = () => {
             <p>
               We are glad to inform you that the management is pleased to
               confirm you in service with effect from{" "}
-              <b>{cnfLetterData.confirmationDate}</b>. All the other terms and
-              conditions of your appointment letter dated{" "}
-              {/* {relivingLetterData.date} */}
+              <b>
+                {" "}
+                {cnfLetterData.confirmationDate !== null &&
+                cnfLetterData.confirmationDate !== undefined
+                  ? moment(new Date(cnfLetterData.confirmationDate)).format(
+                      "DD-MM-YYYY"
+                    )
+                  : ""}
+              </b>
+              . All the other terms and conditions of your appointment letter
+              dated {/* {relivingLetterData.date} */}
               shall remain same.
+              <br />
               <br />
               Please sign the copy of this letter as receipt of acceptance.
               <br />
               <br />
+              <br />
               Thanking You,
             </p>
-            <p className="mt-5 ">
+            <p className="mt-2 ">
               <b>For {cnfLetterData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
