@@ -6,7 +6,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { ProbationContext } from "../../context/ProbationState";
 
 const ExtensionLetter1 = () => {
-  const { extensionLetterData, loader, setLetterView } =
+  const { extensionLetterData, loader, setLetterView, setSaveTheLetter } =
     useContext(ProbationContext);
   const [show, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
@@ -23,6 +23,7 @@ const ExtensionLetter1 = () => {
     setShow(false);
     setSaveLetter(true);
     setLetterView(false);
+    setSaveTheLetter(true);
   };
   return (
     <Fragment>
