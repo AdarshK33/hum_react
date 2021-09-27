@@ -262,7 +262,7 @@ export const ClusterProvider = ({ children }) => {
   function salaryEdit(salaryEdit, salaryData) {
     console.log("/api/v1/salary edit api response", salaryEdit);
     return client
-      .post("salary/update", salaryEdit)
+      .post("/api/v1/salary/update", salaryEdit)
       .then((response) => {
         if (response.data === null) {
           toast.info(response.message);
