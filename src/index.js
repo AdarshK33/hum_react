@@ -45,6 +45,7 @@ import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import CandidateWithAxios from "./utils/canditateLogin";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { MitProvider } from "./context/MitReportState";
 
 //firebase Auth
 function Root() {
@@ -85,21 +86,23 @@ function Root() {
                                                           <ModuleReportProvider>
                                                             <NoticePeriodProvider>
                                                               <InsuranceProvider>
-                                                                <DocumentManagementProvider>
-                                                                  <BrowserRouter
-                                                                    basename={
-                                                                      "/"
-                                                                    }
-                                                                  >
-                                                                    <ScrollContext>
-                                                                      <WithAxios>
-                                                                        <CandidateWithAxios>
-                                                                          <RoutePath />
-                                                                        </CandidateWithAxios>
-                                                                      </WithAxios>
-                                                                    </ScrollContext>
-                                                                  </BrowserRouter>
-                                                                </DocumentManagementProvider>
+                                                                <MitProvider>
+                                                                  <DocumentManagementProvider>
+                                                                    <BrowserRouter
+                                                                      basename={
+                                                                        "/"
+                                                                      }
+                                                                    >
+                                                                      <ScrollContext>
+                                                                        <WithAxios>
+                                                                          <CandidateWithAxios>
+                                                                            <RoutePath />
+                                                                          </CandidateWithAxios>
+                                                                        </WithAxios>
+                                                                      </ScrollContext>
+                                                                    </BrowserRouter>
+                                                                  </DocumentManagementProvider>
+                                                                </MitProvider>
                                                               </InsuranceProvider>
                                                             </NoticePeriodProvider>
                                                           </ModuleReportProvider>

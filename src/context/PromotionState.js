@@ -24,7 +24,7 @@ export const PromotionProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [createdPromotion, setCreatedPromotion] = useState(false);
 
-  const promotionListView = (key, page, status = 6) => {
+  const promotionListView = (key, page, status = 6,role) => {
     console.log(key, page, client.defaults.headers, "promotion ");
     console.log(key, page, "promotion ");
     setLoader(true);
@@ -37,7 +37,9 @@ export const PromotionProvider = (props) => {
           "&size=" +
           10 +
           "&status=" +
-          status
+          status +
+          "&superManager=" +
+          role
       )
       .then((response) => {
         console.log("response", response.data.data.data);
@@ -134,7 +136,7 @@ export const PromotionProvider = (props) => {
       .then((response) => {
         state.promotionCreate = response.data.data;
 
-        console.log("--->", state.promotionCreate);
+        console.log("response--->", state.promotionCreate);
         console.log(response);
         toast.info(response.data.message);
 
@@ -163,6 +165,7 @@ export const PromotionProvider = (props) => {
         } else {
           setCreatedPromotion(true);
         }
+        ViewPromotionById(response.data.data.promotionId)
         setLoader(false);
         return dispatch({
           type: "PROMOTION_CREATE",

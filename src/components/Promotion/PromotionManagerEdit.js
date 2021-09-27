@@ -304,17 +304,16 @@ const PromotionManagerEdit = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (
-      (state.promotionType == 1 && salaryEffectiveDate == "") ||
-      salaryEffectiveDate == null ||
-      salaryEffectiveDate == undefined
-    ) {
-      setSalaryEffectiveDateError("Please add salary effective date");
-    } else {
-      setSalaryEffectiveDateError("");
-    }
+    //var salaryEffectiveDate = state.salaryEffectiveDate;
+    // if (
+    //   (state.promotionType == 1 && salaryEffectiveDate == "") ||
+    //   salaryEffectiveDate == null ||
+    //   salaryEffectiveDate == undefined
+    // ) {
+    //   setSalaryEffectiveDateError("Please add salary effective date");
+    // } else {
+    //   setSalaryEffectiveDateError("");
+    // }
     var effectiveDate = state.effectiveDate;
     if (
       (state.promotionType == 1 && effectiveDate == "") ||
@@ -370,17 +369,22 @@ const PromotionManagerEdit = (props) => {
       state.effectiveDate !== undefined
     ) {
       if (state.promotionType == 1) {
-        if (
-          state.salaryEffectiveDate !== "" &&
-          state.salaryEffectiveDate !== null &&
-          state.salaryEffectiveDate !== undefined
-        ) {
-          PromotionCreate(infoData);
-          setSubmitted(true);
-          setPreview(true);
-          console.log("all okay", infoData);
-        }
-      } else {
+        // if (
+        //   state.salaryEffectiveDate !== "" &&
+        //   state.salaryEffectiveDate !== null &&
+        //   state.salaryEffectiveDate !== undefined
+        // ) {
+        //   console.log("in 1 ",infoData)
+        //   PromotionCreate(infoData);
+        //   setSubmitted(true);
+        //   setPreview(true);
+        //   console.log("all okay", infoData);
+        // }
+        PromotionCreate(infoData);
+        setSubmitted(true);
+        setPreview(true);
+      }else{
+        console.log("all okay", infoData);
         PromotionCreate(infoData);
         setSubmitted(true);
         setPreview(true);
@@ -738,8 +742,8 @@ const PromotionManagerEdit = (props) => {
                                   name="effectiveDate"
                                   required
                                   onChange={(e) => effectiveHandler(e)}
-                                  dateFormat="yyyy-MM-dd"
-                                  placeholderText="YYYY-MM-DD"
+                                  dateFormat="dd-MM-yyyy"
+                                  placeholderText="DD-MM-YYYY"
                                   minDate={new Date()}
                                 />
                               </Form.Group>
@@ -753,7 +757,7 @@ const PromotionManagerEdit = (props) => {
                             )}
                           </Col>
 
-                          {promotionIdData !== null &&
+                          {/* {promotionIdData !== null &&
                           promotionIdData !== undefined &&
                           promotionIdData.promotionType === 1 ? (
                             <Col sm={6}>
@@ -769,8 +773,8 @@ const PromotionManagerEdit = (props) => {
                                     name="salaryEffectiveDate"
                                     required
                                     onChange={(e) => salaryeEffectiveHandler(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
+                                    dateFormat="dd-MM-yyyy"
+                                    placeholderText="DD-MM-YYYY"
                                     minDate={new Date()}
                                   />
                                 </Form.Group>
@@ -785,7 +789,7 @@ const PromotionManagerEdit = (props) => {
                             </Col>
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </Row>
                         <Row
                           style={{
@@ -850,7 +854,7 @@ const PromotionManagerEdit = (props) => {
                                       promotionIdData !== undefined &&
                                       Object.keys(promotionIdData).length !==
                                         0 &&
-                                      promotionIdData.status === 5)
+                                      (promotionIdData.status === 5))
                                   }
                                   className={
                                     showPreview ||

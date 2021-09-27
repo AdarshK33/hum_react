@@ -27,27 +27,44 @@ const PromotionSalaryLetter = () => {
           <br></br>
           <h5 className="text-center"> PROMOTION LETTER</h5>
 
-          <p>Name:{promotionLetterData.empName}</p>
-          <p>EmployeeId:{promotionLetterData.employeeId}</p>
+          <p>Name:{promotionLetterData !== undefined &&
+              promotionLetterData.gender == "MALE"?
+              `Mr.${promotionLetterData.empName}`
+              :(promotionLetterData.gender == "FEMALE" && 
+              promotionLetterData.maritalStatus == "Single")?
+              `Miss. ${promotionLetterData.empName}`
+              :`Mrs.${promotionLetterData.empName}`}</p>
+          <p>Employee ID:{promotionLetterData.employeeId}</p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{promotionLetterData.empName},</b>{" "}
+              Dear <b>{promotionLetterData !== undefined &&
+              promotionLetterData.gender == "MALE"?
+              `Mr.${promotionLetterData.empName}`
+              :(promotionLetterData.gender == "FEMALE" && 
+              promotionLetterData.maritalStatus == "Single")?
+              `Miss. ${promotionLetterData.empName}`
+              :`Mrs.${promotionLetterData.empName}`},</b>{" "}
             </p>
             <br></br>
             <p>
-              <b>Sub: Promotion with salary increment</b>
+              <b>Sub: Promotion with Salary Increment</b>
             </p>
             <p>
               We are pleased to promote you as{" "}
               <b>{promotionLetterData.promotedPosition}</b> and your new gross
               salary will be INR. <b>{promotionLetterData.newFixedGross}</b>/-
-              with effect from <b>{promotionLetterData.salaryEffectiveDate}</b>. You
-              will be reporting to Ms./Mr.{" "}
+              with effect from <b>{
+              promotionLetterData.effectiveDate !== null && promotionLetterData.effectiveDate !== undefined 
+              && promotionLetterData.effectiveDate !== ""?
+              moment(promotionLetterData.effectiveDate).format("DD-MM-YYYY"):""}</b>. You
+              will be reporting to {" "}
               <b>{promotionLetterData.reportingManagerName},</b>. All the other
               terms and conditions of your appointment letter dated{" "}
-              <b>{promotionLetterData.appointmentLetterDate}</b> shall remain
+              <b>{promotionLetterData.appointmentLetterDate !== null && promotionLetterData.appointmentLetterDate !== undefined 
+              && promotionLetterData.appointmentLetterDate !== ""?
+              moment(promotionLetterData.appointmentLetterDate).format("DD-MM-YYYY"):""}</b> shall remain
               the same.
             </p>
             <p>Please sign the copy of this letter as receipt of acceptance.</p>

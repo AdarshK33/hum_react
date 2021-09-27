@@ -453,7 +453,7 @@ const PromotionView = (props) => {
                               </Col>
                             </>
                             <>
-                              <Col sm={2}>
+                              {/* <Col sm={2}>
                                 <div>
                                   <label>Salary Effective Date :</label>
                                 </div>
@@ -464,7 +464,7 @@ const PromotionView = (props) => {
                                     {state.salaryEffectiveDate}
                                   </label>
                                 </div>
-                              </Col>
+                              </Col> */}
                             </>
                           </>
                         ) : (
@@ -502,7 +502,12 @@ const PromotionView = (props) => {
                           <Col sm={2}>
                             <div>
                               <label className="itemResult">
-                                {state.effectiveDate}
+                                {
+                                 state.effectiveDate !== null && 
+                                 state.effectiveDate !== undefined 
+                                  && state.effectiveDate !== ""?
+                                 moment(state.effectiveDate).format("DD-MM-YYYY"):""
+                                }
                               </label>
                             </div>
                           </Col>
@@ -634,7 +639,7 @@ const PromotionView = (props) => {
                                 <>
                                   <Col sm={2}>
                                     <div>
-                                      <label>Validated By:</label>
+                                      <label>Validated by Costcenter Leader:</label>
                                     </div>
                                   </Col>
                                   <Col sm={2}>
@@ -654,8 +659,13 @@ const PromotionView = (props) => {
                                   <Col sm={2}>
                                     <div>
                                       <label className="itemResult">
-                                        {state.managerValidatedDate}
-                                      </label>
+                                        {
+                                            state.managerValidatedDate !== null && 
+                                            state.managerValidatedDate !== undefined 
+                                             && state.managerValidatedDate !== ""?
+                                            moment(state.managerValidatedDate).format("DD-MM-YYYY"):""
+                                        }
+                                            </label>
                                     </div>
                                   </Col>
                                 </>
@@ -670,7 +680,7 @@ const PromotionView = (props) => {
                                 <>
                                   <Col sm={2}>
                                     <div>
-                                      <label>Validated By:</label>
+                                      <label>Validated by Admin:</label>
                                     </div>
                                   </Col>
                                   <Col sm={2}>
@@ -690,7 +700,11 @@ const PromotionView = (props) => {
                                   <Col sm={2}>
                                     <div>
                                       <label className="itemResult">
-                                        {state.adminValidatedDate}
+                                        {state.adminValidatedDate !== null && 
+                                         state.adminValidatedDate !== undefined 
+                                         && state.adminValidatedDate !== ""?
+                                  moment(state.adminValidatedDate).format("DD-MM-YYYY"):""
+                                        }
                                       </label>
                                     </div>
                                   </Col>
