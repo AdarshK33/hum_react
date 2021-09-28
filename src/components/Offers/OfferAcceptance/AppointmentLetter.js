@@ -53,7 +53,7 @@ const AppointmentLetter = (props) => {
   const saveAppointmentLetter = () => {
     setSaveLetter(true);
     setShow(false);
-    /*saveAppointmentLetter */
+    /*saveAppointmentLetterr */
   };
   return (
     <Container className="letterStyle">
