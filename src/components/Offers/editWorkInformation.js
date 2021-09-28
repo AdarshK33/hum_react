@@ -848,7 +848,7 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )} */}
-            {state.employmentType === "Local Expat" && (
+            {/* {state.employmentType === "Local Expat" && (
               <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Passport Number</Form.Label>
@@ -864,7 +864,7 @@ const EditWorkInformation = () => {
                   />
                 </Form.Group>
               </Col>
-            )}
+            )} */}
 
             {state.employmentType === "Local Expat" && (
               <React.Fragment>

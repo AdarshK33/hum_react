@@ -134,3 +134,9 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.letterStyle {
+  padding: 10px;
+  border: 1px solid #a9a9ac;
+  text-align: justify;
+}

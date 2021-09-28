@@ -1,21 +1,19 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Modal, Row, Col, Form, Button } from "react-bootstrap";
-import calendarImage from "../../assets/images/calendar-image.png";
+import { Modal, Row, Col, Form, Button, Container } from "react-bootstrap";
 import moment from "moment";
-import "./offers.css";
-import { OfferContext } from "../../context/OfferState";
-
+import ".././offers.css";
+import { OfferContext } from "../../../context/OfferState";
+import { OnBoardContext } from "../../../context/OnBoardState";
 const PartTimeOfferLetter = () => {
-  const {
-    createCandidateResponse,
-    generateOfferLetter,
-    offerLetterData,
-  } = useContext(OfferContext);
+  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+    useContext(OfferContext);
+  const { generateCandidateLetter, candidateLetterData } =
+    useContext(OnBoardContext);
   //   console.log("today", moment().format("DD-MM-YYYY"));
   return (
-    <Fragment>
-      {typeof offerLetterData &&
-      offerLetterData.partTimeCandidateOffer !== undefined ? (
+    <Container className="letterStyle">
+      {typeof candidateLetterData &&
+      candidateLetterData.partTimeCandidateOffer !== undefined ? (
         <Fragment>
           <p className="offerHeader">OFFER LETTER</p>
           <br></br>
@@ -25,31 +23,35 @@ const PartTimeOfferLetter = () => {
             Date: {moment().format("DD-MM-YYYY")}
           </p>
 
-          <p>Dear {offerLetterData.candidateName},</p>
+          <p>Dear {candidateLetterData.candidateName},</p>
 
           <p>
             We have the pleasure to offer you the position of{" "}
-            <span className="boldText">{offerLetterData.position}</span> on
-            Part-Time Basis at {offerLetterData.companyName} Pvt. Ltd.{" "}
+            <span className="boldText">{candidateLetterData.position}</span> on
+            Part-Time Basis at {candidateLetterData.companyName} Pvt. Ltd.{" "}
           </p>
 
           <p className="offerSubHeader">1. Terms & Conditions</p>
           <ol>
             <li>
               You will report to{" "}
-              <span className="boldText">{offerLetterData.managerName}</span> or
-              any officer appointed by him/her on{" "}
-              {offerLetterData.partTimeCandidateOffer.effectiveDate}
+              <span className="boldText">
+                {candidateLetterData.managerName}
+              </span>{" "}
+              or any officer appointed by him/her on{" "}
+              {moment(
+                candidateLetterData.partTimeCandidateOffer.effectiveDate
+              ).format("DD-MM-YYYY")}
             </li>
             <li>
               Your gross salary will not exceed{" "}
-              <span className="boldText">{offerLetterData.fixedGross}</span> per
-              Hourly
+              <span className="boldText">{candidateLetterData.fixedGross}</span>{" "}
+              per Hourly
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
               to a maximum of{" "}
-              <span className="boldText">{offerLetterData.bonus} %</span> of
+              <span className="boldText">{candidateLetterData.bonus} %</span> of
               your monthly gross salary.Your manager will explain to you the
               calculation of such bonus
             </li>
@@ -67,7 +69,7 @@ const PartTimeOfferLetter = () => {
             <li>
               You will be on probation for a period of{" "}
               <span className="boldText">
-                {offerLetterData.probationPeriod} month(s)
+                {candidateLetterData.probationPeriod} month(s)
               </span>{" "}
               from the date of your appointment. On completion of the probation
               period, if the Company finds you to be suitable for the appointed
@@ -80,13 +82,15 @@ const PartTimeOfferLetter = () => {
             forward the same to us.
           </p>
           <br></br>
-          <p>For {offerLetterData.companyName} Pvt. Ltd</p>
+          <p>For {candidateLetterData.companyName} Pvt. Ltd</p>
           <br></br>
+          <p>Thanking you</p>
+          <p>Manager Name</p>
         </Fragment>
       ) : (
         ""
       )}
-    </Fragment>
+    </Container>
   );
 };
 

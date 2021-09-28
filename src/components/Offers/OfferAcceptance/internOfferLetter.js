@@ -1,21 +1,20 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Modal, Row, Col, Form, Button } from "react-bootstrap";
-import calendarImage from "../../assets/images/calendar-image.png";
+import { Modal, Row, Col, Form, Button, Container } from "react-bootstrap";
 import moment from "moment";
-import "./offers.css";
-import { OfferContext } from "../../context/OfferState";
+import ".././offers.css";
+import { OfferContext } from "../../../context/OfferState";
+import { OnBoardContext } from "../../../context/OnBoardState";
 
 const InternOfferLetter = () => {
-  const {
-    createCandidateResponse,
-    generateOfferLetter,
-    offerLetterData,
-  } = useContext(OfferContext);
+  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+    useContext(OfferContext);
+  const { generateCandidateLetter, candidateLetterData } =
+    useContext(OnBoardContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
-    <Fragment>
-      {typeof offerLetterData &&
-      offerLetterData.internshipCandidateOffer !== undefined ? (
+    <Container className="letterStyle">
+      {typeof candidateLetterData &&
+      candidateLetterData.internshipCandidateOffer !== undefined ? (
         <Fragment>
           <p className="offerHeader">OFFER LETTER</p>
           <br></br>
@@ -25,15 +24,22 @@ const InternOfferLetter = () => {
             Date: {moment().format("DD-MM-YYYY")}
           </p>
 
-          <p>Dear {offerLetterData.candidateName},</p>
+          <p>Dear {candidateLetterData.candidateName},</p>
 
           <p>
             We are pleased to offer internship programme for period of{" "}
-            {offerLetterData.internshipCandidateOffer.internshipPeriod} months
-            from {offerLetterData.internshipCandidateOffer.fromDate} to{" "}
-            {offerLetterData.internshipCandidateOffer.toDate} at{" "}
-            {offerLetterData.companyName} Pvt. Ltd. You will be provided stipend{" "}
-            {offerLetterData.internshipCandidateOffer.stipend} per month.
+            {candidateLetterData.internshipCandidateOffer.internshipPeriod}{" "}
+            months from{" "}
+            {moment(
+              candidateLetterData.internshipCandidateOffer.fromDate
+            ).format("DD-MM-YYYY")}{" "}
+            to{" "}
+            {moment(candidateLetterData.internshipCandidateOffer.toDate).format(
+              "DD-MM-YYYY"
+            )}{" "}
+            at {candidateLetterData.companyName} Pvt. Ltd. You will be provided
+            stipend {candidateLetterData.internshipCandidateOffer.stipend} per
+            month.
           </p>
 
           <p>
@@ -41,13 +47,16 @@ const InternOfferLetter = () => {
             course of your internship should be kept confidential at all times.
           </p>
           <br></br>
-          <p>For {offerLetterData.companyName} Pvt. Ltd</p>
+          <p>For {candidateLetterData.companyName} Pvt. Ltd</p>
           <br></br>
+          <br></br>
+          <p>Thanking you</p>
+          <p>Manager Name</p>
         </Fragment>
       ) : (
         ""
       )}
-    </Fragment>
+    </Container>
   );
 };
 

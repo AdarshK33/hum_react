@@ -13,11 +13,8 @@ import { OfferContext } from "../../context/OfferState";
 import moment from "moment";
 
 const PartTimeAppointmentLetter = (props) => {
-  const {
-    createCandidateResponse,
-    generateOfferLetter,
-    offerLetterData,
-  } = useContext(OfferContext);
+  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+    useContext(OfferContext);
   const [showLetter, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
   const [previewClick, setPreviewClick] = useState(false);
@@ -84,7 +81,9 @@ const PartTimeAppointmentLetter = (props) => {
                     of a <b>{offerLetterData.position}</b> at our{" "}
                     <b>{offerLetterData.location}</b> location effective{" "}
                     <b>
-                      {offerLetterData.partTimeCandidateOffer.effectiveDate}
+                      {moment(
+                        offerLetterData.partTimeCandidateOffer.effectiveDate
+                      ).format("DD-MM-YYYY")}
                     </b>
                     .{" "}
                   </p>
