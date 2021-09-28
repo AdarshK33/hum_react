@@ -45,10 +45,20 @@ const EndOfProbationLetter = () => {
             </p>
             <p>
               This is to inform you that the probation period is being
-              terminated effective on <b>{endLetterData.exitDate}</b> We have
-              observed that your performance in the company is unsatisfactory
-              and hereby your employment with company is terminated. Please sign
-              the copy of this letter as receipt of acceptance.
+              terminated effective on{" "}
+              <b>
+                {" "}
+                {endLetterData.exitDate !== null &&
+                endLetterData.exitDate !== undefined
+                  ? moment(new Date(endLetterData.exitDate)).format(
+                      "DD-MM-YYYY"
+                    )
+                  : ""}
+              </b>{" "}
+              We have observed that your performance in the company is
+              unsatisfactory and hereby your employment with company is
+              terminated. Please sign the copy of this letter as receipt of
+              acceptance.
               <br />
               <br />
               Yours Sincerely,
