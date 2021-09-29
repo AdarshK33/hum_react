@@ -22,7 +22,7 @@ const TerminationLetter = () => {
         </div>
       ):typeof terminationLetterData !== undefined ? (
 <Fragment>
-    <h5 className="text-center"> WARNING LETTER </h5>
+    {/* <h5 className="text-center"> WARNING LETTER </h5> */}
     <p className="">
       {" "}
       Date: <b>{moment().format("DD-MM-YYYY")}</b>
