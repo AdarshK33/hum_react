@@ -96,7 +96,9 @@ const LocalExpactAppointmentLetter = (props) => {
                     <b>{offerLetterData.location} </b>
                     location effective
                     <b>
-                      {offerLetterData.permanentCandidateOffer.effectiveDate}
+                      {moment(
+                        offerLetterData.permanentCandidateOffer.effectiveDate
+                      ).format("DD-MM-YYYY")}
                     </b>{" "}
                     and you will be on probation up to{" "}
                     <b>{offerLetterData.probationPeriod}</b> month(s) or such

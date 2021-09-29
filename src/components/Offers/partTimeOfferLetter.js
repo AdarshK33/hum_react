@@ -6,11 +6,8 @@ import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 
 const PartTimeOfferLetter = () => {
-  const {
-    createCandidateResponse,
-    generateOfferLetter,
-    offerLetterData,
-  } = useContext(OfferContext);
+  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+    useContext(OfferContext);
   //   console.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
@@ -39,7 +36,9 @@ const PartTimeOfferLetter = () => {
               You will report to{" "}
               <span className="boldText">{offerLetterData.managerName}</span> or
               any officer appointed by him/her on{" "}
-              {offerLetterData.partTimeCandidateOffer.effectiveDate}
+              {moment(
+                offerLetterData.partTimeCandidateOffer.effectiveDate
+              ).format("DD-MM-YYYY")}
             </li>
             <li>
               Your gross salary will not exceed{" "}

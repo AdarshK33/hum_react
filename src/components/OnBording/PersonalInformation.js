@@ -45,6 +45,8 @@ const PersonalInformation = (props) => {
     documentViewData,
     DeleteAllInsuranceNominations,
     UpdateNomineeStatus,
+    candidateCountryList,
+    candidateCountryData,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -54,7 +56,7 @@ const PersonalInformation = (props) => {
   const [internship, setInternship] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
-
+  const [nationlArray, setNationlArray] = useState([]);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
   const [refEmail1, setRefEmail1] = useState("");
@@ -92,8 +94,8 @@ const PersonalInformation = (props) => {
   const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [saveClick, setSaveClick] = useState(false);
   const [disabilityStatus, setDisabilityStatus] = useState(false);
-  const [dateOfIssue, setDateOfIssue] = useState();
-  const [dateOfValidity, setDateOfValidity] = useState();
+  const [dateOfIssue, setDateOfIssue] = useState(null);
+  const [dateOfValidity, setDateOfValidity] = useState(null);
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -106,8 +108,10 @@ const PersonalInformation = (props) => {
     lgbt: "",
   });
   let history = useHistory();
+
   useEffect(() => {
     CandidateProfile();
+    candidateCountryList();
     if (
       localStorage.getItem("candidate_access_token") !== null &&
       localStorage.getItem("candidate_access_token") !== undefined
@@ -129,6 +133,26 @@ const PersonalInformation = (props) => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      Object.keys(candidateViewInfo).length !== 0
+    ) {
+      if (candidateViewInfo.contractType === "Local Expat") {
+        let nationList = candidateCountryData.filter(
+          (item) => item.nationality !== "Indian"
+        );
+        console.log("options list", options);
+        console.log("contract list", nationList);
+        setNationlArray(nationList);
+      } else {
+        setNationlArray(candidateCountryData);
+      }
+    }
+  }, [candidateViewInfo]);
+
   useEffect(() => {
     CandidateProfile();
   }, [candidateProfileData]);
@@ -270,13 +294,13 @@ const PersonalInformation = (props) => {
         candidatePersonalInfoData.passportIssuedDate !== null &&
           candidatePersonalInfoData.passportIssuedDate !== undefined
           ? new Date(candidatePersonalInfoData.passportIssuedDate)
-          : ""
+          : null
       );
       setDateOfValidity(
         candidatePersonalInfoData.passportExpiryDate !== null &&
           candidatePersonalInfoData.passportExpiryDate !== undefined
           ? new Date(candidatePersonalInfoData.passportExpiryDate)
-          : ""
+          : null
       );
       if (
         candidatePersonalInfoData.gender !== null &&
@@ -1119,16 +1143,21 @@ const PersonalInformation = (props) => {
                 as="select"
                 name="nationality"
                 value={state.nationality}
-                options={options}
+                options={nationlArray}
                 onChange={changeHandler}
                 required
                 disabled={disabled}
                 style={nationalityError ? { borderColor: "red" } : {}}
               >
                 <option value="">Nationality</option>
-                {options.map((item) => {
-                  return <option key={item.value}>{item.label}</option>;
-                })}
+                {nationlArray !== null &&
+                  nationlArray !== undefined &&
+                  nationlArray.length > 0 &&
+                  nationlArray.map((item) => {
+                    return (
+                      <option key={item.countryId}>{item.nationality}</option>
+                    );
+                  })}
               </Form.Control>
 
               {nationalityError ? (
