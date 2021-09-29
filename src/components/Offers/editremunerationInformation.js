@@ -313,7 +313,7 @@ const EditRemunerationInformation = (props) => {
       fixedGross,
       monthlyBonus,
       stipened,
-      user.role
+      user.role,remunerationData,remunerationViewData,saveclick
     );
     if (
       fixedGrossError === false &&
@@ -322,15 +322,11 @@ const EditRemunerationInformation = (props) => {
       partTimeGrossLimit === false &&
       localExpatGrossLimit === false
     ) {
-      if (
-        candidateData.remuneration == null ||
-        candidateData.remuneration == undefined ||
-        Object.keys(candidateData.remuneration).length === 0 ||
-        ((remunerationViewData == null ||
-          remunerationViewData == undefined ||
-          Object.keys(remunerationViewData).length === 0) &&
-          saveclick === false)
-      ) {
+      if ((
+        candidateData.candidateInformation !== null ||
+        candidateData.candidateInformation !== undefined ||
+        Object.keys(candidateData.candidateInformation).length !== 0) &&
+          saveclick === false) {
         console.log("first click");
         setSaveclick(true);
         remunerationinfo = {
@@ -356,6 +352,7 @@ const EditRemunerationInformation = (props) => {
             Object.keys(remunerationViewData).length !== 0)) &&
         saveclick === true
       ) {
+        console.log("second click");
         remunerationinfo = {
           candidateId: candidateData.candidateInformation.candidateId,
           fixedGross: fixedGross,
