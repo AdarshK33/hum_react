@@ -20,10 +20,25 @@ const ShowCauseNotice = () => {
           <p>To ,</p>
           <p>
             {" "}
-            <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.employeeName}
+            <b>
+              {disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).legth !== 0 &&
+              disciplinarySearchData.gender !== null &&
+              disciplinarySearchData.gender !== undefined &&
+              disciplinarySearchData.maritalStatus !== null &&
+              disciplinarySearchData.maritalStatus !== undefined
+                ? disciplinarySearchData.gender === "MALE"
+                  ? "Mr."
+                  : disciplinarySearchData.maritalStatus === "Married"
+                  ? "Mrs."
+                  : "Miss"
+                : "Mr./Ms."}
+            </b>{" "}
+            &nbsp; {disciplinarySearchData.employeeName}
           </p>
           <p>
-            <b>EmployeeId:</b> {disciplinarySearchData.employeeId}
+            <b>Employee Id:</b> {disciplinarySearchData.employeeId}
           </p>
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
@@ -72,10 +87,11 @@ const ShowCauseNotice = () => {
               disciplinarySearchData.disciplinaryAction !== null &&
               disciplinarySearchData.disciplinaryAction !== undefined &&
               Object.keys(disciplinarySearchData).length !== 0 &&
-              disciplinarySearchData.disciplinaryAction.reason === "Other" ? (
+              disciplinarySearchData.disciplinaryAction.reason ===
+                "Misconduct" ? (
                 <b>{disciplinarySearchData.disciplinaryAction.reasonDetails}</b>
               ) : (
-                <b>Non-Performance</b>
+                <b>Wilful Misconduct and Gross Negligence</b>
               )}{" "}
               which, if proved, would warrant serious disciplinary action
               against you.
