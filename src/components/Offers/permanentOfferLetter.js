@@ -31,7 +31,9 @@ const PermanentOfferLetter = () => {
               You will report to{" "}
               <span className="boldText">{offerLetterData.managerName}</span> or
               any officer appointed by him/her on{" "}
-              {offerLetterData.permanentCandidateOffer.effectiveDate}
+              {moment(
+                offerLetterData.permanentCandidateOffer.effectiveDate
+              ).format("DD-MM-YYYY")}
             </li>
             <li>
               Your monthly gross salary will not exceed Rs.{" "}

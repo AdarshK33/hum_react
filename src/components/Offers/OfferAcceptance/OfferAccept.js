@@ -7,6 +7,7 @@ import AcceptModal from "./AcceptModal";
 import RejectModal from "./RejectModal";
 //import {  Page } from 'react-pdf'
 import fileName from "../../../assets/file.pdf";
+import insuranceFile from "../../../assets/Insurance_Benefit_2021.pdf";
 import appointmentFile from "../../../assets/Full_Time_Appointment.pdf";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRight, ChevronLeft } from "react-feather";
@@ -15,7 +16,14 @@ import { CandidateContext } from "../../../context/CandidateState";
 import { OfferContext } from "../../../context/OfferState";
 import { Link } from "react-router-dom";
 import man from "../../../assets/images/dashboard/userImage.png";
-
+import PermanentOfferLetter from "./permanentOfferLetter";
+import PartTimeOfferLetter from "./partTimeOfferLetter";
+import LocalExpatOfferLetter from "./localExpatOfferLetter";
+import InternOfferLetter from "./internOfferLetter";
+import PermanentAppointmentLetter from "./AppointmentLetter";
+import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
+import LocalExpactAppointmentLetter from "./localExpactAppointmentLetter";
+import InternAppointmentLetter from "./internAppointmentLetter";
 const OfferAccept = (props) => {
   const [showLetter, setShowLetter] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -29,7 +37,7 @@ const OfferAccept = (props) => {
   const [showAppointmentLetter, setShowAppointmentLetter] = useState(false);
   const [yesChecked, setYesChecked] = useState(false);
   const [noChecked, setNoChecked] = useState(false);
-
+  const [insuranceLetter, setInsuranceLetter] = useState(false);
   const {
     CandidateProfile,
     candidateProfileData,
@@ -75,6 +83,10 @@ const OfferAccept = (props) => {
     setShowLetter(true);
   };
 
+  const showInsuranceClick = (e) => {
+    console.log("candidate Offer", candidateLetterData);
+    setInsuranceLetter(true);
+  };
   const showAppointmentLetterClick = (e) => {
     setShowAppointmentLetter(true);
   };
@@ -194,8 +206,106 @@ const OfferAccept = (props) => {
                   {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
                 </div>
               </Container>
+              <Container className="last-container">
+                <Row>
+                  <Col sm={2}></Col>
+                  <Col sm={9}>
+                    {showLetter === true && candidateLetterData ? (
+                      candidateLetterData.contractType !== undefined &&
+                      candidateLetterData.contractType !== null &&
+                      candidateLetterData.contractType === "Permanent" ? (
+                        <PermanentOfferLetter />
+                      ) : candidateLetterData &&
+                        candidateLetterData.contractType !== undefined &&
+                        candidateLetterData.contractType !== null &&
+                        candidateLetterData.contractType === "Parttime" ? (
+                        <PartTimeOfferLetter />
+                      ) : candidateLetterData &&
+                        candidateLetterData.contractType !== undefined &&
+                        candidateLetterData.contractType !== null &&
+                        candidateLetterData.contractType === "Local Expat" ? (
+                        <LocalExpatOfferLetter />
+                      ) : (
+                        <InternOfferLetter />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </Col>
+                  <Col sm={1}></Col>
+                </Row>
+              </Container>
 
-              {showLetter === true && (
+              <Container className="middle-container">
+                <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+                  <span style={{ marginRight: "1rem" }}>
+                    View Insurance Benefit
+                  </span>
+                  <Button onClick={showInsuranceClick}>Show</Button>
+                </div>
+              </Container>
+              {insuranceLetter === true && (
+                <Container className="last-container">
+                  <Row>
+                    <Col sm={2}>
+                      {/* {pageNumber <= 1 ? (
+                        <ChevronLeft
+                          disabled
+                          style={{
+                            color: "grey",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      ) : (
+                        <ChevronLeft
+                          onClick={goToPrevPage}
+                          disabled={pageNumber === 1}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      )} */}
+                    </Col>
+                    <Col sm={8}>
+                      <Document
+                        file={insuranceFile}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                      >
+                        <Page pageNumber={pageNumber} />
+                      </Document>
+                    </Col>
+                    <Col sm={2}>
+                      {/* {pageNumber === numPages ? (
+                        <ChevronRight
+                          disabled
+                          style={{
+                            color: "grey",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      ) : (
+                        <ChevronRight
+                          onClick={goToNextPage}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      )} */}
+                    </Col>
+                  </Row>
+
+                  {/* <p>
+                    Page {pageNumber} of {numPages}
+                  </p> */}
+                </Container>
+              )}
+              {/* {insuranceLetter === true && (
                 <Container className="last-container">
                   <Row>
                     <Col sm={2}>
@@ -222,11 +332,9 @@ const OfferAccept = (props) => {
                     </Col>
                     <Col sm={8}>
                       <Document
-                        file={fileName}
+                        file={insuranceFile}
                         onLoadSuccess={onDocumentLoadSuccess}
-                      >
-                        <Page pageNumber={pageNumber} />
-                      </Document>
+                      ></Document>
                     </Col>
                     <Col sm={2}>
                       {pageNumber === numPages ? (
@@ -255,7 +363,8 @@ const OfferAccept = (props) => {
                     Page {pageNumber} of {numPages}
                   </p>
                 </Container>
-              )}
+              )} */}
+
               {(candidateProfileData.status === 2 &&
                 candidateProfileData.documentUploaded === 0 &&
                 candidateProfileData.documentReUploadCount !== 4 &&
@@ -355,8 +464,106 @@ const OfferAccept = (props) => {
                   {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
                 </div>
               </Container>
+              <Container className="last-container">
+                <Row>
+                  <Col sm={2}></Col>
+                  <Col sm={9}>
+                    {showLetter === true && candidateLetterData ? (
+                      candidateLetterData.contractType !== undefined &&
+                      candidateLetterData.contractType !== null &&
+                      candidateLetterData.contractType === "Permanent" ? (
+                        <PermanentOfferLetter />
+                      ) : candidateLetterData &&
+                        candidateLetterData.contractType !== undefined &&
+                        candidateLetterData.contractType !== null &&
+                        candidateLetterData.contractType === "Parttime" ? (
+                        <PartTimeOfferLetter />
+                      ) : candidateLetterData &&
+                        candidateLetterData.contractType !== undefined &&
+                        candidateLetterData.contractType !== null &&
+                        candidateLetterData.contractType === "Local Expat" ? (
+                        <LocalExpatOfferLetter />
+                      ) : (
+                        <InternOfferLetter />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </Col>
+                  <Col sm={1}></Col>
+                </Row>
+              </Container>
 
-              {showLetter === true && (
+              <Container className="middle-container">
+                <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+                  <span style={{ marginRight: "1rem" }}>
+                    View Insurance Benefit
+                  </span>
+                  <Button onClick={showInsuranceClick}>Show</Button>
+                </div>
+              </Container>
+              {insuranceLetter === true && (
+                <Container className="last-container">
+                  <Row>
+                    <Col sm={2}>
+                      {/* {pageNumber <= 1 ? (
+                        <ChevronLeft
+                          disabled
+                          style={{
+                            color: "grey",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      ) : (
+                        <ChevronLeft
+                          onClick={goToPrevPage}
+                          disabled={pageNumber === 1}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      )} */}
+                    </Col>
+                    <Col sm={8}>
+                      <Document
+                        file={insuranceFile}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                      >
+                        <Page pageNumber={pageNumber} />
+                      </Document>
+                    </Col>
+                    <Col sm={2}>
+                      {/* {pageNumber === numPages ? (
+                        <ChevronRight
+                          disabled
+                          style={{
+                            color: "grey",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      ) : (
+                        <ChevronRight
+                          onClick={goToNextPage}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      )} */}
+                    </Col>
+                  </Row>
+
+                  {/* <p>
+                    Page {pageNumber} of {numPages}
+                  </p> */}
+                </Container>
+              )}
+              {/* {insuranceLetter === true && (
                 <Container className="last-container">
                   <Row>
                     <Col sm={2}>
@@ -382,12 +589,11 @@ const OfferAccept = (props) => {
                       )}
                     </Col>
                     <Col sm={8}>
+                      <p>Insurance</p>
                       <Document
-                        file={fileName}
+                        file={insuranceFile}
                         onLoadSuccess={onDocumentLoadSuccess}
-                      >
-                        <Page pageNumber={pageNumber} />
-                      </Document>
+                      ></Document>
                     </Col>
                     <Col sm={2}>
                       {pageNumber === numPages ? (
@@ -413,40 +619,42 @@ const OfferAccept = (props) => {
                   </Row>
 
                   <p>
-                    Page {pageNumber} of {numPages}
-                  </p>
-                  {candidateProfileData &&
-                  (candidateProfileData.status === 5 ||
-                    candidateProfileData.status === 2) ? (
-                    <React.Fragment>
-                      <span style={{ marginRight: "1rem" }}>
-                        Do you accept the Offer letter
-                      </span>
-                      {/* <Switch
+                 Page {pageNumber} of {numPages}
+               </p>
+                </Container>
+              )} */}
+
+              {candidateProfileData &&
+              (candidateProfileData.status === 5 ||
+                candidateProfileData.status === 2) ? (
+                <React.Fragment>
+                  <span style={{ marginRight: "1rem" }}>
+                    Do you accept the Offer letter
+                  </span>
+                  {/* <Switch
                         onChange={handleSwitch}
                         checked={checked}
                         className="react-switch"
                       /> */}
-                      Yes &nbsp;{" "}
-                      <input
-                        type="checkbox"
-                        name="accept"
-                        checked={yesChecked}
-                        onChange={checkedYesHandler}
-                      />
-                      &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
-                      <input
-                        type="checkbox"
-                        name="accept"
-                        checked={noChecked}
-                        onChange={checkedNoHandler}
-                      />
-                    </React.Fragment>
-                  ) : (
-                    ""
-                  )}
-                </Container>
+                  Yes &nbsp;{" "}
+                  <input
+                    type="checkbox"
+                    name="accept"
+                    checked={yesChecked}
+                    onChange={checkedYesHandler}
+                  />
+                  &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
+                  <input
+                    type="checkbox"
+                    name="accept"
+                    checked={noChecked}
+                    onChange={checkedNoHandler}
+                  />
+                </React.Fragment>
+              ) : (
+                ""
               )}
+
               {candidateProfileData && candidateProfileData.status === 6 ? (
                 <Container className="middle-container">
                   <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
@@ -460,7 +668,36 @@ const OfferAccept = (props) => {
               ) : (
                 ""
               )}
-              {showAppointmentLetter === true && (
+              <Container className="last-container">
+                <Row>
+                  <Col sm={2}></Col>
+                  <Col sm={9}>
+                    {showAppointmentLetter === true && candidateLetterData ? (
+                      candidateLetterData.contractType !== undefined &&
+                      candidateLetterData.contractType !== null &&
+                      candidateLetterData.contractType === "Permanent" ? (
+                        <PermanentAppointmentLetter />
+                      ) : candidateLetterData &&
+                        candidateLetterData.contractType !== undefined &&
+                        candidateLetterData.contractType !== null &&
+                        candidateLetterData.contractType === "Parttime" ? (
+                        <PartTimeAppointmentLetter />
+                      ) : candidateLetterData &&
+                        candidateLetterData.contractType !== undefined &&
+                        candidateLetterData.contractType !== null &&
+                        candidateLetterData.contractType === "Local Expat" ? (
+                        <LocalExpactAppointmentLetter />
+                      ) : (
+                        <InternAppointmentLetter />
+                      )
+                    ) : (
+                      ""
+                    )}
+                  </Col>
+                  <Col sm={1}></Col>
+                </Row>
+              </Container>
+              {/* {showAppointmentLetter === true && (
                 <Container className="last-container">
                   <Row>
                     <Col sm={2}>
@@ -514,13 +751,13 @@ const OfferAccept = (props) => {
                         />
                       )}
                     </Col>
-                  </Row>
-                  {/* <p>
+                  </Row> */}
+              {/* <p>
               Page {pageAppointNumber} of {numAppointPages}
             </p> */}
-                  {/* <Button>Save</Button> */}
-                </Container>
-              )}
+              {/* <Button>Save</Button> */}
+              {/* </Container>
+              )} */}
               <AcceptModal modal={modal} handleClose={handleClose} />
               <RejectModal
                 rejectModal={rejectModal}

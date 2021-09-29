@@ -78,8 +78,17 @@ const InternAppointmentLetter = (props) => {
                     are pleased to assign the project of your interest and we
                     permit you to carry out the learning and we engage you as an
                     intern for the period{" "}
-                    <b>{offerLetterData.internshipCandidateOffer.fromDate}</b>{" "}
-                    to <b>{offerLetterData.internshipCandidateOffer.toDate}</b>{" "}
+                    <b>
+                      {moment(
+                        offerLetterData.internshipCandidateOffer.fromDate
+                      ).format("DD-MM-YYYY")}
+                    </b>{" "}
+                    to{" "}
+                    <b>
+                      {moment(
+                        offerLetterData.internshipCandidateOffer.toDate
+                      ).format("DD-MM-YYYY")}
+                    </b>{" "}
                     at our <b>{offerLetterData.location}</b> location.
                   </p>
                   <p>

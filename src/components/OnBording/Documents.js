@@ -806,10 +806,11 @@ const Documents = (props) => {
       (FrroUploadValidation() === true) &
       (PassPortUploadValidation() === true) &
       (CollegeIdUploadValidation() === true) &
-      (CollegeLetterUploadValidation() === true) &
-      (EduCetificateUploadValidation() === true) &
-      (RelivingLetterUploadValidation() === true) &
-      (LatestPaySlipsUploadValidation() === true)
+      (CollegeLetterUploadValidation() === true)
+      //  &
+      // (EduCetificateUploadValidation() === true) &
+      // (RelivingLetterUploadValidation() === true) &
+      // (LatestPaySlipsUploadValidation() === true)
     ) {
       return true;
     } else {
@@ -830,10 +831,10 @@ const Documents = (props) => {
         FrroUploadValidation(),
         PassPortUploadValidation(),
         CollegeIdUploadValidation(),
-        CollegeLetterUploadValidation(),
-        EduCetificateUploadValidation(),
-        RelivingLetterUploadValidation(),
-        LatestPaySlipsUploadValidation()
+        CollegeLetterUploadValidation()
+        // EduCetificateUploadValidation(),
+        // RelivingLetterUploadValidation(),
+        // LatestPaySlipsUploadValidation()
       );
       if (
         (PhotoIdUploadValidation() === true) &
@@ -848,9 +849,10 @@ const Documents = (props) => {
         (CollegeLetterUploadValidation() === true)
       ) {
         if (
-          (EduCetificateUploadValidation() === true) &
-          (RelivingLetterUploadValidation() === true) &
-          (LatestPaySlipsUploadValidation() === true)
+          true
+          // (EduCetificateUploadValidation() === true) &
+          // (RelivingLetterUploadValidation() === true) &
+          // (LatestPaySlipsUploadValidation() === true)
         ) {
           return true;
         } else {
@@ -859,9 +861,10 @@ const Documents = (props) => {
           return false;
         }
       } else if (
-        (EduCetificateUploadValidation() === true) &
-        (RelivingLetterUploadValidation() === true) &
-        (LatestPaySlipsUploadValidation() === true)
+        true
+        // (EduCetificateUploadValidation() === true) &
+        // (RelivingLetterUploadValidation() === true) &
+        // (LatestPaySlipsUploadValidation() === true)
       )
         if (
           (PhotoIdUploadValidation() === true) &
