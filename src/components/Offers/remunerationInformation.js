@@ -108,12 +108,19 @@ const RemunerationInformation = (props) => {
 
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
-
+    console.log(
+      "candidateData",
+      candidateData,
+      "workInfoViewData",
+      workInfoViewData
+    );
     if (
       (candidateData !== null &&
         candidateData !== undefined &&
+        Object.keys(candidateData).length !== 0 &&
         candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined) ||
+        candidateData.workInformation !== undefined &&
+        Object.keys(candidateData.workInformation).length !== 0) ||
       (workInfoViewData !== null &&
         workInfoViewData !== undefined &&
         Object.keys(workInfoViewData).length !== 0)
@@ -130,7 +137,19 @@ const RemunerationInformation = (props) => {
       //   }
       // }
 
-      if (workInfoViewData.contractType === "Permanent") {
+      if (
+        (candidateData !== null &&
+          candidateData !== undefined &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation !== undefined &&
+          Object.keys(candidateData.workInformation).length !== 0 &&
+          candidateData.workInformation.contractType === "Permanent") ||
+        (workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          Object.keys(workInfoViewData).length !== 0 &&
+          workInfoViewData.contractType === "Permanent")
+      ) {
         if (fixedGross < 18000) {
           setFixedGrossError(false);
           setParmanentGrossLimit(true);
@@ -140,7 +159,19 @@ const RemunerationInformation = (props) => {
         }
       }
 
-      if (workInfoViewData.contractType === "Parttime") {
+      if (
+        (candidateData !== null &&
+          candidateData !== undefined &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation !== undefined &&
+          Object.keys(candidateData.workInformation).length !== 0 &&
+          candidateData.workInformation.contractType === "Parttime") ||
+        (workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          Object.keys(workInfoViewData).length !== 0 &&
+          workInfoViewData.contractType === "Parttime")
+      ) {
         if (fixedGross < 90 || fixedGross > 400) {
           setFixedGrossError(false);
           setPartTimeGrossLimit(true);
@@ -150,7 +181,19 @@ const RemunerationInformation = (props) => {
         }
       }
 
-      if (workInfoViewData.contractType === "Local Expat") {
+      if (
+        (candidateData !== null &&
+          candidateData !== undefined &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation !== undefined &&
+          Object.keys(candidateData.workInformation).length !== 0 &&
+          candidateData.workInformation.contractType === "Local Expat") ||
+        (workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          Object.keys(workInfoViewData).length !== 0 &&
+          workInfoViewData.contractType === "Local Expat")
+      ) {
         if (fixedGross < 25000) {
           setFixedGrossError(false);
           setLocalExpatGrossLimit(true);

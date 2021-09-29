@@ -6,11 +6,8 @@ import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 
 const InternOfferLetter = () => {
-  const {
-    createCandidateResponse,
-    generateOfferLetter,
-    offerLetterData,
-  } = useContext(OfferContext);
+  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+    useContext(OfferContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
@@ -30,10 +27,17 @@ const InternOfferLetter = () => {
           <p>
             We are pleased to offer internship programme for period of{" "}
             {offerLetterData.internshipCandidateOffer.internshipPeriod} months
-            from {offerLetterData.internshipCandidateOffer.fromDate} to{" "}
-            {offerLetterData.internshipCandidateOffer.toDate} at{" "}
-            {offerLetterData.companyName} Pvt. Ltd. You will be provided stipend{" "}
-            {offerLetterData.internshipCandidateOffer.stipend} per month.
+            from{" "}
+            {moment(offerLetterData.internshipCandidateOffer.fromDate).format(
+              "DD-MM-YYYY"
+            )}{" "}
+            to{" "}
+            {moment(offerLetterData.internshipCandidateOffer.toDate).format(
+              "DD-MM-YYYY"
+            )}{" "}
+            at {offerLetterData.companyName} Pvt. Ltd. You will be provided
+            stipend {offerLetterData.internshipCandidateOffer.stipend} per
+            month.
           </p>
 
           <p>

@@ -21,10 +21,25 @@ const WarningLetter = () => {
           <p>To ,</p>
           <p>
             {" "}
-            <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.employeeName}
+            <b>
+              {disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).legth !== 0 &&
+              disciplinarySearchData.gender !== null &&
+              disciplinarySearchData.gender !== undefined &&
+              disciplinarySearchData.maritalStatus !== null &&
+              disciplinarySearchData.maritalStatus !== undefined
+                ? disciplinarySearchData.gender === "MALE"
+                  ? "Mr."
+                  : disciplinarySearchData.maritalStatus === "Married"
+                  ? "Mrs."
+                  : "Miss"
+                : "Mr./Ms."}
+            </b>{" "}
+            &nbsp; {disciplinarySearchData.employeeName}
           </p>
           <p>
-            <b>EmployeeId:</b> {disciplinarySearchData.employeeId}
+            <b>Employee Id:</b> {disciplinarySearchData.employeeId}
           </p>
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
@@ -60,9 +75,11 @@ const WarningLetter = () => {
               refrain in doing these activities and follow the right process of
               the company. It is expected that henceforth, there will be no
               occasions for such complaints in future otherwise appropriate
-              disciplinary action will follow Please note, the Company reserves
-              the right to take appropriate action with respect to any
-              repetition of similar act.
+              disciplinary action will follow.
+              <br />
+              <br />
+              Please note, the Company reserves the right to take appropriate
+              action with respect to any repetition of similar act.
               <br />
               <br />
             </p>

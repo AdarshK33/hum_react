@@ -301,8 +301,12 @@ const ProbationSeparation = () => {
     setShowSignature(true);
   };
 
-  const submitfinalRelivingLetter = () => {
-    if (employeeData.empId !== null && employeeData.empId !== undefined) {
+  const submitfinalRelivingLetter = (e) => {
+    e.preventDefault();
+    if (
+      employeeData.employeeId !== null &&
+      employeeData.employeeId !== undefined
+    ) {
       const data2 = {
         company: employeeData.company,
         contractType: employeeData.contractType,
@@ -1319,6 +1323,7 @@ const ProbationSeparation = () => {
                           )}
 
                           {(!saveLetter &&
+                            !previewGeneratedLetter &&
                             employeeData &&
                             employeeData &&
                             employeeData !== null &&
@@ -1326,7 +1331,9 @@ const ProbationSeparation = () => {
                             Object.keys(employeeData).length !== 0 &&
                             (employeeData.status === 7 ||
                               employeeData.status === 8)) ||
-                          (showPreview === true && submitted === true) ? (
+                          (!previewGeneratedLetter &&
+                            showPreview === true &&
+                            submitted === true) ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtons"}
