@@ -261,7 +261,11 @@ const DisciplinarySeparation = () => {
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.email;
-
+      if(searchByCostData.department == "AFS" ||searchByCostData.department == "IT" ||searchByCostData.department == "Legal" ||searchByCostData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -270,7 +274,18 @@ const DisciplinarySeparation = () => {
       } else {
         setIntern(false);
       }
+      if(
+        state.empContractType === "permanent" ||
+        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "PartTime"
+      ) {
+              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
+        setIntern(false);
+        // setLastDateSelection(aboveDateValue)
+        setLastWorkingDate(dateValue)
     }
+  }
   }, [searchByCostData]);
 
   useEffect(() => {
@@ -586,6 +601,8 @@ const DisciplinarySeparation = () => {
     );
     // console.log("AdjusteddateValue");
     setDateOfResignation(AdjusteddateValue);
+    setLastWorkingDate(AdjusteddateValue);
+
   };
 
   const dateOfBirthHandler1 = (date) => {
@@ -822,7 +839,7 @@ const DisciplinarySeparation = () => {
             employeeName: EmpName,
             exitId: 0,
             hoursWorked: null,
-            lastWorkingDate: null,
+            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
@@ -839,7 +856,7 @@ const DisciplinarySeparation = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 8,
+            status: 4,
           };
 
           console.log("createExitData", data2);
@@ -897,7 +914,7 @@ const DisciplinarySeparation = () => {
       }
     }
   };
-
+console.log(terminationLetterData,"terminate")
   return (
     <Fragment>
       {/* reliving letter */}
@@ -913,7 +930,7 @@ const DisciplinarySeparation = () => {
           <Modal.Body className="mx-auto">
             <label className="text-center">
               The details have been saved successfully <br />
-              The relieving letter will be sent to the employee on{" "}
+              The termination letter will be sent to the employee on{" "}
               {moment(terminationLetterData.lastWorkingDate, "YYYY-MM-DD")
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
@@ -1484,7 +1501,7 @@ const DisciplinarySeparation = () => {
                           employeeData !== null &&
                           employeeData !== undefined &&
                           Object.keys(employeeData).length !== 0 &&
-                          employeeData.status === 2 &&
+                          employeeData.status === 4 &&
                           showPreview === true &&
                           submitted === true ? (
                             <button
