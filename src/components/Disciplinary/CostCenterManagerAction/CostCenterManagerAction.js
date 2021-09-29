@@ -694,7 +694,7 @@ const CostCenterManagerAction = () => {
                             </label>
                           </div>
                         </Col>
-                        {showCauseReason === "Other" ? (
+                        {showCauseReason === "Misconduct" ? (
                           <Col sm={6}>
                             <div>
                               <label>
@@ -888,7 +888,7 @@ const CostCenterManagerAction = () => {
                                 </label>
                               </div>
                             </Col>
-                            {showCauseReason === "Other" ? (
+                            {showCauseReason === "Misconduct" ? (
                               ""
                             ) : (
                               <Col sm={6}>
@@ -908,7 +908,7 @@ const CostCenterManagerAction = () => {
                               </Col>
                             )}
                           </Row>
-                          {showCauseReason === "Other" ? (
+                          {showCauseReason === "Misconduct" ? (
                             ""
                           ) : (
                             <Row
