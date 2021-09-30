@@ -397,7 +397,11 @@ const EntityTransferAcceptance = () => {
         currentEmployeeId: transferData.currentEmployeeId,
         currentFixedGross: transferData.currentFixedGross,
         currentJoiningDate: transferData.currentJoiningDate,
-        currentLocation: transferData.currentLocation,
+        currentLocation:
+          transferData.currentLocation !== null &&
+          transferData.currentLocation !== undefined
+            ? transferData.currentLocation
+            : 0,
         currentManagerId: transferData.currentManagerId,
         currentMonthlyBonus: transferData.currentMonthlyBonus,
         currentPosition: transferData.currentPosition,

@@ -204,7 +204,9 @@ const TransferPage = () => {
                     ? true
                     : false,
                 link:
-                  rolePermission == "admin" && item.status === 0
+                  rolePermission == "admin" &&
+                  (item.status === 0 ||
+                    isDateBeforeToday(item.promotedDateOfReturn))
                     ? `/international-transfer/${item.transferId}`
                     : "",
               },
