@@ -776,7 +776,7 @@ const ActionPage = () => {
                             </label>
                           </div>
                         </Col>
-                        {showCauseReason === "Other" ? (
+                        {showCauseReason === "Misconduct" ? (
                           <Col sm={6}>
                             <div>
                               <label>
@@ -1043,7 +1043,7 @@ const ActionPage = () => {
                                 </label>
                               </div>
                             </Col>
-                            {showCauseReason === "Other" ? (
+                            {showCauseReason === "Misconduct" ? (
                               ""
                             ) : (
                               <Col sm={6}>
@@ -1063,7 +1063,7 @@ const ActionPage = () => {
                               </Col>
                             )}
                           </Row>
-                          {showCauseReason === "Other" ? (
+                          {showCauseReason === "Misconduct" ? (
                             ""
                           ) : (
                             <Row

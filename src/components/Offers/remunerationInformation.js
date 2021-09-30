@@ -7,7 +7,7 @@ import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 import { candidate } from "../../utils/canditateLogin";
 import { BonusContext } from "../../context/BonusState";
-
+import { ToastContainer, toast } from "react-toastify";
 const RemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState();
   const [monthlyBonus, setMonthlyBonus] = useState();
@@ -348,7 +348,23 @@ const RemunerationInformation = (props) => {
       workInfoViewData
     );
 
-    if (
+   
+let fixedGrossEmpty=false;
+
+if(fixedGross===undefined||fixedGross===null||fixedGross===0){
+  fixedGrossEmpty=true;
+  toast.error("Please Enter the valid FixedGross");
+}else{
+  fixedGrossEmpty=false;
+}
+
+console.log("submit error check",fixedGrossError,
+stipenedError,
+parmanentGrossLimit,
+partTimeGrossLimit,
+localExpatGrossLimit,
+fixedGrossEmpty);
+    if (fixedGrossEmpty===false&&
       fixedGrossError === false &&
       stipenedError === false &&
       parmanentGrossLimit === false &&
@@ -422,6 +438,7 @@ const RemunerationInformation = (props) => {
 
   return (
     <Fragment>
+    <ToastContainer />
       <Form>
         <Row>
           <Fragment>
@@ -497,8 +514,8 @@ const RemunerationInformation = (props) => {
                       placeholder="100"
                       value={fixedGross}
                       onChange={(event) => changeHandler(event.target.value)}
-                      required
                       disabled={disabled}
+                      required
                     />
                     {fixedGrossError ? (
                       <p style={{ color: "red" }}>
