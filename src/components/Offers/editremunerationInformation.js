@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 import { BonusContext } from "../../context/BonusState";
-
+import { ToastContainer, toast } from "react-toastify";
 const EditRemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState();
   const [monthlyBonus, setMonthlyBonus] = useState();
@@ -341,7 +341,16 @@ const EditRemunerationInformation = (props) => {
     parmanentGrossLimit,
     partTimeGrossLimit,
     localExpatGrossLimit);
-    if (
+
+    let fixedGrossEmpty=false;
+
+if(fixedGross===undefined||fixedGross===null||fixedGross===0){
+  fixedGrossEmpty=true;
+  toast.error("Please Enter the valid FixedGross");
+}else{
+  fixedGrossEmpty=false;
+}
+    if (fixedGrossEmpty===false&&
       fixedGrossError === false &&
       stipenedError === false &&
       parmanentGrossLimit === false &&
@@ -423,6 +432,7 @@ const EditRemunerationInformation = (props) => {
     console.log(monthlyBonusError),
     (
       <Fragment>
+        <ToastContainer />
         <Form>
           <Row>
             <Fragment>
