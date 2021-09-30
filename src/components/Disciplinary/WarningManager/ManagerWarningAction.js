@@ -236,7 +236,7 @@ const ManagerWarningAction = (props) => {
           state.disciplinaryWarning.reasonDetails = null;
         } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
           if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
-            setShowCauseReason("Other");
+            setShowCauseReason("Misconduct");
             console.log("elseiff");
             setIssueWarningStatus("");
           }
@@ -1051,31 +1051,32 @@ const ManagerWarningAction = (props) => {
                 undefined ? (
               disciplinarySearchData.disciplinaryWarning.reportingType === 1 ? (
                 <label className="text-center">
-                  Warning details saved successfully, employee has been
+                  Warning letter details saved successfully, employee has been
                   notified.
                 </label>
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
-                  Warning details saved successfully, cost center manager has
-                  been notified.
+                  Warning letter details saved successfully, sent for cost
+                  manager confirmation
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
-                  Warning details saved successfully, super cost center manager
-                  has been notified.
+                  Warning letter details saved successfully, sent for super cost
+                  center manager confirmation
                 </label>
               ) : rolePermission == "superCostCenterManager" ? (
                 <label className="text-center">
-                  Warning details saved successfully, admin has been notified.
+                  Warning letter details saved successfully, sent for admin
+                  confirmation
                 </label>
               ) : (
                 <label className="text-center">
-                  Warning details saved successfully.
+                  Warning letter details saved successfully.
                 </label>
               )
             ) : (
               <label className="text-center">
-                Warning details saved successfully.
+                Warning letter details saved successfully.
               </label>
             )}
             <div className="text-center">
@@ -1350,7 +1351,7 @@ const ManagerWarningAction = (props) => {
                             </div>
                           </Col>
                         </>
-                        {state.disciplinaryAction.reason == "Other" ? (
+                        {state.disciplinaryAction.reason == "Misconduct" ? (
                           <>
                             <Col sm={2}>
                               <div>
@@ -1720,7 +1721,7 @@ const ManagerWarningAction = (props) => {
                                     <label className="itemResult">
                                       {state.disciplinaryWarning.reasonId == 1
                                         ? "Non-Performance"
-                                        : "Other"}
+                                        : "Misconduct"}
                                     </label>
                                   </div>
                                 </Col>

@@ -20,10 +20,26 @@ const NonPerformanceLetter = () => {
           <p>To ,</p>
           <p>
             {" "}
-            <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.employeeName}
+            <b>
+              {" "}
+              {disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).legth !== 0 &&
+              disciplinarySearchData.gender !== null &&
+              disciplinarySearchData.gender !== undefined &&
+              disciplinarySearchData.maritalStatus !== null &&
+              disciplinarySearchData.maritalStatus !== undefined
+                ? disciplinarySearchData.gender === "MALE"
+                  ? "Mr."
+                  : disciplinarySearchData.maritalStatus === "Married"
+                  ? "Mrs."
+                  : "Miss"
+                : "Mr./Ms."}
+            </b>{" "}
+            &nbsp; {disciplinarySearchData.employeeName}
           </p>
           <p>
-            <b>EmployeeId:</b> {disciplinarySearchData.employeeId}
+            <b>Employee Id:</b> {disciplinarySearchData.employeeId}
           </p>
           <p>
             <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}

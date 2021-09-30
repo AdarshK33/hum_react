@@ -535,14 +535,14 @@ const EmployeShowCaseLetter = () => {
               disciplinarySearchData.disciplinaryAction.initiatedRole !== null
                 ? disciplinarySearchData.disciplinaryAction.initiatedRole ==
                   "costCentermanager"
-                  ? " Show cause details saved successfully, cost center manager has been notified."
+                  ? " Show cause response details saved successfully, cost center manager has been notified."
                   : disciplinarySearchData.disciplinaryAction.initiatedRole ==
                     "superCostCentermanager"
-                  ? " Show cause details saved successfully, super cost center manager has been notified."
-                  : " Show cause details saved successfully, " +
+                  ? " Show cause response details saved successfully, super cost center manager has been notified."
+                  : " Show cause response details saved successfully, " +
                     disciplinarySearchData.disciplinaryAction.initiatedRole +
                     " has been notified."
-                : " Show cause details saved successfully, respective person has been notified."}
+                : " Show cause response details saved successfully, respective person has been notified."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -778,7 +778,7 @@ const EmployeShowCaseLetter = () => {
                             </label>
                           </div>
                         </Col>
-                        {showCauseReason === "Other" ? (
+                        {showCauseReason === "Misconduct" ? (
                           <Col sm={6}>
                             <div>
                               <label>
@@ -923,7 +923,7 @@ const EmployeShowCaseLetter = () => {
                               className={"LettersButtonsExtra"}
                               onClick={ShowCauseLetterClick}
                             >
-                              View Show Cause Notice
+                              View Show Cause Response
                             </button>
                           ) : (
                             ""
@@ -934,7 +934,7 @@ const EmployeShowCaseLetter = () => {
                               className={"LettersButtonsExtra"}
                               onClick={previewShowCauseLetter}
                             >
-                              Preview Show Cause Notice
+                              Preview Show Cause Response
                             </button>
                           ) : (
                             ""
