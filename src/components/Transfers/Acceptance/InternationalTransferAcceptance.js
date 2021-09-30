@@ -170,7 +170,6 @@ const InternationalTransferAcceptance = () => {
   };
   const changeProjectTermHandler = (e) => {
     setProjectTerm(e.target.value);
-    console.log("year->", e.target.value);
     setProjectTermErrMsg("");
     if (
       effectiveDate !== null &&
@@ -178,13 +177,29 @@ const InternationalTransferAcceptance = () => {
       effectiveDate !== "" &&
       e.target.value !== "0"
     ) {
-      setReturnDate(
-        new Date(
-          returnDate.setFullYear(
-            effectiveDate.getFullYear() + parseInt(e.target.value)
+      if (parseInt(e.target.value) <= 10) {
+        console.log("year->", e.target.value);
+        setReturnDate(
+          new Date(
+            returnDate.setFullYear(
+              effectiveDate.getFullYear() + parseInt(e.target.value)
+            )
           )
-        )
-      );
+        );
+        setReturnDate(new Date(returnDate.setMonth(effectiveDate.getMonth())));
+      } else {
+        console.log("month->", parseInt(e.target.value) / 10);
+        setReturnDate(
+          new Date(returnDate.setFullYear(effectiveDate.getFullYear()))
+        );
+        setReturnDate(
+          new Date(
+            returnDate.setMonth(
+              effectiveDate.getMonth() + parseInt(e.target.value) / 10
+            )
+          )
+        );
+      }
     } else {
       setReturnDate(new Date());
     }

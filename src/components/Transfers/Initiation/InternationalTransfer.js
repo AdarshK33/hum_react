@@ -267,8 +267,12 @@ const InternationalTransfer = () => {
             )
           )
         );
+        setReturnDate(new Date(returnDate.setMonth(effectiveDate.getMonth())));
       } else {
         console.log("month->", parseInt(e.target.value) / 10);
+        setReturnDate(
+          new Date(returnDate.setFullYear(effectiveDate.getFullYear()))
+        );
         setReturnDate(
           new Date(
             returnDate.setMonth(
