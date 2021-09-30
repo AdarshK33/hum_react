@@ -511,7 +511,7 @@ const ViewWorkInformation = () => {
               </Form.Group>
             </Col>
           )} */}
-          {state.employmentType === "Local Expat" && (
+          {/* {state.employmentType === "Local Expat" && (
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Passport Number</Form.Label>
@@ -524,7 +524,7 @@ const ViewWorkInformation = () => {
                 />
               </Form.Group>
             </Col>
-          )}
+          )} */}
 
           {state.employmentType === "Local Expat" && (
             <React.Fragment>
@@ -551,7 +551,7 @@ const ViewWorkInformation = () => {
                   </Form.Control>
                 </Form.Group>
               </Col>
-              <Col sm={3}>
+              {/* <Col sm={3}>
                 <Form.Group className="reactDate">
                   <Form.Label>Date of Issue</Form.Label>
                   <DatePicker
@@ -577,7 +577,7 @@ const ViewWorkInformation = () => {
                     disabled="true"
                   />
                 </Form.Group>
-              </Col>
+              </Col> */}
             </React.Fragment>
           )}
         </Row>
