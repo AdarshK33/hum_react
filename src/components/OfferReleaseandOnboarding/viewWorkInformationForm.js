@@ -424,6 +424,18 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )}
+
+{state.employmentType === "Local Expat" && (
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Nationality</Form.Label>
+                    <br></br>
+                    <Form.Label className="headingColor">
+                      {state.nationality}
+                    </Form.Label>
+                  </Form.Group>
+                </Col>
+            )}
             {/* {(state.employmentType === "Internship" ||
               state.employmentType === "Permanent" ||
               state.employmentType === "permanent" ||
@@ -438,7 +450,7 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )} */}
-            {state.employmentType === "Local Expat" && (
+            {/* {state.employmentType === "Local Expat" && (
               <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Passport Number</Form.Label>
@@ -448,10 +460,10 @@ const EditWorkInformation = () => {
                   </Form.Label>
                 </Form.Group>
               </Col>
-            )}
+            )} */}
           </Row>
-          <Row>
-            {state.employmentType === "Local Expat" && (
+          
+            {/* {state.employmentType === "Local Expat" && (
               <React.Fragment>
                 <Col sm={3}>
                   <Form.Group>
@@ -461,8 +473,8 @@ const EditWorkInformation = () => {
                       {state.nationality}
                     </Form.Label>
                   </Form.Group>
-                </Col>
-                <Col sm={3}>
+                </Col> */}
+                {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date of Issue</Form.Label>
                     <br></br>
@@ -470,8 +482,8 @@ const EditWorkInformation = () => {
                       {moment(dateOfIssue).format("YYYY-MM-DD")}
                     </Form.Label>
                   </Form.Group>
-                </Col>
-                <Col sm={3}>
+                </Col> */}
+                {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date Of Validity</Form.Label>
                     <br></br>
@@ -479,10 +491,9 @@ const EditWorkInformation = () => {
                       {moment(dateOfValidity).format("YYYY-MM-DD")}
                     </Form.Label>
                   </Form.Group>
-                </Col>
-              </React.Fragment>
-            )}
-          </Row>
+                </Col> */}
+              {/* </React.Fragment>
+            )} */}
           {state.recuritment === "NGO" ? (
             <Row className="mt-4">
               <Col sm={12}>

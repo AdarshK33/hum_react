@@ -74,8 +74,11 @@ const OfferAccept = (props) => {
 
   useEffect(() => {
     console.log("candidateProfileData offer accept", candidateProfileData);
-    viewCandidateId(candidateProfileData.candidateId);
-    generateCandidateLetter(candidateProfileData.candidateId);
+    if(candidateProfileData!==null&&candidateProfileData!==undefined&&Object.keys(candidateProfileData).length!==0){
+      viewCandidateId(candidateProfileData.candidateId);
+      generateCandidateLetter(candidateProfileData.candidateId);
+    }
+    
   }, [candidateProfileData]);
 
   const showLetterClick = (e) => {

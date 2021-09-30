@@ -155,25 +155,22 @@ const EditRemunerationInformation = (props) => {
   const changeHandler = (e) => {
     console.log("changeHandler", e);
     console.log("contracttype", workInfoViewData.contractType);
-    if (
-      (candidateData !== null &&
-        candidateData !== undefined &&
-        candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined) ||
-      (workInfoViewData !== null &&
-        workInfoViewData !== undefined &&
-        Object.keys(workInfoViewData).length !== 0)
-    ) {
       if (
-        candidateData.workInformation.contractType === "Internship" ||
-        workInfoViewData.contractType === "Internship"
+        (candidateData !== null &&
+        candidateData !== undefined &&
+        Object.keys(candidateData).length !== 0&&
+        candidateData.workInformation !== null &&
+        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Internship") ||
+        (workInfoViewData !== null &&
+        workInfoViewData !== undefined &&
+        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Internship")
       ) {
         if (
           typeof e === "undefined" ||
           e === "" ||
           (e + "").includes(" ", "-", ".", "/", "+")
         ) {
-          console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
+          console.log("inside intern if", e);
           setStipened(e);
           setStipenedError(true);
           setFixedGross(0);
@@ -182,6 +179,7 @@ const EditRemunerationInformation = (props) => {
           setPartTimeGrossLimit(false);
           setLocalExpatGrossLimit(false);
         } else {
+          console.log("inside intern else", e);
           setStipened(e);
           setStipenedError(false);
           setFixedGross(0);
@@ -193,8 +191,14 @@ const EditRemunerationInformation = (props) => {
       }
 
       if (
-        candidateData.workInformation.contractType === "Permanent" ||
-        workInfoViewData.contractType === "Permanent"
+        (candidateData !== null &&
+        candidateData !== undefined &&
+        Object.keys(candidateData).length !== 0&&
+        candidateData.workInformation !== null &&
+        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Permanent") ||
+        (workInfoViewData !== null &&
+        workInfoViewData !== undefined &&
+        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Permanent")
       ) {
         console.log("inside permanent", e);
         if (
@@ -232,14 +236,21 @@ const EditRemunerationInformation = (props) => {
       }
 
       if (
-        candidateData.workInformation.contractType === "Parttime" ||
-        workInfoViewData.contractType === "Parttime"
+        (candidateData !== null &&
+        candidateData !== undefined &&
+        Object.keys(candidateData).length !== 0&&
+        candidateData.workInformation !== null &&
+        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Parttime") ||
+        (workInfoViewData !== null &&
+        workInfoViewData !== undefined &&
+        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Parttime")
       ) {
         if (
           typeof e === "undefined" ||
           e === "" ||
           e.includes(" ", "-", ".", "/", "+")
         ) {
+          console.log("inside part time1", e);
           setFixedGross(e);
           setFixedGrossError(true);
           setPartTimeGrossLimit(false);
@@ -248,6 +259,7 @@ const EditRemunerationInformation = (props) => {
           setStipenedError(false);
           setLocalExpatGrossLimit(false);
         } else if (e < 90 || e > 400) {
+          console.log("inside part time2", e);
           setFixedGross(e);
           setFixedGrossError(false);
           setPartTimeGrossLimit(true);
@@ -256,6 +268,7 @@ const EditRemunerationInformation = (props) => {
           setStipenedError(false);
           setLocalExpatGrossLimit(false);
         } else {
+          console.log("inside part time3", e);
           setFixedGross(e);
           setFixedGrossError(false);
           setPartTimeGrossLimit(false);
@@ -267,14 +280,21 @@ const EditRemunerationInformation = (props) => {
       }
 
       if (
-        candidateData.workInformation.contractType === "Local Expat" ||
-        workInfoViewData.contractType === "Local Expat"
+        (candidateData !== null &&
+        candidateData !== undefined &&
+        Object.keys(candidateData).length !== 0&&
+        candidateData.workInformation !== null &&
+        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Local Expat") ||
+        (workInfoViewData !== null &&
+        workInfoViewData !== undefined &&
+        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Local Expat")
       ) {
         if (
           typeof e === "undefined" ||
           e === "" ||
           e.includes(" ", "-", ".", "/", "+")
         ) {
+          console.log("inside local expat1", e);
           setFixedGross(e);
           setFixedGrossError(true);
           setLocalExpatGrossLimit(false);
@@ -283,6 +303,7 @@ const EditRemunerationInformation = (props) => {
           setStipenedError(false);
           setPartTimeGrossLimit(false);
         } else if (e < 25000) {
+          console.log("inside local expat2", e);
           setFixedGross(e);
           setFixedGrossError(false);
           setLocalExpatGrossLimit(true);
@@ -291,6 +312,7 @@ const EditRemunerationInformation = (props) => {
           setStipenedError(false);
           setPartTimeGrossLimit(false);
         } else {
+          console.log("inside local expat3", e);
           setFixedGross(e);
           setFixedGrossError(false);
           setLocalExpatGrossLimit(false);
@@ -300,7 +322,6 @@ const EditRemunerationInformation = (props) => {
           setPartTimeGrossLimit(false);
         }
       }
-    }
   };
 
   const submitHandler = (e) => {
@@ -315,6 +336,11 @@ const EditRemunerationInformation = (props) => {
       stipened,
       user.role,remunerationData,remunerationViewData,saveclick
     );
+    console.log("submit error check",fixedGrossError,
+    stipenedError,
+    parmanentGrossLimit,
+    partTimeGrossLimit,
+    localExpatGrossLimit);
     if (
       fixedGrossError === false &&
       stipenedError === false &&
