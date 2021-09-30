@@ -250,7 +250,7 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&
+    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 17
@@ -260,7 +260,7 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&
+    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 24
@@ -903,7 +903,7 @@ const DocVerification = () => {
                             Disapprove
                           </button>
                         ) : (
-                          <div></div>
+                          ""
                         )}
                         {rolePermission == "admin" &&
                         item.documentType === 11 &&
@@ -929,7 +929,7 @@ const DocVerification = () => {
                             Disapprove
                           </button>
                         ) : (
-                          <div></div>
+                          ""
                         )}
                         {rolePermission == "admin" &&
                         item.documentType === 12 &&
@@ -955,7 +955,7 @@ const DocVerification = () => {
                             Disapprove
                           </button>
                         ) : (
-                          <div></div>
+                          ""
                         )}
                       </td>
                     )}

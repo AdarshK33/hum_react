@@ -166,7 +166,7 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&
+    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 17
@@ -176,7 +176,7 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&
+    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 24
