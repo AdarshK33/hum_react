@@ -18,9 +18,28 @@ const ReasonByEmployee = () => {
           <br></br>
 
           <p>To ,</p>
-          <p>
+          {/* <p>
             {" "}
             <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.managerName}
+          </p> */}
+          <p>
+            {" "}
+            <b>
+              {disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).legth !== 0 &&
+              disciplinarySearchData.gender !== null &&
+              disciplinarySearchData.gender !== undefined &&
+              disciplinarySearchData.maritalStatus !== null &&
+              disciplinarySearchData.maritalStatus !== undefined
+                ? disciplinarySearchData.gender === "MALE"
+                  ? "Mr."
+                  : disciplinarySearchData.maritalStatus === "Married"
+                  ? "Mrs."
+                  : "Miss"
+                : "Mr./Ms."}
+            </b>{" "}
+            &nbsp; {disciplinarySearchData.managerName}
           </p>
           <p>Decathlon Sports India</p>
           <br />
