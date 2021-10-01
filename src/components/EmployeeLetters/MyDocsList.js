@@ -292,7 +292,8 @@ const EmployeeDocementsList = () => {
                                 item.disciplinaryAction.employeeActionStatus !==
                                   "Responded") &&
                               item.disciplinaryAction.statusDesc !==
-                                "Exit Initiated" ? (
+                                "Exit Initiated" &&
+                              item.disciplinaryAction.actionDueDays > 0 ? (
                                 <Link to="/letters/show-cause">
                                   <Edit2
                                     onClick={() => {

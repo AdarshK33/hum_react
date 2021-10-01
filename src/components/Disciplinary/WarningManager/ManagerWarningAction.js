@@ -252,7 +252,12 @@ const ManagerWarningAction = (props) => {
           state.disciplinaryWarning.reasonDetails =
             disciplinarySearchData.disciplinaryAction.reasonDetails;
         }
-        if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
+        if (
+          disciplinarySearchData.disciplinaryAction.actionDueDays === 0 &&
+          disciplinarySearchData.disciplinaryAction.employeeActionStatus !==
+            "Responded"
+        ) {
+          console.log("i am here");
           setIssueWarningStatus("no");
         }
       }
@@ -432,16 +437,21 @@ const ManagerWarningAction = (props) => {
       setManagerCommentError("");
     }
     if (
-      (reasonId === 2 ||
-        (improvementPeriod !== "" &&
-          improvementPeriod !== undefined &&
-          improvementPeriod !== null)) &&
-      reason !== "" &&
-      managerComment !== "" &&
-      reason !== null &&
-      managerComment !== null &&
-      reason !== undefined &&
-      managerComment !== undefined
+      (reasonId === 2 &&
+        reason !== "" &&
+        managerComment !== "" &&
+        reason !== null &&
+        managerComment !== null &&
+        reason !== undefined &&
+        managerComment !== undefined) ||
+      (reasonId === 1 &&
+        improvementPeriod > 0 &&
+        reason !== "" &&
+        managerComment !== "" &&
+        reason !== null &&
+        managerComment !== null &&
+        reason !== undefined &&
+        managerComment !== undefined)
     ) {
       var infoData = {
         company: state.company,
@@ -605,6 +615,15 @@ const ManagerWarningAction = (props) => {
     setModal(false);
     setSuccessModal(false);
     setIssueResolved(false);
+    //setSubmitted({value:true});
+  };
+  const handleClose3 = (e) => {
+    console.log(state);
+    setInitalExit(false);
+    setModal(false);
+    setSuccessModal(false);
+    setIssueResolved(false);
+    history.push("../disciplinary");
     //setSubmitted({value:true});
   };
 
@@ -997,7 +1016,7 @@ const ManagerWarningAction = (props) => {
               separation module for next steps of action
             </label>
             <div className="text-center">
-              <Button onClick={handleClose}>Close</Button>
+              <Button onClick={handleClose3}>Close</Button>
               <></>
 
               <Button onClick={GoToSeperation} style={{ marginLeft: "1rem" }}>
@@ -2005,11 +2024,11 @@ const ManagerWarningAction = (props) => {
                           disciplinarySearchData.disciplinaryAction
                             .actionDueDays === 0 &&
                           (disciplinarySearchData.disciplinaryAction
-                            .employeeComment !== null ||
+                            .employeeComment === null ||
                             disciplinarySearchData.disciplinaryAction
-                              .employeeComment !== undefined ||
+                              .employeeComment === undefined ||
                             disciplinarySearchData.disciplinaryAction
-                              .employeeComment !== "") &&
+                              .employeeComment === "") &&
                           submitted.value == false) ? (
                           <Col
                             style={{

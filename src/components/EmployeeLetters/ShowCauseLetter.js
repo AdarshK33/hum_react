@@ -33,6 +33,7 @@ const EmployeShowCaseLetter = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const [remarksError, setRemarkError] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const [state, setState] = useState({
     empId: "",
@@ -360,6 +361,11 @@ const EmployeShowCaseLetter = () => {
       return false;
     }
   };
+  const EditHandler = (e) => {
+    e.preventDefault();
+    setEdit(true);
+    setSubmitted(false);
+  };
 
   const submitHandler = (e) => {
     console.log("submit handler");
@@ -435,6 +441,7 @@ const EmployeShowCaseLetter = () => {
       setSubmitted(true);
       state.clickOnsubmit = true;
       setPreview(true);
+      setEdit(false);
       //   setSuccessModal(true);
     } else {
       console.log("search data is null");
@@ -853,10 +860,8 @@ const EmployeShowCaseLetter = () => {
                             </label>
                           </div>
                         </Col>
-                        {submitted === true ||
-                        (state.employeeCommentSCIN !== null &&
-                          state.employeeCommentSCIN !== undefined &&
-                          state.employeeCommentSCIN !== "") ? (
+                        {(submitted === true || state.statusSCIN === 9) &&
+                        edit === false ? (
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">
@@ -904,20 +909,30 @@ const EmployeShowCaseLetter = () => {
                             textAlign: "center",
                           }}
                         >
-                          <button
-                            disabled={submitted}
-                            className={
-                              submitted || state.statusSCIN === 9
-                                ? "confirmButton"
-                                : "stepperButtons"
-                            }
-                            onClick={submitHandler}
-                          >
-                            Save
-                          </button>
+                          {submitted === false &&
+                          (state.statusSCIN !== 9 || edit === true) ? (
+                            <button
+                              className="stepperButtons"
+                              onClick={submitHandler}
+                            >
+                              Save
+                            </button>
+                          ) : !previewGeneratedLetter ? (
+                            <button
+                              className="stepperButtons"
+                              onClick={EditHandler}
+                            >
+                              Edit
+                            </button>
+                          ) : (
+                            <button className="confirmButton" disabled={true}>
+                              Save
+                            </button>
+                          )}
 
                           {(state.statusSCIN === 9 || submitted) &&
-                          !saveLetter ? (
+                          !saveLetter &&
+                          edit === false ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtonsExtra"}
@@ -929,7 +944,9 @@ const EmployeShowCaseLetter = () => {
                             ""
                           )}
                           {saveLetter ||
-                          (previewGeneratedLetter && showPreview) ? (
+                          (previewGeneratedLetter &&
+                            showPreview &&
+                            edit == false) ? (
                             <button
                               className={"LettersButtonsExtra"}
                               onClick={previewShowCauseLetter}
