@@ -328,6 +328,8 @@ const EditRemunerationInformation = (props) => {
     console.log(saveclick);
     console.log("inside edit submit", candidateData);
     let remunerationinfo;
+    let fixedGrossEmpty=false;
+    let stipendEmpty=false;
     e.preventDefault();
     console.log(
       "remuneration Info1",
@@ -340,17 +342,27 @@ const EditRemunerationInformation = (props) => {
     stipenedError,
     parmanentGrossLimit,
     partTimeGrossLimit,
-    localExpatGrossLimit);
+    localExpatGrossLimit,fixedGrossEmpty,stipendEmpty);
 
-    let fixedGrossEmpty=false;
 
+    if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType !== "Internship") {
 if(fixedGross===undefined||fixedGross===null||fixedGross===0){
   fixedGrossEmpty=true;
   toast.error("Please Enter the valid FixedGross");
 }else{
   fixedGrossEmpty=false;
 }
-    if (fixedGrossEmpty===false&&
+    }
+
+    if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType === "Internship") {
+      if(stipened===undefined||stipened===null||stipened===0){
+        stipendEmpty=true;
+        toast.error("Please Enter the valid Stipend");
+      }else{
+        stipendEmpty=false;
+      }
+          }
+    if (fixedGrossEmpty===false&&stipendEmpty===false&&
       fixedGrossError === false &&
       stipenedError === false &&
       parmanentGrossLimit === false &&
