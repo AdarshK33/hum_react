@@ -46,17 +46,17 @@ const WarningLetter = () => {
           </p>
 
           <div className=" ">
-            <p className="mt-5 ">
+            {/* <p className="mt-5 ">
               {" "}
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
             </p>
-            <br></br>
+            <br></br> */}
 
             <p>
               You have been associated Decathlon Sports India Private Limited
               (“Decathlon/Company”), having its registered office at{" "}
               {disciplinarySearchData.storeAddressLine}, You are currently
-              working at Decathlon (prodin/indeca) india pvt ltd,
+              working at {disciplinarySearchData.company} pvt ltd,
               <b>{disciplinarySearchData.storeLocation} </b>as a
               <b>{disciplinarySearchData.position}</b>.
               <br />
@@ -84,7 +84,7 @@ const WarningLetter = () => {
               <br />
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India Pvt Ltd,</b>
+              <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

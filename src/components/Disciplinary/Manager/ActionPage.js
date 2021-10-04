@@ -460,17 +460,18 @@ const ActionPage = () => {
                 </label>
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
-                  Warning details saved successfully, cost center manager has
-                  been notified.
+                  Warning details saved successfully, sent for cost center
+                  manager confirmation.
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
-                  Warning details saved successfully, super cost center manager
-                  has been notified.
+                  Warning details saved successfully, sent for super cost center
+                  manager confirmation.
                 </label>
               ) : rolePermission == "superCostCenterManager" ? (
                 <label className="text-center">
-                  Warning details saved successfully, admin has been notified.
+                  Warning details saved successfully, sent for admin
+                  confirmation.
                 </label>
               ) : (
                 <label className="text-center">
@@ -495,18 +496,18 @@ const ActionPage = () => {
                 </label>
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, cost center
-                  manager has been notified.
+                  Show cause notice details saved successfully, sent for cost
+                  center manager confirmation.
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, super cost
-                  center manager has been notified.
+                  Show cause notice details saved successfully, sent for super
+                  cost center manager confirmation.
                 </label>
               ) : rolePermission == "superCostCenterManager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, admin has been
-                  notified.
+                  Show cause notice details saved successfully, sent for admin
+                  confirmation.
                 </label>
               ) : (
                 <label className="text-center">
@@ -776,7 +777,7 @@ const ActionPage = () => {
                             </label>
                           </div>
                         </Col>
-                        {showCauseReason === "Other" ? (
+                        {showCauseReason === "Misconduct" ? (
                           <Col sm={6}>
                             <div>
                               <label>
@@ -1043,7 +1044,7 @@ const ActionPage = () => {
                                 </label>
                               </div>
                             </Col>
-                            {showCauseReason === "Other" ? (
+                            {showCauseReason === "Misconduct" ? (
                               ""
                             ) : (
                               <Col sm={6}>
@@ -1063,7 +1064,7 @@ const ActionPage = () => {
                               </Col>
                             )}
                           </Row>
-                          {showCauseReason === "Other" ? (
+                          {showCauseReason === "Misconduct" ? (
                             ""
                           ) : (
                             <Row
