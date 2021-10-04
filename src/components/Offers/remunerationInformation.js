@@ -350,21 +350,31 @@ const RemunerationInformation = (props) => {
 
    
 let fixedGrossEmpty=false;
-
+let stipendEmpty=false;
+if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType !== "Internship") {
 if(fixedGross===undefined||fixedGross===null||fixedGross===0){
   fixedGrossEmpty=true;
   toast.error("Please Enter the valid FixedGross");
 }else{
   fixedGrossEmpty=false;
 }
+}
+if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType === "Internship") {
+  if(stipened===undefined||stipened===null||stipened===0){
+    stipendEmpty=true;
+    toast.error("Please Enter the valid Stipend");
+  }else{
+    stipendEmpty=false;
+  }
+      }
 
 console.log("submit error check",fixedGrossError,
 stipenedError,
 parmanentGrossLimit,
 partTimeGrossLimit,
 localExpatGrossLimit,
-fixedGrossEmpty);
-    if (fixedGrossEmpty===false&&
+fixedGrossEmpty,stipendEmpty);
+    if (fixedGrossEmpty===false&&stipendEmpty===false&&
       fixedGrossError === false &&
       stipenedError === false &&
       parmanentGrossLimit === false &&
