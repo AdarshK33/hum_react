@@ -43,6 +43,7 @@ const OfferAccept = (props) => {
     candidateProfileData,
     generateCandidateLetter,
     candidateLetterData,
+    candidateCountryList
   } = useContext(OnBoardContext);
   const { candidateRejectOffer, candidateAcceptOffer, offerAcceptData } =
     useContext(CandidateContext);
@@ -60,6 +61,7 @@ const OfferAccept = (props) => {
   };
   useEffect(() => {
     CandidateProfile();
+    // candidateCountryList();
   }, []);
 
   // useEffect(() => {

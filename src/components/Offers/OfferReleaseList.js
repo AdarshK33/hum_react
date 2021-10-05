@@ -299,13 +299,14 @@ const OfferReleaseList = () => {
                                   value="yes"
                                   name={item.candidateId}
                                   checked={item.noShow}
-                                  // disabled={item.noShow}
+                                  disabled={(item.status === 0 || item.status === 5 || item.status === 6||item.overallStatus===1)}
                                   onChange={
                                     item.noShow ? dummyFun : handleModalOpen
                                   }
                                 />
                               </div>
                             </td>
+                            
                           </tr>
                         </tbody>
                       );
