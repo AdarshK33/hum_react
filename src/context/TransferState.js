@@ -114,6 +114,7 @@ export const TransferProvider = (props) => {
 
   const getCostCentreDetails = (entity, dept) => {
     setLoader(true);
+    entity = entity === "DSI" ? "Decathlon Sports India" : entity;
     client
 
       .get(
