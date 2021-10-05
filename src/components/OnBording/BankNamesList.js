@@ -1,7 +1,5 @@
 const BANK_NAMES = [
-  "Allahabad Bank",
   "Almora Urban Co-operative Bank Ltd",
-  "Andhra Bank",
   "ANZ Bank",
   "Apna Sahakari Bank Ltd",
   "Axis Bank",
@@ -21,7 +19,6 @@ const BANK_NAMES = [
   "Credit Suisse AG",
   "Dakhin Dinajpur DCCB",
   "Darjeeling DCCB",
-  "Dena Bank",
   "Development Credit Bank",
   "Dhanlaxmi Bank Ltd",
   "Dombivli Nagari Sahakari Bank Ltd",
@@ -47,7 +44,7 @@ const BANK_NAMES = [
   "Nadia DCCB",
   "Nagpur Nagrik Sahakari Bank Ltd",
   "NKGSB Co-op Bank Ltd",
-  "Pragathi Gramin Bank",
+  "Pragathi Krishna Gramin Bank",
   "Punjab & Sind Bank",
   "Punjab National Bank",
   "Purulia DCCB",
@@ -78,7 +75,7 @@ const BANK_NAMES = [
   "Vidyasagar CCB",
   "Yes Bank",
   "IDBI Bank",
-  "RBS (Royal Bank of Sotland)",
+  "RBS (Royal Bank of Scotland)",
 ];
 
 export default BANK_NAMES;
