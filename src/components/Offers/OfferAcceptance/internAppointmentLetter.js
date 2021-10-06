@@ -64,7 +64,7 @@ const InternAppointmentLetter = (props) => {
             We thank you for your interest in choosing Decathlon Sports India
             Pvt Ltd (DSIPL). We are in receipt of your application authorised by
             your institute/college/university to do an internship project on the
-            topic Legal Real Estate. As we believe your passion for sport and
+            topic {candidateLetterData.internshipCandidateOffer.department}. As we believe your passion for sport and
             your values match those of our Company, we, at DSIPL, encourage
             academic aspirants to learn practical aspects of their academic
             curriculum. We are pleased to assign the project of your interest
