@@ -1,0 +1,80 @@
+.CardHeading {
+  height: 30px;
+  background-color: #006ebb;
+  text-align: left;
+  color: white;
+  font-size: 17px;
+  width: 100%;
+  padding-top: 3px;
+}
+
+.smallCardHeading {
+  margin-left: 1rem;
+  margin-top: -1rem;
+  border-bottom: 1px solid #006ebb;
+}
+.workingHours {
+  font-size: 25px;
+  color: orange;
+  float: left;
+}
+.AdditionalHours {
+  font-size: 25px;
+  color: #006ebb;
+  float: right;
+}
+.workingHoursLabel {
+  font-size: 15px;
+  color: orange;
+  float: left;
+  margin-top: -10px;
+}
+.AdditionalHoursLabel {
+  font-size: 15px;
+  color: #006ebb;
+  float: right;
+  margin-top: -10px;
+}
+.totalHours {
+  font-size: 20px;
+  color: black;
+  float: right;
+  margin-top: -3px;
+}
+.slidderLeft {
+  color: #006ebb;
+  font-size: 25px;
+  float: left;
+  text-align: center;
+}
+.slidderRight {
+  color: #006ebb;
+  font-size: 25px;
+  float: right;
+  margin-left: 6px;
+  text-align: center;
+}
+.dateBox {
+  background-color: #f8f8f8;
+  border-radius: 5%;
+  height: 50px;
+  width: 110px;
+  margin-left: 4px;
+  text-align: center;
+  margin-bottom: 10px;
+  box-shadow: 3px 6px #bbb;
+}
+.dateNum {
+  font-size: 20px;
+  color: black;
+  text-align: center;
+}
+.dateMonth {
+  font-size: 20px;
+  color: #006ebb;
+  text-align: left;
+  margin-left: -20px;
+}
+.leaveContent {
+  margin-top: -10px;
+}
