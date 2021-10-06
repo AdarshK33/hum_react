@@ -27,6 +27,7 @@ const initial_state = {
   aadhaarNotificationData: {},
   submitAppointmentLetter: {},
   noticePeriodViewData: {},
+  costcenterByDepartmentData:[]
 };
 
 export const OfferContext = createContext();
@@ -264,14 +265,14 @@ export const OfferProvider = (props) => {
   };
   // location api for work information
   const locationView = async (costCenter) => {
-    console.log(costCenter);
+    console.log("locationView",costCenter);
     const result1 = await client.get("/api/v1/location/view/" + costCenter);
     const result2 = await client.get(
       `api/v1/employee/view/${costCenter}/managers`
     );
     state.locationName = result1.data.data;
     state.managerList = result2.data.data;
-    console.log("locationName response", state.locationName);
+    console.log("locationName response", state.locationName,state.managerList);
     return dispatch({
       type: "LOCATION",
       payload: (state.locationName, state.managerList),
@@ -507,6 +508,25 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+  const costcenterByDepartment = (department,superMangerFlag) => {
+    console.log("department,superMangerFlag",  department,superMangerFlag);
+    return client
+      .get("/api/v1/cost_centre/view/department?department="+department+"&superManager="+superMangerFlag
+      )
+      .then((response) => {
+        state.costcenterByDepartmentData = response.data.data;
+        console.log("costcenterByDepartmentData.message", state.costcenterByDepartmentData);
+        return dispatch({
+          type: "COSTCENTER_BY_DEPARTMENT",
+          payload: state.costcenterByDepartmentData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
   return (
     <OfferContext.Provider
       value={{
@@ -535,6 +555,7 @@ export const OfferProvider = (props) => {
         makeSearchEmp1DataNull,
         noticePeriodView,
         noShowCandidate,
+        costcenterByDepartment,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -558,6 +579,7 @@ export const OfferProvider = (props) => {
         aadhaarNotificationData: state.aadhaarNotificationData,
         submitAppointmentLetter: state.submitAppointmentLetter,
         noticePeriodViewData: state.noticePeriodViewData,
+        costcenterByDepartmentData:state.costcenterByDepartmentData
       }}
     >
       {props.children}

@@ -5791,7 +5791,7 @@ const InsuranceNomination = (props) => {
                       onChange={nomineeHandler}
                       required
                       style={nomineeNameError ? { borderColor: "red" } : {}}
-                      placeholder="Dependent Name"
+                      placeholder="Nominee Name"
                     />
                     {nomineeNameError ? (
                       <p style={{ color: "red" }}>
@@ -5896,7 +5896,7 @@ const InsuranceNomination = (props) => {
                         style={
                           nomineeAddressError ? { borderColor: "red" } : {}
                         }
-                        placeholder="Dependent Address"
+                        placeholder="Nominee Address"
                       />
                     </div>
                     {nomineeAddressError ? (

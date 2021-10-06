@@ -111,7 +111,7 @@ const PersonalInformation = (props) => {
 
   useEffect(() => {
     CandidateProfile();
-    candidateCountryList();
+
     if (
       localStorage.getItem("candidate_access_token") !== null &&
       localStorage.getItem("candidate_access_token") !== undefined
@@ -135,12 +135,19 @@ const PersonalInformation = (props) => {
   }, []);
 
   useEffect(() => {
+  candidateCountryList();
+}, []);
+
+  useEffect(() => {
+    console.log("candidateProfileData1",candidateProfileData,candidateCountryData);
+
     if (
-      candidateViewInfo !== null &&
-      candidateViewInfo !== undefined &&
-      Object.keys(candidateViewInfo).length !== 0
+      candidateProfileData !== null &&
+      candidateProfileData !== undefined &&
+      Object.keys(candidateProfileData).length !== 0
     ) {
-      if (candidateViewInfo.contractType === "Local Expat") {
+      console.log("inside if");
+      if (candidateProfileData.contractType === "Local Expat") {
         let nationList = candidateCountryData.filter(
           (item) => item.nationality !== "Indian"
         );
@@ -148,10 +155,11 @@ const PersonalInformation = (props) => {
         console.log("contract list", nationList);
         setNationlArray(nationList);
       } else {
+        console.log("inside else");
         setNationlArray(candidateCountryData);
       }
     }
-  }, [candidateViewInfo]);
+  }, [candidateProfileData,candidateCountryData]);
 
   useEffect(() => {
     CandidateProfile();

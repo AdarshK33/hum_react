@@ -67,6 +67,8 @@ const WorkInformation = (props) => {
     managerList,
     noticePeriodView,
     noticePeriodViewData,
+    costcenterByDepartment,
+    costcenterByDepartmentData
   } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -165,6 +167,23 @@ const WorkInformation = (props) => {
       noticePeriodView(state.employmentType, state.department);
     }
   }, [state.employmentType, state.department]);
+
+  useEffect(() => {
+    let superMangerFlag;
+    if (state.department !== null&&state.department !== undefined&&state.department !== "") {
+      console.log("state.department",state.department);
+      if(rolePermission == "superCostCenterManager"){
+        superMangerFlag=1
+        costcenterByDepartment( state.department,superMangerFlag);
+      }else{
+        superMangerFlag=0
+        costcenterByDepartment( state.department,superMangerFlag);
+      }
+      
+    }
+  }, [ state.department]);
+
+
   useEffect(() => {
     if (
       noticePeriodViewData !== null &&
@@ -627,10 +646,10 @@ const WorkInformation = (props) => {
                   required
                 >
                   <option value="">Select Cost Center</option>
-                  {costCenterList !== null &&
-                    costCenterList !== undefined &&
-                    costCenterList.length > 0 &&
-                    costCenterList.map((item) => {
+                  {costcenterByDepartmentData !== null &&
+                    costcenterByDepartmentData !== undefined &&
+                    costcenterByDepartmentData.length > 0 &&
+                    costcenterByDepartmentData.map((item) => {
                       return (
                         <option key={item.costCenterId}>
                           {item.costCentreName}
@@ -883,6 +902,9 @@ const WorkInformation = (props) => {
                     <option value="1">1 Month</option>
                     <option value="2">2 Month</option>
                     <option value="3">3 Month</option>
+                    <option value="4">4 Month</option>
+                    <option value="5">5 Month</option>
+                    <option value="6">6 Month</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
