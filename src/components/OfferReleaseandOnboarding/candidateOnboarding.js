@@ -580,9 +580,9 @@ const CandidateOnboarding = () => {
         ) : candidateData !== undefined &&
           candidateData.workInformation !== undefined &&
           candidateData.workInformation.contractType === "Local Expat" ? (
-          <LocalExpatAppointmentLetter />
+          <LocalExpatAppointmentLetter previewLetter={previewLetter} />
         ) : (
-          <InternAppointmentLetter />
+          <InternAppointmentLetter previewLetter={previewLetter} />
         )
       ) : (
         ""
@@ -803,7 +803,7 @@ const CandidateOnboarding = () => {
           </Row>
         )}
       </div>
-      <div className="px-5  mt-4">
+      {/* <div className="px-5  mt-4">
         <h5 style={{ fontWeight: 700 }}>Cost Center Split</h5>
         {costCenter === true && (
           <Row className="mt-4">
@@ -1190,11 +1190,11 @@ const CandidateOnboarding = () => {
                 </Form.Group>
               </Col>
             )}
-            {/* {costCenterError === true && (
+            {costCenterError === true && (
               <p style={{ color: "red" }}>
                 Please select atleast one cost Center
               </p>
-            )} */}
+            )}
           </Row>
         )}
         {costCenterError === true && (
@@ -1212,13 +1212,13 @@ const CandidateOnboarding = () => {
             <b> Add + </b>
           </button>
         </div>
-        {/* <Row className="mt-5">
+        <Row className="mt-5">
             <Col sm={3}></Col>
             <Col sm={4} className="text-center">
               <Button className="px-5">Save</Button>
             </Col>
-          </Row> */}
-      </div>
+          </Row>
+      </div> */}
       {!previewLetter && generateAppoint === false && (
         <Row className="text-center mt-4">
           <Button
