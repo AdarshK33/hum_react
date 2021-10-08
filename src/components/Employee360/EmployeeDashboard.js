@@ -1,22 +1,20 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Form,
-  Card,
-  Button,
-  Container,
-  Modal,
-} from "react-bootstrap";
-import { Search, PlusCircle, MinusCircle } from "react-feather";
+import { Row, Col, Form, Card, Button, Table, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import man from "../../assets/images/dashboard/userImage.png";
 import { AppContext } from "../../context/AppState";
-import Chart from "react-google-charts";
+import { Edit2, Eye, Search, Download } from "react-feather";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import ScrollArea from "react-scrollbar";
 import "./Employee360.css";
 import MyPerformanceCard from "./MyPerformanceCard";
+import MyLeavesCard from "./MyLeavesCard";
+import Roster from "./Roster";
+import HolidaysCard from "./HolidaysCard";
+import MyDocumentsCard from "./MyDocumentsCard";
 
 // view-----
 const EmployeeDashboard = () => {
@@ -37,35 +35,11 @@ const EmployeeDashboard = () => {
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
   const { user } = useContext(AppContext);
+  const [tabIndex, setTabIndex] = useState(0);
 
   const [state, setState] = useState({
     empId: "",
   });
-  const LeavesOption = {
-    slices: [
-      {
-        color: "#5059ab",
-      },
-      {
-        color: "#01cc9b",
-      },
-    ],
-    pieSliceText: "key",
-    legend: {
-      position: "center",
-      alignment: "center",
-      textStyle: {
-        color: "233238",
-        fontSize: 11,
-      },
-    },
-    chartArea: {
-      left: 10,
-      top: 10,
-      width: "100%",
-      height: "80%",
-    },
-  };
 
   return (
     <Fragment>
@@ -271,15 +245,10 @@ const EmployeeDashboard = () => {
                         style={{ borderRadius: "3%" }}
                         className="big-card p-10 main-card"
                       >
-                        <Row>
-                          <Col>
-                            <div className="CardHeading">
-                              <label style={{ marginLeft: "1rem" }}>
-                                Roster
-                              </label>
-                            </div>
-                          </Col>
-                        </Row>
+                        <div className="CardHeading">
+                          <label style={{ marginLeft: "1rem" }}>Roster</label>
+                        </div>
+                        <Roster />
                       </Card>
                     </Col>
                     <Col sm={3}>
@@ -292,83 +261,7 @@ const EmployeeDashboard = () => {
                             My Leaves
                           </label>
                         </div>
-                        <div>
-                          <Chart
-                            width={"100%"}
-                            height={"150px"}
-                            chartType="PieChart"
-                            data={[
-                              ["Leave Type", "Days"],
-                              ["Pending", 11],
-                              ["Applied", 2],
-                              ["UnPlanned", 2],
-                            ]}
-                            legend_toggle
-                            options={LeavesOption}
-                          />
-                        </div>
-                        {/* upcomming leves */}
-                        <div>Upcomming Leaves</div>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginTop: "1rem",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          <div className="slidderLeft">&#60;</div>
-                          <div className="dateBox">
-                            <Row>
-                              <Col className="dateNum">26</Col>
-                              <Col className="dateMonth">Feb</Col>
-                            </Row>
-                            <Row>
-                              <Col className="leaveContent">Aniversery</Col>
-                            </Row>
-                          </div>
-                          <div className="dateBox">
-                            <Row>
-                              <Col className="dateNum">26</Col>
-                              <Col className="dateMonth">Feb</Col>
-                            </Row>
-                            <Row>
-                              <Col className="leaveContent">Aniversery</Col>
-                            </Row>
-                          </div>
-
-                          <div className="slidderRight">&#62;</div>
-                        </div>
-                        {/* unplanned Leaves */}
-                        <div>Unplanned Leaves</div>
-                        <div
-                          style={{
-                            display: "flex",
-                            marginTop: "1rem",
-                            justifyContent: "flex-start",
-                          }}
-                        >
-                          <div className="slidderLeft">&#60;</div>
-                          <div className="dateBox">
-                            <Row>
-                              <Col className="dateNum">26</Col>
-                              <Col className="dateMonth">Feb</Col>
-                            </Row>
-                            <Row>
-                              <Col className="leaveContent">Aniversery</Col>
-                            </Row>
-                          </div>
-                          {/* <div className="dateBox">
-                            <Row>
-                              <Col className="dateNum">26</Col>
-                              <Col className="dateMonth">Feb</Col>
-                            </Row>
-                            <Row>
-                              <Col className="leaveContent">Aniversery</Col>
-                            </Row>
-                          </div> */}
-
-                          <div className="slidderRight">&#62;</div>
-                        </div>
+                        <MyLeavesCard />
                       </Card>
                     </Col>
                     <Col sm={3} px={0}>
@@ -415,9 +308,106 @@ const EmployeeDashboard = () => {
                             Approvals
                           </label>
                         </div>
-                        {/* <div style={{ overflow: "scroll" }}>
-                          
-                        </div> */}
+                        <div className="tabsHeading">
+                          <div
+                            className={
+                              tabIndex === 0 ? "activeTab" : "disabledTab"
+                            }
+                            onClick={(e) => setTabIndex(0)}
+                          >
+                            <label>Leaves</label>
+                          </div>
+                          <div
+                            className={
+                              tabIndex === 1 ? "activeTab" : "disabledTab"
+                            }
+                            onClick={(e) => setTabIndex(1)}
+                          >
+                            <label>Promotions</label>
+                          </div>
+                          <div
+                            className={
+                              tabIndex === 2 ? "activeTab" : "disabledTab"
+                            }
+                            onClick={(e) => setTabIndex(2)}
+                          >
+                            <label>Transfers</label>
+                          </div>
+                          <div
+                            className={
+                              tabIndex === 3 ? "activeTab" : "disabledTab"
+                            }
+                            onClick={(e) => setTabIndex(3)}
+                          >
+                            <label>Others</label>
+                          </div>
+                        </div>
+                        <div>
+                          {(() => {
+                            switch (tabIndex) {
+                              case 0:
+                                return <h1>Hiiii</h1>;
+
+                              case 1:
+                                return <h1>Bye</h1>;
+                              case 2:
+                                return <h1>Bye2</h1>;
+                              case 3:
+                                return <h1>Bye3</h1>;
+
+                              default:
+                                return <div>nothing</div>;
+                            }
+                          })()}
+                        </div>
+                        {/* <Tabs
+                          selectedIndex={tabIndex}
+                          onSelect={(index) => setTabIndex(index)}
+                        >
+                           <TabList>
+                            <Tab
+                              className={
+                                tabIndex === 0 ? "activeTab" : "disabledTab"
+                              }
+                            >
+                              Leaves
+                            </Tab>
+                            <Tab
+                              className={
+                                tabIndex === 1 ? "activeTab" : "disabledTab"
+                              }
+                            >
+                              Promotions
+                            </Tab>
+                            <Tab
+                              className={
+                                tabIndex === 2 ? "activeTab" : "disabledTab"
+                              }
+                            >
+                              Transfers
+                            </Tab>
+                            <Tab
+                              className={
+                                tabIndex === 3 ? "activeTab" : "disabledTab"
+                              }
+                            >
+                              Others
+                            </Tab>
+                          </TabList>
+
+                          <TabPanel>
+                            <h1>Leaves {tabIndex}</h1>
+                          </TabPanel>
+                          <TabPanel>
+                            <h1>Promotions {tabIndex}</h1>
+                          </TabPanel>
+                          <TabPanel>
+                            <h1>Transfers {tabIndex}</h1>
+                          </TabPanel>
+                          <TabPanel>
+                            <h1>Others {tabIndex}</h1>
+                          </TabPanel>
+                        </Tabs> */}
                       </Card>
                     </Col>
                     <Col sm={3}>
@@ -430,6 +420,7 @@ const EmployeeDashboard = () => {
                             Holiday Calendar
                           </label>
                         </div>
+                        <HolidaysCard />
                       </Card>
                     </Col>
                     <Col sm={3}>
@@ -437,26 +428,17 @@ const EmployeeDashboard = () => {
                         style={{ borderRadius: "3%", height: "55%" }}
                         className="big-card p-10 main-card"
                       >
-                        <Row>
-                          <Col>
-                            <label className="smallCardHeading">
-                              My Documents
-                            </label>
-                          </Col>
-                        </Row>
+                        <label className="smallCardHeading">My Documents</label>
+                        <MyDocumentsCard />
                       </Card>
 
                       <Card
                         style={{ borderRadius: "3%", height: "30%" }}
                         className="big-card p-10 main-card"
                       >
-                        <Row>
-                          <Col>
-                            <label className="smallCardHeading">
-                              My Digital Signature
-                            </label>
-                          </Col>
-                        </Row>
+                        <label className="smallCardHeading">
+                          My Digital Signature
+                        </label>
                       </Card>
                     </Col>
                   </Row>
