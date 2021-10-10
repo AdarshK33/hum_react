@@ -409,6 +409,21 @@ export const DocsVerificationProvider = (props) => {
       fileDownload(response.data, name);
     });
   };
+  const downloadFileOnboard = (name) => {
+    Axios({
+      url: `${process.env.REACT_APP_BASEURL}api/v2/document/download?name=${name}`,
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    }).then((response) => {
+      console.log(response);
+      fileDownload(response.data, name);
+    });
+  };
 
   const step5suscessStatus = (val) => {
     state.step5Status = val;
@@ -562,6 +577,7 @@ export const DocsVerificationProvider = (props) => {
           documentRejectComplete,
           adminRejectComplete,
           downloadFile,
+          downloadFileOnboard,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
           step5Status: state.step5Status,
