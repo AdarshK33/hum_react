@@ -272,16 +272,14 @@ const LocalExpactAppointmentLetter = (props) => {
                   <td>
                     <b>
                       {Math.round(
-                        candidateLetterData.fixedGross +
-                          candidateLetterData.bonusAmt
+                        candidateLetterData.fixedGross 
                       )}
                     </b>
                   </td>
                   <td>
                     <b>
                       {Math.round(
-                        (candidateLetterData.fixedGross +
-                          candidateLetterData.bonusAmt) *
+                        candidateLetterData.fixedGross  *
                           12
                       )}
                     </b>
@@ -353,12 +351,14 @@ const LocalExpactAppointmentLetter = (props) => {
                   <td className="boldText">Gross Salary </td>
                   <td className="boldText">
                     {Math.round(
-                      candidateLetterData.permanentCandidateOffer.grossSalary
+                      candidateLetterData.permanentCandidateOffer.grossSalary+
+                      candidateLetterData.bonusAmt
                     )}
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      candidateLetterData.permanentCandidateOffer.grossSalary *
+                      (candidateLetterData.permanentCandidateOffer.grossSalary+
+                      candidateLetterData.bonusAmt) *
                         12
                     )}
                   </td>

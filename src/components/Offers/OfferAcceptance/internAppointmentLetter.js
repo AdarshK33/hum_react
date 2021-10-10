@@ -64,7 +64,7 @@ const InternAppointmentLetter = (props) => {
             We thank you for your interest in choosing Decathlon Sports India
             Pvt Ltd (DSIPL). We are in receipt of your application authorised by
             your institute/college/university to do an internship project on the
-            topic Legal Real Estate. As we believe your passion for sport and
+            topic <b>{candidateLetterData.internshipCandidateOffer.department}</b>. As we believe your passion for sport and
             your values match those of our Company, we, at DSIPL, encourage
             academic aspirants to learn practical aspects of their academic
             curriculum. We are pleased to assign the project of your interest
@@ -85,7 +85,7 @@ const InternAppointmentLetter = (props) => {
           </p>
           <p>
             Your fixed stipend would be INR.{" "}
-            {candidateLetterData.internshipCandidateOffer.stipend} per month.
+            <b>{candidateLetterData.internshipCandidateOffer.stipend}</b> per month.
             This stipend is paid purely to manage your travel, record
             maintenance, project submission and any other unforeseen project
             related expenses. Further it is to be noted that DSIPL will not be
@@ -102,8 +102,8 @@ const InternAppointmentLetter = (props) => {
             months from{" "}
             <b>{candidateLetterData.internshipCandidateOffer.fromDate}</b> to{" "}
             <b>{candidateLetterData.internshipCandidateOffer.toDate}</b> at{" "}
-            {candidateLetterData.companyName} Pvt. Ltd. You will be provided
-            stipend {candidateLetterData.internshipCandidateOffer.stipend} per
+            <b>{candidateLetterData.companyName}</b> Pvt. Ltd. You will be provided
+            stipend <b>{candidateLetterData.internshipCandidateOffer.stipend}</b> per
             month.
           </p>
 
