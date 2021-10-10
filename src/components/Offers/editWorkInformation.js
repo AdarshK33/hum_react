@@ -155,11 +155,13 @@ const EditWorkInformation = () => {
       );
     }
   }, [state.employmentType, state.department, state.position]);
+
   useEffect(() => {
-    if (state.employmentType !== "" && state.department !== null) {
+    if (state.employmentType !== ""&& state.employmentType !== undefined&&state.employmentType !== ""&& state.department !== null&&state.department !== undefined&&state.department !== "") {
       noticePeriodView(state.employmentType, state.department);
     }
   }, [state.employmentType, state.department]);
+
   useEffect(() => {
     let superMangerFlag;
     if (state.department !== null&&state.department !== undefined&&state.department !== "") {
@@ -176,7 +178,7 @@ const EditWorkInformation = () => {
   }, [ state.department]);
   useEffect(() => {
     if (
-      noticePeriodViewData !== null &&
+      noticePeriodViewData !== null &&noticePeriodViewData!==undefined&&noticePeriodViewData!==""&&
       Object.keys(noticePeriodViewData).length !== 0
     ) {
       setNoticePeriod(noticePeriodViewData.noticePeriod);
@@ -375,15 +377,8 @@ const EditWorkInformation = () => {
     console.log("update data", updateData);
     if (dateOfLeavingError === false) {
       updateCandidateWork(updateData);
-      viewCandidateId(candidateData.candidateInformation.candidateId);
-      workInfoView(candidateData.candidateInformation.candidateId);
       setDisabled(true);
       setEditButton(true);
-      viewBonusByContarctType(
-        state.employmentType,
-        state.department,
-        state.position
-      );
     }
   };
   const editHandler = () => {

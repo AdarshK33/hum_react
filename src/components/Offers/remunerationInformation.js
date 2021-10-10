@@ -51,18 +51,6 @@ const RemunerationInformation = (props) => {
     ) {
       // viewCandidateId(createCandidateResponse.candidateId);
       workInfoView(createCandidateResponse.candidateId);
-      if (
-        candidateData !== null &&
-        candidateData !== undefined &&
-        candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined
-      ) {
-        viewBonusByContarctType(
-          candidateData.workInformation.contractType,
-          candidateData.workInformation.department,
-          candidateData.workInformation.position
-        );
-      }
 
       setViewApiCall(true);
     } else {
@@ -72,12 +60,6 @@ const RemunerationInformation = (props) => {
     console.log("workInformationData remuneration", workInformationData);
     console.log("workInfoViewData", workInfoViewData);
     console.log("user profile", user);
-    if (
-      getBonusByContractType !== null &&
-      getBonusByContractType !== undefined
-    ) {
-      setMonthlyBonus(getBonusByContractType.bonus);
-    }
   }, [candidateData.workInformation, getBonusByContractType]);
 
   useEffect(() => {
@@ -98,13 +80,20 @@ const RemunerationInformation = (props) => {
     console.log("candidateData remuneration2", candidateData);
     console.log("workInformationData remuneration", workInformationData);
 
+
+  }, [candidateData.workInformation]);
+
+  useEffect(() => {
+    console.log("getBonusByContractType", getBonusByContractType);
     if (
       getBonusByContractType !== null &&
-      getBonusByContractType !== undefined
+      getBonusByContractType !== undefined&&getBonusByContractType!==""&&Object.keys(getBonusByContractType).length!==0
     ) {
       setMonthlyBonus(getBonusByContractType.bonus);
+    }else{
+      setMonthlyBonus(0);
     }
-  }, [candidateData.workInformation, getBonusByContractType]);
+  }, [getBonusByContractType]);
 
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);

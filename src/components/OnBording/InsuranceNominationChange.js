@@ -38,6 +38,8 @@ const InsuranceNomination = (props) => {
     uploadFile,
     insuranceTopUpView,
     insuranceTopUpData,
+    premiumView,
+    premiumViewData,
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
   const [showEdit, SetShowEdit] = useState(false);
@@ -168,6 +170,7 @@ const InsuranceNomination = (props) => {
   const [topupNo, setTopupNo] = useState(false);
   const [topupError, setTopupError] = useState(false);
   const [sumInsured, setSumInsured] = useState("");
+  const [sumInsuredId, setSumInsuredId] = useState("");
   const [insuranceHoldDeathYes, setInsuranceHoldDeathYes] = useState(true);
   const [insuranceHoldDeathNo, setInsuranceHoldDeathNo] = useState(false);
   const [required, setRequired] = useState(true);
@@ -310,6 +313,21 @@ const InsuranceNomination = (props) => {
       insuranceTopUpView(currentYear);
     }
   }, [candidateProfileData]);
+
+  useEffect(() => {
+
+    if (sumInsuredId !== ""&&sumInsuredId!==null&&sumInsuredId!==undefined&&candidateProfileData!==""&&candidateProfileData!==null&&candidateProfileData!==undefined&&Object.keys(candidateProfileData).length!==0) {
+      premiumView(sumInsuredId,candidateProfileData.candidateId);
+    }
+  }, [sumInsuredId]);
+  console.log("premiumViewData",premiumViewData);
+
+  useEffect(() => {
+    if (premiumViewData!==""&&premiumViewData!==null&&premiumViewData!==undefined&&Object.keys(premiumViewData).length!==0) {
+     setPremiumAmnt(premiumViewData.premiumAmt)
+    }
+  }, [premiumViewData]);
+
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateProfileData);
@@ -1070,7 +1088,8 @@ const InsuranceNomination = (props) => {
           (item) => item.sum == sumInsured
         );
         console.log("premiumAmnt", premiumValue[0]);
-        setPremiumAmnt(premiumValue[0].premiumAmt);
+        setSumInsuredId(premiumValue[0].insuranceNominationId)
+        // setPremiumAmnt(premiumValue[0].premiumAmt);
       }
     }
   }, [insuranceTopUpData, sumInsured]);
@@ -1343,8 +1362,9 @@ const InsuranceNomination = (props) => {
     }
   };
   const sumInsuredChange = (e) => {
-    console.log("sumInsuredChange", e.target.value);
+    console.log("sumInsuredChange", e);
     setSumInsured(e.target.value);
+    
   };
   const NomineeNameValidation = (itemState, setError) => {
     const nameValid = /^[a-zA-Z\b]+$/;

@@ -91,21 +91,17 @@ const EditRemunerationInformation = (props) => {
     }
     console.log("candidateData remuneration2", candidateData);
 
-    // if (
-    //   getBonusByContractType !== null &&
-    //   getBonusByContractType !== undefined
-    // ) {
-    //   setMonthlyBonus(getBonusByContractType.bonus);
-    // }
   }, [candidateData.workInformation, getBonusByContractType]);
 
   useEffect(() => {
     console.log("candidateData getBonusByContractType", getBonusByContractType);
     if (
       getBonusByContractType !== null &&
-      getBonusByContractType !== undefined
+      getBonusByContractType !== undefined&&getBonusByContractType!==""&&Object.keys(getBonusByContractType).length!==0
     ) {
       setMonthlyBonus(getBonusByContractType.bonus);
+    }else{
+      setMonthlyBonus(0);
     }
   }, [getBonusByContractType]);
 
@@ -125,17 +121,6 @@ const EditRemunerationInformation = (props) => {
       workInfoView(candidateData.candidateInformation.candidateId);
     } else {
       setViewApiCall(false);
-    }
-    let remunerationDataInfo =
-      candidateData !== null &&
-      candidateData !== undefined &&
-      candidateData.remuneration;
-
-    if (
-      getBonusByContractType !== null &&
-      getBonusByContractType !== undefined
-    ) {
-      setMonthlyBonus(getBonusByContractType.bonus);
     }
   }, [candidateData]);
   // useEffect(() => {
@@ -436,8 +421,6 @@ if(fixedGross===undefined||fixedGross===null||fixedGross===0){
     console.log("view cadidate id ", createCandidateResponse.candidateId);
     setDisabled(false);
     console.log("remunerationViewData", remunerationViewData);
-    // setFixedGross(remunerationViewData.fixedGross);
-    // setMonthlyBonus(remunerationViewData.monthlyBonus);
   };
   console.log(fixedGross, "check fixedGross");
   return (
@@ -605,9 +588,6 @@ if(fixedGross===undefined||fixedGross===null||fixedGross===0){
                           min="0"
                           name="monthlyBonus"
                           value={monthlyBonus}
-                          onChange={(event) =>
-                            setMonthlyBonus(event.target.value)
-                          }
                           required
                           placeholder="0"
                           readOnly
