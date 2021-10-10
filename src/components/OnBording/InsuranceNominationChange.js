@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button,Modal } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
@@ -16,6 +16,7 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { setSeconds } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InsuranceNominationFormLetter from "./InsuranceNominationFormLetter";
 import moment from "moment";
 const InsuranceNomination = (props) => {
   const {
@@ -25,6 +26,7 @@ const InsuranceNomination = (props) => {
     CandidateViewInformation,
     candidateViewInfo,
     CreateNominee,
+    PersonalInfoResponse,
     CreateNomineeResponse,
     InsuranceNominationView,
     candidateInsuranceNominationData,
@@ -40,6 +42,8 @@ const InsuranceNomination = (props) => {
     insuranceTopUpData,
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
+  const [showShowCauseNoticeModal, setShow] = useState(false);
+
   const [showEdit, SetShowEdit] = useState(false);
   const [defaultNominee, setDefaultNominee] = useState(true);
   const [count, setCount] = useState(0);
@@ -3172,8 +3176,42 @@ const InsuranceNomination = (props) => {
       setNAcheck2(!NAcheck2);
     }
   };
-
+const handleIsuranceForm = (e) =>{
+setShow(true)
+}
+const handleInsuranceFormCloseLink = (e)=>{
+setShow(false)
+}
+console.log(candidatePersonalInfoData,candidateViewInfo,nominee,"offer999")
   return (
+    <Fragment>
+       <Modal
+        show={showShowCauseNoticeModal}
+        onHide={handleInsuranceFormCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {
+            <InsuranceNominationFormLetter data={
+              candidatePersonalInfoData !== null && candidatePersonalInfoData !== undefined 
+              && candidatePersonalInfoData !== "" && nominee !== null && nominee !== undefined 
+              && nominee !== ""?
+              {nomineeName:nominee.nomineeName,
+              nomineeRelationship:nominee.nomineeRelationship,
+              nomineeAddress: nominee.nomineeAddress,
+              nomineeDateOfBirth:nomineeDOB,
+              employeeName :candidatePersonalInfoData.aadhaarName,
+              gender:candidatePersonalInfoData.gender,
+              maritalStatus:candidatePersonalInfoData.maritalStatus,
+              employeeAadharNumber:candidatePersonalInfoData.aadhaarNumber,
+
+              // employeeSignature:candidatePersonalInfoData.employeeSignature,
+              companyName:candidateViewInfo.companyName
+            }:''}/>
+          }
+        </Modal.Body>
+      </Modal>
     <Fragment>
       {/* <Form onSubmit={submitHandler}>  */}
       <ToastContainer />
@@ -5924,7 +5962,13 @@ const InsuranceNomination = (props) => {
                 target="_blank"
               >
                 Download Insurance Nomination Form
-              </a>
+              </a> <br/>
+              <a onClick={handleIsuranceForm}>
+                              {" "}
+                              <u className="itemResult">
+                              Insurance Nomination Form
+                              </u>
+                            </a>
               <br />
             </Col>
           </Row>
@@ -6124,6 +6168,7 @@ const InsuranceNomination = (props) => {
           Save & Next
         </button>
       </div>
+    </Fragment>
     </Fragment>
   );
 };
