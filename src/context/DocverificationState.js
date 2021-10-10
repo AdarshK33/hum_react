@@ -368,11 +368,13 @@ export const DocsVerificationProvider = (props) => {
       });
   };
   const candidateOnBoard = (candidateId) => {
+    console.log("onboard candidate id",candidateId);
     setLoader(true);
     client
       .get("/api/v1/candidate/onboard?candidateId=" + candidateId)
       .then((response) => {
         state.onBoardData = response.data.data;
+        console.log("onboard response",response.data.data,state.onBoardData);
         return dispatch({
           type: "CANDIDATE_ONBOARD",
           payload: state.onBoardData,

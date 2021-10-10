@@ -77,6 +77,8 @@ const GroupReducer = (state, action) => {
       return { ...state, insuranceTopUpData: action.payload };
     case "CANDIDATE_LETTER_DATA":
       return { ...state, candidateLetterData: action.payload };
+      case "PREMIUM_DATA":
+      return { ...state, premiumViewData: action.payload };
     default:
       return state;
   }
