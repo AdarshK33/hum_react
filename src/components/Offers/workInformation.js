@@ -186,7 +186,8 @@ const WorkInformation = (props) => {
 
   useEffect(() => {
     if (
-      noticePeriodViewData !== null &&noticePeriodViewData!==undefined&&noticePeriodViewData!==""&&
+      noticePeriodViewData !== null && noticePeriodViewData !== undefined 
+      && noticePeriodViewData !== "" && 
       Object.keys(noticePeriodViewData).length !== 0
     ) {
       setNoticePeriod(noticePeriodViewData.noticePeriod);

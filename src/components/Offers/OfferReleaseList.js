@@ -83,6 +83,7 @@ const OfferReleaseList = () => {
     viewRole();
     CostCenter();
   };
+  console.log(rolePermission,"rolePermission")
   const noShowHandler = () => {
     console.log("no show candidate", noShowId);
     setPageCount(currentPage - 1);
@@ -94,7 +95,17 @@ const OfferReleaseList = () => {
     }
     setInfoModelShow(false);
   };
-
+  const editNoShowHandler = (candidateId) => {
+    console.log("no show candidate", candidateId);
+    setPageCount(currentPage - 1);
+    setCurrentPage(currentPage);
+    if (searchValue !== "") {
+      noShowCandidate(candidateId, searchValue, pageCount);
+    } else {
+      noShowCandidate(candidateId, "all", pageCount);
+    }
+    setInfoModelShow(false);
+  };
   const dummyFun = (e) => {
     console.log("no show candidate", e.target.name);
   };
@@ -180,6 +191,7 @@ const OfferReleaseList = () => {
                         ""
                       )}
                       <th scope="col">No Show</th>
+                      <th scope="col">No Show Edit</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -306,7 +318,22 @@ const OfferReleaseList = () => {
                                 />
                               </div>
                             </td>
-                            
+                            <td    style={
+                            item.noShow === true
+                              ? { backgroundColor:"white" }
+                              : {}
+                          }>
+                              {item.noShow === true &&
+                      rolePermission == "admin"?(
+                                <Link >
+                                  <Edit2
+                                    onClick={() => {
+                                      editNoShowHandler(item.candidateId);
+                                    }}
+                                  />
+                                </Link>
+                              ):<Edit2 />}
+                            </td>
                           </tr>
                         </tbody>
                       );
