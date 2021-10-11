@@ -8,31 +8,36 @@ import moment from "moment";
   
 const InsuranceNominationFormLetter = (props) => {
 const {CandidatePersonalInfo,candidatePersonalInfoData} = useContext(OnBoardContext);
+  const [clickSave,setClickSave] = useState(false)
+  const { insuranceResponse, ExportPDFandUploadInsurance
+    ,downloadFileOnboard,candidateProfileData 
+  ,uploadInsurranceNominationForm} = useContext(DocsVerifyContext);
 
-  const { imageData, downloadFileOnboard,candidateProfileData } = useContext(DocsVerifyContext);
   const [show, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
+  const ref = React.createRef();
+  const inputRef = useRef(null);
   useEffect(() => {
-    // console.log("personal information view candidate", candidateProfileData);
     if (candidateProfileData) {
       CandidatePersonalInfo(candidateProfileData.candidateId);
       console.log(candidatePersonalInfoData,"candidatePersonalInfoData")
     }
   }, [candidateProfileData]);
-  const HandleSaveLetter = () => {
-    // if (imageData !== "" && imageData !== null && imageData !== undefined) {
-      downloadFileOnboard(candidatePersonalInfoData.aadhaarName);
-      console.log(imageData,"imageData-->",candidatePersonalInfoData);
-    // }
-    setShow(false);
-    setSaveLetter(true);
+
+  const HandleDownloadLetter = () => {
+    downloadFileOnboard(insuranceResponse)
   };
+const HandleSaveLetter = () =>{
+  ExportPDFandUploadInsurance(inputRef.current,0,24,props.data.candidateId);
+  setClickSave(true)
+}
 console.log(props.data,"props")
   return (
     <Fragment >
       {typeof(props) !== undefined ? (
      
     <Fragment >
+              <div id="insurance" ref={inputRef}>
     <p className="">
       {" "}
       Date: <b>{moment().format("DD-MM-YYYY")}</b>
@@ -104,7 +109,8 @@ console.log(props.data,"props")
            </p>
       <div className="float-right "></div>
     </div>
-    {/* {!saveLetter ? ( */}
+    </div>
+    {clickSave ? ( 
               <Row>
                 <Col sm={4}></Col>
                 <Col sm={5}>
@@ -112,15 +118,27 @@ console.log(props.data,"props")
                   <br></br>
                   <button
                     className={"stepperButtons"}
-                    onClick={HandleSaveLetter}
+                    onClick={HandleDownloadLetter}
                   >
                     Download
                   </button>
                 </Col>
               </Row>
-            {/* ) : (
-              ""
-            )} */}
+           ) : (
+             <Row>
+            <Col sm={4}></Col>
+            <Col sm={5}>
+              <br></br>
+              <br></br>
+              <button
+                className={"stepperButtons"}
+                 onClick={HandleSaveLetter}
+              >
+                Save
+              </button>
+            </Col>
+          </Row>
+            )}
   </Fragment>  
       ) : (
         ""

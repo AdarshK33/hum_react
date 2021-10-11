@@ -3222,6 +3222,7 @@ console.log(candidatePersonalInfoData,candidateViewInfo,nominee,"offer999")
               nomineeAddress: nominee.nomineeAddress,
               nomineeDateOfBirth:nomineeDOB,
               employeeName :candidatePersonalInfoData.aadhaarName,
+              candidateId :candidatePersonalInfoData.candidateId,
               gender:candidatePersonalInfoData.gender,
               maritalStatus:candidatePersonalInfoData.maritalStatus,
               employeeAadharNumber:candidatePersonalInfoData.aadhaarNumber,

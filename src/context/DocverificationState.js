@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Axios from "axios";
 import { access_token } from "../auth/signin";
 import html2canvas from "html2canvas";
+import { candidate } from "../utils/canditateLogin";
 var fileDownload = require("js-file-download");
 
 const initial_state = {
@@ -32,6 +33,7 @@ const initial_state = {
   verificationCityList: [],
   verificationPermanentCityList: [],
   imageData: "",
+  insuranceResponse:"",
   rejectUpdate: [],
   adminRejectUpdate: [],
 };
@@ -413,13 +415,13 @@ export const DocsVerificationProvider = (props) => {
   };
   const downloadFileOnboard = (name) => {
     Axios({
-      url: `${process.env.REACT_APP_BASEURL}api/v2/document/download?name=${name}`,
+      url: `${process.env.REACT_APP_BASEURL}api/v2/candidate/documents/download?name=${name}`,
       method: "GET",
       responseType: "blob",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${localStorage.candidate_access_token}`,
       },
     }).then((response) => {
       console.log(response);
@@ -547,6 +549,56 @@ export const DocsVerificationProvider = (props) => {
     });
   };
 
+
+  const uploadInsurranceNominationForm = (base64Data) => {
+    console.log("base64...........", base64Data);
+    return (
+      candidate.post("/api/v2/candidate/documents/file/upload", base64Data)
+        .then((response) => {
+          console.log(response);
+          state.insuranceResponse = response.data.data;
+          return dispatch({ type: "BASE64_UPLOAD", payload: state.insuranceResponse });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+  const ExportPDFandUploadInsurance = (
+    RefData,
+    employeeId = 0,
+    fileType = 0,
+    candidateId = 0,
+    exitId = 0,
+    disciplinaryId = 0,
+    promotionId = 0,
+    transferId = 0
+  ) => {
+    html2canvas(RefData).then((canvas) => {
+      // document.body.appendChild(canvas); 
+      // if you want see your screenshot in body.
+      const imgData = canvas.toDataURL("image/png");
+      var imageData = imgData;
+      imageData = imgData.slice(22) + imgData.slice(23);
+      var data = {
+        base64String: imageData,
+        candidateId: candidateId,
+        fileType: fileType,
+      };
+      var data = {
+        base64String: imageData,
+        candidateId: candidateId,
+        disciplinaryId: disciplinaryId,
+        employeeId: employeeId,
+        exitId: exitId,
+        fileType: fileType,
+        promotionId: promotionId,
+        transferId: transferId,
+      };
+      uploadInsurranceNominationForm(data);
+      console.log("base64 data", imageData);
+    });
+  };
   return (
     console.log(state),
     (
@@ -580,8 +632,11 @@ export const DocsVerificationProvider = (props) => {
           adminRejectComplete,
           downloadFile,
           downloadFileOnboard,
+          uploadInsurranceNominationForm,
+          ExportPDFandUploadInsurance,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
+          insuranceResponse:state.insuranceResponse,
           step5Status: state.step5Status,
           aadharStatus: state.aadharStatus,
           step6Status: state.step6Status,
