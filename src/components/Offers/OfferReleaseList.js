@@ -191,7 +191,12 @@ const OfferReleaseList = () => {
                         ""
                       )}
                       <th scope="col">No Show</th>
-                      <th scope="col">No Show Edit</th>
+                      {user !== null &&
+                      user !== undefined &&
+                      rolePermission === "admin" ?<th scope="col">No Show Edit</th>
+                       : (
+                        ""
+                      )}
                     </tr>
                   </thead>
                   {loader === true &&
@@ -318,13 +323,15 @@ const OfferReleaseList = () => {
                                 />
                               </div>
                             </td>
+                            {user !== null &&
+                      user !== undefined &&
+                      rolePermission === "admin" ?
                             <td    style={
                             item.noShow === true
                               ? { backgroundColor:"white" }
                               : {}
                           }>
-                              {item.noShow === true &&
-                      rolePermission == "admin"?(
+                              {item.noShow === true ?(
                                 <Link >
                                   <Edit2
                                     onClick={() => {
@@ -333,7 +340,7 @@ const OfferReleaseList = () => {
                                   />
                                 </Link>
                               ):<Edit2 />}
-                            </td>
+                            </td>:""}
                           </tr>
                         </tbody>
                       );
