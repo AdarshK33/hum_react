@@ -163,7 +163,7 @@ const WorkInformation = (props) => {
     }
   }, [locationName]);
   useEffect(() => {
-    if (state.employmentType !== "" && state.department !== null) {
+    if (state.employmentType !== ""&& state.employmentType !== undefined&&state.employmentType !== ""&& state.department !== null&&state.department !== undefined&&state.department !== "") {
       noticePeriodView(state.employmentType, state.department);
     }
   }, [state.employmentType, state.department]);
@@ -441,13 +441,6 @@ const WorkInformation = (props) => {
     console.log("createData", createData);
     if (dateOfLeavingError === false) {
       createCandidateWork(createData);
-      viewCandidateId(createCandidateResponse.candidateId);
-      workInfoView(createCandidateResponse.candidateId);
-      viewBonusByContarctType(
-        state.employmentType,
-        state.department,
-        state.position
-      );
       setDisabled(true);
       setEditButton(true);
     }

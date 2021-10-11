@@ -37,8 +37,9 @@ const initial_state = {
   documentUploadData: {},
   deleteNomineeData: {},
   deleteAllNomineeData: {},
-  insuranceTopUpData: {},
+  insuranceTopUpData: [],
   candidateLetterData: {},
+  premiumViewData:[]
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -654,6 +655,25 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const premiumView = (insuranceId,candidateId) => {
+    console.log("premiumView", insuranceId,candidateId);
+    candidate
+      .get(
+        "/api/v2/candidate/insurance-nomination/view/"+insuranceId+"/"+candidateId
+      )
+      .then((response) => {
+        state.premiumViewData = response.data.data;
+        console.log("premiumViewData", state.premiumViewData);
+        return dispatch({
+          type: "PREMIUM_DATA",
+          payload: state.premiumViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const generateCandidateLetter = (id) => {
     console.log("state offer id", id);
     return (
@@ -710,6 +730,7 @@ export const OnBoardProvider = (props) => {
         UpdateNomineeStatus,
         insuranceTopUpView,
         generateCandidateLetter,
+        premiumView,
         deleteAllNomineeData: state.deleteAllNomineeData,
         deleteNomineeData: state.deleteNomineeData,
         emergencyContactData: state.emergencyContactData,
@@ -743,6 +764,7 @@ export const OnBoardProvider = (props) => {
         documentUploadData: state.documentUploadData,
         insuranceTopUpData: state.insuranceTopUpData,
         candidateLetterData: state.candidateLetterData,
+        premiumViewData:state.premiumViewData
       }}
     >
       {props.children}

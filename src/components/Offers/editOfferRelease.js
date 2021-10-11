@@ -49,6 +49,7 @@ const EditOfferRelease = () => {
     ) {
       viewCandidateId(candidateData.candidateInformation.candidateId);
     }
+    generatebonusClick(e);
   };
 
   const generatebonusClick = (e) => {
@@ -122,7 +123,7 @@ const EditOfferRelease = () => {
             </AccordionItemPanel>
           </AccordionItem>
 
-          <AccordionItem onClick={(generateOfferClick, generatebonusClick)}>
+          <AccordionItem onClick={generateOfferClick}>
             <AccordionItemHeading>
               <AccordionItemButton>
                 Step 4: Generate Offer Letter
