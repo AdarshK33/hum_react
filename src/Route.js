@@ -163,8 +163,8 @@ const RoutePath = () => {
       />
 
       {/* <Route
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
+        path={`${process.env.PUBLIC_URL}/emp360`}
+        component={EmployeeDashboard}
       /> */}
 
       <Route
@@ -332,7 +332,7 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             // component={ProbationList}
-            component={EmployeeDashboard}
+            component ={EmployeeDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}

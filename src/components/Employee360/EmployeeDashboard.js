@@ -10,6 +10,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import ScrollArea from "react-scrollbar";
 import "./Employee360.css";
+import { PermissionContext } from "../../context/PermissionState";
+import {MasterFilesContext} from "../../context/MasterFilesState"
 import MyPerformanceCard from "./MyPerformanceCard";
 import MyLeavesCard from "./MyLeavesCard";
 import Roster from "./Roster";
@@ -36,10 +38,66 @@ const EmployeeDashboard = () => {
 
   const { user } = useContext(AppContext);
   const [tabIndex, setTabIndex] = useState(0);
-
+const [stateId, setStateId]= useState("")
   const [state, setState] = useState({
     empId: "",
+    empLocation:"",
+    empState:"",
+    empCountry:"",
+
   });
+  const { locationDetails, locationDetailsList } =
+    useContext(PermissionContext);
+    const {stateList,viewStates}= useContext(MasterFilesContext)
+ useEffect(() => {
+    locationDetails();
+  }, []);
+   useEffect(() => {
+    viewStates();
+  }, []);
+
+    useEffect(() => {
+    if (
+      user &&
+      user &&
+      user !== null &&
+      user !== undefined &&
+      Object.keys(user).length !== 0 &&
+      locationDetailsList &&
+      locationDetailsList &&
+      locationDetailsList !== null &&
+      locationDetailsList !== undefined &&
+      Object.keys(locationDetailsList).length !== 0
+    ) {
+      locationDetailsList.map((item, i) => {
+        if (item.locationId === user.locationId) {setState({
+        ...state,
+        ["empCity"]: item.cityName,
+           ["empLocation"]: item.locationName,
+        
+      });
+      setStateId(item.stateId)
+          // state.empLocation = item.locationName;
+        }
+      });
+    }
+  }, [locationDetailsList, user]);
+  useEffect(() => {
+    if(stateId !== "" && stateList !==null && stateList !==undefined &&
+    Object.keys(stateList).length!==0 ){
+      console.log("stateist",stateList)
+      stateList.map((item, i) => {
+        if (item.stateId === stateId) {setState({
+        ...state,
+        ["empState"]: item.stateName,
+         ["empCountry"]: item.country,
+      });
+          // state.empLocation = item.locationName;
+        }
+      });
+      
+    }
+  }, [stateId])
 
   return (
     <Fragment>
@@ -150,7 +208,8 @@ const EmployeeDashboard = () => {
                               <b>City & State</b>
                             </label>
                             <br />
-                            <label>{user.costCentre}</label>
+                            <label>{state.empCity}</label>
+                            <label>{state.empState}</label>
                           </div>
                         </Col>
                         <Col>
@@ -159,7 +218,7 @@ const EmployeeDashboard = () => {
                               <b>Country</b>
                             </label>
                             <br />
-                            <label>{user.costCentre}</label>
+                            <label>{state.empCountry}</label>
                             <br />
                             <label>
                               <b>Manager</b>
@@ -184,7 +243,7 @@ const EmployeeDashboard = () => {
                               <b>Work Location</b>
                             </label>
                             <br />
-                            <label>{user.costCentre}</label>
+                            <label>{state.empLocation}</label>
                           </div>
                         </Col>
                         <Col>
@@ -193,7 +252,7 @@ const EmployeeDashboard = () => {
                               <b>Login Type</b>
                             </label>
                             <br />
-                            <label>{user.loginType}</label>
+                            <label>Type {user.loginType}</label>
                             <br />
                             <label>
                               <b>Additional Role</b>
@@ -347,7 +406,6 @@ const EmployeeDashboard = () => {
                             switch (tabIndex) {
                               case 0:
                                 return <h1>Hiiii</h1>;
-
                               case 1:
                                 return <h1>Bye</h1>;
                               case 2:
@@ -360,54 +418,7 @@ const EmployeeDashboard = () => {
                             }
                           })()}
                         </div>
-                        {/* <Tabs
-                          selectedIndex={tabIndex}
-                          onSelect={(index) => setTabIndex(index)}
-                        >
-                           <TabList>
-                            <Tab
-                              className={
-                                tabIndex === 0 ? "activeTab" : "disabledTab"
-                              }
-                            >
-                              Leaves
-                            </Tab>
-                            <Tab
-                              className={
-                                tabIndex === 1 ? "activeTab" : "disabledTab"
-                              }
-                            >
-                              Promotions
-                            </Tab>
-                            <Tab
-                              className={
-                                tabIndex === 2 ? "activeTab" : "disabledTab"
-                              }
-                            >
-                              Transfers
-                            </Tab>
-                            <Tab
-                              className={
-                                tabIndex === 3 ? "activeTab" : "disabledTab"
-                              }
-                            >
-                              Others
-                            </Tab>
-                          </TabList>
-
-                          <TabPanel>
-                            <h1>Leaves {tabIndex}</h1>
-                          </TabPanel>
-                          <TabPanel>
-                            <h1>Promotions {tabIndex}</h1>
-                          </TabPanel>
-                          <TabPanel>
-                            <h1>Transfers {tabIndex}</h1>
-                          </TabPanel>
-                          <TabPanel>
-                            <h1>Others {tabIndex}</h1>
-                          </TabPanel>
-                        </Tabs> */}
+                        
                       </Card>
                     </Col>
                     <Col sm={3}>
@@ -441,6 +452,67 @@ const EmployeeDashboard = () => {
                         </label>
                       </Card>
                     </Col>
+                  </Row>
+                    <Row
+                    style={{
+                      marginTop: "1rem",
+                      marginBottom: "1rem",
+                      marginRight: "1rem",
+                      marginLeft: "1rem",
+                    }}
+                  >
+                    <Col sm={6}>
+                      <Card
+                        style={{ borderRadius: "3%" }}
+                        className="scrollbar big-card p-10 main-card"
+                      >
+                        <div className="CardHeading">
+                          <label style={{ marginLeft: "1rem" }}>
+                            My Team
+                          </label>
+                        </div>
+                        
+                        <Row  style={{
+                      marginTop: "1rem",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                        <Col sm={6}>
+                        <label className="itemResult"> Cluster Name </label>
+                        <label style={{marginLeft:"25px"}} className="itemResult"> Cluster Name </label>
+                         <hr
+                          align="center"
+                          width="100%"
+                          size="10"
+                          color="#006ebb"
+                          className={"lineStyle"}
+                        />
+                        <label  className="itemResult"> Team Strength </label>
+                        <label  style={{marginLeft:"25px"}} className="itemResult"> 25 </label>
+                        </Col>
+                        {/* <Col sm={1}>
+                        </Col> */}
+                        
+                    <Col md={6} style={{ marginTop: "7px" }}>
+                      <Form.Control
+                        type="text"
+                        style={{border: "1px solid #006ebb"}}
+                        // value={searchInput}
+                        placeholder="Search"
+                        // onChange={searchInputHandler}
+                        className="form-control searchButton"
+                      />
+                      <Search
+                        className="search-icon mr-1"
+                        style={{ color: "#313131"  }}
+                        // onClick={searchDataHandler}
+                      />
+                    </Col>
+                        </Row>
+                        
+                        </Card>
+                        </Col>
+
                   </Row>
                 </Form>
               </div>
