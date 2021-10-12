@@ -85,11 +85,12 @@ const ViewOfferLetter = () => {
         <Fragment>
           <Form>
             <Row>
-              <Col sm={5}></Col>
-              <Col sm={2}>
-                <Button type="button" onClick={offerLetterClick}>
+              <Col sm={4}></Col>
+              <Col sm={5}>
+                <p>Documents are available in Document Managenment</p>
+                {/* <Button type="button" onClick={offerLetterClick}>
                   Preview Offer Letter
-                </Button>
+                </Button> */}
               </Col>
             </Row>
           </Form>
