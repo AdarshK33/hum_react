@@ -54,6 +54,7 @@ const ViewWorkInformation = () => {
     cityData,
     cityList,
     managerList,
+    allManagerList
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -277,7 +278,7 @@ const ViewWorkInformation = () => {
           <Col sm={3}>
             <Form.Group className="reactDate">
               <Form.Label>Manager Name/Id</Form.Label>
-              {managerList === null ? (
+              {allManagerList === null ? (
                 <Form.Control
                   type="text"
                   value={user.employeeId}
@@ -294,7 +295,7 @@ const ViewWorkInformation = () => {
                   required
                 >
                   <option value="">Select ManagerId</option>
-                  {managerList.map((item, i) => {
+                  {allManagerList.map((item, i) => {
                     return (
                       <option key={i} value={item.employeeId}>
                         {item.firstName}-{item.employeeId}
