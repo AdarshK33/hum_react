@@ -24,6 +24,7 @@ const initial_state = {
   stateList: [],
   cityList: [],
   managerList: [],
+  allManagerList: [],
   aadhaarNotificationData: {},
   submitAppointmentLetter: {},
   noticePeriodViewData: {},
@@ -270,12 +271,16 @@ export const OfferProvider = (props) => {
     const result2 = await client.get(
       `api/v1/employee/view/${costCenter}/managers`
     );
+    const result3 = await client.get(
+      `api/v1/employee/view/managers/${costCenter}`
+    );
     state.locationName = result1.data.data;
     state.managerList = result2.data.data;
-    console.log("locationName response", state.locationName,state.managerList);
+    state.allManagerList = result3.data.data;
+    console.log("locationName response", state.locationName,state.managerList,state.allManagerList);
     return dispatch({
       type: "LOCATION",
-      payload: (state.locationName, state.managerList),
+      payload: (state.locationName, state.managerList,state.allManagerList),
     });
 
     /* .get("/api/v1/location/view/" + costCenter)
@@ -575,6 +580,7 @@ export const OfferProvider = (props) => {
         stateList: state.stateList,
         cityList: state.cityList,
         managerList: state.managerList,
+        allManagerList:state.allManagerList,
         workInformationData: state.workInformationData,
         aadhaarNotificationData: state.aadhaarNotificationData,
         submitAppointmentLetter: state.submitAppointmentLetter,

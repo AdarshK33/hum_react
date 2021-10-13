@@ -246,7 +246,7 @@ const CandidateList = () => {
                       <td>
                         {user !== null &&
                         user !== undefined &&
-                        rolePermission == "admin" &&
+                        rolePermission === "admin" &&
                         item.contractType !== "Internship" &&
                         (item.adminVerificationStatus === 0 ||
                           item.adminVerificationStatus === 3 ||
@@ -261,7 +261,7 @@ const CandidateList = () => {
                           </Link>
                         ) : user !== null &&
                           user !== undefined &&
-                          rolePermission == "admin" &&
+                          rolePermission === "admin" &&
                           item.contractType === "Internship" &&
                           (item.adminVerificationStatus === 0 ||
                             item.adminVerificationStatus === 3) &&
