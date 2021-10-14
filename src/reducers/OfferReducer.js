@@ -72,6 +72,8 @@ const GroupReducer = (state, action) => {
       return { ...state, noticePeriodViewData: action.payload };
       case "COSTCENTER_BY_DEPARTMENT":
       return { ...state, costcenterByDepartmentData: action.payload };
+      case "ALL_COST_CENTER_DATA":
+        return { ...state, allCostCenterList: action.payload };
     default:
       return state;
   }

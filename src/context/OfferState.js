@@ -28,7 +28,8 @@ const initial_state = {
   aadhaarNotificationData: {},
   submitAppointmentLetter: {},
   noticePeriodViewData: {},
-  costcenterByDepartmentData:[]
+  costcenterByDepartmentData:[],
+  allCostCenterList:[]
 };
 
 export const OfferContext = createContext();
@@ -531,6 +532,23 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+    // All Cost Center List
+    const AllCostCenter = (superMangerFlag) => {
+      client
+        .get("/api/v1/cost_centre/view-all-costcentre?superManager="+superMangerFlag)
+        .then((response) => {
+          state.allCostCenterList = response.data.data;
+          console.log("cost center data", state.allCostCenterList);
+          return dispatch({
+            type: "ALL_COST_CENTER_DATA",
+            payload: state.allCostCenterList,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
   
   return (
     <OfferContext.Provider
@@ -561,6 +579,7 @@ export const OfferProvider = (props) => {
         noticePeriodView,
         noShowCandidate,
         costcenterByDepartment,
+        AllCostCenter,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -585,7 +604,8 @@ export const OfferProvider = (props) => {
         aadhaarNotificationData: state.aadhaarNotificationData,
         submitAppointmentLetter: state.submitAppointmentLetter,
         noticePeriodViewData: state.noticePeriodViewData,
-        costcenterByDepartmentData:state.costcenterByDepartmentData
+        costcenterByDepartmentData:state.costcenterByDepartmentData,
+        allCostCenterList:state.allCostCenterList
       }}
     >
       {props.children}

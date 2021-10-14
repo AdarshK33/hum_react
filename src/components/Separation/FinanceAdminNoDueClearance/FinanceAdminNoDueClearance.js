@@ -17,7 +17,8 @@ import { RotateCw, Eye, Search } from "react-feather";
 import { saveAs, FileSaver } from "file-saver";
 import { AdminContext } from "../../../context/AdminState";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
-
+import { OfferContext } from "../../../context/OfferState";
+import { PermissionContext } from "../../../context/PermissionState";
 import "../nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ToastContainer, toast } from "react-toastify";
@@ -43,6 +44,8 @@ const FinanaceAdminNoDueClearance = () => {
     UpdateAdminFinanceClearanceList,
   } = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
+  const { AllCostCenter, allCostCenterList } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const [pageCount, setPageCount] = useState(0);
   const [fileUpload, setFileUpload] = useState();
 
@@ -80,6 +83,18 @@ const FinanaceAdminNoDueClearance = () => {
   useEffect(() => {
     CostCenter();
   }, []);
+
+  useEffect(() => {
+    let superMangerFlag;
+    if(rolePermission === "superCostCenterManager"){
+      superMangerFlag=1
+      AllCostCenter(superMangerFlag);
+    }else{
+      superMangerFlag=0
+      AllCostCenter(superMangerFlag);
+    }
+  }, [rolePermission]);
+
   const fetchEmployeeDetails = (employeeId) => {
     changeEmployeeId(employeeId);
     ViewEmployeeDataById(employeeId);
@@ -435,8 +450,8 @@ const FinanaceAdminNoDueClearance = () => {
                       name="filters"
                       placeholder="Cost Center"
                       options={
-                        costCenterList !== null
-                          ? costCenterList.map((e) => ({
+                        allCostCenterList !== null
+                          ? allCostCenterList.map((e) => ({
                               label: e.costCentreName,
                               value: e.costCentreName,
                             }))
