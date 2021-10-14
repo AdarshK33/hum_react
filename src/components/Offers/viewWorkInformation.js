@@ -54,7 +54,9 @@ const ViewWorkInformation = () => {
     cityData,
     cityList,
     managerList,
-    allManagerList
+    allManagerList,
+    costcenterByDepartment,
+    costcenterByDepartmentData
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -112,7 +114,20 @@ const ViewWorkInformation = () => {
     cityData(locationName.stateId);
     console.log("state in useEffect", locationName);
   }, [locationName]);
-
+  useEffect(() => {
+    let superMangerFlag;
+    if (state.department !== null&&state.department !== undefined&&state.department !== "") {
+      console.log("state.department",state.department);
+      if(rolePermission == "superCostCenterManager"){
+        superMangerFlag=1
+        costcenterByDepartment( state.department,superMangerFlag);
+      }else{
+        superMangerFlag=0
+        costcenterByDepartment( state.department,superMangerFlag);
+      }
+      
+    }
+  }, [ state.department]);
   return (
     <Fragment>
       <Form>
@@ -262,10 +277,10 @@ const ViewWorkInformation = () => {
                 readOnly
                 disabled="true"
               >
-                {costCenterList !== null &&
-                  costCenterList !== undefined &&
-                  costCenterList.length > 0 &&
-                  costCenterList.map((item) => {
+                {costcenterByDepartmentData !== null &&
+                  costcenterByDepartmentData !== undefined &&
+                  costcenterByDepartmentData.length > 0 &&
+                  costcenterByDepartmentData.map((item) => {
                     return (
                       <option key={item.costCenterId}>
                         {item.costCentreName}

@@ -5,6 +5,8 @@ import Select from "react-select";
 import { AdminContext } from "../../context/AdminState";
 import { DocumentManagementContext } from "../../context/DocumentManagementState";
 import { AppContext } from "../../context/AppState";
+import { OfferContext } from "../../context/OfferState";
+import { PermissionContext } from "../../context/PermissionState";
 import LoaderIcon from "../Loader/LoaderIcon";
 import "./DocumentManagement.css";
 
@@ -22,7 +24,8 @@ const DocumentForm = () => {
     loader,
   } = useContext(DocumentManagementContext);
   const { user } = useContext(AppContext);
-
+  const { AllCostCenter, allCostCenterList } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const history = useHistory();
 
   const [costCentre, setCostCentre] = useState({
@@ -44,15 +47,15 @@ const DocumentForm = () => {
 
   /* To get the cost centre options */
   const costCentreOptions = useMemo(() => {
-    return costCenterList !== null && costCenterList.length > 0
-      ? costCenterList.map((item) => {
+    return allCostCenterList !== null && allCostCenterList.length > 0
+      ? allCostCenterList.map((item) => {
           return {
             label: item.costCentreName,
             value: item.costCentreName,
           };
         })
       : [];
-  }, [costCenterList]);
+  }, [allCostCenterList]);
 
   /* To get the module list options */
   const moduleOptions = useMemo(() => {
@@ -170,9 +173,16 @@ const DocumentForm = () => {
         errMsg: "",
       });
     } else if (loginRole !== "") {
-      CostCenter();
+      let superMangerFlag;
+      if(rolePermission === "superCostCenterManager"){
+        superMangerFlag=1
+        AllCostCenter(superMangerFlag);
+      }else{
+        superMangerFlag=0
+        AllCostCenter(superMangerFlag);
+      }
     }
-  }, [loginRole]);
+  }, [loginRole,rolePermission]);
 
   useEffect(() => {
     if (formValid === true) {
