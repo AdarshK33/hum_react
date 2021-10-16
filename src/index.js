@@ -30,6 +30,7 @@ import { MyDocsProvider } from "./context/MyDocsState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
+import { Employee360Provider } from "./context/Employee360State";
 import { BonusProvider } from "./context/BonusState";
 import { TransferProvider } from "./context/TransferState";
 import { ModuleReportProvider } from "./context/ModuleReportState";
@@ -76,43 +77,45 @@ function Root() {
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
-                                            <SeparationProvider>
-                                              <ProbationProvider>
-                                                <DisciplinaryProvider>
-                                                  <MyDocsProvider>
-                                                    <PromotionProvider>
-                                                      <BonusProvider>
-                                                        <TransferProvider>
-                                                          <ModuleReportProvider>
-                                                            <NoticePeriodProvider>
-                                                              <InsuranceProvider>
-                                                                <MitProvider>
-                                                                  <DocumentManagementProvider>
-                                                                    <BrowserRouter
-                                                                      basename={
-                                                                        "/"
-                                                                      }
-                                                                    >
-                                                                      <ScrollContext>
-                                                                        <WithAxios>
-                                                                          <CandidateWithAxios>
-                                                                            <RoutePath />
-                                                                          </CandidateWithAxios>
-                                                                        </WithAxios>
-                                                                      </ScrollContext>
-                                                                    </BrowserRouter>
-                                                                  </DocumentManagementProvider>
-                                                                </MitProvider>
-                                                              </InsuranceProvider>
-                                                            </NoticePeriodProvider>
-                                                          </ModuleReportProvider>
-                                                        </TransferProvider>
-                                                      </BonusProvider>
-                                                    </PromotionProvider>
-                                                  </MyDocsProvider>
-                                                </DisciplinaryProvider>
-                                              </ProbationProvider>
-                                            </SeparationProvider>
+                                            <Employee360Provider>
+                                              <SeparationProvider>
+                                                <ProbationProvider>
+                                                  <DisciplinaryProvider>
+                                                    <MyDocsProvider>
+                                                      <PromotionProvider>
+                                                        <BonusProvider>
+                                                          <TransferProvider>
+                                                            <ModuleReportProvider>
+                                                              <NoticePeriodProvider>
+                                                                <InsuranceProvider>
+                                                                  <MitProvider>
+                                                                    <DocumentManagementProvider>
+                                                                      <BrowserRouter
+                                                                        basename={
+                                                                          "/"
+                                                                        }
+                                                                      >
+                                                                        <ScrollContext>
+                                                                          <WithAxios>
+                                                                            <CandidateWithAxios>
+                                                                              <RoutePath />
+                                                                            </CandidateWithAxios>
+                                                                          </WithAxios>
+                                                                        </ScrollContext>
+                                                                      </BrowserRouter>
+                                                                    </DocumentManagementProvider>
+                                                                  </MitProvider>
+                                                                </InsuranceProvider>
+                                                              </NoticePeriodProvider>
+                                                            </ModuleReportProvider>
+                                                          </TransferProvider>
+                                                        </BonusProvider>
+                                                      </PromotionProvider>
+                                                    </MyDocsProvider>
+                                                  </DisciplinaryProvider>
+                                                </ProbationProvider>
+                                              </SeparationProvider>
+                                            </Employee360Provider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>
                                       </CandidateProvider>

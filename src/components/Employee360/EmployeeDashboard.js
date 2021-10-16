@@ -11,12 +11,13 @@ import "react-tabs/style/react-tabs.css";
 import ScrollArea from "react-scrollbar";
 import "./Employee360.css";
 import { PermissionContext } from "../../context/PermissionState";
-import {MasterFilesContext} from "../../context/MasterFilesState"
+import { MasterFilesContext } from "../../context/MasterFilesState";
 import MyPerformanceCard from "./MyPerformanceCard";
 import MyLeavesCard from "./MyLeavesCard";
 import Roster from "./Roster";
 import HolidaysCard from "./HolidaysCard";
 import MyDocumentsCard from "./MyDocumentsCard";
+import ClusterCard from "./ClusterManager360Card";
 
 // view-----
 const EmployeeDashboard = () => {
@@ -38,25 +39,25 @@ const EmployeeDashboard = () => {
 
   const { user } = useContext(AppContext);
   const [tabIndex, setTabIndex] = useState(0);
-const [stateId, setStateId]= useState("")
+  const [stateId, setStateId] = useState("");
   const [state, setState] = useState({
     empId: "",
-    empLocation:"",
-    empState:"",
-    empCountry:"",
-
+    empLocation: "",
+    empState: "",
+    empCountry: "",
   });
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
-    const {stateList,viewStates}= useContext(MasterFilesContext)
- useEffect(() => {
+  const { stateList, viewStates } = useContext(MasterFilesContext);
+
+  useEffect(() => {
     locationDetails();
   }, []);
-   useEffect(() => {
+  useEffect(() => {
     viewStates();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     if (
       user &&
       user &&
@@ -70,34 +71,38 @@ const [stateId, setStateId]= useState("")
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {setState({
-        ...state,
-        ["empCity"]: item.cityName,
-           ["empLocation"]: item.locationName,
-        
-      });
-      setStateId(item.stateId)
+        if (item.locationId === user.locationId) {
+          setState({
+            ...state,
+            ["empCity"]: item.cityName,
+            ["empLocation"]: item.locationName,
+          });
+          setStateId(item.stateId);
           // state.empLocation = item.locationName;
         }
       });
     }
   }, [locationDetailsList, user]);
   useEffect(() => {
-    if(stateId !== "" && stateList !==null && stateList !==undefined &&
-    Object.keys(stateList).length!==0 ){
-      console.log("stateist",stateList)
+    if (
+      stateId !== "" &&
+      stateList !== null &&
+      stateList !== undefined &&
+      Object.keys(stateList).length !== 0
+    ) {
+      console.log("stateist", stateList);
       stateList.map((item, i) => {
-        if (item.stateId === stateId) {setState({
-        ...state,
-        ["empState"]: item.stateName,
-         ["empCountry"]: item.country,
-      });
+        if (item.stateId === stateId) {
+          setState({
+            ...state,
+            ["empState"]: item.stateName,
+            ["empCountry"]: item.country,
+          });
           // state.empLocation = item.locationName;
         }
       });
-      
     }
-  }, [stateId])
+  }, [stateId]);
 
   return (
     <Fragment>
@@ -111,175 +116,181 @@ const [stateId, setStateId]= useState("")
                   <b>EMplodewd</b>
                 </div> */}
                 <Form>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                    }}
-                  >
-                    <Col
-                      sm={1}
+                  {user !== null &&
+                  user !== undefined &&
+                  Object.keys(user).length !== 0 ? (
+                    <Row
                       style={{
-                        borderRight: "2px solid #006ebb",
-                        height: "160px",
-                        marginTop: "-1rem",
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
                       }}
                     >
-                      <div style={{ textAlign: "center", marginTop: "1rem" }}>
-                        <div className="media align-items-center">
-                          <img
-                            className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
-                            src={man}
-                            alt="header-user"
-                          />
+                      <Col
+                        sm={1}
+                        style={{
+                          borderRight: "2px solid #006ebb",
+                          height: "160px",
+                          marginTop: "-1rem",
+                        }}
+                      >
+                        <div style={{ textAlign: "center", marginTop: "1rem" }}>
+                          <div className="media align-items-center">
+                            <img
+                              className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
+                              src={man}
+                              alt="header-user"
+                            />
+                          </div>
+                          <label
+                            style={{
+                              marginLeft: "-1rem",
+                            }}
+                          >
+                            View Profile{" "}
+                          </label>
                         </div>
-                        <label
-                          style={{
-                            marginLeft: "-1rem",
-                          }}
-                        >
-                          View Profile{" "}
-                        </label>
-                      </div>
-                    </Col>
-                    {/* <div
+                      </Col>
+                      {/* <div
                       style={{
                         borderLeft: "2px solid #006ebb",
                         height: "150px ",
                         marginTop: "-1rem",
                       }}
                     ></div> */}
-                    <Col sm={3}>
-                      <label>
-                        <b> {user.firstName + " " + user.lastName}</b>
-                      </label>
-                      <br />
-                      <label>{user.position}</label>
-                      <br />
-                      <label style={{ marginRight: "1rem" }}>
-                        {" "}
-                        {user.employeeId}
-                      </label>
-                      <label>|</label>
-                      <label style={{ marginLeft: "1rem" }}>
-                        {user.contractType}
-                      </label>
-                      <br />
-
-                      {user.active == "1" ? (
-                        <div>
-                          <span
-                            style={{
-                              height: "10px",
-                              width: "10px",
-                              backgroundColor: "green",
-                              borderRadius: "50%",
-                              display: "inline-block",
-                            }}
-                          />{" "}
-                          <label> Active </label>
-                        </div>
-                      ) : (
-                        <div>
-                          <span
-                            style={{
-                              height: "10px",
-                              width: "10px",
-                              backgroundColor: "red",
-                              borderRadius: "50%",
-                              display: "inline-block",
-                            }}
-                          />{" "}
-                          <label>Inactive</label>
-                        </div>
-                      )}
-                    </Col>
-                    <Col sm={3}>
-                      <Row>
-                        <Col>
-                          <div>
-                            <label>
-                              <b>Cost Center</b>
-                            </label>
-                            <br />
-                            <label>{user.costCentre}</label>
-                            <br />
-                            <label>
-                              <b>City & State</b>
-                            </label>
-                            <br />
-                            <label>{state.empCity}</label>
-                            <label>{state.empState}</label>
-                          </div>
-                        </Col>
-                        <Col>
-                          <div>
-                            <label>
-                              <b>Country</b>
-                            </label>
-                            <br />
-                            <label>{state.empCountry}</label>
-                            <br />
-                            <label>
-                              <b>Manager</b>
-                            </label>
-                            <br />
-                            <label>{user.managerName}</label>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col sm={3}>
-                      <Row>
-                        <Col>
-                          <div>
-                            <label>
-                              <b>Joining Date</b>
-                            </label>
-                            <br />
-                            <label>{user.joiningDate}</label>
-                            <br />
-                            <label>
-                              <b>Work Location</b>
-                            </label>
-                            <br />
-                            <label>{state.empLocation}</label>
-                          </div>
-                        </Col>
-                        <Col>
-                          <div>
-                            <label>
-                              <b>Login Type</b>
-                            </label>
-                            <br />
-                            <label>Type {user.loginType}</label>
-                            <br />
-                            <label>
-                              <b>Additional Role</b>
-                            </label>
-                            <br />
-                            <label>{user.additionalRole}</label>
-                          </div>
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col sm={2}>
-                      <div>
+                      <Col sm={3}>
                         <label>
-                          <b>Emergency Contact</b>
+                          <b> {user.firstName + " " + user.lastName}</b>
                         </label>
                         <br />
-                        <label className="itemResult">
-                          Name: {user.emergencyContactName}
+                        <label>{user.position}</label>
+                        <br />
+                        <label style={{ marginRight: "1rem" }}>
+                          {" "}
+                          {user.employeeId}
+                        </label>
+                        <label>|</label>
+                        <label style={{ marginLeft: "1rem" }}>
+                          {user.contractType}
                         </label>
                         <br />
-                        <div style={{ fontSize: "25px", color: "#006ebb" }}>
-                          <i className="fa fa-phone"></i>
-                          <label> {user.emergencyContactName} </label>
+
+                        {user.active == "1" ? (
+                          <div>
+                            <span
+                              style={{
+                                height: "10px",
+                                width: "10px",
+                                backgroundColor: "green",
+                                borderRadius: "50%",
+                                display: "inline-block",
+                              }}
+                            />{" "}
+                            <label> Active </label>
+                          </div>
+                        ) : (
+                          <div>
+                            <span
+                              style={{
+                                height: "10px",
+                                width: "10px",
+                                backgroundColor: "red",
+                                borderRadius: "50%",
+                                display: "inline-block",
+                              }}
+                            />{" "}
+                            <label>Inactive</label>
+                          </div>
+                        )}
+                      </Col>
+                      <Col sm={3}>
+                        <Row>
+                          <Col>
+                            <div>
+                              <label>
+                                <b>Cost Center</b>
+                              </label>
+                              <br />
+                              <label>{user.costCentre}</label>
+                              <br />
+                              <label>
+                                <b>City & State</b>
+                              </label>
+                              <br />
+                              <label>{state.empCity}</label>
+                              <label>{state.empState}</label>
+                            </div>
+                          </Col>
+                          <Col>
+                            <div>
+                              <label>
+                                <b>Country</b>
+                              </label>
+                              <br />
+                              <label>{state.empCountry}</label>
+                              <br />
+                              <label>
+                                <b>Manager</b>
+                              </label>
+                              <br />
+                              <label>{user.managerName}</label>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col sm={3}>
+                        <Row>
+                          <Col>
+                            <div>
+                              <label>
+                                <b>Joining Date</b>
+                              </label>
+                              <br />
+                              <label>{user.joiningDate}</label>
+                              <br />
+                              <label>
+                                <b>Work Location</b>
+                              </label>
+                              <br />
+                              <label>{state.empLocation}</label>
+                            </div>
+                          </Col>
+                          <Col>
+                            <div>
+                              <label>
+                                <b>Login Type</b>
+                              </label>
+                              <br />
+                              <label>Type {user.loginType}</label>
+                              <br />
+                              <label>
+                                <b>Additional Role</b>
+                              </label>
+                              <br />
+                              <label>{user.additionalRole}</label>
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Emergency Contact</b>
+                          </label>
+                          <br />
+                          <label className="itemResult">
+                            Name: {user.emergencyContactName}
+                          </label>
+                          <br />
+                          <div style={{ fontSize: "25px", color: "#006ebb" }}>
+                            <i className="fa fa-phone"></i>
+                            <label> {user.emergencyContactName} </label>
+                          </div>
                         </div>
-                      </div>
-                    </Col>
-                  </Row>
+                      </Col>
+                    </Row>
+                  ) : (
+                    ""
+                  )}
                   <Row
                     style={{
                       borderTop: "2px solid #006ebb",
@@ -418,7 +429,6 @@ const [stateId, setStateId]= useState("")
                             }
                           })()}
                         </div>
-                        
                       </Card>
                     </Col>
                     <Col sm={3}>
@@ -453,7 +463,7 @@ const [stateId, setStateId]= useState("")
                       </Card>
                     </Col>
                   </Row>
-                    <Row
+                  <Row
                     style={{
                       marginTop: "1rem",
                       marginBottom: "1rem",
@@ -467,52 +477,12 @@ const [stateId, setStateId]= useState("")
                         className="scrollbar big-card p-10 main-card"
                       >
                         <div className="CardHeading">
-                          <label style={{ marginLeft: "1rem" }}>
-                            My Team
-                          </label>
+                          <label style={{ marginLeft: "1rem" }}>My Team</label>
                         </div>
-                        
-                        <Row  style={{
-                      marginTop: "1rem",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                        <Col sm={6}>
-                        <label className="itemResult"> Cluster Name </label>
-                        <label style={{marginLeft:"25px"}} className="itemResult"> Cluster Name </label>
-                         <hr
-                          align="center"
-                          width="100%"
-                          size="10"
-                          color="#006ebb"
-                          className={"lineStyle"}
-                        />
-                        <label  className="itemResult"> Team Strength </label>
-                        <label  style={{marginLeft:"25px"}} className="itemResult"> 25 </label>
-                        </Col>
-                        {/* <Col sm={1}>
-                        </Col> */}
-                        
-                    <Col md={6} style={{ marginTop: "7px" }}>
-                      <Form.Control
-                        type="text"
-                        style={{border: "1px solid #006ebb"}}
-                        // value={searchInput}
-                        placeholder="Search"
-                        // onChange={searchInputHandler}
-                        className="form-control searchButton"
-                      />
-                      <Search
-                        className="search-icon mr-1"
-                        style={{ color: "#313131"  }}
-                        // onClick={searchDataHandler}
-                      />
+                        <ClusterCard />
+                        {/* </Row> */}
+                      </Card>
                     </Col>
-                        </Row>
-                        
-                        </Card>
-                        </Col>
-
                   </Row>
                 </Form>
               </div>

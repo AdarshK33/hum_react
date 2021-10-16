@@ -117,7 +117,7 @@ const MyLeavesCard = () => {
                 <Col className="dateMonth">{item.month}</Col>
               </Row>
               <Row>
-                <Col className="leaveContent">{item.reason}</Col>
+                <marquee className="leaveContent">{item.reason}</marquee>
               </Row>
             </div>
           );

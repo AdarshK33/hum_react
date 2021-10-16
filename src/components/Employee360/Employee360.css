@@ -93,6 +93,9 @@
 }
 .leaveContent {
   margin-top: -10px;
+  direction: left;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .rosterHead {
   width: 100%;
@@ -105,14 +108,14 @@
   text-align: center;
 }
 .rosterColumn2 {
-  height: 38px;
+  height: 50px;
   width: 100%;
   text-align: center;
   border: 1px solid #4f90ff;
 }
 .rosterContent {
-  margin-top: -1rem;
-  font-style: italic;
+  margin-top: -10px;
+  font-size: 13px;
 }
 .rosterSelect {
   width: 130px;
@@ -131,6 +134,7 @@
 .weekCountLabel {
   text-align: center;
   color: white;
+  margin-top: -1rem;
 }
 .holidayColumn2 {
   height: 50px;
@@ -172,4 +176,12 @@
   padding-right: 15px;
   border-top-right-radius: 10%;
   border: 1px solid white;
+}
+.clusterEmpployeeBox {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  border-radius: 5%;
+  background-color: #e4effa;
+  width: 95%;
+  align-content: center;
 }

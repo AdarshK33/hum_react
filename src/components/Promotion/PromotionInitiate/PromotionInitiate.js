@@ -182,6 +182,7 @@ const PromotionInitiate = () => {
       state.oldDepartment = searchByCostData.department;
       state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
+      SetCurrentManager(searchByCostData.managerName); //need to verify
       if (
         searchByCostData.contractType === "internship" ||
         searchByCostData.contractType === "Internship"
@@ -191,31 +192,31 @@ const PromotionInitiate = () => {
     }
   }, [searchByCostData]);
 
-  useEffect(() => {
-    if (
-      searchByCostData &&
-      searchByCostData &&
-      searchByCostData !== null &&
-      searchByCostData !== undefined &&
-      Object.keys(searchByCostData).length !== 0 &&
-      promotioManagerList &&
-      promotioManagerList &&
-      promotioManagerList !== null &&
-      promotioManagerList !== undefined &&
-      Object.keys(promotioManagerList).length !== 0
-    ) {
-      promotioManagerList.map((item) => {
-        if (item.employeeId == searchByCostData.managerId) {
-          const temp =
-            item.lastName !== null && item.lastName !== undefined
-              ? item.lastName
-              : "";
-          state.currentManagerName = item.firstName + " " + temp;
-          SetCurrentManager(item.firstName + " " + temp);
-        }
-      });
-    }
-  }, [promotioManagerList, searchByCostData]);
+  // useEffect(() => {
+  //   if (
+  //     searchByCostData &&
+  //     searchByCostData &&
+  //     searchByCostData !== null &&
+  //     searchByCostData !== undefined &&
+  //     Object.keys(searchByCostData).length !== 0 &&
+  //     promotioManagerList &&
+  //     promotioManagerList &&
+  //     promotioManagerList !== null &&
+  //     promotioManagerList !== undefined &&
+  //     Object.keys(promotioManagerList).length !== 0
+  //   ) {
+  //     promotioManagerList.map((item) => {
+  //       if (item.employeeId == searchByCostData.managerId) {
+  //         const temp =
+  //           item.lastName !== null && item.lastName !== undefined
+  //             ? item.lastName
+  //             : "";
+  //         state.currentManagerName = item.firstName + " " + temp;
+  //         SetCurrentManager(item.firstName + " " + temp);
+  //       }
+  //     });
+  //   }
+  // }, [promotioManagerList, searchByCostData]);
 
   const submitHandler = (e) => {
     e.preventDefault();
