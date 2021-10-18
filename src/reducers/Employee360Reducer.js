@@ -11,6 +11,12 @@ const GroupReducer = (state, action) => {
       return { ...state, WeeksInfoList: action.payload };
     case "CLUSTER_DATA":
       return { ...state, ClusterData: action.payload };
+    case "EMPLOYEE_360_APROVAL":
+      return { ...state, employee360ListData: action.payload };
+    case "UN_PLANNED_LEAVES":
+      return { ...state, unPlannedLeaves: action.payload };
+    case "PLANNED_LEAVES":
+      return { ...state, plannedLeaves: action.payload };
 
     default:
       return state;

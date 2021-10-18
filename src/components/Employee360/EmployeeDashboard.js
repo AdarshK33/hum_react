@@ -18,6 +18,7 @@ import Roster from "./Roster";
 import HolidaysCard from "./HolidaysCard";
 import MyDocumentsCard from "./MyDocumentsCard";
 import ClusterCard from "./ClusterManager360Card";
+import ApprovalsEmp360Card from "./ApprovalsEmp360Card";
 
 // view-----
 const EmployeeDashboard = () => {
@@ -38,7 +39,7 @@ const EmployeeDashboard = () => {
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
   const { user } = useContext(AppContext);
-  const [tabIndex, setTabIndex] = useState(0);
+
   const [stateId, setStateId] = useState("");
   const [state, setState] = useState({
     empId: "",
@@ -378,57 +379,7 @@ const EmployeeDashboard = () => {
                             Approvals
                           </label>
                         </div>
-                        <div className="tabsHeading">
-                          <div
-                            className={
-                              tabIndex === 0 ? "activeTab" : "disabledTab"
-                            }
-                            onClick={(e) => setTabIndex(0)}
-                          >
-                            <label>Leaves</label>
-                          </div>
-                          <div
-                            className={
-                              tabIndex === 1 ? "activeTab" : "disabledTab"
-                            }
-                            onClick={(e) => setTabIndex(1)}
-                          >
-                            <label>Promotions</label>
-                          </div>
-                          <div
-                            className={
-                              tabIndex === 2 ? "activeTab" : "disabledTab"
-                            }
-                            onClick={(e) => setTabIndex(2)}
-                          >
-                            <label>Transfers</label>
-                          </div>
-                          <div
-                            className={
-                              tabIndex === 3 ? "activeTab" : "disabledTab"
-                            }
-                            onClick={(e) => setTabIndex(3)}
-                          >
-                            <label>Others</label>
-                          </div>
-                        </div>
-                        <div>
-                          {(() => {
-                            switch (tabIndex) {
-                              case 0:
-                                return <h1>Hiiii</h1>;
-                              case 1:
-                                return <h1>Bye</h1>;
-                              case 2:
-                                return <h1>Bye2</h1>;
-                              case 3:
-                                return <h1>Bye3</h1>;
-
-                              default:
-                                return <div>nothing</div>;
-                            }
-                          })()}
-                        </div>
+                        <ApprovalsEmp360Card />
                       </Card>
                     </Col>
                     <Col sm={3}>
@@ -463,7 +414,7 @@ const EmployeeDashboard = () => {
                       </Card>
                     </Col>
                   </Row>
-                  <Row
+                  {/* <Row
                     style={{
                       marginTop: "1rem",
                       marginBottom: "1rem",
@@ -480,10 +431,10 @@ const EmployeeDashboard = () => {
                           <label style={{ marginLeft: "1rem" }}>My Team</label>
                         </div>
                         <ClusterCard />
-                        {/* </Row> */}
+                        
                       </Card>
                     </Col>
-                  </Row>
+                  </Row> */}
                 </Form>
               </div>
             </div>

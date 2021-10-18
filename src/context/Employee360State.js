@@ -9,9 +9,9 @@ const initial_state = {
   WeeksList: [],
   WeeksInfoList: [],
   ClusterData: [],
-  updateResponse: {},
-  employeeId: "",
-  employeeProfileData: {},
+  employee360ListData: [],
+  plannedLeaves: [],
+  unPlannedLeaves: [],
   relivingLetterData: [],
   terminationLetterData: [],
   terminationConfirmationStatus: "",
@@ -123,7 +123,57 @@ export const Employee360Provider = ({ children }) => {
         console.log(error);
       });
   };
-
+  const Employee360ListView = (key) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/" + key)
+      .then((response) => {
+        state.employee360ListData = response.data.data;
+        toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "EMPLOYEE_360_APROVAL",
+          payload: state.employee360ListData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const MyLeavesViewPlanned = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/leaves?key=Planned")
+      .then((response) => {
+        state.plannedLeaves = response.data.data;
+        toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "PLANNED_LEAVES",
+          payload: state.plannedLeaves,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const MyLeavesViewUnplanned = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/leaves?key=Unplanned")
+      .then((response) => {
+        state.unPlannedLeaves = response.data.data;
+        toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "UN_PLANNED_LEAVES",
+          payload: state.unPlannedLeaves,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Employee360Context.Provider
       value={{
@@ -133,6 +183,12 @@ export const Employee360Provider = ({ children }) => {
         RosterMonthSearch,
         SearchByWeekName,
         ClusterView,
+        Employee360ListView,
+        MyLeavesViewPlanned,
+        MyLeavesViewUnplanned,
+        unPlannedLeaves: state.unPlannedLeaves,
+        plannedLeaves: state.plannedLeaves,
+        employee360ListData: state.employee360ListData,
         ClusterData: state.ClusterData,
         WeeksInfoList: state.WeeksInfoList,
         WeeksList: state.WeeksList,

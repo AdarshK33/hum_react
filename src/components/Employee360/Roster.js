@@ -253,7 +253,7 @@ const Roster = () => {
           </table>
         </ScrollArea>
       ) : (
-        ""
+        <h4 style={{ textAlign: "center" }}>No Records Found</h4>
       )}
     </Fragment>
   );
