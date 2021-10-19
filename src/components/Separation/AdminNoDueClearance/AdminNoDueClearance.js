@@ -1,6 +1,8 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react'
 import { SeparationContext } from "../../../context/SepearationState";
 import { AdminContext } from '../../../context/AdminState'
+import { OfferContext } from "../../../context/OfferState";
+import { PermissionContext } from "../../../context/PermissionState";
 import Select from 'react-select'
 import Breadcrumb from "../../common/breadcrumb";
 import "../nodueclearance.css"
@@ -11,7 +13,9 @@ import { toast } from "react-toastify";
 const AdminNoDueClearance =()=> {
   const { total,loader,viewAdminITClearanceList,adminNoDueClearanceList,NoDueClearanceAdminClearanceExport } = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
-const [pageCount, setPageCount] = useState(0);
+  const { AllCostCenter, allCostCenterList } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
+  const [pageCount, setPageCount] = useState(0);
 const [finalStatus,SetFinalStatus] =useState("3")
 const [financeStatus,SetFinanceStatus] =useState("3")
 
@@ -53,6 +57,18 @@ const handlePageChange = (pageNumber) => {
 useEffect(() => {
   CostCenter();
 }, []);
+
+useEffect(() => {
+  let superMangerFlag;
+  if(rolePermission === "superCostCenterManager"){
+    superMangerFlag=1
+    AllCostCenter(superMangerFlag);
+  }else{
+    superMangerFlag=0
+    AllCostCenter(superMangerFlag);
+  }
+}, [rolePermission]);
+
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
 
@@ -180,7 +196,7 @@ const options2 = [
           className="selectInputWrapper"
            name="filters"
           placeholder="Cost Center"
-          options={costCenterList !== null ?costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+          options={allCostCenterList !== null ?allCostCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
             onChange={handleCostCenter}
                required isSearchable />
           </Col>

@@ -61,6 +61,7 @@ const EditWorkInformation = () => {
     cityData,
     cityList,
     managerList,
+    allManagerList,
     workInfoView,
     noticePeriodView,
     noticePeriodViewData,
@@ -355,7 +356,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: city,
-      managerId: managerList !== null ? state.managerId : user.employeeId,
+      managerId: allManagerList !== null ? state.managerId : user.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
@@ -389,7 +390,7 @@ const EditWorkInformation = () => {
   return (
     console.log(state),
     console.log(designationName),
-    console.log(managerList),
+    console.log(allManagerList),
     (
       <Fragment>
         <Form onSubmit={submitHandler}>
@@ -596,7 +597,7 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group className="reactDate">
                 <Form.Label>Manager Name/Id</Form.Label>
-                {managerList === null ? (
+                {allManagerList === null ? (
                   <Form.Control
                     type="text"
                     value={user.employeeId}
@@ -614,7 +615,7 @@ const EditWorkInformation = () => {
                     required
                   >
                     <option value="">Select ManagerId</option>
-                    {managerList.map((item, i) => {
+                    {allManagerList.map((item, i) => {
                       return (
                         <option key={i} value={item.employeeId}>
                           {item.firstName}-{item.employeeId}

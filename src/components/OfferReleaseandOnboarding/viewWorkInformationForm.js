@@ -55,6 +55,7 @@ const EditWorkInformation = () => {
     cityData,
     cityList,
     managerList,
+    allManagerList
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -164,7 +165,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: locationName.locationId,
-      managerId: managerList !== null ? state.managerId : user.employeeId,
+      managerId: allManagerList !== null ? state.managerId : user.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
@@ -266,7 +267,7 @@ const EditWorkInformation = () => {
               <Form.Group className="reactDate">
                 <Form.Label>Manager Name/Id</Form.Label>
                 <br></br>
-                {managerList === null ? (
+                {allManagerList === null ? (
                   <Form.Label>{user.employeeId}</Form.Label>
                 ) : (
                   <Form.Label className="headingColor">

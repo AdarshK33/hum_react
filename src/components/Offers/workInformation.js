@@ -65,6 +65,7 @@ const WorkInformation = (props) => {
     cityData,
     cityList,
     managerList,
+    allManagerList,
     noticePeriodView,
     noticePeriodViewData,
     costcenterByDepartment,
@@ -376,7 +377,7 @@ const WorkInformation = (props) => {
         internshipPeriod:
           state.employmentType === "Internship" ? state.internship : 0,
         locationId: city,
-        managerId: managerList !== null ? state.managerId : user.employeeId,
+        managerId: allManagerList !== null ? state.managerId : user.employeeId,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
         probationPeriod:
@@ -419,7 +420,7 @@ const WorkInformation = (props) => {
         internshipPeriod:
           state.employmentType === "Internship" ? state.internship : 0,
         locationId: city,
-        managerId: managerList !== null ? state.managerId : user.employeeIds,
+        managerId: allManagerList !== null ? state.managerId : user.employeeIds,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
         probationPeriod:
@@ -656,7 +657,7 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group className="reactDate">
                 <Form.Label>Manager Name/Id</Form.Label>
-                {managerList === null ? (
+                {allManagerList === null ? (
                   <Form.Control
                     type="text"
                     value={user.employeeId}
@@ -674,7 +675,7 @@ const WorkInformation = (props) => {
                     required
                   >
                     <option value="">Select ManagerId</option>
-                    {managerList.map((item, i) => {
+                    {allManagerList.map((item, i) => {
                       return (
                         <option key={i} value={item.employeeId}>
                           {item.firstName}-{item.employeeId}

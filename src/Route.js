@@ -146,6 +146,8 @@ import EthicsCharter from "./components/DSICharter/EthicCharter";
 import ITCharter from "./components/DSICharter/ITCharter";
 import CharterList from "./components/DSICharter/CharterList";
 import CharterEdit from "./components/DSICharter/CharterEdit";
+import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -167,8 +169,8 @@ const RoutePath = () => {
       />
 
       {/* <Route
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
+        path={`${process.env.PUBLIC_URL}/emp360`}
+        component={EmployeeDashboard}
       /> */}
 
       <Route
@@ -236,10 +238,6 @@ const RoutePath = () => {
             component={CharterList}
           />
 
-           <Route
-            path={`${process.env.PUBLIC_URL}/promotion-list`}
-            component={CodeOfConduct}
-          />
            <Route
             path={`${process.env.PUBLIC_URL}/master/charter-edit`}
             component={CharterEdit}
@@ -363,6 +361,10 @@ const RoutePath = () => {
 
        
           <Route
+            path={`${process.env.PUBLIC_URL}/employee360`}
+            component={EmployeeDashboard}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
             component={ManagerDisciplinaryList}
           />
@@ -409,10 +411,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/employee-info/:employeeid`}
             component={viewEmployeeInfo}
           />
-          {/* <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={PromotionList}
-          /> */}
+          />
              <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
