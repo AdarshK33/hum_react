@@ -32,27 +32,37 @@ const ITCharter =(props)=>{
 
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
-         && employeeProfileData !== "" && charterDataAll !== undefined && 
-         charterDataAll !== null && charterDataAll !== ""){
-             console.log(charterDataAll,"charterDataAll it")
-         charterDataAll.map((item)=>{
-            console.log(item,"item it" )
-           if(item.employeeId == employeeProfileData.employeeId){
-            setCharterId(item.charterId)
-            //  if(item.codeOfConduct == true && item.ethicsCharter !==true && item.dsiItCharter !==true){
-            //      props.history.push("/ethiccharter")
-            //      setShow(false)
-            //  }else
-              if(item.codeOfConduct == true && item.dsiItCharter !==true){
-               setShow(true)
-             }else if(item.codeOfConduct == true && item.dsiItCharter==true){
-               props.history.push("/dashboard/storedashboard")
-               setShow(false)
-             }
-           }
-         })
+         && employeeProfileData !== "" 
+        //  && charterDataAll !== undefined && 
+        //  charterDataAll !== null && charterDataAll !== ""
+         ){
+        //      console.log(charterDataAll,"charterDataAll it")
+        //  charterDataAll.map((item)=>{
+        //     console.log(item,"item it" )
+        //    if(item.employeeId == employeeProfileData.employeeId){
+        //     setCharterId(item.charterId)
+        //     //  if(item.codeOfConduct == true && item.ethicsCharter !==true && item.dsiItCharter !==true){
+        //     //      props.history.push("/ethiccharter")
+        //     //      setShow(false)
+        //     //  }else
+        //       if(item.codeOfConduct == true && item.dsiItCharter !==true){
+        //        setShow(true)
+        //      }else if(item.codeOfConduct == true && item.dsiItCharter==true){
+        //        props.history.push("/dashboard/storedashboard")
+        //        setShow(false)
+        //      }
+        //    }
+        //  })
+         if(employeeProfileData.codeOfConduct === true &&
+             employeeProfileData.dsiItCharter !==true){
+                setShow(true)
+              }else if(employeeProfileData.codeOfConduct === true && 
+                employeeProfileData.dsiItCharter === true){
+                props.history.push("/dashboard/storedashboard")
+                setShow(false)
+              }
      }
-     }, [charterDataAll])
+     }, [employeeProfileData])
      
     const handleSave = (e)=>{
         e.preventDefault()

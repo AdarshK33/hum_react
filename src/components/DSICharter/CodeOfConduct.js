@@ -88,28 +88,43 @@ const CodeOfConduct =(props)=> {
   // },[props])
   useEffect(() => {
      if(employeeProfileData !== undefined && employeeProfileData !== null 
-      && employeeProfileData !== "" && charterDataAll !== undefined && 
-      charterDataAll !== null && charterDataAll !== ""){
-      charterDataAll.map((item)=>{
-        console.log(item,"item code")
-        if(item.employeeId == employeeProfileData.employeeId){
-          // if(item.codeOfConduct == true && item.ethicsCharter !==true && item.dsiItCharter !==true){
-          //     props.history.push("/ethiccharter")
-          //     setShow(false)
-          // }else 
-          if(item.codeOfConduct == true && item.dsiItCharter !==true){
-            props.history.push("/itcharter")
+      && employeeProfileData !== "" 
+      // && charterDataAll !== undefined && 
+      // charterDataAll !== null && charterDataAll !== ""
+      ){
+     // charterDataAll.map((item)=>{
+       // console.log(item,"item code")
+      //   if(item.employeeId == employeeProfileData.employeeId){
+      //     // if(item.codeOfConduct == true && item.ethicsCharter !==true && item.dsiItCharter !==true){
+      //     //     props.history.push("/ethiccharter")
+      //     //     setShow(false)
+      //     // }else 
+      //     if(item.codeOfConduct == true && item.dsiItCharter !==true){
+      //       props.history.push("/itcharter")
+      //       setShow(false)
+      //     }else if(item.codeOfConduct == true && item.dsiItCharter==true){
+      //       props.history.push("/dashboard/storedashboard")
+      //       setShow(false)
+      //     }
+      //   }else{
+      //     handleShow()
+      //   }
+      // })
+      if(employeeProfileData.codeOfConduct === false && 
+        employeeProfileData.dsiItCharter === false){
+          handleShow()
+      }else if(employeeProfileData.codeOfConduct === true &&
+         employeeProfileData.dsiItCharter !== true){
+        props.history.push("/itcharter")
             setShow(false)
-          }else if(item.codeOfConduct == true && item.dsiItCharter==true){
+          }else if(employeeProfileData.codeOfConduct === true && 
+            employeeProfileData.dsiItCharter === true){
             props.history.push("/dashboard/storedashboard")
             setShow(false)
           }
-        }else{
-          handleShow()
-        }
-      })
-  }
-  }, [employeeProfileData,props,charterDataAll])
+          }
+  }, [employeeProfileData])
+  console.log(props,charterDataAll,employeeProfileData,"charter")
   const handleSave = (e) =>{
     e.preventDefault()
     console.log(props,codeOfConduct,employeeProfileData,charterDataAll,"charter")
