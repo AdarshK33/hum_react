@@ -39,7 +39,13 @@ const HolidaysCard = () => {
                       }}
                     >
                       <div className="rosterColumn1">
-                        <label className="dateNum">{item.date} </label>{" "}
+                        <label
+                          className={
+                            item.date.length === 1 ? "dateNumAdj" : "dateNum"
+                          }
+                        >
+                          {item.date.length === 1 ? "0" + item.date : item.date}{" "}
+                        </label>{" "}
                         <label
                           style={{
                             marginLeft: "0.5rem",
@@ -51,7 +57,7 @@ const HolidaysCard = () => {
                     </td>
                     <td>
                       <div className="holidayColumn2">
-                        <label>{item.day} </label>
+                        <label>{item.day}</label>
                         <div className="rosterContent">{item.holidayName}</div>
                       </div>
                     </td>
@@ -62,7 +68,9 @@ const HolidaysCard = () => {
           </table>
         </ScrollArea>
       ) : (
-        <h1> No Data Available</h1>
+        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+          No Records Found
+        </h4>
       )}
     </Fragment>
   );

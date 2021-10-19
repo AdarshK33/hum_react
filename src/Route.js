@@ -331,8 +331,11 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
-            // component={ProbationList}
-            component ={EmployeeDashboard}
+            component={ProbationList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee360`}
+            component={EmployeeDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}

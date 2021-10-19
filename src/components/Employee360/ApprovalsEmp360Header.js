@@ -1,6 +1,5 @@
 const APPROVALS_EMP360_TABLE_HEADERS = {
   promotion: {
-    sno: "S.No",
     empId: "Emp ID",
     empName: "Emp Name",
     position: "Position",
@@ -9,7 +8,6 @@ const APPROVALS_EMP360_TABLE_HEADERS = {
     status: "Status",
   },
   transfer: {
-    sno: "S.No",
     empId: "Emp ID",
     empName: "Emp Name",
     effectiveDate: "Effective Date",
@@ -17,11 +15,9 @@ const APPROVALS_EMP360_TABLE_HEADERS = {
     status: "Status",
   },
   leaves: {
-    sno: "S.No",
-    empId: "Emp ID",
-    empName: "Emp Name",
     leaveDate: "Leave Date",
     duration: "Duration",
+    reason: "Reason",
     status: "Status",
   },
 };

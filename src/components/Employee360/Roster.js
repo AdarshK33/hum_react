@@ -6,6 +6,7 @@ import ScrollArea from "react-scrollbar";
 import { Fragment } from "react";
 import moment from "moment";
 import { Employee360Context } from "../../context/Employee360State";
+import LoaderIcon from "../Loader/LoaderIcon";
 
 const Roster = () => {
   const [resultData, setResultData] = useState([]);
@@ -20,8 +21,13 @@ const Roster = () => {
   const [weekEndDate, setWeekEndDate] = useState("");
   const [weekNum, setWeekNum] = useState(weekOptions[0]);
   const data = [];
-  const { RosterMonthSearch, WeeksList, SearchByWeekName, WeeksInfoList } =
-    useContext(Employee360Context);
+  const {
+    RosterMonthSearch,
+    WeeksList,
+    SearchByWeekName,
+    WeeksInfoList,
+    rosterLoader,
+  } = useContext(Employee360Context);
 
   useEffect(() => {
     shifting(rosterMnth, "Increment");
@@ -123,6 +129,18 @@ const Roster = () => {
       RosterMonthSearch(StartDate, EndDate);
     }
   };
+  const tConvert = (time) => {
+    time = time
+      .toString()
+      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    if (time.length > 1) {
+      time = time.slice(1);
+      time[5] = +time[0] < 12 ? "am" : "pm"; // Set AM/PM
+      time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    return time.join("");
+  };
 
   return (
     <Fragment>
@@ -136,7 +154,7 @@ const Roster = () => {
           >
             {rosterMnth !== 0 ? <p className="slidderLeft">&#60;</p> : ""}
           </div>
-          <div>
+          <div style={{ textAlign: "center" }}>
             <Select
               name="Week"
               options={
@@ -175,9 +193,11 @@ const Roster = () => {
           ""
         )}
       </div>
-      {WeeksInfoList !== null &&
-      WeeksInfoList !== undefined &&
-      Object.keys(WeeksInfoList).length !== 0 ? (
+      {rosterLoader ? (
+        <LoaderIcon />
+      ) : WeeksInfoList !== null &&
+        WeeksInfoList !== undefined &&
+        Object.keys(WeeksInfoList).length !== 0 ? (
         <ScrollArea
           speed={0.4}
           // className="area"
@@ -186,7 +206,7 @@ const Roster = () => {
           horizontal={false}
           style={{ zIndex: "0" }}
         >
-          <table style={{ width: "96%" }}>
+          <table style={{ width: "100%" }}>
             <tbody>
               {WeeksInfoList.map((item) => {
                 return (
@@ -214,7 +234,9 @@ const Roster = () => {
                       }
                     >
                       <div className="rosterColumn1">
-                        <label className="dateNum">{item.date} </label>{" "}
+                        <label className="dateNum">
+                          {item.date.length === 1 ? "0" + item.date : item.date}
+                        </label>{" "}
                         <label
                           style={{
                             marginLeft: "0.5rem",
@@ -231,10 +253,15 @@ const Roster = () => {
                         ) : item.holiday !== null &&
                           item.holiday !== undefined ? (
                           <label> </label>
-                        ) : (
+                        ) : item.startTime !== null &&
+                          item.startTime !== undefined ? (
                           <label>
-                            {item.startTime}-{item.endTime}
+                            {tConvert(item.startTime.slice(0, -3))}-
+                            {tConvert(item.endTime.slice(0, -3))}
+                            {/* {item.startTime.slice(0, -3)} */}
                           </label>
+                        ) : (
+                          <label></label>
                         )}
                         <div className="rosterContent">
                           {item.weekOff === true
@@ -253,7 +280,9 @@ const Roster = () => {
           </table>
         </ScrollArea>
       ) : (
-        <h4 style={{ textAlign: "center" }}>No Records Found</h4>
+        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+          No Records Found
+        </h4>
       )}
     </Fragment>
   );

@@ -47,6 +47,7 @@ const EmployeeDashboard = () => {
     empState: "",
     empCountry: "",
   });
+  const [country, setCountry] = useState("");
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
   const { stateList, viewStates } = useContext(MasterFilesContext);
@@ -97,13 +98,13 @@ const EmployeeDashboard = () => {
           setState({
             ...state,
             ["empState"]: item.stateName,
-            ["empCountry"]: item.country,
           });
+          setCountry(item.country);
           // state.empLocation = item.locationName;
         }
       });
     }
-  }, [stateId]);
+  }, [stateId, stateList]);
 
   return (
     <Fragment>
@@ -227,7 +228,7 @@ const EmployeeDashboard = () => {
                                 <b>Country</b>
                               </label>
                               <br />
-                              <label>{state.empCountry}</label>
+                              <label>{country}</label>
                               <br />
                               <label>
                                 <b>Manager</b>
@@ -249,25 +250,58 @@ const EmployeeDashboard = () => {
                               <label>{user.joiningDate}</label>
                               <br />
                               <label>
-                                <b>Work Location</b>
+                                <b>Login Type</b>
                               </label>
                               <br />
-                              <label>{state.empLocation}</label>
+                              <label>
+                                {/* Type {user.loginType} */}
+                                {user.loginType == "1"
+                                  ? "Admin"
+                                  : user.loginType == "2"
+                                  ? "General User"
+                                  : user.loginType == "4"
+                                  ? "Finance Partner"
+                                  : user.loginType == "5"
+                                  ? "IT Admin"
+                                  : user.loginType == "7"
+                                  ? "Cost Center Manager"
+                                  : user.loginType == "9"
+                                  ? "Super Cost Center Manager"
+                                  : user.loginType == "10"
+                                  ? "HR Strategist"
+                                  : "NA"}
+                              </label>
                             </div>
                           </Col>
                           <Col>
                             <div>
                               <label>
-                                <b>Login Type</b>
+                                <b>Work Location</b>
                               </label>
                               <br />
-                              <label>Type {user.loginType}</label>
+                              <label>{state.empLocation}</label>
                               <br />
                               <label>
                                 <b>Additional Role</b>
                               </label>
                               <br />
-                              <label>{user.additionalRole}</label>
+                              <label>
+                                {user.additionalRole == "1"
+                                  ? "Admin"
+                                  : user.additionalRole == "2"
+                                  ? "General User"
+                                  : user.additionalRole == "4"
+                                  ? "Finance Partner"
+                                  : user.additionalRole == "5"
+                                  ? "IT Admin"
+                                  : user.additionalRole == "7"
+                                  ? "Cost Center Manager"
+                                  : user.additionalRole == "9"
+                                  ? "Super Cost Center Manager"
+                                  : user.additionalRole == "10"
+                                  ? "HR Strategist"
+                                  : "NA"}
+                              </label>
                             </div>
                           </Col>
                         </Row>
@@ -309,11 +343,12 @@ const EmployeeDashboard = () => {
                       marginBottom: "1rem",
                       marginRight: "1rem",
                       marginLeft: "1rem",
+                      height: "150%",
                     }}
                   >
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%" }}
+                        style={{ borderRadius: "3%", height: "100%" }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -324,7 +359,7 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%" }}
+                        style={{ borderRadius: "3%", height: "100%" }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -337,7 +372,7 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3} px={0}>
                       <Card
-                        style={{ borderRadius: "3%" }}
+                        style={{ borderRadius: "3%", height: "100%" }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -350,7 +385,7 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%" }}
+                        style={{ borderRadius: "3%", height: "100%" }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -363,7 +398,7 @@ const EmployeeDashboard = () => {
                   </Row>
                   <Row
                     style={{
-                      marginTop: "1rem",
+                      marginTop: "2rem",
                       marginBottom: "1rem",
                       marginRight: "1rem",
                       marginLeft: "1rem",
@@ -389,7 +424,7 @@ const EmployeeDashboard = () => {
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
-                            Holiday Calendar
+                            {" Holiday Calendar (2021)"}
                           </label>
                         </div>
                         <HolidaysCard />

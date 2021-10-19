@@ -40,11 +40,12 @@ const ApprovalsEmp360Card = () => {
           <label>Transfers</label>
         </div>
       </div>
+
       <div style={{ width: "100%", height: "100%" }}>
         {(() => {
           switch (tabIndex) {
             case 0:
-              return <ApprovalsEmp360List ListType={"Regular Transfer"} />;
+              return <ApprovalsEmp360List ListType={"leaves"} />;
             case 1:
               return <ApprovalsEmp360List ListType={"promotion"} />;
             case 2:
@@ -54,11 +55,6 @@ const ApprovalsEmp360Card = () => {
               return <div>nothing</div>;
           }
         })()}
-      </div>
-      <div style={{ float: "bottom", textAlign: "center" }}>
-        <label className="itemResult" onClick={(e) => setTabIndex(2)}>
-          View All
-        </label>
       </div>
     </Fragment>
   );

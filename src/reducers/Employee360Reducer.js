@@ -17,6 +17,8 @@ const GroupReducer = (state, action) => {
       return { ...state, unPlannedLeaves: action.payload };
     case "PLANNED_LEAVES":
       return { ...state, plannedLeaves: action.payload };
+    case "MY_PERFORMANCE":
+      return { ...state, myPerformanceData: action.payload };
 
     default:
       return state;

@@ -52,7 +52,12 @@ const MyDocumentsCard = () => {
                   <div className="DocumentsDiv">
                     <div className="DocumentDot"></div>
                     <div className="DocName">
-                      <label>{item.documentName}</label>
+                      <label>
+                        {item.documentName !== null &&
+                        item.documentName !== undefined
+                          ? item.documentName.replace(" ", "")
+                          : ""}
+                      </label>
                     </div>
                   </div>
                 </Col>
@@ -88,7 +93,9 @@ const MyDocumentsCard = () => {
           })}
         </ScrollArea>
       ) : (
-        ""
+        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+          No Records Found
+        </h4>
       )}
     </Fragment>
   );

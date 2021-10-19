@@ -45,10 +45,13 @@ const MyLeavesCard = () => {
   const LeavesOption = {
     slices: [
       {
-        color: "#5059ab",
+        color: "#eb409b",
       },
       {
-        color: "#01cc9b",
+        color: "#3ab16d",
+      },
+      {
+        color: "#51bfff",
       },
     ],
     pieSliceText: "value",
@@ -77,47 +80,51 @@ const MyLeavesCard = () => {
       plannedLeaves !== undefined &&
       Object.keys(plannedLeaves).length !== 0 ? (
         <div>
-          <Chart
-            width={"100%"}
-            height={"150px"}
-            chartType="PieChart"
-            data={[
-              ["Leave Type", "Days"],
-              ["Pending", plannedLeaves[0].planned],
-              ["Applied", plannedLeaves[0].applied],
-              ["UnPlanned", plannedLeaves[0].unplanned],
-            ]}
-            legend_toggle
-            options={LeavesOption}
-          />
+          <div style={{ marginTop: "1rem" }}>
+            <Chart
+              width={"100%"}
+              height={"150px"}
+              chartType="PieChart"
+              data={[
+                ["Leave Type", "Days"],
+                ["UnPlanned", plannedLeaves[0].unplanned],
+                ["Applied", plannedLeaves[0].applied],
+                ["Pending", plannedLeaves[0].planned],
+              ]}
+              legend_toggle
+              options={LeavesOption}
+            />
+          </div>
+
+          <div style={{ marginTop: "2rem" }}>
+            <label>Upcomming Leaves</label>
+            <label
+              style={{ float: "right" }}
+              onClick={(e) => GoToLeaves(e)}
+              className="itemResult"
+            >
+              View All
+            </label>
+          </div>
+          <LeavesShifting Data={plannedLeaves} />
+
+          <div style={{ marginTop: "2rem" }}>
+            <label>Unplanned Leaves</label>
+            <label
+              style={{ float: "right" }}
+              onClick={(e) => GoToLeaves(e)}
+              className="itemResult"
+            >
+              View All
+            </label>
+          </div>
+          <LeavesShifting Data={unPlannedLeaves} />
         </div>
       ) : (
-        <h4 style={{ textAlign: "center" }}>No Records Found</h4>
+        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+          No Records Found
+        </h4>
       )}
-      {/* upcomming leves */}
-      <div>
-        <label>Upcomming Leaves</label>
-        <label
-          style={{ float: "right" }}
-          onClick={(e) => GoToLeaves(e)}
-          className="itemResult"
-        >
-          View All
-        </label>
-      </div>
-      <LeavesShifting Data={plannedLeaves} />
-      {/* unplanned Leaves */}
-      <div>
-        <label>Unplanned Leaves</label>
-        <label
-          style={{ float: "right" }}
-          onClick={(e) => GoToLeaves(e)}
-          className="itemResult"
-        >
-          View All
-        </label>
-      </div>
-      <LeavesShifting Data={unPlannedLeaves} />
     </Fragment>
   );
 };
