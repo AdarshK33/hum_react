@@ -61,9 +61,12 @@ const EditWorkInformation = () => {
     cityData,
     cityList,
     managerList,
+    allManagerList,
     workInfoView,
     noticePeriodView,
     noticePeriodViewData,
+    costcenterByDepartment,
+    costcenterByDepartmentData
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -127,8 +130,9 @@ const EditWorkInformation = () => {
       setDateOFLeaving(new Date(workData.dateOfLeaving));
       // setDateOfIssue(new Date(workData.passportIssuedDate));
       // setDateOfValidity(new Date(workData.passportExpiryDate));
-      setCostCenter(workData.costCentre);
+
       locationView(workData.costCentre);
+      setCostCenter(workData.costCentre);
       setCollege(workData.collegeName);
       setNoticePeriod(workData.noticePeriod);
       viewBonusByContarctType(
@@ -152,14 +156,31 @@ const EditWorkInformation = () => {
       );
     }
   }, [state.employmentType, state.department, state.position]);
+
   useEffect(() => {
-    if (state.employmentType !== "" && state.department !== null) {
+    if (state.employmentType !== ""&& state.employmentType !== undefined&&state.employmentType !== ""&& state.department !== null&&state.department !== undefined&&state.department !== "") {
       noticePeriodView(state.employmentType, state.department);
     }
   }, [state.employmentType, state.department]);
+
+  useEffect(() => {
+    let superMangerFlag;
+    if (state.department !== null&&state.department !== undefined&&state.department !== "") {
+      console.log("state.department",state.department);
+      if(rolePermission == "superCostCenterManager"){
+        superMangerFlag=1
+        costcenterByDepartment( state.department,superMangerFlag);
+      }else{
+        superMangerFlag=0
+        costcenterByDepartment( state.department,superMangerFlag);
+      }
+      
+    }
+  }, [ state.department]);
   useEffect(() => {
     if (
-      noticePeriodViewData !== null &&
+      noticePeriodViewData !== null &&  noticePeriodViewData !== undefined && 
+       noticePeriodViewData !== "" &&
       Object.keys(noticePeriodViewData).length !== 0
     ) {
       setNoticePeriod(noticePeriodViewData.noticePeriod);
@@ -335,7 +356,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: city,
-      managerId: managerList !== null ? state.managerId : user.employeeId,
+      managerId: allManagerList !== null ? state.managerId : user.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
@@ -358,15 +379,8 @@ const EditWorkInformation = () => {
     console.log("update data", updateData);
     if (dateOfLeavingError === false) {
       updateCandidateWork(updateData);
-      viewCandidateId(candidateData.candidateInformation.candidateId);
-      workInfoView(candidateData.candidateInformation.candidateId);
       setDisabled(true);
       setEditButton(true);
-      viewBonusByContarctType(
-        state.employmentType,
-        state.department,
-        state.position
-      );
     }
   };
   const editHandler = () => {
@@ -376,7 +390,7 @@ const EditWorkInformation = () => {
   return (
     console.log(state),
     console.log(designationName),
-    console.log(managerList),
+    console.log(allManagerList),
     (
       <Fragment>
         <Form onSubmit={submitHandler}>
@@ -567,10 +581,10 @@ const EditWorkInformation = () => {
                   required
                 >
                   <option value="">Select Cost Center</option>
-                  {costCenterList !== null &&
-                    costCenterList !== undefined &&
-                    costCenterList.length > 0 &&
-                    costCenterList.map((item) => {
+                  {costcenterByDepartmentData !== null &&
+                    costcenterByDepartmentData !== undefined &&
+                    costcenterByDepartmentData.length > 0 &&
+                    costcenterByDepartmentData.map((item) => {
                       return (
                         <option key={item.costCenterId}>
                           {item.costCentreName}
@@ -583,7 +597,7 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group className="reactDate">
                 <Form.Label>Manager Name/Id</Form.Label>
-                {managerList === null ? (
+                {allManagerList === null ? (
                   <Form.Control
                     type="text"
                     value={user.employeeId}
@@ -601,7 +615,7 @@ const EditWorkInformation = () => {
                     required
                   >
                     <option value="">Select ManagerId</option>
-                    {managerList.map((item, i) => {
+                    {allManagerList.map((item, i) => {
                       return (
                         <option key={i} value={item.employeeId}>
                           {item.firstName}-{item.employeeId}
@@ -823,6 +837,9 @@ const EditWorkInformation = () => {
                     <option value="1">1 Month</option>
                     <option value="2">2 Month</option>
                     <option value="3">3 Month</option>
+                    <option value="4">4 Month</option>
+                    <option value="5">5 Month</option>
+                    <option value="6">6 Month</option>
                   </Form.Control>
                 </Form.Group>
               </Col>

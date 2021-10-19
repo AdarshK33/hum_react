@@ -24,9 +24,12 @@ const initial_state = {
   stateList: [],
   cityList: [],
   managerList: [],
+  allManagerList: [],
   aadhaarNotificationData: {},
   submitAppointmentLetter: {},
   noticePeriodViewData: {},
+  costcenterByDepartmentData:[],
+  allCostCenterList:[]
 };
 
 export const OfferContext = createContext();
@@ -264,17 +267,21 @@ export const OfferProvider = (props) => {
   };
   // location api for work information
   const locationView = async (costCenter) => {
-    console.log(costCenter);
+    console.log("locationView",costCenter);
     const result1 = await client.get("/api/v1/location/view/" + costCenter);
     const result2 = await client.get(
       `api/v1/employee/view/${costCenter}/managers`
     );
+    const result3 = await client.get(
+      `api/v1/employee/view/managers/${costCenter}`
+    );
     state.locationName = result1.data.data;
     state.managerList = result2.data.data;
-    console.log("locationName response", state.locationName);
+    state.allManagerList = result3.data.data;
+    console.log("locationName response", state.locationName,state.managerList,state.allManagerList);
     return dispatch({
       type: "LOCATION",
-      payload: (state.locationName, state.managerList),
+      payload: (state.locationName, state.managerList,state.allManagerList),
     });
 
     /* .get("/api/v1/location/view/" + costCenter)
@@ -507,6 +514,42 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+  const costcenterByDepartment = (department,superMangerFlag) => {
+    console.log("department,superMangerFlag",  department,superMangerFlag);
+    return client
+      .get("/api/v1/cost_centre/view/department?department="+department+"&superManager="+superMangerFlag
+      )
+      .then((response) => {
+        state.costcenterByDepartmentData = response.data.data;
+        console.log("costcenterByDepartmentData.message", state.costcenterByDepartmentData);
+        return dispatch({
+          type: "COSTCENTER_BY_DEPARTMENT",
+          payload: state.costcenterByDepartmentData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+    // All Cost Center List
+    const AllCostCenter = (superMangerFlag) => {
+      client
+        .get("/api/v1/cost_centre/view-all-costcentre?superManager="+superMangerFlag)
+        .then((response) => {
+          state.allCostCenterList = response.data.data;
+          console.log("cost center data", state.allCostCenterList);
+          return dispatch({
+            type: "ALL_COST_CENTER_DATA",
+            payload: state.allCostCenterList,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+  
   return (
     <OfferContext.Provider
       value={{
@@ -535,6 +578,8 @@ export const OfferProvider = (props) => {
         makeSearchEmp1DataNull,
         noticePeriodView,
         noShowCandidate,
+        costcenterByDepartment,
+        AllCostCenter,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -554,10 +599,13 @@ export const OfferProvider = (props) => {
         stateList: state.stateList,
         cityList: state.cityList,
         managerList: state.managerList,
+        allManagerList:state.allManagerList,
         workInformationData: state.workInformationData,
         aadhaarNotificationData: state.aadhaarNotificationData,
         submitAppointmentLetter: state.submitAppointmentLetter,
         noticePeriodViewData: state.noticePeriodViewData,
+        costcenterByDepartmentData:state.costcenterByDepartmentData,
+        allCostCenterList:state.allCostCenterList
       }}
     >
       {props.children}

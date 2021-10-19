@@ -16,6 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Edit2, Eye, Search } from "react-feather";
 import { AdminContext } from "../../context/AdminState";
+import { OfferContext } from "../../context/OfferState";
+import { PermissionContext } from "../../context/PermissionState";
 import "./nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -31,6 +33,8 @@ const NoDueClearance = () => {
     noDueClearanceList,
   } = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
+  const { AllCostCenter, allCostCenterList } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const [pageCount, setPageCount] = useState(0);
   const [clearanceData, setCleranceData] = useState({
     itclearanceId: "",
@@ -105,6 +109,17 @@ const NoDueClearance = () => {
   useEffect(() => {
     CostCenter();
   }, []);
+
+  useEffect(() => {
+    let superMangerFlag;
+    if(rolePermission === "superCostCenterManager"){
+      superMangerFlag=1
+      AllCostCenter(superMangerFlag);
+    }else{
+      superMangerFlag=0
+      AllCostCenter(superMangerFlag);
+    }
+  }, [rolePermission]);
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
   };
@@ -350,8 +365,8 @@ const itStatusValue = [
                         name="filters"
                         placeholder="Cost Center"
                         options={
-                          costCenterList !== null
-                            ? costCenterList.map((e) => ({
+                          allCostCenterList !== null
+                            ? allCostCenterList.map((e) => ({
                                 label: e.costCentreName,
                                 value: e.costCentreName,
                               }))

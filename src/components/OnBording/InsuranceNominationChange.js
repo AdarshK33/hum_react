@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button,Modal } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
@@ -16,6 +16,7 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { setSeconds } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InsuranceNominationFormLetter from "./InsuranceNominationFormLetter";
 import moment from "moment";
 const InsuranceNomination = (props) => {
   const {
@@ -25,6 +26,7 @@ const InsuranceNomination = (props) => {
     CandidateViewInformation,
     candidateViewInfo,
     CreateNominee,
+    PersonalInfoResponse,
     CreateNomineeResponse,
     InsuranceNominationView,
     candidateInsuranceNominationData,
@@ -38,8 +40,12 @@ const InsuranceNomination = (props) => {
     uploadFile,
     insuranceTopUpView,
     insuranceTopUpData,
+    premiumView,
+    premiumViewData,
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
+  const [showShowCauseNoticeModal, setShow] = useState(false);
+
   const [showEdit, SetShowEdit] = useState(false);
   const [defaultNominee, setDefaultNominee] = useState(true);
   const [count, setCount] = useState(0);
@@ -168,6 +174,7 @@ const InsuranceNomination = (props) => {
   const [topupNo, setTopupNo] = useState(false);
   const [topupError, setTopupError] = useState(false);
   const [sumInsured, setSumInsured] = useState("");
+  const [sumInsuredId, setSumInsuredId] = useState("");
   const [insuranceHoldDeathYes, setInsuranceHoldDeathYes] = useState(true);
   const [insuranceHoldDeathNo, setInsuranceHoldDeathNo] = useState(false);
   const [required, setRequired] = useState(true);
@@ -310,6 +317,21 @@ const InsuranceNomination = (props) => {
       insuranceTopUpView(currentYear);
     }
   }, [candidateProfileData]);
+
+  useEffect(() => {
+
+    if (sumInsuredId !== ""&&sumInsuredId!==null&&sumInsuredId!==undefined&&candidateProfileData!==""&&candidateProfileData!==null&&candidateProfileData!==undefined&&Object.keys(candidateProfileData).length!==0) {
+      premiumView(sumInsuredId,candidateProfileData.candidateId);
+    }
+  }, [sumInsuredId]);
+  console.log("premiumViewData",premiumViewData);
+
+  useEffect(() => {
+    if (premiumViewData!==""&&premiumViewData!==null&&premiumViewData!==undefined&&Object.keys(premiumViewData).length!==0) {
+     setPremiumAmnt(premiumViewData.premiumAmt)
+    }
+  }, [premiumViewData]);
+
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateProfileData);
@@ -1070,7 +1092,8 @@ const InsuranceNomination = (props) => {
           (item) => item.sum == sumInsured
         );
         console.log("premiumAmnt", premiumValue[0]);
-        setPremiumAmnt(premiumValue[0].premiumAmt);
+        setSumInsuredId(premiumValue[0].insuranceNominationId)
+        // setPremiumAmnt(premiumValue[0].premiumAmt);
       }
     }
   }, [insuranceTopUpData, sumInsured]);
@@ -1343,8 +1366,9 @@ const InsuranceNomination = (props) => {
     }
   };
   const sumInsuredChange = (e) => {
-    console.log("sumInsuredChange", e.target.value);
+    console.log("sumInsuredChange", e);
     setSumInsured(e.target.value);
+    
   };
   const NomineeNameValidation = (itemState, setError) => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -3172,8 +3196,43 @@ const InsuranceNomination = (props) => {
       setNAcheck2(!NAcheck2);
     }
   };
-
+const handleIsuranceForm = (e) =>{
+setShow(true)
+}
+const handleInsuranceFormCloseLink = (e)=>{
+setShow(false)
+}
+console.log(candidatePersonalInfoData,candidateViewInfo,nominee,"offer999")
   return (
+    <Fragment>
+       <Modal
+        show={showShowCauseNoticeModal}
+        onHide={handleInsuranceFormCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {
+            <InsuranceNominationFormLetter data={
+              candidatePersonalInfoData !== null && candidatePersonalInfoData !== undefined 
+              && candidatePersonalInfoData !== "" && nominee !== null && nominee !== undefined 
+              && nominee !== ""?
+              {nomineeName:nominee.nomineeName,
+              nomineeRelationship:nominee.nomineeRelationship,
+              nomineeAddress: nominee.nomineeAddress,
+              nomineeDateOfBirth:nomineeDOB,
+              employeeName :candidatePersonalInfoData.aadhaarName,
+              candidateId :candidatePersonalInfoData.candidateId,
+              gender:candidatePersonalInfoData.gender,
+              maritalStatus:candidatePersonalInfoData.maritalStatus,
+              employeeAadharNumber:candidatePersonalInfoData.aadhaarNumber,
+
+              // employeeSignature:candidatePersonalInfoData.employeeSignature,
+              companyName:candidateViewInfo.companyName
+            }:''}/>
+          }
+        </Modal.Body>
+      </Modal>
     <Fragment>
       {/* <Form onSubmit={submitHandler}>  */}
       <ToastContainer />
@@ -5791,7 +5850,7 @@ const InsuranceNomination = (props) => {
                       onChange={nomineeHandler}
                       required
                       style={nomineeNameError ? { borderColor: "red" } : {}}
-                      placeholder="Dependent Name"
+                      placeholder="Nominee Name"
                     />
                     {nomineeNameError ? (
                       <p style={{ color: "red" }}>
@@ -5896,7 +5955,7 @@ const InsuranceNomination = (props) => {
                         style={
                           nomineeAddressError ? { borderColor: "red" } : {}
                         }
-                        placeholder="Dependent Address"
+                        placeholder="Nominee Address"
                       />
                     </div>
                     {nomineeAddressError ? (
@@ -5924,7 +5983,13 @@ const InsuranceNomination = (props) => {
                 target="_blank"
               >
                 Download Insurance Nomination Form
-              </a>
+              </a> <br/>
+              <a onClick={handleIsuranceForm}>
+                              {" "}
+                              <u className="itemResult">
+                              Insurance Nomination Form
+                              </u>
+                            </a>
               <br />
             </Col>
           </Row>
@@ -6124,6 +6189,7 @@ const InsuranceNomination = (props) => {
           Save & Next
         </button>
       </div>
+    </Fragment>
     </Fragment>
   );
 };

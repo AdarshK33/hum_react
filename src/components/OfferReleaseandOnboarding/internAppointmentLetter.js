@@ -71,7 +71,7 @@ const InternAppointmentLetter = (props) => {
                     We thank you for your interest in choosing Decathlon Sports
                     India Pvt Ltd (DSIPL). We are in receipt of your application
                     authorised by your institute/college/university to do an
-                    internship project on the topic Legal Real Estate. As we
+                    internship project on the topic <b>{offerLetterData.internshipCandidateOffer.department}</b>. As we
                     believe your passion for sport and your values match those
                     of our Company, we, at DSIPL, encourage academic aspirants
                     to learn practical aspects of their academic curriculum. We
@@ -93,7 +93,7 @@ const InternAppointmentLetter = (props) => {
                   </p>
                   <p>
                     Your fixed stipend would be INR.{" "}
-                    {offerLetterData.internshipCandidateOffer.stipend} per
+                    <b>{offerLetterData.internshipCandidateOffer.stipend}</b> per
                     month. This stipend is paid purely to manage your travel,
                     record maintenance, project submission and any other
                     unforeseen project related expenses. Further it is to be
@@ -114,9 +114,9 @@ const InternAppointmentLetter = (props) => {
                     months from{" "}
                     <b>{offerLetterData.internshipCandidateOffer.fromDate}</b>{" "}
                     to <b>{offerLetterData.internshipCandidateOffer.toDate}</b>{" "}
-                    at {offerLetterData.companyName} Pvt. Ltd. You will be
+                    at <b>{offerLetterData.companyName}</b> Pvt. Ltd. You will be
                     provided stipend{" "}
-                    {offerLetterData.internshipCandidateOffer.stipend} per
+                    <b>{offerLetterData.internshipCandidateOffer.stipend}</b> per
                     month.
                   </p>
 
@@ -136,7 +136,7 @@ const InternAppointmentLetter = (props) => {
                       rules better the productivity as far as we are concerned.
                     </li>
                     <li>
-                      3. We trust you will enjoy the stay with DSIPL and take
+                       We trust you will enjoy the stay with DSIPL and take
                       the utmost autonomy to complete your Project and enhance
                       the learnings.
                       <ol type="i">

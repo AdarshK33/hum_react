@@ -87,9 +87,9 @@ const AppointmentLetter = (props) => {
                   </p>
                   <p>
                     Thank for your interest in choosing{" "}
-                    {offerLetterData.companyName}. As we believe your passion
+                    <b>{offerLetterData.companyName}</b>. As we believe your passion
                     for sport and your values match those of our Company, we, at{" "}
-                    {offerLetterData.companyName}, are pleased to appoint you as
+                    <b>{offerLetterData.companyName}</b>, are pleased to appoint you as
                     a Decathlon Permanent Employee on a Full Time basis, and
                     your responsibilities would be those of a{" "}
                     <b>{offerLetterData.position}</b> at our{" "}
@@ -152,7 +152,7 @@ const AppointmentLetter = (props) => {
                       and we prefer you not share it with other team members
                     </li>
                     <li>
-                      Working for {offerLetterData.companyName} is a full time
+                      Working for <b>{offerLetterData.companyName}</b> is a full time
                       job! While we believe in honesty in the job
                       responsibility, we insist you dedicate your working hours
                       solely to Decathlon and not work elsewhere, and also do
@@ -293,16 +293,14 @@ const AppointmentLetter = (props) => {
                         <td>
                           <b>
                             {Math.round(
-                              offerLetterData.fixedGross +
-                                offerLetterData.bonusAmt
+                              offerLetterData.fixedGross 
                             )}
                           </b>
                         </td>
                         <td>
                           <b>
                             {Math.round(
-                              (offerLetterData.fixedGross +
-                                offerLetterData.bonusAmt) *
+                              offerLetterData.fixedGross *
                                 12
                             )}
                           </b>
@@ -372,13 +370,13 @@ const AppointmentLetter = (props) => {
                         <td className="boldText">Gross Salary </td>
                         <td className="boldText">
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.grossSalary
+                            offerLetterData.permanentCandidateOffer.grossSalary+offerLetterData.bonusAmt
                           )}
                         </td>
                         <td className="boldText">
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer
-                              .grossSalary * 12
+                            (offerLetterData.permanentCandidateOffer
+                              .grossSalary+offerLetterData.bonusAmt) * 12
                           )}
                         </td>
                       </tr>
