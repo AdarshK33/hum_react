@@ -140,6 +140,8 @@ import Pdfsample from "./components/PdfLetters/pdfsample";
 import DocumentContainer from "./components/DocumentManagement/DocumentContainer";
 import ModuleDocumentList from "./components/DocumentManagement/ModuleDocumentList";
 
+import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -161,8 +163,8 @@ const RoutePath = () => {
       />
 
       {/* <Route
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
+        path={`${process.env.PUBLIC_URL}/emp360`}
+        component={EmployeeDashboard}
       /> */}
 
       <Route
@@ -330,6 +332,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee360`}
+            component={EmployeeDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
