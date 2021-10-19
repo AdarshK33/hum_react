@@ -47,6 +47,7 @@ import CandidateWithAxios from "./utils/canditateLogin";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { MitProvider } from "./context/MitReportState";
 
+import {DSICharterProvider} from "./context/DSICharterState"
 //firebase Auth
 function Root() {
   useEffect(() => {
@@ -87,6 +88,7 @@ function Root() {
                                                             <NoticePeriodProvider>
                                                               <InsuranceProvider>
                                                                 <MitProvider>
+                                                                  <DSICharterProvider>
                                                                   <DocumentManagementProvider>
                                                                     <BrowserRouter
                                                                       basename={
@@ -102,6 +104,7 @@ function Root() {
                                                                       </ScrollContext>
                                                                     </BrowserRouter>
                                                                   </DocumentManagementProvider>
+                                                                  </DSICharterProvider>
                                                                 </MitProvider>
                                                               </InsuranceProvider>
                                                             </NoticePeriodProvider>
