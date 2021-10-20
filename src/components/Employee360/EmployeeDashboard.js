@@ -348,7 +348,11 @@ const EmployeeDashboard = () => {
                   >
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%", height: "100%" }}
+                        style={{
+                          borderRadius: "3%",
+                          height: "100%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -359,7 +363,11 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%", height: "100%" }}
+                        style={{
+                          borderRadius: "3%",
+                          height: "100%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -372,7 +380,11 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3} px={0}>
                       <Card
-                        style={{ borderRadius: "3%", height: "100%" }}
+                        style={{
+                          borderRadius: "3%",
+                          height: "100%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -385,7 +397,11 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%", height: "100%" }}
+                        style={{
+                          borderRadius: "3%",
+                          height: "100%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -406,8 +422,11 @@ const EmployeeDashboard = () => {
                   >
                     <Col sm={6}>
                       <Card
-                        style={{ borderRadius: "3%" }}
-                        className="scrollbar big-card p-10 main-card"
+                        style={{
+                          borderRadius: "3%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
+                        className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
@@ -419,7 +438,10 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%" }}
+                        style={{
+                          borderRadius: "3%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <div className="CardHeading">
@@ -432,7 +454,11 @@ const EmployeeDashboard = () => {
                     </Col>
                     <Col sm={3}>
                       <Card
-                        style={{ borderRadius: "3%", height: "55%" }}
+                        style={{
+                          borderRadius: "3%",
+                          height: "55%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <label className="smallCardHeading">My Documents</label>
@@ -440,7 +466,11 @@ const EmployeeDashboard = () => {
                       </Card>
 
                       <Card
-                        style={{ borderRadius: "3%", height: "30%" }}
+                        style={{
+                          borderRadius: "3%",
+                          height: "30%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
                         className="big-card p-10 main-card"
                       >
                         <label className="smallCardHeading">
