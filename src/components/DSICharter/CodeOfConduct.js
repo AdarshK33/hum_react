@@ -164,14 +164,6 @@ const CodeOfConduct =(props)=> {
   }, [props])
  
   return (<>
-      {/* <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
-      >
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-      </div> */}
       {loader==true?"":<Modal show={showModal} onHide={handleClose}>
         <Modal.Body>
         <div>

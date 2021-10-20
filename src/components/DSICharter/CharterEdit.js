@@ -139,7 +139,7 @@ const CharterEdit = () => {
                                   className="largerCheckbox"
                                   type="checkbox"
                                   value="no"
-                                  checked={!status}
+                                  checked={status ===false?true:""}
                                   style={
                                     acknowledgementError
                                       ? { borderColor: "red" }
