@@ -64,6 +64,7 @@ const CodeOfConduct =(props)=> {
     const [showModal, setShow] = useState(false);
   const [codeOfConduct,setCodeOfConduct] = useState(false)
   const [codeOfConductError,setCodeOfConductError] = useState("")
+  const [charterId ,setCharterId] = useState("")
 
   const handleClose = () => {
     setShow(false);
@@ -110,17 +111,20 @@ const CodeOfConduct =(props)=> {
       //     handleShow()
       //   }
       // })
-      if(employeeProfileData.codeOfConduct === false && 
-        employeeProfileData.dsiItCharter === false){
-          handleShow()
-      }else if(employeeProfileData.codeOfConduct === true &&
-         employeeProfileData.dsiItCharter !== true){
+      if((employeeProfileData.isCodeOfConduct !== true && 
+        employeeProfileData.isDsiItCharter !== true)||(employeeProfileData.isCodeOfConduct === null && 
+        employeeProfileData.isDsiItCharter === null)){
+          setCharterId(employeeProfileData.charterId)
+      }else if(employeeProfileData.isCodeOfConduct === true &&
+         employeeProfileData.isDsiItCharter !== true){
         props.history.push("/itcharter")
             setShow(false)
-          }else if(employeeProfileData.codeOfConduct === true && 
-            employeeProfileData.dsiItCharter === true){
+          }else if(employeeProfileData.isCodeOfConduct === true && 
+            employeeProfileData.isDsiItCharter === true){
             props.history.push("/dashboard/storedashboard")
             setShow(false)
+          }else{
+            handleShow()
           }
           }
   }, [employeeProfileData])
@@ -135,10 +139,10 @@ const CodeOfConduct =(props)=> {
     }
     if(codeOfConduct == true){
   const infoData = {
-        "charterId": 0,
+        "charterId": charterId,
         "employeeId":employeeProfileData.employeeId,
-        "codeOfConduct": true,
-        "dsiItCharter": false 
+        "isCodeOfConduct": true,
+        "isDsiItCharter": false 
         }
         console.log(infoData)
         dsiCharterCreate(infoData)
