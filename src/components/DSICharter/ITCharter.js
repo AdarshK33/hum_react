@@ -18,13 +18,6 @@ const ITCharter =(props)=>{
       } 
       
     const handleShow = () => setShow(true);
-    // const handleCheckBox =(e)=>{
-    //     if(dsiItCharter == false){
-    //         setDsiItCharter(true)
-    //     }else{
-    //         setDsiItCharter(true)
-    //     }
-    // }
     const handleCheckBox =(e)=>{
         if(dsiItCharter == false){
           setDsiItCharter(true)
@@ -33,34 +26,10 @@ const ITCharter =(props)=>{
         }
         console.log(dsiItCharter)
       }
-    // useEffect(()=>{
-    //     handleShow()
-    //     console.log(props,"props it")
-    //   },[props])
 
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
-         && employeeProfileData !== "" 
-        //  && charterDataAll !== undefined && 
-        //  charterDataAll !== null && charterDataAll !== ""
-         ){
-        //      console.log(charterDataAll,"charterDataAll it")
-        //  charterDataAll.map((item)=>{
-        //     console.log(item,"item it" )
-        //    if(item.employeeId == employeeProfileData.employeeId){
-        //     setCharterId(item.charterId)
-        //     //  if(item.codeOfConduct == true && item.ethicsCharter !==true && item.dsiItCharter !==true){
-        //     //      props.history.push("/ethiccharter")
-        //     //      setShow(false)
-        //     //  }else
-        //       if(item.codeOfConduct == true && item.dsiItCharter !==true){
-        //        setShow(true)
-        //      }else if(item.codeOfConduct == true && item.dsiItCharter==true){
-        //        props.history.push("/dashboard/storedashboard")
-        //        setShow(false)
-        //      }
-        //    }
-        //  })
+         && employeeProfileData !== "" ){
         console.log(employeeProfileData,"employeeProfileData it")
         setCharterId(employeeProfileData.charterId)
          if(employeeProfileData.isCodeOfConduct === true &&
@@ -74,7 +43,7 @@ const ITCharter =(props)=>{
      }
      }, [employeeProfileData])
      
-    const handleSave = (e)=>{
+    const handleSave =(e)=>{
         e.preventDefault()
         console.log(props,dsiItCharter,employeeProfileData,charterDataAll,"charter it")
         if (dsiItCharter == "" || dsiItCharter == null || dsiItCharter == undefined) {
@@ -86,7 +55,7 @@ const ITCharter =(props)=>{
       const infoData = {
         "charterId": charterId,
         "employeeId":employeeProfileData.employeeId,
-        "isCodeOfConduct": true,
+        "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
         "isDsiItCharter": true 
         }
         dsiCharterUpdate(infoData)
@@ -105,29 +74,23 @@ const ITCharter =(props)=>{
       },[props])
 
       useEffect(() => {
-        if(employeeProfileData !== undefined && employeeProfileData !== null && employeeProfileData !== "" &&
-          charterDataAll !== undefined && charterDataAll !== null && charterDataAll !== ""){
-          charterDataAll.map((item)=>{
-            if(item.employeeId == employeeProfileData.employeeId){
-                if(item.dsiItCharter == true){
+        if(employeeProfileData !== undefined && employeeProfileData !== null && employeeProfileData !== ""){
+                if(employeeProfileData.isDsiItCharter == true){
                     setDsiItCharter(true)
                 }else{
                     setDsiItCharter(false)
                 }
-            }
-          })
         }
       }, [props])
 
   return (
     <>
       <Modal show={showModal} onHide={handleClose} >
-     
         <Modal.Body>
-        <div>
-<body>
-    <div class="container">
-        <h1>DSI IT CHARTER</h1>
+        <div class="html-charter">
+        <body>
+    <div class="container-charter">
+        <h1 class="h1-charter">DSI IT CHARTER</h1>
         <p>Decathlon Sports India Pvt. Ltd. along with its group companies (hereinafter referred as DSI)
             issues this IT Charter (“​ <strong>Charter</strong>​ ”) which will be ITCharterlicable to all its employees in relation to all
             DSI’s tangible and intangible assets in any form or media including but not limited to IT assets,
@@ -144,82 +107,82 @@ const ITCharter =(props)=>{
             This Charter also extends to third party suppliers using or in possession of DSI Assets. DSI
             employees and any third Party shall be referred to as (“​ <strong>User​</strong> ”)
         </p>
-        <table>
+        <table class="table-charter">
             <thead>
                 <tr>
-                    <th>Document Classification:</th>
-                    <th colspan="2">Internal Use Only</th>
+                    <th class="th-charter">Document Classification:</th>
+                    <th class="th-charter"colspan="2">Internal Use Only</th>
                 </tr>
                 <tr>
-                    <th>Reviewed on:</th>
-                    <th>Review Frequency:</th>
-                    <th>Next Review Date</th>
+                    <th class="th-charter">Reviewed on:</th>
+                    <th class="th-charter">Review Frequency:</th>
+                    <th class="th-charter">Next Review Date</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>17th Nov, 2020</td>
-                    <td>Yearly</td>
-                    <td>1st Dec, 2021</td>
+                    <td class="td-charter">17th Nov, 2020</td>
+                    <td class="td-charter">Yearly</td>
+                    <td class="td-charter">1st Dec, 2021</td>
                 </tr>
             </tbody>
             <thead>
                 <tr>
-                    <th>Prepared by:</th>
-                    <th>Reviewed by:</th>
-                    <th>Approved by:</th>
+                    <th class="th-charter">Prepared by:</th>
+                    <th class="th-charter">Reviewed by:</th>
+                    <th class="th-charter">Approved by:</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Sanjeev Nadgir - Country IT Security Leader</td>
-                    <td>Sreejith Mohanchandran - IS Team Manager
+                    <td class="td-charter">Sanjeev Nadgir - Country IT Security Leader</td>
+                    <td class="td-charter">Sreejith Mohanchandran - IS Team Manager
                         Erikaa Kathuria - Legal Advisor 
                         Ravi Sinha - Human Resource Manager</td>
-                    <td>Joy Tiwary - Chief Information Officer</td>
+                    <td class="td-charter">Joy Tiwary - Chief Information Officer</td>
                 </tr>
             </tbody>
             <thead>
                 <tr>
-                    <th>Owned by:</th>
-                    <th>Effective Date:</th>
-                    <th>Scope:</th>
+                    <th class="th-charter">Owned by:</th>
+                    <th class="th-charter">Effective Date:</th>
+                    <th class="th-charter">Scope:</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Information Security team</td>
-                    <td><strong>1st December, 2020</strong></td>
-                    <td>India, Sri Lanka, Bangladesh</td>
+                    <td class="td-charter">Information Security team</td>
+                    <td class="td-charter"><strong>1st December, 2020</strong></td>
+                    <td class="td-charter">India, Sri Lanka, Bangladesh</td>
                 </tr>
             </tbody>
         </table>
 
-        <h2>Charter for All Teammates</h2>
+        <h2 class="h2-charter">Charter for All Teammates</h2>
 
-        <h3>RIGHTS AND RESPONSIBILITIES OF USERS</h3>
-        <ol>
-            <li class="list-item-main">Each User has the right to access DSI Assets necessary for their job:
-                <ol>
-                    <li>This right is strictly professional.</li>
-                    <li>It may be revoked by DSI at any time if the User is in non-compliance with the
+        <h3 class="h3-charter">RIGHTS AND RESPONSIBILITIES OF USERS</h3>
+        <ol class="ol-charter">
+            <li class="list-item-main-charter">Each User has the right to access DSI Assets necessary for their job:
+                <ol class="ol-charter">
+                    <li class="li-charter">This right is strictly professional.</li>
+                    <li class="li-charter">It may be revoked by DSI at any time if the User is in non-compliance with the
                         authorization granted.</li>
-                    <li>It ceases when the professional activity that requires it comes to an end.</li>
+                    <li class="li-charter">It ceases when the professional activity that requires it comes to an end.</li>
                 </ol>
             </li>
-            <li class="list-item-main">Each User is responsible for the DSI Assets made available to them:
+            <li class="list-item-main-charter">Each User is responsible for the DSI Assets made available to them:
                 <ol>
-                    <li class="list-alpha">DSI Assets must be used professionally and honestly and only for the
+                    <li class="list-alpha-charter">DSI Assets must be used professionally and honestly and only for the
                         purpose of the job, in a legal way.</li>
                 </ol>
             </li>
-            <li class="list-item-main">Each User is responsible, at their level, for the protection of DSI Assets:
+            <li class="list-item-main-charter">Each User is responsible, at their level, for the protection of DSI Assets:
                 <ol>
-                    <li>Users are responsible for the confidentiality and backup of their data. Users must
+                    <li class="li-charter">Users are responsible for the confidentiality and backup of their data. Users must
                         save all professional data to the intended directories periodic backup. Users
                         must keep confidential files secured using encryption and/or password devices
                         or by assigning proper access rights.</li>
-                    <li>Users must only access their own information, and information that is published
+                    <li class="li-charter">Users must only access their own information, and information that is published
                         or shared with any workgroups or team drives they belong to. Users undertake
                         not to read, edit, copy or destroy any data not belonging to them without clear
                         agreement from the data owner, even if the data owner has not sufficiently
@@ -228,48 +191,48 @@ const ITCharter =(props)=>{
                         department or the owner of such information. This rule also applies to private
                         conversations and correspondences such as email where the User is not the
                         intended recipient or copied to the message.</li>
-                    <li>Users are responsible for the accesses and rights they grant to other Users, and
+                    <li class="li-charter">Users are responsible for the accesses and rights they grant to other Users, and
                         for any use made by the grantee.</li>
-                    <li>Users undertake not to intentionally disturb the smooth running of the Decathlon
+                    <li class="li-charter">Users undertake not to intentionally disturb the smooth running of the Decathlon
                         Group’s information systems by inappropriate use or introducing malware or
                         viruses.</li>
-                    <li>Users must inform their IT department of any abnormal operations they notice, or
+                    <li class="li-charter">Users must inform their IT department of any abnormal operations they notice, or
                         any attempted hacking of their account.</li>
-                    <li>Printed documents must be collected from printers, faxes and photocopiers
+                    <li class="li-charter">Printed documents must be collected from printers, faxes and photocopiers
                         promptly, and stored securely according to their confidentiality. After use,
                         documents must be archived or destroyed in accordance with their
                         confidentiality.</li>
-                    <li>Portable devices such as storage devices must never be left in full view of others
+                    <li class="li-charter">Portable devices such as storage devices must never be left in full view of others
                         (lying on the desk, left in a car, in a public place).</li>
-                    <li>Storage devices that are no longer in use must be sanitized, with the assistance
+                    <li class="li-charter">Storage devices that are no longer in use must be sanitized, with the assistance
                         of IT services if necessary, before disposal.</li>
                 </ol>
             </li>
-            <li class="list-item-main">Every User must observe internal and external regulations applicable in the following areas:
+            <li class="list-item-main-charter">Every User must observe internal and external regulations applicable in the following areas:
                 <ol>
-                    <li class="list-alpha">Access, profiles and passwords:
-                        <ol>
-                            <li>Access to different IT resources requires a profile and password. Users
+                    <li class="list-alpha-charter">Access, profiles and passwords:
+                        <ol class="ol-charter">
+                            <li class="li-charter">Access to different IT resources requires a profile and password. Users
                                 must change the password at initial log on.</li>
-                            <li>The password must be changed every 120 days, or immediately if it is
+                            <li class="li-charter">The password must be changed every 120 days, or immediately if it is
                                 compromised or revealed.</li>
-                            <li>Users must never communicate or write down their password.</li>
-                            <li>Users must never use any profile not belonging to them, or share their
+                            <li class="li-charter">Users must never communicate or write down their password.</li>
+                            <li class="li-charter">Users must never use any profile not belonging to them, or share their
                                 profile with others.</li>
-                            <li>Every User must have an individual profile, and must logout of their profile
+                            <li class="li-charter">Every User must have an individual profile, and must logout of their profile
                                 and email when using a shared IT resource after their usage of the shared
                                 asset is completed for the job/task.</li>
-                            <li>Users should use a good password that contains at least 8 characters
+                            <li class="li-charter">Users should use a good password that contains at least 8 characters
                                 with upper and lowercase characters, numbers and special characters.
                                 Avoid using names, dictionary words, or common series of numbers and
                                 letters.</li>
-                            <li>Each entity may be asked to reinforce physical or logical access through
+                            <li class="li-charter">Each entity may be asked to reinforce physical or logical access through
                                 the use of a specific system for its organisation (access badge, chip card,
                                 biometric systems, secure access filter etc.).</li>
                         </ol>
                     </li>
-                    <li class="list-alpha roman">Workstations and access to information:
-                        <ol>
+                    <li class="list-alpha-charter roman-charter">Workstations and access to information:
+                        <ol >
                             <li>Users may only log on to the network using the DSI assets provided to them by
                                 the IT department.</li>
                             <li>Users may not change the settings or configuration of their DSI assets , or
@@ -284,7 +247,7 @@ const ITCharter =(props)=>{
                                 etc.)</li>
                         </ol>
                     </li>
-                    <li class="list-alpha roman">DSI Assets : Laptop computers, PDAs, telephones, USB devices etc:
+                    <li class="list-alpha-charter roman-charter">DSI Assets : Laptop computers, PDAs, telephones, USB devices etc:
                         <ol>
                             <li>Mobile devices are allocated in accordance with the objective criteria linked to
                                 the individual's job. (Number of trips off-site, organisation of meetings, specific
@@ -307,7 +270,7 @@ const ITCharter =(props)=>{
                                 them.</li>
                         </ol>
                     </li>
-                    <li class="list-alpha roman">Use of communication and exchange tools:
+                    <li class="list-alpha-charter roman-charter">Use of communication and exchange tools:
                         <ol>
                             <li>DSI provides staff with various messaging tools that meet their needs for
                                 internal and external professional communication (email, IM, telephones and
@@ -334,7 +297,7 @@ const ITCharter =(props)=>{
                                 this charter.</li>
                         </ol>
                     </li>
-                    <li class="list-alpha roman">Use of internet services:
+                    <li class="list-alpha-charter roman-charter">Use of internet services:
                         <ol>
                             <li>Internet access is allocated to Users whose jobs require it. This access can be
                                 revoked at any time if it is in the DSIs interests.</li>
@@ -369,7 +332,7 @@ const ITCharter =(props)=>{
                                 legislation or IT policies and procedures.</li>
                         </ol>
                     </li>
-                    <li class="list-alpha roman">Forums, blogs, wikis, collaborative workspaces:
+                    <li class="list-alpha-charter roman-charter">Forums, blogs, wikis, collaborative workspaces:
                         <ol>
                             <li>Participation of forums, blogs, wikis and collaborative workspaces using
                                 company IT infrastructure(network IP address and workstation) is authorised
@@ -396,18 +359,18 @@ const ITCharter =(props)=>{
             </li>
         </ol>
 
-        <h3>DSI’s RIGHTS AND RESPONSIBILITIES</h3>
+        <h3 class="h3-charter">DSI’s RIGHTS AND RESPONSIBILITIES</h3>
         <p>DSI is responsible for:</p>
-        <ul>
-            <ul>
-                <li>Providing Users with secure IT resources.</li>
-                <li>Providing key IS stakeholders with security training and up-to-date
+        <ul class="ul-charter">
+            <ul class="ul-charter">
+                <li class="li-charter">Providing Users with secure IT resources.</li>
+                <li class="li-charter">Providing key IS stakeholders with security training and up-to-date
                     information regarding security rules applicable to DSI IT resources, in
                     particular for systems administrators.</li>
             </ul>
         </ul>
-        <ol>
-            <li class="list-item-main">DSI has the rights to check:
+        <ol class="ol-charter">
+            <li class="list-item-main-charter">DSI has the rights to check:
                 <ol>
                     <li>DSI reserves the right to analyse, monitor and even restrict the use of hardware
                         and software resources and any exchanges, regardless of their nature or subject,
@@ -429,17 +392,17 @@ const ITCharter =(props)=>{
                         preserve and/or correct, and will inform DSI management and stakeholders.</li>
                 </ol>
             </li>
-            <li class="list-item-main">Disciplinary measures:
+            <li class="list-item-main-charter">Disciplinary measures:
                 <ul>
-                    <li class="liststylenone">Any failure to observe the rules set out here will be the personal liability of the
+                    <li class="liststylenone-charter">Any failure to observe the rules set out here will be the personal liability of the
                         User. In the event of manifest infringement of these rules, DSI may take
                         measures appropriate to the severity of the User's actions, in accordance with
                         the terms and conditions of employment contract.</li>
                 </ul>
             </li>
-            <li class="list-item-main">Specific to system administrators:
+            <li class="list-item-main-charter">Specific to system administrators:
                 <ul>
-                    <li class="liststylenone">System administrators/IT Teams:</li>
+                    <li class="liststylenone-charter">System administrators/IT Teams:</li>
                 </ul>
                 <ol>
                     <li>Are required to observe the rules they enforce on other users.</li>
