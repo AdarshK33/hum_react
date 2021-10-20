@@ -59,6 +59,7 @@ const Signin = ({ location, history }) => {
         setDefaultHeader(access_token, user.refresh_token);
         if (localStorage.getItem("URL") === null) {
           history.push('/dashboard/storedashboard');
+          history.push('/codeofconduct');
         } else {
           let url = localStorage.getItem('URL');
           history.push(url);
