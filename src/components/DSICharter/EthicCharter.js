@@ -91,14 +91,6 @@ useEffect(()=>{
     }, [])
   return (
     <>
-      {/* <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
-      >
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-      </div> */}
       <Modal show={showModal} onHide={handleClose} >
      
         <Modal.Body>

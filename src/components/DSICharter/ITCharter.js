@@ -18,13 +18,21 @@ const ITCharter =(props)=>{
       } 
       
     const handleShow = () => setShow(true);
+    // const handleCheckBox =(e)=>{
+    //     if(dsiItCharter == false){
+    //         setDsiItCharter(true)
+    //     }else{
+    //         setDsiItCharter(true)
+    //     }
+    // }
     const handleCheckBox =(e)=>{
         if(dsiItCharter == false){
-            setDsiItCharter(true)
+          setDsiItCharter(true)
         }else{
-            setDsiItCharter(true)
+          setDsiItCharter(false)
         }
-    }
+        console.log(dsiItCharter)
+      }
     // useEffect(()=>{
     //     handleShow()
     //     console.log(props,"props it")
@@ -53,11 +61,13 @@ const ITCharter =(props)=>{
         //      }
         //    }
         //  })
-         if(employeeProfileData.codeOfConduct === true &&
-             employeeProfileData.dsiItCharter !==true){
+        console.log(employeeProfileData,"employeeProfileData it")
+        setCharterId(employeeProfileData.charterId)
+         if(employeeProfileData.isCodeOfConduct === true &&
+             employeeProfileData.isDsiItCharter !==true){
                 setShow(true)
-              }else if(employeeProfileData.codeOfConduct === true && 
-                employeeProfileData.dsiItCharter === true){
+              }else if(employeeProfileData.isCodeOfConduct === true && 
+                employeeProfileData.isDsiItCharter === true){
                 props.history.push("/dashboard/storedashboard")
                 setShow(false)
               }
@@ -76,8 +86,8 @@ const ITCharter =(props)=>{
       const infoData = {
         "charterId": charterId,
         "employeeId":employeeProfileData.employeeId,
-        "codeOfConduct":true,
-        "dsiItCharter": true
+        "isCodeOfConduct": true,
+        "isDsiItCharter": true 
         }
         dsiCharterUpdate(infoData)
         props.history.push("/dashboard/storedashboard")
@@ -111,14 +121,6 @@ const ITCharter =(props)=>{
 
   return (
     <>
-      {/* <div
-        className="d-flex align-items-center justify-content-center"
-        style={{ height: "100vh" }}
-      >
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-      </div> */}
       <Modal show={showModal} onHide={handleClose} >
      
         <Modal.Body>

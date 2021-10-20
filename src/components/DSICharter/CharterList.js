@@ -119,9 +119,9 @@ const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationC
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.employeeId}</td>
-                            <td>{item.codeOfConduct?"Yes":"No"}</td>
+                            <td>{item.isCodeOfConduct?"Yes":"No"}</td>
                             {/* <td>{item.ethicsCharter?"Yes":"No"}</td> */}
-                            <td>{item.dsiItCharter?"Yes":"No"}</td>
+                            <td>{item.isDsiItCharter?"Yes":"No"}</td>
                             {/* <td>
                               {true? (
                                 <Link to="/letters/show-cause">
