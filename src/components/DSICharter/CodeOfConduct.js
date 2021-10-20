@@ -114,6 +114,7 @@ const CodeOfConduct =(props)=> {
       if((employeeProfileData.isCodeOfConduct !== true && 
         employeeProfileData.isDsiItCharter !== true)||(employeeProfileData.isCodeOfConduct === null && 
         employeeProfileData.isDsiItCharter === null)){
+          handleShow()
           setCharterId(employeeProfileData.charterId)
       }else if(employeeProfileData.isCodeOfConduct === true &&
          employeeProfileData.isDsiItCharter !== true){
@@ -123,8 +124,6 @@ const CodeOfConduct =(props)=> {
             employeeProfileData.isDsiItCharter === true){
             props.history.push("/dashboard/storedashboard")
             setShow(false)
-          }else{
-            handleShow()
           }
           }
   }, [employeeProfileData])
