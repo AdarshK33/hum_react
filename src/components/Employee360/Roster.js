@@ -198,88 +198,87 @@ const Roster = () => {
       ) : WeeksInfoList !== null &&
         WeeksInfoList !== undefined &&
         Object.keys(WeeksInfoList).length !== 0 ? (
-        <ScrollArea
-          speed={0.4}
-          // className="area"
-          // contentClassName="content"
-          smoothScrolling={true}
-          horizontal={false}
-          style={{ zIndex: "0" }}
-        >
-          <table style={{ width: "100%" }}>
-            <tbody>
-              {WeeksInfoList.map((item) => {
-                return (
-                  <tr>
-                    <td
-                      style={
-                        // } // border: "1px solid white", // width: "50px", // backgroundColor:, // {
-                        item.weekOff === true
-                          ? {
-                              backgroundColor: "orange",
-                              width: "50px",
-                              border: "1px solid white",
-                            }
-                          : item.holiday !== null && item.holiday !== undefined
-                          ? {
-                              backgroundColor: "yellow",
-                              width: "50px",
-                              border: "1px solid white",
-                            }
-                          : {
-                              backgroundColor: "#f2f2f2",
-                              width: "50px",
-                              border: "1px solid white",
-                            }
-                      }
-                    >
-                      <div className="rosterColumn1">
-                        <label className="dateNum">
-                          {item.date.length === 1 ? "0" + item.date : item.date}
-                        </label>{" "}
-                        <label
-                          style={{
-                            marginLeft: "0.5rem",
-                          }}
-                        >
-                          {item.day}
+        // <ScrollArea
+        //   speed={0.4}
+        //   // className="area"
+        //   // contentClassName="content"
+        //   smoothScrolling={true}
+        //   horizontal={false}
+        //   style={{ zIndex: "0" }}
+        // >
+        <table style={{ width: "100%" }}>
+          <tbody>
+            {WeeksInfoList.map((item) => {
+              return (
+                <tr>
+                  <td
+                    style={
+                      // } // border: "1px solid white", // width: "50px", // backgroundColor:, // {
+                      item.weekOff === true
+                        ? {
+                            backgroundColor: "orange",
+                            width: "50px",
+                            border: "1px solid white",
+                          }
+                        : item.holiday !== null && item.holiday !== undefined
+                        ? {
+                            backgroundColor: "yellow",
+                            width: "50px",
+                            border: "1px solid white",
+                          }
+                        : {
+                            backgroundColor: "#f2f2f2",
+                            width: "50px",
+                            border: "1px solid white",
+                          }
+                    }
+                  >
+                    <div className="rosterColumn1">
+                      <label className="dateNum">
+                        {item.date.length === 1 ? "0" + item.date : item.date}
+                      </label>{" "}
+                      <label
+                        style={{
+                          marginLeft: "0.5rem",
+                        }}
+                      >
+                        {item.day}
+                      </label>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="rosterColumn2">
+                      {item.weekOff === true ? (
+                        <label> </label>
+                      ) : item.holiday !== null &&
+                        item.holiday !== undefined ? (
+                        <label> </label>
+                      ) : item.startTime !== null &&
+                        item.startTime !== undefined ? (
+                        <label>
+                          {tConvert(item.startTime.slice(0, -3))}-
+                          {tConvert(item.endTime.slice(0, -3))}
+                          {/* {item.startTime.slice(0, -3)} */}
                         </label>
+                      ) : (
+                        <label></label>
+                      )}
+                      <div className="rosterContent">
+                        {item.weekOff === true
+                          ? "Week Off"
+                          : item.holiday !== null && item.holiday !== undefined
+                          ? item.holiday
+                          : item.shiftName}
                       </div>
-                    </td>
-                    <td>
-                      <div className="rosterColumn2">
-                        {item.weekOff === true ? (
-                          <label> </label>
-                        ) : item.holiday !== null &&
-                          item.holiday !== undefined ? (
-                          <label> </label>
-                        ) : item.startTime !== null &&
-                          item.startTime !== undefined ? (
-                          <label>
-                            {tConvert(item.startTime.slice(0, -3))}-
-                            {tConvert(item.endTime.slice(0, -3))}
-                            {/* {item.startTime.slice(0, -3)} */}
-                          </label>
-                        ) : (
-                          <label></label>
-                        )}
-                        <div className="rosterContent">
-                          {item.weekOff === true
-                            ? "Week Off"
-                            : item.holiday !== null &&
-                              item.holiday !== undefined
-                            ? item.holiday
-                            : item.shiftName}
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </ScrollArea>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       ) : (
+        // </ScrollArea>
         <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
           No Records Found
         </h4>
