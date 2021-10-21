@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from "react";
-import { Route, Switch,Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import App from "./components/app";
 
@@ -140,13 +140,14 @@ import Pdfsample from "./components/PdfLetters/pdfsample";
 import DocumentContainer from "./components/DocumentManagement/DocumentContainer";
 import ModuleDocumentList from "./components/DocumentManagement/ModuleDocumentList";
 
-import DSICharter from "./components/DSICharter/Charter"
-import CodeOfConduct  from "./components/DSICharter/CodeOfConduct";
+import DSICharter from "./components/DSICharter/Charter";
+import CodeOfConduct from "./components/DSICharter/CodeOfConduct";
 import EthicsCharter from "./components/DSICharter/EthicCharter";
 import ITCharter from "./components/DSICharter/ITCharter";
 import CharterList from "./components/DSICharter/CharterList";
 import CharterEdit from "./components/DSICharter/CharterEdit";
 import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
+import ManagerDashboard from "./components/Employee360/ManagerDashboard";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -221,28 +222,30 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/dashboard/storedashboard`}
             component={Default}
           />
-              <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/codeofconduct`}
             component={CodeOfConduct}
-          />   
-           <Route
-          path={`${process.env.PUBLIC_URL}/ethiccharter`}
-          component={EthicsCharter}
-        />  
+          />
           <Route
-        path={`${process.env.PUBLIC_URL}/itcharter`}
-        component={ITCharter}
-      />
-       <Route
+            path={`${process.env.PUBLIC_URL}/ethiccharter`}
+            component={EthicsCharter}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/itcharter`}
+            component={ITCharter}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/charter-list`}
             component={CharterList}
           />
 
-           <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/master/charter-edit`}
             component={CharterEdit}
           />
-          <Redirect from="/" to={`${process.env.PUBLIC_URL}/codeofconduct`}
+          <Redirect
+            from="/"
+            to={`${process.env.PUBLIC_URL}/codeofconduct`}
             component={CodeOfConduct}
           />
           {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} /> */}
@@ -359,7 +362,6 @@ const RoutePath = () => {
             component={EmployeeExitList}
           />
 
-       
           <Route
             path={`${process.env.PUBLIC_URL}/employee360`}
             component={EmployeeDashboard}
@@ -415,9 +417,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={PromotionList}
           />
-             <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
+            // component={ManagerDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/promotion-initiate`}
@@ -571,7 +574,8 @@ const RoutePath = () => {
                   ) : e.path === "/holiday/holidaylist" ? (
                     <Route
                       path={`${process.env.PUBLIC_URL}/holiday/holidaylist`}
-                      component={HolidayList}
+                      // component={HolidayList}
+                      component={ManagerDashboard}
                     />
                   ) : e.path === "/salary/processsalary" ? (
                     <Route

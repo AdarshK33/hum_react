@@ -13,8 +13,8 @@ const initial_state = {
   plannedLeaves: [],
   unPlannedLeaves: [],
   myPerformanceData: {},
-  terminationLetterData: [],
-  terminationConfirmationStatus: "",
+  Manager360ListData: [],
+  ClusterEmpList: [],
   resignationConfirmationStatus: "",
 };
 
@@ -125,6 +125,23 @@ export const Employee360Provider = ({ children }) => {
         console.log(error);
       });
   };
+  const ClusterSearchByClusterName = (key) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/cluster?key=" + key)
+      .then((response) => {
+        state.ClusterEmpList = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "CLUSTER_EMP_DATA",
+          payload: state.ClusterEmpList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const Employee360ListView = (key) => {
     setApprovalsLoader(true);
     client
@@ -142,6 +159,39 @@ export const Employee360Provider = ({ children }) => {
         console.log(error);
       });
   };
+
+  const Manager360ListView = (key) => {
+    let api = "";
+    setApprovalsLoader(true);
+    if (key === "transfer") {
+      api =
+        "/api/v1/transfer/view?key=all&page=0&size=10&status=5&transferType=all";
+    } else if (key === "promotion") {
+      api =
+        "/api/v1/promotion/view?key=all&page=0&size=10&status=6&superManager=0";
+    } else {
+      api = "/api/v1/employee/360/view/leave/manager?page=0&size=10";
+    }
+
+    client
+      .get(api)
+      .then((response) => {
+        if (key === "leaves") {
+          state.Manager360ListData = response.data.data;
+        } else {
+          state.Manager360ListData = response.data.data.data;
+        }
+        setApprovalsLoader(false);
+        return dispatch({
+          type: "MANAGER_360_APROVAL",
+          payload: state.Manager360ListData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const MyLeavesViewPlanned = () => {
     setLoader(true);
     client
@@ -207,6 +257,10 @@ export const Employee360Provider = ({ children }) => {
         MyLeavesViewPlanned,
         MyLeavesViewUnplanned,
         MyPerformanceView,
+        Manager360ListView,
+        ClusterSearchByClusterName,
+        ClusterEmpList: state.ClusterEmpList,
+        Manager360ListData: state.Manager360ListData,
         myPerformanceData: state.myPerformanceData,
         unPlannedLeaves: state.unPlannedLeaves,
         plannedLeaves: state.plannedLeaves,
