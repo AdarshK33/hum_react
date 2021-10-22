@@ -575,7 +575,7 @@ const ChangeEmployementType = () => {
                       {initiationEmpData !== null &&
                       initiationEmpData !== undefined &&
                       initiationEmpData !== "" &&
-                      initiationEmpData.currentContractType === "permanent" ? (
+                      initiationEmpData.currentContractType.toLowerCase() === "permanent" ? (
                         <option value="From Full Time to Part Time">
                           From Full Time to Part Time
                         </option>

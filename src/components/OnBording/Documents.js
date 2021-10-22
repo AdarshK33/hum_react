@@ -374,6 +374,7 @@ const Documents = (props) => {
       });
       setUploadedError(tempArray);
     }
+    console.log("stateOfDisable",stateOfDisable.relievingLetter);
   }, [documentViewData]);
 
   console.log("state.photoId", state, state.photoId);
@@ -2339,8 +2340,8 @@ const Documents = (props) => {
                           disabled={
                             (candidateProfileData.documentUploaded === 1 &&
                               candidateProfileData.verificationStatus === 2 &&
-                              (stateOfDisable.relievingLetter === 0 ||
-                                stateOfDisable.relievingLetter === 2)) ||
+                              (stateOfDisable.relievingLetter === 2 ||
+                                stateOfDisable.relievingLetter === 0)) ||
                             (candidateProfileData.verificationStatus === 0 &&
                               candidateProfileData.documentUploaded === 0)
                               ? false
@@ -2353,8 +2354,8 @@ const Documents = (props) => {
                         className={
                           (candidateProfileData.documentUploaded === 1 &&
                             candidateProfileData.verificationStatus === 2 &&
-                            (stateOfDisable.relievingLetter === 0 ||
-                              stateOfDisable.relievingLetter === 2)) ||
+                            (stateOfDisable.relievingLetter === 2 ||
+                              stateOfDisable.relievingLetter === 0)) ||
                           (candidateProfileData.verificationStatus === 0 &&
                             candidateProfileData.documentUploaded === 0)
                             ? "custom-file-upload"
@@ -2371,8 +2372,8 @@ const Documents = (props) => {
                           disabled={
                             (candidateProfileData.documentUploaded === 1 &&
                               candidateProfileData.verificationStatus === 2 &&
-                              (stateOfDisable.relievingLetter === 0 ||
-                                stateOfDisable.relievingLetter === 2)) ||
+                              (stateOfDisable.relievingLetter === 2 ||
+                                stateOfDisable.relievingLetter === 0)) ||
                             (candidateProfileData.verificationStatus === 0 &&
                               candidateProfileData.documentUploaded === 0)
                               ? false
