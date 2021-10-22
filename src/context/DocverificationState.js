@@ -557,7 +557,7 @@ export const DocsVerificationProvider = (props) => {
         .then((response) => {
           console.log(response);
           state.insuranceResponse = response.data.data;
-          return dispatch({ type: "BASE64_UPLOAD", payload: state.insuranceResponse });
+          return dispatch({ type: "INSURANCE_BASE64_UPLOAD", payload: state.insuranceResponse });
         })
         .catch((error) => {
           console.log(error);
