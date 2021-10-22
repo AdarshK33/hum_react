@@ -19,9 +19,11 @@ import HolidaysCard from "./HolidaysCard";
 import MyDocumentsCard from "./MyDocumentsCard";
 import ClusterCard from "./ClusterManager360Card";
 import ApprovalsEmp360Card from "./ApprovalsEmp360Card";
+import { useHistory } from "react-router-dom";
 
 // view-----
 const EmployeeDashboard = () => {
+  const history = useHistory();
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -51,6 +53,7 @@ const EmployeeDashboard = () => {
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
   const { stateList, viewStates } = useContext(MasterFilesContext);
+  const { rolePermission } = useContext(PermissionContext);
 
   useEffect(() => {
     locationDetails();
@@ -105,6 +108,9 @@ const EmployeeDashboard = () => {
       });
     }
   }, [stateId, stateList]);
+  const GoToDocuments = (e) => {
+    history.push("./document-management");
+  };
 
   return (
     <Fragment>
@@ -250,57 +256,36 @@ const EmployeeDashboard = () => {
                               <label>{user.joiningDate}</label>
                               <br />
                               <label>
-                                <b>Login Type</b>
+                                <b>Work Location</b>
+                              </label>
+                              <br />
+                              <label>{state.empLocation}</label>
+                            </div>
+                          </Col>
+                          <Col>
+                            <div>
+                              <label>
+                                <b>System Role</b>
                               </label>
                               <br />
                               <label>
-                                {/* Type {user.loginType} */}
-                                {user.loginType == "1"
+                                {rolePermission == "costCenterManager"
+                                  ? "Cost Center Manager"
+                                  : rolePermission == "superCostCenterManager"
+                                  ? "Super Cost Center Manager"
+                                  : rolePermission == "admin"
                                   ? "Admin"
+                                  : rolePermission == "manager"
+                                  ? "Manager"
                                   : user.loginType == "2"
                                   ? "General User"
                                   : user.loginType == "4"
                                   ? "Finance Partner"
                                   : user.loginType == "5"
                                   ? "IT Admin"
-                                  : user.loginType == "7"
-                                  ? "Cost Center Manager"
-                                  : user.loginType == "9"
-                                  ? "Super Cost Center Manager"
                                   : user.loginType == "10"
                                   ? "HR Strategist"
-                                  : "NA"}
-                              </label>
-                            </div>
-                          </Col>
-                          <Col>
-                            <div>
-                              <label>
-                                <b>Work Location</b>
-                              </label>
-                              <br />
-                              <label>{state.empLocation}</label>
-                              <br />
-                              <label>
-                                <b>Additional Role</b>
-                              </label>
-                              <br />
-                              <label>
-                                {user.additionalRole == "1"
-                                  ? "Admin"
-                                  : user.additionalRole == "2"
-                                  ? "General User"
-                                  : user.additionalRole == "4"
-                                  ? "Finance Partner"
-                                  : user.additionalRole == "5"
-                                  ? "IT Admin"
-                                  : user.additionalRole == "7"
-                                  ? "Cost Center Manager"
-                                  : user.additionalRole == "9"
-                                  ? "Super Cost Center Manager"
-                                  : user.additionalRole == "10"
-                                  ? "HR Strategist"
-                                  : "NA"}
+                                  : " "}
                               </label>
                             </div>
                           </Col>
@@ -462,7 +447,15 @@ const EmployeeDashboard = () => {
                         className="big-card p-10 main-card"
                       >
                         <label className="smallCardHeading">My Documents</label>
-                        <MyDocumentsCard />
+                        <MyDocumentsCard height={"200px"} />
+                        <div style={{ float: "bottom", textAlign: "center" }}>
+                          <label
+                            className="itemResult"
+                            onClick={(e) => GoToDocuments(e)}
+                          >
+                            View All
+                          </label>
+                        </div>
                       </Card>
 
                       <Card

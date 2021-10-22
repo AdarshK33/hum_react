@@ -25,19 +25,25 @@ const ApprovalsManager360Card = () => {
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(0)}
         >
-          <label>Leaves</label>
+          <label>Promotions & Salary</label>
         </div>
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(1)}
         >
-          <label>Promotions & Salary</label>
+          <label>Transfers</label>
         </div>
         <div
           className={tabIndex === 2 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(2)}
         >
-          <label>Transfers</label>
+          <label>Disciplinary</label>
+        </div>
+        <div
+          className={tabIndex === 3 ? "activeTab" : "disabledTab"}
+          onClick={(e) => setTabIndex(3)}
+        >
+          <label>Probation</label>
         </div>
       </div>
 
@@ -45,11 +51,13 @@ const ApprovalsManager360Card = () => {
         {(() => {
           switch (tabIndex) {
             case 0:
-              return <ApprovalsManager360List ListType={"leaves"} />;
-            case 1:
               return <ApprovalsManager360List ListType={"promotion"} />;
-            case 2:
+            case 1:
               return <ApprovalsManager360List ListType={"transfer"} />;
+            case 2:
+              return <ApprovalsManager360List ListType={"disciplinary"} />;
+            case 3:
+              return <ApprovalsManager360List ListType={"probation"} />;
 
             default:
               return <div>nothing</div>;

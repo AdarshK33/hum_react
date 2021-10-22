@@ -14,10 +14,22 @@ const APPROVALS_EMP360_TABLE_HEADERS = {
     transferType: "Typpe Of Transfer",
     status: "Status",
   },
-  leaves: {
-    leaveDate: "Leave Date",
-    duration: "Duration",
-    reason: "Reason",
+  disciplinary: {
+    empName: "Employee Name",
+    showCauseDate: "Show Cause Notice Issued Date",
+    dueDays: "Due Days",
+    showCauseStatus: "Show Cause Status",
+    warningDate: "Warning Letter Issue Date",
+    pipStartDate: "PIP Start Date",
+    pipEndDate: "PIP End Date",
+    pipStatus: "PIP Status",
+    status: "Status",
+  },
+  probation: {
+    empName: "Emp Name",
+    dateOfJoining: "Date of Joining",
+    dateOfCnfrmation: "Date of Confirmation",
+    dueDays: "Due Days",
     status: "Status",
   },
 };

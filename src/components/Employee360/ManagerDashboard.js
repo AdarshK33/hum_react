@@ -19,9 +19,11 @@ import HolidaysCard from "./HolidaysCard";
 import MyDocumentsCard from "./MyDocumentsCard";
 import ClusterCard from "./ClusterManager360Card";
 import ApprovalsManager360Card from "./ApprovalsManager360Card";
+import { useHistory } from "react-router-dom";
+import { RoleManagementContext } from "../../context/RoleManagementState";
 
-// view-----
 const ManagerDashboard = () => {
+  const history = useHistory();
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -50,6 +52,7 @@ const ManagerDashboard = () => {
   const [country, setCountry] = useState("");
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { stateList, viewStates } = useContext(MasterFilesContext);
 
   useEffect(() => {
@@ -105,6 +108,12 @@ const ManagerDashboard = () => {
       });
     }
   }, [stateId, stateList]);
+  const GoToDocuments = (e) => {
+    history.push("./document-management");
+  };
+  const GoToCluster = (e) => {
+    history.push("./cluster/viewclustert");
+  };
 
   return (
     <Fragment>
@@ -250,57 +259,36 @@ const ManagerDashboard = () => {
                               <label>{user.joiningDate}</label>
                               <br />
                               <label>
-                                <b>Login Type</b>
+                                <b>Work Location</b>
+                              </label>
+                              <br />
+                              <label>{state.empLocation}</label>
+                            </div>
+                          </Col>
+                          <Col>
+                            <div>
+                              <label>
+                                <b>System Role</b>
                               </label>
                               <br />
                               <label>
-                                {/* Type {user.loginType} */}
-                                {user.loginType == "1"
+                                {rolePermission == "costCenterManager"
+                                  ? "Cost Center Manager"
+                                  : rolePermission == "superCostCenterManager"
+                                  ? "Super Cost Center Manager"
+                                  : rolePermission == "admin"
                                   ? "Admin"
+                                  : rolePermission == "manager"
+                                  ? "Manager"
                                   : user.loginType == "2"
                                   ? "General User"
                                   : user.loginType == "4"
                                   ? "Finance Partner"
                                   : user.loginType == "5"
                                   ? "IT Admin"
-                                  : user.loginType == "7"
-                                  ? "Cost Center Manager"
-                                  : user.loginType == "9"
-                                  ? "Super Cost Center Manager"
                                   : user.loginType == "10"
                                   ? "HR Strategist"
-                                  : "NA"}
-                              </label>
-                            </div>
-                          </Col>
-                          <Col>
-                            <div>
-                              <label>
-                                <b>Work Location</b>
-                              </label>
-                              <br />
-                              <label>{state.empLocation}</label>
-                              <br />
-                              <label>
-                                <b>Additional Role</b>
-                              </label>
-                              <br />
-                              <label>
-                                {user.additionalRole == "1"
-                                  ? "Admin"
-                                  : user.additionalRole == "2"
-                                  ? "General User"
-                                  : user.additionalRole == "4"
-                                  ? "Finance Partner"
-                                  : user.additionalRole == "5"
-                                  ? "IT Admin"
-                                  : user.additionalRole == "7"
-                                  ? "Cost Center Manager"
-                                  : user.additionalRole == "9"
-                                  ? "Super Cost Center Manager"
-                                  : user.additionalRole == "10"
-                                  ? "HR Strategist"
-                                  : "NA"}
+                                  : " "}
                               </label>
                             </div>
                           </Col>
@@ -433,6 +421,14 @@ const ManagerDashboard = () => {
                           <label style={{ marginLeft: "1rem" }}>My Team</label>
                         </div>
                         <ClusterCard />
+                        <div style={{ float: "bottom", textAlign: "center" }}>
+                          <label
+                            className="itemResult"
+                            onClick={(e) => GoToCluster(e)}
+                          >
+                            View All
+                          </label>
+                        </div>
                       </Card>
                     </Col>
                     <Col sm={6}>
@@ -488,7 +484,16 @@ const ManagerDashboard = () => {
                         className="big-card p-10 main-card"
                       >
                         <label className="smallCardHeading">My Documents</label>
-                        <MyDocumentsCard />
+
+                        <MyDocumentsCard height={"200px"} />
+                        <div style={{ float: "bottom", textAlign: "center" }}>
+                          <label
+                            className="itemResult"
+                            onClick={(e) => GoToDocuments(e)}
+                          >
+                            View All
+                          </label>
+                        </div>
                       </Card>
                     </Col>
                     <Col sm={3}>

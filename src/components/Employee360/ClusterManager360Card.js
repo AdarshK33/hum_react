@@ -189,13 +189,6 @@ const ClusterCard = () => {
           ""
         )}
       </ScrollArea>
-
-      <div style={{ float: "bottom", textAlign: "center" }}>
-        <label className="itemResult">
-          {/* onClick={(e) => setTabIndex(2)} */}
-          View All
-        </label>
-      </div>
     </Fragment>
   );
 };

@@ -15,7 +15,7 @@ const TableComponentManager360 = ({
     <div style={{ height: height }}>
       <TableScrollbar>
         <table className="table table-hover">
-          <thead className="thead-light">
+          <thead className="thead-light" style={{ fontSize: "15px" }}>
             <tr>
               {Object.entries(tableHeaders).map(([key, value]) => (
                 <th key={key}>{value}</th>
@@ -25,7 +25,7 @@ const TableComponentManager360 = ({
           {tableBody !== null &&
           tableBody !== undefined &&
           Object.keys(tableBody).length !== 0 ? (
-            <tbody>
+            <tbody style={{ fontSize: "15px" }}>
               {tableBody.map((item, itemIndex) => (
                 <tr key={`${item.sno}_${itemIndex}`}>
                   {Object.entries(item).map(([key, value], index) => {

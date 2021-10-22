@@ -25,19 +25,26 @@ const ApprovalsEmp360Card = () => {
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(0)}
         >
-          <label>Leaves</label>
+          <label>Promotions & Salary</label>
         </div>
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(1)}
         >
-          <label>Promotions & Salary</label>
+          <label>Transfers</label>
         </div>
         <div
           className={tabIndex === 2 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(2)}
         >
-          <label>Transfers</label>
+          <label>Disciplinary</label>
+        </div>
+
+        <div
+          className={tabIndex === 3 ? "activeTab" : "disabledTab"}
+          onClick={(e) => setTabIndex(3)}
+        >
+          <label>probation</label>
         </div>
       </div>
 
@@ -45,11 +52,13 @@ const ApprovalsEmp360Card = () => {
         {(() => {
           switch (tabIndex) {
             case 0:
-              return <ApprovalsEmp360List ListType={"leaves"} />;
-            case 1:
               return <ApprovalsEmp360List ListType={"promotion"} />;
-            case 2:
+            case 1:
               return <ApprovalsEmp360List ListType={"transfer"} />;
+            case 2:
+              return <ApprovalsEmp360List ListType={"disciplinary"} />;
+            case 3:
+              return <ApprovalsEmp360List ListType={"probation"} />;
 
             default:
               return <div>nothing</div>;

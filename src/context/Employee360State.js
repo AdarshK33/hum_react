@@ -142,10 +142,16 @@ export const Employee360Provider = ({ children }) => {
         console.log(error);
       });
   };
-  const Employee360ListView = (key) => {
+  const Employee360ListView = (key, EmpId) => {
     setApprovalsLoader(true);
+    let api = "";
+    if (key === "disciplinary") {
+      api = "/api/v1/disciplinary/view/employee?employeeId=" + EmpId;
+    } else {
+      api = "/api/v1/employee/360/view/" + key;
+    }
     client
-      .get("/api/v1/employee/360/view/" + key)
+      .get(api)
       .then((response) => {
         state.employee360ListData = response.data.data;
         //toast.info(response.data.message);
@@ -168,19 +174,17 @@ export const Employee360Provider = ({ children }) => {
         "/api/v1/transfer/view?key=all&page=0&size=10&status=5&transferType=all";
     } else if (key === "promotion") {
       api =
-        "/api/v1/promotion/view?key=all&page=0&size=10&status=6&superManager=0";
-    } else {
-      api = "/api/v1/employee/360/view/leave/manager?page=0&size=10";
+        "/api/v1/promotion/view?key=all&page=0&size=10&status=0&superManager=0";
+    } else if (key === "probation") {
+      api = "/api/v1/probation/view?days=0&key=all&page=0&size=10&status=0";
+    } else if ((key = "disciplinary")) {
+      api = "/api/v1/disciplinary/view?key=all&page=0&size=10&superManager=0";
     }
 
     client
       .get(api)
       .then((response) => {
-        if (key === "leaves") {
-          state.Manager360ListData = response.data.data;
-        } else {
-          state.Manager360ListData = response.data.data.data;
-        }
+        state.Manager360ListData = response.data.data.data;
         setApprovalsLoader(false);
         return dispatch({
           type: "MANAGER_360_APROVAL",

@@ -11,6 +11,7 @@ import { BonusContext } from "../../context/BonusState";
 import { PermissionContext } from "../../context/PermissionState";
 import { Employee360Context } from "../../context/Employee360State";
 import LoaderIcon from "../Loader/LoaderIcon";
+import moment from "moment";
 
 const ApprovalsEmp360List = ({ ListType }) => {
   const { Employee360ListView, employee360ListData, approvalsLoader } =
@@ -29,13 +30,15 @@ const ApprovalsEmp360List = ({ ListType }) => {
       ? APPROVALS_EMP360_TABLE_HEADERS.promotion
       : ListType === "transfer"
       ? APPROVALS_EMP360_TABLE_HEADERS.transfer
-      : ListType === "leaves"
-      ? APPROVALS_EMP360_TABLE_HEADERS.leaves
-      : APPROVALS_EMP360_TABLE_HEADERS.leaves;
+      : ListType === "disciplinary"
+      ? APPROVALS_EMP360_TABLE_HEADERS.disciplinary
+      : ListType === "probation"
+      ? APPROVALS_EMP360_TABLE_HEADERS.probation
+      : APPROVALS_EMP360_TABLE_HEADERS.promotion;
   const [tableBody, setTableBody] = useState([]);
 
   useEffect(() => {
-    Employee360ListView(ListType);
+    Employee360ListView(ListType, user.employeeId);
   }, [ListType]);
   console.log("employee360ListData", employee360ListData);
   useEffect(() => {
@@ -72,13 +75,88 @@ const ApprovalsEmp360List = ({ ListType }) => {
           };
         });
         setTableBody(tableData);
-      } else if (ListType === "leaves") {
+      } else if (ListType === "disciplinary") {
         let tableData = employee360ListData.map((item, index) => {
           return {
-            leaveDate: item.fromDate + " to " + item.todate,
-            duration: item.numberOfDays + "Days",
-            reason: item.reason,
-            status: item.status == "1" ? "Approved" : "Disapproved",
+            empName: item.employeeName,
+            showCauseDate:
+              item.disciplinaryAction !== null &&
+              item.disciplinaryAction !== undefined
+                ? item.disciplinaryAction.actionIssuedDate
+                : "NA",
+            dueDays:
+              item.disciplinaryAction !== null &&
+              item.disciplinaryAction !== undefined
+                ? item.disciplinaryAction.actionDueDays
+                : "NA ",
+            showCauseStatus:
+              item.disciplinaryAction !== null &&
+              item.disciplinaryAction !== undefined
+                ? item.disciplinaryAction.employeeActionStatus
+                : "NA ",
+            warningDate:
+              item.disciplinaryWarning !== null &&
+              item.disciplinaryWarning !== undefined
+                ? item.disciplinaryWarning.warningIssuedDate
+                : "NA ",
+            pipStartDate:
+              item.disciplinaryWarning !== null &&
+              item.disciplinaryWarning !== undefined
+                ? item.disciplinaryWarning.warningIssuedDate
+                : "NA ",
+            pipEndDate:
+              item.disciplinaryWarning !== null &&
+              item.disciplinaryWarning !== undefined
+                ? item.disciplinaryWarning.pipEndDate
+                : "NA ",
+            pipStatus:
+              item.disciplinaryWarning !== null &&
+              item.disciplinaryWarning !== undefined
+                ? item.disciplinaryWarning.statusDesc
+                : "NA ",
+            status: "Approved",
+          };
+        });
+        setTableBody(tableData);
+      } else if (ListType === "probation") {
+        let tableData = employee360ListData.map((item, index) => {
+          return {
+            empName: item.empName,
+            dateOfJoining: item.dateOfJoining,
+            dateOfCnfrmation:
+              item.status === 2 &&
+              item.probationExtensionEndDate !== null &&
+              item.probationExtensionEndDate !== "" &&
+              item.probationExtensionEndDate !== undefined
+                ? item.probationExtensionEndDate
+                : item.probationConfirmationDate !== null &&
+                  item.probationConfirmationDate !== "" &&
+                  item.probationConfirmationDate !== undefined
+                ? item.probationConfirmationDate
+                : item.dateOfJoining !== null &&
+                  item.dateOfJoining !== undefined &&
+                  item.dateOfJoining !== "" &&
+                  item.probationPeriod !== null &&
+                  item.probationPeriod !== undefined &&
+                  item.probationPeriod !== ""
+                ? moment(
+                    new Date(
+                      new Date(item.dateOfJoining).setMonth(
+                        new Date(item.dateOfJoining).getMonth() +
+                          item.probationPeriod
+                      )
+                    )
+                  ).format("yyyy-MM-DD")
+                : "NA",
+            dueDays: item.dueDays,
+            status:
+              item.status == 0
+                ? "Due for"
+                : item.status == 1
+                ? "Approved"
+                : item.status == 2
+                ? "Extended"
+                : "Disapproved",
           };
         });
         setTableBody(tableData);
