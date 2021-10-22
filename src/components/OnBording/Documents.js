@@ -2073,7 +2073,8 @@ const Documents = (props) => {
                           candidateProfileData.verificationStatus === 2 &&
                           (stateOfDisable.collegeLetter === 0 ||
                             stateOfDisable.collegeLetter === 2)) ||
-                        (candidateProfileData.adminVerificationStatus === 2 &&
+                        ((candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
                           (adminDocApprove.collegeLetter === 0 ||
                             adminDocApprove.collegeLetter === 2)) ||
                         (candidateProfileData.documentUploaded === 0 &&
@@ -2091,7 +2092,8 @@ const Documents = (props) => {
                         candidateProfileData.verificationStatus === 2 &&
                         (stateOfDisable.collegeLetter === 0 ||
                           stateOfDisable.collegeLetter === 2)) ||
-                      (candidateProfileData.adminVerificationStatus === 2 &&
+                      ((candidateProfileData.adminVerificationStatus === 1||
+                        candidateProfileData.adminVerificationStatus === 2) &&
                         (adminDocApprove.collegeLetter === 0 ||
                           adminDocApprove.collegeLetter === 2)) ||
                       (candidateProfileData.documentUploaded === 0 &&
@@ -2113,7 +2115,8 @@ const Documents = (props) => {
                           candidateProfileData.verificationStatus === 2 &&
                           (stateOfDisable.collegeLetter === 0 ||
                             stateOfDisable.collegeLetter === 2)) ||
-                        (candidateProfileData.adminVerificationStatus === 2 &&
+                        ((candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
                           (adminDocApprove.collegeLetter === 0 ||
                             adminDocApprove.collegeLetter === 2)) ||
                         (candidateProfileData.documentUploaded === 0 &&
@@ -2182,7 +2185,8 @@ const Documents = (props) => {
                           candidateProfileData.verificationStatus === 2 &&
                           (stateOfDisable.collegeId === 0 ||
                             stateOfDisable.collegeId === 2)) ||
-                        (candidateProfileData.adminVerificationStatus === 2 &&
+                        ((candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
                           (adminDocApprove.collegeId === 0 ||
                             adminDocApprove.collegeId === 2)) ||
                         (candidateProfileData.documentUploaded === 0 &&
@@ -2200,7 +2204,8 @@ const Documents = (props) => {
                         candidateProfileData.verificationStatus === 2 &&
                         (stateOfDisable.collegeId === 0 ||
                           stateOfDisable.collegeId === 2)) ||
-                      (candidateProfileData.adminVerificationStatus === 2 &&
+                      ((candidateProfileData.adminVerificationStatus === 1||
+                        candidateProfileData.adminVerificationStatus === 2) &&
                         (adminDocApprove.collegeId === 0 ||
                           adminDocApprove.collegeId === 2)) ||
                       (candidateProfileData.documentUploaded === 0 &&
@@ -2222,7 +2227,8 @@ const Documents = (props) => {
                           candidateProfileData.verificationStatus === 2 &&
                           (stateOfDisable.collegeId === 0 ||
                             stateOfDisable.collegeId === 2)) ||
-                        (candidateProfileData.adminVerificationStatus === 2 &&
+                        ((candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
                           (adminDocApprove.collegeId === 0 ||
                             adminDocApprove.collegeId === 2)) ||
                         (candidateProfileData.documentUploaded === 0 &&
