@@ -41,7 +41,7 @@ const ITCharter =(props)=>{
                 setShow(false)
               }
      }
-     }, [employeeProfileData])
+     }, [employeeProfileData,props])
      
     const handleSave =(e)=>{
         e.preventDefault()
@@ -69,9 +69,6 @@ const ITCharter =(props)=>{
         viewCharterAll()
     }, [props])
 
-    useEffect(()=>{
-        handleShow()
-      },[props])
 
       useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null && employeeProfileData !== ""){
