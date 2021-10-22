@@ -106,12 +106,7 @@ const CodeOfConduct =(props)=> {
       //     handleShow()
       //   }
       // })
-      if((employeeProfileData.isCodeOfConduct !== true && 
-        employeeProfileData.isDsiItCharter !== true)||(employeeProfileData.isCodeOfConduct === null && 
-        employeeProfileData.isDsiItCharter === null)){
-          handleShow()
-          setCharterId(employeeProfileData.charterId)
-      }else if(employeeProfileData.isCodeOfConduct === true &&
+     if(employeeProfileData.isCodeOfConduct === true &&
          employeeProfileData.isDsiItCharter !== true){
         props.history.push("/itcharter")
             setShow(false)
@@ -119,13 +114,18 @@ const CodeOfConduct =(props)=> {
             employeeProfileData.isDsiItCharter === true){
             props.history.push("/dashboard/storedashboard")
             setShow(false)
+          }else if((employeeProfileData.isCodeOfConduct !== true && 
+            employeeProfileData.isDsiItCharter !== true)||(employeeProfileData.isCodeOfConduct === null && 
+            employeeProfileData.isDsiItCharter === null)){
+              setCharterId(employeeProfileData.charterId)
+              console.log(employeeProfileData,"employeeProfileData")
+              handleShow()
           }
           }
-  }, [employeeProfileData])
-  console.log(props,charterDataAll,employeeProfileData,"charter")
+  }, [employeeProfileData,props])
+  console.log(props,charterDataAll,employeeProfileData,"charter code")
   const handleSave = (e) =>{
     e.preventDefault()
-    console.log(props,codeOfConduct,employeeProfileData,charterDataAll,"charter")
     if (codeOfConduct == "" || codeOfConduct == null || codeOfConduct == undefined) {
       setCodeOfConductError("Please accept the acknowledgement ");
     } else {
@@ -175,7 +175,7 @@ const CodeOfConduct =(props)=> {
   }, [props])
  
   return (<>
-      {loader==true?"":<Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose}>
         <Modal.Body>
         <div class="html-charter">
     <body>
@@ -265,7 +265,7 @@ const CodeOfConduct =(props)=> {
             Save & Next
           </Button>
           </div><br/>
-                </Modal>}
+                </Modal>
     </>  );
 }
 
