@@ -61,9 +61,9 @@ const PFDeclaration = (props) => {
   const [nomineeDOB, setNomineeDOB] = useState();
 
   const [nomineeAddressError, setNomineeAddressError] = useState(false);
-  const [form11DocStatus, setForm11DocStatus] = useState(false);
-  const [form2epfDocStatus, setForm2epfDocStatus] = useState(false);
-  const [formfDocStatus, setFormfDocStatus] = useState(false);
+  const [adminForm11DocStatus, setAdminForm11DocStatus] = useState(false);
+  const [adminForm2epfDocStatus, setAdminForm2epfDocStatus] = useState(false);
+  const [adminFormfDocStatus, setAdminFormfDocStatus] = useState(false);
   const [state, setState] = useState({
     form11: "",
     form2epf: "",
@@ -119,17 +119,17 @@ const PFDeclaration = (props) => {
         console.log("item.documentType", item.documentType, item);
         if (item.documentType === 10 && item.documentName) {
           form11Doc = item.documentName ? item.documentName : "";
-          setForm11DocStatus(item.status ? item.status : 0);
+          setAdminForm11DocStatus(item.adminStatus ? item.adminStatus : 0);
           setForm11Uploade(true);
         }
         if (item.documentType === 11 && item.documentName) {
           form2epfDoc = item.documentName ? item.documentName : "";
-          setForm2epfDocStatus(item.status ? item.status : 0);
+          setAdminForm2epfDocStatus(item.adminStatus ? item.adminStatus : 0);
           setForm2EpfUploade(true);
         }
         if (item.documentType === 12 && item.documentName) {
           formFDoc = item.documentName ? item.documentName : "";
-          setFormfDocStatus(item.status ? item.status : 0);
+          setAdminFormfDocStatus(item.adminStatus ? item.adminStatus : 0);
           setFormFUploade(true);
         }
         setState({
@@ -1255,10 +1255,10 @@ const PFDeclaration = (props) => {
                       name="form11"
                       style={{ display: "none" }}
                       disabled={
-                        (candidateProfileData.documentUploaded === 1 &&
-                          candidateProfileData.verificationStatus === 2 &&
-                          (form11DocStatus === 0 || form11DocStatus === 2)) ||
-                        (candidateProfileData.verificationStatus === 0 &&
+                        (candidateProfileData.documentUploaded === 1 &&(candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
+                          (adminForm11DocStatus === 0 || adminForm11DocStatus === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
@@ -1273,9 +1273,10 @@ const PFDeclaration = (props) => {
                   <label
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
-                        candidateProfileData.verificationStatus === 2 &&
-                        (form11DocStatus === 0 || form11DocStatus === 2)) ||
-                      (candidateProfileData.verificationStatus === 0 &&
+                        (candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
+                        (adminForm11DocStatus === 0 || adminForm11DocStatus === 2)) ||
+                      (candidateProfileData.adminVerificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
@@ -1290,9 +1291,10 @@ const PFDeclaration = (props) => {
                       }}
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          candidateProfileData.verificationStatus === 2 &&
-                          (form11DocStatus === 0 || form11DocStatus === 2)) ||
-                        (candidateProfileData.verificationStatus === 0 &&
+                          (candidateProfileData.adminVerificationStatus === 1||
+                            candidateProfileData.adminVerificationStatus === 2)&&
+                          (adminForm11DocStatus === 0 || adminForm11DocStatus === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
@@ -1342,10 +1344,11 @@ const PFDeclaration = (props) => {
                       style={{ display: "none" }}
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          candidateProfileData.verificationStatus === 2 &&
-                          (form2epfDocStatus === 0 ||
-                            form2epfDocStatus === 2)) ||
-                        (candidateProfileData.verificationStatus === 0 &&
+                          (candidateProfileData.adminVerificationStatus === 1||
+                            candidateProfileData.adminVerificationStatus === 2) &&
+                          (adminForm2epfDocStatus === 0 ||
+                            adminForm2epfDocStatus === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
@@ -1360,9 +1363,10 @@ const PFDeclaration = (props) => {
                   <label
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
-                        candidateProfileData.verificationStatus === 2 &&
-                        (form2epfDocStatus === 0 || form2epfDocStatus === 2)) ||
-                      (candidateProfileData.verificationStatus === 0 &&
+                        (candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
+                        (adminForm2epfDocStatus === 0 || adminForm2epfDocStatus === 2)) ||
+                      (candidateProfileData.adminVerificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
@@ -1374,10 +1378,11 @@ const PFDeclaration = (props) => {
                       className="custom_file_Upload_button"
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          candidateProfileData.verificationStatus === 2 &&
-                          (form2epfDocStatus === 0 ||
-                            form2epfDocStatus === 2)) ||
-                        (candidateProfileData.verificationStatus === 0 &&
+                          (candidateProfileData.adminVerificationStatus === 1||
+                            candidateProfileData.adminVerificationStatus === 2)&&
+                          (adminForm2epfDocStatus === 0 ||
+                            adminForm2epfDocStatus === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
@@ -1430,9 +1435,10 @@ const PFDeclaration = (props) => {
                       style={{ display: "none" }}
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          candidateProfileData.verificationStatus === 2 &&
-                          (formfDocStatus === 0 || formfDocStatus === 2)) ||
-                        (candidateProfileData.verificationStatus === 0 &&
+                          (candidateProfileData.adminVerificationStatus === 1||
+                            candidateProfileData.adminVerificationStatus === 2) &&
+                          (adminFormfDocStatus === 0 || adminFormfDocStatus === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
@@ -1447,9 +1453,10 @@ const PFDeclaration = (props) => {
                   <label
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
-                        candidateProfileData.verificationStatus === 2 &&
-                        (formfDocStatus === 0 || formfDocStatus === 2)) ||
-                      (candidateProfileData.verificationStatus === 0 &&
+                        (candidateProfileData.adminVerificationStatus === 1||
+                          candidateProfileData.adminVerificationStatus === 2) &&
+                        (adminFormfDocStatus === 0 || adminFormfDocStatus === 2)) ||
+                      (candidateProfileData.adminVerificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
                         : "custom-file-disable"
@@ -1461,9 +1468,10 @@ const PFDeclaration = (props) => {
                       className="custom_file_Upload_button"
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          candidateProfileData.verificationStatus === 2 &&
-                          (formfDocStatus === 0 || formfDocStatus === 2)) ||
-                        (candidateProfileData.verificationStatus === 0 &&
+                          (candidateProfileData.adminVerificationStatus === 1||
+                            candidateProfileData.adminVerificationStatus === 2) &&
+                          (adminFormfDocStatus === 0 || adminFormfDocStatus === 2)) ||
+                        (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
                           : true
