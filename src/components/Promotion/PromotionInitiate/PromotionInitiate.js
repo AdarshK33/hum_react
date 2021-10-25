@@ -261,7 +261,7 @@ const PromotionInitiate = () => {
         } else {
           setNewFixedGrossError("");
         }
-      } else if (contractType === "Permanent" || contractType === "permanent") {
+      } else if (contractType === "Fulltime" || contractType === "fulltime") {
         if (newFixedGross < 18000) {
           setNewFixedGrossError("Value should be above 18000");
         } else {
@@ -405,7 +405,7 @@ const PromotionInitiate = () => {
         PromotionCreate(infoData);
         console.log("all okay1", infoData);
       } else if (
-        contractType.toLowerCase() == "permanent" &&
+        contractType.toLowerCase() == "fulltime" &&
         state.newFixedGross > 18000
       ) {
         // setModelStatus(true);
@@ -433,7 +433,7 @@ const PromotionInitiate = () => {
       } else if (
         state.promotionType == 0 &&
         (contractType.toLowerCase() == "parttime" ||
-          contractType.toLowerCase() == "permanent")
+          contractType.toLowerCase() == "fulltime")
       ) {
         // setModelStatus(true);
         setSubmitted(true);

@@ -467,7 +467,7 @@ const PersonalInformation = (props) => {
       candidateViewInfo !== null &&
       candidateViewInfo !== undefined &&
       Object.keys(candidateViewInfo).length !== 0 &&
-      candidateViewInfo.contractType === "Permanent"
+      candidateViewInfo.contractType === "Fulltime"
     ) {
       if ((state.panNumber !== "") & panValid.test(state.panNumber)) {
         var tempVar = state.panNumber.split("");
@@ -497,7 +497,7 @@ const PersonalInformation = (props) => {
       candidateViewInfo !== null &&
       candidateViewInfo !== undefined &&
       Object.keys(candidateViewInfo).length !== 0 &&
-      (candidateViewInfo.contractType === "Permanent") |
+      (candidateViewInfo.contractType === "Fulltime") |
         (candidateViewInfo.contractType === "Parttime")
     ) {
       if (
@@ -1258,7 +1258,7 @@ const PersonalInformation = (props) => {
             candidateViewInfo !== undefined &&
             Object.keys(candidateViewInfo).length !== 0 &&
             (candidateViewInfo.contractType === "Parttime") |
-              (candidateViewInfo.contractType === "Permanent") ? (
+              (candidateViewInfo.contractType === "Fulltime") ? (
               <Form.Group>
                 <Form.Label>
                   Aadhaar Number
@@ -1328,7 +1328,7 @@ const PersonalInformation = (props) => {
           candidateViewInfo !== undefined &&
           Object.keys(candidateViewInfo).length !== 0 &&
           (candidateViewInfo.contractType === "Parttime") |
-            (candidateViewInfo.contractType === "Permanent") ? (
+            (candidateViewInfo.contractType === "Fulltime") ? (
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>
@@ -1338,7 +1338,7 @@ const PersonalInformation = (props) => {
                     {candidateViewInfo !== null &&
                     candidateViewInfo !== undefined &&
                     Object.keys(candidateViewInfo).length !== 0 &&
-                    candidateViewInfo.contractType === "Permanent"
+                    candidateViewInfo.contractType === "Fulltime"
                       ? "*"
                       : ""}
                   </span>

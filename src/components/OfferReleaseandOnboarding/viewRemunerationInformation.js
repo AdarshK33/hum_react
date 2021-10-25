@@ -77,8 +77,8 @@ const ViewRemunerationInformation = (props) => {
       (typeof fixedGross === "undefined" ||
         fixedGross === "" ||
         (fixedGross + "").includes(" ", "-", ".", "/", "+") ||
-        ((candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        ((candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
           fixedGross < 18000) ||
         ((candidateData.workInformation.contractType === "Parttime" ||
           workInfoViewData.contractType === "Parttime") &&
@@ -86,8 +86,8 @@ const ViewRemunerationInformation = (props) => {
       (typeof monthlyBonus === "undefined" ||
         monthlyBonus === "" ||
         (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
-        ((candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        ((candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
           monthlyBonus > 20) ||
         ((candidateData.workInformation.contractType === "Parttime" ||
           workInfoViewData.contractType === "Parttime") &&
@@ -97,16 +97,16 @@ const ViewRemunerationInformation = (props) => {
       setMonthlyBonusError(true);
       setStipenedError(false);
       if (
-        (candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        (candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
         fixedGross <= 18000
       ) {
         setParmanentGrossLimit(true);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
       } else if (
-        (candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        (candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
         fixedGross > 18000
       ) {
         setParmanentGrossLimit(false);
@@ -130,18 +130,18 @@ const ViewRemunerationInformation = (props) => {
         setParmanentGrossLimit(false);
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
-          candidateData.workInformation.contractType === "Permanent" ||
+          candidateData.workInformation.contractType === "Fulltime" ||
           workInfoViewData.contractType === "Parttime" ||
-          workInfoViewData.contractType === "Permanent") &&
+          workInfoViewData.contractType === "Fulltime") &&
         monthlyBonus > 20
       ) {
         setBonusLimit(true);
         setMonthlyBonusError(false);
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
-          candidateData.workInformation.contractType === "Permanent" ||
+          candidateData.workInformation.contractType === "Fulltime" ||
           workInfoViewData.contractType === "Parttime" ||
-          workInfoViewData.contractType === "Permanent") &&
+          workInfoViewData.contractType === "Fulltime") &&
         monthlyBonus < 20
       ) {
         setBonusLimit(false);
@@ -151,8 +151,8 @@ const ViewRemunerationInformation = (props) => {
       typeof fixedGross === "undefined" ||
       fixedGross === "" ||
       fixedGross.includes(" ", "-", ".", "/", "+") ||
-      ((candidateData.workInformation.contractType === "Permanent" ||
-        workInfoViewData.contractType === "Permanent") &&
+      ((candidateData.workInformation.contractType === "Fulltime" ||
+        workInfoViewData.contractType === "Fulltime") &&
         fixedGross < 18000) ||
       ((candidateData.workInformation.contractType === "Parttime" ||
         workInfoViewData.contractType === "Parttime") &&
@@ -161,16 +161,16 @@ const ViewRemunerationInformation = (props) => {
       setFixedGrossError(true);
       setStipenedError(false);
       if (
-        (candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        (candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
         fixedGross <= 18000
       ) {
         setParmanentGrossLimit(true);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
       } else if (
-        (candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        (candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
         fixedGross > 18000
       ) {
         setParmanentGrossLimit(false);
@@ -198,8 +198,8 @@ const ViewRemunerationInformation = (props) => {
       (typeof monthlyBonus === "undefined" ||
         monthlyBonus === "" ||
         (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
-        ((candidateData.workInformation.contractType === "Permanent" ||
-          workInfoViewData.contractType === "Permanent") &&
+        ((candidateData.workInformation.contractType === "Fulltime" ||
+          workInfoViewData.contractType === "Fulltime") &&
           monthlyBonus > 20) ||
         ((candidateData.workInformation.contractType === "Parttime" ||
           workInfoViewData.contractType === "Parttime") &&
@@ -209,18 +209,18 @@ const ViewRemunerationInformation = (props) => {
       setStipenedError(false);
       if (
         (candidateData.workInformation.contractType === "Parttime" ||
-          candidateData.workInformation.contractType === "Permanent" ||
+          candidateData.workInformation.contractType === "Fulltime" ||
           workInfoViewData.contractType === "Parttime" ||
-          workInfoViewData.contractType === "Permanent") &&
+          workInfoViewData.contractType === "Fulltime") &&
         monthlyBonus > 20
       ) {
         setBonusLimit(true);
         setMonthlyBonusError(false);
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
-          candidateData.workInformation.contractType === "Permanent" ||
+          candidateData.workInformation.contractType === "Fulltime" ||
           workInfoViewData.contractType === "Parttime" ||
-          workInfoViewData.contractType === "Permanent") &&
+          workInfoViewData.contractType === "Fulltime") &&
         monthlyBonus < 20
       ) {
         setBonusLimit(false);
@@ -327,8 +327,8 @@ const ViewRemunerationInformation = (props) => {
                     ) : ((candidateData &&
                         candidateData.workInformation &&
                         candidateData.workInformation.contractType ===
-                          "Permanent") ||
-                        workInfoViewData.contractType === "Permanent") &&
+                          "Fulltime") ||
+                        workInfoViewData.contractType === "Fulltime") &&
                       fixedGross < 18000 ? (
                       <p style={{ color: "red" }}>
                         Value should be greater than 18000{" "}

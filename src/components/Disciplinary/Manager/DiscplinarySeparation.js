@@ -275,8 +275,8 @@ const DisciplinarySeparation = () => {
         setIntern(false);
       }
       if(
-        state.empContractType === "permanent" ||
-        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "Fulltime" ||
+        state.empContractType === "fulltime" ||state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
               var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
