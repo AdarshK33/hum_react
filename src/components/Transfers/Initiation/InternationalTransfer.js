@@ -344,8 +344,8 @@ const InternationalTransfer = () => {
       initiationEmpData !== null &&
       initiationEmpData !== undefined &&
       Object.keys(initiationEmpData).length !== 0 &&
-      (initiationEmpData.currentContractType === "Permanent" ||
-        initiationEmpData.currentContractType === "permanent")
+      (initiationEmpData.currentContractType === "Fulltime" ||
+        initiationEmpData.currentContractType === "fulltime")
     ) {
       if (Valid.test(newGross)) {
         if (parseInt(newGross) < 18000) {

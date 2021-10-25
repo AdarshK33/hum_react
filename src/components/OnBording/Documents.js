@@ -120,8 +120,8 @@ const Documents = (props) => {
       Object.keys(workInfoData).length !== 0 &&
       workInfoData.contractType !== null
     ) {
-      if (workInfoData.contractType === "Permanent") {
-        console.log("permanent");
+      if (workInfoData.contractType === "Fulltime") {
+        console.log("Fulltime");
         setFullTime(true);
         setParTime(false);
         setInternship(false);

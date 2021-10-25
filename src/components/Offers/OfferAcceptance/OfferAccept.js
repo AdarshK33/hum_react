@@ -218,7 +218,7 @@ const OfferAccept = (props) => {
                     {showLetter === true && candidateLetterData ? (
                       candidateLetterData.contractType !== undefined &&
                       candidateLetterData.contractType !== null &&
-                      candidateLetterData.contractType === "Permanent" ? (
+                      candidateLetterData.contractType === "Fulltime" ? (
                         <PermanentOfferLetter />
                       ) : candidateLetterData &&
                         candidateLetterData.contractType !== undefined &&
@@ -476,7 +476,7 @@ const OfferAccept = (props) => {
                     {showLetter === true && candidateLetterData ? (
                       candidateLetterData.contractType !== undefined &&
                       candidateLetterData.contractType !== null &&
-                      candidateLetterData.contractType === "Permanent" ? (
+                      candidateLetterData.contractType === "Fulltime" ? (
                         <PermanentOfferLetter />
                       ) : candidateLetterData &&
                         candidateLetterData.contractType !== undefined &&
@@ -680,7 +680,7 @@ const OfferAccept = (props) => {
                     {showAppointmentLetter === true && candidateLetterData ? (
                       candidateLetterData.contractType !== undefined &&
                       candidateLetterData.contractType !== null &&
-                      candidateLetterData.contractType === "Permanent" ? (
+                      candidateLetterData.contractType === "Fulltime" ? (
                         <PermanentAppointmentLetter />
                       ) : candidateLetterData &&
                         candidateLetterData.contractType !== undefined &&

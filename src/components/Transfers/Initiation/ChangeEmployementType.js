@@ -307,7 +307,7 @@ const ChangeEmployementType = () => {
           promotedContractType:
             newEmployement !== null && newEmployement !== ""
               ? newEmployement === "From Part Time to Full Time"
-                ? "permanent"
+                ? "Fulltime"
                 : "parttime"
               : null,
           salaryType:
@@ -401,8 +401,8 @@ const ChangeEmployementType = () => {
           transferData.promotedContractType !== null &&
           transferData.promotedContractType !== undefined &&
           transferData.promotedContractType !== "" &&
-          (transferData.promotedContractType === "Permanent" ||
-            transferData.promotedContractType === "permanent") ? (
+          (transferData.promotedContractType === "Fulltime" ||
+            transferData.promotedContractType === "fulltime") ? (
             <PartTimeToFullTimeLetter />
           ) : transferData !== null &&
             transferData !== undefined &&
@@ -575,7 +575,7 @@ const ChangeEmployementType = () => {
                       {initiationEmpData !== null &&
                       initiationEmpData !== undefined &&
                       initiationEmpData !== "" &&
-                      initiationEmpData.currentContractType.toLowerCase() === "permanent" ? (
+                      initiationEmpData.currentContractType.toLowerCase() === "fulltime" ? (
                         <option value="From Full Time to Part Time">
                           From Full Time to Part Time
                         </option>

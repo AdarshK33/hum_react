@@ -555,7 +555,7 @@ const CandidateOnboarding = () => {
       !previewLetter &&
       candidateData !== undefined &&
       candidateData.workInformation !== undefined ? (
-        candidateData.workInformation.contractType === "Permanent" ? (
+        candidateData.workInformation.contractType === "Fulltime" ? (
           <AppointmentLetter />
         ) : candidateData.workInformation.contractType === "Parttime" ? (
           <PartTimeAppointmentLetter />
@@ -573,7 +573,7 @@ const CandidateOnboarding = () => {
       {previewLetter &&
       candidateData !== undefined &&
       candidateData.workInformation !== undefined ? (
-        candidateData.workInformation.contractType === "Permanent" ? (
+        candidateData.workInformation.contractType === "Fulltime" ? (
           <AppointmentLetter previewLetter={previewLetter} />
         ) : candidateData.workInformation.contractType === "Parttime" ? (
           <PartTimeAppointmentLetter previewLetter={previewLetter} />

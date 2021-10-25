@@ -133,11 +133,11 @@ const RemunerationInformation = (props) => {
           candidateData.workInformation !== null &&
           candidateData.workInformation !== undefined &&
           Object.keys(candidateData.workInformation).length !== 0 &&
-          candidateData.workInformation.contractType === "Permanent") ||
+          candidateData.workInformation.contractType === "Fulltime") ||
         (workInfoViewData !== null &&
           workInfoViewData !== undefined &&
           Object.keys(workInfoViewData).length !== 0 &&
-          workInfoViewData.contractType === "Permanent")
+          workInfoViewData.contractType === "Fulltime")
       ) {
         if (fixedGross < 18000) {
           setFixedGrossError(false);
@@ -222,14 +222,14 @@ const RemunerationInformation = (props) => {
       }
     }
 
-    if (workInfoViewData.contractType === "Permanent") {
-      console.log("inside permanent", e);
+    if (workInfoViewData.contractType === "Fulltime") {
+      console.log("inside Fulltime", e);
       if (
         typeof e === "undefined" ||
         e === "" ||
         e.includes(" ", "-", ".", "/", "+")
       ) {
-        console.log("inside permanent1", e);
+        console.log("inside Fulltime1", e);
         setFixedGross(e);
         setFixedGrossError(true);
         setParmanentGrossLimit(false);
@@ -238,7 +238,7 @@ const RemunerationInformation = (props) => {
         setPartTimeGrossLimit(false);
         setLocalExpatGrossLimit(false);
       } else if (e < 18000) {
-        console.log("inside permanent2", e);
+        console.log("inside Fulltime2", e);
         setFixedGross(e);
         setFixedGrossError(false);
         setParmanentGrossLimit(true);
@@ -247,7 +247,7 @@ const RemunerationInformation = (props) => {
         setPartTimeGrossLimit(false);
         setLocalExpatGrossLimit(false);
       } else {
-        console.log("inside permanent3", e);
+        console.log("inside Fulltime3", e);
         setFixedGross(e);
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
@@ -488,10 +488,10 @@ fixedGrossEmpty,stipendEmpty);
                           candidateData.workInformation !== null &&
                           candidateData.workInformation !== undefined &&
                           candidateData.workInformation.contractType ===
-                            "Permanent") ||
+                            "Fulltime") ||
                         (workInfoViewData !== null &&
                           workInfoViewData !== undefined &&
-                          workInfoViewData.contractType === "Permanent")
+                          workInfoViewData.contractType === "Fulltime")
                       ? ""
                       : (candidateData &&
                           candidateData.workInformation &&

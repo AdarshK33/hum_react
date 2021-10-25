@@ -256,7 +256,7 @@ return (
                                 <Form.Control as="input" size="sm" name="contractType" value={contractType}
                                     readOnly />
                             </Col>
-                            {contractType === 'permanent' ?
+                            {contractType === 'Fulltime' ?
                                 <Fragment>
                                     <Form.Label column sm="3" className="padding-right">Extra Hours:</Form.Label>
                                     <Col sm="9" className="padding-left">

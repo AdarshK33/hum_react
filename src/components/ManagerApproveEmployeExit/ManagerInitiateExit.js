@@ -167,8 +167,8 @@ const ManagerInitiateExit = () => {
       ) {
         state.lastWorkingDate = (new Date(employeeData.joiningDate).setMonth(new Date(employeeData.joiningDate).getMonth() + (((employeeData.internshipPeriod !== null && employeeData.internshipPeriod !== undefined)?employeeData.internshipPeriod:0))))
       } else if (
-        state.empContractType === "permanent" ||
-        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "Fulltime" ||
+        state.empContractType === "fulltime" ||state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
               var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
@@ -397,8 +397,8 @@ const ManagerInitiateExit = () => {
         setIntern(true);
         setLastWorkingDate(new Date(searchByCostData.joiningDate).setMonth(new Date(searchByCostData.joiningDate).getMonth() + (((searchByCostData.internshipPeriod !== null && searchByCostData.internshipPeriod !== undefined)?searchByCostData.internshipPeriod:0))))
       } else if (
-        state.empContractType === "permanent" ||
-        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "Fulltime" ||
+        state.empContractType === "fulltime" ||state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
               var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
@@ -1610,7 +1610,7 @@ console.log(intern,"8098709809808")
                                           {item.label}
                                         </option>
                                       );
-                                      }else if(state.empContractType.toLowerCase() == "permanent" || state.empContractType == "parttime"){
+                                      }else if(state.empContractType.toLowerCase() == "fulltime" || state.empContractType == "parttime"){
                                         return (
                                           <option key={item.value}>
                                             {item.label}
