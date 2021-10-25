@@ -147,6 +147,13 @@ const CodeOfConduct =(props)=> {
       const infoData = {
         "charterId": charterId,
         "employeeId":employeeProfileData.employeeId,
+        "dsiCharterAcknowledgement": [
+          {
+            "charterAcknowledgementId": 0,
+            "charterId": charterId,
+          }
+        ],     
+        "acknowledge":true,
         "isCodeOfConduct":true,
         "isDsiItCharter": employeeProfileData.isCodeOfConduct 
         }
