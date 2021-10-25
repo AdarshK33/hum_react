@@ -127,8 +127,8 @@ const EmployeeExitAction = () => {
               : 0)
         );
       } else if (
-        state.empContractType === "permanent" ||
-        state.empContractType === "Permanent" ||
+        state.empContractType === "Fulltime" ||
+        state.empContractType === "fulltime" ||
         state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {

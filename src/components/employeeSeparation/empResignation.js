@@ -129,7 +129,7 @@ const EmpResignation = () => {
         user.department == "IT" ||
         user.department == "Legal" ||
         user.department == "Finance") &&
-      (user.contractType === "permanent" || user.contractType === "parttime")
+      (user.contractType === "Fulltime" || user.contractType === "parttime")
     ) {
       setNoticePeriod(2);
       var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 2));

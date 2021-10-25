@@ -164,8 +164,8 @@ const EmployeeExitAction = () => {
           )
         );
       } else if (
-        state.contractType === "permanent" ||
-        state.contractType === "Permanent" ||
+        state.contractType === "Fulltime" ||
+        state.contractType === "fulltime" ||
         state.contractType === "parttime" ||
         state.contractType === "PartTime"
       ) {

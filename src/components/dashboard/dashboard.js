@@ -228,7 +228,7 @@ function Dashboard() {
     }
 
     for (let item in graphData[0].rosterCluster) {
-      if (graphData[0].rosterCluster[item].contractType === "permanent") {
+      if (graphData[0].rosterCluster[item].contractType === "Fulltime") {
         FTcluster = FTcluster + graphData[0].rosterCluster[item].workingHours;
       }
       if (graphData[0].rosterCluster[item].contractType === "parttime") {
@@ -247,7 +247,7 @@ function Dashboard() {
     clusterHours.push({ temporary: TPTcluster });
 
     for (let item in graphData[0].rosterStore) {
-      if (graphData[0].rosterStore[item].contractType === "permanent") {
+      if (graphData[0].rosterStore[item].contractType === "Fulltime") {
         FTstore = FTstore + graphData[0].rosterStore[item].workingHours;
       }
       if (graphData[0].rosterStore[item].contractType === "parttime") {
