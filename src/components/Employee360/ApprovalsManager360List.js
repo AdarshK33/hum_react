@@ -12,8 +12,10 @@ import { PermissionContext } from "../../context/PermissionState";
 import { Employee360Context } from "../../context/Employee360State";
 import LoaderIcon from "../Loader/LoaderIcon";
 import moment from "moment";
+import { useHistory } from "react-router-dom";
 
 const ApprovalsManager360List = ({ ListType }) => {
+  const history = useHistory();
   const { Manager360ListView, Manager360ListData, approvalsLoader } =
     useContext(Employee360Context);
   const { rolePermission } = useContext(PermissionContext);
@@ -44,6 +46,18 @@ const ApprovalsManager360List = ({ ListType }) => {
   useEffect(() => {
     makeBonusByContractTypeEmpty();
   }, []);
+  const GoToModules = (e) => {
+    if (ListType === "promotion") {
+      history.push("./promotion-list");
+    } else if (ListType === "transfer") {
+      history.push("./transfers");
+    } else if (ListType === "disciplinary") {
+      history.push("./disciplinary");
+    } else if (ListType === "probation") {
+      history.push("./probation");
+    } else {
+    }
+  };
 
   const isDateBeforeToday = (date) => {
     console.log("yes");
@@ -73,9 +87,37 @@ const ApprovalsManager360List = ({ ListType }) => {
             validateByCCMdate: item.managerValidatedDate,
             validateByAdmin: item.validatedAdminName,
             validateByAdminDate: item.adminValidatedDate,
-            status: item.status === 3 ? "Approved" : "Disapproved",
+            status:
+              item.status == 0
+                ? "Pending"
+                : item.status == 1 || item.status == 2
+                ? "In Progress"
+                : item.status == 3
+                ? "Approved"
+                : item.status == 4
+                ? "Rejected"
+                : item.status == 5
+                ? "Action Required"
+                : "",
+            action:
+              (rolePermission == "admin" && item.status === 2) ||
+              (rolePermission == "costCenterManager" && item.status === 0) ||
+              (rolePermission == "superCostCenterManager" && item.status === 0)
+                ? {
+                    edit: {
+                      active: true,
+                      link: `/promotion-approval/${item.promotionId}`,
+                    },
+                  }
+                : {
+                    edit: {
+                      active: false,
+                      link: "",
+                    },
+                  },
           };
         });
+
         setTableBody(tableData);
       } else if (ListType === "transfer") {
         let tableData = Manager360ListData.map((item, index) => {
@@ -84,9 +126,10 @@ const ApprovalsManager360List = ({ ListType }) => {
             empName: item.employeeName,
             effectiveDate: item.promotedJoiningDate,
             transferType: item.transferType,
-            status: (item.transferType = "International Transfer "
-              ? "Request Sent To Admin"
-              : item.statusDesc),
+            status:
+              item.transferType === "International Transfer "
+                ? "Request Sent To Admin"
+                : item.statusDesc,
             action: (item.transferType = "Regular Transfer "
               ? {
                   edit: {
@@ -228,16 +271,8 @@ const ApprovalsManager360List = ({ ListType }) => {
                     "Show Cause Notice Issued"))
                 ? {
                     edit: {
-                      active:
-                        item.promotedManagerId === user.employeeId &&
-                        item.status === 0
-                          ? true
-                          : false,
-                      link:
-                        item.promotedManagerId === user.employeeId &&
-                        item.status === 0
-                          ? `/disciplinary-action/${item.employeeId}`
-                          : "",
+                      active: true,
+                      link: `/disciplinary-action/${item.disciplinaryAction.disciplinaryId}`,
                     },
                   }
                 : {
@@ -319,8 +354,7 @@ const ApprovalsManager360List = ({ ListType }) => {
 
         {!approvalsLoader ? (
           <div style={{ float: "bottom", textAlign: "center" }}>
-            <label className="itemResult">
-              {/* onClick={(e) => setTabIndex(2)} */}
+            <label className="itemResult" onClick={(e) => GoToModules(e)}>
               View All
             </label>
           </div>

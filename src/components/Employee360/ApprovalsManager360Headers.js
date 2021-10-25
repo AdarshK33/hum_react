@@ -10,6 +10,7 @@ const APPROVALS_MANAGER360_TABLE_HEADERS = {
     validateByAdmin: "Validated By HR/Admin",
     validateByAdminDate: "Date",
     status: "Status",
+    action: "Action",
   },
   transfer: {
     empId: "Emp ID",

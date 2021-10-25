@@ -171,14 +171,15 @@ export const Employee360Provider = ({ children }) => {
     setApprovalsLoader(true);
     if (key === "transfer") {
       api =
-        "/api/v1/transfer/view?key=all&page=0&size=10&status=5&transferType=all";
+        "/api/v1/transfer/view?key=all&page=0&size=10&status=0&transferType=all";
     } else if (key === "promotion") {
       api =
-        "/api/v1/promotion/view?key=all&page=0&size=10&status=0&superManager=0";
+        "/api/v1/employee/360/view/promotion/manager?key=all&page=0&size=10&superManager=0";
     } else if (key === "probation") {
       api = "/api/v1/probation/view?days=0&key=all&page=0&size=10&status=0";
     } else if ((key = "disciplinary")) {
-      api = "/api/v1/disciplinary/view?key=all&page=0&size=10&superManager=0";
+      api =
+        "/api/v1/disciplinary/view?key=all&page=0&size=10&status=0&superManager=0";
     }
 
     client

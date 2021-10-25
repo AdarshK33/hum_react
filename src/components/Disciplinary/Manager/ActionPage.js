@@ -9,8 +9,8 @@ import NonPerformanceLetter from "./NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
-import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
+import { useHistory, useParams } from "react-router-dom";
 
 // view-----
 const ActionPage = () => {
@@ -34,7 +34,7 @@ const ActionPage = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const { rolePermission } = useContext(PermissionContext);
-
+  const { employeeid } = useParams();
   const [state, setState] = useState({
     empId: "",
     empName: "",
@@ -92,6 +92,10 @@ const ActionPage = () => {
     createShowCauseIssue,
     loader,
   } = useContext(DisciplinaryContext);
+
+  useEffect(() => {
+    disciplinaryEmployeeSearch(employeeid);
+  }, [employeeid]);
 
   useEffect(() => {
     if (
