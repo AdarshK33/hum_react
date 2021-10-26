@@ -30,7 +30,6 @@ const ITCharter =(props)=>{
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
          && employeeProfileData !== "" ){
-        console.log(employeeProfileData,"employeeProfileData it")
         setCharterId(employeeProfileData.charterId)
          if(employeeProfileData.isCodeOfConduct === true &&
              employeeProfileData.isDsiItCharter !==true){
@@ -42,7 +41,7 @@ const ITCharter =(props)=>{
               }
      }
      }, [employeeProfileData,props])
-     
+     console.log(employeeProfileData,"employeeProfileData it0000")
     const handleSave =(e)=>{
         e.preventDefault()
         console.log(props,dsiItCharter,employeeProfileData,charterDataAll,"charter it")
@@ -52,19 +51,34 @@ const ITCharter =(props)=>{
             setDsiItCharterError("");
           }
           if(dsiItCharter == true){
-      const infoData = {
-        "charterId": charterId,
-        "acknowledge":true,
-        "dsiCharterAcknowledgement": [
-            {
-              "charterAcknowledgementId": 0,
-              "charterId": charterId,
+    //   const infoData = {
+    //     "charterId": charterId,
+    //     "acknowledge":true,
+    //     "dsiCharterAcknowledgement": [
+    //         {
+    //           "charterAcknowledgementId": charterId,
+    //           "charterId": charterId,
+    //         }
+    //       ],
+    //     "employeeId":employeeProfileData.employeeId,
+    //     "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
+    //     "isDsiItCharter": true 
+    //     }
+
+        const infoData = {
+            "acknowledge":true,
+            "charterId": charterId,
+            "dsiCharterAcknowledgement": [
+              {
+                "charterAcknowledgementId":0,
+                "charterId": charterId,
+              }
+            ],     
+            "employeeId":employeeProfileData.employeeId,
+            "isCodeOfConduct":true,
+            "isDsiItCharter":true
             }
-          ],
-        "employeeId":employeeProfileData.employeeId,
-        "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
-        "isDsiItCharter": true 
-        }
+
         dsiCharterUpdate(infoData)
         props.history.push("/dashboard/storedashboard")
         setShow(false)
@@ -74,7 +88,7 @@ const ITCharter =(props)=>{
       useEffect(() => {
         ViewEmployeeProfile()
         viewCharterAll()
-    }, [props])
+    }, [props,employeeProfileData.isCodeOfConduct])
 
 
       useEffect(() => {

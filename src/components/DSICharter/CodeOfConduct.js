@@ -58,7 +58,8 @@ import Img52 from './img/img52.png'
 
 import "./charter.css"
 const CodeOfConduct =(props)=> {
-  const { dsiCharterCreate ,dsiCharterUpdate,dsiCharterData,viewCharterAll,loader,charterDataAll} = useContext(DSICharterContext);
+  const { dsiCharterCreate ,dsiCharterUpdate,dsiCharterData,
+    viewCharterAll,loader,charterDataAll} = useContext(DSICharterContext);
   const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
 
     const [showModal, setShow] = useState(false);
@@ -133,6 +134,7 @@ const CodeOfConduct =(props)=> {
     }
     if(codeOfConduct === true){
       if(charterId === 0){
+          let history = props.history
   const infoData = {
         "charterId": charterId,
         "employeeId":employeeProfileData.employeeId,
@@ -140,28 +142,47 @@ const CodeOfConduct =(props)=> {
         "isDsiItCharter": false 
         }
         console.log(infoData)
-        dsiCharterCreate(infoData)
+        dsiCharterCreate(infoData,history)
         props.history.push("/itcharter")
-        setShow(false)
+        // setShow(false)
       }else{
-      const infoData = {
-        "charterId": charterId,
-        "employeeId":employeeProfileData.employeeId,
-        "dsiCharterAcknowledgement": [
-          {
-            "charterAcknowledgementId": 0,
-            "charterId": charterId,
+      // const infoData = {
+      //   "charterId": charterId,
+      //   "employeeId":employeeProfileData.employeeId,
+      //   "dsiCharterAcknowledgement": [
+      //     {
+      //       "charterAcknowledgementId": 0,
+      //       "charterId": charterId,
+      //     }
+      //   ],     
+      //   "acknowledge":true,
+      //   "isCodeOfConduct":true,
+      //   "isDsiItCharter": employeeProfileData.isDsiItCharter 
+      //   }
+      //   console.log(infoData)
+      //   dsiCharterUpdate(infoData)
+      //   props.history.push("/itcharter")
+      //   setShow(false)
+
+        const infoData = {
+          "acknowledge":true,
+          "charterId": charterId,
+          "dsiCharterAcknowledgement": [
+            {
+              "charterAcknowledgementId":0,
+              "charterId": charterId,
+            }
+          ],     
+          "employeeId":employeeProfileData.employeeId,
+          "isCodeOfConduct":true,
+          "isDsiItCharter":false
           }
-        ],     
-        "acknowledge":true,
-        "isCodeOfConduct":true,
-        "isDsiItCharter": employeeProfileData.isDsiItCharter 
-        }
-        console.log(infoData)
-        dsiCharterUpdate(infoData)
-        props.history.push("/itcharter")
-        setShow(false)
+          console.log(infoData)
+          dsiCharterUpdate(infoData)
+          props.history.push("/itcharter")
+          setShow(false)
       }
+      
     }
   }
   
