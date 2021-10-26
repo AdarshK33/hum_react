@@ -32,7 +32,7 @@ const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationC
       setCurrentRecords(charterData);
     }
   }, [charterData, currentRecords]);
-  console.log("charterData", charterData);
+  console.log("charterDatalist", employeeProfileData,charterData);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);

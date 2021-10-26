@@ -19,16 +19,19 @@ export const DSICharterProvider = (props) => {
   const [state, dispatch] = useReducer(DSICharterReducer, initial_state);
   const [loader, setLoader] = useState(false);
   /*----------Api to create charter ------------*/
-  const dsiCharterCreate = (data) => {
+  const dsiCharterCreate = (data,value) => {
     setLoader(true);
     client
       .post("/api/v1/dsi_charter/create", data)
       .then((response) => {
         state.dsiCharterData = response.data.data;
         toast.info(response.data.message);
-        setLoader(false);
-        viewCharterAll()
-        viewCharter("all",0);
+        if(response.data.message === "SUCCESS"){
+          value.history.push("/itcharter")
+          setLoader(false);
+          viewCharterAll()
+          viewCharter("all",0);
+        }
         return dispatch({
           type: "DSICHARTER_CREATE",
           payload: state.dsiCharterData,
@@ -61,10 +64,11 @@ export const DSICharterProvider = (props) => {
     const dsiCharterEnable = (data) => {
       setLoader(true);
       client
-        .get("/api/v1/dsi_charter/enable?status=" + data)
+        .get("/api/v1/dsi_charter/enable?closingDate="+data.closingDate + "&startingDate=" + data.startingDate +"&status=" + data.status)
         .then((response) => {
           state.charterEnable = response.data.data;
           toast.info(response.data.message);
+          
           viewCharterAll()
           setLoader(false);
           return dispatch({
