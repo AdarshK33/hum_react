@@ -155,7 +155,7 @@ const CodeOfConduct =(props)=> {
         ],     
         "acknowledge":true,
         "isCodeOfConduct":true,
-        "isDsiItCharter": employeeProfileData.isCodeOfConduct 
+        "isDsiItCharter": employeeProfileData.isDsiItCharter 
         }
         console.log(infoData)
         dsiCharterUpdate(infoData)
