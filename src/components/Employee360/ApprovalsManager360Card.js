@@ -7,9 +7,9 @@ import { Fragment } from "react";
 import { Employee360Context } from "../../context/Employee360State";
 import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
-import ApprovalsEmp360List from "./ApprovalsEmp360List";
+import ApprovalsManager360List from "./ApprovalsManager360List";
 
-const ApprovalsEmp360Card = () => {
+const ApprovalsManager360Card = () => {
   const { MyDocView, MyDocList, letterShow, SetLetterView } =
     useContext(Employee360Context);
   const [tabIndex, setTabIndex] = useState(0);
@@ -39,12 +39,11 @@ const ApprovalsEmp360Card = () => {
         >
           <label>Disciplinary</label>
         </div>
-
         <div
           className={tabIndex === 3 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(3)}
         >
-          <label>probation</label>
+          <label>Probation</label>
         </div>
       </div>
 
@@ -52,13 +51,13 @@ const ApprovalsEmp360Card = () => {
         {(() => {
           switch (tabIndex) {
             case 0:
-              return <ApprovalsEmp360List ListType={"promotion"} />;
+              return <ApprovalsManager360List ListType={"promotion"} />;
             case 1:
-              return <ApprovalsEmp360List ListType={"transfer"} />;
+              return <ApprovalsManager360List ListType={"transfer"} />;
             case 2:
-              return <ApprovalsEmp360List ListType={"disciplinary"} />;
+              return <ApprovalsManager360List ListType={"disciplinary"} />;
             case 3:
-              return <ApprovalsEmp360List ListType={"probation"} />;
+              return <ApprovalsManager360List ListType={"probation"} />;
 
             default:
               return <div>nothing</div>;
@@ -68,4 +67,4 @@ const ApprovalsEmp360Card = () => {
     </Fragment>
   );
 };
-export default ApprovalsEmp360Card;
+export default ApprovalsManager360Card;

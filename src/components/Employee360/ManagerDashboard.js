@@ -18,11 +18,11 @@ import Roster from "./Roster";
 import HolidaysCard from "./HolidaysCard";
 import MyDocumentsCard from "./MyDocumentsCard";
 import ClusterCard from "./ClusterManager360Card";
-import ApprovalsEmp360Card from "./ApprovalsEmp360Card";
+import ApprovalsManager360Card from "./ApprovalsManager360Card";
 import { useHistory } from "react-router-dom";
+import { Employee360Context } from "../../context/Employee360State";
 
-// view-----
-const EmployeeDashboard = () => {
+const ManagerDashboard = () => {
   const history = useHistory();
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
@@ -52,8 +52,9 @@ const EmployeeDashboard = () => {
   const [country, setCountry] = useState("");
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
-  const { stateList, viewStates } = useContext(MasterFilesContext);
   const { rolePermission } = useContext(PermissionContext);
+  const { stateList, viewStates } = useContext(MasterFilesContext);
+  const { clusterLoader } = useContext(Employee360Context);
 
   useEffect(() => {
     locationDetails();
@@ -110,6 +111,9 @@ const EmployeeDashboard = () => {
   }, [stateId, stateList]);
   const GoToDocuments = (e) => {
     history.push("./document-management");
+  };
+  const GoToCluster = (e) => {
+    history.push("./cluster/viewclustert");
   };
 
   return (
@@ -410,6 +414,34 @@ const EmployeeDashboard = () => {
                         style={{
                           borderRadius: "3%",
                           boxShadow: "0px 0px 2px 0 black",
+                          height: "500px",
+                        }}
+                        className="scrollbar big-card p-10 main-card"
+                      >
+                        <div className="CardHeading">
+                          <label style={{ marginLeft: "1rem" }}>My Team</label>
+                        </div>
+                        <ClusterCard />
+                        {!clusterLoader ? (
+                          <div style={{ float: "bottom", textAlign: "center" }}>
+                            <label
+                              className="itemResult"
+                              onClick={(e) => GoToCluster(e)}
+                            >
+                              View All
+                            </label>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </Card>
+                    </Col>
+                    <Col sm={6}>
+                      <Card
+                        style={{
+                          borderRadius: "3%",
+                          boxShadow: "0px 0px 2px 0 black",
+                          height: "500px",
                         }}
                         className="big-card p-10 main-card"
                       >
@@ -418,16 +450,26 @@ const EmployeeDashboard = () => {
                             Approvals
                           </label>
                         </div>
-                        <ApprovalsEmp360Card />
+                        <ApprovalsManager360Card />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                  </Row>
+                  <Row
+                    style={{
+                      marginTop: "1rem",
+                      marginBottom: "1rem",
+                      marginRight: "1rem",
+                      marginLeft: "1rem",
+                    }}
+                  >
+                    <Col sm={5}>
                       <Card
                         style={{
                           borderRadius: "3%",
+                          height: "260px",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
-                        className="big-card p-10 main-card"
+                        className="small-card p-10 main-card"
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
@@ -437,16 +479,17 @@ const EmployeeDashboard = () => {
                         <HolidaysCard />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
-                          height: "55%",
+                          height: "260px",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
                         className="big-card p-10 main-card"
                       >
                         <label className="smallCardHeading">My Documents</label>
+
                         <MyDocumentsCard height={"200px"} />
                         <div style={{ float: "bottom", textAlign: "center" }}>
                           <label
@@ -457,11 +500,12 @@ const EmployeeDashboard = () => {
                           </label>
                         </div>
                       </Card>
-
+                    </Col>
+                    <Col sm={3}>
                       <Card
                         style={{
                           borderRadius: "3%",
-                          height: "30%",
+                          height: "260px",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
                         className="big-card p-10 main-card"
@@ -472,27 +516,6 @@ const EmployeeDashboard = () => {
                       </Card>
                     </Col>
                   </Row>
-                  {/* <Row
-                    style={{
-                      marginTop: "1rem",
-                      marginBottom: "1rem",
-                      marginRight: "1rem",
-                      marginLeft: "1rem",
-                    }}
-                  >
-                    <Col sm={6}>
-                      <Card
-                        style={{ borderRadius: "3%" }}
-                        className="scrollbar big-card p-10 main-card"
-                      >
-                        <div className="CardHeading">
-                          <label style={{ marginLeft: "1rem" }}>My Team</label>
-                        </div>
-                        <ClusterCard />
-                        
-                      </Card>
-                    </Col>
-                  </Row> */}
                 </Form>
               </div>
             </div>
@@ -503,4 +526,4 @@ const EmployeeDashboard = () => {
   );
 };
 
-export default EmployeeDashboard;
+export default ManagerDashboard;

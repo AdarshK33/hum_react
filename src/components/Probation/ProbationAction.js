@@ -11,7 +11,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import ConfirmationLetter from "./ConfirmationLetter";
 import ExtensionLetter from "./ExtensionLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { SeparationContext } from "../../context/SepearationState";
 import ConfirmationLetter1 from "./UpdatedConfirmationLetter";
 import ExtensionLetter1 from "./UpdatedExtensionLetter";
@@ -51,6 +51,7 @@ const ProbationAction = () => {
   const [dateDisable, setDateDisable] = useState(true);
   const [extDATE, setExtDate] = useState("");
   const history = useHistory();
+  const { employeeid } = useParams();
 
   const [state, setState] = useState({
     empName: "",
@@ -90,10 +91,10 @@ const ProbationAction = () => {
     LetterSaved,
   } = useContext(ProbationContext);
   const { searchByCostCenter } = useContext(SeparationContext);
-  console.log("employeeId", empId);
+  console.log("employeeId", employeeid);
   useEffect(() => {
-    ViewProbationDataById(empId);
-  }, [empId]);
+    ViewProbationDataById(employeeid);
+  }, [employeeid]);
   console.log("probationData->", probationData);
 
   useEffect(() => {
@@ -786,9 +787,15 @@ const ProbationAction = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="itemResult">
-              {probationData.status === 1
+              {probationData !== null &&
+              probationData !== undefined &&
+              Object.keys(probationData).length !== 0 &&
+              probationData.status === 1
                 ? "Confirmattion letter sent to the employee"
-                : probationData.status === 2
+                : probationData !== null &&
+                  probationData !== undefined &&
+                  Object.keys(probationData).length !== 0 &&
+                  probationData.status === 2
                 ? "Extension letter sent to the employee"
                 : ""}
             </label>

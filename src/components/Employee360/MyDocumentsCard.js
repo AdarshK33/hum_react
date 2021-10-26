@@ -8,7 +8,7 @@ import { Employee360Context } from "../../context/Employee360State";
 import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 
-const MyDocumentsCard = () => {
+const MyDocumentsCard = ({ height }) => {
   const { MyDocView, MyDocList, letterShow, SetLetterView } =
     useContext(Employee360Context);
   const { downloadFile } = useContext(DocsVerifyContext);
@@ -43,7 +43,7 @@ const MyDocumentsCard = () => {
           // contentClassName="content"
           smoothScrolling={true}
           horizontal={false}
-          style={{ zIndex: "0" }}
+          style={{ zIndex: "0", height: height }}
         >
           {MyDocList.map((item) => {
             return (
@@ -55,7 +55,7 @@ const MyDocumentsCard = () => {
                       <label>
                         {item.documentName !== null &&
                         item.documentName !== undefined
-                          ? item.documentName.replace(" ", "")
+                          ? item.documentName.replace(" ", "").replace(" ", "")
                           : ""}
                       </label>
                     </div>
@@ -93,7 +93,7 @@ const MyDocumentsCard = () => {
           })}
         </ScrollArea>
       ) : (
-        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+        <h4 style={{ textAlign: "center", width: "100%", marginTop: "30%" }}>
           No Records Found
         </h4>
       )}

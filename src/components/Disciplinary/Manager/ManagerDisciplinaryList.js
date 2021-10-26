@@ -446,7 +446,10 @@ const ManagerDisciplinaryList = () => {
                               <td>
                                 {" "}
                                 <Link
-                                  to={"/disciplinary-action/" + item.employeeId}
+                                  to={
+                                    "/disciplinary-action/" +
+                                    item.disciplinaryAction.disciplinaryId
+                                  }
                                 >
                                   <Edit2
                                     onClick={() => {

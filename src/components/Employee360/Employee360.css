@@ -189,9 +189,43 @@
 }
 .clusterEmpployeeBox {
   margin-top: 1rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   border-radius: 5%;
   background-color: #e4effa;
   width: 95%;
   align-content: center;
+}
+.circle {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  background-color: #006ebb;
+  position: relative;
+  float: right;
+  margin-top: 0px;
+  margin-right: 15px;
+}
+.circle::after {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: #fff;
+  height: 2px;
+  margin-top: -1px;
+  top: 50%;
+  left: 9px;
+  right: 9px;
+  z-index: 9;
+}
+.circle::before {
+  content: " ";
+  position: absolute;
+  display: block;
+  background-color: #fff;
+  width: 2px;
+  margin-left: -2px;
+  left: 50%;
+  top: 9px;
+  bottom: 9px;
+  z-index: 0;
 }

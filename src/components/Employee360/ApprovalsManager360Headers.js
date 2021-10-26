@@ -1,4 +1,4 @@
-const APPROVALS_EMP360_TABLE_HEADERS = {
+const APPROVALS_MANAGER360_TABLE_HEADERS = {
   promotion: {
     empId: "Emp ID",
     empName: "Name",
@@ -6,31 +6,36 @@ const APPROVALS_EMP360_TABLE_HEADERS = {
     pstPromotedTo: "Promoted Position",
     promotionDate: "PD",
     status: "Status",
+    action: "Action",
   },
   transfer: {
     empId: "Emp ID",
     empName: "Name",
     effectiveDate: "Effective Date",
-    transferType: "Typpe Of Transfer",
+    transferType: "Type Of Transfer",
     status: "Status",
+    action: "Action",
   },
   disciplinary: {
+    empId: "Emp ID",
     empName: "Name",
     showCauseDate: "Show Cause",
+    issuedFor: "Issue",
     dueDays: "DD",
-    showCauseStatus: "Status",
-    warningDate: "Warning Letter",
-    pipStartDate: "PIP SD",
-    pipEndDate: "PIP ED",
+    empAction: "Status",
+    warningIssueDaTE: "Warning Letter",
+    PIP: "PIP",
     status: "Status",
+    action: "Action",
   },
   probation: {
+    empId: "Emp ID",
     empName: "Name",
     dateOfJoining: "DOJ",
-    dateOfCnfrmation: "DOC",
     dueDays: "DD",
     status: "Status",
+    action: "Action",
   },
 };
 
-export default APPROVALS_EMP360_TABLE_HEADERS;
+export default APPROVALS_MANAGER360_TABLE_HEADERS;
