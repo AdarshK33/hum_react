@@ -10,7 +10,7 @@ const ITCharter =(props)=>{
     const [dsiItCharter,setDsiItCharter] = useState(false)
     const [dsiItCharterError,setDsiItCharterError] = useState("")
     const [charterId ,setCharterId] = useState("")
-
+    const [charterAcknowledgementId,setCharterAcknowledgementId] = useState("")
 
     const handleClose = () => {
         setShow(false);
@@ -54,6 +54,13 @@ const ITCharter =(props)=>{
           if(dsiItCharter == true){
       const infoData = {
         "charterId": charterId,
+        "acknowledge":true,
+        "dsiCharterAcknowledgement": [
+            {
+              "charterAcknowledgementId": 0,
+              "charterId": charterId,
+            }
+          ],
         "employeeId":employeeProfileData.employeeId,
         "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
         "isDsiItCharter": true 
