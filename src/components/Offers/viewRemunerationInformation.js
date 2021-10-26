@@ -63,7 +63,7 @@ const ViewRemunerationInformation = (props) => {
                         candidateData.workInformation !== null &&
                         candidateData.workInformation !== undefined &&
                         candidateData.workInformation.contractType ===
-                          "Permanent"
+                          "Fulltime"
                       ? ""
                       : ""}
                   </Form.Label>

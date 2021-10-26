@@ -338,8 +338,8 @@ const EntityTransferAcceptance = () => {
       transferData !== null &&
       transferData !== undefined &&
       Object.keys(transferData).length !== 0 &&
-      (transferData.currentContractType === "Permanent" ||
-        transferData.currentContractType === "permanent")
+      (transferData.currentContractType === "Fulltime" ||
+        transferData.currentContractType === "fulltime")
     ) {
       if (Valid.test(newGross)) {
         if (parseInt(newGross) < 18000) {
@@ -480,8 +480,8 @@ const EntityTransferAcceptance = () => {
             Object.keys(transferData).length !== 0 &&
             transferData.currentContractType !== null &&
             transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Permanent" ||
-              transferData.currentContractType === "permanent") ? (
+            (transferData.currentContractType === "Fulltime" ||
+              transferData.currentContractType === "fulltime") ? (
             <ApointmentLetter />
           ) : transferData !== null &&
             transferData !== undefined &&
