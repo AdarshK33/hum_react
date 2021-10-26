@@ -14,9 +14,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
+import { useHistory, useParams } from "react-router-dom";
 import { AppContext } from "../../../context/AppState";
 
 const PromotionApproval = (props) => {
+  const { promotionId } = useParams();
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
@@ -91,6 +93,9 @@ const PromotionApproval = (props) => {
     rejectPromotion,
   } = useContext(PromotionContext);
   useEffect(() => {
+    ViewPromotionById(promotionId);
+  }, [promotionId]);
+  useEffect(() => {
     if (
       promotionIdData !== null &&
       promotionIdData !== undefined &&
@@ -151,7 +156,7 @@ const PromotionApproval = (props) => {
       });
     }
   }, [promotionIdData]);
-  console.log(state,"state1")
+  console.log(state, "state1");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -166,7 +171,7 @@ const PromotionApproval = (props) => {
     ) {
       approvePromotion(state.promotionId, 2);
       setModelStatus(true);
-    }else if (
+    } else if (
       user !== null &&
       user !== undefined &&
       rolePermission == "superCostCenterManager"
@@ -255,10 +260,11 @@ const PromotionApproval = (props) => {
                   user !== undefined &&
                   rolePermission == "costCenterManager"
                 ? "Promotion confirmed successfully, request sent to Admin"
-                :user !== null &&
-                user !== undefined &&
-                rolePermission == "superCostCenterManager"
-              ? "Promotion confirmed successfully, request sent to Admin": ""}
+                : user !== null &&
+                  user !== undefined &&
+                  rolePermission == "superCostCenterManager"
+                ? "Promotion confirmed successfully, request sent to Admin"
+                : ""}
             </label>
             <div className="text-center mb-2">
               <Link to={"/promotion-list"}>
@@ -277,8 +283,7 @@ const PromotionApproval = (props) => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Promotion rejected,the Manager/Admin has been
-              notified
+              Promotion rejected,the Manager/Admin has been notified
             </label>
             <div className="text-center mb-2">
               <Link to={"/promotion-list"}>
@@ -608,8 +613,13 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.effectiveDate !== null && state.effectiveDate !== undefined && state.effectiveDate !== ""
-                                  ?moment(state.effectiveDate).format("DD-MM-YYYY"):""}
+                                  {state.effectiveDate !== null &&
+                                  state.effectiveDate !== undefined &&
+                                  state.effectiveDate !== ""
+                                    ? moment(state.effectiveDate).format(
+                                        "DD-MM-YYYY"
+                                      )
+                                    : ""}
                                 </label>
                               </div>
                             </Col>
@@ -645,8 +655,13 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.managerValidatedDate !== null && state.managerValidatedDate !== undefined && state.managerValidatedDate !== ""
-                                  ?moment(state.managerValidatedDate).format("DD-MM-YYYY"):""}
+                                  {state.managerValidatedDate !== null &&
+                                  state.managerValidatedDate !== undefined &&
+                                  state.managerValidatedDate !== ""
+                                    ? moment(state.managerValidatedDate).format(
+                                        "DD-MM-YYYY"
+                                      )
+                                    : ""}
                                 </label>
                               </div>
                             </Col>
@@ -682,8 +697,13 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.adminValidatedDate !== null && state.adminValidatedDate !== undefined && state.adminValidatedDate !== ""
-                                  ?moment(state.adminValidatedDate).format("DD-MM-YYYY"):""}
+                                  {state.adminValidatedDate !== null &&
+                                  state.adminValidatedDate !== undefined &&
+                                  state.adminValidatedDate !== ""
+                                    ? moment(state.adminValidatedDate).format(
+                                        "DD-MM-YYYY"
+                                      )
+                                    : ""}
                                 </label>
                               </div>
                             </Col>

@@ -13,8 +13,8 @@ const initial_state = {
   plannedLeaves: [],
   unPlannedLeaves: [],
   myPerformanceData: {},
-  terminationLetterData: [],
-  terminationConfirmationStatus: "",
+  Manager360ListData: [],
+  ClusterEmpList: [],
   resignationConfirmationStatus: "",
 };
 
@@ -24,6 +24,7 @@ export const Employee360Provider = ({ children }) => {
   const [loader, setLoader] = useState(false);
   const [approvalsLoader, setApprovalsLoader] = useState(false);
   const [rosterLoader, setRosterLoader] = useState(false);
+  const [clusterLoader, setClusterLoader] = useState(false);
   const [letterShow, setLetterShow] = useState(false);
   const [state, dispatch] = useReducer(Employee360Reducer, initial_state);
 
@@ -109,13 +110,13 @@ export const Employee360Provider = ({ children }) => {
   };
 
   const ClusterView = (key = "all") => {
-    setLoader(true);
+    setClusterLoader(true);
     client
       .get("/api/v1/employee/360/view/cluster?key=" + key)
       .then((response) => {
         state.ClusterData = response.data.data;
         //toast.info(response.data.message);
-        setLoader(false);
+        setClusterLoader(false);
         return dispatch({
           type: "CLUSTER_DATA",
           payload: state.ClusterData,
@@ -125,10 +126,56 @@ export const Employee360Provider = ({ children }) => {
         console.log(error);
       });
   };
-  const Employee360ListView = (key) => {
-    setApprovalsLoader(true);
+  const ClusterSearchByClusterName = (key) => {
+    setClusterLoader(true);
     client
-      .get("/api/v1/employee/360/view/" + key)
+      .get("/api/v1/employee/360/view/cluster?key=" + key)
+      .then((response) => {
+        state.ClusterEmpList = response.data.data;
+        //toast.info(response.data.message);
+        setClusterLoader(false);
+        return dispatch({
+          type: "CLUSTER_EMP_DATA",
+          payload: state.ClusterEmpList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const ClusterSearchByEmployeeName = (cluster, key) => {
+    setClusterLoader(true);
+    client
+      .get(
+        "/api/v1/employee/360/view/cluster/employee?key=" +
+          cluster +
+          "&searchKey=" +
+          key
+      )
+      .then((response) => {
+        state.ClusterEmpList = response.data.data;
+        //toast.info(response.data.message);
+        setClusterLoader(false);
+        return dispatch({
+          type: "CLUSTER_EMP_DATA",
+          payload: state.ClusterEmpList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const Employee360ListView = (key, EmpId) => {
+    setApprovalsLoader(true);
+    let api = "";
+    if (key === "disciplinary") {
+      api = "/api/v1/disciplinary/view/employee?employeeId=" + EmpId;
+    } else {
+      api = "/api/v1/employee/360/view/" + key;
+    }
+    client
+      .get(api)
       .then((response) => {
         state.employee360ListData = response.data.data;
         //toast.info(response.data.message);
@@ -142,6 +189,38 @@ export const Employee360Provider = ({ children }) => {
         console.log(error);
       });
   };
+
+  const Manager360ListView = (key) => {
+    let api = "";
+    setApprovalsLoader(true);
+    if (key === "transfer") {
+      api =
+        "/api/v1/transfer/view?key=all&page=0&size=10&status=0&transferType=all";
+    } else if (key === "promotion") {
+      api =
+        "/api/v1/employee/360/view/promotion/manager?key=all&page=0&size=10&superManager=0";
+    } else if (key === "probation") {
+      api = "/api/v1/probation/view?days=0&key=all&page=0&size=10&status=0";
+    } else if ((key = "disciplinary")) {
+      api =
+        "/api/v1/disciplinary/view?key=all&page=0&size=10&status=0&superManager=0";
+    }
+
+    client
+      .get(api)
+      .then((response) => {
+        state.Manager360ListData = response.data.data.data;
+        setApprovalsLoader(false);
+        return dispatch({
+          type: "MANAGER_360_APROVAL",
+          payload: state.Manager360ListData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const MyLeavesViewPlanned = () => {
     setLoader(true);
     client
@@ -207,6 +286,11 @@ export const Employee360Provider = ({ children }) => {
         MyLeavesViewPlanned,
         MyLeavesViewUnplanned,
         MyPerformanceView,
+        Manager360ListView,
+        ClusterSearchByClusterName,
+        ClusterSearchByEmployeeName,
+        ClusterEmpList: state.ClusterEmpList,
+        Manager360ListData: state.Manager360ListData,
         myPerformanceData: state.myPerformanceData,
         unPlannedLeaves: state.unPlannedLeaves,
         plannedLeaves: state.plannedLeaves,
@@ -220,6 +304,7 @@ export const Employee360Provider = ({ children }) => {
         resignationConfirmationStatus: state.resignationConfirmationStatus,
         approvalsLoader: approvalsLoader,
         rosterLoader: rosterLoader,
+        clusterLoader: clusterLoader,
       }}
     >
       {children}

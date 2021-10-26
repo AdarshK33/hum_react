@@ -9,10 +9,11 @@ import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 // view-----
 const CostCenterManagerAction = () => {
+  const { employeeid } = useParams();
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -91,6 +92,9 @@ const CostCenterManagerAction = () => {
     issueShowCauseNoticeData,
     createShowCauseIssue,
   } = useContext(DisciplinaryContext);
+  useEffect(() => {
+    disciplinaryEmployeeSearch(employeeid);
+  }, [employeeid]);
 
   useEffect(() => {
     if (
