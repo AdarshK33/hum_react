@@ -366,6 +366,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/employee360`}
             component={EmployeeDashboard}
           />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager360`}
+            component={ManagerDashboard}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
             component={ManagerDisciplinaryList}
@@ -420,7 +425,6 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
-            // component={ManagerDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/promotion-initiate`}
@@ -574,8 +578,7 @@ const RoutePath = () => {
                   ) : e.path === "/holiday/holidaylist" ? (
                     <Route
                       path={`${process.env.PUBLIC_URL}/holiday/holidaylist`}
-                      // component={HolidayList}
-                      component={ManagerDashboard}
+                      component={HolidayList}
                     />
                   ) : e.path === "/salary/processsalary" ? (
                     <Route

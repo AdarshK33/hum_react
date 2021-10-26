@@ -75,59 +75,15 @@ const TableComponentManager360 = ({
                           </Row>
                         </td>
                       );
-                    } else if (key === "status" && button) {
-                      return (
-                        <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                          {value === "Approved" ? (
-                            <div>
-                              <button
-                                style={{
-                                  backgroundColor: "green",
-                                  color: "white",
-                                  border: "1px",
-                                  height: "30px",
-                                  width: "100px",
-                                }}
-                                disabled="true"
-                              >
-                                Approve
-                              </button>
-                              <br />
-                              <br />
-                              <button
-                                style={{
-                                  backgroundColor: "red",
-                                  color: "white",
-
-                                  border: "1px",
-                                  height: "30px",
-                                  width: "100px",
-                                }}
-                                disabled="true"
-                              >
-                                Disapprove
-                              </button>
-                            </div>
-                          ) : (
-                            <button
-                              style={{
-                                backgroundColor: "red",
-                                color: "white",
-                                border: "1px",
-                                height: "30px",
-                                width: "100px",
-                              }}
-                              disabled="true"
-                            >
-                              {value}
-                            </button>
-                          )}
-                        </td>
-                      );
                     } else {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                          {value}
+                          <Link
+                            to={item.action.edit.link}
+                            style={{ textDecoration: "none" }}
+                          >
+                            {value}
+                          </Link>
                         </td>
                       );
                     }

@@ -8,6 +8,7 @@ import { Fragment } from "react";
 import { Employee360Context } from "../../context/Employee360State";
 import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import LoaderIcon from "../Loader/LoaderIcon";
 
 const ClusterCard = () => {
   const {
@@ -15,9 +16,12 @@ const ClusterCard = () => {
     ClusterData,
     ClusterSearchByClusterName,
     ClusterEmpList,
+    clusterLoader,
+    ClusterSearchByEmployeeName,
   } = useContext(Employee360Context);
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     ClusterView();
@@ -47,9 +51,17 @@ const ClusterCard = () => {
   }, [ClusterData]);
   useEffect(() => {
     if (cluster !== "") {
+      setSearchInput("");
       ClusterSearchByClusterName(cluster);
     }
   }, [cluster]);
+
+  const searchDataHandler = () => {
+    if (cluster !== "" && searchInput !== "") {
+      console.log("-----------s");
+      ClusterSearchByEmployeeName(cluster, searchInput);
+    }
+  };
 
   return (
     <Fragment>
@@ -100,95 +112,108 @@ const ClusterCard = () => {
           <Form.Control
             type="text"
             style={{ border: "1px solid #006ebb" }}
-            // value={searchInput}
+            value={searchInput}
             placeholder="Search Employee Name/ID"
-            // onChange={searchInputHandler}
+            onChange={(e) => setSearchInput(e.target.value)}
             className="form-control searchButton"
           />
           <Search
             className="search-icon mr-1"
             style={{ color: "#313131" }}
-            // onClick={searchDataHandler}
+            onClick={searchDataHandler}
           />
         </Col>
       </Row>
       {/* <Row style={{ marginTop: "1rem", marginLeft: "1rem" }}> */}
-
-      <ScrollArea
-        speed={0.4}
-        // className="area"
-        // contentClassName="content"
-        smoothScrolling={true}
-        horizontal={false}
-        style={{ zIndex: "0", height: "350px" }}
-      >
-        <div className="circle"></div>
-        {ClusterEmpList !== null &&
-        ClusterEmpList !== undefined &&
-        Object.keys(ClusterEmpList).length !== 0 &&
-        ClusterEmpList[0] !== null &&
-        ClusterEmpList[0] !== undefined &&
-        Object.keys(ClusterEmpList[0]).length !== 0 &&
-        ClusterEmpList[0].employees !== null &&
-        ClusterEmpList[0].employees !== undefined &&
-        Object.keys(ClusterEmpList[0].employees).length !== 0 ? (
-          <div>
-            {ClusterEmpList[0].employees.map((item) => {
-              return (
-                <div className="clusterEmpployeeBox">
-                  <div style={{ padding: "10px" }}>
-                    <label>{item.firstName + " " + item.lastName}</label>
-                    <Row>
-                      <Col sm={5}>
-                        <label
-                          style={{ fontSize: "15px", marginRight: "15px" }}
-                        >
-                          Employee Id
-                        </label>
-                        <label style={{ fontSize: "15px" }}>
-                          {item.employeeId}
-                        </label>
-                      </Col>
-
-                      <Col sm={7}>
-                        <p style={{ fontSize: "initial" }}>
-                          <span
+      {clusterLoader ? (
+        <LoaderIcon />
+      ) : (
+        <ScrollArea
+          speed={0.4}
+          // className="area"
+          // contentClassName="content"
+          smoothScrolling={true}
+          horizontal={false}
+          style={{ zIndex: "0", height: "350px" }}
+        >
+          {/* <div className="circle"></div> */}
+          {ClusterEmpList !== null &&
+          ClusterEmpList !== undefined &&
+          Object.keys(ClusterEmpList).length !== 0 &&
+          ClusterEmpList[0] !== null &&
+          ClusterEmpList[0] !== undefined &&
+          Object.keys(ClusterEmpList[0]).length !== 0 &&
+          ClusterEmpList[0].employees !== null &&
+          ClusterEmpList[0].employees !== undefined &&
+          Object.keys(ClusterEmpList[0].employees).length !== 0 ? (
+            <div>
+              {ClusterEmpList[0].employees.map((item) => {
+                return (
+                  <div className="clusterEmpployeeBox">
+                    <div style={{ padding: "10px", fontSize: "17px" }}>
+                      <label>
+                        <b>{item.firstName + " " + item.lastName}</b>
+                      </label>
+                      <Row style={{ marginTop: "-0.5rem" }}>
+                        <Col sm={5}>
+                          <label
                             style={{ fontSize: "15px", marginRight: "15px" }}
                           >
-                            Email
-                          </span>
-                          {item.personalEmail}
-                        </p>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col sm={5}>
-                        <label
-                          style={{ fontSize: "15px", marginRight: "70px" }}
-                        >
-                          Role
-                        </label>
-                        <label style={{ fontSize: "15px" }}>{item.role}</label>
-                      </Col>
+                            <b>Employee Id:</b>
+                          </label>
+                          <label style={{ fontSize: "15px" }}>
+                            {item.employeeId}
+                          </label>
+                        </Col>
 
-                      <Col sm={7}>
-                        <label
-                          style={{ fontSize: "15px", marginRight: "15px" }}
-                        >
-                          Ph No
-                        </label>
-                        <label style={{ fontSize: "15px" }}>{item.phone}</label>
-                      </Col>
-                    </Row>
+                        <Col sm={7}>
+                          <p style={{ fontSize: "initial" }}>
+                            <span
+                              style={{ fontSize: "15px", marginRight: "15px" }}
+                            >
+                              <b>Email:</b>
+                            </span>
+                            {item.personalEmail}
+                          </p>
+                        </Col>
+                      </Row>
+                      <Row style={{ marginTop: "-1rem" }}>
+                        <Col sm={5}>
+                          <label
+                            style={{ fontSize: "15px", marginRight: "70px" }}
+                          >
+                            <b>Role:</b>
+                          </label>
+                          <label style={{ fontSize: "15px" }}>
+                            {item.role}
+                          </label>
+                        </Col>
+
+                        <Col sm={7}>
+                          <label
+                            style={{ fontSize: "15px", marginRight: "15px" }}
+                          >
+                            <b>Ph No:</b>
+                          </label>
+                          <label style={{ fontSize: "15px" }}>
+                            {item.phone}
+                          </label>
+                        </Col>
+                      </Row>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          ""
-        )}
-      </ScrollArea>
+                );
+              })}
+            </div>
+          ) : (
+            <h4
+              style={{ textAlign: "center", width: "100%", marginTop: "25%" }}
+            >
+              No Records Found
+            </h4>
+          )}
+        </ScrollArea>
+      )}
     </Fragment>
   );
 };

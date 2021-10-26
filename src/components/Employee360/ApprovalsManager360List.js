@@ -83,10 +83,6 @@ const ApprovalsManager360List = ({ ListType }) => {
             position: item.oldPosition,
             pstPromotedTo: item.promotedPosition,
             promotionDate: item.promotionDate,
-            validateByCCM: item.validatedManagerName,
-            validateByCCMdate: item.managerValidatedDate,
-            validateByAdmin: item.validatedAdminName,
-            validateByAdminDate: item.adminValidatedDate,
             status:
               item.status == 0
                 ? "Pending"
@@ -195,7 +191,6 @@ const ApprovalsManager360List = ({ ListType }) => {
           return {
             empId: item.employeeId,
             empName: item.employeeName,
-            costCenter: item.employeeCostCentre,
             showCauseDate:
               item.disciplinaryAction !== null &&
               item.disciplinaryAction !== undefined
@@ -288,36 +283,34 @@ const ApprovalsManager360List = ({ ListType }) => {
         let tableData = Manager360ListData.map((item, index) => {
           return {
             empId: item.empId,
-            costCenter: item.costCentre,
             empName: item.empName,
             dateOfJoining: item.dateOfJoining,
-            dateOfConfirmation:
-              item.status === 2 &&
-              item.probationExtensionEndDate !== null &&
-              item.probationExtensionEndDate !== "" &&
-              item.probationExtensionEndDate !== undefined
-                ? item.probationExtensionEndDate
-                : item.probationConfirmationDate !== null &&
-                  item.probationConfirmationDate !== "" &&
-                  item.probationConfirmationDate !== undefined
-                ? item.probationConfirmationDate
-                : item.dateOfJoining !== null &&
-                  item.dateOfJoining !== undefined &&
-                  item.dateOfJoining !== "" &&
-                  item.probationPeriod !== null &&
-                  item.probationPeriod !== undefined &&
-                  item.probationPeriod !== ""
-                ? moment(
-                    new Date(
-                      new Date(item.dateOfJoining).setMonth(
-                        new Date(item.dateOfJoining).getMonth() +
-                          item.probationPeriod
-                      )
-                    )
-                  ).format("yyyy-MM-DD")
-                : "NA",
+            // dateOfConfirmation:
+            //   item.status === 2 &&
+            //   item.probationExtensionEndDate !== null &&
+            //   item.probationExtensionEndDate !== "" &&
+            //   item.probationExtensionEndDate !== undefined
+            //     ? item.probationExtensionEndDate
+            //     : item.probationConfirmationDate !== null &&
+            //       item.probationConfirmationDate !== "" &&
+            //       item.probationConfirmationDate !== undefined
+            //     ? item.probationConfirmationDate
+            //     : item.dateOfJoining !== null &&
+            //       item.dateOfJoining !== undefined &&
+            //       item.dateOfJoining !== "" &&
+            //       item.probationPeriod !== null &&
+            //       item.probationPeriod !== undefined &&
+            //       item.probationPeriod !== ""
+            //     ? moment(
+            //         new Date(
+            //           new Date(item.dateOfJoining).setMonth(
+            //             new Date(item.dateOfJoining).getMonth() +
+            //               item.probationPeriod
+            //           )
+            //         )
+            //       ).format("yyyy-MM-DD")
+            //     : "NA",
             dueDays: item.dueDays,
-            reminderDate: item.reminderSent,
             status: "Due for confirmation",
 
             action: {

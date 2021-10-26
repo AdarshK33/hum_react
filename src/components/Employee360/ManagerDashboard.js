@@ -20,7 +20,7 @@ import MyDocumentsCard from "./MyDocumentsCard";
 import ClusterCard from "./ClusterManager360Card";
 import ApprovalsManager360Card from "./ApprovalsManager360Card";
 import { useHistory } from "react-router-dom";
-import { RoleManagementContext } from "../../context/RoleManagementState";
+import { Employee360Context } from "../../context/Employee360State";
 
 const ManagerDashboard = () => {
   const history = useHistory();
@@ -54,6 +54,7 @@ const ManagerDashboard = () => {
     useContext(PermissionContext);
   const { rolePermission } = useContext(PermissionContext);
   const { stateList, viewStates } = useContext(MasterFilesContext);
+  const { clusterLoader } = useContext(Employee360Context);
 
   useEffect(() => {
     locationDetails();
@@ -421,14 +422,18 @@ const ManagerDashboard = () => {
                           <label style={{ marginLeft: "1rem" }}>My Team</label>
                         </div>
                         <ClusterCard />
-                        <div style={{ float: "bottom", textAlign: "center" }}>
-                          <label
-                            className="itemResult"
-                            onClick={(e) => GoToCluster(e)}
-                          >
-                            View All
-                          </label>
-                        </div>
+                        {!clusterLoader ? (
+                          <div style={{ float: "bottom", textAlign: "center" }}>
+                            <label
+                              className="itemResult"
+                              onClick={(e) => GoToCluster(e)}
+                            >
+                              View All
+                            </label>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </Card>
                     </Col>
                     <Col sm={6}>

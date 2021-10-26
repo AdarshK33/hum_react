@@ -24,6 +24,7 @@ export const Employee360Provider = ({ children }) => {
   const [loader, setLoader] = useState(false);
   const [approvalsLoader, setApprovalsLoader] = useState(false);
   const [rosterLoader, setRosterLoader] = useState(false);
+  const [clusterLoader, setClusterLoader] = useState(false);
   const [letterShow, setLetterShow] = useState(false);
   const [state, dispatch] = useReducer(Employee360Reducer, initial_state);
 
@@ -109,13 +110,13 @@ export const Employee360Provider = ({ children }) => {
   };
 
   const ClusterView = (key = "all") => {
-    setLoader(true);
+    setClusterLoader(true);
     client
       .get("/api/v1/employee/360/view/cluster?key=" + key)
       .then((response) => {
         state.ClusterData = response.data.data;
         //toast.info(response.data.message);
-        setLoader(false);
+        setClusterLoader(false);
         return dispatch({
           type: "CLUSTER_DATA",
           payload: state.ClusterData,
@@ -126,13 +127,36 @@ export const Employee360Provider = ({ children }) => {
       });
   };
   const ClusterSearchByClusterName = (key) => {
-    setLoader(true);
+    setClusterLoader(true);
     client
       .get("/api/v1/employee/360/view/cluster?key=" + key)
       .then((response) => {
         state.ClusterEmpList = response.data.data;
         //toast.info(response.data.message);
-        setLoader(false);
+        setClusterLoader(false);
+        return dispatch({
+          type: "CLUSTER_EMP_DATA",
+          payload: state.ClusterEmpList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const ClusterSearchByEmployeeName = (cluster, key) => {
+    setClusterLoader(true);
+    client
+      .get(
+        "/api/v1/employee/360/view/cluster/employee?key=" +
+          cluster +
+          "&searchKey=" +
+          key
+      )
+      .then((response) => {
+        state.ClusterEmpList = response.data.data;
+        //toast.info(response.data.message);
+        setClusterLoader(false);
         return dispatch({
           type: "CLUSTER_EMP_DATA",
           payload: state.ClusterEmpList,
@@ -264,6 +288,7 @@ export const Employee360Provider = ({ children }) => {
         MyPerformanceView,
         Manager360ListView,
         ClusterSearchByClusterName,
+        ClusterSearchByEmployeeName,
         ClusterEmpList: state.ClusterEmpList,
         Manager360ListData: state.Manager360ListData,
         myPerformanceData: state.myPerformanceData,
@@ -279,6 +304,7 @@ export const Employee360Provider = ({ children }) => {
         resignationConfirmationStatus: state.resignationConfirmationStatus,
         approvalsLoader: approvalsLoader,
         rosterLoader: rosterLoader,
+        clusterLoader: clusterLoader,
       }}
     >
       {children}

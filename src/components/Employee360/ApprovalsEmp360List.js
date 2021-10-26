@@ -109,11 +109,11 @@ const ApprovalsEmp360List = ({ ListType }) => {
               item.disciplinaryWarning !== undefined
                 ? item.disciplinaryWarning.pipEndDate
                 : "NA ",
-            pipStatus:
-              item.disciplinaryWarning !== null &&
-              item.disciplinaryWarning !== undefined
-                ? item.disciplinaryWarning.statusDesc
-                : "NA ",
+            // pipStatus:
+            //   item.disciplinaryWarning !== null &&
+            //   item.disciplinaryWarning !== undefined
+            //     ? item.disciplinaryWarning.statusDesc
+            //     : "NA ",
             status: "Approved",
           };
         });
