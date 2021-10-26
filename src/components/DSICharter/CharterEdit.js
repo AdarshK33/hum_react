@@ -34,8 +34,11 @@ const CharterEdit = () => {
       employeeProfileData.isAdminEnabled !== "" && 
        employeeProfileData.isAdminEnabled !== undefined){
         setStatus(employeeProfileData.isAdminEnabled)
-        SetStartDate(employeeProfileData.startingDate)
-        SetStartDate(employeeProfileData.closingDate)
+        SetStartDate(new Date(employeeProfileData.startingDate !== null 
+          && employeeProfileData.startingDate !== undefined &&  employeeProfileData.startingDate !== ""?employeeProfileData.startingDate:''))
+          setEndDate(new Date(employeeProfileData.startingDate !== null 
+            && employeeProfileData.closingDate !== undefined &&  employeeProfileData.closingDate !== ""?employeeProfileData.closingDate:''))
+          // SetEndDate(new Date(employeeProfileData.closingDate))
        }
     }
   },[])
@@ -175,7 +178,7 @@ const CharterEdit = () => {
                             </div>
                           </Col>
 
-                          <Col sm={3}>
+                          <Col sm={3} style={{marginLeft: "-6rem"}}>
                             <div>
                               <Form.Group>
                                 <div className={""}>
@@ -212,13 +215,13 @@ const CharterEdit = () => {
                               ""
                             )}
                           </Col>
-                          <Col sm={2}>
+                          <Col sm={2} style={{marginLeft: "6rem"}}>
                             <div>
                               <label>End Date :</label>
                             </div>
                           </Col>
 
-                          <Col sm={3}>
+                          <Col sm={3} style={{marginLeft: "-6rem"}}>
                             <div>
                               <Form.Group>
                                 <div className={""}>
@@ -289,7 +292,7 @@ const CharterEdit = () => {
                                   // required={required}
                                   onChange={handleCheckBox}
                                 />
-                                <label className="itemResult">Yes</label>
+                                <label className="itemResult"> Yes</label>
                               </div>
                           </Col>
                           <Col sm={1} style={{ marginTop: "0.25rem" }}>
