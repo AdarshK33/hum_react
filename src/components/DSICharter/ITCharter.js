@@ -1,11 +1,13 @@
 import React, { useState ,useContext,useEffect} from "react";
 import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+// import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const ITCharter =(props)=>{
-    const {  dsiCharterUpdate,dsiCharterUpdateData,viewCharterAll,charterDataAll} = useContext(DSICharterContext);
-    const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+    const {  dsiCharterUpdate,dsiCharterUpdateData,
+        ViewEmployeeProfile,employeeProfileData,charterIdValue
+        ,viewCharterAll,charterDataAll} = useContext(DSICharterContext);
+    // const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
   const [showModal, setShow] = useState(true);
     const [dsiItCharter,setDsiItCharter] = useState(false)
     const [dsiItCharterError,setDsiItCharterError] = useState("")
@@ -67,11 +69,11 @@ const ITCharter =(props)=>{
 
         const infoData = {
             "acknowledge":true,
-            "charterId": charterId,
+            "charterId": charterIdValue,
             "dsiCharterAcknowledgement": [
               {
                 "charterAcknowledgementId":0,
-                "charterId": charterId,
+                "charterId": charterIdValue,
               }
             ],     
             "employeeId":employeeProfileData.employeeId,
@@ -84,11 +86,10 @@ const ITCharter =(props)=>{
         setShow(false)
     }
       }
-
       useEffect(() => {
         ViewEmployeeProfile()
         viewCharterAll()
-    }, [props,employeeProfileData.isCodeOfConduct])
+      },[])
 
 
       useEffect(() => {

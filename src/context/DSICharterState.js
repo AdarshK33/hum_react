@@ -1,10 +1,11 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer, useState ,useContext} from "react";
 import { client } from "../utils/axios";
 import DSICharterReducer from "../reducers/DSICharterReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
-
+// import { EmployeeSeparationContext } from "./EmployeeSeparationState";
 const initial_state = {
+  employeeProfileData: {},
   dsiCharterData: [],
   dsiCharterUpdateData:{},
   charterEnable:{},
@@ -18,6 +19,29 @@ export const DSICharterContext = createContext();
 export const DSICharterProvider = (props) => {
   const [state, dispatch] = useReducer(DSICharterReducer, initial_state);
   const [loader, setLoader] = useState(false);
+  const [charterIdValue, setCharterIdValue] = useState(0);
+  // const { ViewEmployeeProfile,employeeProfileData } = useContext(EmployeeSeparationContext);
+
+  const ViewEmployeeProfile = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile")
+      .then((response) => {
+        state.employeeProfileData = response.data.data;
+        setCharterIdValue(response.data.data.charterId)
+        setLoader(false);
+        console.log("--->", state.employeeProfileData);
+        console.log("response of employee profile", response);
+
+        return dispatch({
+          type: "EMPLOYEE_PROFILE",
+          payload: state.employeeProfileData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   /*----------Api to create charter ------------*/
   const dsiCharterCreate = (data,value) => {
     setLoader(true);
@@ -25,12 +49,15 @@ export const DSICharterProvider = (props) => {
       .post("/api/v1/dsi_charter/create", data)
       .then((response) => {
         state.dsiCharterData = response.data.data;
+        setCharterIdValue(response.data.data.charterId)
+        console.log(response,"createDataDsi")
         toast.info(response.data.message);
         if(response.data.message === "SUCCESS"){
           value.history.push("/itcharter")
           setLoader(false);
           viewCharterAll()
           viewCharter("all",0);
+          ViewEmployeeProfile()
         }
         return dispatch({
           type: "DSICHARTER_CREATE",
@@ -48,8 +75,10 @@ export const DSICharterProvider = (props) => {
       .post("/api/v1/dsi_charter/update", data)
       .then((response) => {
         state.dsiCharterUpdateData = response.data.data;
+        console.log(response,"updateDataDsi")
         toast.info(response.data.message);
         viewCharterAll()
+        ViewEmployeeProfile()
         setLoader(false);
         return dispatch({
           type: "DSICHARTER_UPDATE",
@@ -70,6 +99,7 @@ export const DSICharterProvider = (props) => {
           toast.info(response.data.message);
           
           viewCharterAll()
+          ViewEmployeeProfile()
           setLoader(false);
           return dispatch({
             type: "DSICHARTER_ENABLE",
@@ -149,8 +179,11 @@ export const DSICharterProvider = (props) => {
         viewCharterAll,
         setLoader,
         dsiCharterEnable,
+        ViewEmployeeProfile,
+        employeeProfileData:state.employeeProfileData,
         charterEnable:state.charterEnable,
         loader: loader,
+        charterIdValue:charterIdValue,
         dsiCharterData: state.dsiCharterData,
         dsiCharterUpdateData:state.dsiCharterUpdateData,
         charterData: state.charterData,
