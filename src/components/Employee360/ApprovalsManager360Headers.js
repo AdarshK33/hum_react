@@ -36,6 +36,14 @@ const APPROVALS_MANAGER360_TABLE_HEADERS = {
     status: "Status",
     action: "Action",
   },
+  separation: {
+    empId: "Emp ID",
+    empName: "Name",
+    resignationDate: "Resignation Date",
+    noticePeriod: "Notice Period",
+    reason: "Reason",
+    action: "Action",
+  },
 };
 
 export default APPROVALS_MANAGER360_TABLE_HEADERS;

@@ -118,7 +118,7 @@ const ManagerDashboard = () => {
 
   return (
     <Fragment>
-      <Breadcrumb title="EMPLOYEE 360" parent="EMPLOYEE 360" />
+      <Breadcrumb title="MANAGER 360" parent="MANAGER 360" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -462,7 +462,7 @@ const ManagerDashboard = () => {
                       marginLeft: "1rem",
                     }}
                   >
-                    <Col sm={5}>
+                    <Col sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -479,7 +479,7 @@ const ManagerDashboard = () => {
                         <HolidaysCard />
                       </Card>
                     </Col>
-                    <Col sm={4}>
+                    {/* <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -500,8 +500,8 @@ const ManagerDashboard = () => {
                           </label>
                         </div>
                       </Card>
-                    </Col>
-                    <Col sm={3}>
+                    </Col> */}
+                    <Col sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",

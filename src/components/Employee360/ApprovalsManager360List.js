@@ -36,6 +36,8 @@ const ApprovalsManager360List = ({ ListType }) => {
       ? APPROVALS_MANAGER360_TABLE_HEADERS.disciplinary
       : ListType === "probation"
       ? APPROVALS_MANAGER360_TABLE_HEADERS.probation
+      : ListType === "separation"
+      ? APPROVALS_MANAGER360_TABLE_HEADERS.separation
       : APPROVALS_MANAGER360_TABLE_HEADERS.promotion;
   const [tableBody, setTableBody] = useState([]);
 
@@ -55,6 +57,8 @@ const ApprovalsManager360List = ({ ListType }) => {
       history.push("./disciplinary");
     } else if (ListType === "probation") {
       history.push("./probation");
+    } else if (ListType === "separation") {
+      history.push("./exit-approval");
     } else {
     }
   };
