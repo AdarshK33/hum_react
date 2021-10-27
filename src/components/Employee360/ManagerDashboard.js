@@ -118,7 +118,7 @@ const ManagerDashboard = () => {
 
   return (
     <Fragment>
-      <Breadcrumb title="EMPLOYEE 360" parent="EMPLOYEE 360" />
+      <Breadcrumb title="MANAGER 360" parent="MANAGER 360" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
