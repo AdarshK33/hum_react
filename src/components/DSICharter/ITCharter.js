@@ -43,7 +43,7 @@ const ITCharter =(props)=>{
               }
      }
      }, [employeeProfileData,props])
-     console.log(employeeProfileData,"employeeProfileData it0000")
+     console.log(employeeProfileData,charterIdValue,"employeeProfileData it0000")
     const handleSave =(e)=>{
         e.preventDefault()
         console.log(props,dsiItCharter,employeeProfileData,charterDataAll,"charter it")
@@ -52,7 +52,7 @@ const ITCharter =(props)=>{
           } else {
             setDsiItCharterError("");
           }
-          if(dsiItCharter == true){
+          if(dsiItCharter == true && charterIdValue !== 0){
     //   const infoData = {
     //     "charterId": charterId,
     //     "acknowledge":true,
@@ -89,7 +89,7 @@ const ITCharter =(props)=>{
       useEffect(() => {
         ViewEmployeeProfile()
         viewCharterAll()
-      },[])
+      },[charterIdValue,props])
 
 
       useEffect(() => {
