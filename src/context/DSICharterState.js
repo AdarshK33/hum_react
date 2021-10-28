@@ -30,8 +30,7 @@ export const DSICharterProvider = (props) => {
         state.employeeProfileData = response.data.data;
         setCharterIdValue(response.data.data.charterId)
         setLoader(false);
-        console.log("--->", state.employeeProfileData);
-        console.log("response of employee profile", response);
+        console.log("employee profile", response);
 
         return dispatch({
           type: "EMPLOYEE_PROFILE",
@@ -142,7 +141,11 @@ export const DSICharterProvider = (props) => {
       .then((response) => {
         console.log(response.data.data,"allcharter");
         state.charterDataAll = response.data.data;
-     
+        response.data.data.map((item)=>{
+          if(item.employeeId == state.employeeProfileData.employeeId){
+            setCharterIdValue(item.charterId)
+          }
+        })
         setLoader(false);
 
         return dispatch({

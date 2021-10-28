@@ -130,23 +130,44 @@ const CodeOfConduct =(props)=> {
         props.history.push("/itcharter")
         // setShow(false)
       }else{
-      const infoData = {
-        "charterId": charterIdValue,
-        "employeeId":employeeProfileData.employeeId,
-        "dsiCharterAcknowledgement": [
-          {
-            "charterAcknowledgementId": 0,
-            "charterId": charterIdValue,
-          }
-        ],     
-        "acknowledge":true,
-        "isCodeOfConduct":true,
-        "isDsiItCharter": employeeProfileData.isDsiItCharter 
-        }
-        console.log(infoData)
-        dsiCharterUpdate(infoData)
-        props.history.push("/itcharter")
-        setShow(false)
+        charterDataAll.map((item)=>{
+          if(item.employeeId === employeeProfileData.employeeId){
+            const infoData = {
+              "charterId": item.charterId,
+              "employeeId":employeeProfileData.employeeId,
+              "dsiCharterAcknowledgement": [
+                {
+                  "charterAcknowledgementId": 0,
+                  "charterId": item.charterId,
+                }
+              ],     
+              "acknowledge":true,
+              "isCodeOfConduct":true,
+              "isDsiItCharter": employeeProfileData.isDsiItCharter 
+              }
+    
+            dsiCharterUpdate(infoData)
+            props.history.push("/itcharter")
+            setShow(false)       
+           }
+        })
+      // const infoData = {
+      //   "charterId": charterIdValue,
+      //   "employeeId":employeeProfileData.employeeId,
+      //   "dsiCharterAcknowledgement": [
+      //     {
+      //       "charterAcknowledgementId": 0,
+      //       "charterId": charterIdValue,
+      //     }
+      //   ],     
+      //   "acknowledge":true,
+      //   "isCodeOfConduct":true,
+      //   "isDsiItCharter": employeeProfileData.isDsiItCharter 
+      //   }
+      //   console.log(infoData)
+      //   dsiCharterUpdate(infoData)
+      //   props.history.push("/itcharter")
+      //   setShow(false)
       }
       
     }

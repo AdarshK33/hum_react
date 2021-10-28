@@ -28,6 +28,10 @@ const ITCharter =(props)=>{
         }
         console.log(dsiItCharter)
       }
+      useEffect(() => {
+        ViewEmployeeProfile()
+        viewCharterAll()
+      },[charterIdValue,props])
 
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
@@ -52,7 +56,7 @@ const ITCharter =(props)=>{
           } else {
             setDsiItCharterError("");
           }
-          if(dsiItCharter == true && charterIdValue !== 0){
+          if(dsiItCharter == true){
     //   const infoData = {
     //     "charterId": charterId,
     //     "acknowledge":true,
@@ -66,30 +70,31 @@ const ITCharter =(props)=>{
     //     "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
     //     "isDsiItCharter": true 
     //     }
-
-        const infoData = {
-            "acknowledge":true,
-            "charterId": charterIdValue,
-            "dsiCharterAcknowledgement": [
-              {
-                "charterAcknowledgementId":0,
-                "charterId": charterIdValue,
-              }
-            ],     
-            "employeeId":employeeProfileData.employeeId,
-            "isCodeOfConduct":true,
-            "isDsiItCharter":true
-            }
-
-        dsiCharterUpdate(infoData)
-        props.history.push("/dashboard/storedashboard")
-        setShow(false)
+    charterDataAll.map((item)=>{
+          if(item.employeeId === employeeProfileData.employeeId){
+            const infoData = {
+                "acknowledge":true,
+                "charterId": item.charterId,
+                "dsiCharterAcknowledgement": [
+                  {
+                    "charterAcknowledgementId":0,
+                    "charterId": item.charterId,
+                  }
+                ],     
+                "employeeId":employeeProfileData.employeeId,
+                "isCodeOfConduct":item.isCodeOfConduct === null?false:true,
+                "isDsiItCharter":true
+                }
+    
+            dsiCharterUpdate(infoData)
+            props.history.push("/dashboard/storedashboard")
+            setShow(false)       
+           }
+        })
+        
     }
       }
-      useEffect(() => {
-        ViewEmployeeProfile()
-        viewCharterAll()
-      },[charterIdValue,props])
+    
 
 
       useEffect(() => {
