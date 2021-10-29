@@ -51,12 +51,13 @@ export const DSICharterProvider = (props) => {
         setCharterIdValue(response.data.data.charterId)
         console.log(response,"createDataDsi")
         toast.info(response.data.message);
+        viewCharterAll()
+        viewCharter("all",0);
+        ViewEmployeeProfile()
         if(response.data.message === "SUCCESS"){
           value.history.push("/itcharter")
           setLoader(false);
-          viewCharterAll()
-          viewCharter("all",0);
-          ViewEmployeeProfile()
+        
         }
         return dispatch({
           type: "DSICHARTER_CREATE",

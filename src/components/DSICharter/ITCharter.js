@@ -29,9 +29,9 @@ const ITCharter =(props)=>{
         console.log(dsiItCharter)
       }
       useEffect(() => {
-        ViewEmployeeProfile()
         viewCharterAll()
-      },[charterIdValue,props])
+        ViewEmployeeProfile()
+      },[employeeProfileData.charterId !== 0])
 
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
