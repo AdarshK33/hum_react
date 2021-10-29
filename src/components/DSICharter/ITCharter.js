@@ -31,7 +31,7 @@ const ITCharter =(props)=>{
       useEffect(() => {
         viewCharterAll()
         ViewEmployeeProfile()
-      },[employeeProfileData.charterId !== 0])
+      },[charterIdValue])
 
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
