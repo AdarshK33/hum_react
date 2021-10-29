@@ -40,7 +40,6 @@ const APPROVALS_MANAGER360_TABLE_HEADERS = {
     empId: "Emp ID",
     empName: "Name",
     resignationDate: "Resignation Date",
-    noticePeriod: "Notice Period",
     reason: "Reason",
     action: "Action",
   },
