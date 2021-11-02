@@ -4,7 +4,6 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import DatePicker from "react-datepicker";
 import Breadcrumb from "../common/breadcrumb";
 import { DSICharterContext } from "../../context/DSICharterState";
-import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,8 +19,7 @@ const CharterEdit = () => {
   const [startDateError,setStartDateError] = useState("")
   const [endDateError,setEndDateError] = useState("")
 
-  const {  dsiCharterEnable,charterEnable} = useContext(DSICharterContext);
-  const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+  const {  dsiCharterEnable,charterEnable,ViewEmployeeProfile,employeeProfileData} = useContext(DSICharterContext);
 
   useEffect(()=>{
     ViewEmployeeProfile()
@@ -33,15 +31,17 @@ const CharterEdit = () => {
     if(employeeProfileData.isAdminEnabled !== null && 
       employeeProfileData.isAdminEnabled !== "" && 
        employeeProfileData.isAdminEnabled !== undefined){
+         console.log(employeeProfileData,"employeeProfileDataedit")
         setStatus(employeeProfileData.isAdminEnabled)
-        SetStartDate(new Date(employeeProfileData.startingDate !== null 
-          && employeeProfileData.startingDate !== undefined &&  employeeProfileData.startingDate !== ""?employeeProfileData.startingDate:''))
-          setEndDate(new Date(employeeProfileData.startingDate !== null 
-            && employeeProfileData.closingDate !== undefined &&  employeeProfileData.closingDate !== ""?employeeProfileData.closingDate:''))
+        SetStartDate(new Date(employeeProfileData.startingDate === null||employeeProfileData.startingDate === undefined || employeeProfileData.startingDate === "" ?new Date():employeeProfileData.startingDate))
+          setEndDate(new Date(employeeProfileData.closingDate === null 
+            || employeeProfileData.closingDate === undefined || employeeProfileData.closingDate === "" ?new Date():employeeProfileData.closingDate))
           // SetEndDate(new Date(employeeProfileData.closingDate))
+          
        }
     }
-  },[])
+  },[employeeProfileData])
+  console.log(status,startDate,endDate)
   const handleCheckBox =(e)=>{
     console.log(e.target.value)
     if(e.target.value == "yes"){

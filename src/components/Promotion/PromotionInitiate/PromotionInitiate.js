@@ -787,13 +787,13 @@ const PromotionInitiate = () => {
             {user !== null &&
             user !== undefined &&
             Object.keys(user).length !== 0 &&
-            (user.loginType == 7 || user.additionalRole === "7")||
+            (user.loginType == 7 || user.additionalRole === "7")
               // ? "Your request has been sent to admin."
               // : user !== null &&
               //   user !== undefined &&
               //   Object.keys(user).length !== 0 &&
-                (user.additionalRole === "1" || user.loginType == "1")
-              ? "Your request has been saved successfully."
+                
+              ?"Your request has been sent to admin":(user.additionalRole === "1" || user.loginType == "1")?"Your request has been saved successfully."
               : "Your request has been sent to cost center manager."}
           </label>
           <div className="text-center mb-2">

@@ -23,6 +23,8 @@ const GroupReducer = (state, action) => {
       return { ...state, myPerformanceData: action.payload };
     case "MANAGER_360_APROVAL":
       return { ...state, Manager360ListData: action.payload };
+    case "CLUSTER_DIRECT":
+      return { ...state, clusterDirect: action.payload };
 
     default:
       return state;

@@ -9,6 +9,7 @@ const initial_state = {
   WeeksList: [],
   WeeksInfoList: [],
   ClusterData: [],
+  clusterDirect: [],
   employee360ListData: [],
   plannedLeaves: [],
   unPlannedLeaves: [],
@@ -190,20 +191,26 @@ export const Employee360Provider = ({ children }) => {
       });
   };
 
-  const Manager360ListView = (key) => {
+  const Manager360ListView = (key, roleCheck) => {
     let api = "";
     setApprovalsLoader(true);
     if (key === "transfer") {
       api =
-        "/api/v1/transfer/view?key=all&page=0&size=10&status=0&transferType=all";
+        "/api/v1/transfer/view?key=all&page=0&size=10&status=6&transferType=all";
     } else if (key === "promotion") {
       api =
         "/api/v1/employee/360/view/promotion/manager?key=all&page=0&size=10&superManager=0";
     } else if (key === "probation") {
       api = "/api/v1/probation/view?days=0&key=all&page=0&size=10&status=0";
-    } else if ((key = "disciplinary")) {
+    } else if (key === "disciplinary") {
       api =
-        "/api/v1/disciplinary/view?key=all&page=0&size=10&status=0&superManager=0";
+        "/api/v1/disciplinary/view?key=all&page=0&size=10&status=15&superManager=0";
+    } else if (key === "separation") {
+      if (roleCheck === "costCenterManager") {
+        api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=10";
+      } else {
+        api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=9";
+      }
     }
 
     client
@@ -214,6 +221,22 @@ export const Employee360Provider = ({ children }) => {
         return dispatch({
           type: "MANAGER_360_APROVAL",
           payload: state.Manager360ListData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const ClusterDirectTeam = (key) => {
+    setClusterLoader(true);
+    client
+      .get("/api/v1/employee/360/view/cluster/direct/employee?searchKey=" + key)
+      .then((response) => {
+        state.clusterDirect = response.data.data;
+        setClusterLoader(false);
+        return dispatch({
+          type: "CLUSTER_DIRECT",
+          payload: state.clusterDirect,
         });
       })
       .catch((error) => {
@@ -289,6 +312,8 @@ export const Employee360Provider = ({ children }) => {
         Manager360ListView,
         ClusterSearchByClusterName,
         ClusterSearchByEmployeeName,
+        ClusterDirectTeam,
+        clusterDirect: state.clusterDirect,
         ClusterEmpList: state.ClusterEmpList,
         Manager360ListData: state.Manager360ListData,
         myPerformanceData: state.myPerformanceData,
