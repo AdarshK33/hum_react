@@ -42,7 +42,7 @@ const ApprovalsManager360List = ({ ListType }) => {
   const [tableBody, setTableBody] = useState([]);
 
   useEffect(() => {
-    Manager360ListView(ListType);
+    Manager360ListView(ListType, rolePermission);
   }, [ListType]);
   console.log("Manager360ListData", Manager360ListData);
   useEffect(() => {

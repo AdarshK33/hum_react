@@ -191,7 +191,7 @@ export const Employee360Provider = ({ children }) => {
       });
   };
 
-  const Manager360ListView = (key) => {
+  const Manager360ListView = (key, roleCheck) => {
     let api = "";
     setApprovalsLoader(true);
     if (key === "transfer") {
@@ -206,7 +206,11 @@ export const Employee360Provider = ({ children }) => {
       api =
         "/api/v1/disciplinary/view?key=all&page=0&size=10&status=15&superManager=0";
     } else if (key === "separation") {
-      api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10";
+      if (roleCheck === "costCenterManager") {
+        api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=10";
+      } else {
+        api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=9";
+      }
     }
 
     client
@@ -224,12 +228,12 @@ export const Employee360Provider = ({ children }) => {
       });
   };
   const ClusterDirectTeam = (key) => {
-    setLoader(true);
+    setClusterLoader(true);
     client
       .get("/api/v1/employee/360/view/cluster/direct/employee?searchKey=" + key)
       .then((response) => {
         state.clusterDirect = response.data.data;
-        setLoader(false);
+        setClusterLoader(false);
         return dispatch({
           type: "CLUSTER_DIRECT",
           payload: state.clusterDirect,

@@ -25,6 +25,29 @@ const ClusterCard = () => {
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [directTeamArr, setDirectTeamArr] = useState([]);
+  const [searchInputDirect, setSearchInputDirect] = useState("");
+  useEffect(() => {
+    if (
+      clusterDirect !== null &&
+      clusterDirect !== undefined &&
+      Object.keys(clusterDirect).length !== 0
+    ) {
+      let tempArr = [];
+      {
+        clusterDirect.map((items) => {
+          {
+            items.employees.map((item) => {
+              tempArr.push(item);
+            });
+          }
+        });
+      }
+      setDirectTeamArr(tempArr);
+    } else {
+      setDirectTeamArr([]);
+    }
+  }, [clusterDirect]);
 
   useEffect(() => {
     ClusterView();
@@ -33,6 +56,7 @@ const ClusterCard = () => {
   console.log("ClusterData", ClusterData);
   console.log("ClusterEmpList", ClusterEmpList);
   console.log("clusterDirect", clusterDirect);
+  console.log("directTeamArr", directTeamArr);
   useEffect(() => {
     if (
       ClusterData !== null &&
@@ -67,7 +91,14 @@ const ClusterCard = () => {
       ClusterSearchByEmployeeName(cluster, searchInput);
     }
   };
-
+  const searchDataHandlerDirect = () => {
+    if (searchInputDirect !== "") {
+      console.log("-----------Direct");
+      ClusterDirectTeam(searchInputDirect);
+    } else {
+      ClusterDirectTeam("all");
+    }
+  };
   return (
     <Fragment>
       <div className="tabsHeading">
@@ -106,15 +137,15 @@ const ClusterCard = () => {
                       <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
-                        value={searchInput}
+                        value={searchInputDirect}
                         placeholder="Search Employee Name/ID"
-                        onChange={(e) => setSearchInput(e.target.value)}
+                        onChange={(e) => setSearchInputDirect(e.target.value)}
                         className="form-control searchButton"
                       />
                       <Search
                         className="search-icon mr-1"
                         style={{ color: "#313131" }}
-                        onClick={searchDataHandler}
+                        onClick={searchDataHandlerDirect}
                       />
                     </Col>
                   </Row>
@@ -130,17 +161,11 @@ const ClusterCard = () => {
                       style={{ zIndex: "0", height: "310px" }}
                     >
                       {/* <div className="circle"></div> */}
-                      {ClusterEmpList !== null &&
-                      ClusterEmpList !== undefined &&
-                      Object.keys(ClusterEmpList).length !== 0 &&
-                      ClusterEmpList[0] !== null &&
-                      ClusterEmpList[0] !== undefined &&
-                      Object.keys(ClusterEmpList[0]).length !== 0 &&
-                      ClusterEmpList[0].employees !== null &&
-                      ClusterEmpList[0].employees !== undefined &&
-                      Object.keys(ClusterEmpList[0].employees).length !== 0 ? (
+                      {directTeamArr !== null &&
+                      directTeamArr !== undefined &&
+                      Object.keys(directTeamArr).length !== 0 ? (
                         <div>
-                          {ClusterEmpList[0].employees.map((item) => {
+                          {directTeamArr.map((item) => {
                             return (
                               <div className="clusterEmpployeeBox">
                                 <div
