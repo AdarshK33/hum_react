@@ -92,9 +92,10 @@ const PromotionApproval = (props) => {
     approvePromotion,
     rejectPromotion,
   } = useContext(PromotionContext);
-  useEffect(() => {
-    ViewPromotionById(promotionId);
-  }, [promotionId]);
+  // console.log(promotionId,"promotionid")
+  // useEffect(() => {
+  //   ViewPromotionById(promotionId);
+  // }, [promotionId]);
   useEffect(() => {
     if (
       promotionIdData !== null &&
@@ -160,6 +161,7 @@ const PromotionApproval = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("approved")
     setSubmitted(true);
     if (user !== null && user !== undefined && rolePermission == "admin") {
       approvePromotion(state.promotionId, 1);
@@ -185,6 +187,7 @@ const PromotionApproval = (props) => {
   };
   const rejectReasonHandler = (e) => {
     e.preventDefault();
+    console.log("reject")
     console.log(state, "state");
     rejectPromotion(state.promotionId, state.remarks);
     setModelStatusReject(true);

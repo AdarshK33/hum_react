@@ -66,8 +66,14 @@ const TerminationLetter = (props) => {
             <br></br>
 
             <div className="relievingLetterHeading">
-                To
-              <div className="mt-1">
+                <p>
+                &nbsp;&nbsp;
+                  {terminationLetterData !== undefined &&
+                    ""
+                      }
+                      </p>
+                      <p>
+                  To,</p>
                 <p>
                   Name:&nbsp;&nbsp;
                   {terminationLetterData !== undefined &&
@@ -84,7 +90,6 @@ const TerminationLetter = (props) => {
                   {terminationLetterData !== undefined &&
                     terminationLetterData.designation}
                 </p>
-              </div>
             </div>
             <br/>
             <p>
@@ -150,7 +155,7 @@ const TerminationLetter = (props) => {
             {terminationLetterData !== undefined &&
             terminationLetterData.managerName} 
             </p>
-            <div style={{ textAlign: "left" }}>
+            {/* <div style={{ textAlign: "left" }}>
                   {showSignature && (
                   <Fragment>
                   <br></br>
@@ -175,18 +180,55 @@ const TerminationLetter = (props) => {
                       </>
                     </div>
                   )}
-                </div>
+                </div> */}
+
+                  {showSignature && (
+                   <Fragment>
+                   <br></br>
+                   <img 
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    style={{marginLeft:"10px"}}
+                  />
+                 </Fragment>
+                  )}
+                  {!showSignature && (
+                    <>
+                    <br/>
+                      <button
+                        className="signatureButtons"
+                        onClick={() => addSignature()}
+                      >
+                        Add Signature
+                      </button>
+                      </>
+                  )}
               </div>
+              {/* <br></br>
               <div className="text-center mt-5 mb-5">
                 {showSignature && (
                   <button
                     className="signatureButtons"
                     onClick={() => handleSave()}
                   >
-                    Save
+                    Save changes
                   </button>
                 )}
-              </div>
+              </div> */}
+                {showSignature &&(<Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={() => handleSave()}
+                  >
+                    Save Changes
+                  </button>
+                </Col>
+              </Row>)}
           </div>
               {/* <div ref={ref}>
                 <p className="float-left mb-5">

@@ -168,7 +168,7 @@ const RelievingLetter = (props) => {
                   )}
                 </div>
               </div>
-                {showSignature  ? (
+                {showSignature?(
               <Row>
                 <Col sm={4}></Col>
                 <Col sm={5}>

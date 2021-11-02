@@ -1,21 +1,47 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
+import DatePicker from "react-datepicker";
 import Breadcrumb from "../common/breadcrumb";
 import { DSICharterContext } from "../../context/DSICharterState";
-import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment'
 
 const CharterEdit = () => {
+
   const [status,setStatus] = useState("")
+  const [startDate,SetStartDate] = useState(null)
+  const [endDate,setEndDate] = useState(null)
 
   const [acknowledgementError,setAnknowledgementError] = useState("")
+  const [startDateError,setStartDateError] = useState("")
+  const [endDateError,setEndDateError] = useState("")
 
-  const {  dsiCharterEnable,charterEnable} = useContext(DSICharterContext);
-  const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+  const {  dsiCharterEnable,charterEnable,ViewEmployeeProfile,employeeProfileData} = useContext(DSICharterContext);
 
+  useEffect(()=>{
+    ViewEmployeeProfile()
+  },[])
+  useEffect(()=>{
+    if(employeeProfileData !== null && 
+      employeeProfileData !== undefined && 
+      employeeProfileData !== ""){
+    if(employeeProfileData.isAdminEnabled !== null && 
+      employeeProfileData.isAdminEnabled !== "" && 
+       employeeProfileData.isAdminEnabled !== undefined){
+         console.log(employeeProfileData,"employeeProfileDataedit")
+        setStatus(employeeProfileData.isAdminEnabled)
+        SetStartDate(new Date(employeeProfileData.startingDate === null||employeeProfileData.startingDate === undefined || employeeProfileData.startingDate === "" ?new Date():employeeProfileData.startingDate))
+          setEndDate(new Date(employeeProfileData.closingDate === null 
+            || employeeProfileData.closingDate === undefined || employeeProfileData.closingDate === "" ?new Date():employeeProfileData.closingDate))
+          // SetEndDate(new Date(employeeProfileData.closingDate))
+          
+       }
+    }
+  },[employeeProfileData])
+  console.log(status,startDate,endDate)
   const handleCheckBox =(e)=>{
     console.log(e.target.value)
     if(e.target.value == "yes"){
@@ -27,13 +53,54 @@ const CharterEdit = () => {
   console.log(status,"status")
   const handleSave=(e)=>{
     e.preventDefault()
-    if(status !== null && status !== undefined && status !== ""){
+    if (
+      startDate == null ||
+      startDate == undefined
+    ) {
+      setStartDateError("Please select start date");
+    } else {
+      setStartDateError("");
+    }
+    if (
+      endDate == null ||
+      endDate == undefined
+    ) {
+      setEndDateError("Please select end date");
+    } else {
+      setEndDateError("");
+    }
+    console.log(startDate,endDate,status,"handlesave")
+    if(status !== null && status !== undefined && status !== "" &&
+      startDate !== null && startDate !== undefined && startDate !== "" &&
+      endDate !== null && endDate !== undefined && endDate !== ""){
       setAnknowledgementError("")
-      dsiCharterEnable(status)
+      var start= moment(startDate).format("YYYY-MM-DD")
+      var end= moment(endDate).format("YYYY-MM-DD")
+      const infoData={
+        "status":status,
+        "startingDate":start,
+        "closingDate":end
+      }
+      console.log(startDate,endDate,status,"startend",start,end,infoData)
+     dsiCharterEnable(infoData)
     }else{
       setAnknowledgementError("Please select the checkbox")
     }
   }
+  const startHandler = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    moment(new Date(AdjusteddateValue)).format("DD/MM/YYYY")
+    SetStartDate(AdjusteddateValue);
+  };
+  const endHandler = (date) => {
+    var endDateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    moment(new Date(endDateValue)).format("DD/MM/YYYY")
+    setEndDate(endDateValue);
+  };
   return (
     <Fragment>
       {/* {true?<Modal
@@ -98,6 +165,101 @@ const CharterEdit = () => {
                         </Col>
                       
                   </Row> */}
+                     <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <div>
+                              <label>Start Date :</label>
+                            </div>
+                          </Col>
+
+                          <Col sm={3} style={{marginLeft: "-6rem"}}>
+                            <div>
+                              <Form.Group>
+                                <div className={""}>
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    style={
+                                      startDateError
+                                        ? { borderColor: "red" }
+                                        : { borderRadius: "5px" }
+                                    }
+                                    selected={startDate}
+                                    name="startDate"
+                                    // minDate={moment().toDate()}
+                                    required
+                                    onChange={(e) => startHandler(e)}
+                                    dateFormat="dd-MM-yyyy"
+                                    placeholderText="DD-MM-YYYY"
+                                    minDate={
+                                      new Date(
+                                        new Date().setMonth(
+                                          new Date().getMonth() - 2
+                                        )
+                                      )
+                                    }
+                                  />
+                                </div>
+                              </Form.Group>
+                            </div>
+                            {startDateError ? (
+                              <p style={{ color: "red" }}>
+                                {startDateError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </Col>
+                          <Col sm={2} style={{marginLeft: "6rem"}}>
+                            <div>
+                              <label>End Date :</label>
+                            </div>
+                          </Col>
+
+                          <Col sm={3} style={{marginLeft: "-6rem"}}>
+                            <div>
+                              <Form.Group>
+                                <div className={""}>
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    style={
+                                      endDateError
+                                        ? { borderColor: "red" }
+                                        : { borderRadius: "5px" }
+                                    }
+                                    selected={endDate}
+                                    name="endDate"
+                                    // minDate={moment().toDate()}
+                                    required
+                                    onChange={(e) => endHandler(e)}
+                                    dateFormat="dd-MM-yyyy"
+                                    placeholderText="DD-MM-YYYY"
+                                    minDate={
+                                      new Date(
+                                        new Date().setMonth(
+                                          new Date().getMonth() - 2
+                                        )
+                                      )
+                                    }
+                                  />
+                                </div>
+                              </Form.Group>
+                            </div>
+                            {endDateError ? (
+                              <p style={{ color: "red" }}>
+                                {endDateError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </Col>
+                         
+                        </Row>
                   <Row
                           style={{
                             marginLeft: "2rem",
@@ -130,7 +292,7 @@ const CharterEdit = () => {
                                   // required={required}
                                   onChange={handleCheckBox}
                                 />
-                                <label className="itemResult">Yes</label>
+                                <label className="itemResult"> Yes</label>
                               </div>
                           </Col>
                           <Col sm={1} style={{ marginTop: "0.25rem" }}>

@@ -1,11 +1,13 @@
 import React, { useState ,useContext,useEffect} from "react";
 import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+// import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const ITCharter =(props)=>{
-    const {  dsiCharterUpdate,dsiCharterUpdateData,viewCharterAll,charterDataAll} = useContext(DSICharterContext);
-    const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+    const {  dsiCharterUpdate,dsiCharterUpdateData,
+        ViewEmployeeProfile,employeeProfileData,charterIdValue
+        ,viewCharterAll,charterDataAll} = useContext(DSICharterContext);
+    // const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
   const [showModal, setShow] = useState(true);
     const [dsiItCharter,setDsiItCharter] = useState(false)
     const [dsiItCharterError,setDsiItCharterError] = useState("")
@@ -26,11 +28,14 @@ const ITCharter =(props)=>{
         }
         console.log(dsiItCharter)
       }
+      useEffect(() => {
+        viewCharterAll()
+        ViewEmployeeProfile()
+      },[charterIdValue])
 
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
          && employeeProfileData !== "" ){
-        console.log(employeeProfileData,"employeeProfileData it")
         setCharterId(employeeProfileData.charterId)
          if(employeeProfileData.isCodeOfConduct === true &&
              employeeProfileData.isDsiItCharter !==true){
@@ -42,7 +47,7 @@ const ITCharter =(props)=>{
               }
      }
      }, [employeeProfileData,props])
-     
+     console.log(employeeProfileData,charterIdValue,"employeeProfileData it0000")
     const handleSave =(e)=>{
         e.preventDefault()
         console.log(props,dsiItCharter,employeeProfileData,charterDataAll,"charter it")
@@ -52,29 +57,44 @@ const ITCharter =(props)=>{
             setDsiItCharterError("");
           }
           if(dsiItCharter == true){
-      const infoData = {
-        "charterId": charterId,
-        "acknowledge":true,
-        "dsiCharterAcknowledgement": [
-            {
-              "charterAcknowledgementId": 0,
-              "charterId": charterId,
-            }
-          ],
-        "employeeId":employeeProfileData.employeeId,
-        "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
-        "isDsiItCharter": true 
-        }
-        dsiCharterUpdate(infoData)
-        props.history.push("/dashboard/storedashboard")
-        setShow(false)
+    //   const infoData = {
+    //     "charterId": charterId,
+    //     "acknowledge":true,
+    //     "dsiCharterAcknowledgement": [
+    //         {
+    //           "charterAcknowledgementId": charterId,
+    //           "charterId": charterId,
+    //         }
+    //       ],
+    //     "employeeId":employeeProfileData.employeeId,
+    //     "isCodeOfConduct": employeeProfileData.isCodeOfConduct,
+    //     "isDsiItCharter": true 
+    //     }
+    charterDataAll.map((item)=>{
+          if(item.employeeId === employeeProfileData.employeeId){
+            const infoData = {
+                "acknowledge":true,
+                "charterId": item.charterId,
+                "dsiCharterAcknowledgement": [
+                  {
+                    "charterAcknowledgementId":0,
+                    "charterId": item.charterId,
+                  }
+                ],     
+                "employeeId":employeeProfileData.employeeId,
+                "isCodeOfConduct":item.isCodeOfConduct === null?false:true,
+                "isDsiItCharter":true
+                }
+    
+            dsiCharterUpdate(infoData)
+            props.history.push("/dashboard/storedashboard")
+            setShow(false)       
+           }
+        })
+        
     }
       }
-
-      useEffect(() => {
-        ViewEmployeeProfile()
-        viewCharterAll()
-    }, [props])
+    
 
 
       useEffect(() => {

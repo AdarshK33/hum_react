@@ -1,7 +1,7 @@
 import React, { useState ,useContext,useEffect} from "react";
 import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
+// import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from './img/img1.png'
 import Img2 from './img/img2.png'
 import Img3 from './img/img3.png'
@@ -58,8 +58,9 @@ import Img52 from './img/img52.png'
 
 import "./charter.css"
 const CodeOfConduct =(props)=> {
-  const { dsiCharterCreate ,dsiCharterUpdate,dsiCharterData,viewCharterAll,loader,charterDataAll} = useContext(DSICharterContext);
-  const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+  const { dsiCharterCreate ,dsiCharterUpdate,dsiCharterData,ViewEmployeeProfile,employeeProfileData,
+    viewCharterAll,loader,charterIdValue,charterDataAll} = useContext(DSICharterContext);
+  // const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
 
     const [showModal, setShow] = useState(false);
   const [codeOfConduct,setCodeOfConduct] = useState(false)
@@ -83,29 +84,11 @@ const CodeOfConduct =(props)=> {
   useEffect(() => {
     ViewEmployeeProfile()
     viewCharterAll()
-  }, [props])
+  }, [])
 
   useEffect(() => {
      if(employeeProfileData !== undefined && employeeProfileData !== null 
-      && employeeProfileData !== ""){
-     // charterDataAll.map((item)=>{
-       // console.log(item,"item code")
-      //   if(item.employeeId == employeeProfileData.employeeId){
-      //     // if(item.codeOfConduct == true && item.ethicsCharter !==true && item.dsiItCharter !==true){
-      //     //     props.history.push("/ethiccharter")
-      //     //     setShow(false)
-      //     // }else 
-      //     if(item.codeOfConduct == true && item.dsiItCharter !==true){
-      //       props.history.push("/itcharter")
-      //       setShow(false)
-      //     }else if(item.codeOfConduct == true && item.dsiItCharter==true){
-      //       props.history.push("/dashboard/storedashboard")
-      //       setShow(false)
-      //     }
-      //   }else{
-      //     handleShow()
-      //   }
-      // })
+      && employeeProfileData !== "" && Object.keys(employeeProfileData).length !== 0){
      if(employeeProfileData.isCodeOfConduct === true &&
          employeeProfileData.isDsiItCharter !== true){
         props.history.push("/itcharter")
@@ -118,6 +101,7 @@ const CodeOfConduct =(props)=> {
             employeeProfileData.isDsiItCharter !== true)||(employeeProfileData.isCodeOfConduct === null && 
             employeeProfileData.isDsiItCharter === null)){
               setCharterId(employeeProfileData.charterId)
+            
               console.log(employeeProfileData,"employeeProfileData")
               handleShow()
           }
@@ -131,37 +115,61 @@ const CodeOfConduct =(props)=> {
     } else {
       setCodeOfConductError("");
     }
+    console.log(charterId,codeOfConduct,employeeProfileData,"employeeProfileData")
     if(codeOfConduct === true){
       if(charterId === 0){
+          let history = props.history
   const infoData = {
-        "charterId": charterId,
+        "charterId": charterIdValue,
         "employeeId":employeeProfileData.employeeId,
         "isCodeOfConduct": true,
         "isDsiItCharter": false 
         }
         console.log(infoData)
-        dsiCharterCreate(infoData)
+        dsiCharterCreate(infoData,history)
         props.history.push("/itcharter")
-        setShow(false)
+        // setShow(false)
       }else{
-      const infoData = {
-        "charterId": charterId,
-        "employeeId":employeeProfileData.employeeId,
-        "dsiCharterAcknowledgement": [
-          {
-            "charterAcknowledgementId": 0,
-            "charterId": charterId,
-          }
-        ],     
-        "acknowledge":true,
-        "isCodeOfConduct":true,
-        "isDsiItCharter": employeeProfileData.isCodeOfConduct 
-        }
-        console.log(infoData)
-        dsiCharterUpdate(infoData)
-        props.history.push("/itcharter")
-        setShow(false)
+        charterDataAll.map((item)=>{
+          if(item.employeeId === employeeProfileData.employeeId){
+            const infoData = {
+              "charterId": item.charterId,
+              "employeeId":employeeProfileData.employeeId,
+              "dsiCharterAcknowledgement": [
+                {
+                  "charterAcknowledgementId": 0,
+                  "charterId": item.charterId,
+                }
+              ],     
+              "acknowledge":true,
+              "isCodeOfConduct":true,
+              "isDsiItCharter": employeeProfileData.isDsiItCharter 
+              }
+    
+            dsiCharterUpdate(infoData)
+            props.history.push("/itcharter")
+            setShow(false)       
+           }
+        })
+      // const infoData = {
+      //   "charterId": charterIdValue,
+      //   "employeeId":employeeProfileData.employeeId,
+      //   "dsiCharterAcknowledgement": [
+      //     {
+      //       "charterAcknowledgementId": 0,
+      //       "charterId": charterIdValue,
+      //     }
+      //   ],     
+      //   "acknowledge":true,
+      //   "isCodeOfConduct":true,
+      //   "isDsiItCharter": employeeProfileData.isDsiItCharter 
+      //   }
+      //   console.log(infoData)
+      //   dsiCharterUpdate(infoData)
+      //   props.history.push("/itcharter")
+      //   setShow(false)
       }
+      
     }
   }
   
