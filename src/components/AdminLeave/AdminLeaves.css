@@ -41,3 +41,18 @@ button.disabled-export-button.btn.btn-primary {
     color: black;
     border-color: white;
 }
+
+.Btn-Blue-BG.active {
+    background-color: #006EBB !important;
+    color: white !important;
+  }
+
+  .Btn-Blue-BG {
+    background-color: rgb(255, 255, 255) !important;
+    color: #006EBB !important;
+  }
+
+  .Btn-Blue-BG:hover {
+    background-color: #006EBB !important;
+    color: white !important;
+  }

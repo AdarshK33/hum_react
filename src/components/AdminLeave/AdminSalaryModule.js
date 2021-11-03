@@ -5,7 +5,7 @@ import "../salary/salary.css";
 import "../Leaves/Leaves.css";
 import "./AdminLeaves.css";
 import { Edit2, } from 'react-feather';
-import { Button, Modal, Form, Table, Row } from "react-bootstrap";
+import { Col,Button, Modal, Form, Table, Row,ButtonGroup,ToggleButton,ToggleButtonGroup } from "react-bootstrap";
 import { ClusterContext } from "../../context/ClusterState";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
@@ -20,6 +20,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import ReactExport from 'react-data-export'
 import MultiSelect from 'react-multi-select-component'
 import { AdminContext } from '../../context/AdminState'
+import { OfferContext } from "../../context/OfferState";
+import { RosterContext } from "../../context/RosterState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -38,7 +41,7 @@ const AdminSalaryModule = () => {
   const [lastName, setLastName] = useState()
   const [numberOfHours, setNumberOfHours] = useState()
   const [lop, setLop] = useState()
-  const [contractType, setContractType] = useState()
+  const [contractType, setContractType] = useState([])
   const [extraHours, setExtraHours] = useState()
   const [reason, setReason] = useState()
   const [month, setMonth] = useState()
@@ -49,8 +52,8 @@ const AdminSalaryModule = () => {
   const [additionalHours, setadditionalHours] = useState()
   const [year, setYear] = useState()
   const [error, setError] = useState(false)
-
-
+  const[department,setDepartment]=useState([])
+  const [radioValue, setRadioValue] = useState('1');
 
   let history = useHistory();
 
@@ -60,15 +63,36 @@ const AdminSalaryModule = () => {
     salaryApproval, loader
   } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
-
-
+  const {
+    departmentView,
+    departmentName,
+    managerList,
+    allManagerList,
+    costcenterByDepartment,
+    costcenterByDepartmentData
+  } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
+  const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const handleEditClose = () => setEditModal(false)
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
     CostCenter();
+    departmentView();
+    viewContractTypes();
   }, []);
 
+  useEffect(() => {
+    console.log("cosCentreList",costCenterList);
+    if(costCenterList !== null&&costCenterList!==undefined&&Object.keys(costCenterList).length!==0&&Object.keys(costCenterList).length===1){
+      console.log("cosCentreList inside",costCenterList);
+  // ({ label: costCenterList[0].costCentreName, value: costCenterList[0].costCentreName })
+setCostCenter([{ label: costCenterList[0].costCentreName, value: costCenterList[0].costCentreName }])
+    }else{
+      setCostCenter([])
+    }
+}, [costCenterList]);
+console.log("CostCenterr",costCenter);
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -97,10 +121,15 @@ const AdminSalaryModule = () => {
       cluster: flag,
       month: month,
       storeIds: costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null,
+      departments: department.length > 0 ? department.map((e, i) => department[i].value) : null,
+      contractType: contractType,
       year: year
     }
+    console.log("salaryData",salaryData);
     if (validate) {
+      setCurrentPage(1)
       viewSalary(salaryData);
+     
     }
     setGetM(getM)
     /* setCostCenter(costCenter) */
@@ -108,13 +137,24 @@ const AdminSalaryModule = () => {
 
   const validation = () => {
     let flag = true
-    if (costCenter === '') {
+
+    if (getM === '') {
+      toast.error("Select Month and Year")
+      flag = false;
+      return;
+    }
+    if (costCenter === ''||Object.keys(costCenter).length===0) {
       toast.error("Select Cost Center")
       flag = false;
       return;
     }
-    if (getM === '') {
-      toast.error("Select Month and Year")
+    if (rolePermission == "admin"&&(department === ''||Object.keys(department).length===0)) {
+      toast.error("Select Department")
+      flag = false;
+      return;
+    }
+    if (contractType === ''||Object.keys(contractType).length===0) {
+      toast.error("Select Contract type")
       flag = false;
       return;
     }
@@ -124,9 +164,19 @@ const AdminSalaryModule = () => {
   const setCostCenterHandler = (options) => {
     let data1 = options !== null ? options.map((e, i) => options[i].value) : []
     setCostCenter(options)
-    console.log("options in cost center", data1)
+    console.log("options in cost center", data1,options )
 } 
 
+const setDepartmentHandler = (options) => {
+  let data1 = options !== null ? options.map((e, i) => options[i].value) : []
+  setDepartment(options)
+  console.log("options in cost center", data1,options)
+} 
+
+const setContractTypeHandler = (options) => {
+  setContractType(options)
+  console.log("options in ContractType", options)
+} 
 
 
   const approvedButton = () => {
@@ -204,6 +254,7 @@ const AdminSalaryModule = () => {
     toast.error("No Records to be Export")
   }
 
+  console.log("radiovalue",radioValue);
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="Admin" />
@@ -255,8 +306,76 @@ const AdminSalaryModule = () => {
                 <div>{error && <span style={{ color: 'red' }}>Cost Center is Required</span>}</div>
               </Form.Group>
             </div>
+            <div className="col-sm-4">
+{rolePermission == "admin" ?
+            <Form.Group>
+            <Form.Label>Department</Form.Label><span style={{ color: 'red' }}>*</span> 
+            <MultiSelect
+              options={departmentName !== null ?
+                departmentName.map(e => ({ label: e.departmentName, value: e.departmentName })) : []}
+              value={department}
+              onChange={setDepartmentHandler}
+              labelledBy={"Select"}
+              hasSelectAll={true}
+              disableSearch={false}
+            />
+            <div>{error && <span style={{ color: 'red' }}>Department is Required</span>}</div>
+          </Form.Group>:""}
+            </div>
           </Row>
+<Row>
+<Col sm={1}></Col>
+<Col sm={2}>
+<Form.Label>Contract Type <span style={{ color: 'red' }}>*</span></Form.Label>
+</Col>
+<Col sm={7}>
+  
+                        {/* <ButtonGroup>
+                        {shiftContractNames !== null &&
+                    shiftContractNames !== undefined &&
+                    shiftContractNames.length > 0 &&shiftContractNames.map((radio, idx) => (
+                      <React.Fragment>
+                          <p>&nbsp;&nbsp;&nbsp;</p><ToggleButton
+                            key={idx}
+                            id={`radio-${idx}`}
+                            type="radio"
+                            variant={'outline-primary'}
+                            name="radio"
+                            value={radio.contractType}
+                            checked={radioValue === radio.contractType}
+                            onChange={(e) => setRadioValue(e.currentTarget.value)}
+                          >
+                            {radio.contractType}
+                          </ToggleButton>
+                          </React.Fragment>
+                        ))}
+                      </ButtonGroup> */}
+                      {shiftContractNames !== null &&
+                    shiftContractNames !== undefined &&
+                    shiftContractNames.length > 0 &&shiftContractNames.map((radio, idx) => (
+                       <ToggleButtonGroup
+        type="checkbox"
+        value={contractType}
+        onChange={setContractTypeHandler}
+      >
+        
+        <p>&nbsp;&nbsp;&nbsp;</p><ToggleButton   className="Btn-Blue-BG" value={radio.contractType}>{radio.contractType}</ToggleButton>
+      </ToggleButtonGroup>
+           ))}        
+      </Col>
 
+     
+{/* {shiftContractNames !== null &&
+                    shiftContractNames !== undefined &&
+                    shiftContractNames.length > 0 &&
+                    shiftContractNames.map((item) => {
+                      return (
+                        
+                        <Button type="button" className="submitButton">{item.contractType}</Button>
+                      );
+                    })} */}
+
+</Row>
           <Button type="submit" disabled={shiftButton} value="Submit" className="submitButton">Submit</Button>
 
 
@@ -406,7 +525,7 @@ const AdminSalaryModule = () => {
                               <td>{item.totalHours}</td>
                               <td>{item.statusDesc}</td>
                               <td>
-                                {
+                                {(rolePermission == "admin"&&(item.statusDesc === 'Pending'||item.statusDesc === 'Approved'))||
                                   item.statusDesc === 'Pending' ?
                                     <Edit2 onClick={() => {
                                       setEditModal(true); setEmployeeId(item.employeeId);
