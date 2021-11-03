@@ -419,7 +419,7 @@ const ManagerDashboard = () => {
                         className="scrollbar big-card p-10 main-card"
                       >
                         <div className="CardHeading">
-                          <label style={{ marginLeft: "1rem" }}>My Team</label>
+                          <label style={{ marginLeft: "1rem" }}>Team</label>
                         </div>
                         <ClusterCard />
                         {!clusterLoader ? (
