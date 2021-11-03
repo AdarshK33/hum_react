@@ -132,7 +132,10 @@ const ClusterCard = () => {
 
                     <Col
                       md={6}
-                      style={{ marginTop: "7px", marginLeft: "-13px" }}
+                      style={{
+                        marginTop: "7px",
+                        marginLeft: "-13px",
+                      }}
                     >
                       <Form.Control
                         type="text"
@@ -263,6 +266,10 @@ const ClusterCard = () => {
                       marginBottom: "1rem",
                       marginLeft: "-5px",
                       marginRight: "-10px",
+                      float: "left",
+                      width: "100%",
+                      height: "66%",
+                      marginTop: "9px",
                     }}
                   >
                     <Col sm={6}>
