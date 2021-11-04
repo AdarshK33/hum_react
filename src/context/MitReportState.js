@@ -7,6 +7,7 @@ export const MitReportContext = createContext();
 var fileDownload = require("js-file-download");
 const initial_state = {
   mitReportStatus: false,
+  mitReport: {},
 };
 
 export const MitProvider = (props) => {
@@ -23,15 +24,23 @@ export const MitProvider = (props) => {
           month +
           "&year=" +
           year
-      )
+      ,{ responseType: "arraybuffer" 
+      })
       .then((response) => {
+        console.log(response,"reponse excel")
         setLoader(false);
-        const blob = new Blob([response.data], {
-          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+        var blob = new Blob([response.data],{
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+
         });
-        const fileName = "Report.xlsx";
+        var fileName = "Report.xlsx";
         saveAs(blob, fileName);
         toast.info(`File downloaded successfully`);
+        return dispatch({
+          type: "MIT_REPORT_DOWNLOAD",
+          payload: state.mitReport,
+        });
       })
       .catch(() => {
         setLoader(false);
@@ -42,6 +51,7 @@ export const MitProvider = (props) => {
   const setMitReportStatus = () => {
     return dispatch({
       type: "SET_MIT_REPORT_STATUS",
+      payload: state.mitReportStatus,
     });
   };
 
