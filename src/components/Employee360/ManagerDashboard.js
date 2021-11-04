@@ -419,7 +419,7 @@ const ManagerDashboard = () => {
                         className="scrollbar big-card p-10 main-card"
                       >
                         <div className="CardHeading">
-                          <label style={{ marginLeft: "1rem" }}>My Team</label>
+                          <label style={{ marginLeft: "1rem" }}>Team</label>
                         </div>
                         <ClusterCard />
                         {!clusterLoader ? (
@@ -462,7 +462,7 @@ const ManagerDashboard = () => {
                       marginLeft: "1rem",
                     }}
                   >
-                    <Col sm={5}>
+                    <Col sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -479,7 +479,7 @@ const ManagerDashboard = () => {
                         <HolidaysCard />
                       </Card>
                     </Col>
-                    <Col sm={4}>
+                    {/* <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -500,8 +500,8 @@ const ManagerDashboard = () => {
                           </label>
                         </div>
                       </Card>
-                    </Col>
-                    <Col sm={3}>
+                    </Col> */}
+                    <Col sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",

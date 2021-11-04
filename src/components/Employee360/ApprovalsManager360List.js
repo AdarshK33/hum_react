@@ -36,11 +36,13 @@ const ApprovalsManager360List = ({ ListType }) => {
       ? APPROVALS_MANAGER360_TABLE_HEADERS.disciplinary
       : ListType === "probation"
       ? APPROVALS_MANAGER360_TABLE_HEADERS.probation
+      : ListType === "separation"
+      ? APPROVALS_MANAGER360_TABLE_HEADERS.separation
       : APPROVALS_MANAGER360_TABLE_HEADERS.promotion;
   const [tableBody, setTableBody] = useState([]);
 
   useEffect(() => {
-    Manager360ListView(ListType);
+    Manager360ListView(ListType, rolePermission);
   }, [ListType]);
   console.log("Manager360ListData", Manager360ListData);
   useEffect(() => {
@@ -55,6 +57,8 @@ const ApprovalsManager360List = ({ ListType }) => {
       history.push("./disciplinary");
     } else if (ListType === "probation") {
       history.push("./probation");
+    } else if (ListType === "separation") {
+      history.push("./exit-approval");
     } else {
     }
   };
@@ -285,31 +289,7 @@ const ApprovalsManager360List = ({ ListType }) => {
             empId: item.empId,
             empName: item.empName,
             dateOfJoining: item.dateOfJoining,
-            // dateOfConfirmation:
-            //   item.status === 2 &&
-            //   item.probationExtensionEndDate !== null &&
-            //   item.probationExtensionEndDate !== "" &&
-            //   item.probationExtensionEndDate !== undefined
-            //     ? item.probationExtensionEndDate
-            //     : item.probationConfirmationDate !== null &&
-            //       item.probationConfirmationDate !== "" &&
-            //       item.probationConfirmationDate !== undefined
-            //     ? item.probationConfirmationDate
-            //     : item.dateOfJoining !== null &&
-            //       item.dateOfJoining !== undefined &&
-            //       item.dateOfJoining !== "" &&
-            //       item.probationPeriod !== null &&
-            //       item.probationPeriod !== undefined &&
-            //       item.probationPeriod !== ""
-            //     ? moment(
-            //         new Date(
-            //           new Date(item.dateOfJoining).setMonth(
-            //             new Date(item.dateOfJoining).getMonth() +
-            //               item.probationPeriod
-            //           )
-            //         )
-            //       ).format("yyyy-MM-DD")
-            //     : "NA",
+
             dueDays: item.dueDays,
             status: "Due for confirmation",
 
@@ -318,6 +298,26 @@ const ApprovalsManager360List = ({ ListType }) => {
                 active: item.status === 0 ? true : false,
                 link:
                   item.status === 0 ? `/probation-action/${item.empId}` : "",
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
+      } else if (ListType === "separation") {
+        let tableData = Manager360ListData.map((item, index) => {
+          return {
+            empId: item.employeeId,
+            empName: item.employeeName,
+            resignationDate: item.dateOfResignation,
+            reason: item.reasonForResignation,
+
+            action: {
+              edit: {
+                active: true,
+                link:
+                  item.status === 0
+                    ? `/exit-action/${item.employeeId}`
+                    : `/employee-info/${item.employeeId}`,
               },
             },
           };

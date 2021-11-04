@@ -6,7 +6,7 @@ import { SeparationContext } from "../../context/SepearationState";
 import RelievingLetter from "./Relieving Letter";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TerminationLetter from "./TerminationLetter"
+import TerminationLetter from "./TerminationLetter";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -31,7 +31,7 @@ const EmployeeExitAction = () => {
   const [terminationLetter, setTerminationLetter] = useState(false);
   const [lastWorkingDate, setLastWorkingDate] = useState(new Date());
   const [lastWorkingDateError, setLastWorkingDateError] = useState(false);
-  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
+  const [lastDateSelection, setLastDateSelection] = useState(new Date());
   const [submitted, setSubmitted] = useState(false);
   const [intern, setIntern] = useState(false);
 
@@ -44,18 +44,18 @@ const EmployeeExitAction = () => {
 
   const [state, setState] = useState({
     exitId: "",
-    company:"",
+    company: "",
     contractType: "",
-    costCentreManagerEmailId:"",
+    costCentreManagerEmailId: "",
     costCentreName: "",
-    hoursWorked:"",
+    hoursWorked: "",
     employeeName: "",
-    employeeComment:"",
-    managerEmailId:"",
+    employeeComment: "",
+    managerEmailId: "",
     employeeId: "",
     location: "",
     position: "",
-    reason:"",
+    reason: "",
     managerName: "",
     managerId: "",
     managerCostCentre: "",
@@ -64,15 +64,15 @@ const EmployeeExitAction = () => {
     modeOfSeparationReasonId: "",
     dateOfResignation: "",
     noticePeriod: "",
-    lastWorkingDate:new Date(),
+    lastWorkingDate: new Date(),
     emailId: "",
-    personalEmailId:"",
+    personalEmailId: "",
     noticePeriodRcryDays: "",
-    reasonForResignation:"",
-    noticePeriodRecovery:"",
+    reasonForResignation: "",
+    noticePeriodRecovery: "",
     remarks: "",
     status: "",
-    withdraw:"",
+    withdraw: "",
   });
   const {
     EmployeeSeparationListView,
@@ -84,6 +84,7 @@ const EmployeeExitAction = () => {
     UpdateEmplyoeeExist,
     employeeId,
     loader,
+    ModeOfSeparationView,
     fetchRelievingLetterData,
     terminationLetterData,
     fetchTerminationLetterData,
@@ -91,16 +92,22 @@ const EmployeeExitAction = () => {
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter,searchByEmployee, searchByCostData } =
-  useContext(SeparationContext);
-  console.log("employeeId", employeeId);
+  const {
+    empResign,
+    withdraw,
+    searchByCostCenter,
+    searchByEmployee,
+    searchByCostData,
+  } = useContext(SeparationContext);
+  console.log("employeeId", paramsemployeeId);
+  console.log("employeeData", employeeData);
   useEffect(() => {
-    ViewEmployeeDataById(employeeId);
+    ViewEmployeeDataById(paramsemployeeId);
     fetchRelievingLetterData(paramsemployeeId);
-    fetchTerminationLetterData(paramsemployeeId)
-  }, [employeeId]);
+    fetchTerminationLetterData(paramsemployeeId);
+    ModeOfSeparationView();
+  }, [paramsemployeeId]);
   useEffect(() => {
-    console.log(employeeData);
     if (
       employeeData &&
       employeeData &&
@@ -110,22 +117,22 @@ const EmployeeExitAction = () => {
     ) {
       console.log("employeeData................", employeeData);
       state.company = employeeData.company;
-      state.withdraw = employeeData.withdraw
+      state.withdraw = employeeData.withdraw;
       state.contractType = employeeData.contractType;
-      state.costCentreManagerEmailId= employeeData.costCentreManagerEmailId;
-      state.costCentreManagerName=employeeData.costCentreManagerName
-      state.costCentreName= employeeData.costCentreName
+      state.costCentreManagerEmailId = employeeData.costCentreManagerEmailId;
+      state.costCentreManagerName = employeeData.costCentreManagerName;
+      state.costCentreName = employeeData.costCentreName;
       state.dateOfResignation = employeeData.dateOfResignation;
-      state.managerEmailId = employeeData.managerEmailId
+      state.managerEmailId = employeeData.managerEmailId;
       state.reason = employeeData.reason;
       state.exitId = employeeData.exitId;
       state.employeeName = employeeData.employeeName;
       state.employeeComment = employeeData.employeeComment;
       state.employeeId = employeeData.employeeId;
-      state.hoursWorked =employeeData.hoursWorked
-      state.noticePeriodRcryDays = employeeData.noticePeriodRecoveryDays
-      state.reasonForResignation = employeeData.reasonForResignation
-      state.noticePeriod = employeeData.noticePeriod
+      state.hoursWorked = employeeData.hoursWorked;
+      state.noticePeriodRcryDays = employeeData.noticePeriodRecoveryDays;
+      state.reasonForResignation = employeeData.reasonForResignation;
+      state.noticePeriod = employeeData.noticePeriod;
       state.location = employeeData.location;
       state.position = employeeData.position;
       state.managerName = employeeData.managerName;
@@ -134,20 +141,29 @@ const EmployeeExitAction = () => {
       state.managerPosition = employeeData.managerPosition;
       state.status = employeeData.status;
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
-       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
+      state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.personalEmailId = employeeData.personalEmailId;
-      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        employeeData.department == "AFS" ||
+        employeeData.department == "IT" ||
+        employeeData.department == "Legal" ||
+        employeeData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       // state.noticePeriod = employeeData.noticePeriod;
-      if(employeeData.lastWorkingDate !== null && employeeData.lastWorkingDate !== undefined && employeeData.lastWorkingDate !== ""){
-        setLastWorkingDate(new Date(employeeData.lastWorkingDate))
+      if (
+        employeeData.lastWorkingDate !== null &&
+        employeeData.lastWorkingDate !== undefined &&
+        employeeData.lastWorkingDate !== ""
+      ) {
+        setLastWorkingDate(new Date(employeeData.lastWorkingDate));
       }
-      state.lastWorkingDate =employeeData.lastWorkingDate
+      state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
-      console.log(employeeData.lastWorkingDate,"employeedat444")
+      console.log(employeeData.lastWorkingDate, "employeedat444");
 
       if (
         state.contractType === "internship" ||
@@ -225,7 +241,7 @@ const EmployeeExitAction = () => {
         setRehireYes(false);
       }
     }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
+  }, [employeeData, ModeOfSeparationData, paramsemployeeId]);
   useEffect(() => {
     if (
       employeeData &&
@@ -266,7 +282,7 @@ const EmployeeExitAction = () => {
         }
       });
     }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
+  }, [employeeData, ModeOfSeparationData, paramsemployeeId]);
   const handleNoticePeriodRcryYes = (e) => {
     setRcryYes(e.target.checked);
     setRcryNo(!e.target.checked);
@@ -363,10 +379,10 @@ const EmployeeExitAction = () => {
   const handleConfirmation = (exitId, employeeId) => {
     if (state.modeOfSeparationId == 2) {
       terminationConfirmation(exitId, employeeId);
-      viewTermination()
+      viewTermination();
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
       resignationConfirmation(exitId, employeeId);
-      viewResignation()
+      viewResignation();
     }
     // console.log(state.modeOfSeparationId, "sravani");
 
@@ -397,121 +413,135 @@ const EmployeeExitAction = () => {
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
-    if(intern == false){
-          // const InfoData = {
-          //   company: state.company,
-          //   contractType: state.contractType,
-          //   costCentreManagerEmailId: state.costCentreManagerEmailId,
-          //   costCentreManagerName: state.costCentreManagerName,
-          //   costCentreName: state.costCentreName,
-          //   dateOfResignation: state.dateOfResignation,
-          //   personalEmailId: state.emailId,
-          //   employeeName: state.employeeName,
-          //   employeeComment: state.employeeComment,
-          //   employeeId: state.employeeId,
-          //   exitId: state.exitId,
-          //   hoursWorked: state.hoursWorked,
-          //   lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-          //   location: state.location,
-          //   managerCostCentre: state.managerCostCentre,
-          //   managerEmailId: state.managerEmailId,
-          //   managerId: state.managerId ? state.managerId : "",
-          //   managerName: state.managerName,
-          //   managerPosition: state.managerPosition,
-          //   modeOfSeparationId: state.modeOfSeparationId,
-          //   modeOfSeparationReasonId: state.modeOfSeparationReasonId,
-          //   noticePeriod: state.noticePeriod,
-          //   noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-          //   noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
-          //   position: state.position,
-          //   reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-          //   reason: state.reason,
-          //   reasonForResignation: state.reasonForResignation,
-          //   rehireRemark: state.remarks !== "" ? state.remarks : null,
-          //   status: 9,
-          //   withdraw:state.withdraw
-          // };
-          const InfoData = {
-            company: employeeData.company,
-            contractType: employeeData.contractType,
-            costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
-            costCentreManagerName: employeeData.costCentreManagerName,
-            costCentreName: employeeData.costCentreName,
-            dateOfResignation: employeeData.dateOfResignation,
-            personalEmailId: state.emailId,
-            empName: employeeData.empName,
-            employeeComment: employeeData.employeeComment,
-            employeeId: employeeData.employeeId,
-            employeeName: employeeData.employeeName,
-            exitId: employeeData.exitId,
-            hoursWorked: employeeData.hoursWorked,
-            lastWorkingDate: lastWorkingDate,
-            location: employeeData.location,
-            managerCostCentre: employeeData.managerCostCentre,
-            managerEmailId: employeeData.managerEmailId,
-            managerId: employeeData.managerId ? employeeData.managerId : "",
-            managerName: employeeData.managerName,
-            managerPosition: employeeData.managerPosition,
-            modeOfSeparationId: employeeData.modeOfSeparationId,
-            modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
-            noticePeriodRecoveryDays: state.noticePeriodRcryDays,
-            noticePeriod: employeeData.noticePeriod,
-            noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-            position: employeeData.position,
-            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-            reason: employeeData.reason,
-            reasonForResignation: employeeData.reasonForResignation,
-            rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 9,
-            withdraw: employeeData.withdraw,
-          };
-          console.log("createExitData", InfoData);
-          setSubmitted(true);
-          UpdateEmplyoeeExist(InfoData);
-          // setPreview(true);
-          // setSuccessModal(true);
-        }
-
+      if (intern == false) {
+        // const InfoData = {
+        //   company: state.company,
+        //   contractType: state.contractType,
+        //   costCentreManagerEmailId: state.costCentreManagerEmailId,
+        //   costCentreManagerName: state.costCentreManagerName,
+        //   costCentreName: state.costCentreName,
+        //   dateOfResignation: state.dateOfResignation,
+        //   personalEmailId: state.emailId,
+        //   employeeName: state.employeeName,
+        //   employeeComment: state.employeeComment,
+        //   employeeId: state.employeeId,
+        //   exitId: state.exitId,
+        //   hoursWorked: state.hoursWorked,
+        //   lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+        //   location: state.location,
+        //   managerCostCentre: state.managerCostCentre,
+        //   managerEmailId: state.managerEmailId,
+        //   managerId: state.managerId ? state.managerId : "",
+        //   managerName: state.managerName,
+        //   managerPosition: state.managerPosition,
+        //   modeOfSeparationId: state.modeOfSeparationId,
+        //   modeOfSeparationReasonId: state.modeOfSeparationReasonId,
+        //   noticePeriod: state.noticePeriod,
+        //   noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+        //   noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+        //   position: state.position,
+        //   reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+        //   reason: state.reason,
+        //   reasonForResignation: state.reasonForResignation,
+        //   rehireRemark: state.remarks !== "" ? state.remarks : null,
+        //   status: 9,
+        //   withdraw:state.withdraw
+        // };
+        const InfoData = {
+          company: employeeData.company,
+          contractType: employeeData.contractType,
+          costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
+          costCentreManagerName: employeeData.costCentreManagerName,
+          costCentreName: employeeData.costCentreName,
+          dateOfResignation: employeeData.dateOfResignation,
+          personalEmailId: state.emailId,
+          empName: employeeData.empName,
+          employeeComment: employeeData.employeeComment,
+          employeeId: employeeData.employeeId,
+          employeeName: employeeData.employeeName,
+          exitId: employeeData.exitId,
+          hoursWorked: employeeData.hoursWorked,
+          lastWorkingDate: lastWorkingDate,
+          location: employeeData.location,
+          managerCostCentre: employeeData.managerCostCentre,
+          managerEmailId: employeeData.managerEmailId,
+          managerId: employeeData.managerId ? employeeData.managerId : "",
+          managerName: employeeData.managerName,
+          managerPosition: employeeData.managerPosition,
+          modeOfSeparationId: employeeData.modeOfSeparationId,
+          modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
+          noticePeriodRecoveryDays: state.noticePeriodRcryDays,
+          noticePeriod: employeeData.noticePeriod,
+          noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+          position: employeeData.position,
+          reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+          reason: employeeData.reason,
+          reasonForResignation: employeeData.reasonForResignation,
+          rehireRemark: state.remarks !== "" ? state.remarks : null,
+          status: 9,
+          withdraw: employeeData.withdraw,
+        };
+        console.log("createExitData", InfoData);
+        setSubmitted(true);
+        UpdateEmplyoeeExist(InfoData);
+        // setPreview(true);
+        // setSuccessModal(true);
+      }
     }
   };
   return (
     console.log(state.status),
     (
       <Fragment>
-        <Modal show={message} size="md" onHide={() => handleClosePopup()} centered>
-        
+        <Modal
+          show={message}
+          size="md"
+          onHide={() => handleClosePopup()}
+          centered
+        >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-                {" "} 
-                The details have been saved successfully.
-                <br /> The relieving letter will be sent to the employee on{" "}
-                {moment(((terminationLetterData !== null && terminationLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
-              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1 || modeOfSeparation == "Employee Resignation" || modeOfSeparation == 4)?relivingLetterData.lastWorkingDate:'', "YYYY-MM-DD")
-                  .add(1, "days")
-                  .format("YYYY-MM-DD")}
-              </label>
-              <div className="text-center mb-2">
-
-              <Link to={"/exit-approval"}> <Button onClick={() => handleClosePopup()}>OK</Button></Link>
-              </div>
-            </Modal.Body>
+              {" "}
+              The details have been saved successfully.
+              <br /> The relieving letter will be sent to the employee on{" "}
+              {moment(
+                terminationLetterData !== null &&
+                  terminationLetterData !== undefined &&
+                  (modeOfSeparation == "Termination" || modeOfSeparation == 2)
+                  ? terminationLetterData.lastWorkingDate
+                  : relivingLetterData !== null &&
+                    relivingLetterData !== undefined &&
+                    (modeOfSeparation == "Resignation" ||
+                      modeOfSeparation == 1 ||
+                      modeOfSeparation == "Employee Resignation" ||
+                      modeOfSeparation == 4)
+                  ? relivingLetterData.lastWorkingDate
+                  : "",
+                "YYYY-MM-DD"
+              )
+                .add(1, "days")
+                .format("YYYY-MM-DD")}
+            </label>
+            <div className="text-center mb-2">
+              <Link to={"/exit-approval"}>
+                {" "}
+                <Button onClick={() => handleClosePopup()}>OK</Button>
+              </Link>
+            </div>
+          </Modal.Body>
         </Modal>
         <Modal show={showModal} onHide={() => handleClose1()} centered>
           <Container style={{ textAlign: "center", margin: "1rem 0 1rem 0" }}>
             <Modal.Body style={{ marginBottom: "1rem" }}>
-            <label className="text-center">
+              <label className="text-center">
                 {modeOfSeparation === "Termination"
                   ? "Thank you for confirming the Termination details"
                   : "Thank you for confirming the Resignation details"}
               </label>
-              <Button
-                onClick={() => handleClose1()}
-              >
-                OK
-              </Button>
+              <Button onClick={() => handleClose1()}>OK</Button>
             </Modal.Body>
-            </Container>
+          </Container>
         </Modal>
         <RelievingLetter previewLetter={previewLetter} />
         <TerminationLetter terminationLetter={terminationLetter} />
@@ -524,228 +554,234 @@ const EmployeeExitAction = () => {
                 <div>
                   <div className="OnBoardHeading">
                     <b>EMPLOYEE SEPARATION LISTING</b>
-                  </div>                
-                    <div>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Emp Name/Id:</b>
-                              <label className="itemResult">
-                                {" "}
-                                &nbsp;&nbsp; {state.employeeName} &nbsp;{state.employeeId}
-                              </label>
+                  </div>
+                  <div>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "2rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Emp Name/Id:</b>
+                            <label className="itemResult">
+                              {" "}
+                              &nbsp;&nbsp; {state.employeeName} &nbsp;
+                              {state.employeeId}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Contract Type:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.contractType}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Contract Type:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.contractType}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Cost Center Name:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.costCenterName}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Cost Center Name:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.costCentreName}
                             </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "2rem",
-                        }}
-                      >
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Location:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.location}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Location:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.location}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Position:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.position}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Position:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.position}
                             </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Manager Name/Id:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.managerName}
-                                &nbsp; {state.managerId}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Manager Name/Id:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.managerName}
+                              &nbsp; {state.managerId}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Position:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.managerPosition}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Position:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.managerPosition}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Cost Center Name:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.managerCostCentre}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Cost Center Name:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.managerCostCentre}
                             </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Mode of Separation:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {modeOfSeparation}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Mode of Separation:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {modeOfSeparation}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Reason of Separation:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Reason of Separation:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.modeOfSeparationReasonId}
                             </label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Date of Resignation:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.dateOfResignation}
-                              </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Date of Resignation:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.dateOfResignation}
                             </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Notice Period:</b>
-                              {/* <label className="itemResult">
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "3rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Notice Period:</b>
+                            {/* <label className="itemResult">
                                 &nbsp;&nbsp; {state.noticePeriod}
                               </label>
                             </label> */}
-                              <label className="itemResult">
-                              &nbsp;&nbsp; {state.noticePeriod == 1?`${state.noticePeriod} Month`:state.noticePeriod >1?`${state.noticePeriod} Months`:''}
+                            <label className="itemResult">
+                              &nbsp;&nbsp;{" "}
+                              {state.noticePeriod == 1
+                                ? `${state.noticePeriod} Month`
+                                : state.noticePeriod > 1
+                                ? `${state.noticePeriod} Months`
+                                : ""}
                             </label>
                           </label>
-                          </div>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                              <b>Preffered Last Working Date:</b>
-                              {/* <label className="itemResult">
+                        </div>
+                      </Col>
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Preffered Last Working Date:</b>
+                            {/* <label className="itemResult">
                                 &nbsp;&nbsp; {state.lastWorkingDate}
                               </label> */}
-                            </label>
-                            
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={2}>
+                        <Form.Group>
+                          <div
+                            className={
+                              lastWorkingDateError
+                                ? "onBoard-date-error"
+                                : "onBoard-date"
+                            }
+                          >
+                            <DatePicker
+                              className="form-control onBoard-view"
+                              selected={lastWorkingDate}
+                              name="lastWorkingDate"
+                              minDate={new Date()}
+                              maxDate={lastDateSelection}
+                              minDate={moment().toDate()}
+                              onChange={(e) => dateOfBirthHandler1(e)}
+                              dateFormat="yyyy-MM-dd"
+                              placeholderText="YYYY-MM-DD"
+                              // disabled={disabled}
+                            />
                           </div>
-                          </Col>
-                          <Col sm={2}>
-                          <Form.Group>
-                                  <div
-                                    className={
-                                      lastWorkingDateError
-                                        ? "onBoard-date-error"
-                                        : "onBoard-date"
-                                    }
-                                  >
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={lastWorkingDate}
-                                      name="lastWorkingDate"
-                                      minDate={new Date()}
-                                     maxDate={lastDateSelection}
-                                     minDate={moment().toDate()}
-                                      onChange={(e) => dateOfBirthHandler1(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      // disabled={disabled}
-                                    />
-                                  </div>
-                                  {lastWorkingDateError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please enter valid date
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label>
-                              <b>Personal Email Id:</b>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.personalEmailId}
-                              </label>
+                          {lastWorkingDateError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please enter valid date
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Personal Email Id:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.personalEmailId}
                             </label>
-                          </div>
-                        </Col>
-                      </Row>
-                     {state.modeOfSeparationId == 4?<Row
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    {state.modeOfSeparationId == 4 ? (
+                      <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -765,13 +801,183 @@ const EmployeeExitAction = () => {
                         <Col sm={2}>
                           <div>
                             <label>
-                              <a  target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform">
+                              <a
+                                target="_blank"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
+                              >
                                 <u>Click here</u>
                               </a>
                             </label>
                           </div>
                         </Col>
-                      </Row>:""}
+                      </Row>
+                    ) : (
+                      ""
+                    )}
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "3rem",
+                      }}
+                    >
+                      <Col sm={12}>
+                        <div>
+                          <label>
+                            <b>Comment:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.employeeComment}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginTop: "2rem",
+                        marginLeft: "2rem",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Notice Period Recovery</b>
+                          </label>
+                          {RcryError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              *Please select one of the option
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </div>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="yes"
+                              checked={RcryYes}
+                              style={RcryError ? { borderColor: "red" } : {}}
+                              disabled={true}
+                              // required={required}
+                              onChange={handleNoticePeriodRcryYes}
+                            />
+                            <label className="itemResult">Yes</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="no"
+                              checked={RcryNo}
+                              disabled={true}
+                              style={RcryError ? { borderColor: "red" } : {}}
+                              // required={required}
+                              onChange={handleNoticePeriodRcryNo}
+                            />
+                            <label className="itemResult">No</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Notice Period Recovery Days</b>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={2} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <Form.Control
+                            type="text"
+                            placeholder=""
+                            required
+                            style={{
+                              borderColor: "#006ebb",
+                            }}
+                            disabled={true}
+                            name="noticePeriodRcryDays"
+                            value={state.noticePeriodRcryDays}
+                            onChange={(e) => changeHandler(e)}
+                            style={rcryDaysError ? { borderColor: "red" } : {}}
+                          />
+
+                          {rcryDaysError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please enter valid days
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </Col>
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>
+                              Eligible <br />
+                              For Rehire
+                            </b>
+                          </label>
+                          {RehireError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              *Please select one of the option
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </div>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="yes"
+                              checked={RehireYes}
+                              disabled={true}
+                              // required={required}
+                              style={RehireError ? { borderColor: "red" } : {}}
+                              onChange={handleRehireChangeYes}
+                            />
+                            <label className="itemResult">Yes</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="no"
+                              checked={RehireNo}
+                              disabled={true}
+                              // required={required}
+                              style={RehireError ? { borderColor: "red" } : {}}
+                              onChange={handleRehireChangeNo}
+                            />
+                            <label className="itemResult">No</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    {state.remarks !== "" &&
+                    state.remarks !== null &&
+                    state.remarks !== undefined ? (
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -782,245 +988,72 @@ const EmployeeExitAction = () => {
                         <Col sm={12}>
                           <div>
                             <label>
-                              <b>Comment:</b>
+                              <b>Remarks:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.employeeComment}
+                                &nbsp;&nbsp; {state.remarks}
                               </label>
                             </label>
                           </div>
                         </Col>
                       </Row>
-                      <Row
-                        style={{
-                          marginTop: "2rem",
-                          marginLeft: "2rem",
-                          marginBottom: "2rem",
-                        }}
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      <button
+                        disabled={submitted}
+                        className={
+                          submitted ? "confirmButton" : "stepperButtons"
+                        }
+                        onClick={submitHandler}
                       >
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                              <b>Notice Period Recovery</b>
-                            </label>
-                            {RcryError ? (
-                              <p style={{ color: "red" }}>
-                                {" "}
-                                *Please select one of the option
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </div>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                checked={RcryYes}
-                                style={RcryError ? { borderColor: "red" } : {}}
-                                disabled={true}
-                                // required={required}
-                                onChange={handleNoticePeriodRcryYes}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                checked={RcryNo}
-                                disabled={true}
-                                style={RcryError ? { borderColor: "red" } : {}}
-                                // required={required}
-                                onChange={handleNoticePeriodRcryNo}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
+                        Save
+                      </button>
 
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                              <b>Notice Period Recovery Days</b>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={2} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <Form.Control
-                              type="text"
-                              placeholder=""
-                              required
-                              style={{
-                                borderColor: "#006ebb",
-                              }}
-                              disabled={true}
-                              name="noticePeriodRcryDays"
-                              value={state.noticePeriodRcryDays}
-                              onChange={(e) => changeHandler(e)}
-                              style={
-                                rcryDaysError ? { borderColor: "red" } : {}
-                              }
-                            />
-
-                            {rcryDaysError ? (
-                              <p style={{ color: "red" }}>
-                                {" "}
-                                &nbsp; *Please enter valid days
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </Form.Group>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            <label>
-                              <b>
-                                Eligible <br />
-                                For Rehire
-                              </b>
-                            </label>
-                            {RehireError ? (
-                              <p style={{ color: "red" }}>
-                                {" "}
-                                *Please select one of the option
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </div>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                checked={RehireYes}
-                                disabled={true}
-                                // required={required}
-                                style={
-                                  RehireError ? { borderColor: "red" } : {}
-                                }
-                                onChange={handleRehireChangeYes}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                checked={RehireNo}
-                                disabled={true}
-                                // required={required}
-                                style={
-                                  RehireError ? { borderColor: "red" } : {}
-                                }
-                                onChange={handleRehireChangeNo}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                      </Row>
-                      {state.remarks !== "" &&
-                      state.remarks !== null &&
-                      state.remarks !== undefined ? (
-                        <Row
-                          style={{
-                            marginLeft: "2rem",
-                            marginTop: "1rem",
-                            marginBottom: "3rem",
+                      {submitted ? (
+                        <button
+                          // disabled={previewLetter | showSuccessModal}
+                          className="resignationButton"
+                          onClick={() => {
+                            handleConfirmation(state.exitId, paramsemployeeId);
                           }}
                         >
-                          <Col sm={12}>
-                            <div>
-                              <label>
-                                <b>Remarks:</b>
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.remarks}
-                                </label>
-                              </label>
-                            </div>
-                          </Col>
-                        </Row>
+                          {modeOfSeparation === "Termination"
+                            ? "View Letter"
+                            : "View Letter"}
+                        </button>
                       ) : (
                         ""
                       )}
-                      <div
-                        style={{
-                          marginTop: "2rem",
-                          marginBottom: "2rem",
-                          textAlign: "center",
-                        }}
-                      >
-                     <button
-                            disabled={submitted}
-                            className={
-                              submitted ? "confirmButton" : "stepperButtons"
-                            }
-                            onClick={submitHandler}
-                          >
-                            Save
-                          </button>
-                       
-                          {submitted?<button
-                            // disabled={previewLetter | showSuccessModal}
-                            className="resignationButton"
-                            onClick={() => {
-                              handleConfirmation(state.exitId, paramsemployeeId)}}
-                          >
-                            {modeOfSeparation === "Termination"
-                              ? "View Letter"
-                              : "View Letter"}
-                          </button>:""}
-                        
-                      </div>
-                      {submit === true && (
-                        <div className="text-center mb-3">
-                          <br></br>
-                          <br></br>
-                          <img
-                            src={calendarImage}
-                            alt="calendar"
-                            width="300px"
-                          />
-                        </div>
-                      )}
-                      {submit === true && (
-                        <div className="text-center mb-2">
-                          <button
-                           className={message?"confirmButton":"stepperButtons"}
-                                                      
-                            // style={{ textAlign: "center" }}
-                            onClick={() => handleSubmit()}
-                          >
-                            {" "}
-                            Submit
-                          </button>
-                        </div>
-                      )}
-
-                  
-                       
                     </div>
-                  
+                    {submit === true && (
+                      <div className="text-center mb-3">
+                        <br></br>
+                        <br></br>
+                        <img src={calendarImage} alt="calendar" width="300px" />
+                      </div>
+                    )}
+                    {submit === true && (
+                      <div className="text-center mb-2">
+                        <button
+                          className={
+                            message ? "confirmButton" : "stepperButtons"
+                          }
+                          // style={{ textAlign: "center" }}
+                          onClick={() => handleSubmit()}
+                        >
+                          {" "}
+                          Submit
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

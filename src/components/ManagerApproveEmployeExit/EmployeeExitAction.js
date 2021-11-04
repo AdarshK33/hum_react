@@ -10,8 +10,12 @@ import RelievingLetter from "./RelivingLetter";
 import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
+import { useParams } from "react-router-dom";
 
 const EmployeeExitAction = () => {
+  const params = useParams();
+
+  const paramsemployeeId = params["employeeid"];
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
@@ -75,15 +79,17 @@ const EmployeeExitAction = () => {
     terminationLetterData,
     UpdateEmplyoeeExist,
     fetchTerminationLetterData,
+    ModeOfSeparationView,
     terminationConfirmation,
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
   } = useContext(EmployeeSeparationContext);
   useEffect(() => {
-    ViewEmployeeDataById(employeeId);
-  }, [employeeId]);
-  console.log("employeeData", employeeData);
+    ViewEmployeeDataById(paramsemployeeId);
+    ModeOfSeparationView();
+  }, [paramsemployeeId]);
+  console.log("employeeData", paramsemployeeId);
   useEffect(() => {
     if (
       employeeData &&
@@ -196,7 +202,7 @@ const EmployeeExitAction = () => {
         setRehireYes(false);
       }
     }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
+  }, [employeeData, ModeOfSeparationData, paramsemployeeId]);
   useEffect(() => {
     if (
       employeeData &&
@@ -221,7 +227,8 @@ const EmployeeExitAction = () => {
           setModeOfSeparation(
             ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
           );
-              state.modeOfSeparationId = ModeOfSeparationData[i].modeOfSeparation.separationId
+          state.modeOfSeparationId =
+            ModeOfSeparationData[i].modeOfSeparation.separationId;
 
           ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
             if (
@@ -238,7 +245,7 @@ const EmployeeExitAction = () => {
         }
       });
     }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
+  }, [employeeData, ModeOfSeparationData, paramsemployeeId]);
   const handleNoticePeriodRcryYes = (e) => {
     setRcryYes(e.target.checked);
     setRcryNo(!e.target.checked);
@@ -846,26 +853,35 @@ const EmployeeExitAction = () => {
                         marginBottom: "3rem",
                       }}
                     >
-                     {state.empContractType !== "internship"? <Col sm={2}>
-                        <div>
-                          <label>
-                            <b>Notice Period:</b>
-                            <label className="itemResult">
-                              &nbsp;&nbsp;{" "}
-                              {state.empName ? state.noticePeriod : ""}
-                            </label>
-                          </label>
-                        </div>
-                      </Col>:<Col sm={2}>
-                        <div>
+                      {state.empContractType !== "internship" ? (
+                        <Col sm={2}>
+                          <div>
                             <label>
-                            <b>Internship contract end date:</b>
+                              <b>Notice Period:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                                &nbsp;&nbsp;{" "}
+                                {state.empName ? state.noticePeriod : ""}
                               </label>
                             </label>
                           </div>
-                </Col>}
+                        </Col>
+                      ) : (
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              <b>Internship contract end date:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{" "}
+                                {state.noticePeriod === 1
+                                  ? `${state.noticePeriod} Month`
+                                  : state.noticePeriod > 1
+                                  ? `${state.noticePeriod} Months`
+                                  : state.noticePeriod}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      )}
                       {/* <Col sm={4}>
                         <div>
                           <label>
@@ -890,39 +906,39 @@ const EmployeeExitAction = () => {
                               &nbsp;&nbsp; {state.lastWorkingDate}
                             </label>
                           ) : ( */}
-                            <Form.Group>
-                              <div
-                                className={
-                                  lastWorkingDateError
-                                    ? "onBoard-date-error"
-                                    : "onBoard-date"
-                                }
-                              >
-                                <DatePicker
-                                  className="form-control onBoard-view"
-                                  value={state.lastWorkingDate}
-                                  selected={state.lastWorkingDate}
-                                  name="lastWorkingDate"
-                                  minDate={new Date()}
-                                  minDate={moment().toDate()}
-                                  maxDate={lastDateSelection}
-                                  // required
-                                  onChange={(e) => dateOfBirthHandler1(e)}
-                                  dateFormat="yyyy-MM-dd"
-                                  placeholderText="YYYY-MM-DD"
+                          <Form.Group>
+                            <div
+                              className={
+                                lastWorkingDateError
+                                  ? "onBoard-date-error"
+                                  : "onBoard-date"
+                              }
+                            >
+                              <DatePicker
+                                className="form-control onBoard-view"
+                                value={state.lastWorkingDate}
+                                selected={state.lastWorkingDate}
+                                name="lastWorkingDate"
+                                minDate={new Date()}
+                                minDate={moment().toDate()}
+                                maxDate={lastDateSelection}
+                                // required
+                                onChange={(e) => dateOfBirthHandler1(e)}
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
 
-                                  // disabled={disabled}
-                                />
-                              </div>
-                              {lastWorkingDateError ? (
-                                <p style={{ color: "red" }}>
-                                  {" "}
-                                  &nbsp; *Please enter valid date
-                                </p>
-                              ) : (
-                                <p></p>
-                              )}
-                            </Form.Group>
+                                // disabled={disabled}
+                              />
+                            </div>
+                            {lastWorkingDateError ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid date
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
                           {/* )} */}
                         </div>
                       </Col>
@@ -976,36 +992,41 @@ const EmployeeExitAction = () => {
                         </div>
                       </Col>
                     </Row>
-                    {state.modeOfSeparationId == 4?<Row
-                      style={{
-                        marginLeft: "2rem",
-                        marginTop: "1rem",
-                        marginBottom: "3rem",
-                      }}
-                    >
-                      <Col sm={2}>
-                        <div>
-                          <label>
-                            <b>Exit Feedback Form:</b>
-                            <label className="itemResult">
-                              {/* &nbsp;&nbsp; {InfoState.empName} */}
+                    {state.modeOfSeparationId == 4 ? (
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              <b>Exit Feedback Form:</b>
+                              <label className="itemResult">
+                                {/* &nbsp;&nbsp; {InfoState.empName} */}
+                              </label>
                             </label>
-                          </label>
-                        </div>
-                      </Col>
-                      <Col sm={2}>
-                        <div>
-                          <label className="itemResult">
-                            <a  target="_blank"
-                              href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
-                              className="itemResult"
-                            >
-                              <u>Click here</u>
-                            </a>
-                          </label>
-                        </div>
-                      </Col>
-                    </Row>:""}
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            <label className="itemResult">
+                              <a
+                                target="_blank"
+                                href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
+                                className="itemResult"
+                              >
+                                <u>Click here</u>
+                              </a>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+                    ) : (
+                      ""
+                    )}
                     <Row
                       style={{
                         marginLeft: "2rem",
