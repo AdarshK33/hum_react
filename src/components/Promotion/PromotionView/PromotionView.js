@@ -209,7 +209,7 @@ const PromotionView = (props) => {
                           <Col sm={4}>
                             <div>
                               <label className="itemResult">
-                                {state.empName}
+                                {`${state.empName}  / ${state.employeeId}` }
                               </label>
                             </div>
                           </Col>
