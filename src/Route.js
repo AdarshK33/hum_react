@@ -148,6 +148,7 @@ import CharterList from "./components/DSICharter/CharterList";
 import CharterEdit from "./components/DSICharter/CharterEdit";
 import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
 import ManagerDashboard from "./components/Employee360/ManagerDashboard";
+import ManagerProfileSteppers from "./components/MyProfile/MyProfileSteppers";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -369,7 +370,8 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/manager360`}
-            component={ManagerDashboard}
+            // component={ManagerDashboard}
+            component={ManagerProfileSteppers}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
