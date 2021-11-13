@@ -17,7 +17,7 @@ export const MitProvider = (props) => {
   const getMitReport = (company, month, year) => {
     setLoader(true);
     client
-      .post(
+      .get(
         "/api/v1/employee/reports/mit/download?company=" +
           company +
           "&month=" +

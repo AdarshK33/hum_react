@@ -62,11 +62,12 @@ console.log(props.data,"props")
                 {" "}
                 Dear{" "}
                 <b>
-                  {props.data!== undefined &&
-                  props.data.gender.toLowerCase() == "male"?
+                  {props.data!== undefined && 
+                  (props.data.gender == "Male"||props.data.gender == "male"||props.data.gender == "MALE")?
                   `Mr.${props.data.employeeName}`
-                  :(props.data.gender.toLowerCase() == "female" && 
-                  props.data.maritalStatus.toLowerCase() == "single")?
+                  :((props.data.gender == "Female"||props.data.gender == "female"||props.data.gender == "FEMALE")&& 
+                  (props.data.maritalStatus == "single"||props.data.maritalStatus == "Single" 
+                  ||props.data.maritalStatus == "SINGLE"))?
                   `Miss. ${props.data.employeeName}`
                   :`Mrs.${props.data.employeeName}`}
                   

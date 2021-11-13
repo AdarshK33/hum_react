@@ -3,6 +3,7 @@ import { client } from "../utils/axios";
 import DSICharterReducer from "../reducers/DSICharterReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
+import codeBase64 from "../components/DSICharter/CharterFile/codeofconduct"
 // import { EmployeeSeparationContext } from "./EmployeeSeparationState";
 const initial_state = {
   employeeProfileData: {},
@@ -14,6 +15,7 @@ const initial_state = {
   total: {},
   data: [],
   getBonusDetailsById: [],
+  charterAllResponse:{}
 };
 export const DSICharterContext = createContext();
 export const DSICharterProvider = (props) => {
@@ -42,15 +44,16 @@ export const DSICharterProvider = (props) => {
       });
   };
   /*----------Api to create charter ------------*/
-  const dsiCharterCreate = (data,value) => {
+  const dsiCharterCreate = (infoData,value,data,blob) => {
     setLoader(true);
     client
-      .post("/api/v1/dsi_charter/create", data)
+      .post("/api/v1/dsi_charter/create", infoData)
       .then((response) => {
         state.dsiCharterData = response.data.data;
         setCharterIdValue(response.data.data.charterId)
         console.log(response,"createDataDsi")
         toast.info(response.data.message);
+        uploadAllCharter(data,blob)
         viewCharterAll()
         viewCharter("all",0);
         ViewEmployeeProfile()
@@ -69,14 +72,16 @@ export const DSICharterProvider = (props) => {
       });
   };
    /*----------Api to update charter ------------*/
-   const dsiCharterUpdate = (data) => {
+   const dsiCharterUpdate = (infoData,data,blob) => {
+     console.log(infoData,data,blob,"dsiCharterUpdate")
     setLoader(true);
     client
-      .post("/api/v1/dsi_charter/update", data)
+      .post("/api/v1/dsi_charter/update", infoData)
       .then((response) => {
         state.dsiCharterUpdateData = response.data.data;
         console.log(response,"updateDataDsi")
         toast.info(response.data.message);
+        uploadAllCharter(data,blob)
         viewCharterAll()
         ViewEmployeeProfile()
         setLoader(false);
@@ -161,19 +166,25 @@ export const DSICharterProvider = (props) => {
         console.log(error);
       });
   };
-  /*-----------------get charter data using bonusId-----------------*/
-  // const viewBonusById = (id) => {
-  //   setLoader(true);
-  //   client.get("/api/v1/bonus/" + id).then((response) => {
-  //     state.getBonusDetailsById = response.data.data;
-  //     setLoader(false);
-  //     return dispatch({
-  //       type: "VIEW_BONUS_BY_ID",
-  //       payload: state.getBonusDetailsById,
-  //     });
-  //   });
-  // };
- 
+    /*-----------------post charter upload-----------------*/
+  const uploadAllCharter = (data,blob) => {
+    console.log("base64...........", data,blob);
+    const formData = new FormData()
+    formData.append("file",blob,blob.name)
+    
+    return (
+      client.post("api/v1/dsi_charter/document/upload?dsiType="+data.dsiType +
+      "&employeeId=" + data.employeeId +"&fileType="+data.fileType,formData)
+        .then((response) => {
+          console.log(response,"charterupload");
+          state.charterAllResponse = response.data.data;
+          return dispatch({ type: "CHARTER_ALL_UPLOAD", payload: state.charterAllResponse });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
   return (
     <DSICharterContext.Provider
       value={{
@@ -184,6 +195,8 @@ export const DSICharterProvider = (props) => {
         setLoader,
         dsiCharterEnable,
         ViewEmployeeProfile,
+        uploadAllCharter,
+        charterAllResponse:state.charterAllResponse,
         employeeProfileData:state.employeeProfileData,
         charterEnable:state.charterEnable,
         loader: loader,
