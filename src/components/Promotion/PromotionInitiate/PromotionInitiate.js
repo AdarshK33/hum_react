@@ -75,7 +75,7 @@ const PromotionInitiate = () => {
   const [reportingManagerError, setReportingManagerError] = useState("");
   const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [directing,setDirecting] = useState(true)
+  const [directing, setDirecting] = useState(true);
   const { user } = useContext(AppContext);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
@@ -220,6 +220,7 @@ const PromotionInitiate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("fixedgross", state.newFixedGross, state.oldFixedGross);
     var empName = state.empName;
     if (empName == "" || empName == null || empName == undefined) {
       setEmpNameError("Select choose the employee name");
@@ -255,20 +256,38 @@ const PromotionInitiate = () => {
       newFixedGross !== null &&
       newFixedGross !== undefined
     ) {
+      console.log("inside if");
       if (contractType === "Parttime" || contractType === "parttime") {
-        if (newFixedGross < 90 || newFixedGross > 400) {
+        if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        } else if (newFixedGross < 90 || newFixedGross > 400) {
           setNewFixedGrossError("Value should be between 90 - 400");
         } else {
           setNewFixedGrossError("");
         }
+      } else if (contractType === "Local Expat") {
+        if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        } else {
+          setNewFixedGrossError("");
+        }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (newFixedGross < 18000) {
+        if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        } else if (newFixedGross < 18000) {
           setNewFixedGrossError("Value should be above 18000");
         } else {
           setNewFixedGrossError("");
         }
       }
     } else {
+      console.log("inside else ");
       setNewFixedGrossError(" Please add new fixed gross");
     }
     var newDepartment = state.newDepartment;
@@ -385,7 +404,7 @@ const PromotionInitiate = () => {
         state.newFixedGross <= 400
       ) {
         setSubmitted(true);
-        setDirecting(false)
+        setDirecting(false);
         // if (
         //   user !== null &&
         //   user !== undefined &&
@@ -402,7 +421,7 @@ const PromotionInitiate = () => {
         // } else {
         //   PromotionCreate(infoData);
         // }
-        PromotionCreate(infoData);
+        // PromotionCreate(infoData);
         console.log("all okay1", infoData);
       } else if (
         contractType.toLowerCase() == "fulltime" &&
@@ -410,7 +429,7 @@ const PromotionInitiate = () => {
       ) {
         // setModelStatus(true);
         setSubmitted(true);
-        setDirecting(false)
+        setDirecting(false);
 
         // if (
         //   user !== null &&
@@ -428,7 +447,7 @@ const PromotionInitiate = () => {
         // } else {
         //   PromotionCreate(infoData);
         // }
-        PromotionCreate(infoData);
+        // PromotionCreate(infoData);
         console.log("all okay2", infoData);
       } else if (
         state.promotionType == 0 &&
@@ -437,7 +456,7 @@ const PromotionInitiate = () => {
       ) {
         // setModelStatus(true);
         setSubmitted(true);
-        PromotionCreate(infoData);
+        // PromotionCreate(infoData);
         // if (
         //   user !== null &&
         //   user !== undefined &&
@@ -591,7 +610,7 @@ const PromotionInitiate = () => {
       // });
     }
 
-    console.log(state,promotionIdData, "state");
+    console.log(state, promotionIdData, "state");
   };
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
@@ -639,7 +658,7 @@ const PromotionInitiate = () => {
         remarks: promotionIdData["remarks"],
         status: 3,
       };
-      PromotionCreate(infoData);
+      // PromotionCreate(infoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
@@ -788,12 +807,14 @@ const PromotionInitiate = () => {
             user !== undefined &&
             Object.keys(user).length !== 0 &&
             (user.loginType == 7 || user.additionalRole === "7")
-              // ? "Your request has been sent to admin."
-              // : user !== null &&
-              //   user !== undefined &&
-              //   Object.keys(user).length !== 0 &&
-                
-              ?"Your request has been sent to admin":(user.additionalRole === "1" || user.loginType == "1")?"Your request has been saved successfully."
+              ? // ? "Your request has been sent to admin."
+                // : user !== null &&
+                //   user !== undefined &&
+                //   Object.keys(user).length !== 0 &&
+
+                "Your request has been sent to admin"
+              : user.additionalRole === "1" || user.loginType == "1"
+              ? "Your request has been saved successfully."
               : "Your request has been sent to cost center manager."}
           </label>
           <div className="text-center mb-2">
@@ -806,7 +827,7 @@ const PromotionInitiate = () => {
               // <Link to={"/promotion-list"}>
               //   <Button onClick={handleCloseValue}>Close</Button>
               // </Link>
-             <Button onClick={handleCloseValue}>Close</Button>
+              <Button onClick={handleCloseValue}>Close</Button>
             )}
           </div>
         </Modal.Body>
@@ -1395,78 +1416,78 @@ const PromotionInitiate = () => {
                               }}
                             >
                               {/* {directing ? ( */}
-                                <button
-                                  disabled={
-                                    submitted ||
-                                    (promotionIdData !== null &&
-                                      promotionIdData !== undefined &&
-                                      Object.keys(promotionIdData).length !==
-                                        0 &&
-                                      promotionIdData.status === 5)
-                                  }
-                                  className={
-                                    submitted ||
-                                    (promotionIdData !== null &&
-                                      promotionIdData !== undefined &&
-                                      Object.keys(promotionIdData).length !==
-                                        0 &&
-                                      promotionIdData.status === 5)
-                                      ? "confirmButton"
-                                      : "stepperButtons"
-                                  }
-                                  onClick={submitHandler}
-                                >
-                                  Save
-                                </button>
+                              <button
+                                disabled={
+                                  submitted ||
+                                  (promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
+                                    Object.keys(promotionIdData).length !== 0 &&
+                                    promotionIdData.status === 5)
+                                }
+                                className={
+                                  submitted ||
+                                  (promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
+                                    Object.keys(promotionIdData).length !== 0 &&
+                                    promotionIdData.status === 5)
+                                    ? "confirmButton"
+                                    : "stepperButtons"
+                                }
+                                onClick={submitHandler}
+                              >
+                                Save
+                              </button>
                               {/* ) : (
                                 ""
                               )} */}
                               {
-                              //(showPreview === true || !saveLetter) &&
-                              // user !== null &&
-                              // user !== undefined &&
-                              // Object.keys(user).length !== 0 &&
-                              // (user.additionalRole === "1" ||
-                              //   user.loginType == "1") &&
-                              promotionIdData !== null &&
-                              promotionIdData !== undefined &&
-                              Object.keys(promotionIdData).length !== 0 &&
-                              (promotionIdData.status === 1 ||
-                                promotionIdData.status === 5) ? (
-                                <button
-                                  // disabled={!submitted}
-                                  className={"LettersProbButtons"}
-                                  onClick={generateLetterClick}
-                                >
-                                  Generate Promotion Letter
-                                </button>
-                              ) : (
-                                ""
-                              )}
+                                //(showPreview === true || !saveLetter) &&
+                                // user !== null &&
+                                // user !== undefined &&
+                                // Object.keys(user).length !== 0 &&
+                                // (user.additionalRole === "1" ||
+                                //   user.loginType == "1") &&
+                                promotionIdData !== null &&
+                                promotionIdData !== undefined &&
+                                Object.keys(promotionIdData).length !== 0 &&
+                                (promotionIdData.status === 1 ||
+                                  promotionIdData.status === 5) ? (
+                                  <button
+                                    // disabled={!submitted}
+                                    className={"LettersProbButtons"}
+                                    onClick={generateLetterClick}
+                                  >
+                                    Generate Promotion Letter
+                                  </button>
+                                ) : (
+                                  ""
+                                )
+                              }
                               {
-                              // user !== null &&
-                              // user !== undefined &&
-                              // Object.keys(user).length !== 0 &&
-                              // (user.additionalRole === "1" ||
-                              //   user.loginType == "1") &&
-                              //saveLetter &&
-                              previewGeneratedLetter ? (
-                                <button
-                                  className={"LettersProbButtons"}
-                                  onClick={previewLetterViewing}
-                                >
-                                  Preview Promotion Letter
-                                </button>
-                              ) : (
-                                ""
-                              )}
+                                // user !== null &&
+                                // user !== undefined &&
+                                // Object.keys(user).length !== 0 &&
+                                // (user.additionalRole === "1" ||
+                                //   user.loginType == "1") &&
+                                //saveLetter &&
+                                previewGeneratedLetter ? (
+                                  <button
+                                    className={"LettersProbButtons"}
+                                    onClick={previewLetterViewing}
+                                  >
+                                    Preview Promotion Letter
+                                  </button>
+                                ) : (
+                                  ""
+                                )
+                              }
                               {
-                              // user !== null &&
-                              //   user !== undefined &&
-                              //   Object.keys(user).length !== 0 &&
-                              //   (user.additionalRole === "1" ||
-                              //     user.loginType == "1") &&
-                               // saveLetter &&
+                                // user !== null &&
+                                //   user !== undefined &&
+                                //   Object.keys(user).length !== 0 &&
+                                //   (user.additionalRole === "1" ||
+                                //     user.loginType == "1") &&
+                                // saveLetter &&
                                 previewGeneratedLetter === true && (
                                   <div className="preview-section">
                                     <br></br>
@@ -1494,7 +1515,8 @@ const PromotionInitiate = () => {
                                       ""
                                     )}
                                   </div>
-                                )}
+                                )
+                              }
                             </div>
                           </Col>
                         </Row>

@@ -80,8 +80,8 @@ const MitReports = () => {
                   >
                     <option value="">Select Company</option>
                     <option value="Decathlon Sports India">DSI</option>
-                    <option value="Indeca">INDECA</option>
-                    <option value="Prodin">PRODIN</option>
+                    <option value="INDECA">INDECA</option>
+                    <option value="PRODIN">PRODIN</option>
                   </Form.Control>
                 </Col>
               </Form.Group>
@@ -121,7 +121,6 @@ const MitReports = () => {
                     selected={month}
                     className="mitDates"
                     onChange={(date) => setMonth(date)}
-                    minDate={new Date()}
                     placeholderText="Select Month"
                     dateFormat="MM"
                     showMonthYearPicker

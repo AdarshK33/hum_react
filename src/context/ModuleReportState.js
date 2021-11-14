@@ -21,6 +21,7 @@ export const ModuleReportProvider = (props) => {
         responseType: "arraybuffer",
       })
       .then((response) => {
+        console.log("module response", response.data);
         setLoader(false);
         const blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
