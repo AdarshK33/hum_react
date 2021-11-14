@@ -52,48 +52,29 @@ const ClusterCard = () => {
   useEffect(() => {
     ClusterView();
     ClusterDirectTeam("all");
+    ClusterSearchByEmployeeName("all", "all");
   }, []);
   console.log("ClusterData", ClusterData);
   console.log("ClusterEmpList", ClusterEmpList);
   console.log("clusterDirect", clusterDirect);
   console.log("directTeamArr", directTeamArr);
-  useEffect(() => {
-    if (
-      ClusterData !== null &&
-      ClusterData !== undefined &&
-      Object.keys(ClusterData).length !== 0
-    ) {
-      let tempArr = [];
-      ClusterData.map((item, index) => {
-        tempArr.push({
-          label: item.clusterName,
-          value: item.clusterName,
-        });
-      });
-      setClusterList(tempArr);
-      setCluster(tempArr[0].value);
-      //   ClusterSearchByClusterName(tempArr[0].value);
-    } else {
-      setClusterList([]);
-      setCluster("");
-    }
-  }, [ClusterData]);
-  useEffect(() => {
-    if (cluster !== "") {
-      setSearchInput("");
-      ClusterSearchByClusterName(cluster);
-    }
-  }, [cluster]);
+
+  // useEffect(() => {
+  //   if (cluster !== "") {
+  //     setSearchInput("");
+  //     ClusterSearchByClusterName(cluster);
+  //   }
+  // }, [cluster]);
 
   const searchDataHandler = () => {
-    if (cluster !== "" && searchInput !== "") {
-      console.log("-----------s");
-      ClusterSearchByEmployeeName(cluster, searchInput);
+    if (searchInput !== "") {
+      ClusterSearchByEmployeeName("all", searchInput);
+    } else {
+      ClusterSearchByEmployeeName("all", "all");
     }
   };
   const searchDataHandlerDirect = () => {
     if (searchInputDirect !== "") {
-      console.log("-----------Direct");
       ClusterDirectTeam(searchInputDirect);
     } else {
       ClusterDirectTeam("all");
@@ -106,13 +87,13 @@ const ClusterCard = () => {
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(0)}
         >
-          <label>Direct Team</label>
+          <label>My Team</label>
         </div>
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(1)}
         >
-          <label>Indirect Team</label>
+          <label>All Team</label>
         </div>
       </div>
       <div style={{ width: "100%", height: "100%" }}>
@@ -132,7 +113,10 @@ const ClusterCard = () => {
 
                     <Col
                       md={6}
-                      style={{ marginTop: "7px", marginLeft: "-13px" }}
+                      style={{
+                        marginTop: "7px",
+                        marginLeft: "-13px",
+                      }}
                     >
                       <Form.Control
                         type="text"
@@ -266,7 +250,7 @@ const ClusterCard = () => {
                     }}
                   >
                     <Col sm={6}>
-                      <Form.Control
+                      {/* <Form.Control
                         as="select"
                         aria-label="Select Transfer Type"
                         style={{ border: "1px solid #4f90ff" }}
@@ -280,10 +264,13 @@ const ClusterCard = () => {
                         {clusterList.map((item) => {
                           return <option key={item.value}>{item.label}</option>;
                         })}
-                      </Form.Control>
+                      </Form.Control> */}
                     </Col>
 
-                    <Col md={6} style={{ marginTop: "7px" }}>
+                    <Col
+                      md={6}
+                      style={{ marginTop: "7px", marginLeft: "-13px" }}
+                    >
                       <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}

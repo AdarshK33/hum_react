@@ -24,6 +24,7 @@ import { ProbationContext } from "../../context/ProbationState";
 import PromotionLetters from "./PromotionLetter";
 import PromotionSalaryLetters from "./PromotionSalaryLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
+import "./Promotion.css"
 
 const PromotionManagerEdit = (props) => {
   const [EmpName, setEmpName] = useState();
@@ -426,6 +427,7 @@ const PromotionManagerEdit = (props) => {
                 <Fragment>
                   <br></br>
                   <img
+                    style={{marginLeft:"50px"}}
                     src={calendarImage}
                     alt="calendar"
                     width="50px"
@@ -512,7 +514,8 @@ const PromotionManagerEdit = (props) => {
                               <label>
                                 Emp Name/Id:
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.empName}
+                                  &nbsp;&nbsp;{`${state.empName}  /${state.employeeId}` }
+
                                 </label>
                               </label>
                             </div>
@@ -744,8 +747,13 @@ const PromotionManagerEdit = (props) => {
                                   onChange={(e) => effectiveHandler(e)}
                                   dateFormat="dd-MM-yyyy"
                                   placeholderText="DD-MM-YYYY"
-                                  minDate={new Date()}
-                                />
+                                  minDate={
+                                    new Date(
+                                      new Date().setMonth(
+                                        new Date().getMonth() - 2
+                                      )
+                                    )
+                                  }                                />
                               </Form.Group>
                             </div>
                             {effectiveDateError ? (
@@ -883,7 +891,9 @@ const PromotionManagerEdit = (props) => {
                               showPreview === true ? (
                                 <button
                                   // disabled={!submitted}
-                                  className={"LettersProbButtons"}
+                                  className={saveLetter
+                                    ? "confirmButton"
+                                    : "stepperButtons"}
                                   onClick={generateLetterClick}
                                 >
                                   Generate Promotion Letter

@@ -6,6 +6,7 @@ import { saveAs } from "file-saver";
 
 const initialState = {
   mitReportStatus: false,
+  mitReport: {},
 };
 
 export const MitReportContext = createContext();
@@ -24,21 +25,21 @@ export const MitProvider = (props) => {
           month +
           "&year=" +
           year,
-        {
-          responseType: "arraybuffer",
-        }
+        { responseType: "arraybuffer" }
       )
       .then((response) => {
-        console.log("mit response", response);
+        console.log(response, "reponse excel");
         setLoader(false);
-        const blob = new Blob([response.data], {
+
+        var blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
-        const fileName = `${company}_Report.xlsx`;
+        var fileName = "Report.xlsx";
         saveAs(blob, fileName);
-        toast.info(`${company} Report downloaded successfully`);
+        toast.info(`File downloaded successfully`);
         return dispatch({
-          type: "FETCH_MIT_REPORT",
+          type: "MIT_REPORT_DOWNLOAD",
+          payload: state.mitReport,
         });
       })
       .catch(() => {
@@ -50,6 +51,7 @@ export const MitProvider = (props) => {
   const setMitReportStatus = () => {
     return dispatch({
       type: "SET_MIT_REPORT_STATUS",
+      payload: state.mitReportStatus,
     });
   };
 

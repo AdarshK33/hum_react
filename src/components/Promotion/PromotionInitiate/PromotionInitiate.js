@@ -17,7 +17,7 @@ import { AppContext } from "../../../context/AppState";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import PromotionLetters from "../PromotionLetter";
 import PromotionSalaryLetters from "../PromotionSalaryLetter";
-
+import "../Promotion.css";
 const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState("");
@@ -183,15 +183,9 @@ const PromotionInitiate = () => {
       state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
       SetCurrentManager(searchByCostData.managerName); //need to verify
-      if (
-        searchByCostData.contractType === "internship" ||
-        searchByCostData.contractType === "Internship"
-      ) {
-        setContractTypeStatus(true);
-      }
     }
   }, [searchByCostData]);
-
+  useEffect(() => {});
   // useEffect(() => {
   //   if (
   //     searchByCostData &&
@@ -280,7 +274,7 @@ const PromotionInitiate = () => {
           setNewFixedGrossError(
             "Fixed gross should be greater than old fixed gross"
           );
-        } else if (newFixedGross < 18000) {
+        } else if (newFixedGross < 18000 || newFixedGross == 18000) {
           setNewFixedGrossError("Value should be above 18000");
         } else {
           setNewFixedGrossError("");
@@ -588,6 +582,24 @@ const PromotionInitiate = () => {
         }
       });
       console.log(e.target.value, state, "value666");
+    } else if (e.target.name === "newFixedGross") {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+      if (contractType === "Parttime" || contractType === "parttime") {
+        if (e.target.value < 90 || e.target.value > 400) {
+          setNewFixedGrossError("Value should be between 90 - 400");
+        } else {
+          setNewFixedGrossError("");
+        }
+      } else if (contractType === "Fulltime" || contractType === "fulltime") {
+        if (e.target.value < 18000 || e.target.value == 18000) {
+          setNewFixedGrossError("Value should be above 18000");
+        } else {
+          setNewFixedGrossError("");
+        }
+      }
     } else {
       if (e.target.name === "reason" && e.target.value !== "") {
         if (valid.test(e.target.value) === true) {
@@ -741,6 +753,7 @@ const PromotionInitiate = () => {
                 <Fragment>
                   <br></br>
                   <img
+                    style={{ marginLeft: "50px" }}
                     src={calendarImage}
                     alt="calendar"
                     width="50px"
@@ -803,10 +816,12 @@ const PromotionInitiate = () => {
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            {user !== null &&
-            user !== undefined &&
-            Object.keys(user).length !== 0 &&
-            (user.loginType == 7 || user.additionalRole === "7")
+            {(user !== null &&
+              user !== undefined &&
+              Object.keys(user).length !== 0 &&
+              (user.loginType == 7 || user.additionalRole === "7")) ||
+            user.loginType == 9 ||
+            user.additionalRole == "9"
               ? // ? "Your request has been sent to admin."
                 // : user !== null &&
                 //   user !== undefined &&
@@ -824,22 +839,22 @@ const PromotionInitiate = () => {
             (user.additionalRole === "1" || user.loginType == "1") ? (
               <Button onClick={handleCloseValue}>Close</Button>
             ) : (
-              // <Link to={"/promotion-list"}>
-              //   <Button onClick={handleCloseValue}>Close</Button>
-              // </Link>
-              <Button onClick={handleCloseValue}>Close</Button>
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleCloseValue}>Close</Button>
+              </Link>
+              // <Button onClick={handleCloseValue}>Close</Button>
             )}
           </div>
         </Modal.Body>
       </Modal>
-      <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
+      <Breadcrumb title="PROMOTION INITIATION" parent="PROMOTION INITIATION" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>PROMOTION INTIATION </b>
+                  <b>PROMOTION INITIATION </b>
                 </div>
                 <Form>
                   <Container>
@@ -1454,7 +1469,11 @@ const PromotionInitiate = () => {
                                   promotionIdData.status === 5) ? (
                                   <button
                                     // disabled={!submitted}
-                                    className={"LettersProbButtons"}
+                                    className={
+                                      saveLetter
+                                        ? "confirmButton"
+                                        : "stepperButtons"
+                                    }
                                     onClick={generateLetterClick}
                                   >
                                     Generate Promotion Letter

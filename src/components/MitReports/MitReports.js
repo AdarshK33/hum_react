@@ -121,6 +121,7 @@ const MitReports = () => {
                     selected={month}
                     className="mitDates"
                     onChange={(date) => setMonth(date)}
+                    // minDate={new Date()}
                     placeholderText="Select Month"
                     dateFormat="MM"
                     showMonthYearPicker

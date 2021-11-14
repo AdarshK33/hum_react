@@ -15,6 +15,11 @@ const MitReducer = (state, action) => {
         ...state,
         mitReportStatus: false,
       };
+      case "MIT_REPORT_DOWNLOAD":
+        return {
+          ...state,
+          mitReport: action.payload,
+        };
     default:
       return state;
   }
