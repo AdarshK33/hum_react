@@ -148,6 +148,8 @@ import CharterList from "./components/DSICharter/CharterList";
 import CharterEdit from "./components/DSICharter/CharterEdit";
 import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
 import ManagerDashboard from "./components/Employee360/ManagerDashboard";
+import ViewWeekOff from "./components/MasterWeekOff/ViewWeekOff";
+import ViewWeekHours from "./components/MasterWeekHours/ViewWeekHours";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -704,6 +706,16 @@ const RoutePath = () => {
                     <Route
                       path={`${process.env.PUBLIC_URL}/master/bonus-structure`}
                       component={ViewBonus}
+                    />
+                  ) : e.path === "/master/week-off" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/week-off`}
+                      component={ViewWeekOff}
+                    />
+                  ) : e.path === "/master/work-hours" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/work-hours`}
+                      component={ViewWeekHours}
                     />
                   ) : e.path === "/master/notice-period" ? (
                     <Route

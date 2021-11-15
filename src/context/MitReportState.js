@@ -3,16 +3,17 @@ import MitReducer from "../reducers/MitReducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
-export const MitReportContext = createContext();
-var fileDownload = require("js-file-download");
-const initial_state = {
+
+const initialState = {
   mitReportStatus: false,
   mitReport: {},
 };
 
+export const MitReportContext = createContext();
+
 export const MitProvider = (props) => {
+  const [state, dispatch] = useReducer(MitReducer, initialState);
   const [loader, setLoader] = useState(false);
-  const [state, dispatch] = useReducer(MitReducer, initial_state);
 
   const getMitReport = (company, month, year) => {
     setLoader(true);
@@ -23,16 +24,15 @@ export const MitProvider = (props) => {
           "&month=" +
           month +
           "&year=" +
-          year
-      ,{ responseType: "arraybuffer" 
-      })
+          year,
+        { responseType: "arraybuffer" }
+      )
       .then((response) => {
-        console.log(response,"reponse excel")
+        console.log(response, "reponse excel");
         setLoader(false);
 
-        var blob = new Blob([response.data],{
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-
+        var blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         var fileName = "Report.xlsx";
         saveAs(blob, fileName);
