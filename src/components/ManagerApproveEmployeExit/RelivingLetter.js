@@ -36,7 +36,7 @@ const RelivingLetter = () => {
                   relivingLetterData.maritalStatus == "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`}</p>
-          <p>EmployeeId:{relivingLetterData !== undefined && relivingLetterData.employeeId}</p>
+          <p>Employee ID:{relivingLetterData !== undefined && relivingLetterData.employeeId}</p>
           <p>Designation:{relivingLetterData !== undefined && relivingLetterData.designation}</p>
 
           <div className=" ">
@@ -53,23 +53,28 @@ const RelivingLetter = () => {
             <p>
               With reference to your resignation. We would like to inform you
               that your resignation has been accepted and you are relieved from
-              the services of the Decathlon Sports India on the closing of
-              working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>. We
-              hereby confirm that you have been working in Decathlon Sports
-              India since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>. Please be
-              informed that you shall be bound by the relevant clause of your
+              the services of the {relivingLetterData.company} on the closing of
+              working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>.<br/>
+               We hereby confirm that you have been working in {relivingLetterData.company}
+                since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>.<br/>
+               Please be informed that you shall be bound by the relevant clause of your
               appointment letter which states that you shall not use, disclose,
               remove or transfer whether directly or indirectly, to any person,
               corporation or organisation, any trade secrets, know-how and
               confidential information relating to the business or financial
-              conditions of Decathlon. During the employment tenure with us, we
+              conditions of Decathlon.<br/>
+               During the employment tenure with us, we
               found him to be good at work & thank you for your service and
-              commitment to the Decathlon. He left the services of the Decathlon
+              commitment to the Decathlon. <br/>
+              He left the services of the Decathlon
               on his own accord. We wish him all the best in his future
               endeavours.
             </p>
             <p className="mt-5 ">
               <b>For {relivingLetterData.company} Pvt Ltd,</b>
+            </p><br/>
+            <p className="mt-5 ">
+              <b>Authorised Signatory</b>
             </p>
             <div className="float-right "></div>
           </div>

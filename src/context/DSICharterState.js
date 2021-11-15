@@ -22,6 +22,8 @@ export const DSICharterProvider = (props) => {
   const [state, dispatch] = useReducer(DSICharterReducer, initial_state);
   const [loader, setLoader] = useState(false);
   const [charterIdValue, setCharterIdValue] = useState(0);
+  const [ITCHARTER, setItCharter]= useState(null)
+  const [CODEOFCONDUCT, setCodeOfConduct]= useState(null)
   // const { ViewEmployeeProfile,employeeProfileData } = useContext(EmployeeSeparationContext);
 
   const ViewEmployeeProfile = () => {
@@ -176,8 +178,10 @@ export const DSICharterProvider = (props) => {
       client.post("api/v1/dsi_charter/document/upload?dsiType="+data.dsiType +
       "&employeeId=" + data.employeeId +"&fileType="+data.fileType,formData)
         .then((response) => {
-          console.log(response,"charterupload");
+          console.log(response,data,"charterupload");
           state.charterAllResponse = response.data.data;
+
+          {data.fileType === 25?setCodeOfConduct(response.data.data) : setItCharter(response.data.data)}
           return dispatch({ type: "CHARTER_ALL_UPLOAD", payload: state.charterAllResponse });
         })
         .catch((error) => {
@@ -200,6 +204,8 @@ export const DSICharterProvider = (props) => {
         employeeProfileData:state.employeeProfileData,
         charterEnable:state.charterEnable,
         loader: loader,
+        ITCHARTER:ITCHARTER,
+        CODEOFCONDUCT:CODEOFCONDUCT,
         charterIdValue:charterIdValue,
         dsiCharterData: state.dsiCharterData,
         dsiCharterUpdateData:state.dsiCharterUpdateData,

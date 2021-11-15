@@ -62,7 +62,7 @@ import "./charter.css"
 
 const CodeOfConduct =(props)=> {
   const { dsiCharterCreate ,dsiCharterUpdate,dsiCharterData,ViewEmployeeProfile,employeeProfileData,
-    viewCharterAll,loader,charterIdValue,charterDataAll,
+    viewCharterAll,loader,charterIdValue,charterDataAll,ITCHARTER,
     charterAllResponse,uploadAllCharter} = useContext(DSICharterContext);
 
     const [showModal, setShow] = useState(false);
@@ -118,7 +118,6 @@ const CodeOfConduct =(props)=> {
           }
   }, [employeeProfileData,props])
   // console.log(inputRef,props,charterDataAll,employeeProfileData,"charter code")
-console.log(codeBase64,"codeofconduct")
 function base64ToArrayBuffer(imageValue){
   var bString = window.atob(imageValue);
   var bLength = bString.length;
@@ -136,7 +135,7 @@ function base64ToArrayBuffer(imageValue){
     } else {
       setCodeOfConductError("");
     }
-    console.log(charterId,codeOfConduct,employeeProfileData,"employeeProfileData")
+    console.log(charterId,employeeProfileData,"employeeProfileData")
     if(codeOfConduct === true){
       if(charterId === 0){
           let history = props.history
@@ -172,7 +171,8 @@ function base64ToArrayBuffer(imageValue){
               ],     
               "acknowledge":true,
               "isCodeOfConduct":true,
-              "isDsiItCharter": employeeProfileData.isDsiItCharter 
+              "isDsiItCharter": employeeProfileData.isDsiItCharter ,
+              "itCharterLetter":ITCHARTER
               }
            
                 var imageValue = codeBase64

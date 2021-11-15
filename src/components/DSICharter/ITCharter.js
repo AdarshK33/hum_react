@@ -6,7 +6,7 @@ import itBase64 from "./CharterFile/itcharter"
 const ITCharter =(props)=>{
     const {  dsiCharterUpdate,dsiCharterUpdateData,
         ViewEmployeeProfile,employeeProfileData,charterIdValue
-        ,viewCharterAll,charterDataAll,
+        ,viewCharterAll,charterDataAll,CODEOFCONDUCT,
         charterAllResponse,uploadAllCharter} = useContext(DSICharterContext);
   const [showModal, setShow] = useState(true);
     const [dsiItCharter,setDsiItCharter] = useState(false)
@@ -35,7 +35,7 @@ const ITCharter =(props)=>{
         viewCharterAll()
         ViewEmployeeProfile()
       },[charterIdValue])
-
+      console.log(CODEOFCONDUCT,"CODEOFCONDUCT")
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
          && employeeProfileData !== "" ){
@@ -97,12 +97,13 @@ const ITCharter =(props)=>{
                 ],     
                 "employeeId":employeeProfileData.employeeId,
                 "isCodeOfConduct":item.isCodeOfConduct === null?false:true,
-                "isDsiItCharter":true
+                "isDsiItCharter":true,
+                "codeOfConductLetter":CODEOFCONDUCT
                 }
                 var imageValue = itBase64
                 var bufferArray = base64ToArrayBuffer(imageValue);
                 var blobStore = new Blob([bufferArray], { type: "application/pdf" });
-                blobStore.name = "codeofconduct.pdf"      
+                blobStore.name = "itcharter.pdf"      
                 const data = {"dsiType":"It Charter",
                             "employeeId":employeeProfileData.employeeId,
                             "fileType":26}
