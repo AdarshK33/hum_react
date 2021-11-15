@@ -148,6 +148,7 @@ import CharterList from "./components/DSICharter/CharterList";
 import CharterEdit from "./components/DSICharter/CharterEdit";
 import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
 import ManagerDashboard from "./components/Employee360/ManagerDashboard";
+import ManagerProfileSteppers from "./components/MyProfile/MyProfileSteppers";
 import ViewWeekOff from "./components/MasterWeekOff/ViewWeekOff";
 import ViewWeekHours from "./components/MasterWeekHours/ViewWeekHours";
 
@@ -372,6 +373,7 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/manager360`}
             component={ManagerDashboard}
+            // component={ManagerProfileSteppers}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}

@@ -14,14 +14,16 @@ const MyDocumentsCard = ({ height }) => {
   const { downloadFile } = useContext(DocsVerifyContext);
   const [showLetter, setShowLetter] = useState(false);
   const [LetterName, setLetterName] = useState("");
+  const [Name, setName] = useState("");
 
   useEffect(() => {
     MyDocView();
   }, []);
   console.log("MyDocList", MyDocList);
-  const showTheLetter = (e) => {
+  const showTheLetter = (e, name) => {
     console.log("check", e);
     setLetterName(e);
+    setName(name);
     setShowLetter(true);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
@@ -32,7 +34,7 @@ const MyDocumentsCard = ({ height }) => {
   };
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
       {MyDocList !== null &&
       MyDocList !== undefined &&
       MyDocList !== "" &&
@@ -72,7 +74,9 @@ const MyDocumentsCard = ({ height }) => {
                       fontSize: "xx-small",
                       color: "#4f90ff",
                     }}
-                    onClick={(e) => showTheLetter(item.documentLink)}
+                    onClick={(e) =>
+                      showTheLetter(item.documentLink, item.documentName)
+                    }
                   />
 
                   {/* <div
