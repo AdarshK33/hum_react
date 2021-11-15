@@ -149,8 +149,8 @@ console.log(user,"user")
     (
       <Fragment>
         <Breadcrumb
-          title="Employee Separartion List"
-          parent="Employee Separartion List"
+          title="Employee Separation List"
+          parent="Employee Separation List"
         />
         <Container fluid>
           <Row>

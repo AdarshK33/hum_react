@@ -62,13 +62,21 @@ const handleDate = (data)=>{
 let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
 let hours = current.getHours();
 let am_pm = (hours >= 12) ? "PM" : "AM";
-
+let minutes = current.getMinutes()<10?("0"+current.getMinutes()):current.getMinutes()
 if(hours >= 12){
     hours -=12;
 }
 
-let cTime = hours + ":" + current.getMinutes() + ":"  +" "+ am_pm;
-let dateTime = cDate + '   ' + cTime;
+let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
+let dateTime =
+//  current.toLocaleString(undefined, {
+//   day:    'numeric',
+//   month:  'numeric',
+//   year:   'numeric',
+//   hour:   '2-digit',
+//   minute: '2-digit',
+// })  +"  "+ am_pm; 
+cDate + '   ' + cTime;
 return dateTime
 }
 
