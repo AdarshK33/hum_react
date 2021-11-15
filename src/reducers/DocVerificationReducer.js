@@ -56,6 +56,10 @@ const GroupReducer = (state, action) => {
       return { ...state, adminRejectUpdate: action.payload };
       case "INSURANCE_BASE64_UPLOAD":
         return { ...state, insuranceResponse: action.payload };
-        }
+          case "ITCHARTER_BASE64_UPLOAD":
+          return { ...state, itCharterResponse: action.payload };
+          
+          }
+        
 };
 export default GroupReducer;

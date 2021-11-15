@@ -17,7 +17,7 @@ import { AppContext } from "../../../context/AppState";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import PromotionLetters from "../PromotionLetter";
 import PromotionSalaryLetters from "../PromotionSalaryLetter";
-
+import "../Promotion.css";
 const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState("");
@@ -75,7 +75,7 @@ const PromotionInitiate = () => {
   const [reportingManagerError, setReportingManagerError] = useState("");
   const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [directing,setDirecting] = useState(true)
+  const [directing, setDirecting] = useState(true);
   const { user } = useContext(AppContext);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
@@ -183,15 +183,9 @@ const PromotionInitiate = () => {
       state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
       SetCurrentManager(searchByCostData.managerName); //need to verify
-      if (
-        searchByCostData.contractType === "internship" ||
-        searchByCostData.contractType === "Internship"
-      ) {
-        setContractTypeStatus(true);
-      }
     }
   }, [searchByCostData]);
-
+  useEffect(() => {});
   // useEffect(() => {
   //   if (
   //     searchByCostData &&
@@ -220,6 +214,7 @@ const PromotionInitiate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("fixedgross", state.newFixedGross, state.oldFixedGross);
     var empName = state.empName;
     if (empName == "" || empName == null || empName == undefined) {
       setEmpNameError("Select choose the employee name");
@@ -255,20 +250,38 @@ const PromotionInitiate = () => {
       newFixedGross !== null &&
       newFixedGross !== undefined
     ) {
+      console.log("inside if");
       if (contractType === "Parttime" || contractType === "parttime") {
-        if (newFixedGross < 90 || newFixedGross > 400) {
+        if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        } else if (newFixedGross < 90 || newFixedGross > 400) {
           setNewFixedGrossError("Value should be between 90 - 400");
         } else {
           setNewFixedGrossError("");
         }
+      } else if (contractType === "Local Expat") {
+        if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        } else {
+          setNewFixedGrossError("");
+        }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (newFixedGross < 18000) {
+        if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        } else if (newFixedGross < 18000 || newFixedGross == 18000) {
           setNewFixedGrossError("Value should be above 18000");
         } else {
           setNewFixedGrossError("");
         }
       }
     } else {
+      console.log("inside else ");
       setNewFixedGrossError(" Please add new fixed gross");
     }
     var newDepartment = state.newDepartment;
@@ -385,7 +398,7 @@ const PromotionInitiate = () => {
         state.newFixedGross <= 400
       ) {
         setSubmitted(true);
-        setDirecting(false)
+        setDirecting(false);
         // if (
         //   user !== null &&
         //   user !== undefined &&
@@ -402,7 +415,7 @@ const PromotionInitiate = () => {
         // } else {
         //   PromotionCreate(infoData);
         // }
-        PromotionCreate(infoData);
+        // PromotionCreate(infoData);
         console.log("all okay1", infoData);
       } else if (
         contractType.toLowerCase() == "fulltime" &&
@@ -410,7 +423,7 @@ const PromotionInitiate = () => {
       ) {
         // setModelStatus(true);
         setSubmitted(true);
-        setDirecting(false)
+        setDirecting(false);
 
         // if (
         //   user !== null &&
@@ -428,7 +441,7 @@ const PromotionInitiate = () => {
         // } else {
         //   PromotionCreate(infoData);
         // }
-        PromotionCreate(infoData);
+        // PromotionCreate(infoData);
         console.log("all okay2", infoData);
       } else if (
         state.promotionType == 0 &&
@@ -437,7 +450,7 @@ const PromotionInitiate = () => {
       ) {
         // setModelStatus(true);
         setSubmitted(true);
-        PromotionCreate(infoData);
+        // PromotionCreate(infoData);
         // if (
         //   user !== null &&
         //   user !== undefined &&
@@ -569,6 +582,24 @@ const PromotionInitiate = () => {
         }
       });
       console.log(e.target.value, state, "value666");
+    } else if (e.target.name === "newFixedGross") {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+      if (contractType === "Parttime" || contractType === "parttime") {
+        if (e.target.value < 90 || e.target.value > 400) {
+          setNewFixedGrossError("Value should be between 90 - 400");
+        } else {
+          setNewFixedGrossError("");
+        }
+      } else if (contractType === "Fulltime" || contractType === "fulltime") {
+        if (e.target.value < 18000 || e.target.value == 18000) {
+          setNewFixedGrossError("Value should be above 18000");
+        } else {
+          setNewFixedGrossError("");
+        }
+      }
     } else {
       if (e.target.name === "reason" && e.target.value !== "") {
         if (valid.test(e.target.value) === true) {
@@ -591,7 +622,7 @@ const PromotionInitiate = () => {
       // });
     }
 
-    console.log(state,promotionIdData, "state");
+    console.log(state, promotionIdData, "state");
   };
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
@@ -639,7 +670,7 @@ const PromotionInitiate = () => {
         remarks: promotionIdData["remarks"],
         status: 3,
       };
-      PromotionCreate(infoData);
+      // PromotionCreate(infoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
@@ -722,6 +753,7 @@ const PromotionInitiate = () => {
                 <Fragment>
                   <br></br>
                   <img
+                    style={{ marginLeft: "50px" }}
                     src={calendarImage}
                     alt="calendar"
                     width="50px"
@@ -784,16 +816,20 @@ const PromotionInitiate = () => {
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            {user !== null &&
-            user !== undefined &&
-            Object.keys(user).length !== 0 &&
-            (user.loginType == 7 || user.additionalRole === "7")
-              // ? "Your request has been sent to admin."
-              // : user !== null &&
-              //   user !== undefined &&
-              //   Object.keys(user).length !== 0 &&
-                
-              ?"Your request has been sent to admin":(user.additionalRole === "1" || user.loginType == "1")?"Your request has been saved successfully."
+            {(user !== null &&
+              user !== undefined &&
+              Object.keys(user).length !== 0 &&
+              (user.loginType == 7 || user.additionalRole === "7")) ||
+            user.loginType == 9 ||
+            user.additionalRole == "9"
+              ? // ? "Your request has been sent to admin."
+                // : user !== null &&
+                //   user !== undefined &&
+                //   Object.keys(user).length !== 0 &&
+
+                "Your request has been sent to admin"
+              : user.additionalRole === "1" || user.loginType == "1"
+              ? "Your request has been saved successfully."
               : "Your request has been sent to cost center manager."}
           </label>
           <div className="text-center mb-2">
@@ -803,22 +839,22 @@ const PromotionInitiate = () => {
             (user.additionalRole === "1" || user.loginType == "1") ? (
               <Button onClick={handleCloseValue}>Close</Button>
             ) : (
-              // <Link to={"/promotion-list"}>
-              //   <Button onClick={handleCloseValue}>Close</Button>
-              // </Link>
-             <Button onClick={handleCloseValue}>Close</Button>
+              <Link to={"/promotion-list"}>
+                <Button onClick={handleCloseValue}>Close</Button>
+              </Link>
+              // <Button onClick={handleCloseValue}>Close</Button>
             )}
           </div>
         </Modal.Body>
       </Modal>
-      <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
+      <Breadcrumb title="PROMOTION INITIATION" parent="PROMOTION INITIATION" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>PROMOTION INTIATION </b>
+                  <b>PROMOTION INITIATION </b>
                 </div>
                 <Form>
                   <Container>
@@ -1395,78 +1431,82 @@ const PromotionInitiate = () => {
                               }}
                             >
                               {/* {directing ? ( */}
-                                <button
-                                  disabled={
-                                    submitted ||
-                                    (promotionIdData !== null &&
-                                      promotionIdData !== undefined &&
-                                      Object.keys(promotionIdData).length !==
-                                        0 &&
-                                      promotionIdData.status === 5)
-                                  }
-                                  className={
-                                    submitted ||
-                                    (promotionIdData !== null &&
-                                      promotionIdData !== undefined &&
-                                      Object.keys(promotionIdData).length !==
-                                        0 &&
-                                      promotionIdData.status === 5)
-                                      ? "confirmButton"
-                                      : "stepperButtons"
-                                  }
-                                  onClick={submitHandler}
-                                >
-                                  Save
-                                </button>
+                              <button
+                                disabled={
+                                  submitted ||
+                                  (promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
+                                    Object.keys(promotionIdData).length !== 0 &&
+                                    promotionIdData.status === 5)
+                                }
+                                className={
+                                  submitted ||
+                                  (promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
+                                    Object.keys(promotionIdData).length !== 0 &&
+                                    promotionIdData.status === 5)
+                                    ? "confirmButton"
+                                    : "stepperButtons"
+                                }
+                                onClick={submitHandler}
+                              >
+                                Save
+                              </button>
                               {/* ) : (
                                 ""
                               )} */}
                               {
-                              //(showPreview === true || !saveLetter) &&
-                              // user !== null &&
-                              // user !== undefined &&
-                              // Object.keys(user).length !== 0 &&
-                              // (user.additionalRole === "1" ||
-                              //   user.loginType == "1") &&
-                              promotionIdData !== null &&
-                              promotionIdData !== undefined &&
-                              Object.keys(promotionIdData).length !== 0 &&
-                              (promotionIdData.status === 1 ||
-                                promotionIdData.status === 5) ? (
-                                <button
-                                  // disabled={!submitted}
-                                  className={"LettersProbButtons"}
-                                  onClick={generateLetterClick}
-                                >
-                                  Generate Promotion Letter
-                                </button>
-                              ) : (
-                                ""
-                              )}
+                                //(showPreview === true || !saveLetter) &&
+                                // user !== null &&
+                                // user !== undefined &&
+                                // Object.keys(user).length !== 0 &&
+                                // (user.additionalRole === "1" ||
+                                //   user.loginType == "1") &&
+                                promotionIdData !== null &&
+                                promotionIdData !== undefined &&
+                                Object.keys(promotionIdData).length !== 0 &&
+                                (promotionIdData.status === 1 ||
+                                  promotionIdData.status === 5) ? (
+                                  <button
+                                    // disabled={!submitted}
+                                    className={
+                                      saveLetter
+                                        ? "confirmButton"
+                                        : "stepperButtons"
+                                    }
+                                    onClick={generateLetterClick}
+                                  >
+                                    Generate Promotion Letter
+                                  </button>
+                                ) : (
+                                  ""
+                                )
+                              }
                               {
-                              // user !== null &&
-                              // user !== undefined &&
-                              // Object.keys(user).length !== 0 &&
-                              // (user.additionalRole === "1" ||
-                              //   user.loginType == "1") &&
-                              //saveLetter &&
-                              previewGeneratedLetter ? (
-                                <button
-                                  className={"LettersProbButtons"}
-                                  onClick={previewLetterViewing}
-                                >
-                                  Preview Promotion Letter
-                                </button>
-                              ) : (
-                                ""
-                              )}
+                                // user !== null &&
+                                // user !== undefined &&
+                                // Object.keys(user).length !== 0 &&
+                                // (user.additionalRole === "1" ||
+                                //   user.loginType == "1") &&
+                                //saveLetter &&
+                                previewGeneratedLetter ? (
+                                  <button
+                                    className={"LettersProbButtons"}
+                                    onClick={previewLetterViewing}
+                                  >
+                                    Preview Promotion Letter
+                                  </button>
+                                ) : (
+                                  ""
+                                )
+                              }
                               {
-                              // user !== null &&
-                              //   user !== undefined &&
-                              //   Object.keys(user).length !== 0 &&
-                              //   (user.additionalRole === "1" ||
-                              //     user.loginType == "1") &&
-                               // saveLetter &&
+                                // user !== null &&
+                                //   user !== undefined &&
+                                //   Object.keys(user).length !== 0 &&
+                                //   (user.additionalRole === "1" ||
+                                //     user.loginType == "1") &&
+                                // saveLetter &&
                                 previewGeneratedLetter === true && (
                                   <div className="preview-section">
                                     <br></br>
@@ -1494,7 +1534,8 @@ const PromotionInitiate = () => {
                                       ""
                                     )}
                                   </div>
-                                )}
+                                )
+                              }
                             </div>
                           </Col>
                         </Row>

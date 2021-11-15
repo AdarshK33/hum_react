@@ -3,35 +3,44 @@ import MitReducer from "../reducers/MitReducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
-export const MitReportContext = createContext();
-var fileDownload = require("js-file-download");
-const initial_state = {
+
+const initialState = {
   mitReportStatus: false,
+  mitReport: {},
 };
 
+export const MitReportContext = createContext();
+
 export const MitProvider = (props) => {
+  const [state, dispatch] = useReducer(MitReducer, initialState);
   const [loader, setLoader] = useState(false);
-  const [state, dispatch] = useReducer(MitReducer, initial_state);
 
   const getMitReport = (company, month, year) => {
     setLoader(true);
     client
-      .post(
+      .get(
         "/api/v1/employee/reports/mit/download?company=" +
           company +
           "&month=" +
           month +
           "&year=" +
-          year
+          year,
+        { responseType: "arraybuffer" }
       )
       .then((response) => {
+        console.log(response, "reponse excel");
         setLoader(false);
-        const blob = new Blob([response.data], {
+
+        var blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
-        const fileName = "Report.xlsx";
+        var fileName = "Report.xlsx";
         saveAs(blob, fileName);
         toast.info(`File downloaded successfully`);
+        return dispatch({
+          type: "MIT_REPORT_DOWNLOAD",
+          payload: state.mitReport,
+        });
       })
       .catch(() => {
         setLoader(false);
@@ -42,6 +51,7 @@ export const MitProvider = (props) => {
   const setMitReportStatus = () => {
     return dispatch({
       type: "SET_MIT_REPORT_STATUS",
+      payload: state.mitReportStatus,
     });
   };
 

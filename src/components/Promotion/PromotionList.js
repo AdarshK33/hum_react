@@ -181,7 +181,7 @@ const PromotionList = () => {
                     <div className="promotion_initiate">
                       <Link to="/promotion-initiate">
                         <Button className="apply-button btn btn-light mr-2">
-                          Initate Promotion
+                         Initiate Promotion
                         </Button>
                       </Link>
                     </div>

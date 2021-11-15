@@ -57,7 +57,28 @@ const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationC
   };
 
   /*-----------------Pagination------------------*/
+const handleDate = (data)=>{
+  let current = new Date(data)
+let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
+let hours = current.getHours();
+let am_pm = (hours >= 12) ? "PM" : "AM";
+let minutes = current.getMinutes()<10?("0"+current.getMinutes()):current.getMinutes()
+if(hours >= 12){
+    hours -=12;
+}
 
+let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
+let dateTime =
+//  current.toLocaleString(undefined, {
+//   day:    'numeric',
+//   month:  'numeric',
+//   year:   'numeric',
+//   hour:   '2-digit',
+//   minute: '2-digit',
+// })  +"  "+ am_pm; 
+cDate + '   ' + cTime;
+return dateTime
+}
 
   return (
     <Fragment>
@@ -84,6 +105,7 @@ const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationC
                     <tr>
                       <th scope="col">SL. No</th>
                       <th scope="col">Employee Id</th>
+                      <th scope="col">Updated Date</th>
                       <th scope="col">Code of Conduct</th>
                       {/* <th scope="col">Ethics Charter</th> */}
                       <th scope="col">IT Charter</th>
@@ -119,6 +141,7 @@ const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationC
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.employeeId}</td>
+                            <td>{handleDate(item.auditField.updatedDate)}</td>
                             <td>{item.isCodeOfConduct?"Yes":"No"}</td>
                             {/* <td>{item.ethicsCharter?"Yes":"No"}</td> */}
                             <td>{item.isDsiItCharter?"Yes":"No"}</td>
