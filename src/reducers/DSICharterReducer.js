@@ -13,6 +13,8 @@ const DSICharterReducer = (state, action) => {
                 return { ...state, charterEnable: action.payload };
             case "EMPLOYEE_PROFILE":
                 return { ...state, employeeProfileData: action.payload };
+            case "CHARTER_ALL_UPLOAD":
+                return { ...state, charterAllResponse: action.payload };
             default: return state;
     }
 }

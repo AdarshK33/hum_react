@@ -28,7 +28,7 @@ const InternShipLetter = () => {
           </p>
           <br></br>
           <h5 className="text-center"> INTERNSHIP EXPERIENCE LETTER</h5>
-
+{/* 
           <p>Name:{relivingLetterData !== undefined &&
                   relivingLetterData.gender.toLowerCase() == "male"?
                   `Mr.${relivingLetterData.employeeName}`
@@ -49,7 +49,7 @@ const InternShipLetter = () => {
                   relivingLetterData.maritalStatus.toLowerCase() == "single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`},</b>{" "}
-            </p>
+            </p> */}
             <p>
             This is to certify that  {relivingLetterData !== undefined &&
                   relivingLetterData.gender.toLowerCase() == "male"?
@@ -69,13 +69,11 @@ const InternShipLetter = () => {
             </p>
             <p className="mt-5 ">
               <b>For {relivingLetterData.company} Pvt Ltd,</b>
-            </p>
+            </p><br/>
             <div className="float-right "></div>
             <p className="mt-5 ">
               <b>Authorised Signatory</b>
             </p>
-
-          </div>
         </Fragment>
       ) : (
         ""

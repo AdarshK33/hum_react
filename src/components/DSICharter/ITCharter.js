@@ -1,18 +1,21 @@
-import React, { useState ,useContext,useEffect} from "react";
+import React, { useState ,useContext,useEffect,useRef} from "react";
 import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-// import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
+import itBase64 from "./CharterFile/itcharter"
 const ITCharter =(props)=>{
     const {  dsiCharterUpdate,dsiCharterUpdateData,
         ViewEmployeeProfile,employeeProfileData,charterIdValue
-        ,viewCharterAll,charterDataAll} = useContext(DSICharterContext);
-    // const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+        ,viewCharterAll,charterDataAll,CODEOFCONDUCT,
+        charterAllResponse,uploadAllCharter} = useContext(DSICharterContext);
   const [showModal, setShow] = useState(true);
     const [dsiItCharter,setDsiItCharter] = useState(false)
     const [dsiItCharterError,setDsiItCharterError] = useState("")
     const [charterId ,setCharterId] = useState("")
     const [charterAcknowledgementId,setCharterAcknowledgementId] = useState("")
+
+      const ref = React.createRef();
+      const inputRef = useRef(null);
 
     const handleClose = () => {
         setShow(false);
@@ -32,7 +35,7 @@ const ITCharter =(props)=>{
         viewCharterAll()
         ViewEmployeeProfile()
       },[charterIdValue])
-
+      console.log(CODEOFCONDUCT,"CODEOFCONDUCT")
     useEffect(() => {
         if(employeeProfileData !== undefined && employeeProfileData !== null 
          && employeeProfileData !== "" ){
@@ -47,7 +50,18 @@ const ITCharter =(props)=>{
               }
      }
      }, [employeeProfileData,props])
-     console.log(employeeProfileData,charterIdValue,"employeeProfileData it0000")
+
+     function base64ToArrayBuffer(imageValue){
+        var bString = window.atob(imageValue);
+        var bLength = bString.length;
+        var bytes = new Uint8Array(bLength);
+        for (var i = 0; i < bLength; i++) {
+            var ascii = bString.charCodeAt(i);
+            bytes[i] = ascii;
+        }
+        return bytes;
+      };
+
     const handleSave =(e)=>{
         e.preventDefault()
         console.log(props,dsiItCharter,employeeProfileData,charterDataAll,"charter it")
@@ -83,10 +97,19 @@ const ITCharter =(props)=>{
                 ],     
                 "employeeId":employeeProfileData.employeeId,
                 "isCodeOfConduct":item.isCodeOfConduct === null?false:true,
-                "isDsiItCharter":true
+                "isDsiItCharter":true,
+                "codeOfConductLetter":CODEOFCONDUCT
                 }
-    
-            dsiCharterUpdate(infoData)
+                var imageValue = itBase64
+                var bufferArray = base64ToArrayBuffer(imageValue);
+                var blobStore = new Blob([bufferArray], { type: "application/pdf" });
+                blobStore.name = "itcharter.pdf"      
+                const data = {"dsiType":"It Charter",
+                            "employeeId":employeeProfileData.employeeId,
+                            "fileType":26}
+
+            dsiCharterUpdate(infoData,data,blobStore)
+         //  ExportPDFITCharter(inputRef.current,item.charterId,20,employeeProfileData.employeeId);
             props.history.push("/dashboard/storedashboard")
             setShow(false)       
            }
@@ -111,8 +134,8 @@ const ITCharter =(props)=>{
     <>
       <Modal show={showModal} onHide={handleClose} >
         <Modal.Body>
-        <div class="html-charter">
-        <body>
+        <div class="html-charter" id="itcharter" ref={inputRef}>  
+         <body>
     <div class="container-charter">
         <h1 class="h1-charter">DSI IT CHARTER</h1>
         <p>Decathlon Sports India Pvt. Ltd. along with its group companies (hereinafter referred as DSI)
@@ -457,7 +480,7 @@ const ITCharter =(props)=>{
         </ol>
     </div>
     
-</body>
+</body> 
 </div>        </Modal.Body>
         {/* <Modal.Footer> */}
             <Row>
