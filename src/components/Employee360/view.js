@@ -24,8 +24,12 @@ const ViewTheLetter = ({ DocName, Name }) => {
               <div>
                 {Name === "Code Of Conduct" || Name === "It Charter" ? (
                   <iframe
-                    src={process.env.REACT_APP_S3_URL + DocName}
-                    style={{ width: "90%", height: "900px" }}
+                    src={
+                      process.env.REACT_APP_S3_URL +
+                      DocName +
+                      "#toolbar=0& navpanes=0"
+                    }
+                    style={{ width: "100%", height: "900px" }}
                     frameborder="0"
                   ></iframe>
                 ) : (

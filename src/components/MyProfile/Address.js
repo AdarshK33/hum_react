@@ -83,13 +83,14 @@ const Address = (props) => {
   const [permanentStateId, setPermanentStateId] = useState();
   const [permanentCityId, setPermanentCityId] = useState();
   const [addressValue, setAddressValue] = useState(0);
+  // un commect
+  // useEffect(() => {
+  //   CandidateProfile();
+  //   candidateCountryList();
+  //   addressView(candidateProfileData.candidateId);
+  //   console.log("intialdata");
+  // }, [candidateProfileData]);
 
-  useEffect(() => {
-    CandidateProfile();
-    candidateCountryList();
-    addressView(candidateProfileData.candidateId);
-    console.log("intialdata");
-  }, [candidateProfileData]);
   // console.log("address candidate data", candidateProfileData);
   // console.log("candidateCountryList data", candidateCountryData);
   // console.log("addressViewData data", addressViewData);
@@ -672,7 +673,7 @@ const Address = (props) => {
       </div> */}
               <Form.Group>
                 <Form.Label>
-                  Flat/Plot No<span style={{ color: "red" }}>*</span>
+                  <b>Flat/Plot No</b>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -693,7 +694,9 @@ const Address = (props) => {
             </div>
             <div className="col-sm-3">
               <Form.Group>
-                <Form.Label>Street</Form.Label>
+                <Form.Label>
+                  <b>Street</b>
+                </Form.Label>
                 <Form.Control
                   type="text"
                   name="street"
@@ -706,7 +709,9 @@ const Address = (props) => {
             </div>
             <div className="col-sm-3">
               <Form.Group>
-                <Form.Label>Locality</Form.Label>
+                <Form.Label>
+                  <b>Locality</b>
+                </Form.Label>
 
                 <Form.Control
                   type="text"
@@ -721,7 +726,7 @@ const Address = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  Address Line 1<span style={{ color: "red" }}>*</span>
+                  <b>Address Line 1</b>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -746,7 +751,7 @@ const Address = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  Country <span style={{ color: "red" }}>*</span>
+                  <b> Country </b>
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -777,7 +782,7 @@ const Address = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  State <span style={{ color: "red" }}>*</span>
+                  <b>State</b>
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -806,7 +811,7 @@ const Address = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  City <span style={{ color: "red" }}>*</span>
+                  <b>City </b>
                 </Form.Label>
                 <Form.Control
                   as="select"
@@ -834,7 +839,7 @@ const Address = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  PinCode<span style={{ color: "red" }}>*</span>
+                  <b>PinCode</b>
                 </Form.Label>
                 <Form.Control
                   type="number"
@@ -859,7 +864,7 @@ const Address = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  Phone No<span style={{ color: "red" }}>*</span>
+                  <b>Phone No</b>
                 </Form.Label>
                 <Form.Control
                   type="number"
@@ -937,7 +942,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      Flat/Plot No<span style={{ color: "red" }}>*</span>
+                      <b>Flat/Plot No</b>
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -960,7 +965,9 @@ const Address = (props) => {
                 </div>
                 <div className="col-sm-3">
                   <Form.Group>
-                    <Form.Label>Street</Form.Label>
+                    <Form.Label>
+                      <b>Street</b>
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       name="permanentStreet"
@@ -974,7 +981,9 @@ const Address = (props) => {
                 </div>
                 <div className="col-sm-3">
                   <Form.Group>
-                    <Form.Label>Locality</Form.Label>
+                    <Form.Label>
+                      <b>Locality</b>
+                    </Form.Label>
 
                     <Form.Control
                       type="text"
@@ -990,7 +999,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      Address Line 1<span style={{ color: "red" }}>*</span>
+                      <b>Address Line 1</b>
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -1020,7 +1029,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      Country <span style={{ color: "red" }}>*</span>
+                      <b>Country </b>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -1055,7 +1064,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      State <span style={{ color: "red" }}>*</span>
+                      <b> State</b>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -1084,7 +1093,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      City <span style={{ color: "red" }}>*</span>
+                      <b>City</b>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -1114,7 +1123,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      PinCode<span style={{ color: "red" }}>*</span>
+                      <b>PinCode</b>
                     </Form.Label>
                     <Form.Control
                       type="number"
@@ -1144,7 +1153,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      Phone No<span style={{ color: "red" }}>*</span>
+                      <b>Phone No</b>
                     </Form.Label>
                     <Form.Control
                       type="number"
@@ -1176,7 +1185,10 @@ const Address = (props) => {
             <Col>
               <Form.Group>
                 <div className="FileInputWithOutStar">
-                  <label>Upload Address Proof</label>
+                  <label>
+                    {" "}
+                    <b>Upload Address Proof</b>
+                  </label>
                 </div>
                 <div className="parentInput">
                   <label className="fileInputField">

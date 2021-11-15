@@ -10,14 +10,9 @@ import "react-datepicker/dist/react-datepicker.css";
 // import "./OnBoard.css";
 import Breadcrumb from "../common/breadcrumb";
 import PersonalInformation from "./PersonalInformation";
-//   import Address from "./Address";
-//   import EmergencyContact from "./EmergencyContact";
-//   import BankDetails from "./BankDetails";
-//   // import InsuranceNomination from "./InsuranceNomination";
-//   import InsuranceNomination from "./InsuranceNominationChange";
-//   import PFDeclaration from "./PFDeclaration";
-//   import Documents from "./Documents";
-//   import { toast } from "react-toastify";
+import WorkDetails from "./WorkDetails";
+import Remuneration from "./Remunaration";
+import Documents from "./Documents";
 import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
@@ -141,14 +136,14 @@ const ManagerProfileSteppers = (props) => {
     }
   };
 
-  useEffect(() => {
-    CandidateProfile();
-  }, [candidateProfileData]);
-  useEffect(() => {
-    viewCandidateId(candidateProfileData.candidateId);
-  }, []);
-  console.log("stepper candidate data", candidateProfileData);
-  console.log("candidate data", candidateData);
+  // useEffect(() => {
+  //   CandidateProfile();
+  // }, [candidateProfileData]);
+  // useEffect(() => {
+  //   viewCandidateId(candidateProfileData.candidateId);
+  // }, []);
+  // console.log("stepper candidate data", candidateProfileData);
+  // console.log("candidate data", candidateData);
 
   const NextStep = (value) => {
     console.log(stepCount, "NEXTSTEP");
@@ -282,9 +277,9 @@ const ManagerProfileSteppers = (props) => {
                         <div
                           type="button"
                           onClick={() => {
-                            handleIconChange(stepArray[3].idValue);
+                            handleIconChange(stepArray[2].idValue);
                           }}
-                          className={stepArray[3].step}
+                          className={stepArray[2].step}
                         >
                           <div style={{ paddingTop: "0px", fontSize: "31px" }}>
                             <i className="fa fa-lock"></i>
@@ -298,6 +293,27 @@ const ManagerProfileSteppers = (props) => {
                           Remuneration
                         </label>
                         <br></br>
+                        <span className={stepArray[2].line}></span>
+
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[3].idValue);
+                          }}
+                          className={stepArray[3].step}
+                        >
+                          <div style={{ paddingTop: "4px", fontSize: "27px" }}>
+                            <i className="fa fa-shield"></i>
+                          </div>
+                        </div>
+                        <label
+                          className={stepArray[3].label}
+                          style={{ marginLeft: "25px", textAlign: "center" }}
+                        >
+                          {" "}
+                          Benfits
+                        </label>
+                        <br></br>
                         <span className={stepArray[3].line}></span>
 
                         <div
@@ -307,33 +323,12 @@ const ManagerProfileSteppers = (props) => {
                           }}
                           className={stepArray[4].step}
                         >
-                          <div style={{ paddingTop: "4px", fontSize: "27px" }}>
-                            <i className="fa fa-shield"></i>
-                          </div>
-                        </div>
-                        <label
-                          className={stepArray[4].label}
-                          style={{ marginLeft: "25px", textAlign: "center" }}
-                        >
-                          {" "}
-                          Benfits
-                        </label>
-                        <br></br>
-                        <span className={stepArray[4].line}></span>
-
-                        <div
-                          type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[6].idValue);
-                          }}
-                          className={stepArray[6].step}
-                        >
                           <div style={{ paddingTop: "2px", fontSize: "26px" }}>
                             <i className="fa fa-book"></i>
                           </div>
                         </div>
                         <label
-                          className={stepArray[6].label}
+                          className={stepArray[4].label}
                           style={{ marginLeft: "15px", textAlign: "center" }}
                         >
                           Documents
@@ -356,27 +351,12 @@ const ManagerProfileSteppers = (props) => {
                               />
                             );
 
-                          // case 1:
-                          //   return (
-                          //     <Address
-                          //       NextStep={NextStep}
-                          //       PrevStep={PrevStep}
-                          //     />
-                          //   );
-                          // case 2:
-                          //   return (
-                          //     <EmergencyContact
-                          //       NextStep={NextStep}
-                          //       PrevStep={PrevStep}
-                          //     />
-                          //   );
-                          // case 3:
-                          //   return (
-                          //     <BankDetails
-                          //       NextStep={NextStep}
-                          //       PrevStep={PrevStep}
-                          //     />
-                          //   );
+                          case 1:
+                            return <WorkDetails />;
+                          case 2:
+                            return <Remuneration />;
+                          case 4:
+                            return <Documents />;
                           // case 4:
                           //   return (
                           //     <InsuranceNomination

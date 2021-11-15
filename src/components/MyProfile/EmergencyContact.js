@@ -47,10 +47,10 @@ const EmergencyContact = (props) => {
     pinCode: "",
     relationship: "",
   });
-  useEffect(() => {
-    EmergencyContactView(candidateProfileData.candidateId);
-    console.log(emergencyContactView, "emergencyContactView");
-  }, []);
+  // useEffect(() => {
+  //   EmergencyContactView(candidateProfileData.candidateId);
+  //   console.log(emergencyContactView, "emergencyContactView");
+  // }, []);
   useEffect(() => {
     if (
       emergencyContactView !== null &&
@@ -228,7 +228,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Name<span style={{ color: "red" }}>*</span>
+                <b>Name</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -248,7 +248,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Relationship<span style={{ color: "red" }}>*</span>
+                <b>Relationship</b>
               </Form.Label>
               <Form.Control
                 as="select"
@@ -276,7 +276,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Contact No<span style={{ color: "red" }}>*</span>
+                <b> Contact No</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -297,7 +297,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Address Line 1<span style={{ color: "red" }}></span>
+                <b>Address Line 1</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -316,7 +316,9 @@ const EmergencyContact = (props) => {
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>Locality</Form.Label>
+              <Form.Label>
+                <b>Locality</b>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="locality"
@@ -333,7 +335,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                City<span style={{ color: "red" }}></span>
+                <b>City</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -351,7 +353,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Country<span style={{ color: "red" }}></span>
+                <b>Country</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -370,7 +372,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                PinCode<span style={{ color: "red" }}></span>
+                <b> PinCode</b>
               </Form.Label>
               <Form.Control
                 type="text"

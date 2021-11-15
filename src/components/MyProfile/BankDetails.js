@@ -30,10 +30,10 @@ const BankDetails = (props) => {
   const [ifscCodeError, setIfscCodeError] = useState(false);
   const [bankIdValue, setBankIdVlue] = useState(0);
 
-  useEffect(() => {
-    CandidateProfile();
-    bankView(candidateProfileData.candidateId);
-  }, []);
+  // useEffect(() => {
+  //   CandidateProfile();
+  //   bankView(candidateProfileData.candidateId);
+  // }, []);
 
   useEffect(() => {
     if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
@@ -201,7 +201,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Bank Name<span style={{ color: "red" }}>*</span>
+                <b>Bank Name</b>
               </Form.Label>
               <Select
                 options={bankNameOptions}
@@ -226,7 +226,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Bank Account No<span style={{ color: "red" }}>*</span>
+                <b>Bank Account No</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -252,7 +252,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                IFSC Code<span style={{ color: "red" }}>*</span>
+                <b>IFSC Code</b>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -277,7 +277,9 @@ const BankDetails = (props) => {
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>PAN No</Form.Label>
+              <Form.Label>
+                <b>PAN No</b>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="ifscCode"
@@ -334,7 +336,9 @@ const BankDetails = (props) => {
           <Col>
             <Form.Group>
               <div className="FileInputWithOutStar">
-                <label>Upload Canceled cheque</label>
+                <label>
+                  <b>Upload Canceled cheque</b>
+                </label>
               </div>
               <div className="parentInput">
                 <label className="fileInputField">

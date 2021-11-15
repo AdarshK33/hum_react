@@ -23,12 +23,17 @@ import {
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { OnBoardContext } from "../../context/OnBoardState";
+import { AppContext } from "../../context/AppState";
 import Address from "./Address";
 import EmergencyContact from "./EmergencyContact";
 import BankDetails from "./BankDetails";
 import moment from "moment";
 
 const PersonalInformation = (props) => {
+  const { user } = useContext(AppContext);
+  const [bloodGrp, setBloodGrp] = useState(user.bloodGroup);
+  const [maritalStatus, setMaritalStatus] = useState(user.maritalStatus);
+  const [personalEmailId, setPersonalEmailId] = useState(user.personalEmail);
   return (
     <Fragment>
       <ToastContainer />
@@ -55,28 +60,28 @@ const PersonalInformation = (props) => {
               <b>Employee Id</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.employeeId}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>First Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.firstName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Last Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.lastName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Father's Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.fatherName}</label>
           </Col>
         </Row>
         <Row
@@ -89,14 +94,14 @@ const PersonalInformation = (props) => {
               <b>Date of Birth</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.dob}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Gender</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.gender}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -106,9 +111,10 @@ const PersonalInformation = (props) => {
             <Form.Group>
               <Form.Control
                 as="select"
+                className="text-primary"
                 name="bloodGroup"
-                // value={state.bloodGroup}
-                // onChange={changeHandler}
+                value={bloodGrp}
+                onChange={(e) => setBloodGrp(e.target.value)}
                 required
                 // disabled={disabled}
                 // style={bloodGroupError ? { borderColor: "red" } : {}}
@@ -136,7 +142,7 @@ const PersonalInformation = (props) => {
               <b>Date of Joining Group</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">--</label>
           </Col>
         </Row>
         <Row
@@ -149,7 +155,7 @@ const PersonalInformation = (props) => {
               <b>Date of Joining</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.joiningDate}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -160,8 +166,9 @@ const PersonalInformation = (props) => {
               <Form.Control
                 as="select"
                 name="maritalStatus"
-                // value={state.bloodGroup}
-                // onChange={changeHandler}
+                className="text-primary"
+                value={maritalStatus}
+                onChange={(e) => setMaritalStatus(e.target.value)}
                 required
                 // disabled={disabled}
                 // style={bloodGroupError ? { borderColor: "red" } : {}}
@@ -187,6 +194,7 @@ const PersonalInformation = (props) => {
               <Form.Control
                 as="select"
                 name="disability"
+                className="text-primary"
                 // value={state.bloodGroup}
                 // onChange={changeHandler}
                 required
@@ -210,7 +218,7 @@ const PersonalInformation = (props) => {
               <b>Nationality</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.nationality}</label>
           </Col>
         </Row>
         <Row
@@ -227,8 +235,9 @@ const PersonalInformation = (props) => {
               <Form.Control
                 type="text"
                 name="emailId"
-                // value={state.aadhaarNumber}
-                // onChange={changeHandler}
+                className="text-primary"
+                value={personalEmailId}
+                onChange={(e) => setPersonalEmailId(e.target.value)}
                 required
                 placeholder="Personal Email Id"
                 // disabled={disabled}
@@ -241,21 +250,21 @@ const PersonalInformation = (props) => {
               <b>Adhar No</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.aadhaarNumber}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>PAN No</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.panNo}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>PF UAN No</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.pfUanNo}</label>
           </Col>
         </Row>
         <Row
@@ -268,7 +277,7 @@ const PersonalInformation = (props) => {
               <b>Are you an EPS member in your earlier employment?</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">--</label>
           </Col>
         </Row>
         <Row
@@ -281,42 +290,50 @@ const PersonalInformation = (props) => {
               <b>Reference 1 Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.reference1Name}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Reference 1 Email Id</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.reference1Email}</label>
           </Col>
         </Row>
-        <Row
-          style={{
-            marginBottom: "2rem",
-          }}
-        >
-          <Col sm={3}>
-            <label>
-              <b>Reference 2 Name</b>
-            </label>
-            <br />
-            <label className="itemResult">IDDDDD</label>
-          </Col>
-          <Col sm={3}>
-            <label>
-              <b>Reference 2 Email Id</b>
-            </label>
-            <br />
-            <label className="itemResult">IDDDDD</label>
-          </Col>
-          <Col sm={3}></Col>
-          <Col sm={3} style={{ textAlign: "right" }}>
-            {/* onClick={submitHandler} */}
-            <br />
-            <button className="stepperButtons">Update</button>
-          </Col>
-        </Row>
+        {user !== null &&
+        user !== undefined &&
+        Object.keys(user).length !== 0 &&
+        user.reference2Name !== null &&
+        user.reference2Name !== undefined ? (
+          <Row
+            style={{
+              marginBottom: "2rem",
+            }}
+          >
+            <Col sm={3}>
+              <label>
+                <b>Reference 2 Name</b>
+              </label>
+              <br />
+              <label className="itemResult">{user.reference2Name}</label>
+            </Col>
+            <Col sm={3}>
+              <label>
+                <b>Reference 2 Email Id</b>
+              </label>
+              <br />
+              <label className="itemResult">{user.reference2Email}</label>
+            </Col>
+            <Col sm={3}></Col>
+            <Col sm={3} style={{ textAlign: "right" }}>
+              {/* onClick={submitHandler} */}
+              <br />
+              <button className="stepperButtons">Update</button>
+            </Col>
+          </Row>
+        ) : (
+          ""
+        )}
       </Form>
       <Row style={{ marginBottom: "2rem" }}>
         <Container fluid className="container-accordion">
