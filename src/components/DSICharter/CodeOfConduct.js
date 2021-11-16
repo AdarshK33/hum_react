@@ -1,8 +1,8 @@
-import React, { useState ,useContext,useEffect,useRef} from "react";
-import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
+import React, { useState, useContext, useEffect, useRef } from "react";
+import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
-import codeBase64 from "./CharterFile/codeofconduct"
+import codeBase64 from "./CharterFile/codeofconduct";
 // import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from "./img/img1.png";
 import Img2 from "./img/img2.png";
@@ -58,19 +58,33 @@ import Img50 from "./img/img50.png";
 import Img51 from "./img/img51.png";
 import Img52 from "./img/img52.png";
 
-import "./charter.css"
+import "./charter.css";
 
-const CodeOfConduct =(props)=> {
-  const { dsiCharterCreate ,dsiCharterUpdate,dsiCharterData,ViewEmployeeProfile,employeeProfileData,
-    viewCharterAll,loader,charterIdValue,charterDataAll,ITCHARTER,
-    charterAllResponse,uploadAllCharter} = useContext(DSICharterContext);
+const CodeOfConduct = (props) => {
+  const {
+    dsiCharterCreate,
+    dsiCharterUpdate,
+    dsiCharterData,
+    ViewEmployeeProfile,
+    employeeProfileData,
+    viewCharterAll,
+    loader,
+    charterIdValue,
+    charterDataAll,
+    ITCHARTER,
+    charterAllResponse,
+    uploadAllCharter,
+  } = useContext(DSICharterContext);
 
-    const [showModal, setShow] = useState(false);
-  const [codeOfConduct,setCodeOfConduct] = useState(false)
-  const [codeOfConductError,setCodeOfConductError] = useState("")
-  const [charterId ,setCharterId] = useState("")
-  const { charterResponse, ExportPDFCharter
-    ,downloadFile,candidateProfileData 
+  const [showModal, setShow] = useState(false);
+  const [codeOfConduct, setCodeOfConduct] = useState(false);
+  const [codeOfConductError, setCodeOfConductError] = useState("");
+  const [charterId, setCharterId] = useState("");
+  const {
+    charterResponse,
+    ExportPDFCharter,
+    downloadFile,
+    candidateProfileData,
   } = useContext(DocsVerifyContext);
 
   const ref = React.createRef();
@@ -96,66 +110,83 @@ const CodeOfConduct =(props)=> {
   }, []);
 
   useEffect(() => {
-     if(employeeProfileData !== undefined && employeeProfileData !== null 
-      && employeeProfileData !== "" && Object.keys(employeeProfileData).length !== 0){
-     if(employeeProfileData.isCodeOfConduct === true &&
-         employeeProfileData.isDsiItCharter !== true){
-        props.history.push("/itcharter")
-              // props.history.push("/codeofconduct")
-            setShow(false)
-          }else if(employeeProfileData.isCodeOfConduct === true && 
-            employeeProfileData.isDsiItCharter === true){
-            props.history.push("/dashboard/storedashboard")
-            setShow(false)
-          }else if((employeeProfileData.isCodeOfConduct !== true && 
-            employeeProfileData.isDsiItCharter !== true)||(employeeProfileData.isCodeOfConduct === null && 
-            employeeProfileData.isDsiItCharter === null)){
-              setCharterId(employeeProfileData.charterId)
-            
-              console.log(employeeProfileData,"employeeProfileData")
-              handleShow()
-          }
-          }
-  }, [employeeProfileData,props])
+    if (
+      employeeProfileData !== undefined &&
+      employeeProfileData !== null &&
+      employeeProfileData !== "" &&
+      Object.keys(employeeProfileData).length !== 0
+    ) {
+      if (
+        employeeProfileData.isCodeOfConduct === true &&
+        employeeProfileData.isDsiItCharter !== true
+      ) {
+        props.history.push("/itcharter");
+        // props.history.push("/codeofconduct")
+        setShow(false);
+      } else if (
+        employeeProfileData.isCodeOfConduct === true &&
+        employeeProfileData.isDsiItCharter === true
+      ) {
+        props.history.push("/dashboard/storedashboard");
+        setShow(false);
+      } else if (
+        (employeeProfileData.isCodeOfConduct !== true &&
+          employeeProfileData.isDsiItCharter !== true) ||
+        (employeeProfileData.isCodeOfConduct === null &&
+          employeeProfileData.isDsiItCharter === null)
+      ) {
+        setCharterId(employeeProfileData.charterId);
+
+        console.log(employeeProfileData, "employeeProfileData");
+        handleShow();
+      }
+    }
+  }, [employeeProfileData, props]);
   // console.log(inputRef,props,charterDataAll,employeeProfileData,"charter code")
-function base64ToArrayBuffer(imageValue){
-  var bString = window.atob(imageValue);
-  var bLength = bString.length;
-  var bytes = new Uint8Array(bLength);
-  for (var i = 0; i < bLength; i++) {
+  function base64ToArrayBuffer(imageValue) {
+    var bString = window.atob(imageValue);
+    var bLength = bString.length;
+    var bytes = new Uint8Array(bLength);
+    for (var i = 0; i < bLength; i++) {
       var ascii = bString.charCodeAt(i);
       bytes[i] = ascii;
+    }
+    return bytes;
   }
-  return bytes;
-};
-  const handleSave = (e) =>{
-    e.preventDefault()
-    if (codeOfConduct == "" || codeOfConduct == null || codeOfConduct == undefined) {
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (
+      codeOfConduct == "" ||
+      codeOfConduct == null ||
+      codeOfConduct == undefined
+    ) {
       setCodeOfConductError("Please accept the acknowledgement ");
     } else {
       setCodeOfConductError("");
     }
-    console.log(charterId,employeeProfileData,"employeeProfileData")
-    if(codeOfConduct === true){
-      if(charterId === 0){
-          let history = props.history
-  const infoData = {
-        "charterId": charterIdValue,
-        "employeeId":employeeProfileData.employeeId,
-        "isCodeOfConduct": true,
-        "isDsiItCharter": false 
-        }
-        var imageValue = codeBase64
+    console.log(charterId, employeeProfileData, "employeeProfileData");
+    if (codeOfConduct === true) {
+      if (charterId === 0) {
+        let history = props.history;
+        const infoData = {
+          charterId: charterIdValue,
+          employeeId: employeeProfileData.employeeId,
+          isCodeOfConduct: true,
+          isDsiItCharter: false,
+        };
+        var imageValue = codeBase64;
         var bufferArray = base64ToArrayBuffer(imageValue);
         var blobStore = new Blob([bufferArray], { type: "application/pdf" });
-        blobStore.name = "codeofconduct.pdf"      
-        const data = {"dsiType":"Code of Conduct",
-                    "employeeId":employeeProfileData.employeeId,
-                    "fileType":25}
-    
-        dsiCharterCreate(infoData,history,data,blobStore)
-       // ExportPDFCharter(inputRef.current,0,19,employeeProfileData.employeeId);
-        props.history.push("/itcharter")
+        blobStore.name = "codeofconduct.pdf";
+        const data = {
+          dsiType: "Code of Conduct",
+          employeeId: employeeProfileData.employeeId,
+          fileType: 25,
+        };
+
+        dsiCharterCreate(infoData, history, data, blobStore);
+        // ExportPDFCharter(inputRef.current,0,19,employeeProfileData.employeeId);
+        props.history.push("/itcharter");
         // setShow(false)
       } else {
         charterDataAll.map((item) => {
@@ -165,31 +196,35 @@ function base64ToArrayBuffer(imageValue){
               employeeId: employeeProfileData.employeeId,
               dsiCharterAcknowledgement: [
                 {
-                  "charterAcknowledgementId": 0,
-                  "charterId": item.charterId,
-                }
-              ],     
-              "acknowledge":true,
-              "isCodeOfConduct":true,
-              "isDsiItCharter": employeeProfileData.isDsiItCharter ,
-              "itCharterLetter":ITCHARTER
-              }
-           
-                var imageValue = codeBase64
-             var bufferArray = base64ToArrayBuffer(imageValue);
-             var blobStore = new Blob([bufferArray], { type: "application/pdf" });
-             blobStore.name = "codeofconduct.pdf"
-             //var blob = window.URL.createObjectURL(blobStore);
-              const data = {"dsiType":"Code of Conduct",
-                          "employeeId":employeeProfileData.employeeId,
-                          "fileType":25}     
-             console.log(blobStore,"update")
-                dsiCharterUpdate(infoData,data,blobStore)
+                  charterAcknowledgementId: 0,
+                  charterId: item.charterId,
+                },
+              ],
+              acknowledge: true,
+              isCodeOfConduct: true,
+              isDsiItCharter: employeeProfileData.isDsiItCharter,
+              itCharterLetter: ITCHARTER,
+            };
+
+            var imageValue = codeBase64;
+            var bufferArray = base64ToArrayBuffer(imageValue);
+            var blobStore = new Blob([bufferArray], {
+              type: "application/pdf",
+            });
+            blobStore.name = "codeofconduct.pdf";
+            //var blob = window.URL.createObjectURL(blobStore);
+            const data = {
+              dsiType: "Code of Conduct",
+              employeeId: employeeProfileData.employeeId,
+              fileType: 25,
+            };
+            console.log(blobStore, "update");
+            dsiCharterUpdate(infoData, data, blobStore);
             //  ExportPDFCharter(inputRef.current,item.charterId,19,employeeProfileData.employeeId);
-            props.history.push("/itcharter")
-            setShow(false)       
-           }
-        })
+            props.history.push("/itcharter");
+            setShow(false);
+          }
+        });
       }
     }
   };
@@ -219,65 +254,69 @@ function base64ToArrayBuffer(imageValue){
     <>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Body>
-        <div class="html-charter" id="charter" ref={inputRef}>
-    <body>
-<div class="container-charter">
-<img class='img-insert-charter' src={Img1} alt="page1"/>
-    <img class='img-insert-charter' src={Img2} alt="page2"/>
-    <img class='img-insert-charter' src={Img3} alt="page3"/>
-    <img class='img-insert-charter' src={Img4} alt="page4"/>
-    <img class='img-insert-charter' src={Img5} alt="page5"/>
-    <img class='img-insert-charter' src={Img6} alt="page6"/>
-    <img class='img-insert-charter' src={Img7} alt="page7"/>
-    <img class='img-insert-charter' src={Img8} alt="page8"/>
-    <a href="https://decathlon.whispli.com/alerte" target="_blank"><img class='img-insert-charter' src={Img9} alt="page9"/></a>
-    <a href="https://decathlon.whispli.com/alerte" target="_blank"><img class='img-insert-charter' src={Img10} alt="page10"/></a>
-    <img class='img-insert-charter' src={Img11} alt="page11"/>
-    <img class='img-insert-charter' src={Img12} alt="page12"/>
-    <img class='img-insert-charter' src={Img13} alt="page13"/>
-    <img class='img-insert-charter' src={Img14} alt="page14"/>
-    <img class='img-insert-charter' src={Img15} alt="page15"/>
-    <img class='img-insert-charter' src={Img16} alt="page16"/>
-    <img class='img-insert-charter' src={Img17} alt="page17"/>
-    <img class='img-insert-charter' src={Img18} alt="page18"/>
-    <img class='img-insert-charter' src={Img19} alt="page19"/>
-    <img class='img-insert-charter' src={Img20} alt="page20"/>
-    <img class='img-insert-charter' src={Img21} alt="page21"/>
-    <img class='img-insert-charter' src={Img22} alt="page22"/>
-    <img class='img-insert-charter' src={Img23} alt="page23"/>
-    <img class='img-insert-charter' src={Img24} alt="page24"/>
-    <img class='img-insert-charter' src={Img25} alt="page25"/>
-    <img class='img-insert-charter' src={Img26} alt="page26"/>
-    <img class='img-insert-charter' src={Img27} alt="page27"/>
-    <img class='img-insert-charter' src={Img28} alt="page28"/>
-    <img class='img-insert-charter' src={Img29} alt="page29"/>
-    <img class='img-insert-charter' src={Img30} alt="page30"/>
-    <img class='img-insert-charter' src={Img31} alt="page31"/>
-    <img class='img-insert-charter' src={Img32} alt="page32"/>
-    <img class='img-insert-charter' src={Img33} alt="page33"/>
-    <img class='img-insert-charter' src={Img34} alt="page34"/>
-    <img class='img-insert-charter' src={Img35} alt="page35"/>
-    <img class='img-insert-charter' src={Img36} alt="page36"/>
-    <img class='img-insert-charter' src={Img37} alt="page37"/>
-    <img class='img-insert-charter' src={Img38} alt="page38"/>
-    <img class='img-insert-charter' src={Img39} alt="page39"/>
-    <img class='img-insert-charter' src={Img40} alt="page40"/>
-    <img class='img-insert-charter' src={Img41} alt="page41"/>
-    <img class='img-insert-charter' src={Img42} alt="page42"/>
-    <img class='img-insert-charter' src={Img43} alt="page43"/>
-    <img class='img-insert-charter' src={Img44} alt="page44"/>
-    <img class='img-insert-charter' src={Img45} alt="page45"/>
-    <img class='img-insert-charter' src={Img46} alt="page46"/>
-    <img class='img-insert-charter' src={Img47} alt="page47"/>
-    <img class='img-insert-charter' src={Img48} alt="page48"/>
-    <img class='img-insert-charter' src={Img49} alt="page49"/>
-    <img class='img-insert-charter' src={Img50} alt="page50"/>
-    <img class='img-insert-charter' src={Img51} alt="page51"/>
-    <img class='img-insert-charter' src={Img52} alt="page52"/>
-</div>
-
-</body>
-</div>      </Modal.Body>
+          <div class="html-charter" id="charter" ref={inputRef}>
+            <body>
+              <div class="container-charter">
+                <img class="img-insert-charter" src={Img1} alt="page1" />
+                <img class="img-insert-charter" src={Img2} alt="page2" />
+                <img class="img-insert-charter" src={Img3} alt="page3" />
+                <img class="img-insert-charter" src={Img4} alt="page4" />
+                <img class="img-insert-charter" src={Img5} alt="page5" />
+                <img class="img-insert-charter" src={Img6} alt="page6" />
+                <img class="img-insert-charter" src={Img7} alt="page7" />
+                <img class="img-insert-charter" src={Img8} alt="page8" />
+                <a href="https://decathlon.whispli.com/alerte" target="_blank">
+                  <img class="img-insert-charter" src={Img9} alt="page9" />
+                </a>
+                <a href="https://decathlon.whispli.com/alerte" target="_blank">
+                  <img class="img-insert-charter" src={Img10} alt="page10" />
+                </a>
+                <img class="img-insert-charter" src={Img11} alt="page11" />
+                <img class="img-insert-charter" src={Img12} alt="page12" />
+                <img class="img-insert-charter" src={Img13} alt="page13" />
+                <img class="img-insert-charter" src={Img14} alt="page14" />
+                <img class="img-insert-charter" src={Img15} alt="page15" />
+                <img class="img-insert-charter" src={Img16} alt="page16" />
+                <img class="img-insert-charter" src={Img17} alt="page17" />
+                <img class="img-insert-charter" src={Img18} alt="page18" />
+                <img class="img-insert-charter" src={Img19} alt="page19" />
+                <img class="img-insert-charter" src={Img20} alt="page20" />
+                <img class="img-insert-charter" src={Img21} alt="page21" />
+                <img class="img-insert-charter" src={Img22} alt="page22" />
+                <img class="img-insert-charter" src={Img23} alt="page23" />
+                <img class="img-insert-charter" src={Img24} alt="page24" />
+                <img class="img-insert-charter" src={Img25} alt="page25" />
+                <img class="img-insert-charter" src={Img26} alt="page26" />
+                <img class="img-insert-charter" src={Img27} alt="page27" />
+                <img class="img-insert-charter" src={Img28} alt="page28" />
+                <img class="img-insert-charter" src={Img29} alt="page29" />
+                <img class="img-insert-charter" src={Img30} alt="page30" />
+                <img class="img-insert-charter" src={Img31} alt="page31" />
+                <img class="img-insert-charter" src={Img32} alt="page32" />
+                <img class="img-insert-charter" src={Img33} alt="page33" />
+                <img class="img-insert-charter" src={Img34} alt="page34" />
+                <img class="img-insert-charter" src={Img35} alt="page35" />
+                <img class="img-insert-charter" src={Img36} alt="page36" />
+                <img class="img-insert-charter" src={Img37} alt="page37" />
+                <img class="img-insert-charter" src={Img38} alt="page38" />
+                <img class="img-insert-charter" src={Img39} alt="page39" />
+                <img class="img-insert-charter" src={Img40} alt="page40" />
+                <img class="img-insert-charter" src={Img41} alt="page41" />
+                <img class="img-insert-charter" src={Img42} alt="page42" />
+                <img class="img-insert-charter" src={Img43} alt="page43" />
+                <img class="img-insert-charter" src={Img44} alt="page44" />
+                <img class="img-insert-charter" src={Img45} alt="page45" />
+                <img class="img-insert-charter" src={Img46} alt="page46" />
+                <img class="img-insert-charter" src={Img47} alt="page47" />
+                <img class="img-insert-charter" src={Img48} alt="page48" />
+                <img class="img-insert-charter" src={Img49} alt="page49" />
+                <img class="img-insert-charter" src={Img50} alt="page50" />
+                <img class="img-insert-charter" src={Img51} alt="page51" />
+                <img class="img-insert-charter" src={Img52} alt="page52" />
+              </div>
+            </body>
+          </div>{" "}
+        </Modal.Body>
         {/* <Modal.Footer> */}
         <Row>
           <Col sm={1} style={{ paddingLeft: "45px" }}>
