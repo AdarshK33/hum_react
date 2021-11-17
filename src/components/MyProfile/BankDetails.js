@@ -12,15 +12,17 @@ import Select from "react-select";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { ToastContainer, toast } from "react-toastify";
 import BANK_NAMES from "./BankNamesList";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
 const BankDetails = (props) => {
+  const { bankView, bankViewData, BankUpdate } = useContext(
+    EmployeeProfileContext
+  );
   const {
     bankCreate,
     bankSaveData,
     CandidateProfile,
     candidateProfileData,
-    bankView,
-    bankViewData,
     bankUpdate,
     bankUpdateData,
   } = useContext(OnBoardContext);
@@ -29,11 +31,18 @@ const BankDetails = (props) => {
   const [bankNameError, setBankNameError] = useState(false);
   const [ifscCodeError, setIfscCodeError] = useState(false);
   const [bankIdValue, setBankIdVlue] = useState(0);
+  const [panNumberEror, setPanNumberError] = useState(false);
+  const [state, setState] = useState({
+    accountNumber: "",
+    bankName: "",
+    ifscCode: "",
+    panNo: "",
+    employeeId: "",
+  });
 
-  // useEffect(() => {
-  //   CandidateProfile();
-  //   bankView(candidateProfileData.candidateId);
-  // }, []);
+  useEffect(() => {
+    bankView();
+  }, []);
 
   useEffect(() => {
     if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
@@ -44,18 +53,14 @@ const BankDetails = (props) => {
           value: bankViewData.bankName,
         },
         ifscCode: bankViewData.ifscCode,
+        panNo: bankViewData.panNumber,
+        employeeId: bankViewData.employeeId,
       });
 
       setBankIdVlue(bankViewData.bankId);
     }
     console.log("bankViewData", bankViewData);
   }, [bankViewData]);
-
-  const [state, setState] = useState({
-    accountNumber: "",
-    bankName: "",
-    ifscCode: "",
-  });
 
   /* To get the bank name options */
   const bankNameOptions = useMemo(() => {
@@ -113,8 +118,7 @@ const BankDetails = (props) => {
       state.ifscCode !== "" &&
       state.ifscCode !== null &&
       state.ifscCode !== undefined &&
-      state.ifscCode.length >= 11 &&
-      aadharValid.test(state.accountNumber)
+      state.ifscCode.length >= 11
     ) {
       setIfscCodeError(false);
       console.log("ifscCodeSuccess");
@@ -125,11 +129,33 @@ const BankDetails = (props) => {
       return false;
     }
   };
+  const PanNumberValidation = () => {
+    const panValid = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+
+    if ((state.panNo !== "") & panValid.test(state.panNo)) {
+      var tempVar = state.panNo.split("");
+      console.log(tempVar[3]);
+      if (tempVar[3].toLocaleLowerCase() === "p") {
+        setPanNumberError(false);
+        console.log("pansucess");
+        return true;
+      } else {
+        setPanNumberError(true);
+        console.log("panerror");
+        return false;
+      }
+    } else {
+      setPanNumberError(true);
+      console.log("panerror");
+      return false;
+    }
+  };
   const checkValidations = () => {
     if (
       (BankNameErrorValidation() == true) &
       (AccountNumberErrorValidation() == true) &
-      (IfscCodeErrorValidation() == true)
+      (IfscCodeErrorValidation() == true) &
+      (PanNumberValidation() == true)
     ) {
       return true;
     } else {
@@ -152,24 +178,27 @@ const BankDetails = (props) => {
     // }
     const value = checkValidations();
     if (value === true) {
+      console.log("INSIDE BANK SUBMIT");
       const bankInfo = {
         accountNumber: state.accountNumber,
         bankId: bankIdValue,
         bankName: selectedBankName,
-        candidateId: candidateProfileData.candidateId,
         ifscCode: state.ifscCode,
+        panNumber: state.panNo,
+        employeeId: bankViewData.employeeId,
       };
       console.log("bank payload", bankInfo);
-      if (
-        (bankSaveData && bankSaveData.bankId) ||
-        (bankViewData && bankViewData.bankId)
-      ) {
-        bankUpdate(bankInfo);
-      } else {
-        bankCreate(bankInfo);
-      }
-      const nextPage = props.NextStep;
-      nextPage(true);
+      BankUpdate(bankInfo);
+      // if (
+      //   (bankSaveData && bankSaveData.bankId) ||
+      //   (bankViewData && bankViewData.bankId)
+      // ) {
+      //   bankUpdate(bankInfo);
+      // } else {
+      //   bankCreate(bankInfo);
+      // }
+      // const nextPage = props.NextStep;
+      // nextPage(true);
     }
   };
 
@@ -282,20 +311,17 @@ const BankDetails = (props) => {
               </Form.Label>
               <Form.Control
                 type="text"
-                name="ifscCode"
-                value={state.ifscCode}
+                name="panNo"
+                value={state.panNo}
                 onChange={changeHandler}
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
                 maxLength="20"
-                style={ifscCodeError ? { borderColor: "red" } : {}}
+                style={panNumberEror ? { borderColor: "red" } : {}}
               />
-              {ifscCodeError ? (
-                <p style={{ color: "red" }}>
-                  {" "}
-                  Please enter the valid IFSC code
-                </p>
+              {panNumberEror ? (
+                <p style={{ color: "red" }}> Please enter the valid PAN no</p>
               ) : (
                 <p></p>
               )}

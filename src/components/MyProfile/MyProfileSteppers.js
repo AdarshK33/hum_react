@@ -13,6 +13,7 @@ import PersonalInformation from "./PersonalInformation";
 import WorkDetails from "./WorkDetails";
 import Remuneration from "./Remunaration";
 import Documents from "./Documents";
+import Benfits from "./Benfits";
 import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
@@ -355,6 +356,8 @@ const ManagerProfileSteppers = (props) => {
                             return <WorkDetails />;
                           case 2:
                             return <Remuneration />;
+                          case 3:
+                            return <Benfits />;
                           case 4:
                             return <Documents />;
                           // case 4:
