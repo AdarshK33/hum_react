@@ -66,7 +66,7 @@ const InternShipLetter = () => {
                   :`Mrs.${relivingLetterData.employeeName}`} has 
             completed internship at {relivingLetterData.company} Pvt Ltd, from  
             <b>{relivingLetterData.dateOfJoining}</b> to  <b>{relivingLetterData.lastWorkingDate}</b> on
-           under the guidance of  {relivingLetterData.managerName}.
+           under the guidance of  {relivingLetterData.managerName}.<br/><br/>
 
             During the period of {(relivingLetterData.gender === "male"||
                   relivingLetterData.gender === "MALE"||

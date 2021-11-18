@@ -3,8 +3,12 @@ import { client } from "../utils/axios";
 import DSICharterReducer from "../reducers/DSICharterReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
+import { access_token } from "../auth/signin";
+import Axios from "axios";
 import codeBase64 from "../components/DSICharter/CharterFile/codeofconduct"
 // import { EmployeeSeparationContext } from "./EmployeeSeparationState";
+var fileDownload = require("js-file-download");
+
 const initial_state = {
   employeeProfileData: {},
   dsiCharterData: [],
@@ -24,8 +28,42 @@ export const DSICharterProvider = (props) => {
   const [charterIdValue, setCharterIdValue] = useState(0);
   const [ITCHARTER, setItCharter]= useState(null)
   const [CODEOFCONDUCT, setCodeOfConduct]= useState(null)
-  // const { ViewEmployeeProfile,employeeProfileData } = useContext(EmployeeSeparationContext);
+  const [letterShow, setLetterShow] = useState(false);
 
+  // const { ViewEmployeeProfile,employeeProfileData } = useContext(EmployeeSeparationContext);
+  const handleDate = (data)=>{
+    let current = new Date(data)
+  let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
+  let hours = current.getHours();
+  let am_pm = (hours >= 12) ? "PM" : "AM";
+  let minutes = current.getMinutes()<10?("0"+current.getMinutes()):current.getMinutes()
+  if(hours >= 12){
+      hours -=12;
+  }
+  
+  let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
+  let dateTime =
+  cDate + '   ' + cTime;
+  return dateTime
+  }
+  const downloadFile = (name,data) => {
+    Axios({
+      url: `${process.env.REACT_APP_BASEURL}api/v1/document/download?name=${name}`,
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    }).then((response) => {
+      console.log(response);
+      fileDownload(response.data,`${data.employeeId +"_"+handleDate(data.auditField.updatedDate)+".pdf"}` );
+    });
+  };
+  const SetLetterView = (val) => {
+    setLetterShow(val);
+  };
   const ViewEmployeeProfile = () => {
     setLoader(true);
     client
@@ -200,6 +238,9 @@ export const DSICharterProvider = (props) => {
         dsiCharterEnable,
         ViewEmployeeProfile,
         uploadAllCharter,
+        downloadFile,
+        SetLetterView,
+        letterShow: letterShow,
         charterAllResponse:state.charterAllResponse,
         employeeProfileData:state.employeeProfileData,
         charterEnable:state.charterEnable,

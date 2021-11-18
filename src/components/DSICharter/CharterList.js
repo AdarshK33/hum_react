@@ -2,7 +2,8 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search, AlertCircle } from "react-feather";
+import { Edit2, Eye, Search, AlertCircle,Download } from "react-feather";
+import ViewTheLetter from "./view"
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { RoleManagementContext } from "../../context/RoleManagementState";
@@ -16,9 +17,12 @@ const CharterList = () => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
-  const { dsiCharterCreate ,dsiCharterData,viewCharter,total,loader,charterData} = useContext(DSICharterContext);
+  const { dsiCharterCreate ,dsiCharterData,SetLetterView,letterShow,
+    viewCharter,total,loader,downloadFile,charterData} = useContext(DSICharterContext);
 const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)  
-
+const [showLetter, setShowLetter] = useState(false);
+const [LetterName, setLetterName] = useState("");
+const [Name, setName] = useState("");
   useEffect(() => {
     if (user !== null && user !== undefined) {
         viewCharter("all",0)
@@ -68,20 +72,26 @@ if(hours >= 12){
 }
 
 let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
-let dateTime =
-//  current.toLocaleString(undefined, {
-//   day:    'numeric',
-//   month:  'numeric',
-//   year:   'numeric',
-//   hour:   '2-digit',
-//   minute: '2-digit',
-// })  +"  "+ am_pm; 
-cDate + '   ' + cTime;
+let dateTime = cDate ;
 return dateTime
 }
 
+const showTheLetter = (e, name) => {
+  console.log("check", e);
+  setLetterName(e);
+  setName(name);
+  setShowLetter(true);
+  SetLetterView(true);
+  // return <ViewTheLetter DocName={e} />;
+};
+
+const downloadTheLetter = (e,data) => {
+  console.log("check", e);
+  downloadFile(e,data);
+};
   return (
     <Fragment>
+            {letterShow? <ViewTheLetter DocName={LetterName} Name={Name} /> :""}
       <Breadcrumb
         title="CHARTER LIST"
         parent="CHARTER LIST"
@@ -107,9 +117,9 @@ return dateTime
                       <th scope="col">Employee Id</th>
                       <th scope="col">Updated Date</th>
                       <th scope="col">Code of Conduct</th>
-                      {/* <th scope="col">Ethics Charter</th> */}
+                      <th scope="col">Code of Conduct File</th>
                       <th scope="col">IT Charter</th>
-                      {/* <th scope="col">Action</th> */}
+                      <th scope="col">IT Charter File</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -143,19 +153,55 @@ return dateTime
                             <td>{item.employeeId}</td>
                             <td>{handleDate(item.auditField.updatedDate)}</td>
                             <td>{item.isCodeOfConduct?"Yes":"No"}</td>
-                            {/* <td>{item.ethicsCharter?"Yes":"No"}</td> */}
+                            <td><Row>
+                            <Col
+                  style={{
+                    textAlign: "right",
+                  }}
+                >
+                  <Eye
+                    style={{
+                      textAlign: "right",
+                      fontSize: "xx-small",
+                      color: "#4f90ff",
+                    }}
+                    onClick={(e) =>
+                      showTheLetter(item.codeOfConductLetter,item.codeOfConductLetter)
+                    }
+                  />
+                </Col>
+                <Col>
+                  <Download
+                    style={{ fontSize: "xx-small", color: "#4f90ff" }}
+                    onClick={(e) => downloadTheLetter(item.codeOfConductLetter,item)}
+                  />
+                </Col>
+                              </Row></td>
                             <td>{item.isDsiItCharter?"Yes":"No"}</td>
-                            {/* <td>
-                              {true? (
-                                <Link to="/letters/show-cause">
-                                  <Edit2
-                                    // onClick={() => {}}
-                                  />
-                                </Link>
-                              ) : (
-                                <Edit2 />
-                              )}
-                            </td> */}
+                            <td><Row>
+                            <Col
+                  style={{
+                    textAlign: "right",
+                  }}
+                >
+                  <Eye
+                    style={{
+                      textAlign: "right",
+                      fontSize: "xx-small",
+                      color: "#4f90ff",
+                    }}
+                    onClick={(e) =>
+                      showTheLetter(item.itCharterLetter, item.itCharterLetter)
+                    }
+                  />
+                </Col>
+                <Col>
+                  <Download
+                    style={{ fontSize: "xx-small", color: "#4f90ff" }}
+                    onClick={(e) => downloadTheLetter(item.itCharterLetter,item)}
+                  />
+                </Col>
+                              </Row></td>
                           </tr>
                         </tbody>
                       );

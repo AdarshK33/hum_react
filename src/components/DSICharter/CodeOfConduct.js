@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-import { DocsVerifyContext } from "../../context/DocverificationState";
 import codeBase64 from "./CharterFile/codeofconduct";
 // import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from "./img/img1.png";
@@ -73,19 +72,13 @@ const CodeOfConduct = (props) => {
     charterDataAll,
     ITCHARTER,
     charterAllResponse,
-    uploadAllCharter,
+    uploadAllCharter,downloadFile
   } = useContext(DSICharterContext);
 
   const [showModal, setShow] = useState(false);
   const [codeOfConduct, setCodeOfConduct] = useState(false);
   const [codeOfConductError, setCodeOfConductError] = useState("");
   const [charterId, setCharterId] = useState("");
-  const {
-    charterResponse,
-    ExportPDFCharter,
-    downloadFile,
-    candidateProfileData,
-  } = useContext(DocsVerifyContext);
 
   const ref = React.createRef();
   const inputRef = useRef(null);
@@ -205,8 +198,8 @@ const CodeOfConduct = (props) => {
               isDsiItCharter: employeeProfileData.isDsiItCharter,
               itCharterLetter: ITCHARTER,
             };
-
-            var imageValue = codeBase64;
+        
+            var imageValue = codeBase64 ;
             var bufferArray = base64ToArrayBuffer(imageValue);
             var blobStore = new Blob([bufferArray], {
               type: "application/pdf",

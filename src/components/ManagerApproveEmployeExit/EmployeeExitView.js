@@ -11,6 +11,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 
 const EmployeeExitView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
+  const [modeOfSeparationReasonId,SetModeOfSeparationReasonId] = useState("")
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
   const [RehireYes, setRehireYes] = useState(false);
@@ -88,7 +89,7 @@ const EmployeeExitView = () => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
        state.modeOfSeparationId = employeeData.modeOfSeparationId;
-      // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
+       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
         state.noticePeriod = 2
@@ -97,7 +98,7 @@ const EmployeeExitView = () => {
       }
       // state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
-      state.emailId = employeeData.personEmailId;
+      state.emailId = employeeData.personalEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
         employeeData.noticePeriodRecoveryDays !== null &&
@@ -152,29 +153,29 @@ const EmployeeExitView = () => {
       Object.keys(ModeOfSeparationData).length !== 0
     ) {
       if (employeeData.modeOfSeparationId === 1) {
-        console.log(ModeOfSeparationData[0].modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparation,ModeOfSeparationData);
         console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
       }
       ModeOfSeparationData.map((item, i) => {
         if (
           employeeData.modeOfSeparationId ===
-          ModeOfSeparationData[i].modeOfSeparation.separationId
+          item.modeOfSeparation.separationId
         ) {
           setModeOfSeparation(
-            ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
+            item.modeOfSeparation.modeOfSeparation
           );
 
-          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
+          item.modeOfSeparationReasonList.map((item1, j) => {
+            console.log(item1,"item1")
             if (
               employeeData.modeOfSeparationReasonId ===
-              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+              item1
                 .separationReasonId
             ) {
               state.modeOfSeparationReasonId =
-                ModeOfSeparationData[i].modeOfSeparationReasonList[
-                  j
-                ].modeOfSeparationReason;
+              item1.modeOfSeparationReason;
+                SetModeOfSeparationReasonId(item1.modeOfSeparationReason)
             }
           });
         }
@@ -366,7 +367,7 @@ const EmployeeExitView = () => {
       }
     }
   };
-
+console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
   return (
     <Fragment>
       {submitLetter ? (
@@ -651,7 +652,7 @@ const EmployeeExitView = () => {
                           <label>
                             <b>Reason of Separation:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.modeOfSeparationReasonId}
+                              &nbsp;&nbsp; {modeOfSeparationReasonId}
                             </label>
                           </label>
                         </div>

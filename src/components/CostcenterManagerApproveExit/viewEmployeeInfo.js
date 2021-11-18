@@ -17,6 +17,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import "./exitForm.css";
 const EmployeeExitAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
+  const [modeOfSeparationReasonId,setModeOfSeparationReasonId] = useState("")
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
   const [RehireYes, setRehireYes] = useState(false);
@@ -254,29 +255,29 @@ const EmployeeExitAction = () => {
       Object.keys(ModeOfSeparationData).length !== 0
     ) {
       if (employeeData.modeOfSeparationId === 1) {
-        console.log(ModeOfSeparationData[0].modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparation,"item");
         console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
       }
       ModeOfSeparationData.map((item, i) => {
         if (
           employeeData.modeOfSeparationId ===
-          ModeOfSeparationData[i].modeOfSeparation.separationId
+          item.modeOfSeparation.separationId
         ) {
           setModeOfSeparation(
-            ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
+            item.modeOfSeparation.modeOfSeparation
           );
-
-          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
+            console.log(item,"itemi")
+          item.modeOfSeparationReasonList.map((item1, j) => {
+            console.log(item1,"item1")
             if (
               employeeData.modeOfSeparationReasonId ===
-              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+              item1
                 .separationReasonId
             ) {
-              state.modeOfSeparationReasonId =
-                ModeOfSeparationData[i].modeOfSeparationReasonList[
-                  j
-                ].modeOfSeparationReason;
+              console.log(item1,"item2")
+              state.modeOfSeparationReasonId =item1.modeOfSeparationReason;
+                setModeOfSeparationReasonId(item1.modeOfSeparationReason)
             }
           });
         }
@@ -543,8 +544,8 @@ const EmployeeExitAction = () => {
             </Modal.Body>
           </Container>
         </Modal>
-        <RelievingLetter previewLetter={previewLetter} />
-        <TerminationLetter terminationLetter={terminationLetter} />
+       { showModal?<RelievingLetter previewLetter={previewLetter} />:
+        <TerminationLetter terminationLetter={terminationLetter} /> }
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
         {/* <PdfExample /> */}
         <div className="container-fluid">
@@ -569,7 +570,7 @@ const EmployeeExitAction = () => {
                             <b>Emp Name/Id:</b>
                             <label className="itemResult">
                               {" "}
-                              &nbsp;&nbsp; {state.employeeName} &nbsp;
+                              &nbsp;&nbsp; {state.employeeName +"/"+state.employeeId} &nbsp;
                               {state.employeeId}
                             </label>
                           </label>

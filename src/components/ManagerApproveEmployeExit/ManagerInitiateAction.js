@@ -21,7 +21,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import EndOfProbationLetter from "../Probation/EndOfProbationLetter";
 import { setDate } from "date-fns";
 
-const ManagerInitiateAction = () => {
+const ManagerInitiateAction = (props) => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [changeInSeparation, setChangeInSeparation] = useState(0);
   const [RcryYes, setRcryYes] = useState(false);
@@ -534,8 +534,10 @@ const ManagerInitiateAction = () => {
   };
 
   //   reliving letter
-  const handleRelivingClose = () => setShow(false);
-
+  const handleRelivingClose = () => {
+    props.history.push("/employee-separation-listing")
+    setShow(false)
+  }
   const saveOfferLetter = () => {
     setPreviewGeneratedLetter(true);
     setSaveLetter(true);
@@ -545,11 +547,12 @@ const ManagerInitiateAction = () => {
   const digitalSignature = () => {
     setShowSignature(true);
   };
-  const handleShowAddModalClose = () => setShowAddModal(false);
+  const handleShowAddModalClose = () => {setShowAddModal(false);}
 
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
     const value = checkValidations();
+    console.log("submit",value);
     if (value === true) {
       console.log("INSIDE");
       // if (
@@ -607,6 +610,9 @@ const ManagerInitiateAction = () => {
         console.log("createExitData", data2);
         // setSubmitted(true);
         UpdateEmplyoeeExist(data2);
+        setSubmitLetter(true);
+        setLetterSent(true);
+        setShow(true);
       } else if (intern === true) {
         const data1 = {
           company: null,
@@ -643,20 +649,22 @@ const ManagerInitiateAction = () => {
         };
         console.log("createExitData", data1);
         UpdateEmplyoeeExist(data1);
+        setSubmitLetter(true);
+        setLetterSent(true);
+        setShow(true);
 
         // }
       }
     }
-    if (
-      employeeData.employeeId !== null &&
-      employeeData.employeeId !== undefined
-    ) {
-      setSubmitLetter(true);
-      setLetterSent(true);
-      setShow(true);
+    // if (
+    //   employeeData.employeeId !== null &&
+    //   employeeData.employeeId !== undefined
+    // ) {
+    //   setSubmitLetter(true);
+    //   setLetterSent(true);
+    //   setShow(true);
 
-      // finalSubmitOfferLetter(employeeData.employeeId);
-    }
+    // }
   };
 
   const previewRelivingLetter = (e) => {
@@ -1139,6 +1147,7 @@ const ManagerInitiateAction = () => {
                   <img
                     src={calendarImage}
                     alt="calendar"
+                    style={{marginLeft:"50px"}}
                     width="50px"
                     className="digital-signature"
                   />

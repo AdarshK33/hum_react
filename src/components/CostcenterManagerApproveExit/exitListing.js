@@ -208,6 +208,7 @@ const ExitListing = () => {
                         <th scope="col">Reason for Resignation</th>
                         <th scope="col">Manager Name</th>
                         <th scope="col">Notice Period</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -262,7 +263,27 @@ const ExitListing = () => {
                                   ? 2
                                   : 1}
                               </td>
-
+                              <td>
+                              {item.status === 0
+                                ? "Resignation Applied"
+                                : item.status === 1
+                                ? "Withdraw"
+                                : item.status === 2
+                                ? "Resignation Confirmed"
+                                : item.status === 3
+                                ? "Resignation Approved"
+                                : item.status === 4
+                                ? "Terminated Confirmed"
+                                : item.status === 5
+                                ? "Terminated Approved"
+                                : item.status === 6
+                                ? "End of InternShip"
+                                : item.status === 7
+                                ? "End of Probation"
+                                : item.status === 8
+                                ? "Not Confirmed"
+                                : ""}
+                            </td>
                               <td>
                                 {/* {(item !== null &&
                                 item !== undefined &&

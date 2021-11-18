@@ -54,19 +54,23 @@ const RelivingLetter = () => {
               With reference to your resignation. We would like to inform you
               that your resignation has been accepted and you are relieved from
               the services of the {relivingLetterData.company} on the closing of
-              working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>.<br/>
+              working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>.
+              <br/><br/>
                We hereby confirm that you have been working in {relivingLetterData.company}
-                since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>.<br/>
+                since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>.
+                <br/><br/>
                Please be informed that you shall be bound by the relevant clause of your
               appointment letter which states that you shall not use, disclose,
               remove or transfer whether directly or indirectly, to any person,
               corporation or organisation, any trade secrets, know-how and
               confidential information relating to the business or financial
-              conditions of Decathlon.<br/>
+              conditions of {relivingLetterData.company}.
+              <br/><br/>
                During the employment tenure with us, we
               found him to be good at work & thank you for your service and
-              commitment to the Decathlon. <br/>
-              He left the services of the Decathlon
+              commitment to the {relivingLetterData.company}.
+               <br/><br/>
+              He left the services of the {relivingLetterData.company}
               on his own accord. We wish him all the best in his future
               endeavours.
             </p>
