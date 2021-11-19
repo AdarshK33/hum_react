@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
+import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import codeBase64 from "./CharterFile/codeofconduct";
 // import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from "./img/img1.png";
@@ -146,6 +147,7 @@ const CodeOfConduct = (props) => {
     }
     return bytes;
   }
+  
   const handleSave = (e) => {
     e.preventDefault();
     if (
@@ -212,7 +214,8 @@ const CodeOfConduct = (props) => {
               fileType: 25,
             };
             console.log(blobStore, "update");
-            dsiCharterUpdate(infoData, data, blobStore);
+
+           // dsiCharterUpdate(infoData, data, blobStore);
             //  ExportPDFCharter(inputRef.current,item.charterId,19,employeeProfileData.employeeId);
             props.history.push("/itcharter");
             setShow(false);

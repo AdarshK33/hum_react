@@ -72,7 +72,7 @@ if(hours >= 12){
 }
 
 let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
-let dateTime = cDate ;
+let dateTime = cDate + '   ' + cTime;
 return dateTime
 }
 
@@ -160,6 +160,7 @@ const downloadTheLetter = (e,data) => {
                   }}
                 >
                   <Eye
+                  display={item.isCodeOfConduct}
                     style={{
                       textAlign: "right",
                       fontSize: "xx-small",
@@ -172,6 +173,7 @@ const downloadTheLetter = (e,data) => {
                 </Col>
                 <Col>
                   <Download
+                   display={item.isCodeOfConduct}
                     style={{ fontSize: "xx-small", color: "#4f90ff" }}
                     onClick={(e) => downloadTheLetter(item.codeOfConductLetter,item)}
                   />
@@ -185,6 +187,7 @@ const downloadTheLetter = (e,data) => {
                   }}
                 >
                   <Eye
+                  display={item.isDsiItCharter}
                     style={{
                       textAlign: "right",
                       fontSize: "xx-small",
@@ -197,6 +200,7 @@ const downloadTheLetter = (e,data) => {
                 </Col>
                 <Col>
                   <Download
+                  display={item.isDsiItCharter}
                     style={{ fontSize: "xx-small", color: "#4f90ff" }}
                     onClick={(e) => downloadTheLetter(item.itCharterLetter,item)}
                   />

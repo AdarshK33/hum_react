@@ -42,8 +42,7 @@ export const DSICharterProvider = (props) => {
   }
   
   let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
-  let dateTime =
-  cDate + '   ' + cTime;
+  let dateTime = cDate 
   return dateTime
   }
   const downloadFile = (name,data) => {

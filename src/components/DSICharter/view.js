@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useState, useContext ,useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
 
 const ViewTheLetter = ({ DocName, Name }) => {
-  const { SetLetterView } = useContext(DSICharterContext);
+  const { SetLetterView,employeeProfileData ,ViewEmployeeProfile} = useContext(DSICharterContext);
   const [show, setShow] = useState(true);
 
   // const show = true;
@@ -11,17 +11,26 @@ const ViewTheLetter = ({ DocName, Name }) => {
     setShow(false);
     SetLetterView(false);
   };
-  console.log("console.log(check, e);", DocName, show);
+  useEffect(() => {
+    ViewEmployeeProfile();
+  }, []);
+  console.log("console.log(check, e);", DocName,employeeProfileData, show);
 
   return (
     <Fragment>
       {DocName !== null && DocName !== undefined ? (
         // {true ? (
         <Modal show={show} onHide={handleClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Header closeButton className="modal-line">
+            <div>
+            <b>Name :{employeeProfileData.firstName}</b><br/>
+            <b>Employee ID :{employeeProfileData.employeeId}</b>
+            </div>
+          </Modal.Header>
           <Modal.Body>
+         
+
             {DocName !== "" && DocName !== null && DocName !== undefined ? (
-              <div>
                   <iframe
                     src={
                       process.env.REACT_APP_S3_URL +
@@ -30,18 +39,9 @@ const ViewTheLetter = ({ DocName, Name }) => {
                     }
                     style={{ width: "100%", height: "900px" }}
                     frameborder="0"
-                  ></iframe>)
-                {/* ) : (
-                  <img
-                    style={{ width: "100%", height: "100%" }}
-                    src={
-                      // "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                      // "http://humine-application.s3-website.ap-south-1.amazonaws.com/humine_dev/" +
-                      process.env.REACT_APP_S3_URL + DocName
-                    }
-                  /> */}
-              </div>
-            ) : (
+                  ></iframe>
+                ) 
+            : (
               ""
             )}
           </Modal.Body>
