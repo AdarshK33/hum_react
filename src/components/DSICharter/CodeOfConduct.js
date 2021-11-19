@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import codeBase64 from "./CharterFile/codeofconduct";
 // import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from "./img/img1.png";
