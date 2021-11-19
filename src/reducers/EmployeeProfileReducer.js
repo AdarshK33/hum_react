@@ -13,6 +13,8 @@ const GroupReducer = (state, action) => {
       return { ...state, costCentreSplitData: action.payload };
     case "EMERGENCY_CONTACT_UPDATE":
       return { ...state, emergencyUpdate: action.payload };
+    case "DOCUMENTS_VIEW":
+      return { ...state, documentsList: action.payload };
     default:
       return state;
   }

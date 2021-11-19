@@ -113,26 +113,6 @@ const Address = (props) => {
       addressViewData !== undefined &&
       Object.keys(addressViewData).length !== 0 &&
       addressViewData.presentAddress !== null &&
-      addressViewData.presentAddress !== undefined
-    ) {
-      setState({
-        flatNumber: addressViewData.presentAddress.flatNumber,
-        street: addressViewData.presentAddress.street,
-        locality: addressViewData.presentAddress.locality,
-        addressLine: addressViewData.presentAddress.addressLine,
-        pinCode: addressViewData.presentAddress.pinCode,
-        phoneNumber: addressViewData.presentAddress.phoneNumber,
-        addressId: addressViewData.presentAddress.addressId,
-        addressType: addressViewData.presentAddress.addressType,
-        employeeId: addressViewData.presentAddress.employeeId,
-      });
-    }
-
-    if (
-      addressViewData !== null &&
-      addressViewData !== undefined &&
-      Object.keys(addressViewData).length !== 0 &&
-      addressViewData.presentAddress !== null &&
       addressViewData.presentAddress !== undefined &&
       Object.keys(addressViewData.presentAddress).length !== 0 &&
       addressViewData.presentAddress.addressType === 0 &&
@@ -158,6 +138,52 @@ const Address = (props) => {
         permanentPinCode: addressViewData.permanentAddress.pinCode,
         permanentPhoneNumber: addressViewData.permanentAddress.phoneNumber,
         permanentAddressId: addressViewData.permanentAddress.addressId,
+      });
+    } else if (
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined &&
+      Object.keys(addressViewData.presentAddress).length !== 0 &&
+      addressViewData.presentAddress.addressType === 1
+    ) {
+      setState({
+        flatNumber: addressViewData.presentAddress.flatNumber,
+        street: addressViewData.presentAddress.street,
+        locality: addressViewData.presentAddress.locality,
+        addressLine: addressViewData.presentAddress.addressLine,
+        pinCode: addressViewData.presentAddress.pinCode,
+        phoneNumber: addressViewData.presentAddress.phoneNumber,
+        addressId: addressViewData.presentAddress.addressId,
+        addressType: addressViewData.presentAddress.addressType,
+        employeeId: addressViewData.presentAddress.employeeId,
+
+        permanentFlatNumber: addressViewData.presentAddress.flatNumber,
+        permanentStreet: addressViewData.presentAddress.street,
+        permanentLocality: addressViewData.presentAddress.locality,
+        permanentAddressLine: addressViewData.presentAddress.addressLine,
+        permanentPinCode: addressViewData.presentAddress.pinCode,
+        permanentPhoneNumber: addressViewData.presentAddress.phoneNumber,
+        permanentAddressId: addressViewData.presentAddress.addressId,
+      });
+    } else if (
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined
+    ) {
+      setState({
+        flatNumber: addressViewData.presentAddress.flatNumber,
+        street: addressViewData.presentAddress.street,
+        locality: addressViewData.presentAddress.locality,
+        addressLine: addressViewData.presentAddress.addressLine,
+        pinCode: addressViewData.presentAddress.pinCode,
+        phoneNumber: addressViewData.presentAddress.phoneNumber,
+        addressId: addressViewData.presentAddress.addressId,
+        addressType: addressViewData.presentAddress.addressType,
+        employeeId: addressViewData.presentAddress.employeeId,
       });
     }
   }, [addressViewData]);
@@ -203,7 +229,7 @@ const Address = (props) => {
     } else {
       setPermanentCountryName("");
     }
-  }, [addressViewData]);
+  }, [addressViewData, countryDetails]);
   useEffect(() => {
     if (
       costCentreLocationData !== null &&
@@ -246,7 +272,7 @@ const Address = (props) => {
     } else {
       setPermanentStateName("");
     }
-  }, [addressViewData]);
+  }, [addressViewData, costCentreLocationData]);
 
   useEffect(() => {
     if (
@@ -290,7 +316,7 @@ const Address = (props) => {
     } else {
       setPermanentCityName("");
     }
-  }, [addressViewData]);
+  }, [addressViewData, stateList]);
   // useEffect(() => {
   //   CandidateProfile();
   //   candidateCountryList();

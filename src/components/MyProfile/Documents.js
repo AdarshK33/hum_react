@@ -21,10 +21,17 @@ import "react-accessible-accordion/dist/fancy-example.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import EducationAndWorkDoc from "./EducationAndWorkDoc";
 import PersonalDoc from "./PersonalDoc";
+import OtherDocuments from "./OtherDocuments";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 import moment from "moment";
 
 const Documents = () => {
+  const { DocumentView, documentsList } = useContext(EmployeeProfileContext);
+  useEffect(() => {
+    DocumentView();
+  }, []);
+
   return (
     <Fragment>
       <label>
@@ -65,7 +72,7 @@ const Documents = () => {
                 <AccordionItemButton>Other Documents</AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <h1>Other Documents</h1>
+                <OtherDocuments />
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>

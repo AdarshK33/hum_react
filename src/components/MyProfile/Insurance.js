@@ -41,7 +41,7 @@ const Insurance = () => {
         <label>
           <b>Insurance Nomination Details :</b>
         </label>
-        <Row
+        {/* <Row
           style={{
             borderTop: "2px solid #006ebb",
             width: "98%",
@@ -49,7 +49,7 @@ const Insurance = () => {
             marginBottom: "1rem",
             marginLeft: "-2px",
           }}
-        ></Row>
+        ></Row> */}
         <Row
           style={{
             marginBottom: "1rem",
@@ -71,28 +71,28 @@ const Insurance = () => {
               <b>Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.email}</label>
+            {/* <label className="itemResult">{user.email}</label> */}
           </Col>
           <Col sm={3}>
             <label>
               <b>Relationship</b>
             </label>
             <br />
-            <label className="itemResult">{user.fedId}</label>
+            {/* <label className="itemResult">{user.fedId}</label> */}
           </Col>
           <Col sm={3}>
             <label>
               <b>Gender</b>
             </label>
             <br />
-            <label className="itemResult">{user.contractType}</label>
+            {/* <label className="itemResult">{user.contractType}</label> */}
           </Col>
           <Col sm={3}>
             <label>
               <b>Date Of Bith</b>
             </label>
             <br />
-            <label className="itemResult">{user.department}</label>
+            {/* <label className="itemResult">{user.department}</label> */}
           </Col>
         </Row>
         <Row
@@ -105,14 +105,14 @@ const Insurance = () => {
               <b>Age</b>
             </label>
             <br />
-            <label className="itemResult">{user.position}</label>
+            {/* <label className="itemResult">{user.position}</label> */}
           </Col>
           <Col sm={3}>
             <label>
               <b>Blood Group</b>
             </label>
             <br />
-            <label className="itemResult">{user.designation}</label>
+            {/* <label className="itemResult">{user.designation}</label> */}
           </Col>
         </Row>
       </Form>

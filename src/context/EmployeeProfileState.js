@@ -10,18 +10,19 @@ const initial_state = {
   remunerationData: [],
   costCentreSplitData: [],
   emergencyUpdate: [],
+  documentsList: [],
 };
 
 export const EmployeeProfileContext = createContext();
 
 export const EmployeeProfileProvider = ({ children }) => {
   const [loader, setLoader] = useState(false);
-  const [approvalsLoader, setApprovalsLoader] = useState(false);
-  const [rosterLoader, setRosterLoader] = useState(false);
-  const [clusterLoader, setClusterLoader] = useState(false);
   const [letterShow, setLetterShow] = useState(false);
   const [state, dispatch] = useReducer(EmployeeProfileReducer, initial_state);
 
+  const SetLetterView = (val) => {
+    setLetterShow(val);
+  };
   const addressView = () => {
     setLoader(true);
     client
@@ -164,6 +165,41 @@ export const EmployeeProfileProvider = ({ children }) => {
         console.log(error);
       });
   };
+  const UpdateEmployeeProfile = (updateData) => {
+    setLoader(true);
+    console.log("updateAddress", updateData);
+    return client
+      .post("/api/v1/employee/profile/update/employee", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "PROFILE_UPDATE",
+          payload: state.emergencyUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const DocumentView = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile/view/employee/document")
+      .then((response) => {
+        state.documentsList = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "DOCUMENTS_VIEW",
+          payload: state.documentsList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <EmployeeProfileContext.Provider
       value={{
@@ -173,8 +209,13 @@ export const EmployeeProfileProvider = ({ children }) => {
         RemunerationView,
         CostCentreSplitView,
         EmergencyContactUpdate,
+        UpdateEmployeeProfile,
         BankUpdate,
         UpdateAddress,
+        DocumentView,
+        SetLetterView,
+        letterShow: letterShow,
+        documentsList: state.documentsList,
         costCentreSplitData: state.costCentreSplitData,
         remunerationData: state.remunerationData,
         bankViewData: state.bankViewData,
