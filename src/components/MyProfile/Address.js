@@ -15,10 +15,11 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
 import { TransferContext } from "../../context/TransferState";
 import { OfferContext } from "../../context/OfferState";
+import { AppContext } from "../../context/AppState";
 const Address = (props) => {
-  const { addressView, addressViewData, bankView, UpdateAddress } = useContext(
-    EmployeeProfileContext
-  );
+  const { user } = useContext(AppContext);
+  const { addressView, addressViewData, bankView, UpdateAddress, uploadFile } =
+    useContext(EmployeeProfileContext);
   const {
     getCountryDetails,
     countryDetails,
@@ -83,6 +84,17 @@ const Address = (props) => {
     permanentPhoneNumber: "",
     permanentAddressId: "",
   });
+  const [stateOfOb, setStateOfOb] = useState({
+    addressProof: "",
+  });
+  const [stateOfName, setStateOfNames] = useState({
+    addressProof: "",
+  });
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULAddressProof: false,
+    },
+  ]);
 
   const [countryName, setCountryName] = useState();
   const [stateName, setStateName] = useState("");
@@ -824,6 +836,61 @@ const Address = (props) => {
     setPermanentCityName(e.target.value);
     // setPermanentCityId(filteredListOfCity[0].cityId);
   };
+  const changeHandler1 = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setStateOfOb({
+          ...stateOfOb,
+          [event.target.name]: fileObj,
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: fileObj.name,
+        });
+
+        if (event.target.name === "addressProof") {
+          UploadedArray[0].ULAddressProof = false;
+        }
+      } else {
+        toast.error("File size should not exceed 500kb");
+      }
+    } else {
+      toast.error("Please select jpg, jpeg, png and pdf formats");
+    }
+  };
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+
+    if (event.target.name === "addressProof") {
+      // if (AddressProofValidation() === true) {
+      fileUpload = stateOfOb.addressProof;
+      fileType = 3;
+      UploadedArray[0].ULAddressProof = true;
+      // }
+    }
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        employeeId: user.employeeId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Please select file");
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -1451,18 +1518,17 @@ const Address = (props) => {
                 <div className="parentInput">
                   <label className="fileInputField">
                     &nbsp;&nbsp;
-                    {/* {stateOfName.photoId !== ""
-                      ? stateOfName.photoId
-                      : "Select File Here"} */}
+                    {stateOfName.addressProof !== ""
+                      ? stateOfName.addressProof
+                      : "Select File Here"}
                     <input
                       type="file"
                       accept="image/*,.pdf"
-                      name="photoId"
+                      name="addressProof"
                       style={{ display: "none" }}
-                      //   onChange={(e) => {
-                      //     changeHandler(e);
-                      //   }}
-
+                      onChange={(e) => {
+                        changeHandler1(e);
+                      }}
                       readOnly
                     />
                   </label>
@@ -1470,12 +1536,11 @@ const Address = (props) => {
                   <label className="custom-file-upload">
                     <input
                       type="button"
+                      name="addressProof"
                       className="custom_file_Upload_button"
-                      name="photoId"
-
-                      //   onClick={(e) => {
-                      //     handleUpload(e);
-                      //   }}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1486,10 +1551,11 @@ const Address = (props) => {
                     ></i>
                   </label>
                 </div>
-                {/* {photoIdError ? (
+                {/* {addressProofError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the photo id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the address
+                    Proof
                   </p>
                 ) : (
                   <p></p>

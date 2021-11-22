@@ -183,6 +183,27 @@ export const EmployeeProfileProvider = ({ children }) => {
         console.log(error);
       });
   };
+
+  const uploadFile = (fileInfo) => {
+    console.log("uploadFile state", fileInfo);
+    const photoFile = fileInfo.file;
+    const formData = new FormData();
+    formData.append("file", photoFile, photoFile.name);
+    formData.append("employeeId", fileInfo.employeeId);
+    formData.append("fileType", fileInfo.fileType);
+    console.log("uploadFile", photoFile);
+    return client
+      .post("/api/v1/employee/profile/upload", formData)
+      .then((response) => {
+        console.log(response, "res uploadFile");
+        toast.info(response.data.message);
+        DocumentView();
+      })
+      .catch((error) => {
+        // toast.info("Please upload a valid file");
+        console.log(error);
+      });
+  };
   const DocumentView = () => {
     setLoader(true);
     client
@@ -214,6 +235,7 @@ export const EmployeeProfileProvider = ({ children }) => {
         UpdateAddress,
         DocumentView,
         SetLetterView,
+        uploadFile,
         letterShow: letterShow,
         documentsList: state.documentsList,
         costCentreSplitData: state.costCentreSplitData,
@@ -222,6 +244,7 @@ export const EmployeeProfileProvider = ({ children }) => {
         addressViewData: state.addressViewData,
         emergencyContactView: state.emergencyContactView,
         emergencyUpdate: state.emergencyUpdate,
+        loader: loader,
       }}
     >
       {children}

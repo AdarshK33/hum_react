@@ -5,12 +5,11 @@ import { AppContext } from "../../context/AppState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
-
+import { ToastContainer, toast } from "react-toastify";
 const OtherDocuments = (props) => {
   const { user } = useContext(AppContext);
-  const { DocumentView, documentsList, letterShow, SetLetterView } = useContext(
-    EmployeeProfileContext
-  );
+  const { DocumentView, documentsList, letterShow, SetLetterView, uploadFile } =
+    useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [educationDocName, setEducationDocName] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
@@ -20,6 +19,19 @@ const OtherDocuments = (props) => {
   const [signedDocName, setSignedDocName] = useState("");
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [DocName, setDocName] = useState("");
+
+  const [stateOfOb, setStateOfOb] = useState({
+    addressProof: "",
+  });
+  const [stateOfName, setStateOfNames] = useState({
+    addressProof: "",
+  });
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULAddressProof: false,
+    },
+  ]);
 
   useEffect(() => {
     DocumentView();
@@ -78,6 +90,61 @@ const OtherDocuments = (props) => {
     // return <ViewTheLetter DocName={e} />;
   };
   console.log("Name", Name);
+  const changeHandler1 = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setStateOfOb({
+          ...stateOfOb,
+          [event.target.name]: fileObj,
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: fileObj.name,
+        });
+
+        if (event.target.name === "addressProof") {
+          UploadedArray[0].ULAddressProof = false;
+        }
+      } else {
+        toast.error("File size should not exceed 500kb");
+      }
+    } else {
+      toast.error("Please select jpg, jpeg, png and pdf formats");
+    }
+  };
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+
+    if (event.target.name === "addressProof") {
+      // if (AddressProofValidation() === true) {
+      fileUpload = stateOfOb.addressProof;
+      fileType = 3;
+      UploadedArray[0].ULAddressProof = true;
+      // }
+    }
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        employeeId: user.employeeId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Please select file");
+    }
+  };
 
   return (
     <Fragment>
@@ -139,8 +206,8 @@ const OtherDocuments = (props) => {
               <Form.Control
                 type="text"
                 name="newDoc"
-                //   value={state.flatNumber}
-                //   onChange={changeHandler}
+                value={DocName}
+                onChange={(e) => setDocName(e.target.value)}
                 required
                 style={
                   false
@@ -162,18 +229,17 @@ const OtherDocuments = (props) => {
               <div className="parentInput">
                 <label className="fileInputField">
                   &nbsp;&nbsp;
-                  {/* {stateOfName.photoId !== ""
-                      ? stateOfName.photoId
-                      : "Select File Here"} */}
+                  {stateOfName.addressProof !== ""
+                    ? stateOfName.addressProof
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/*,.pdf"
-                    name="photoId"
+                    name="addressProof"
                     style={{ display: "none" }}
-                    //   onChange={(e) => {
-                    //     changeHandler(e);
-                    //   }}
-
+                    onChange={(e) => {
+                      changeHandler1(e);
+                    }}
                     readOnly
                   />
                 </label>
@@ -181,13 +247,13 @@ const OtherDocuments = (props) => {
                 <label className="custom-file-upload">
                   <input
                     type="button"
+                    name="addressProof"
                     className="custom_file_Upload_button"
-                    name="photoId"
-
-                    //   onClick={(e) => {
-                    //     handleUpload(e);
-                    //   }}
+                    onClick={(e) => {
+                      handleUpload(e);
+                    }}
                   />
+                  {/* <i className="fa fa-cloud-upload" />  */}
                   Upload File{" "}
                   <i
                     id="custom_file_upload_icon"
@@ -196,10 +262,11 @@ const OtherDocuments = (props) => {
                   ></i>
                 </label>
               </div>
-              {/* {photoIdError ? (
+              {/* {addressProofError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the photo id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the address
+                    Proof
                   </p>
                 ) : (
                   <p></p>

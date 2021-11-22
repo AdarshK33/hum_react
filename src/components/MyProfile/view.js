@@ -5,13 +5,17 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 const ViewTheLetter = ({ DocName, Name }) => {
   const { SetLetterView } = useContext(EmployeeProfileContext);
   const [show, setShow] = useState(true);
+  const [name, setName] = useState("PDF");
 
   // const show = true;
   const handleClose = () => {
     setShow(false);
     SetLetterView(false);
   };
-  console.log("console.log(check, e);", DocName, Name, show);
+  useEffect(() => {
+    setName(Name);
+  }, [Name]);
+  console.log("console.log(check, e);", DocName, name, show);
 
   return (
     <Fragment>
@@ -22,7 +26,7 @@ const ViewTheLetter = ({ DocName, Name }) => {
           <Modal.Body>
             {DocName !== "" && DocName !== null && DocName !== undefined ? (
               <div>
-                {Name === "PDF" ? (
+                {name === "PDF" ? (
                   <iframe
                     src={
                       process.env.REACT_APP_S3_URL +

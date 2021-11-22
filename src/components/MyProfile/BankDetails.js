@@ -14,8 +14,10 @@ import { ToastContainer, toast } from "react-toastify";
 import BANK_NAMES from "./BankNamesList";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
+import { AppContext } from "../../context/AppState";
 const BankDetails = (props) => {
-  const { bankView, bankViewData, BankUpdate } = useContext(
+  const { user } = useContext(AppContext);
+  const { bankView, bankViewData, BankUpdate, uploadFile } = useContext(
     EmployeeProfileContext
   );
   const {
@@ -39,7 +41,17 @@ const BankDetails = (props) => {
     panNo: "",
     employeeId: "",
   });
-
+  const [stateOfOb, setStateOfOb] = useState({
+    cancelledCheque: "",
+  });
+  const [stateOfName, setStateOfNames] = useState({
+    cancelledCheque: "",
+  });
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULcancelledCheque: false,
+    },
+  ]);
   useEffect(() => {
     bankView();
   }, []);
@@ -162,7 +174,61 @@ const BankDetails = (props) => {
       return false;
     }
   };
+  const changeHandler1 = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setStateOfOb({
+          ...stateOfOb,
+          [event.target.name]: fileObj,
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: fileObj.name,
+        });
 
+        if (event.target.name === "cancelledCheque") {
+          UploadedArray[0].ULcancelledCheque = false;
+        }
+      } else {
+        toast.error("File size should not exceed 500kb");
+      }
+    } else {
+      toast.error("Please select jpg, jpeg, png and pdf formats");
+    }
+  };
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+
+    if (event.target.name === "cancelledCheque") {
+      // if (cancelledChequeValidation() === true) {
+      fileUpload = stateOfOb.cancelledCheque;
+      fileType = 5;
+      UploadedArray[0].ULcancelledCheque = true;
+      // }
+    }
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        employeeId: user.employeeId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Please select file");
+    }
+  };
   const submitHandler = (e) => {
     console.log("inside bank submit handler", bankSaveData);
     // const nextPage = props.NextStep;
@@ -369,18 +435,17 @@ const BankDetails = (props) => {
               <div className="parentInput">
                 <label className="fileInputField">
                   &nbsp;&nbsp;
-                  {/* {stateOfName.photoId !== ""
-                      ? stateOfName.photoId
-                      : "Select File Here"} */}
+                  {stateOfName.cancelledCheque !== ""
+                    ? stateOfName.cancelledCheque
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/*,.pdf"
-                    name="photoId"
+                    name="cancelledCheque"
                     style={{ display: "none" }}
-                    //   onChange={(e) => {
-                    //     changeHandler(e);
-                    //   }}
-
+                    onChange={(e) => {
+                      changeHandler1(e);
+                    }}
                     readOnly
                   />
                 </label>
@@ -388,12 +453,11 @@ const BankDetails = (props) => {
                 <label className="custom-file-upload">
                   <input
                     type="button"
+                    name="cancelledCheque"
                     className="custom_file_Upload_button"
-                    name="photoId"
-
-                    //   onClick={(e) => {
-                    //     handleUpload(e);
-                    //   }}
+                    onClick={(e) => {
+                      handleUpload(e);
+                    }}
                   />
                   {/* <i className="fa fa-cloud-upload" />  */}
                   Upload File{" "}
@@ -404,10 +468,12 @@ const BankDetails = (props) => {
                   ></i>
                 </label>
               </div>
-              {/* {photoIdError ? (
+
+              {/* {cancelledChequeError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the photo id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                    cancelled cheque
                   </p>
                 ) : (
                   <p></p>
