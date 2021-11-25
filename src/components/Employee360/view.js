@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext } from "react";
 import { Modal } from "react-bootstrap";
 import { Employee360Context } from "../../context/Employee360State";
 
-const ViewTheLetter = ({ DocName }) => {
+const ViewTheLetter = ({ DocName, Name }) => {
   const { SetLetterView } = useContext(Employee360Context);
   const [show, setShow] = useState(true);
 
@@ -22,14 +22,26 @@ const ViewTheLetter = ({ DocName }) => {
           <Modal.Body>
             {DocName !== "" && DocName !== null && DocName !== undefined ? (
               <div>
-                <img
-                  style={{ width: "100%", height: "100%" }}
-                  src={
-                    // "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                    "http://humine-application.s3-website.ap-south-1.amazonaws.com/humine_dev/" +
-                    DocName
-                  }
-                />
+                {Name === "Code Of Conduct" || Name === "It Charter" ? (
+                  <iframe
+                    src={
+                      process.env.REACT_APP_S3_URL +
+                      DocName +
+                      "#toolbar=0& navpanes=0"
+                    }
+                    style={{ width: "100%", height: "900px" }}
+                    frameborder="0"
+                  ></iframe>
+                ) : (
+                  <img
+                    style={{ width: "100%", height: "100%" }}
+                    src={
+                      // "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                      // "http://humine-application.s3-website.ap-south-1.amazonaws.com/humine_dev/" +
+                      process.env.REACT_APP_S3_URL + DocName
+                    }
+                  />
+                )}
               </div>
             ) : (
               ""

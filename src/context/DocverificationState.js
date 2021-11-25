@@ -6,6 +6,9 @@ import Axios from "axios";
 import { access_token } from "../auth/signin";
 import html2canvas from "html2canvas";
 import { candidate } from "../utils/canditateLogin";
+import * as jspdf from 'jspdf';
+
+import codeBase64 from "../components/DSICharter/CharterFile/codeofconduct"
 var fileDownload = require("js-file-download");
 
 const initial_state = {
@@ -34,6 +37,7 @@ const initial_state = {
   verificationPermanentCityList: [],
   imageData: "",
   insuranceResponse:"",
+  itCharterResponse:"",
   rejectUpdate: [],
   adminRejectUpdate: [],
 };
@@ -541,29 +545,10 @@ export const DocsVerificationProvider = (props) => {
       };
       uploadBase64Image(data);
       console.log("base64 data", imageData);
-      // setImage(imgData);
-      //   const pdf = new jsPDF();
-      //   pdf.addImage(imgData, "PNG", 0, 0);
-      //   console.log(pdf);
-      //   pdf.save("download.pdf");
     });
   };
 
 
-  const uploadInsurranceNominationForm = (base64Data) => {
-    console.log("base64...........", base64Data);
-    return (
-      candidate.post("/api/v2/candidate/documents/file/upload", base64Data)
-        .then((response) => {
-          console.log(response);
-          state.insuranceResponse = response.data.data;
-          return dispatch({ type: "INSURANCE_BASE64_UPLOAD", payload: state.insuranceResponse });
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    );
-  };
   const ExportPDFandUploadInsurance = (
     RefData,
     employeeId = 0,
@@ -599,6 +584,64 @@ export const DocsVerificationProvider = (props) => {
       console.log("base64 data", imageData);
     });
   };
+  const uploadInsurranceNominationForm = (base64Data) => {
+    console.log("base64...........", base64Data);
+    return (
+      candidate.post("/api/v2/candidate/documents/file/upload", base64Data)
+        .then((response) => {
+          console.log(response);
+          state.insuranceResponse = response.data.data;
+          return dispatch({ type: "INSURANCE_BASE64_UPLOAD", payload: state.insuranceResponse });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+  
+
+  const ExportPDFITCharter = (
+    RefData,
+   charterId = 0,
+   fileType = 0,
+   employeeId = 0,
+   candidateId = 0,
+   exitId = 0,
+   disciplinaryId = 0,
+   promotionId = 0,
+   transferId = 0
+ ) => {
+   html2canvas(RefData).then((canvas) => {
+     // document.body.appendChild(canvas); // if you want see your screenshot in body.
+     const imgData = canvas.toDataURL("image/png");
+     var imageData = imgData;
+     imageData = imgData.slice(22) + imgData.slice(23);
+     var data = {
+       base64String: imageData,
+       charterId: charterId,
+       employeeId: employeeId,
+       fileType: fileType,
+     };
+     uploadITCharter(data);
+     console.log("base64 data", imageData);
+  
+   });
+ };
+
+ const uploadITCharter = (base64Data) => {
+  console.log("base64...........", base64Data);
+  return (
+    client.post("/api/v1/document/file/upload", base64Data)
+      .then((response) => {
+        console.log(response,"charterupload");
+        state.itCharterResponse = response.data.data;
+        return dispatch({ type: "ITCHARTER_BASE64_UPLOAD", payload: state.itCharterResponse });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  );
+};
   return (
     console.log(state),
     (
@@ -634,6 +677,9 @@ export const DocsVerificationProvider = (props) => {
           downloadFileOnboard,
           uploadInsurranceNominationForm,
           ExportPDFandUploadInsurance,
+          ExportPDFITCharter,
+          uploadITCharter,
+          itCharterResponse:state.itCharterResponse,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
           insuranceResponse:state.insuranceResponse,

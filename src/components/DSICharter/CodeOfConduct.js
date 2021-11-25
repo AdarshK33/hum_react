@@ -1,6 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import codeBase64 from "./CharterFile/codeofconduct";
 // import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from "./img/img1.png";
 import Img2 from "./img/img2.png";
@@ -57,6 +59,7 @@ import Img51 from "./img/img51.png";
 import Img52 from "./img/img52.png";
 
 import "./charter.css";
+
 const CodeOfConduct = (props) => {
   const {
     dsiCharterCreate,
@@ -68,13 +71,24 @@ const CodeOfConduct = (props) => {
     loader,
     charterIdValue,
     charterDataAll,
+    ITCHARTER,
+    charterAllResponse,
+    uploadAllCharter,
   } = useContext(DSICharterContext);
-  // const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
 
   const [showModal, setShow] = useState(false);
   const [codeOfConduct, setCodeOfConduct] = useState(false);
   const [codeOfConductError, setCodeOfConductError] = useState("");
   const [charterId, setCharterId] = useState("");
+  const {
+    charterResponse,
+    ExportPDFCharter,
+    downloadFile,
+    candidateProfileData,
+  } = useContext(DocsVerifyContext);
+
+  const ref = React.createRef();
+  const inputRef = useRef(null);
 
   const handleClose = () => {
     setShow(false);
@@ -107,6 +121,7 @@ const CodeOfConduct = (props) => {
         employeeProfileData.isDsiItCharter !== true
       ) {
         props.history.push("/itcharter");
+        // props.history.push("/codeofconduct")
         setShow(false);
       } else if (
         employeeProfileData.isCodeOfConduct === true &&
@@ -127,7 +142,17 @@ const CodeOfConduct = (props) => {
       }
     }
   }, [employeeProfileData, props]);
-  console.log(props, charterDataAll, employeeProfileData, "charter code");
+  // console.log(inputRef,props,charterDataAll,employeeProfileData,"charter code")
+  function base64ToArrayBuffer(imageValue) {
+    var bString = window.atob(imageValue);
+    var bLength = bString.length;
+    var bytes = new Uint8Array(bLength);
+    for (var i = 0; i < bLength; i++) {
+      var ascii = bString.charCodeAt(i);
+      bytes[i] = ascii;
+    }
+    return bytes;
+  }
   const handleSave = (e) => {
     e.preventDefault();
     if (
@@ -139,12 +164,7 @@ const CodeOfConduct = (props) => {
     } else {
       setCodeOfConductError("");
     }
-    console.log(
-      charterId,
-      codeOfConduct,
-      employeeProfileData,
-      "employeeProfileData"
-    );
+    console.log(charterId, employeeProfileData, "employeeProfileData");
     if (codeOfConduct === true) {
       if (charterId === 0) {
         let history = props.history;
@@ -154,8 +174,18 @@ const CodeOfConduct = (props) => {
           isCodeOfConduct: true,
           isDsiItCharter: false,
         };
-        console.log(infoData);
-        dsiCharterCreate(infoData, history);
+        var imageValue = codeBase64;
+        var bufferArray = base64ToArrayBuffer(imageValue);
+        var blobStore = new Blob([bufferArray], { type: "application/pdf" });
+        blobStore.name = "codeofconduct.pdf";
+        const data = {
+          dsiType: "Code of Conduct",
+          employeeId: employeeProfileData.employeeId,
+          fileType: 25,
+        };
+
+        dsiCharterCreate(infoData, history, data, blobStore);
+        // ExportPDFCharter(inputRef.current,0,19,employeeProfileData.employeeId);
         props.history.push("/itcharter");
         // setShow(false)
       } else {
@@ -173,30 +203,28 @@ const CodeOfConduct = (props) => {
               acknowledge: true,
               isCodeOfConduct: true,
               isDsiItCharter: employeeProfileData.isDsiItCharter,
+              itCharterLetter: ITCHARTER,
             };
 
-            dsiCharterUpdate(infoData);
+            var imageValue = codeBase64;
+            var bufferArray = base64ToArrayBuffer(imageValue);
+            var blobStore = new Blob([bufferArray], {
+              type: "application/pdf",
+            });
+            blobStore.name = "codeofconduct.pdf";
+            //var blob = window.URL.createObjectURL(blobStore);
+            const data = {
+              dsiType: "Code of Conduct",
+              employeeId: employeeProfileData.employeeId,
+              fileType: 25,
+            };
+            console.log(blobStore, "update");
+            dsiCharterUpdate(infoData, data, blobStore);
+            //  ExportPDFCharter(inputRef.current,item.charterId,19,employeeProfileData.employeeId);
             props.history.push("/itcharter");
             setShow(false);
           }
         });
-        // const infoData = {
-        //   "charterId": charterIdValue,
-        //   "employeeId":employeeProfileData.employeeId,
-        //   "dsiCharterAcknowledgement": [
-        //     {
-        //       "charterAcknowledgementId": 0,
-        //       "charterId": charterIdValue,
-        //     }
-        //   ],
-        //   "acknowledge":true,
-        //   "isCodeOfConduct":true,
-        //   "isDsiItCharter": employeeProfileData.isDsiItCharter
-        //   }
-        //   console.log(infoData)
-        //   dsiCharterUpdate(infoData)
-        //   props.history.push("/itcharter")
-        //   setShow(false)
       }
     }
   };
@@ -226,7 +254,7 @@ const CodeOfConduct = (props) => {
     <>
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Body>
-          <div class="html-charter">
+          <div class="html-charter" id="charter" ref={inputRef}>
             <body>
               <div class="container-charter">
                 <img class="img-insert-charter" src={Img1} alt="page1" />
