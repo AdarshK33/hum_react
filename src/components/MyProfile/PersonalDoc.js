@@ -262,7 +262,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                   className={
-                    photoGraphName ? "stepperButtons" : "confirmButton"
+                    photoGraphName ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, photoGraphName)}
                   disabled={photoGraphName ? false : true}
@@ -281,7 +281,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    photoGraphName ? "stepperButtons" : "confirmButton"
+                    photoGraphName ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, photoGraphName)}
                   disabled={photoGraphName ? false : true}
@@ -357,7 +357,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                   className={
-                    cancelledCheque ? "stepperButtons" : "confirmButton"
+                    cancelledCheque ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, cancelledCheque)}
                   disabled={cancelledCheque ? false : true}
@@ -376,7 +376,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    cancelledCheque ? "stepperButtons" : "confirmButton"
+                    cancelledCheque ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, cancelledCheque)}
                   disabled={cancelledCheque ? false : true}
@@ -461,7 +461,7 @@ const PersonalDoc = (props) => {
                 >
                   {/* onClick={submitHandler} */}
                   <button
-                    className={PANName ? "stepperButtons" : "confirmButton"}
+                    className={PANName ? "profileButtons" : "confirmButton"}
                     onClick={(e, name) => showTheLetter(e, PANName)}
                     disabled={PANName ? false : true}
                   >
@@ -478,7 +478,7 @@ const PersonalDoc = (props) => {
                   }}
                 >
                   <button
-                    className={PANName ? "stepperButtons" : "confirmButton"}
+                    className={PANName ? "profileButtons" : "confirmButton"}
                     onClick={(e, name) => downloadTheLetter(e, PANName)}
                     disabled={PANName ? false : true}
                   >
@@ -555,7 +555,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                   className={
-                    AddressProofName ? "stepperButtons" : "confirmButton"
+                    AddressProofName ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, AddressProofName)}
                   disabled={AddressProofName ? false : true}
@@ -574,7 +574,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    AddressProofName ? "stepperButtons" : "confirmButton"
+                    AddressProofName ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, AddressProofName)}
                   disabled={AddressProofName ? false : true}
@@ -657,7 +657,7 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={
-                      passPortName ? "stepperButtons" : "confirmButton"
+                      passPortName ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => showTheLetter(e, passPortName)}
                     disabled={passPortName ? false : true}
@@ -676,7 +676,7 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={
-                      passPortName ? "stepperButtons" : "confirmButton"
+                      passPortName ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => downloadTheLetter(e, passPortName)}
                     disabled={passPortName ? false : true}
@@ -763,7 +763,7 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={
-                      adharCardName ? "stepperButtons" : "confirmButton"
+                      adharCardName ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => showTheLetter(e, adharCardName)}
                     disabled={adharCardName ? false : true}
@@ -782,7 +782,7 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={
-                      adharCardName ? "stepperButtons" : "confirmButton"
+                      adharCardName ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => downloadTheLetter(e, adharCardName)}
                     disabled={adharCardName ? false : true}
@@ -860,7 +860,7 @@ const PersonalDoc = (props) => {
               >
                 {/* onClick={submitHandler} */}
                 <button
-                  className={EPFName ? "stepperButtons" : "confirmButton"}
+                  className={EPFName ? "profileButtons" : "confirmButton"}
                   onClick={(e, name) => showTheLetter(e, EPFName)}
                   disabled={EPFName ? false : true}
                 >
@@ -877,7 +877,7 @@ const PersonalDoc = (props) => {
                 }}
               >
                 <button
-                  className={EPFName ? "stepperButtons" : "confirmButton"}
+                  className={EPFName ? "profileButtons" : "confirmButton"}
                   onClick={(e, name) => downloadTheLetter(e, EPFName)}
                   disabled={EPFName ? false : true}
                 >

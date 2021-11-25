@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-// import "./OnBoard.css";
+import "./myProfile.css";
 import Breadcrumb from "../common/breadcrumb";
 import PersonalInformation from "./PersonalInformation";
 import WorkDetails from "./WorkDetails";
@@ -312,7 +312,7 @@ const ManagerProfileSteppers = (props) => {
                           style={{ marginLeft: "25px", textAlign: "center" }}
                         >
                           {" "}
-                          Benfits
+                          Benefits
                         </label>
                         <br></br>
                         <span className={stepArray[3].line}></span>
@@ -358,6 +358,7 @@ const ManagerProfileSteppers = (props) => {
                             return <Remuneration />;
                           case 3:
                             return <Benfits />;
+                          // return <h1>Benfits</h1>;
                           case 4:
                             return <Documents />;
                           // case 4:

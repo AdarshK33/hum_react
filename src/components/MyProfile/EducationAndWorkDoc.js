@@ -101,7 +101,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={
-                  educationDocName ? "stepperButtons" : "confirmButton"
+                  educationDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => showTheLetter(e, educationDocName)}
                 disabled={educationDocName ? false : true}
@@ -120,7 +120,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={
-                  educationDocName ? "stepperButtons" : "confirmButton"
+                  educationDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => downloadTheLetter(e, educationDocName)}
                 disabled={educationDocName ? false : true}
@@ -147,7 +147,7 @@ const EducationAndWorkDoc = (props) => {
               }}
             >
               <button
-                className={relivingDocName ? "stepperButtons" : "confirmButton"}
+                className={relivingDocName ? "profileButtons" : "confirmButton"}
                 onClick={(e, name) => showTheLetter(e, relivingDocName)}
                 disabled={relivingDocName ? false : true}
               >
@@ -164,7 +164,7 @@ const EducationAndWorkDoc = (props) => {
               }}
             >
               <button
-                className={relivingDocName ? "stepperButtons" : "confirmButton"}
+                className={relivingDocName ? "profileButtons" : "confirmButton"}
                 onClick={(e, name) => downloadTheLetter(e, relivingDocName)}
                 disabled={relivingDocName ? false : true}
               >
@@ -191,7 +191,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={
-                  latestPayslipDocName ? "stepperButtons" : "confirmButton"
+                  latestPayslipDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => showTheLetter(e, latestPayslipDocName)}
                 disabled={latestPayslipDocName ? false : true}
@@ -210,7 +210,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={
-                  latestPayslipDocName ? "stepperButtons" : "confirmButton"
+                  latestPayslipDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) =>
                   downloadTheLetter(e, latestPayslipDocName)
@@ -245,7 +245,7 @@ const EducationAndWorkDoc = (props) => {
               >
                 <button
                   className={
-                    collegeDocName ? "stepperButtons" : "confirmButton"
+                    collegeDocName ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, collegeDocName)}
                   disabled={collegeDocName ? false : true}
@@ -264,7 +264,7 @@ const EducationAndWorkDoc = (props) => {
               >
                 <button
                   className={
-                    collegeDocName ? "stepperButtons" : "confirmButton"
+                    collegeDocName ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, collegeDocName)}
                   disabled={collegeDocName ? false : true}
@@ -295,7 +295,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={
-                  appointmentDocName ? "stepperButtons" : "confirmButton"
+                  appointmentDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => showTheLetter(e, appointmentDocName)}
                 disabled={appointmentDocName ? false : true}
@@ -314,7 +314,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={
-                  appointmentDocName ? "stepperButtons" : "confirmButton"
+                  appointmentDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => downloadTheLetter(e, appointmentDocName)}
                 disabled={appointmentDocName ? false : true}
@@ -341,7 +341,7 @@ const EducationAndWorkDoc = (props) => {
               }}
             >
               <button
-                className={signedDocName ? "stepperButtons" : "confirmButton"}
+                className={signedDocName ? "profileButtons" : "confirmButton"}
                 onClick={(e, name) => showTheLetter(e, signedDocName)}
                 disabled={signedDocName ? false : true}
               >
@@ -358,7 +358,7 @@ const EducationAndWorkDoc = (props) => {
               }}
             >
               <button
-                className={signedDocName ? "stepperButtons" : "confirmButton"}
+                className={signedDocName ? "profileButtons" : "confirmButton"}
                 onClick={(e, name) => downloadTheLetter(e, signedDocName)}
                 disabled={signedDocName ? false : true}
               >

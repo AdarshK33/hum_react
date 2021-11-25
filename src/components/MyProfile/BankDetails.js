@@ -488,7 +488,7 @@ const BankDetails = (props) => {
             textAlign: "right",
           }}
         >
-          <button className="stepperButtons" onClick={submitHandler}>
+          <button className="profileButtons" onClick={submitHandler}>
             Update
           </button>
         </div>

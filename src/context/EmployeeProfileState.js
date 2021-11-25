@@ -11,6 +11,8 @@ const initial_state = {
   costCentreSplitData: [],
   emergencyUpdate: [],
   documentsList: [],
+  insuranceData: [],
+  otherDocumentsList: [],
 };
 
 export const EmployeeProfileContext = createContext();
@@ -184,6 +186,21 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
+  const UpdateHolidayWorkingBonus = (updateData) => {
+    setLoader(true);
+    console.log("updateAddress", updateData);
+    return client
+      .post("/api/v1/employee/profile/update/holiday", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const uploadFile = (fileInfo) => {
     console.log("uploadFile state", fileInfo);
     const photoFile = fileInfo.file;
@@ -198,6 +215,27 @@ export const EmployeeProfileProvider = ({ children }) => {
         console.log(response, "res uploadFile");
         toast.info(response.data.message);
         DocumentView();
+      })
+      .catch((error) => {
+        // toast.info("Please upload a valid file");
+        console.log(error);
+      });
+  };
+
+  const uploadOtherFiles = (fileInfo) => {
+    console.log("uploadFile state", fileInfo);
+    const photoFile = fileInfo.file;
+    const formData = new FormData();
+    formData.append("file", photoFile, photoFile.name);
+    formData.append("employeeId", fileInfo.employeeId);
+    formData.append("fileName", fileInfo.fileName);
+    console.log("uploadFile", photoFile);
+    return client
+      .post("/api/v1/employee/profile/upload/other", formData)
+      .then((response) => {
+        console.log(response, "res uploadFile");
+        toast.info(response.data.message);
+        OtherDocumentView();
       })
       .catch((error) => {
         // toast.info("Please upload a valid file");
@@ -221,6 +259,42 @@ export const EmployeeProfileProvider = ({ children }) => {
         console.log(error);
       });
   };
+
+  const OtherDocumentView = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile/view/employee/other/document")
+      .then((response) => {
+        state.otherDocumentsList = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "OTHER_DOCUMENTS_VIEW",
+          payload: state.otherDocumentsList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const InsuranceView = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile/view/insurance")
+      .then((response) => {
+        state.insuranceData = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "INSURANCE_VIEW",
+          payload: state.insuranceData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <EmployeeProfileContext.Provider
       value={{
@@ -236,6 +310,12 @@ export const EmployeeProfileProvider = ({ children }) => {
         DocumentView,
         SetLetterView,
         uploadFile,
+        uploadOtherFiles,
+        UpdateHolidayWorkingBonus,
+        InsuranceView,
+        OtherDocumentView,
+        otherDocumentsList: state.otherDocumentsList,
+        insuranceData: state.insuranceData,
         letterShow: letterShow,
         documentsList: state.documentsList,
         costCentreSplitData: state.costCentreSplitData,

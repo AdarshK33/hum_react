@@ -7,114 +7,97 @@ import React, {
 } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { AppContext } from "../../context/AppState";
-import { PermissionContext } from "../../context/PermissionState";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import moment from "moment";
 
 const Insurance = () => {
   const { user } = useContext(AppContext);
-  const { rolePermission, locationDetails, locationDetailsList } =
-    useContext(PermissionContext);
-  const [locationName, setLocationName] = useState("");
+  const { InsuranceView, insuranceData } = useContext(EmployeeProfileContext);
   useEffect(() => {
-    locationDetails();
+    InsuranceView();
   }, []);
-  console.log("locationDetailsList", locationDetailsList);
-  useEffect(() => {
-    if (
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0 &&
-      locationDetailsList &&
-      locationDetailsList !== null &&
-      locationDetailsList !== undefined &&
-      Object.keys(locationDetailsList).length !== 0
-    ) {
-      locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {
-          setLocationName(item.locationName);
-        }
-      });
-    }
-  }, [locationDetailsList, user]);
+  console.log("insuranceData", insuranceData);
   return (
     <Fragment>
       <Form>
         <label>
           <b>Insurance Nomination Details :</b>
         </label>
-        {/* <Row
-          style={{
-            borderTop: "2px solid #006ebb",
-            width: "98%",
-            marginRight: "1rem",
-            marginBottom: "1rem",
-            marginLeft: "-2px",
-          }}
-        ></Row> */}
-        <Row
-          style={{
-            marginBottom: "1rem",
-          }}
-        >
-          <Col sm={3}>
-            <label>
-              <b>Nominee 1</b>
-            </label>
-          </Col>
-        </Row>
-        <Row
-          style={{
-            marginBottom: "2rem",
-          }}
-        >
-          <Col sm={3}>
-            <label>
-              <b>Name</b>
-            </label>
-            <br />
-            {/* <label className="itemResult">{user.email}</label> */}
-          </Col>
-          <Col sm={3}>
-            <label>
-              <b>Relationship</b>
-            </label>
-            <br />
-            {/* <label className="itemResult">{user.fedId}</label> */}
-          </Col>
-          <Col sm={3}>
-            <label>
-              <b>Gender</b>
-            </label>
-            <br />
-            {/* <label className="itemResult">{user.contractType}</label> */}
-          </Col>
-          <Col sm={3}>
-            <label>
-              <b>Date Of Bith</b>
-            </label>
-            <br />
-            {/* <label className="itemResult">{user.department}</label> */}
-          </Col>
-        </Row>
-        <Row
-          style={{
-            marginBottom: "2rem",
-          }}
-        >
-          <Col sm={3}>
-            <label>
-              <b>Age</b>
-            </label>
-            <br />
-            {/* <label className="itemResult">{user.position}</label> */}
-          </Col>
-          <Col sm={3}>
-            <label>
-              <b>Blood Group</b>
-            </label>
-            <br />
-            {/* <label className="itemResult">{user.designation}</label> */}
-          </Col>
-        </Row>
+
+        {insuranceData.map((item, i) => {
+          return (
+            <div>
+              <Row
+                style={{
+                  marginBottom: "1rem",
+                }}
+              >
+                <Col sm={3}>
+                  <label>
+                    <b>Nominee {i + 1}</b>
+                  </label>
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  marginBottom: "2rem",
+                }}
+              >
+                <Col sm={3}>
+                  <label>
+                    <b>Name</b>
+                  </label>
+                  <br />
+                  <label className="itemResult">{item.name}</label>
+                </Col>
+                <Col sm={3}>
+                  <label>
+                    <b>Relationship</b>
+                  </label>
+                  <br />
+                  <label className="itemResult">{item.relationship}</label>
+                </Col>
+                <Col sm={3}>
+                  <label>
+                    <b>Gender</b>
+                  </label>
+                  <br />
+                  <label className="itemResult">{item.gender}</label>
+                </Col>
+                <Col sm={3}>
+                  <label>
+                    <b>Date Of Bith</b>
+                  </label>
+                  <br />
+                  <label className="itemResult">
+                    {" "}
+                    {moment(item.dob).format("DD-MM-YYYY")}
+                  </label>
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  marginBottom: "2rem",
+                }}
+              >
+                <Col sm={3}>
+                  <label>
+                    <b>Age</b>
+                  </label>
+                  <br />
+                  <label className="itemResult">{item.age}</label>
+                </Col>
+                <Col sm={3}>
+                  <label>
+                    <b>Blood Group</b>
+                  </label>
+                  <br />
+                  <label className="itemResult">{item.bloodGroup}</label>
+                </Col>
+              </Row>
+            </div>
+          );
+        })}
       </Form>
     </Fragment>
   );

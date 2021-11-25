@@ -112,7 +112,7 @@ const WorkDetails = () => {
           </Col>
           <Col sm={3}>
             <label>
-              <b>Cost Centre</b>
+              <b>Cost Center</b>
             </label>
             <br />
             <label className="itemResult">{user.costCentre}</label>
@@ -183,7 +183,7 @@ const WorkDetails = () => {
               <b>Recruitment Source</b>
             </label>
             <br />
-            <label className="itemResult">---</label>
+            <label className="itemResult">{user.recruitmentSource}</label>
           </Col>
         </Row>
         <Row

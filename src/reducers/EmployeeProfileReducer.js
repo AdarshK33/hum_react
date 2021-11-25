@@ -15,6 +15,11 @@ const GroupReducer = (state, action) => {
       return { ...state, emergencyUpdate: action.payload };
     case "DOCUMENTS_VIEW":
       return { ...state, documentsList: action.payload };
+    case "INSURANCE_VIEW":
+      return { ...state, insuranceData: action.payload };
+    case "OTHER_DOCUMENTS_VIEW":
+      return { ...state, otherDocumentsList: action.payload };
+
     default:
       return state;
   }

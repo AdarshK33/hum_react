@@ -21,14 +21,27 @@ import "react-accessible-accordion/dist/fancy-example.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import Insurance from "./Insurance";
 import PersonalDoc from "./PersonalDoc";
+import HolidayWorkingBonus from "./HolidayWorkingBonus";
+import { AppContext } from "../../context/AppState";
 
 import moment from "moment";
 
 const Benfits = () => {
+  const { user } = useContext(AppContext);
+  const [activeStep, setActiveStep] = useState(true);
+  useEffect(() => {
+    if (user !== null && user !== undefined && Object.keys(user).length !== 0) {
+      if (user.department.toLowerCase() === "retail") {
+        setActiveStep(false);
+      } else {
+        setActiveStep(true);
+      }
+    }
+  }, [user]);
   return (
     <Fragment>
       <label>
-        <b>Documents :</b>
+        <b>Benefits :</b>
       </label>
       <Row
         style={{
@@ -53,10 +66,14 @@ const Benfits = () => {
 
             <AccordionItem>
               <AccordionItemHeading>
-                <AccordionItemButton>Holiday Working Bonus</AccordionItemButton>
+                <AccordionItemButton
+                  style={activeStep ? {} : { background: "#aaa" }}
+                >
+                  Holiday Working Bonus
+                </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <h1>Holiday Working Bonus</h1>
+                {activeStep ? <HolidayWorkingBonus /> : ""}
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>

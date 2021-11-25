@@ -8,8 +8,17 @@ import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 const OtherDocuments = (props) => {
   const { user } = useContext(AppContext);
-  const { DocumentView, documentsList, letterShow, SetLetterView, uploadFile } =
-    useContext(EmployeeProfileContext);
+  const {
+    DocumentView,
+    documentsList,
+    letterShow,
+    SetLetterView,
+    uploadFile,
+    uploadOtherFiles,
+    OtherDocumentView,
+    otherDocumentsList,
+    loader,
+  } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [educationDocName, setEducationDocName] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
@@ -20,21 +29,23 @@ const OtherDocuments = (props) => {
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
   const [DocName, setDocName] = useState("");
+  const [DocNameError, setDocNameError] = useState(false);
 
   const [stateOfOb, setStateOfOb] = useState({
-    addressProof: "",
+    OtherDocument: "",
   });
   const [stateOfName, setStateOfNames] = useState({
-    addressProof: "",
+    OtherDocument: "",
   });
   const [UploadedArray, setUploadedError] = useState([
     {
-      ULAddressProof: false,
+      ULOtherDocument: false,
     },
   ]);
 
   useEffect(() => {
     DocumentView();
+    OtherDocumentView();
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -110,8 +121,8 @@ const OtherDocuments = (props) => {
           [event.target.name]: fileObj.name,
         });
 
-        if (event.target.name === "addressProof") {
-          UploadedArray[0].ULAddressProof = false;
+        if (event.target.name === "OtherDocument") {
+          UploadedArray[0].ULOtherDocument = false;
         }
       } else {
         toast.error("File size should not exceed 500kb");
@@ -121,30 +132,53 @@ const OtherDocuments = (props) => {
     }
   };
   const handleUpload = (event) => {
-    console.log("changeHandler", event.target.name);
-    let fileType;
-    let fileUpload;
+    if (DocNameValidation() === true) {
+      console.log("changeHandler", event.target.name);
+      let fileName;
+      let fileUpload;
 
-    if (event.target.name === "addressProof") {
-      // if (AddressProofValidation() === true) {
-      fileUpload = stateOfOb.addressProof;
-      fileType = 3;
-      UploadedArray[0].ULAddressProof = true;
-      // }
-    }
-    if (fileUpload) {
-      console.log("inside file info", fileUpload, fileType);
-      const fileInfo = {
-        employeeId: user.employeeId,
-        file: fileUpload,
-        fileType: fileType,
-      };
-      console.log("handleUpload", fileInfo);
-      uploadFile(fileInfo);
-    } else {
-      toast.info("Please select file");
+      if (event.target.name === "OtherDocument") {
+        // if (OtherDocumentValidation() === true) {
+        fileUpload = stateOfOb.OtherDocument;
+        fileName = DocName;
+        UploadedArray[0].ULOtherDocument = true;
+        // }
+      }
+      if (fileUpload) {
+        console.log("inside file info", fileUpload, fileName);
+        const fileInfo = {
+          employeeId: user.employeeId,
+          file: fileUpload,
+          fileName: fileName,
+        };
+        console.log("handleUpload", fileInfo);
+        uploadOtherFiles(fileInfo);
+        setDocName("");
+        setStateOfOb({
+          ...stateOfOb,
+          [event.target.name]: "",
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: "",
+        });
+      } else {
+        toast.info("Please select file");
+      }
     }
   };
+  const DocNameValidation = () => {
+    if (DocName !== "" && DocName !== undefined) {
+      setDocNameError(false);
+      console.log("doc name Success");
+      return true;
+    } else {
+      setDocNameError(true);
+      console.log("doc name Error");
+      return false;
+    }
+  };
+  console.log("otherDocumentsList", otherDocumentsList);
 
   return (
     <Fragment>
@@ -168,7 +202,7 @@ const OtherDocuments = (props) => {
             >
               <button
                 className={
-                  educationDocName ? "stepperButtons" : "confirmButton"
+                  educationDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => showTheLetter(e, educationDocName)}
                 disabled={educationDocName ? false : true}
@@ -187,7 +221,7 @@ const OtherDocuments = (props) => {
             >
               <button
                 className={
-                  educationDocName ? "stepperButtons" : "confirmButton"
+                  educationDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) => downloadTheLetter(e, educationDocName)}
                 disabled={educationDocName ? false : true}
@@ -197,6 +231,81 @@ const OtherDocuments = (props) => {
             </div>
           </Col>
         </Row>
+        {loader ? (
+          <div
+            className="loader-box loader"
+            style={{ width: "100% !important" }}
+          >
+            <div className="loader">
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+            </div>
+          </div>
+        ) : otherDocumentsList !== null &&
+          otherDocumentsList !== undefined &&
+          Object.keys(otherDocumentsList).lenght !== 0 ? (
+          <div>
+            {otherDocumentsList.map((item, i) => {
+              return (
+                <Row>
+                  <Col sm={8}>
+                    <label>
+                      <b>{item.fileName} :</b>
+                    </label>
+                    <br />
+                    <label className="itemResult">{item.documentName}</label>
+                  </Col>
+                  <Col sm={2}>
+                    <div
+                      style={{
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                        textAlign: "right",
+                      }}
+                    >
+                      <button
+                        className={
+                          item.documentName ? "profileButtons" : "confirmButton"
+                        }
+                        onClick={(e, name) =>
+                          showTheLetter(e, item.documentName)
+                        }
+                        disabled={item.documentName ? false : true}
+                      >
+                        View
+                      </button>
+                    </div>
+                  </Col>
+                  <Col sm={2}>
+                    <div
+                      style={{
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                        textAlign: "right",
+                      }}
+                    >
+                      <button
+                        className={
+                          item.documentName ? "profileButtons" : "confirmButton"
+                        }
+                        onClick={(e, name) =>
+                          downloadTheLetter(e, item.documentName)
+                        }
+                        disabled={item.documentName ? false : true}
+                      >
+                        Download
+                      </button>
+                    </div>
+                  </Col>
+                </Row>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
         <Row style={{ marginTop: "2rem" }}>
           <Col sm={4}>
             <Form.Group>
@@ -217,11 +326,14 @@ const OtherDocuments = (props) => {
                 placeholder="Name of the document"
                 //   disabled={disabled}
               />
-              {/* {flatNumberErro ? (
-                  <p style={{ color: "red" }}> Please enter flat/plot no</p>
-                ) : (
-                  <p></p>
-                )} */}
+              {DocNameError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  &nbsp;Please enter document name
+                </p>
+              ) : (
+                <p></p>
+              )}
             </Form.Group>
           </Col>
           <Col sm={8} style={{ marginTop: "1.5rem" }}>
@@ -229,13 +341,13 @@ const OtherDocuments = (props) => {
               <div className="parentInput">
                 <label className="fileInputField">
                   &nbsp;&nbsp;
-                  {stateOfName.addressProof !== ""
-                    ? stateOfName.addressProof
+                  {stateOfName.OtherDocument !== ""
+                    ? stateOfName.OtherDocument
                     : "Select File Here"}
                   <input
                     type="file"
                     accept="image/*,.pdf"
-                    name="addressProof"
+                    name="OtherDocument"
                     style={{ display: "none" }}
                     onChange={(e) => {
                       changeHandler1(e);
@@ -247,7 +359,7 @@ const OtherDocuments = (props) => {
                 <label className="custom-file-upload">
                   <input
                     type="button"
-                    name="addressProof"
+                    name="OtherDocument"
                     className="custom_file_Upload_button"
                     onClick={(e) => {
                       handleUpload(e);
@@ -262,7 +374,7 @@ const OtherDocuments = (props) => {
                   ></i>
                 </label>
               </div>
-              {/* {addressProofError ? (
+              {/* {OtherDocumentError ? (
                   <p style={{ color: "red" }}>
                     {" "}
                     &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the address
