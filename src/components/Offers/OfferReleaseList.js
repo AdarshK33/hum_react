@@ -83,7 +83,7 @@ const OfferReleaseList = () => {
     viewRole();
     CostCenter();
   };
-  console.log(rolePermission,"rolePermission")
+  console.log(rolePermission, "rolePermission");
   const noShowHandler = () => {
     console.log("no show candidate", noShowId);
     setPageCount(currentPage - 1);
@@ -193,8 +193,9 @@ const OfferReleaseList = () => {
                       <th scope="col">No Show</th>
                       {user !== null &&
                       user !== undefined &&
-                      rolePermission === "admin" ?<th scope="col">No Show Edit</th>
-                       : (
+                      rolePermission === "admin" ? (
+                        <th scope="col">No Show Edit</th>
+                      ) : (
                         ""
                       )}
                     </tr>
@@ -316,7 +317,12 @@ const OfferReleaseList = () => {
                                   value="yes"
                                   name={item.candidateId}
                                   checked={item.noShow}
-                                  disabled={(item.status === 0 || item.status === 5 || item.status === 6||item.overallStatus===1)}
+                                  disabled={
+                                    item.status === 0 ||
+                                    item.status === 5 ||
+                                    item.status === 6 ||
+                                    item.overallStatus === 1
+                                  }
                                   onChange={
                                     item.noShow ? dummyFun : handleModalOpen
                                   }
@@ -324,23 +330,30 @@ const OfferReleaseList = () => {
                               </div>
                             </td>
                             {user !== null &&
-                      user !== undefined &&
-                      rolePermission === "admin" ?
-                            <td    style={
-                            item.noShow === true
-                              ? { backgroundColor:"white" }
-                              : {}
-                          }>
-                              {item.noShow === true ?(
-                                <Link >
-                                  <Edit2
-                                    onClick={() => {
-                                      editNoShowHandler(item.candidateId);
-                                    }}
-                                  />
-                                </Link>
-                              ):<Edit2 />}
-                            </td>:""}
+                            user !== undefined &&
+                            rolePermission === "admin" ? (
+                              <td
+                                style={
+                                  item.noShow === true
+                                    ? { backgroundColor: "white" }
+                                    : {}
+                                }
+                              >
+                                {item.noShow === true ? (
+                                  <Link>
+                                    <Edit2
+                                      onClick={() => {
+                                        editNoShowHandler(item.candidateId);
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : (
+                              ""
+                            )}
                           </tr>
                         </tbody>
                       );

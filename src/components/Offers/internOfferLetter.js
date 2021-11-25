@@ -14,7 +14,7 @@ const InternOfferLetter = () => {
       {typeof offerLetterData &&
       offerLetterData.internshipCandidateOffer !== undefined ? (
         <Fragment>
-          <p className="offerHeader">OFFER LETTER</p>
+          <p className="offerHeader">OFFER OF ENGAGEMENT</p>
           <br></br>
           <p className="offerSubHeader">PRIVATE AND CONFIDENTIAL</p>
 
