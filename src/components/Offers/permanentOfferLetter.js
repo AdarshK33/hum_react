@@ -22,7 +22,7 @@ const PermanentOfferLetter = () => {
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{offerLetterData.position}</span> on
-            FullTime Basis, at {offerLetterData.companyName} Pvt. Ltd.{" "}
+            Full-Time Basis, at {offerLetterData.companyName} Pvt. Ltd.{" "}
           </p>
           <br></br>
           <p className="offerSubHeader">1. Terms & Conditions</p>
@@ -93,17 +93,8 @@ const PermanentOfferLetter = () => {
                   <td>Fixed Gross </td>
                   <td>{Math.round(offerLetterData.fixedGross)}</td>
                   <td>{Math.round(offerLetterData.fixedGross * 12)}</td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.fixedGross 
-                    )}
-                  </td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.fixedGross  *
-                        12
-                    )}
-                  </td>
+                  <td>{Math.round(offerLetterData.fixedGross)}</td>
+                  <td>{Math.round(offerLetterData.fixedGross * 12)}</td>
                 </tr>
                 <tr>
                   <td>Basic Salary </td>
@@ -143,13 +134,13 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Conveyance Allowance </td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Leave Travel Allowance</td>
                   <td>
@@ -169,13 +160,13 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Medical Expense Reimbursement </td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Special Allowance </td>
                   <td>
@@ -202,7 +193,7 @@ const PermanentOfferLetter = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td>Bonus @ maximum 20.0% </td>
+                  <td>Bonus @ maximum {offerLetterData.bonus}% </td>
                   <td>-</td>
                   <td>-</td>
                   <td>{Math.round(offerLetterData.bonusAmt)}</td>
@@ -222,12 +213,15 @@ const PermanentOfferLetter = () => {
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      offerLetterData.permanentCandidateOffer.grossSalary+ + offerLetterData.bonusAmt
+                      offerLetterData.permanentCandidateOffer.grossSalary +
+                        +offerLetterData.bonusAmt
                     )}
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      (offerLetterData.permanentCandidateOffer.grossSalary + offerLetterData.bonusAmt) * 12
+                      (offerLetterData.permanentCandidateOffer.grossSalary +
+                        offerLetterData.bonusAmt) *
+                        12
                     )}
                   </td>
                 </tr>
@@ -277,7 +271,7 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Employer ESIC</td>
                   <td className="boldText">
                     {Math.round(
@@ -300,7 +294,7 @@ const PermanentOfferLetter = () => {
                       offerLetterData.permanentCandidateOffer.employerESIC
                     ) * 12}
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>CTC </td>
                   <td className="boldText">

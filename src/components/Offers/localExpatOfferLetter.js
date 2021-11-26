@@ -22,7 +22,7 @@ const LocalExpatOfferLetter = () => {
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{offerLetterData.position}</span> on
-            FullTime Basis, at {offerLetterData.companyName} Pvt. Ltd.{" "}
+            Full-Time Basis, at {offerLetterData.companyName} Pvt. Ltd.{" "}
           </p>
           <br></br>
           <p className="offerSubHeader">1. Terms & Conditions</p>
@@ -93,13 +93,8 @@ const LocalExpatOfferLetter = () => {
                   <td>Fixed Gross </td>
                   <td>{offerLetterData.fixedGross}</td>
                   <td>{offerLetterData.fixedGross * 12}</td>
-                  <td>
-                    {offerLetterData.fixedGross }
-                  </td>
-                  <td>
-                    {offerLetterData.fixedGross *
-                      12}
-                  </td>
+                  <td>{offerLetterData.fixedGross}</td>
+                  <td>{offerLetterData.fixedGross * 12}</td>
                 </tr>
                 <tr>
                   <td>Basic Salary </td>
@@ -121,13 +116,13 @@ const LocalExpatOfferLetter = () => {
                   </td>
                   <td>{offerLetterData.permanentCandidateOffer.hra * 12}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Conveyance Allowance </td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Leave Travel Allowance</td>
                   <td>
@@ -147,13 +142,13 @@ const LocalExpatOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Medical Expense Reimbursement </td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Special Allowance </td>
                   <td>
@@ -180,7 +175,7 @@ const LocalExpatOfferLetter = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td>Bonus @ maximum 20.0% </td>
+                  <td>Bonus @ maximum {offerLetterData.bonus}% </td>
                   <td>-</td>
                   <td>-</td>
                   <td>{Math.round(offerLetterData.bonusAmt)}</td>
@@ -200,17 +195,20 @@ const LocalExpatOfferLetter = () => {
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      offerLetterData.permanentCandidateOffer.grossSalary + offerLetterData.bonusAmt
+                      offerLetterData.permanentCandidateOffer.grossSalary +
+                        offerLetterData.bonusAmt
                     )}
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      (offerLetterData.permanentCandidateOffer.grossSalary + offerLetterData.bonusAmt) * 12
+                      (offerLetterData.permanentCandidateOffer.grossSalary +
+                        offerLetterData.bonusAmt) *
+                        12
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <td>PF </td>
+                  <td> Employer PF </td>
                   <td>
                     {Math.round(
                       offerLetterData.permanentCandidateOffer.employerPF
@@ -255,7 +253,7 @@ const LocalExpatOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Employer ESIC</td>
                   <td className="boldText">
                     {Math.round(
@@ -278,7 +276,7 @@ const LocalExpatOfferLetter = () => {
                       offerLetterData.permanentCandidateOffer.employerESIC
                     ) * 12}
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>CTC </td>
                   <td className="boldText">

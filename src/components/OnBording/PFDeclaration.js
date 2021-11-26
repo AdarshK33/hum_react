@@ -933,7 +933,7 @@ const PFDeclaration = (props) => {
             <div>
               <label>
                 Are you a member of employer pension scheme in your previous
-                employement ?
+                employment ?
               </label>
               {memberOfPensionSchemaError ? (
                 <p style={{ color: "red" }}>
@@ -955,8 +955,13 @@ const PFDeclaration = (props) => {
                   checked={memberOfPensionSchemeYes}
                   required={required}
                   // disabled={firstJobYes}
-                  disabled={firstJobYes == true ?true:contributingPrevOrgNo == true?true:false}
-
+                  disabled={
+                    firstJobYes == true
+                      ? true
+                      : contributingPrevOrgNo == true
+                      ? true
+                      : false
+                  }
                   onChange={handleMemberOfPensionSchemeYesChange}
                 />
                 <label>Yes</label>
@@ -973,8 +978,13 @@ const PFDeclaration = (props) => {
                   checked={memberOfPensionSchemeNo}
                   required={required}
                   // disabled={firstJobYes}
-                  disabled={firstJobYes == true ?true:contributingPrevOrgNo == true?true:false}
-
+                  disabled={
+                    firstJobYes == true
+                      ? true
+                      : contributingPrevOrgNo == true
+                      ? true
+                      : false
+                  }
                   onChange={handleMemberOfPensionSchemeNoChange}
                 />
                 <label>No </label>
@@ -1255,9 +1265,12 @@ const PFDeclaration = (props) => {
                       name="form11"
                       style={{ display: "none" }}
                       disabled={
-                        (candidateProfileData.documentUploaded === 1 &&(candidateProfileData.adminVerificationStatus === 1||
-                          candidateProfileData.adminVerificationStatus === 2) &&
-                          (adminForm11DocStatus === 0 || adminForm11DocStatus === 2)) ||
+                        (candidateProfileData.documentUploaded === 1 &&
+                          (candidateProfileData.adminVerificationStatus === 1 ||
+                            candidateProfileData.adminVerificationStatus ===
+                              2) &&
+                          (adminForm11DocStatus === 0 ||
+                            adminForm11DocStatus === 2)) ||
                         (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
@@ -1273,9 +1286,10 @@ const PFDeclaration = (props) => {
                   <label
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
-                        (candidateProfileData.adminVerificationStatus === 1||
+                        (candidateProfileData.adminVerificationStatus === 1 ||
                           candidateProfileData.adminVerificationStatus === 2) &&
-                        (adminForm11DocStatus === 0 || adminForm11DocStatus === 2)) ||
+                        (adminForm11DocStatus === 0 ||
+                          adminForm11DocStatus === 2)) ||
                       (candidateProfileData.adminVerificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
@@ -1291,9 +1305,11 @@ const PFDeclaration = (props) => {
                       }}
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          (candidateProfileData.adminVerificationStatus === 1||
-                            candidateProfileData.adminVerificationStatus === 2)&&
-                          (adminForm11DocStatus === 0 || adminForm11DocStatus === 2)) ||
+                          (candidateProfileData.adminVerificationStatus === 1 ||
+                            candidateProfileData.adminVerificationStatus ===
+                              2) &&
+                          (adminForm11DocStatus === 0 ||
+                            adminForm11DocStatus === 2)) ||
                         (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
@@ -1344,8 +1360,9 @@ const PFDeclaration = (props) => {
                       style={{ display: "none" }}
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          (candidateProfileData.adminVerificationStatus === 1||
-                            candidateProfileData.adminVerificationStatus === 2) &&
+                          (candidateProfileData.adminVerificationStatus === 1 ||
+                            candidateProfileData.adminVerificationStatus ===
+                              2) &&
                           (adminForm2epfDocStatus === 0 ||
                             adminForm2epfDocStatus === 2)) ||
                         (candidateProfileData.adminVerificationStatus === 0 &&
@@ -1363,9 +1380,10 @@ const PFDeclaration = (props) => {
                   <label
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
-                        (candidateProfileData.adminVerificationStatus === 1||
+                        (candidateProfileData.adminVerificationStatus === 1 ||
                           candidateProfileData.adminVerificationStatus === 2) &&
-                        (adminForm2epfDocStatus === 0 || adminForm2epfDocStatus === 2)) ||
+                        (adminForm2epfDocStatus === 0 ||
+                          adminForm2epfDocStatus === 2)) ||
                       (candidateProfileData.adminVerificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
@@ -1378,8 +1396,9 @@ const PFDeclaration = (props) => {
                       className="custom_file_Upload_button"
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          (candidateProfileData.adminVerificationStatus === 1||
-                            candidateProfileData.adminVerificationStatus === 2)&&
+                          (candidateProfileData.adminVerificationStatus === 1 ||
+                            candidateProfileData.adminVerificationStatus ===
+                              2) &&
                           (adminForm2epfDocStatus === 0 ||
                             adminForm2epfDocStatus === 2)) ||
                         (candidateProfileData.adminVerificationStatus === 0 &&
@@ -1435,9 +1454,11 @@ const PFDeclaration = (props) => {
                       style={{ display: "none" }}
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          (candidateProfileData.adminVerificationStatus === 1||
-                            candidateProfileData.adminVerificationStatus === 2) &&
-                          (adminFormfDocStatus === 0 || adminFormfDocStatus === 2)) ||
+                          (candidateProfileData.adminVerificationStatus === 1 ||
+                            candidateProfileData.adminVerificationStatus ===
+                              2) &&
+                          (adminFormfDocStatus === 0 ||
+                            adminFormfDocStatus === 2)) ||
                         (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
@@ -1453,9 +1474,10 @@ const PFDeclaration = (props) => {
                   <label
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
-                        (candidateProfileData.adminVerificationStatus === 1||
+                        (candidateProfileData.adminVerificationStatus === 1 ||
                           candidateProfileData.adminVerificationStatus === 2) &&
-                        (adminFormfDocStatus === 0 || adminFormfDocStatus === 2)) ||
+                        (adminFormfDocStatus === 0 ||
+                          adminFormfDocStatus === 2)) ||
                       (candidateProfileData.adminVerificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
@@ -1468,9 +1490,11 @@ const PFDeclaration = (props) => {
                       className="custom_file_Upload_button"
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
-                          (candidateProfileData.adminVerificationStatus === 1||
-                            candidateProfileData.adminVerificationStatus === 2) &&
-                          (adminFormfDocStatus === 0 || adminFormfDocStatus === 2)) ||
+                          (candidateProfileData.adminVerificationStatus === 1 ||
+                            candidateProfileData.adminVerificationStatus ===
+                              2) &&
+                          (adminFormfDocStatus === 0 ||
+                            adminFormfDocStatus === 2)) ||
                         (candidateProfileData.adminVerificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false

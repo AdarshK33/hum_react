@@ -87,11 +87,22 @@ const AppointmentLetter = (props) => {
                   </p>
                   <p>
                     Thank for your interest in choosing{" "}
-                    <b>{offerLetterData.companyName}</b>. As we believe your passion
-                    for sport and your values match those of our Company, we, at{" "}
-                    <b>{offerLetterData.companyName}</b>, are pleased to appoint you as
-                    a Decathlon Permanent Employee on a Full Time basis, and
-                    your responsibilities would be those of a{" "}
+                    <b>{offerLetterData.companyName}</b>. As we believe your
+                    passion for sport and your values match those of our
+                    Company, we, at{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>
+                    , are pleased to appoint you as a{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    Permanent Employee on a Full Time basis, and your
+                    responsibilities would be those of a{" "}
                     <b>{offerLetterData.position}</b> at our{" "}
                     <b>{offerLetterData.location} </b>
                     location effective
@@ -129,6 +140,27 @@ const AppointmentLetter = (props) => {
                     mentor and guide you in this phase of your professional
                     journey or any such manager assigned by the later.
                   </p>
+                  <p>
+                    We at{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    strongly believe in your ability to manage yourself in the
+                    best interest of the Company. Fewer the rules better the
+                    productivity as far as we are concerned.
+                  </p>
+                  <p>
+                    We trust you will enjoy working with{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    and take the utmost autonomy to complete your
+                    responsibilities-
+                  </p>
                   <ol>
                     <li>
                       We believe you will treat your team mates and customers
@@ -141,9 +173,15 @@ const AppointmentLetter = (props) => {
                       rules that might be incorporated from time to time
                     </li>
                     <li>
-                      When you are happy being a part of the Decathlon family,
-                      we expect you will be open to relocate to any location
-                      where the Company currently has stores or may be
+                      When you are happy being a part of the{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      family, we expect you will be open to relocate to any
+                      location where the Company currently has stores or may be
                       established or any other Group companies as deemed
                       necessary
                     </li>
@@ -152,25 +190,56 @@ const AppointmentLetter = (props) => {
                       and we prefer you not share it with other team members
                     </li>
                     <li>
-                      Working for <b>{offerLetterData.companyName}</b> is a full time
-                      job! While we believe in honesty in the job
+                      Working for{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      is a full time job! While we believe in honesty in the job
                       responsibility, we insist you dedicate your working hours
-                      solely to Decathlon and not work elsewhere, and also do
-                      not indulge in any trade or business owned by you or any
-                      third party
+                      solely to{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      and not work elsewhere, and also do not indulge in any
+                      trade or business owned by you or any third party
                     </li>
                     <li>
                       We hold transparency in high regard. You cannot involve
                       yourself in taking or giving bribe, gambling, theft,
                       fraudulent practices or any such act that might affect
-                      Decathlon reputation or damage to property
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      reputation or damage to property
                     </li>
                     <li>
-                      We at Decathlon have a strict policy against sexual
-                      harassment. We believe that you will not engage in any
-                      form of sexual harassment towards any of the Company
-                      employees and the Company's customers. Decathlon also
-                      ensures a safe environment to all its employees and
+                      We at{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      have a strict policy against sexual harassment. We believe
+                      that you will not engage in any form of sexual harassment
+                      towards any of the Company employees and the Company's
+                      customers.{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      also ensures a safe environment to all its employees and
                       customers and strict action will be taken against any
                       offender, be it employee or customer
                     </li>
@@ -181,24 +250,44 @@ const AppointmentLetter = (props) => {
                     <li>
                       In the event you feel you cannot be a part of our culture
                       and environment, kindly communicate your desire to depart
-                      at least 7 days in advance during probation or 1 month in
-                      advance if your employment is confirmed
+                      at least 7 days in advance during probation or{" "}
+                      <b>{offerLetterData.probationPeriod}</b> month in advance
+                      if your employment is confirmed
                     </li>
                     <li>
                       In the event we find you have not abided by these, and
                       other regulations explained to you by your manager or if
-                      you do not share the values of Decathlon we shall
-                      communicate the dis-continuance of employment with{" "}
-                      Decathlon to you at least 7 days in advance during
-                      probation or 1 month in advance if your employment is
-                      confirmed
+                      you do not share the values of{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      we shall communicate the dis-continuance of employment
+                      with{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      to you at least 7 days in advance during probation or{" "}
+                      <b>{offerLetterData.probationPeriod}</b> month in advance
+                      if your employment is confirmed
                     </li>
                     <li>
                       Service rules under the Certified Standing Orders of
-                      Decathlon will be applicable to you from the date of
-                      certification of such orders. The information on the
-                      certification of such standing orders will be communicated
-                      to you electronically
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      will be applicable to you from the date of certification
+                      of such orders. The information on the certification of
+                      such standing orders will be communicated to you
+                      electronically
                     </li>
                     <li>
                       However, your employment will be subjected to immediate
@@ -245,13 +334,24 @@ const AppointmentLetter = (props) => {
                     <li>
                       Any image taken of you during a Decathlon event or during
                       a photo-shoot shall be the property of Decathlon and you
-                      consent to Decathlon's use of the such image in
-                      communication.
+                      consent to Decathlon's use of such image in communication.
                     </li>
                     <li>
                       Apart from the above mentioned rules all rules specified
-                      under the certified standing orders of Decathlon will be
-                      applicable to you from the date of your joining Decathlon
+                      under the certified standing orders of{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      will be applicable to you from the date of your joining{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>
                     </li>
                     <li>
                       Clause 4 of this employment contract shall continue to
@@ -291,19 +391,10 @@ const AppointmentLetter = (props) => {
                           <b>Gross</b>{" "}
                         </td>
                         <td>
-                          <b>
-                            {Math.round(
-                              offerLetterData.fixedGross 
-                            )}
-                          </b>
+                          <b>{Math.round(offerLetterData.fixedGross)}</b>
                         </td>
                         <td>
-                          <b>
-                            {Math.round(
-                              offerLetterData.fixedGross *
-                                12
-                            )}
-                          </b>
+                          <b>{Math.round(offerLetterData.fixedGross * 12)}</b>
                         </td>
                       </tr>
                       <tr>
@@ -370,13 +461,16 @@ const AppointmentLetter = (props) => {
                         <td className="boldText">Gross Salary </td>
                         <td className="boldText">
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.grossSalary+offerLetterData.bonusAmt
+                            offerLetterData.permanentCandidateOffer
+                              .grossSalary + offerLetterData.bonusAmt
                           )}
                         </td>
                         <td className="boldText">
                           {Math.round(
                             (offerLetterData.permanentCandidateOffer
-                              .grossSalary+offerLetterData.bonusAmt) * 12
+                              .grossSalary +
+                              offerLetterData.bonusAmt) *
+                              12
                           )}
                         </td>
                       </tr>
@@ -448,15 +542,16 @@ const AppointmentLetter = (props) => {
                             gross salary upto 21000 then you would get a minimum
                             of INR. 583/per month for the number of months that
                             you have worked in any Financial year or a maximum
-                            upto 0.0 % of your Monthly fixed gross basis the
-                            criterion mentioned by your manager from time to
-                            time
+                            upto {offerLetterData.bonus} % of your Monthly fixed
+                            gross basis the criterion mentioned by your manager
+                            from time to time
                           </p>
                           <p>
                             + Please note that if you are drawing monthly gross
-                            more than 21000 then you can earn maximum upto 0.0 %
-                            of your Monthly fixed gross basis the criterion
-                            mentioned by your manager from time to time
+                            more than 21000 then you can earn maximum upto{" "}
+                            {offerLetterData.bonus} % of your Monthly fixed
+                            gross basis the criterion mentioned by your manager
+                            from time to time
                           </p>
                         </td>
                       </tr>
