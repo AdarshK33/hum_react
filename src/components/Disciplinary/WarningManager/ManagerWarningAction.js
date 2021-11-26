@@ -4,6 +4,7 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { Link } from "react-router-dom";
 import WarningLetter from "./WarningLetter";
+import NonPerformanceWarningLetter from "./NonPerformanceWarningLetter";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import ReasonByEmployee from "../Manager/ReasonByEmployee";
@@ -565,6 +566,7 @@ const ManagerWarningAction = (props) => {
       console.log("not okay");
     }
   };
+  console.log(disciplinarySearchData,"disciplinarySearchData")
   const changeHandler = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -953,10 +955,11 @@ const ManagerWarningAction = (props) => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" ? (
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
             <WarningLetter />
           ) : (
-            ""
+            <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
       </Modal>
@@ -1113,10 +1116,18 @@ const ManagerWarningAction = (props) => {
           <Modal.Body>
             {issueShowCauseNoticeData &&
             issueShowCauseNoticeData !== undefined &&
-            issueShowCauseNoticeData !== null ? (
+            issueShowCauseNoticeData !== null &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning !== "" &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
               <WarningLetter />
             ) : (
-              ""
+              <NonPerformanceWarningLetter/>
             )}
             <br></br>
             <Row>

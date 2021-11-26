@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
@@ -268,6 +269,7 @@ const ManagerInitiateExit = () => {
       });
     }
   }, [employeeData, ModeOfSeparationData, employeeId]);
+  console.log(state)
   useEffect(() => {
     console.log("state.empI", state.empId);
     if (
@@ -721,7 +723,11 @@ const ManagerInitiateExit = () => {
 
           console.log("createExitData", data2);
           // setSubmitted(true);
+          
           UpdateEmplyoeeExist(data2);
+          setSubmitLetter(true);
+          setLetterSent(true);
+          setShow(true);
        
         } else if (intern === true) {
           const data1 = {
@@ -759,20 +765,23 @@ const ManagerInitiateExit = () => {
           };
           console.log("createExitData", data1);
           UpdateEmplyoeeExist(data1);
+          setSubmitLetter(true);
+          setLetterSent(true);
+          setShow(true);
        
         }
       }
     }
-    if (
-      employeeData.employeeId !== null &&
-      employeeData.employeeId !== undefined
-    ) {
-      setSubmitLetter(true);
-      setLetterSent(true);
-      setShow(true);
+    // if (
+    //   employeeData.employeeId !== null &&
+    //   employeeData.employeeId !== undefined
+    // ) {
+    //   setSubmitLetter(true);
+    //   setLetterSent(true);
+    //   setShow(true);
 
-      // finalSubmitOfferLetter(employeeData.employeeId);
-    }
+      //// finalSubmitOfferLetter(employeeData.employeeId);
+   // }
   };
 
   const previewRelivingLetter = (e) => {
@@ -1063,40 +1072,6 @@ const ManagerInitiateExit = () => {
               console.log(reasonOfSeparationList[i].value);
             }
           });
-          //   const data1 = {
-          //     company: "string",
-          //     contractType: "string",
-          //     costCentreManagerEmailId: "string",
-          //     costCentreManagerName: "string",
-          //     costCentreName: "string",
-          //     dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-          //     emailId: state.emailId,
-          //     empName: "string",
-          //     employeeComment: "string",
-          //     employeeId: state.empId,
-          //     employeeName: "string",
-          //     exitId: 0,
-          //     hoursWorked: 0,
-          //     lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-          //     location: "string",
-          //     managerCostCentre: "string",
-          //     managerEmailId: "string",
-          //     managerId: "string",
-          //     managerName: "string",
-          //     managerPosition: "string",
-          //     modeOfSeparationId: changeInSeparation,
-          //     modeOfSeparationReasonId: reasonId,
-          //     noticePeriod: 0,
-          //     noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-          //     noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
-          //     position: "string",
-          //     reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-          //     reason: "string",
-          //     reasonForResignation: "string",
-          //     rehireRemark: "string",
-          //     status: 2,
-          //     withdraw: "string",
-          //   };
 
           const data2 = {
             company: null,
@@ -1248,7 +1223,9 @@ console.log(intern,"8098709809808")
                 .format("YYYY-MM-DD")}
             </label>
             <div className="text-center">
-              <Button onClick={handleRelivingClose}>Close</Button>
+            <Link to={"/employee-separation-listing"}>
+                <Button onClick={handleRelivingClose}>Close</Button>
+              </Link>
             </div>
           </Modal.Body>
         </Modal>

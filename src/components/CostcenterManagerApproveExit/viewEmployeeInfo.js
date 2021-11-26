@@ -17,6 +17,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import "./exitForm.css";
 const EmployeeExitAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
+  const [modeOfSeparationReasonId,setModeOfSeparationReasonId] = useState("")
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
   const [RehireYes, setRehireYes] = useState(false);
@@ -26,6 +27,7 @@ const EmployeeExitAction = () => {
   const [rcryDaysError, setRcryDaysError] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
+  const [letterView, setLetterView] = useState("");
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [terminationLetter, setTerminationLetter] = useState(false);
@@ -159,7 +161,7 @@ const EmployeeExitAction = () => {
         employeeData.lastWorkingDate !== undefined &&
         employeeData.lastWorkingDate !== ""
       ) {
-        setLastWorkingDate(new Date(employeeData.lastWorkingDate));
+        setLastWorkingDate(employeeData.lastWorkingDate);
       }
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
@@ -200,7 +202,12 @@ const EmployeeExitAction = () => {
         setIntern(false);
         setLastWorkingDate("");
       }
-
+      setLastWorkingDate(
+        employeeData.lastWorkingDate !== null &&
+          employeeData.lastWorkingDate !== undefined
+          ? new Date(employeeData.lastWorkingDate)
+          : new Date()
+      );
       state.noticePeriodRcryDays =
         employeeData.noticePeriodRecoveryDays !== null &&
         employeeData.noticePeriodRecoveryDays !== undefined
@@ -254,29 +261,29 @@ const EmployeeExitAction = () => {
       Object.keys(ModeOfSeparationData).length !== 0
     ) {
       if (employeeData.modeOfSeparationId === 1) {
-        console.log(ModeOfSeparationData[0].modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparation,"item");
         console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
       }
       ModeOfSeparationData.map((item, i) => {
         if (
           employeeData.modeOfSeparationId ===
-          ModeOfSeparationData[i].modeOfSeparation.separationId
+          item.modeOfSeparation.separationId
         ) {
           setModeOfSeparation(
-            ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
+            item.modeOfSeparation.modeOfSeparation
           );
-
-          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
+            console.log(item,"itemi")
+          item.modeOfSeparationReasonList.map((item1, j) => {
+            console.log(item1,"item1")
             if (
               employeeData.modeOfSeparationReasonId ===
-              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+              item1
                 .separationReasonId
             ) {
-              state.modeOfSeparationReasonId =
-                ModeOfSeparationData[i].modeOfSeparationReasonList[
-                  j
-                ].modeOfSeparationReason;
+              console.log(item1,"item2")
+              state.modeOfSeparationReasonId =item1.modeOfSeparationReason;
+                setModeOfSeparationReasonId(item1.modeOfSeparationReason)
             }
           });
         }
@@ -380,13 +387,16 @@ const EmployeeExitAction = () => {
     if (state.modeOfSeparationId == 2) {
       terminationConfirmation(exitId, employeeId);
       viewTermination();
+      setModal(true)
+      setLetterView(2)
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
       resignationConfirmation(exitId, employeeId);
       viewResignation();
+      setModal(true)
+      setLetterView(4)
     }
     // console.log(state.modeOfSeparationId, "sravani");
 
-    setModal(true);
   };
   const handleClosePopup = () => {
     setMessage(false);
@@ -543,8 +553,8 @@ const EmployeeExitAction = () => {
             </Modal.Body>
           </Container>
         </Modal>
-        <RelievingLetter previewLetter={previewLetter} />
-        <TerminationLetter terminationLetter={terminationLetter} />
+       {letterView == 2?<RelievingLetter previewLetter={previewLetter} />:
+        (letterView == 1 || letterView == 4)? <TerminationLetter terminationLetter={terminationLetter} /> :""}
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
         {/* <PdfExample /> */}
         <div className="container-fluid">
@@ -569,7 +579,7 @@ const EmployeeExitAction = () => {
                             <b>Emp Name/Id:</b>
                             <label className="itemResult">
                               {" "}
-                              &nbsp;&nbsp; {state.employeeName} &nbsp;
+                              &nbsp;&nbsp; {state.employeeName +"/"+state.employeeId} &nbsp;
                               {state.employeeId}
                             </label>
                           </label>
@@ -752,7 +762,6 @@ const EmployeeExitAction = () => {
                               name="lastWorkingDate"
                               minDate={new Date()}
                               maxDate={lastDateSelection}
-                              minDate={moment().toDate()}
                               onChange={(e) => dateOfBirthHandler1(e)}
                               dateFormat="yyyy-MM-dd"
                               placeholderText="YYYY-MM-DD"
@@ -814,7 +823,7 @@ const EmployeeExitAction = () => {
                     ) : (
                       ""
                     )}
-                    <Row
+                    {/* <Row
                       style={{
                         marginLeft: "2rem",
                         marginTop: "1rem",
@@ -831,7 +840,7 @@ const EmployeeExitAction = () => {
                           </label>
                         </div>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <Row
                       style={{
                         marginTop: "2rem",

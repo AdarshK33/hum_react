@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "./ShowCauseNoticeLetter";
 import NonPerformanceLetter from "./NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
+import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter"
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { PermissionContext } from "../../../context/PermissionState";
@@ -416,10 +417,11 @@ const ActionPage = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" ? (
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
             <WarningLetter />
           ) : (
-            ""
+            <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
       </Modal>
@@ -544,9 +546,19 @@ const ActionPage = () => {
             Object.keys(disciplinarySearchData).length !== 0 &&
             disciplinarySearchData.disciplinaryWarning !== null &&
             disciplinarySearchData.disciplinaryWarning !== undefined &&
-            disciplinarySearchData.disciplinaryWarning !== "" ? (
+            disciplinarySearchData.disciplinaryWarning !== "" &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 2?(
               <WarningLetter />
-            ) : disciplinarySearchData &&
+            ): disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning !== "" &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 1 ? (
+              <NonPerformanceWarningLetter />
+            ) :disciplinarySearchData &&
               disciplinarySearchData &&
               disciplinarySearchData !== null &&
               disciplinarySearchData !== undefined &&

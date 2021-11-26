@@ -1,7 +1,10 @@
 import React, { useState ,useContext,useEffect,useRef} from "react";
 import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
-
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import htmlToPdfmake from 'html-to-pdfmake';
 import itBase64 from "./CharterFile/itcharter"
 const ITCharter =(props)=>{
     const {  dsiCharterUpdate,dsiCharterUpdateData,
@@ -100,15 +103,37 @@ const ITCharter =(props)=>{
                 "isDsiItCharter":true,
                 "codeOfConductLetter":CODEOFCONDUCT
                 }
-                var imageValue = itBase64
-                var bufferArray = base64ToArrayBuffer(imageValue);
-                var blobStore = new Blob([bufferArray], { type: "application/pdf" });
-                blobStore.name = "itcharter.pdf"      
-                const data = {"dsiType":"It Charter",
-                            "employeeId":employeeProfileData.employeeId,
-                            "fileType":26}
+                const doc = new jsPDF();    
+                //get table html
+                const pdfTable = document.getElementById('itcharter');
+                //html to pdf format
+                var html = htmlToPdfmake(pdfTable.innerHTML);
+              
+                const documentDefinition = { content: html };
+                pdfMake.vfs = pdfFonts.pdfMake.vfs;
+               // pdfMake.createPdf(documentDefinition).open();   
+                const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+             pdfDocGenerator.getBuffer((buffer) => {
+                 var blobStore = new Blob([buffer], { type: "application/pdf" });
+              blobStore.name = "itcharter.pdf"      
+              const data = {"dsiType":"It Charter",
+                          "employeeId":employeeProfileData.employeeId,
+                          "fileType":26}
 
-            dsiCharterUpdate(infoData,data,blobStore)
+          dsiCharterUpdate(infoData,data,blobStore)
+      });
+      
+                // var imageValue = itBase64
+            //var bufferArray = base64ToArrayBuffer(imageValue);
+            //console.log(bufferArray,"bufferArray")
+            //     var blobStore = new Blob([bufferArray], { type: "application/pdf" });
+            //     blobStore.name = "itcharter.pdf"      
+            //     const data = {"dsiType":"It Charter",
+            //                 "employeeId":employeeProfileData.employeeId,
+            //                 "fileType":26}
+
+            // dsiCharterUpdate(infoData,data,blobStore)
+
          //  ExportPDFITCharter(inputRef.current,item.charterId,20,employeeProfileData.employeeId);
             props.history.push("/dashboard/storedashboard")
             setShow(false)       
@@ -129,7 +154,20 @@ const ITCharter =(props)=>{
                 }
         }
       }, [props])
-
+      const handleDate = (data)=>{
+        let current = new Date(data)
+      let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
+      let hours = current.getHours();
+      let am_pm = (hours >= 12) ? "PM" : "AM";
+      let minutes = current.getMinutes()<10?("0"+current.getMinutes()):current.getMinutes()
+      if(hours >= 12){
+          hours -=12;
+      }
+      
+      let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
+      let dateTime = cDate;
+      return dateTime
+      }
   return (
     <>
       <Modal show={showModal} onHide={handleClose} >
@@ -478,6 +516,13 @@ const ITCharter =(props)=>{
                 </ol>
             </li>
         </ol>
+        <br/>
+        <br/>
+        <div>
+                   <p>  <b>Date :</b><b style={{  padding: "20px"}}>{handleDate(new Date())}</b></p>
+                     <p><b>Employee ID :</b><b style={{  padding: "20px"}}>{employeeProfileData.employeeId}</b></p>
+                    <p> <b >Signed and Accepted by Employee  :</b><b style={{  padding: "20px"}}>{employeeProfileData.firstName + "  "+employeeProfileData.lastName}</b></p>
+                </div>
     </div>
     
 </body> 
