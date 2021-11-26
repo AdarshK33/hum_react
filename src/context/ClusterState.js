@@ -217,7 +217,7 @@ export const ClusterProvider = ({ children }) => {
     setLoader(true);
     /* console.log(" in cluster" + month + " " + year)
     let flag = localStorage.getItem('flag') */
-
+    console.log("salaryData", salaryData);
     return client
       .post("/api/v1/salary/view/store", salaryData)
       .then(function (response) {
@@ -260,6 +260,7 @@ export const ClusterProvider = ({ children }) => {
   //Edit Salary
 
   function salaryEdit(salaryEdit, salaryData) {
+    console.log("salaryEdit", salaryData);
     console.log("/api/v1/salary edit api response", salaryEdit);
     return client
       .post("/api/v1/salary/update", salaryEdit)
@@ -321,6 +322,28 @@ export const ClusterProvider = ({ children }) => {
     console.log("++++update salary approval api response+++++", approvalData);
     return client
       .post("/api/v1/salary/approve", approvalData)
+      .then((response) => {
+        state.message = response.data.message;
+        toast.info(state.message);
+        viewSalary(salaryData);
+        /*  viewStoreSalary(month, year, storeId) */
+        console.log("salary approval list response===>", response.data.data);
+        console.log("salary approval list message===>", state.message);
+        return dispatch({
+          type: "SALARY_APPRROVAL_LIST",
+          payload: state.salaryStoreList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  //Approval salary input from admin.
+
+  const salaryPending = (pendingId, salaryData) => {
+    return client
+      .get("/api/v1/salary/pending?salaryId=" + pendingId)
       .then((response) => {
         state.message = response.data.message;
         toast.info(state.message);
@@ -500,6 +523,7 @@ export const ClusterProvider = ({ children }) => {
         salaryEdit,
         viewStoreSalary,
         salaryApproval,
+        salaryPending,
         viewClusterCostCenter,
         selectAllClusterLeaderForEdit,
         viewClusterForAdmin,

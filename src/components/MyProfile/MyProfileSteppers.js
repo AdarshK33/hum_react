@@ -7,12 +7,13 @@ import React, {
 } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
-// import "./OnBoard.css";
+import "./myProfile.css";
 import Breadcrumb from "../common/breadcrumb";
 import PersonalInformation from "./PersonalInformation";
 import WorkDetails from "./WorkDetails";
 import Remuneration from "./Remunaration";
 import Documents from "./Documents";
+import Benfits from "./Benfits";
 import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
@@ -33,9 +34,9 @@ const ManagerProfileSteppers = (props) => {
   const [stepCount, setStepNumber] = useState(0);
   const [stepArray, setStep] = useState([
     {
-      step: currStep,
-      line: defaultLine,
-      label: currLabel,
+      step: checkOk,
+      line: lineOk,
+      label: labelOk,
       idValue: 0,
       fileSaved: false,
     },
@@ -128,8 +129,9 @@ const ManagerProfileSteppers = (props) => {
             tempArray[index - 1].line = defaultLine;
           }
         }
-        tempArray[num].step = currStep;
-        tempArray[num].label = currLabel;
+        tempArray[num].step = checkOk;
+        tempArray[num].label = labelOk;
+        tempArray[num].line = lineOk;
       });
       setStepNumber(num);
       setStep(tempArray);
@@ -311,7 +313,7 @@ const ManagerProfileSteppers = (props) => {
                           style={{ marginLeft: "25px", textAlign: "center" }}
                         >
                           {" "}
-                          Benfits
+                          Benefits
                         </label>
                         <br></br>
                         <span className={stepArray[3].line}></span>
@@ -355,6 +357,9 @@ const ManagerProfileSteppers = (props) => {
                             return <WorkDetails />;
                           case 2:
                             return <Remuneration />;
+                          case 3:
+                            return <Benfits />;
+                          // return <h1>Benfits</h1>;
                           case 4:
                             return <Documents />;
                           // case 4:

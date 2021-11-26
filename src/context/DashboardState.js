@@ -76,7 +76,7 @@ export const DashboardProvider = ({ children }) => {
 
   const weekData = (year) => {
     client
-      .get("/weekoff/weeks/" + year)
+      .get("/api/v1/weekoff/weeks/" + year)
       .then((response) => {
         state.weekList = response.data.data;
         console.log("weekList", state.weekList);
@@ -92,7 +92,12 @@ export const DashboardProvider = ({ children }) => {
     if (weekName !== undefined) {
       client
         .get(
-          "dashboard/view/dates/" + month + "/" + year + "?weekName=" + weekName
+          "/api/v1/dashboard/view/dates/" +
+            month +
+            "/" +
+            year +
+            "?weekName=" +
+            weekName
         )
         .then((response) => {
           state.viewDateList = response.data.data;
@@ -104,7 +109,7 @@ export const DashboardProvider = ({ children }) => {
         });
     } else {
       client
-        .get("dashboard/view/dates/" + month + "/" + year)
+        .get("/api/v1/dashboard/view/dates/" + month + "/" + year)
         .then((response) => {
           state.viewDateList = response.data.data;
           console.log("view list", state.viewDateList);

@@ -305,9 +305,12 @@ const ManagerDashboard = () => {
                             Name: {user.emergencyContactName}
                           </label>
                           <br />
-                          <div style={{ fontSize: "25px", color: "#006ebb" }}>
-                            <i className="fa fa-phone"></i>
-                            <label> {user.emergencyContactName} </label>
+                          <div style={{ color: "#006ebb" }}>
+                            <i
+                              style={{ fontSize: "25px" }}
+                              className="fa fa-phone"
+                            ></i>
+                            <label> {user.emergencyContactNo} </label>
                           </div>
                         </div>
                       </Col>

@@ -124,7 +124,7 @@ const EditClusterModal = (props) => {
 
   const validation = () => {
     let flag = true;
-    if (employee.length === 0) {
+    if (status == "0" && employee.length === 0) {
       toast.error("Select employee is mandatory");
       flag = false;
       return;

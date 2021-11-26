@@ -5,26 +5,39 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Select from "react-select";
-// import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
-import { Search, PlusCircle, MinusCircle } from "react-feather";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import { OnBoardContext } from "../../context/OnBoardState";
-import Address from "./Address";
-import EmergencyContact from "./EmergencyContact";
-import BankDetails from "./BankDetails";
+import { Row, Col, Form, Button } from "react-bootstrap";
+import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
 import moment from "moment";
 
 const WorkDetails = () => {
+  const { user } = useContext(AppContext);
+  const { rolePermission, locationDetails, locationDetailsList } =
+    useContext(PermissionContext);
+  const [locationName, setLocationName] = useState("");
+  useEffect(() => {
+    locationDetails();
+  }, []);
+  console.log("locationDetailsList", locationDetailsList);
+  useEffect(() => {
+    if (
+      user !== null &&
+      user !== undefined &&
+      Object.keys(user).length !== 0 &&
+      locationDetailsList &&
+      locationDetailsList !== null &&
+      locationDetailsList !== undefined &&
+      Object.keys(locationDetailsList).length !== 0
+    ) {
+      locationDetailsList.map((item, i) => {
+        if (item.locationId === user.locationId) {
+          setLocationName(item.locationName);
+        }
+      });
+    }
+  }, [locationDetailsList, user]);
   return (
     <Fragment>
-      <ToastContainer />
       <Form>
         <label>
           <b>Work :</b>
@@ -48,28 +61,28 @@ const WorkDetails = () => {
               <b>Email Id</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.email}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Fed Id</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.fedId}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Contract Type</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.contractType}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Department</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.department}</label>
           </Col>
         </Row>
         <Row
@@ -82,28 +95,28 @@ const WorkDetails = () => {
               <b>Position</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.position}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Designation</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.designation}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Sport</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.sport}</label>
           </Col>
           <Col sm={3}>
             <label>
-              <b>Cost Centre</b>
+              <b>Cost Center</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.costCentre}</label>
           </Col>
         </Row>
         <Row
@@ -116,28 +129,30 @@ const WorkDetails = () => {
               <b>Work Location</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{locationName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Company Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.company}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Date Of Transfer</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">
+              {moment(user.dateOfTransfer).format("DD-MM-YYYY")}
+            </label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Manager Id</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.managerId}</label>
           </Col>
         </Row>
         <Row
@@ -150,28 +165,28 @@ const WorkDetails = () => {
               <b>Manager Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.managerName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Probation Period</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.probationPeriod}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>System Role</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{rolePermission}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Recruitment Source</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.recruitmentSource}</label>
           </Col>
         </Row>
         <Row
@@ -184,7 +199,7 @@ const WorkDetails = () => {
               <b>NGO Name</b>
             </label>
             <br />
-            <label className="itemResult">IDDDDD</label>
+            <label className="itemResult">{user.ngoName}</label>
           </Col>
         </Row>
       </Form>

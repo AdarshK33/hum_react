@@ -11,8 +11,22 @@ import Select from "react-select";
 import { ToastContainer, toast } from "react-toastify";
 import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
+import { TransferContext } from "../../context/TransferState";
+import { OfferContext } from "../../context/OfferState";
+import { AppContext } from "../../context/AppState";
 const Address = (props) => {
+  const { user } = useContext(AppContext);
+  const { addressView, addressViewData, bankView, UpdateAddress, uploadFile } =
+    useContext(EmployeeProfileContext);
+  const {
+    getCountryDetails,
+    countryDetails,
+    getCostCentreLocationDetails,
+    costCentreLocationData,
+  } = useContext(TransferContext);
+  const { stateData, stateList } = useContext(OfferContext);
   const {
     candidateCountryList,
     candidateCountryData,
@@ -24,8 +38,6 @@ const Address = (props) => {
     candidatePresentCityData,
     addressCreate,
     addressSaveData,
-    addressView,
-    addressViewData,
     CandidateProfile,
     candidateProfileData,
   } = useContext(OnBoardContext);
@@ -61,20 +73,35 @@ const Address = (props) => {
     addressLine: "",
     pinCode: "",
     phoneNumber: "",
+    addressId: 0,
+    addressType: 0,
+    employeeId: 0,
     permanentFlatNumber: "",
     permanentStreet: "",
     permanentLocality: "",
     permanentAddressLine: "",
     permanentPinCode: "",
     permanentPhoneNumber: "",
+    permanentAddressId: "",
   });
+  const [stateOfOb, setStateOfOb] = useState({
+    addressProof: "",
+  });
+  const [stateOfName, setStateOfNames] = useState({
+    addressProof: "",
+  });
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULAddressProof: false,
+    },
+  ]);
 
   const [countryName, setCountryName] = useState();
-  const [stateName, setStateName] = useState();
-  const [cityName, setCityName] = useState();
+  const [stateName, setStateName] = useState("");
+  const [cityName, setCityName] = useState("");
   const [permanentCountryName, setPermanentCountryName] = useState();
-  const [permanentStateName, setPermanentStateName] = useState();
-  const [permanentCityName, setPermanentCityName] = useState();
+  const [permanentStateName, setPermanentStateName] = useState("");
+  const [permanentCityName, setPermanentCityName] = useState("");
 
   const [countryId, setCountryId] = useState();
   const [stateId, setStateId] = useState();
@@ -84,6 +111,224 @@ const Address = (props) => {
   const [permanentCityId, setPermanentCityId] = useState();
   const [addressValue, setAddressValue] = useState(0);
   // un commect
+  useEffect(() => {
+    addressView();
+    getCountryDetails();
+    getCostCentreLocationDetails();
+    stateData();
+    bankView();
+  }, []);
+
+  useEffect(() => {
+    if (
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined &&
+      Object.keys(addressViewData.presentAddress).length !== 0 &&
+      addressViewData.presentAddress.addressType === 0 &&
+      addressViewData.permanentAddress !== null &&
+      addressViewData.permanentAddress !== undefined &&
+      Object.keys(addressViewData.permanentAddress).length !== 0
+    ) {
+      setState({
+        flatNumber: addressViewData.presentAddress.flatNumber,
+        street: addressViewData.presentAddress.street,
+        locality: addressViewData.presentAddress.locality,
+        addressLine: addressViewData.presentAddress.addressLine,
+        pinCode: addressViewData.presentAddress.pinCode,
+        phoneNumber: addressViewData.presentAddress.phoneNumber,
+        addressId: addressViewData.presentAddress.addressId,
+        addressType: addressViewData.presentAddress.addressType,
+        employeeId: addressViewData.presentAddress.employeeId,
+
+        permanentFlatNumber: addressViewData.permanentAddress.flatNumber,
+        permanentStreet: addressViewData.permanentAddress.street,
+        permanentLocality: addressViewData.permanentAddress.locality,
+        permanentAddressLine: addressViewData.permanentAddress.addressLine,
+        permanentPinCode: addressViewData.permanentAddress.pinCode,
+        permanentPhoneNumber: addressViewData.permanentAddress.phoneNumber,
+        permanentAddressId: addressViewData.permanentAddress.addressId,
+      });
+    } else if (
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined &&
+      Object.keys(addressViewData.presentAddress).length !== 0 &&
+      addressViewData.presentAddress.addressType === 1
+    ) {
+      setState({
+        flatNumber: addressViewData.presentAddress.flatNumber,
+        street: addressViewData.presentAddress.street,
+        locality: addressViewData.presentAddress.locality,
+        addressLine: addressViewData.presentAddress.addressLine,
+        pinCode: addressViewData.presentAddress.pinCode,
+        phoneNumber: addressViewData.presentAddress.phoneNumber,
+        addressId: addressViewData.presentAddress.addressId,
+        addressType: addressViewData.presentAddress.addressType,
+        employeeId: addressViewData.presentAddress.employeeId,
+
+        permanentFlatNumber: addressViewData.presentAddress.flatNumber,
+        permanentStreet: addressViewData.presentAddress.street,
+        permanentLocality: addressViewData.presentAddress.locality,
+        permanentAddressLine: addressViewData.presentAddress.addressLine,
+        permanentPinCode: addressViewData.presentAddress.pinCode,
+        permanentPhoneNumber: addressViewData.presentAddress.phoneNumber,
+        permanentAddressId: addressViewData.presentAddress.addressId,
+      });
+    } else if (
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined
+    ) {
+      setState({
+        flatNumber: addressViewData.presentAddress.flatNumber,
+        street: addressViewData.presentAddress.street,
+        locality: addressViewData.presentAddress.locality,
+        addressLine: addressViewData.presentAddress.addressLine,
+        pinCode: addressViewData.presentAddress.pinCode,
+        phoneNumber: addressViewData.presentAddress.phoneNumber,
+        addressId: addressViewData.presentAddress.addressId,
+        addressType: addressViewData.presentAddress.addressType,
+        employeeId: addressViewData.presentAddress.employeeId,
+      });
+    }
+  }, [addressViewData]);
+  useEffect(() => {
+    if (
+      countryDetails !== null &&
+      countryDetails !== undefined &&
+      Object.keys(countryDetails).length !== 0 &&
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined
+    ) {
+      countryDetails.map((item, i) => {
+        if (item.countryName === addressViewData.presentAddress.country) {
+          setCountryName(item.countryName);
+        }
+      });
+    } else {
+      setCountryName("");
+    }
+    if (
+      countryDetails !== null &&
+      countryDetails !== undefined &&
+      Object.keys(countryDetails).length !== 0 &&
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined &&
+      Object.keys(addressViewData.presentAddress).length !== 0 &&
+      addressViewData.presentAddress.addressType === 0 &&
+      addressViewData.permanentAddress !== null &&
+      addressViewData.permanentAddress !== undefined &&
+      Object.keys(addressViewData.permanentAddress).length !== 0
+    ) {
+      countryDetails.map((item, i) => {
+        if (item.countryName === addressViewData.permanentAddress.country) {
+          setPermanentCountryName(item.countryName);
+        }
+      });
+    } else {
+      setPermanentCountryName("");
+    }
+  }, [addressViewData, countryDetails]);
+  useEffect(() => {
+    if (
+      costCentreLocationData !== null &&
+      costCentreLocationData !== undefined &&
+      Object.keys(costCentreLocationData).length !== 0 &&
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined
+    ) {
+      costCentreLocationData.map((item, i) => {
+        if (item.stateName === addressViewData.presentAddress.state) {
+          setStateName(item.stateName);
+        }
+      });
+    } else {
+      setStateName("");
+    }
+    if (
+      costCentreLocationData !== null &&
+      costCentreLocationData !== undefined &&
+      Object.keys(costCentreLocationData).length !== 0 &&
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined &&
+      Object.keys(addressViewData.presentAddress).length !== 0 &&
+      addressViewData.presentAddress.addressType === 0 &&
+      addressViewData.permanentAddress !== null &&
+      addressViewData.permanentAddress !== undefined &&
+      Object.keys(addressViewData.permanentAddress).length !== 0
+    ) {
+      costCentreLocationData.map((item, i) => {
+        if (item.stateName === addressViewData.permanentAddress.state) {
+          setPermanentStateName(item.stateName);
+        }
+      });
+    } else {
+      setPermanentStateName("");
+    }
+  }, [addressViewData, costCentreLocationData]);
+
+  useEffect(() => {
+    if (
+      stateList !== null &&
+      stateList !== undefined &&
+      Object.keys(stateList).length !== 0 &&
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined
+    ) {
+      stateList.map((item, i) => {
+        if (item.cityName === addressViewData.presentAddress.city) {
+          setCityName(item.cityName);
+        }
+      });
+    } else {
+      setCityName("");
+    }
+    if (
+      stateList !== null &&
+      stateList !== undefined &&
+      Object.keys(stateList).length !== 0 &&
+      addressViewData !== null &&
+      addressViewData !== undefined &&
+      Object.keys(addressViewData).length !== 0 &&
+      addressViewData.presentAddress !== null &&
+      addressViewData.presentAddress !== undefined &&
+      Object.keys(addressViewData.presentAddress).length !== 0 &&
+      addressViewData.presentAddress.addressType === 0 &&
+      addressViewData.permanentAddress !== null &&
+      addressViewData.permanentAddress !== undefined &&
+      Object.keys(addressViewData.permanentAddress).length !== 0
+    ) {
+      stateList.map((item, i) => {
+        if (item.cityName === addressViewData.permanentAddress.city) {
+          setPermanentCityName(item.cityName);
+        }
+      });
+    } else {
+      setPermanentCityName("");
+    }
+  }, [addressViewData, stateList]);
   // useEffect(() => {
   //   CandidateProfile();
   //   candidateCountryList();
@@ -107,162 +352,162 @@ const Address = (props) => {
   //     setCountryName(countryvalue[0].countryName);
   //   }
   // }, [candidateCountryData]);
-  useEffect(() => {
-    let permanentStatevalue;
-    let permanentCityValue;
-    let stateValue;
-    let cityValue;
-    if (
-      addressViewData !== undefined &&
-      addressViewData !== null &&
-      addressViewData.stateId !== undefined &&
-      addressViewData.stateId !== null
-    ) {
-      stateValue = candidateStateData.filter(
-        (i) => i.stateId === addressViewData.stateId
-      );
-      console.log("stateValue", stateValue);
-      if (stateValue.length !== 0) {
-        setStateId(stateValue[0].stateId);
-        setStateName(stateValue[0].stateName);
-        candidatePresentCityList(addressViewData.stateId);
-      }
-      setPresentCityData(candidatePresentCityData);
-      permanentStatevalue = candidateStateData.filter(
-        (i) => i.stateId === addressViewData.permanentStateId
-      );
-      if (permanentStatevalue.length !== 0) {
-        setPermanentStateId(permanentStatevalue[0].stateId);
-        setPermanentStateName(permanentStatevalue[0].stateName);
-        candidatePermanentCityList(addressViewData.permanentStateId);
-      }
-    }
-  }, [candidateStateData, addressViewData]);
-  useEffect(() => {
-    let cityValue;
-    if (addressViewData !== undefined && addressViewData !== null) {
-      cityValue = candidatePresentCityData.filter(
-        (i) => i.cityId == addressViewData.cityId
-      );
-      console.log("present............", cityValue);
+  // useEffect(() => {
+  //   let permanentStatevalue;
+  //   let permanentCityValue;
+  //   let stateValue;
+  //   let cityValue;
+  //   if (
+  //     addressViewData !== undefined &&
+  //     addressViewData !== null &&
+  //     addressViewData.stateId !== undefined &&
+  //     addressViewData.stateId !== null
+  //   ) {
+  //     stateValue = candidateStateData.filter(
+  //       (i) => i.stateId === addressViewData.stateId
+  //     );
+  //     console.log("stateValue", stateValue);
+  //     if (stateValue.length !== 0) {
+  //       setStateId(stateValue[0].stateId);
+  //       setStateName(stateValue[0].stateName);
+  //       candidatePresentCityList(addressViewData.stateId);
+  //     }
+  //     setPresentCityData(candidatePresentCityData);
+  //     permanentStatevalue = candidateStateData.filter(
+  //       (i) => i.stateId === addressViewData.permanentStateId
+  //     );
+  //     if (permanentStatevalue.length !== 0) {
+  //       setPermanentStateId(permanentStatevalue[0].stateId);
+  //       setPermanentStateName(permanentStatevalue[0].stateName);
+  //       candidatePermanentCityList(addressViewData.permanentStateId);
+  //     }
+  //   }
+  // }, [candidateStateData, addressViewData]);
+  // useEffect(() => {
+  //   let cityValue;
+  //   if (addressViewData !== undefined && addressViewData !== null) {
+  //     cityValue = candidatePresentCityData.filter(
+  //       (i) => i.cityId == addressViewData.cityId
+  //     );
+  //     console.log("present............", cityValue);
 
-      setPresentCityData(cityValue);
+  //     setPresentCityData(cityValue);
 
-      let permanentCityValue;
+  //     let permanentCityValue;
 
-      if (addressViewData.addressType === 0) {
-        permanentCityValue = candidatePermanentCityData.filter(
-          (i) => i.cityId === addressViewData.permanentCityId
-        );
-        setPermanentCityData(permanentCityValue);
-      }
-    }
-  }, [addressViewData, candidatePresentCityData, candidatePermanentCityData]);
+  //     if (addressViewData.addressType === 0) {
+  //       permanentCityValue = candidatePermanentCityData.filter(
+  //         (i) => i.cityId === addressViewData.permanentCityId
+  //       );
+  //       setPermanentCityData(permanentCityValue);
+  //     }
+  //   }
+  // }, [addressViewData, candidatePresentCityData, candidatePermanentCityData]);
 
-  useEffect(() => {
-    if (permanetCityData.length !== 0) {
-      setPermanentCityId(permanetCityData[0].cityId);
-      setPermanentCityName(permanetCityData[0].cityName);
-    }
-  }, [candidateStateData, permanetCityData]);
-  useEffect(() => {
-    if (presentCityData.length !== 0) {
-      setCityId(presentCityData[0].cityId);
-      setCityName(presentCityData[0].cityName);
-    }
-  }, [candidateStateData, presentCityData]);
-  useEffect(() => {
-    console.log("prefill data", addressViewData);
-    let countryvalue;
-    let stateValue;
-    let cityValue;
-    let permanentCountryvalue;
+  // useEffect(() => {
+  //   if (permanetCityData.length !== 0) {
+  //     setPermanentCityId(permanetCityData[0].cityId);
+  //     setPermanentCityName(permanetCityData[0].cityName);
+  //   }
+  // }, [candidateStateData, permanetCityData]);
+  // useEffect(() => {
+  //   if (presentCityData.length !== 0) {
+  //     setCityId(presentCityData[0].cityId);
+  //     setCityName(presentCityData[0].cityName);
+  //   }
+  // }, [candidateStateData, presentCityData]);
+  // useEffect(() => {
+  //   console.log("prefill data", addressViewData);
+  //   let countryvalue;
+  //   let stateValue;
+  //   let cityValue;
+  //   let permanentCountryvalue;
 
-    if (addressViewData !== undefined && addressViewData !== null) {
-      if (addressViewData.addressType === 0) {
-        setAddressValue(addressViewData.addressId);
-        if (
-          candidateCountryData !== null &&
-          candidateCountryData !== undefined &&
-          candidateCountryData.length !== 0
-        ) {
-          countryvalue = candidateCountryData.filter(
-            (i) => i.countryId === addressViewData.countryId
-          );
-          console.log("Countryvalue", countryvalue);
-          if (countryvalue !== undefined && countryvalue !== null) {
-            setCountryName(countryvalue[0].countryName);
-            setCountryId(countryvalue[0].countryId);
-            CandidateStateList(countryvalue[0].countryName);
-          }
+  //   if (addressViewData !== undefined && addressViewData !== null) {
+  //     if (addressViewData.addressType === 0) {
+  //       setAddressValue(addressViewData.addressId);
+  //       if (
+  //         candidateCountryData !== null &&
+  //         candidateCountryData !== undefined &&
+  //         candidateCountryData.length !== 0
+  //       ) {
+  //         countryvalue = candidateCountryData.filter(
+  //           (i) => i.countryId === addressViewData.countryId
+  //         );
+  //         console.log("Countryvalue", countryvalue);
+  //         if (countryvalue !== undefined && countryvalue !== null) {
+  //           setCountryName(countryvalue[0].countryName);
+  //           setCountryId(countryvalue[0].countryId);
+  //           CandidateStateList(countryvalue[0].countryName);
+  //         }
 
-          permanentCountryvalue = candidateCountryData.filter(
-            (i) => i.countryId === addressViewData.permanentCountryId
-          );
-          console.log("permanentCountryvalue", permanentCountryvalue);
-          if (
-            permanentCountryvalue !== undefined &&
-            permanentCountryvalue !== null
-          ) {
-            setPermanentCountryId(permanentCountryvalue[0].countryId);
-            setPermanentCountryName(permanentCountryvalue[0].countryName);
-            CandidateStateList(permanentCountryvalue[0].countryName);
-          }
-        }
+  //         permanentCountryvalue = candidateCountryData.filter(
+  //           (i) => i.countryId === addressViewData.permanentCountryId
+  //         );
+  //         console.log("permanentCountryvalue", permanentCountryvalue);
+  //         if (
+  //           permanentCountryvalue !== undefined &&
+  //           permanentCountryvalue !== null
+  //         ) {
+  //           setPermanentCountryId(permanentCountryvalue[0].countryId);
+  //           setPermanentCountryName(permanentCountryvalue[0].countryName);
+  //           CandidateStateList(permanentCountryvalue[0].countryName);
+  //         }
+  //       }
 
-        changeCheckState(false);
-        setState({
-          flatNumber: addressViewData.flatNumber,
-          street: addressViewData.street,
-          locality: addressViewData.locality,
-          addressLine: addressViewData.addressLine,
-          pinCode: addressViewData.pinCode,
-          phoneNumber: addressViewData.phoneNumber,
-          permanentFlatNumber: addressViewData.permanentFlatNumber,
-          permanentStreet: addressViewData.permanentStreet,
-          permanentLocality: addressViewData.permanentLocality,
-          permanentAddressLine: addressViewData.permanentAddressLine,
-          permanentPinCode: addressViewData.permanentPinCode,
-          permanentPhoneNumber: addressViewData.permanentPhoneNumber,
-        });
-      } else if (addressViewData.addressType === 1) {
-        setAddressValue(addressViewData.addressId);
-        if (
-          candidateCountryData !== null &&
-          candidateCountryData !== undefined &&
-          candidateCountryData.length !== 0
-        ) {
-          countryvalue = candidateCountryData.filter(
-            (i) => i.countryId === addressViewData.countryId
-          );
-          console.log("Countryvalue", countryvalue);
-          setCountryName(countryvalue[0].countryName);
-          setCountryId(countryvalue[0].countryId);
-          CandidateStateList(countryvalue[0].countryName);
-          stateValue = candidateStateData.filter(
-            (i) => i.stateId === addressViewData.stateId
-          );
-          console.log("stateValue", stateValue);
+  //       changeCheckState(false);
+  //       setState({
+  //         flatNumber: addressViewData.flatNumber,
+  //         street: addressViewData.street,
+  //         locality: addressViewData.locality,
+  //         addressLine: addressViewData.addressLine,
+  //         pinCode: addressViewData.pinCode,
+  //         phoneNumber: addressViewData.phoneNumber,
+  //         permanentFlatNumber: addressViewData.permanentFlatNumber,
+  //         permanentStreet: addressViewData.permanentStreet,
+  //         permanentLocality: addressViewData.permanentLocality,
+  //         permanentAddressLine: addressViewData.permanentAddressLine,
+  //         permanentPinCode: addressViewData.permanentPinCode,
+  //         permanentPhoneNumber: addressViewData.permanentPhoneNumber,
+  //       });
+  //     } else if (addressViewData.addressType === 1) {
+  //       setAddressValue(addressViewData.addressId);
+  //       if (
+  //         candidateCountryData !== null &&
+  //         candidateCountryData !== undefined &&
+  //         candidateCountryData.length !== 0
+  //       ) {
+  //         countryvalue = candidateCountryData.filter(
+  //           (i) => i.countryId === addressViewData.countryId
+  //         );
+  //         console.log("Countryvalue", countryvalue);
+  //         setCountryName(countryvalue[0].countryName);
+  //         setCountryId(countryvalue[0].countryId);
+  //         CandidateStateList(countryvalue[0].countryName);
+  //         stateValue = candidateStateData.filter(
+  //           (i) => i.stateId === addressViewData.stateId
+  //         );
+  //         console.log("stateValue", stateValue);
 
-          if (stateValue.length !== 0) {
-            setStateId(stateValue[0].stateId);
-            setStateName(stateValue[0].stateName);
-            candidatePresentCityList(stateValue[0].stateId);
-          }
-        }
+  //         if (stateValue.length !== 0) {
+  //           setStateId(stateValue[0].stateId);
+  //           setStateName(stateValue[0].stateName);
+  //           candidatePresentCityList(stateValue[0].stateId);
+  //         }
+  //       }
 
-        changeCheckState(true);
-        setState({
-          flatNumber: addressViewData.flatNumber,
-          street: addressViewData.street,
-          locality: addressViewData.locality,
-          addressLine: addressViewData.addressLine,
-          pinCode: addressViewData.pinCode,
-          phoneNumber: addressViewData.phoneNumber,
-        });
-      }
-    }
-  }, [addressViewData]);
+  //       changeCheckState(true);
+  //       setState({
+  //         flatNumber: addressViewData.flatNumber,
+  //         street: addressViewData.street,
+  //         locality: addressViewData.locality,
+  //         addressLine: addressViewData.addressLine,
+  //         pinCode: addressViewData.pinCode,
+  //         phoneNumber: addressViewData.phoneNumber,
+  //       });
+  //     }
+  //   }
+  // }, [addressViewData]);
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -310,6 +555,7 @@ const Address = (props) => {
       (stateName !== null) &
       (stateName !== undefined) &
       (stateName !== 0) &
+      (stateName !== "") &
       (stateName !== "Select State")
     ) {
       setStateError(false);
@@ -326,6 +572,7 @@ const Address = (props) => {
       (cityName !== null) &
       (cityName !== undefined) &
       (cityName !== 0) &
+      (cityName !== "") &
       (cityName !== "Select City")
     ) {
       setCityError(false);
@@ -428,6 +675,7 @@ const Address = (props) => {
       (permanentStateName !== null) &
       (permanentStateName !== undefined) &
       (permanentStateName !== 0) &
+      (permanentStateName !== "") &
       (permanentStateName !== "Select State")
     ) {
       setPermanentStateError(false);
@@ -444,6 +692,7 @@ const Address = (props) => {
       (permanentCityName !== null) &
       (permanentCityName !== undefined) &
       (permanentCityName !== 0) &
+      (permanentCityName !== "") &
       (permanentCityName !== "Select City")
     ) {
       setPermanentCityError(false);
@@ -498,7 +747,15 @@ const Address = (props) => {
       (PinCodeErrorValidations() == true) &
       (PhoneNoErrorValidations() == true)
     ) {
-      if (isChecked == false) {
+      if (
+        addressViewData !== null &&
+        addressViewData !== undefined &&
+        Object.keys(addressViewData).length !== 0 &&
+        addressViewData.presentAddress !== null &&
+        addressViewData.presentAddress !== undefined &&
+        Object.keys(addressViewData.presentAddress).length !== 0 &&
+        addressViewData.presentAddress.addressType === 0
+      ) {
         console.log("isChecked");
         if (
           (permanentFlatNumberValidation() == true) &
@@ -521,108 +778,176 @@ const Address = (props) => {
     }
   };
   const countryHandler = (e) => {
-    console.log("countryHandler", e.target.value);
-    let filteredListOfCountry = candidateCountryData.filter(
-      (i) => i.countryName === e.target.value
-    );
-    console.log("filteredListOfCountry", filteredListOfCountry);
+    // console.log("countryHandler", e.target.value);
+    // let filteredListOfCountry = candidateCountryData.filter(
+    //   (i) => i.countryName === e.target.value
+    // );
+    // console.log("filteredListOfCountry", filteredListOfCountry);
     setCountryName(e.target.value);
-    setCountryId(filteredListOfCountry[0].countryId);
-    CandidateStateList(filteredListOfCountry[0].countryName);
+    // setCountryId(filteredListOfCountry[0].countryId);
+    // CandidateStateList(filteredListOfCountry[0].countryName);
   };
 
   const stateHandler = (e) => {
-    console.log("stateHandler", e.target.value);
-    let filteredListOfState = candidateStateData.filter(
-      (i) => i.stateName === e.target.value
-    );
-    console.log("filteredListOfState", filteredListOfState);
+    // console.log("stateHandler", e.target.value);
+    // let filteredListOfState = candidateStateData.filter(
+    //   (i) => i.stateName === e.target.value
+    // );
+    // console.log("filteredListOfState", filteredListOfState);
     setStateName(e.target.value);
-    setStateId(filteredListOfState[0].stateId);
-    candidatePresentCityList(filteredListOfState[0].stateId);
+    // setStateId(filteredListOfState[0].stateId);
+    // candidatePresentCityList(filteredListOfState[0].stateId);
   };
 
   const cityHandler = (e) => {
-    let filteredListOfCity = candidatePresentCityData.filter(
-      (i) => i.cityName === e.target.value
-    );
-    console.log("filteredListOfCity", filteredListOfCity);
-    setCityName(filteredListOfCity[0].cityName);
-    setCityId(filteredListOfCity[0].cityId);
+    // let filteredListOfCity = candidatePresentCityData.filter(
+    //   (i) => i.cityName === e.target.value
+    // );
+    // console.log("filteredListOfCity", filteredListOfCity);
+    setCityName(e.target.value);
+    // setCityId(filteredListOfCity[0].cityId);
   };
 
   const permanentCountryHandler = (e) => {
-    let filteredListOfCountry = candidateCountryData.filter(
-      (i) => i.countryName === e.target.value
-    );
-    console.log("filteredListOfCountry", filteredListOfCountry);
+    // let filteredListOfCountry = candidateCountryData.filter(
+    //   (i) => i.countryName === e.target.value
+    // );
+    // console.log("filteredListOfCountry", filteredListOfCountry);
     setPermanentCountryName(e.target.value);
-    setPermanentCountryId(filteredListOfCountry[0].countryId);
-    CandidateStateList(filteredListOfCountry[0].countryName);
+    // setPermanentCountryId(filteredListOfCountry[0].countryId);
+    // CandidateStateList(filteredListOfCountry[0].countryName);
   };
 
   const permanentStateHandler = (e) => {
-    let filteredListOfState = candidateStateData.filter(
-      (i) => i.stateName === e.target.value
-    );
-    console.log("filteredListOfState", filteredListOfState);
+    // let filteredListOfState = candidateStateData.filter(
+    //   (i) => i.stateName === e.target.value
+    // );
+    // console.log("filteredListOfState", filteredListOfState);
     setPermanentStateName(e.target.value);
-    setPermanentStateId(filteredListOfState[0].stateId);
-    candidatePermanentCityList(filteredListOfState[0].stateId);
+    // setPermanentStateId(filteredListOfState[0].stateId);
+    // candidatePermanentCityList(filteredListOfState[0].stateId);
   };
 
   const permanentCityHandler = (e) => {
-    let filteredListOfCity = candidatePermanentCityData.filter(
-      (i) => i.cityName === e.target.value
-    );
-    console.log("filteredListOfCity", filteredListOfCity);
+    // let filteredListOfCity = candidatePermanentCityData.filter(
+    //   (i) => i.cityName === e.target.value
+    // );
+    // console.log("filteredListOfCity", filteredListOfCity);
     setPermanentCityName(e.target.value);
-    setPermanentCityId(filteredListOfCity[0].cityId);
+    // setPermanentCityId(filteredListOfCity[0].cityId);
+  };
+  const changeHandler1 = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setStateOfOb({
+          ...stateOfOb,
+          [event.target.name]: fileObj,
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: fileObj.name,
+        });
+
+        if (event.target.name === "addressProof") {
+          UploadedArray[0].ULAddressProof = false;
+        }
+      } else {
+        toast.error("File size should not exceed 500kb");
+      }
+    } else {
+      toast.error("Please select jpg, jpeg, png and pdf formats");
+    }
+  };
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+
+    if (event.target.name === "addressProof") {
+      // if (AddressProofValidation() === true) {
+      fileUpload = stateOfOb.addressProof;
+      fileType = 3;
+      UploadedArray[0].ULAddressProof = true;
+      // }
+    }
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        employeeId: user.employeeId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Please select file");
+    }
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // if (saveclick === false) {
-    //   addressValue = 0;
-    //   setSaveclick(true);
-    // } else if (addressSaveData || addressViewData || saveclick === true) {
-    //   addressValue = addressSaveData.addressId
-    //     ? addressSaveData.addressId
-    //     : addressViewData.addressId;
-    // }
+
     const value = checkValidations();
 
     if (value === true) {
+      console.log("Inside the address submit");
       // setSaveclick(true);
+
       const AddressInfo = {
-        addressId: addressValue,
-        addressLine: state.addressLine,
-        addressProof: " ",
-        addressType: isChecked ? 1 : 0,
-        candidateId: candidateProfileData.candidateId,
-        cityId: cityId,
-        countryId: countryId,
-        stateId: stateId,
-        flatNumber: state.flatNumber,
-        locality: state.locality,
-        permanentAddressLine: isChecked ? "" : state.permanentAddressLine,
-        permanentAddressProof: " ",
-        permanentCityId: isChecked ? "" : permanentCityId,
-        permanentCountryId: isChecked ? "" : permanentCountryId,
-        permanentStateId: isChecked ? "" : permanentStateId,
-        permanentFlatNumber: isChecked ? "" : state.permanentFlatNumber,
-        permanentLocality: isChecked ? "" : state.permanentLocality,
-        permanentPhoneNumber: isChecked ? "" : state.permanentPhoneNumber,
-        permanentPinCode: isChecked ? "" : state.permanentPinCode,
-        permanentStreet: isChecked ? "" : state.permanentStreet,
-        phoneNumber: state.phoneNumber,
-        pinCode: state.pinCode,
-        street: state.street,
+        presentAddress: {
+          addressId: state.addressId,
+          addressLine: state.addressLine,
+          // addressProof: ,
+          addressType: state.addressType,
+          city: cityName,
+          country: countryName,
+          employeeId: state.employeeId,
+          flatNumber: state.flatNumber,
+          locality: state.locality,
+          phoneNumber: state.phoneNumber,
+          pinCode: state.pinCode,
+          state: stateName,
+          street: state.street,
+        },
+
+        permanentAddress:
+          addressViewData !== null &&
+          addressViewData !== undefined &&
+          Object.keys(addressViewData).length !== 0 &&
+          addressViewData.presentAddress !== null &&
+          addressViewData.presentAddress !== undefined &&
+          Object.keys(addressViewData.presentAddress).length !== 0 &&
+          addressViewData.presentAddress.addressType === 0
+            ? {
+                addressId: state.permanentAddressId,
+                addressLine: state.permanentAddressLine,
+                // addressProof: "string",
+                city: permanentCityName,
+                country: permanentCountryName,
+                employeeId: state.employeeId,
+                flatNumber: state.permanentFlatNumber,
+                locality: state.permanentLocality,
+                phoneNumber: state.permanentPhoneNumber,
+                pinCode: state.permanentPinCode,
+                state: permanentStateName,
+                street: state.permanentStreet,
+              }
+            : null,
       };
+
       console.log("address payload", AddressInfo);
-      addressCreate(AddressInfo);
-      const nextPage = props.NextStep;
-      nextPage(true);
+      UpdateAddress(AddressInfo);
+      // addressCreate(AddressInfo);
+      // const nextPage = props.NextStep;
+      // nextPage(true);
     }
   };
 
@@ -652,7 +977,7 @@ const Address = (props) => {
     console.log("permanet", permanetCityData),
     (
       <Fragment>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <Form>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={6}>
@@ -763,10 +1088,10 @@ const Address = (props) => {
                   disabled={disabled}
                 >
                   <option value="">Select Country</option>
-                  {candidateCountryData !== null &&
-                    candidateCountryData !== undefined &&
-                    candidateCountryData.length > 0 &&
-                    candidateCountryData.map((item, i) => {
+                  {countryDetails !== null &&
+                    countryDetails !== undefined &&
+                    countryDetails.length > 0 &&
+                    countryDetails.map((item, i) => {
                       return (
                         <option key={item.countryId}>{item.countryName}</option>
                       );
@@ -792,10 +1117,10 @@ const Address = (props) => {
                   onChange={(e) => stateHandler(e)}
                 >
                   <option value="">Select State</option>
-                  {candidateStateData !== null &&
-                    candidateStateData !== undefined &&
-                    candidateStateData.length > 0 &&
-                    candidateStateData.map((item, i) => {
+                  {costCentreLocationData !== null &&
+                    costCentreLocationData !== undefined &&
+                    costCentreLocationData.length > 0 &&
+                    costCentreLocationData.map((item, i) => {
                       return (
                         <option key={item.stateId}>{item.stateName}</option>
                       );
@@ -821,10 +1146,10 @@ const Address = (props) => {
                   onChange={cityHandler}
                 >
                   <option value="">Select City</option>
-                  {candidatePresentCityData !== null &&
-                    candidatePresentCityData !== undefined &&
-                    candidatePresentCityData.length > 0 &&
-                    candidatePresentCityData.map((item, i) => {
+                  {stateList !== null &&
+                    stateList !== undefined &&
+                    stateList.length > 0 &&
+                    stateList.map((item, i) => {
                       return <option key={item.cityId}>{item.cityName}</option>;
                     })}
                 </Form.Control>
@@ -1043,10 +1368,10 @@ const Address = (props) => {
                       disabled={disabled}
                     >
                       <option value="">Select Country</option>
-                      {candidateCountryData !== null &&
-                        candidateCountryData !== undefined &&
-                        candidateCountryData.length > 0 &&
-                        candidateCountryData.map((item) => {
+                      {countryDetails !== null &&
+                        countryDetails !== undefined &&
+                        countryDetails.length > 0 &&
+                        countryDetails.map((item) => {
                           return (
                             <option key={item.countryId}>
                               {item.countryName}
@@ -1074,10 +1399,10 @@ const Address = (props) => {
                       onChange={permanentStateHandler}
                     >
                       <option value="">Select State</option>
-                      {candidateStateData !== null &&
-                        candidateStateData !== undefined &&
-                        candidateStateData.length > 0 &&
-                        candidateStateData.map((item) => {
+                      {costCentreLocationData !== null &&
+                        costCentreLocationData !== undefined &&
+                        costCentreLocationData.length > 0 &&
+                        costCentreLocationData.map((item) => {
                           return (
                             <option key={item.stateId}>{item.stateName}</option>
                           );
@@ -1103,10 +1428,10 @@ const Address = (props) => {
                       onChange={permanentCityHandler}
                     >
                       <option value="">Select City</option>
-                      {candidatePermanentCityData !== null &&
-                        candidatePermanentCityData !== undefined &&
-                        candidatePermanentCityData.length > 0 &&
-                        candidatePermanentCityData.map((item) => {
+                      {stateList !== null &&
+                        stateList !== undefined &&
+                        stateList.length > 0 &&
+                        stateList.map((item) => {
                           return (
                             <option key={item.cityId}>{item.cityName}</option>
                           );
@@ -1193,18 +1518,17 @@ const Address = (props) => {
                 <div className="parentInput">
                   <label className="fileInputField">
                     &nbsp;&nbsp;
-                    {/* {stateOfName.photoId !== ""
-                      ? stateOfName.photoId
-                      : "Select File Here"} */}
+                    {stateOfName.addressProof !== ""
+                      ? stateOfName.addressProof
+                      : "Select File Here"}
                     <input
                       type="file"
                       accept="image/*,.pdf"
-                      name="photoId"
+                      name="addressProof"
                       style={{ display: "none" }}
-                      //   onChange={(e) => {
-                      //     changeHandler(e);
-                      //   }}
-
+                      onChange={(e) => {
+                        changeHandler1(e);
+                      }}
                       readOnly
                     />
                   </label>
@@ -1212,12 +1536,11 @@ const Address = (props) => {
                   <label className="custom-file-upload">
                     <input
                       type="button"
+                      name="addressProof"
                       className="custom_file_Upload_button"
-                      name="photoId"
-
-                      //   onClick={(e) => {
-                      //     handleUpload(e);
-                      //   }}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1228,10 +1551,11 @@ const Address = (props) => {
                     ></i>
                   </label>
                 </div>
-                {/* {photoIdError ? (
+                {/* {addressProofError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the photo id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the address
+                    Proof
                   </p>
                 ) : (
                   <p></p>
@@ -1246,7 +1570,7 @@ const Address = (props) => {
               textAlign: "right",
             }}
           >
-            <button className="stepperButtons" onClick={submitHandler}>
+            <button className="profileButtons" onClick={submitHandler}>
               Update
             </button>
           </div>

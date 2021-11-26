@@ -3,21 +3,16 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { OnBoardContext } from "../../context/OnBoardState";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const EmergencyContact = (props) => {
-  const {
-    EmergencyContactCreate,
-    EmergencyContactUpdate,
-    EmergencyContactView,
-    addressView,
-    emergencyContactView,
-    candidateProfileData,
-    emergencyContactData,
-  } = useContext(OnBoardContext);
+  const { candidateProfileData, addressView } = useContext(OnBoardContext);
+  const { emergencyContactView, EmergencyContactView, EmergencyContactUpdate } =
+    useContext(EmployeeProfileContext);
   const [disabled, setDisableState] = useState(false);
-  // acessing candidateId from params
+  // acessing employeeId from params
 
   const [stateError, setStateError] = useState({
     contactNameError: "",
@@ -37,20 +32,17 @@ const EmergencyContact = (props) => {
     addressLine: "",
     city: "",
     country: "",
-    candidateId:
-      candidateProfileData.candidateId !== undefined
-        ? candidateProfileData.candidateId
-        : "",
+    employeeId: 0,
     contactId: 0,
     locality: "",
     phoneNumber: "",
     pinCode: "",
     relationship: "",
   });
-  // useEffect(() => {
-  //   EmergencyContactView(candidateProfileData.candidateId);
-  //   console.log(emergencyContactView, "emergencyContactView");
-  // }, []);
+  useEffect(() => {
+    EmergencyContactView(candidateProfileData.employeeId);
+    console.log(emergencyContactView, "emergencyContactView");
+  }, []);
   useEffect(() => {
     if (
       emergencyContactView !== null &&
@@ -60,7 +52,7 @@ const EmergencyContact = (props) => {
       setState({
         contactName: emergencyContactView.contactName,
         addressLine: emergencyContactView.addressLine,
-        candidateId: emergencyContactView.candidateId,
+        employeeId: emergencyContactView.employeeId,
         contactId: emergencyContactView.contactId,
         city: emergencyContactView.city,
         country: emergencyContactView.country,
@@ -103,15 +95,15 @@ const EmergencyContact = (props) => {
     //     stateError["addressLineError"] = "*Please enter valid address.";
     //   }
     // }
-    // if (!fields["city"]) {
-    //   formIsValid = false;
-    //   stateError["cityError"] = "*Please enter your city.";
-    // }
+    if (!fields["city"]) {
+      formIsValid = false;
+      stateError["cityError"] = "*Please enter your city.";
+    }
 
-    // if (!fields["country"]) {
-    //   formIsValid = false;
-    //   stateError["countryError"] = "*Please enter your country.";
-    // }
+    if (!fields["country"]) {
+      formIsValid = false;
+      stateError["countryError"] = "*Please enter your country.";
+    }
 
     if (typeof fields["country"] !== "undefined") {
       if (!fields["country"].match(/^[a-zA-Z ]*$/)) {
@@ -183,15 +175,18 @@ const EmergencyContact = (props) => {
     e.preventDefault();
     console.log("next", state);
     if (validateForm()) {
-      if (dataExist.exist == true) {
-        EmergencyContactUpdate(state);
-        const nextPage = props.NextStep;
-        nextPage(true);
-      } else {
-        EmergencyContactCreate(state);
-        const nextPage = props.NextStep;
-        nextPage(true);
-      }
+      console.log("INSIDE SUBMIT HANDLER");
+      console.log("state of emergency", state);
+      EmergencyContactUpdate(state);
+      // if (dataExist.exist == true) {
+      //   EmergencyContactUpdate(state);
+      //   const nextPage = props.NextStep;
+      //   nextPage(true);
+      // } else {
+      //   EmergencyContactCreate(state);
+      //   const nextPage = props.NextStep;
+      //   nextPage(true);
+      // }
     }
   };
 
@@ -200,7 +195,7 @@ const EmergencyContact = (props) => {
     console.log("previous");
     const back = props.PrevStep;
     back();
-    addressView(candidateProfileData.candidateId);
+    addressView(candidateProfileData.employeeId);
   };
   const changeHandler = (e) => {
     setState({
@@ -212,7 +207,7 @@ const EmergencyContact = (props) => {
 
   return (
     <Fragment>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={6}>
@@ -395,7 +390,7 @@ const EmergencyContact = (props) => {
             textAlign: "right",
           }}
         >
-          <button className="stepperButtons" onClick={submitHandler}>
+          <button className="profileButtons" onClick={submitHandler}>
             Update
           </button>
         </div>

@@ -73,12 +73,28 @@ const PartTimeAppointmentLetter = (props) => {
                     Dear <b>{offerLetterData.candidateName}</b>,
                   </p>
                   <p>
-                    Thank for your interest in choosing Decathlon Sports India
-                    Pvt Ltd (DSIPL). As we believe your passion for sport and
-                    your values match those of our Company, we, at DSIPL, are
-                    pleased to appoint you as a Decathlon Permanent Employee on
-                    a part time basis, and your responsibilities would be those
-                    of a <b>{offerLetterData.position}</b> at our{" "}
+                    Thank for your interest in choosing{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    Sports India Pvt Ltd (DSIPL). As we believe your passion for
+                    sport and your values match those of our Company, we, at{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>
+                    , are pleased to appoint you as a{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    Permanent Employee on a part time basis, and your
+                    responsibilities would be those of a{" "}
+                    <b>{offerLetterData.position}</b> at our{" "}
                     <b>{offerLetterData.location}</b> location effective{" "}
                     <b>
                       {moment(
@@ -113,13 +129,25 @@ const PartTimeAppointmentLetter = (props) => {
                   </p>
 
                   <p>
-                    We at Decathlon strongly believe in your ability to manage
-                    yourself in the best interest of the Company. Fewer the
-                    rules better the productivity as far as we are concerned.
+                    We at{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    strongly believe in your ability to manage yourself in the
+                    best interest of the Company. Fewer the rules better the
+                    productivity as far as we are concerned.
                   </p>
                   <p>
-                    We trust you will enjoy working with Decathlon and take the
-                    utmost autonomy to complete your responsibilities-
+                    We trust you will enjoy working with{" "}
+                    <b>
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                    </b>{" "}
+                    and take the utmost autonomy to complete your
+                    responsibilities-
                   </p>
                   <ol>
                     <li>
@@ -133,9 +161,15 @@ const PartTimeAppointmentLetter = (props) => {
                       rules that might be incorporated from time to time
                     </li>
                     <li>
-                      When you are happy being a part of the Decathlon family,
-                      we expect you will be open to relocate to any location
-                      where the Company currently has stores or may be
+                      When you are happy being a part of the{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      family, we expect you will be open to relocate to any
+                      location where the Company currently has stores or may be
                       established or any other Group companies as deemed
                       necessary
                     </li>
@@ -147,16 +181,35 @@ const PartTimeAppointmentLetter = (props) => {
                       We hold transparency in high regard. You cannot involve
                       yourself in taking or giving bribe, gambling, theft,
                       fraudulent practices or any such act that might affect
-                      Decathlon reputation or damage to property
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      reputation or damage to property
                     </li>
                     <li>
-                      We at DSIPL, have a strict policy against sexual
-                      harassment. We believe that you will not engage in any
-                      form of sexual harassment towards any of the Company
-                      employees and the Company's customers. DSIPL also ensures
-                      a safe environment to all its employees and customers and
-                      strict action will be taken against any offender, be it
-                      employee or customer
+                      We at{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>
+                      , have a strict policy against sexual harassment. We
+                      believe that you will not engage in any form of sexual
+                      harassment towards any of the Company employees and the
+                      Company's customers.{" "}
+                      <b>
+                        {offerLetterData.companyName ===
+                        "Decathlon Sports India"
+                          ? "Decathlon"
+                          : offerLetterData.companyName}
+                      </b>{" "}
+                      also ensures a safe environment to all its employees and
+                      customers and strict action will be taken against any
+                      offender, be it employee or customer
                     </li>
                     <li>
                       All documents submitted by you to the Company shall be
@@ -165,7 +218,33 @@ const PartTimeAppointmentLetter = (props) => {
                     <li>
                       In the event you feel you cannot be a part of our culture
                       and environment, kindly communicate your desire to depart
-                      at least 7 days in advance
+                      at least 7 days in advance during probation or 1 month in
+                      advance if your employment is confirmed
+                    </li>
+                    <li>
+                      In the event we find you have not abided by these, and
+                      other regulations explained to you by your manager or if
+                      you do not share the values of{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                      , we shall communicate the dis-continuance of employment
+                      with{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}{" "}
+                      to you at least 7 days in advance during probation or 1
+                      month in advance if your employment is confirmed
+                    </li>
+                    <li>
+                      Service rules under the Certified Standing Orders of{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}{" "}
+                      will be applicable to you from the date of certification
+                      of such orders. The information on the certification of
+                      such standing orders will be communicated to you
+                      electronically
                     </li>
                     <li>
                       However, your employment will be subjected to immediate
@@ -210,15 +289,27 @@ const PartTimeAppointmentLetter = (props) => {
                       </li>
                     </ul>
                     <li>
-                      Any image taken of you during a Decathlon event or during
-                      a photo-shoot shall be the property of Decathlon and you
-                      consent to Decathlon's use of the such image in
-                      communication.
+                      Any image taken of you during a{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}{" "}
+                      event or during a photo-shoot shall be the property of{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}{" "}
+                      and you consent to{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
+                      's use of the such image in communication.
                     </li>
                     <li>
                       Apart from the above mentioned rules all rules specified
                       under the certified standing orders of Decathlon will be
-                      applicable to you from the date of your joining Decathlon
+                      applicable to you from the date of your joining{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}
                     </li>
                     <li>
                       Clause 4 of this employment contract shall continue to
@@ -244,7 +335,7 @@ const PartTimeAppointmentLetter = (props) => {
                 <div className="mb-3">
                   <Row>
                     <Col>
-                      <p>For Decathlon Sports India Pvt Ltd</p>
+                      <p>For {offerLetterData.companyName}</p>
                       <p>Authorised Signatory</p>
                       <button
                         className="signatureButtons"
