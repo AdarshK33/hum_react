@@ -119,7 +119,7 @@ const Remuneration = () => {
                       <Row>
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre Split 1 :</b>
+                            <b>Cost Center Split 1 :</b>
                           </label>
                         </Col>
                       </Row>
@@ -130,7 +130,7 @@ const Remuneration = () => {
                       >
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre</b>
+                            <b>Cost Center</b>
                           </label>
                           <br />
                           <label className="itemResult">
@@ -169,7 +169,7 @@ const Remuneration = () => {
                       <Row>
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre Split 2 :</b>
+                            <b>Cost Center Split 2 :</b>
                           </label>
                         </Col>
                       </Row>
@@ -180,7 +180,7 @@ const Remuneration = () => {
                       >
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre</b>
+                            <b>Cost Center</b>
                           </label>
                           <br />
                           <label className="itemResult">
@@ -219,7 +219,7 @@ const Remuneration = () => {
                       <Row>
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre Split 3 :</b>
+                            <b>Cost Center Split 3 :</b>
                           </label>
                         </Col>
                       </Row>
@@ -230,7 +230,7 @@ const Remuneration = () => {
                       >
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre</b>
+                            <b>Cost Center</b>
                           </label>
                           <br />
                           <label className="itemResult">
@@ -269,7 +269,7 @@ const Remuneration = () => {
                       <Row>
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre Split 4 :</b>
+                            <b>Cost Center Split 4 :</b>
                           </label>
                         </Col>
                       </Row>
@@ -280,7 +280,7 @@ const Remuneration = () => {
                       >
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre</b>
+                            <b>Cost Center</b>
                           </label>
                           <br />
                           <label className="itemResult">
@@ -319,7 +319,7 @@ const Remuneration = () => {
                       <Row>
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre Split 5 :</b>
+                            <b>Cost Center Split 5 :</b>
                           </label>
                         </Col>
                       </Row>
@@ -330,7 +330,7 @@ const Remuneration = () => {
                       >
                         <Col sm={3}>
                           <label>
-                            <b>Cost Centre</b>
+                            <b>Cost Center</b>
                           </label>
                           <br />
                           <label className="itemResult">

@@ -34,9 +34,9 @@ const ManagerProfileSteppers = (props) => {
   const [stepCount, setStepNumber] = useState(0);
   const [stepArray, setStep] = useState([
     {
-      step: currStep,
-      line: defaultLine,
-      label: currLabel,
+      step: checkOk,
+      line: lineOk,
+      label: labelOk,
       idValue: 0,
       fileSaved: false,
     },
@@ -129,8 +129,9 @@ const ManagerProfileSteppers = (props) => {
             tempArray[index - 1].line = defaultLine;
           }
         }
-        tempArray[num].step = currStep;
-        tempArray[num].label = currLabel;
+        tempArray[num].step = checkOk;
+        tempArray[num].label = labelOk;
+        tempArray[num].line = lineOk;
       });
       setStepNumber(num);
       setStep(tempArray);

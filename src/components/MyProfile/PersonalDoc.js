@@ -226,7 +226,7 @@ const PersonalDoc = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Please select file");
+      toast.error("Please select file");
     }
   };
   return (

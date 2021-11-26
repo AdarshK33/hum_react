@@ -48,30 +48,30 @@ const OtherDocuments = (props) => {
     OtherDocumentView();
   }, []);
   console.log("documentsList", documentsList);
-  useEffect(() => {
-    if (
-      documentsList &&
-      documentsList !== null &&
-      documentsList !== undefined &&
-      Object.keys(documentsList).length !== 0
-    ) {
-      documentsList.map((item, i) => {
-        if (item.documentType === 6) {
-          setEducationDocName(item.documentName);
-        } else if (item.documentType === 7) {
-          setRelivingDocName(item.documentName);
-        } else if (item.documentType === 8) {
-          setLatestPayslipDocName(item.documentName);
-        } else if (item.documentType === 15) {
-          setCollegeDocName(item.documentName);
-        } else if (item.documentType === 18) {
-          setAppointmentDocName(item.documentName);
-        } else if (item.documentType === 18) {
-          setSignedDocName(item.documentName);
-        }
-      });
-    }
-  }, [documentsList]);
+  // useEffect(() => {
+  //   if (
+  //     documentsList &&
+  //     documentsList !== null &&
+  //     documentsList !== undefined &&
+  //     Object.keys(documentsList).length !== 0
+  //   ) {
+  //     documentsList.map((item, i) => {
+  //       if (item.documentType === 6) {
+  //         setEducationDocName(item.documentName);
+  //       } else if (item.documentType === 7) {
+  //         setRelivingDocName(item.documentName);
+  //       } else if (item.documentType === 8) {
+  //         setLatestPayslipDocName(item.documentName);
+  //       } else if (item.documentType === 15) {
+  //         setCollegeDocName(item.documentName);
+  //       } else if (item.documentType === 18) {
+  //         setAppointmentDocName(item.documentName);
+  //       } else if (item.documentType === 18) {
+  //         setSignedDocName(item.documentName);
+  //       }
+  //     });
+  //   }
+  // }, [documentsList]);
   const downloadTheLetter = (e, name) => {
     e.preventDefault();
     console.log("check", name);

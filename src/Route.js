@@ -372,7 +372,10 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/manager360`}
-            // component={ManagerDashboard}
+            component={ManagerDashboard}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/my_profile`}
             component={ManagerProfileSteppers}
           />
           <Route

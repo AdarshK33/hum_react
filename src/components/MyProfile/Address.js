@@ -977,7 +977,7 @@ const Address = (props) => {
     console.log("permanet", permanetCityData),
     (
       <Fragment>
-        <ToastContainer />
+        {/* <ToastContainer /> */}
         <Form>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={6}>

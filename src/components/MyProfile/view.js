@@ -5,7 +5,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 const ViewTheLetter = ({ DocName, Name }) => {
   const { SetLetterView } = useContext(EmployeeProfileContext);
   const [show, setShow] = useState(true);
-  const [name, setName] = useState("PDF");
+  const [name, setName] = useState("");
 
   // const show = true;
   const handleClose = () => {
@@ -19,7 +19,7 @@ const ViewTheLetter = ({ DocName, Name }) => {
 
   return (
     <Fragment>
-      {DocName !== null && DocName !== undefined ? (
+      {DocName !== null && DocName !== undefined && name !== "" ? (
         // {true ? (
         <Modal show={show} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>

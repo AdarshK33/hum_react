@@ -8,6 +8,7 @@ import React, {
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
+import moment from "moment";
 
 const WorkDetails = () => {
   const { user } = useContext(AppContext);
@@ -108,7 +109,7 @@ const WorkDetails = () => {
               <b>Sport</b>
             </label>
             <br />
-            <label className="itemResult">--</label>
+            <label className="itemResult">{user.sport}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -142,7 +143,9 @@ const WorkDetails = () => {
               <b>Date Of Transfer</b>
             </label>
             <br />
-            <label className="itemResult">--</label>
+            <label className="itemResult">
+              {moment(user.dateOfTransfer).format("DD-MM-YYYY")}
+            </label>
           </Col>
           <Col sm={3}>
             <label>

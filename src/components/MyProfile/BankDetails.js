@@ -290,7 +290,7 @@ const BankDetails = (props) => {
 
   return (
     <Fragment>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-3">
@@ -306,7 +306,11 @@ const BankDetails = (props) => {
                 required
                 placeholder="Bank Name"
                 disabled={disabled}
-                style={bankNameError ? { borderColor: "red" } : {}}
+                style={
+                  bankNameError
+                    ? { borderColor: "red", color: "#006ebb" }
+                    : { color: "#006ebb" }
+                }
               />
               {bankNameError ? (
                 <p style={{ color: "red" }}>
