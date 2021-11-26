@@ -178,22 +178,23 @@ const CodeOfConduct = (props) => {
           html2canvas:{ scale: 1 },
           jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' }
         };
-        html2pdf().from(element).set(opt).save();
+        //html2pdf().from(element).set(opt).save();
         var option ={
           filename:"filecode.pdf"
         }
       // html2pdf(element)
      // html2pdf().from(element).set(option).save();
-        html2pdf().set(opt).from(element).toPdf().output('blob').then( (item) => {
-           console.log(item,"item")
-           item.name = "codeofconduct.pdf";
+     
+     html2pdf().set(option).from(element).toContainer().toCanvas().toPdf().output('blob').then((item)=>{
+      console.log(item,"item")
+           var imageValue = item ;
+           imageValue.name = "codeofconduct.pdf";
            const data = {
              dsiType: "Code of Conduct",
              employeeId: employeeProfileData.employeeId,
              fileType: 25,
            };
-           dsiCharterCreate(infoData, history, data,item);
-           props.history.push("/itcharter");
+           dsiCharterCreate(infoData, history, data,imageValue);
           })   
         // var imageValue = codeBase64;
         // var bufferArray = base64ToArrayBuffer(imageValue);
@@ -229,20 +230,20 @@ const CodeOfConduct = (props) => {
             };
             var element = document.getElementById('codeToPrint');
             var opt = {
-              margin:1,
               filename:'myfile.pdf',
               image:{ type: 'png', quality: 0.5 },
               html2canvas:{ scale: 1 },
-              jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' }
+              jsPDF:{format: 'letter', orientation: 'portrait' }
             };
             var option ={
-              filename:"filecode.pdf"
+              filename:"filecode.pdf",
+              
             }
           // html2pdf(element)
-          // html2pdf().from(element).set(option).save();
-
+          // html2pdf().from(element).set(option).toContainer().toCanvas().toPdf().save();
+       
           //  html2pdf().from(element).set(opt).save();
-          html2pdf().set(option).from(element).toPdf().output('blob').then((item)=>{
+          html2pdf().set(option).from(element).toContainer().toCanvas().toPdf().output('blob').then((item)=>{
              var imageValue = item ;
              imageValue.name = "codeofconduct.pdf"
             const data = {
@@ -250,7 +251,8 @@ const CodeOfConduct = (props) => {
               employeeId: employeeProfileData.employeeId,
               fileType: 25,
             };
-           dsiCharterUpdate(infoData, data, imageValue,history);
+
+          dsiCharterUpdate(infoData, data, imageValue,history);
            })   
 
           //   var imageValue = codeBase64 ;
@@ -318,62 +320,87 @@ const CodeOfConduct = (props) => {
         <Modal.Body>
           <div class="html-charter" id="codeToPrint" ref={inputRef}>
             <body>
-              <div class="container-charter">
+              <div  class="container-charter">
+                {/* <div style={{height:"260px"}}></div> */}
                 <img class="img-insert-charter" src={Img1} alt="page1" />
+              
                 <img class="img-insert-charter" src={Img2} alt="page2" />
                 <img class="img-insert-charter" src={Img3} alt="page3" />
+                <div class="html2pdf__page-break"></div>
+
                 <img class="img-insert-charter" src={Img4} alt="page4" />
+              
                 <img class="img-insert-charter" src={Img5} alt="page5" />
+                
+              
                 <img class="img-insert-charter" src={Img6} alt="page6" />
+                <div class="html2pdf__page-break"></div>
+
                 <img class="img-insert-charter" src={Img7} alt="page7" />
                 <img class="img-insert-charter" src={Img8} alt="page8" />
+      
                 <a href="https://decathlon.whispli.com/alerte" target="_blank">
                   <img class="img-insert-charter" src={Img9} alt="page9" />
                 </a>
+                <div class="html2pdf__page-break"></div>
                 <a href="https://decathlon.whispli.com/alerte" target="_blank">
                   <img class="img-insert-charter" src={Img10} alt="page10" />
                 </a>
                 <img class="img-insert-charter" src={Img11} alt="page11" />
                 <img class="img-insert-charter" src={Img12} alt="page12" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img13} alt="page13" />
                 <img class="img-insert-charter" src={Img14} alt="page14" />
                 <img class="img-insert-charter" src={Img15} alt="page15" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img16} alt="page16" />
                 <img class="img-insert-charter" src={Img17} alt="page17" />
                 <img class="img-insert-charter" src={Img18} alt="page18" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img19} alt="page19" />
                 <img class="img-insert-charter" src={Img20} alt="page20" />
                 <img class="img-insert-charter" src={Img21} alt="page21" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img22} alt="page22" />
                 <img class="img-insert-charter" src={Img23} alt="page23" />
                 <img class="img-insert-charter" src={Img24} alt="page24" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img25} alt="page25" />
                 <img class="img-insert-charter" src={Img26} alt="page26" />
                 <img class="img-insert-charter" src={Img27} alt="page27" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img28} alt="page28" />
                 <img class="img-insert-charter" src={Img29} alt="page29" />
                 <img class="img-insert-charter" src={Img30} alt="page30" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img31} alt="page31" />
                 <img class="img-insert-charter" src={Img32} alt="page32" />
                 <img class="img-insert-charter" src={Img33} alt="page33" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img34} alt="page34" />
                 <img class="img-insert-charter" src={Img35} alt="page35" />
                 <img class="img-insert-charter" src={Img36} alt="page36" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img37} alt="page37" />
                 <img class="img-insert-charter" src={Img38} alt="page38" />
                 <img class="img-insert-charter" src={Img39} alt="page39" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img40} alt="page40" />
                 <img class="img-insert-charter" src={Img41} alt="page41" />
                 <img class="img-insert-charter" src={Img42} alt="page42" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img43} alt="page43" />
                 <img class="img-insert-charter" src={Img44} alt="page44" />
                 <img class="img-insert-charter" src={Img45} alt="page45" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img46} alt="page46" />
                 <img class="img-insert-charter" src={Img47} alt="page47" />
                 <img class="img-insert-charter" src={Img48} alt="page48" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img49} alt="page49" />
                 <img class="img-insert-charter" src={Img50} alt="page50" />
                 <img class="img-insert-charter" src={Img51} alt="page51" />
+                <div class="html2pdf__page-break"></div>
                 <img class="img-insert-charter" src={Img52} alt="page52" />
                 {/* <div class="img-insert-charter" >
           <b >Name :</b><b style={{  padding: "20px"}}>{employeeProfileData.firstName + "  "+employeeProfileData.lastName}</b><br/>
@@ -381,7 +408,7 @@ const CodeOfConduct = (props) => {
                      <b>Date :</b><b style={{  padding: "20px"}}>{handleDate(new Date())}</b>
                      </div > */}
 
-                     <div >
+                     <div style={{  padding: "20px"}}  >
                      <b>Date :</b><b style={{  padding: "20px"}}>{handleDate(new Date())}</b><br/>
                      <b>Employee ID :</b><b style={{  padding: "20px"}}>{employeeProfileData.employeeId}</b><br/>
                      <b >Signed and Accepted by Employee  :</b><b style={{  padding: "20px"}}>{employeeProfileData.firstName + "  "+employeeProfileData.lastName}</b><br/>
