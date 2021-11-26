@@ -572,7 +572,7 @@ const ManagerInitiateAction = (props) => {
             console.log(reasonOfSeparationList[i].value);
           }
         });
-
+console.log(reasonOfSeparationList,"reasonOfSeparationList")
         const data2 = {
           company: null,
           contractType: state.empContractType,
@@ -595,7 +595,7 @@ const ManagerInitiateAction = (props) => {
           managerName: state.mngrName,
           managerPosition: state.mngrPosition,
           modeOfSeparationId: changeInSeparation,
-          modeOfSeparationReasonId: reasonId,
+          modeOfSeparationReasonId: state.modeOfSeparationReasonId,
           noticePeriod: state.noticePeriod,
           noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
           noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
@@ -2058,7 +2058,7 @@ const ManagerInitiateAction = (props) => {
                               className={"LettersButtons"}
                               onClick={relivingLetterClick}
                             >
-                              Generate Letter
+                              Generate Reliving Letter
                             </button>
                           ) : (
                             ""

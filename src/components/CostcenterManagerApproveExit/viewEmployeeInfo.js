@@ -27,6 +27,7 @@ const EmployeeExitAction = () => {
   const [rcryDaysError, setRcryDaysError] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
+  const [letterView, setLetterView] = useState("");
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [terminationLetter, setTerminationLetter] = useState(false);
@@ -160,7 +161,7 @@ const EmployeeExitAction = () => {
         employeeData.lastWorkingDate !== undefined &&
         employeeData.lastWorkingDate !== ""
       ) {
-        setLastWorkingDate(new Date(employeeData.lastWorkingDate));
+        setLastWorkingDate(employeeData.lastWorkingDate);
       }
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
@@ -201,7 +202,12 @@ const EmployeeExitAction = () => {
         setIntern(false);
         setLastWorkingDate("");
       }
-
+      setLastWorkingDate(
+        employeeData.lastWorkingDate !== null &&
+          employeeData.lastWorkingDate !== undefined
+          ? new Date(employeeData.lastWorkingDate)
+          : new Date()
+      );
       state.noticePeriodRcryDays =
         employeeData.noticePeriodRecoveryDays !== null &&
         employeeData.noticePeriodRecoveryDays !== undefined
@@ -381,13 +387,16 @@ const EmployeeExitAction = () => {
     if (state.modeOfSeparationId == 2) {
       terminationConfirmation(exitId, employeeId);
       viewTermination();
+      setModal(true)
+      setLetterView(2)
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
       resignationConfirmation(exitId, employeeId);
       viewResignation();
+      setModal(true)
+      setLetterView(4)
     }
     // console.log(state.modeOfSeparationId, "sravani");
 
-    setModal(true);
   };
   const handleClosePopup = () => {
     setMessage(false);
@@ -544,8 +553,8 @@ const EmployeeExitAction = () => {
             </Modal.Body>
           </Container>
         </Modal>
-       { showModal?<RelievingLetter previewLetter={previewLetter} />:
-        <TerminationLetter terminationLetter={terminationLetter} /> }
+       {letterView == 2?<RelievingLetter previewLetter={previewLetter} />:
+        (letterView == 1 || letterView == 4)? <TerminationLetter terminationLetter={terminationLetter} /> :""}
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
         {/* <PdfExample /> */}
         <div className="container-fluid">
@@ -753,7 +762,6 @@ const EmployeeExitAction = () => {
                               name="lastWorkingDate"
                               minDate={new Date()}
                               maxDate={lastDateSelection}
-                              minDate={moment().toDate()}
                               onChange={(e) => dateOfBirthHandler1(e)}
                               dateFormat="yyyy-MM-dd"
                               placeholderText="YYYY-MM-DD"
@@ -815,7 +823,7 @@ const EmployeeExitAction = () => {
                     ) : (
                       ""
                     )}
-                    <Row
+                    {/* <Row
                       style={{
                         marginLeft: "2rem",
                         marginTop: "1rem",
@@ -832,7 +840,7 @@ const EmployeeExitAction = () => {
                           </label>
                         </div>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <Row
                       style={{
                         marginTop: "2rem",

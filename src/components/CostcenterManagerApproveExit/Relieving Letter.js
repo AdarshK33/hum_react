@@ -78,7 +78,7 @@ const RelivingLetter = () => {
               <b>For {relivingLetterData.company} Pvt Ltd,</b>
             </p><br/>
             <p className="mt-5 ">
-              <b>Authorised Signatory</b>
+              <b>Authorized Signatory</b>
             </p>
             <div className="float-right "></div>
           </div>

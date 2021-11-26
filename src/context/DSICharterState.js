@@ -111,7 +111,7 @@ export const DSICharterProvider = (props) => {
       });
   };
    /*----------Api to update charter ------------*/
-   const dsiCharterUpdate = (infoData,data,blob) => {
+   const dsiCharterUpdate = (infoData,data,blob,value) => {
      console.log(infoData,data,blob,"dsiCharterUpdate")
     setLoader(true);
     client
@@ -120,7 +120,7 @@ export const DSICharterProvider = (props) => {
         state.dsiCharterUpdateData = response.data.data;
         console.log(response,"updateDataDsi")
         toast.info(response.data.message);
-        uploadAllCharter(data,blob)
+        uploadAllCharter(data,blob,value,"CODEOFCONDUCT")
         viewCharterAll()
         ViewEmployeeProfile()
         setLoader(false);
@@ -206,7 +206,7 @@ export const DSICharterProvider = (props) => {
       });
   };
     /*-----------------post charter upload-----------------*/
-  const uploadAllCharter = (data,blob) => {
+  const uploadAllCharter = (data,blob,value,charter) => {
     console.log("base64...........", data,blob);
     const formData = new FormData()
     formData.append("file",blob,blob.name)
@@ -217,8 +217,11 @@ export const DSICharterProvider = (props) => {
         .then((response) => {
           console.log(response,data,"charterupload");
           state.charterAllResponse = response.data.data;
-
+         
           {data.fileType === 25?setCodeOfConduct(response.data.data) : setItCharter(response.data.data)}
+          if(charter == "CODEOFCONDUCT"){
+            value.history.push("/itcharter")
+          }
           return dispatch({ type: "CHARTER_ALL_UPLOAD", payload: state.charterAllResponse });
         })
         .catch((error) => {

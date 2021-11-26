@@ -167,12 +167,10 @@ const EmployeeExitView = () => {
           );
 
           item.modeOfSeparationReasonList.map((item1, j) => {
-            console.log(item1,"item1")
+            console.log(item1,employeeData,"item1")
             if (
-              employeeData.modeOfSeparationReasonId ===
-              item1
-                .separationReasonId
-            ) {
+              employeeData.modeOfSeparationReasonId == item1.separationReasonId){
+              console.log(item1.modeOfSeparationReason,"item1.modeOfSeparationReason")
               state.modeOfSeparationReasonId =
               item1.modeOfSeparationReason;
                 SetModeOfSeparationReasonId(item1.modeOfSeparationReason)

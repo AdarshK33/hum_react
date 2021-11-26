@@ -1263,7 +1263,7 @@ const EmployeeExitAction = () => {
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
-                          Generate Letter
+                              Generate Reliving Letter
                         </button>
                       ) : (
                         ""

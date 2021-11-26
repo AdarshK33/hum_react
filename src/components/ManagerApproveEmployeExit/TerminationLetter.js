@@ -114,7 +114,7 @@ const TerminationLetter = () => {
               </Col>
               </Row>
               <p>
-            Authorised Signatory <br/>
+            Authorized Signatory <br/>
               Manager<br/>
             Name:  {terminationLetterData !== undefined &&
             terminationLetterData.managerName} 

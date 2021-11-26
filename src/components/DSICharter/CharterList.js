@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search, AlertCircle,Download } from "react-feather";
+import { Edit2, Eye, EyeOff,Search, AlertCircle,Download } from "react-feather";
 import ViewTheLetter from "./view"
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -153,7 +153,7 @@ const downloadTheLetter = (e,data) => {
                             <td>{item.employeeId}</td>
                             <td>{handleDate(item.auditField.updatedDate)}</td>
                             <td>{item.isCodeOfConduct?"Yes":"No"}</td>
-                            <td><Row>
+                            <td>{item.isCodeOfConduct?<Row>
                             <Col
                   style={{
                     textAlign: "right",
@@ -167,7 +167,7 @@ const downloadTheLetter = (e,data) => {
                       color: "#4f90ff",
                     }}
                     onClick={(e) =>
-                      showTheLetter(item.codeOfConductLetter,item.codeOfConductLetter)
+                      showTheLetter(item.codeOfConductLetter,item)
                     }
                   />
                 </Col>
@@ -178,9 +178,28 @@ const downloadTheLetter = (e,data) => {
                     onClick={(e) => downloadTheLetter(item.codeOfConductLetter,item)}
                   />
                 </Col>
-                              </Row></td>
+                              </Row>:<Row>
+                            <Col
+                  style={{
+                    textAlign: "right",
+                  }}
+                >
+                  <EyeOff
+                    style={{
+                      textAlign: "right",
+                      fontSize: "xx-small",
+                      color: "#4f90ff",
+                    }}
+                  />
+                </Col>
+                <Col>
+                  <Download
+                    style={{ fontSize: "xx-small", color: "#4f90ff" }}
+                  />
+                </Col>
+                              </Row>}</td>
                             <td>{item.isDsiItCharter?"Yes":"No"}</td>
-                            <td><Row>
+                            <td>{item.isDsiItCharter?<Row>
                             <Col
                   style={{
                     textAlign: "right",
@@ -194,7 +213,7 @@ const downloadTheLetter = (e,data) => {
                       color: "#4f90ff",
                     }}
                     onClick={(e) =>
-                      showTheLetter(item.itCharterLetter, item.itCharterLetter)
+                      showTheLetter(item.itCharterLetter, item)
                     }
                   />
                 </Col>
@@ -205,7 +224,26 @@ const downloadTheLetter = (e,data) => {
                     onClick={(e) => downloadTheLetter(item.itCharterLetter,item)}
                   />
                 </Col>
-                              </Row></td>
+                              </Row>:<Row>
+                            <Col
+                  style={{
+                    textAlign: "right",
+                  }}
+                >
+                  <EyeOff
+                    style={{
+                      textAlign: "right",
+                      fontSize: "xx-small",
+                      color: "#4f90ff",
+                    }}
+                  />
+                </Col>
+                <Col>
+                  <Download
+                    style={{ fontSize: "xx-small", color: "#4f90ff" }}
+                  />
+                </Col>
+                              </Row>}</td>
                           </tr>
                         </tbody>
                       );
