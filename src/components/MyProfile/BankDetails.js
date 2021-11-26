@@ -12,15 +12,19 @@ import Select from "react-select";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { ToastContainer, toast } from "react-toastify";
 import BANK_NAMES from "./BankNamesList";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
+import { AppContext } from "../../context/AppState";
 const BankDetails = (props) => {
+  const { user } = useContext(AppContext);
+  const { bankView, bankViewData, BankUpdate, uploadFile } = useContext(
+    EmployeeProfileContext
+  );
   const {
     bankCreate,
     bankSaveData,
     CandidateProfile,
     candidateProfileData,
-    bankView,
-    bankViewData,
     bankUpdate,
     bankUpdateData,
   } = useContext(OnBoardContext);
@@ -29,11 +33,28 @@ const BankDetails = (props) => {
   const [bankNameError, setBankNameError] = useState(false);
   const [ifscCodeError, setIfscCodeError] = useState(false);
   const [bankIdValue, setBankIdVlue] = useState(0);
-
-  // useEffect(() => {
-  //   CandidateProfile();
-  //   bankView(candidateProfileData.candidateId);
-  // }, []);
+  const [panNumberEror, setPanNumberError] = useState(false);
+  const [state, setState] = useState({
+    accountNumber: "",
+    bankName: "",
+    ifscCode: "",
+    panNo: "",
+    employeeId: "",
+  });
+  const [stateOfOb, setStateOfOb] = useState({
+    cancelledCheque: "",
+  });
+  const [stateOfName, setStateOfNames] = useState({
+    cancelledCheque: "",
+  });
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULcancelledCheque: false,
+    },
+  ]);
+  useEffect(() => {
+    bankView();
+  }, []);
 
   useEffect(() => {
     if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
@@ -44,18 +65,14 @@ const BankDetails = (props) => {
           value: bankViewData.bankName,
         },
         ifscCode: bankViewData.ifscCode,
+        panNo: bankViewData.panNumber,
+        employeeId: bankViewData.employeeId,
       });
 
       setBankIdVlue(bankViewData.bankId);
     }
     console.log("bankViewData", bankViewData);
   }, [bankViewData]);
-
-  const [state, setState] = useState({
-    accountNumber: "",
-    bankName: "",
-    ifscCode: "",
-  });
 
   /* To get the bank name options */
   const bankNameOptions = useMemo(() => {
@@ -113,8 +130,7 @@ const BankDetails = (props) => {
       state.ifscCode !== "" &&
       state.ifscCode !== null &&
       state.ifscCode !== undefined &&
-      state.ifscCode.length >= 11 &&
-      aadharValid.test(state.accountNumber)
+      state.ifscCode.length >= 11
     ) {
       setIfscCodeError(false);
       console.log("ifscCodeSuccess");
@@ -125,18 +141,94 @@ const BankDetails = (props) => {
       return false;
     }
   };
+  const PanNumberValidation = () => {
+    const panValid = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+
+    if ((state.panNo !== "") & panValid.test(state.panNo)) {
+      var tempVar = state.panNo.split("");
+      console.log(tempVar[3]);
+      if (tempVar[3].toLocaleLowerCase() === "p") {
+        setPanNumberError(false);
+        console.log("pansucess");
+        return true;
+      } else {
+        setPanNumberError(true);
+        console.log("panerror");
+        return false;
+      }
+    } else {
+      setPanNumberError(true);
+      console.log("panerror");
+      return false;
+    }
+  };
   const checkValidations = () => {
     if (
       (BankNameErrorValidation() == true) &
       (AccountNumberErrorValidation() == true) &
-      (IfscCodeErrorValidation() == true)
+      (IfscCodeErrorValidation() == true) &
+      (PanNumberValidation() == true)
     ) {
       return true;
     } else {
       return false;
     }
   };
+  const changeHandler1 = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    if (
+      fileObj.type === "image/jpeg" ||
+      fileObj.type === "image/jpg" ||
+      fileObj.type === "image/png" ||
+      fileObj.type === "application/pdf"
+    ) {
+      if (fileObj.size <= 512000) {
+        setStateOfOb({
+          ...stateOfOb,
+          [event.target.name]: fileObj,
+        });
+        setStateOfNames({
+          ...stateOfName,
+          [event.target.name]: fileObj.name,
+        });
 
+        if (event.target.name === "cancelledCheque") {
+          UploadedArray[0].ULcancelledCheque = false;
+        }
+      } else {
+        toast.error("File size should not exceed 500kb");
+      }
+    } else {
+      toast.error("Please select jpg, jpeg, png and pdf formats");
+    }
+  };
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+
+    if (event.target.name === "cancelledCheque") {
+      // if (cancelledChequeValidation() === true) {
+      fileUpload = stateOfOb.cancelledCheque;
+      fileType = 5;
+      UploadedArray[0].ULcancelledCheque = true;
+      // }
+    }
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        employeeId: user.employeeId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Please select file");
+    }
+  };
   const submitHandler = (e) => {
     console.log("inside bank submit handler", bankSaveData);
     // const nextPage = props.NextStep;
@@ -152,24 +244,27 @@ const BankDetails = (props) => {
     // }
     const value = checkValidations();
     if (value === true) {
+      console.log("INSIDE BANK SUBMIT");
       const bankInfo = {
         accountNumber: state.accountNumber,
         bankId: bankIdValue,
         bankName: selectedBankName,
-        candidateId: candidateProfileData.candidateId,
         ifscCode: state.ifscCode,
+        panNumber: state.panNo,
+        employeeId: bankViewData.employeeId,
       };
       console.log("bank payload", bankInfo);
-      if (
-        (bankSaveData && bankSaveData.bankId) ||
-        (bankViewData && bankViewData.bankId)
-      ) {
-        bankUpdate(bankInfo);
-      } else {
-        bankCreate(bankInfo);
-      }
-      const nextPage = props.NextStep;
-      nextPage(true);
+      BankUpdate(bankInfo);
+      // if (
+      //   (bankSaveData && bankSaveData.bankId) ||
+      //   (bankViewData && bankViewData.bankId)
+      // ) {
+      //   bankUpdate(bankInfo);
+      // } else {
+      //   bankCreate(bankInfo);
+      // }
+      // const nextPage = props.NextStep;
+      // nextPage(true);
     }
   };
 
@@ -195,7 +290,7 @@ const BankDetails = (props) => {
 
   return (
     <Fragment>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-3">
@@ -211,7 +306,11 @@ const BankDetails = (props) => {
                 required
                 placeholder="Bank Name"
                 disabled={disabled}
-                style={bankNameError ? { borderColor: "red" } : {}}
+                style={
+                  bankNameError
+                    ? { borderColor: "red", color: "#006ebb" }
+                    : { color: "#006ebb" }
+                }
               />
               {bankNameError ? (
                 <p style={{ color: "red" }}>
@@ -282,20 +381,17 @@ const BankDetails = (props) => {
               </Form.Label>
               <Form.Control
                 type="text"
-                name="ifscCode"
-                value={state.ifscCode}
+                name="panNo"
+                value={state.panNo}
                 onChange={changeHandler}
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
                 maxLength="20"
-                style={ifscCodeError ? { borderColor: "red" } : {}}
+                style={panNumberEror ? { borderColor: "red" } : {}}
               />
-              {ifscCodeError ? (
-                <p style={{ color: "red" }}>
-                  {" "}
-                  Please enter the valid IFSC code
-                </p>
+              {panNumberEror ? (
+                <p style={{ color: "red" }}> Please enter the valid PAN no</p>
               ) : (
                 <p></p>
               )}
@@ -343,18 +439,17 @@ const BankDetails = (props) => {
               <div className="parentInput">
                 <label className="fileInputField">
                   &nbsp;&nbsp;
-                  {/* {stateOfName.photoId !== ""
-                      ? stateOfName.photoId
-                      : "Select File Here"} */}
+                  {stateOfName.cancelledCheque !== ""
+                    ? stateOfName.cancelledCheque
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/*,.pdf"
-                    name="photoId"
+                    name="cancelledCheque"
                     style={{ display: "none" }}
-                    //   onChange={(e) => {
-                    //     changeHandler(e);
-                    //   }}
-
+                    onChange={(e) => {
+                      changeHandler1(e);
+                    }}
                     readOnly
                   />
                 </label>
@@ -362,12 +457,11 @@ const BankDetails = (props) => {
                 <label className="custom-file-upload">
                   <input
                     type="button"
+                    name="cancelledCheque"
                     className="custom_file_Upload_button"
-                    name="photoId"
-
-                    //   onClick={(e) => {
-                    //     handleUpload(e);
-                    //   }}
+                    onClick={(e) => {
+                      handleUpload(e);
+                    }}
                   />
                   {/* <i className="fa fa-cloud-upload" />  */}
                   Upload File{" "}
@@ -378,10 +472,12 @@ const BankDetails = (props) => {
                   ></i>
                 </label>
               </div>
-              {/* {photoIdError ? (
+
+              {/* {cancelledChequeError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the photo id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                    cancelled cheque
                   </p>
                 ) : (
                   <p></p>
@@ -396,7 +492,7 @@ const BankDetails = (props) => {
             textAlign: "right",
           }}
         >
-          <button className="stepperButtons" onClick={submitHandler}>
+          <button className="profileButtons" onClick={submitHandler}>
             Update
           </button>
         </div>

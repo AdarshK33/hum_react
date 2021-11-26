@@ -6,12 +6,6 @@ import React, {
   useMemo,
 } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Select from "react-select";
-// import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
-import { Search, PlusCircle, MinusCircle } from "react-feather";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -22,18 +16,72 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
-import { OnBoardContext } from "../../context/OnBoardState";
 import { AppContext } from "../../context/AppState";
 import Address from "./Address";
 import EmergencyContact from "./EmergencyContact";
 import BankDetails from "./BankDetails";
 import moment from "moment";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 const PersonalInformation = (props) => {
+  const { UpdateEmployeeProfile } = useContext(EmployeeProfileContext);
   const { user } = useContext(AppContext);
   const [bloodGrp, setBloodGrp] = useState(user.bloodGroup);
   const [maritalStatus, setMaritalStatus] = useState(user.maritalStatus);
   const [personalEmailId, setPersonalEmailId] = useState(user.personalEmail);
+  const [disability, setDisability] = useState();
+
+  const [bloodGroupError, setBloodGroupError] = useState(false);
+  const [maritalStatusError, setMaritalStatusError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const DropDownsValidation = (item, setError) => {
+    if (item !== "" && item !== null && item !== undefined) {
+      setError(false);
+      return true;
+    } else {
+      setError(true);
+      return false;
+    }
+  };
+  const emailValidation = () => {
+    const emailValid =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (
+      personalEmailId !== "" &&
+      personalEmailId !== null &&
+      personalEmailId !== undefined &&
+      emailValid.test(personalEmailId)
+    ) {
+      setEmailError(false);
+      return true;
+    } else {
+      setEmailError(true);
+      return false;
+    }
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log("insideSubmit");
+    if (
+      (DropDownsValidation(bloodGrp, setBloodGroupError) === true) &
+      (DropDownsValidation(maritalStatus, setMaritalStatusError) === true) &
+      (emailValidation() === true)
+    ) {
+      if (
+        user !== null &&
+        user !== undefined &&
+        user !== "" &&
+        Object.keys(user).length !== 0
+      ) {
+        user.bloodGroup = bloodGrp;
+        user.maritalStatus = maritalStatus;
+        user.personalEmail = personalEmailId;
+        console.log("user", user);
+        UpdateEmployeeProfile(user);
+      }
+    }
+  };
+
   return (
     <Fragment>
       <ToastContainer />
@@ -94,7 +142,10 @@ const PersonalInformation = (props) => {
               <b>Date of Birth</b>
             </label>
             <br />
-            <label className="itemResult">{user.dob}</label>
+
+            <label className="itemResult">
+              {moment(user.dob).format("DD-MM-YYYY")}
+            </label>
           </Col>
           <Col sm={3}>
             <label>
@@ -117,7 +168,7 @@ const PersonalInformation = (props) => {
                 onChange={(e) => setBloodGrp(e.target.value)}
                 required
                 // disabled={disabled}
-                // style={bloodGroupError ? { borderColor: "red" } : {}}
+                style={bloodGroupError ? { borderColor: "red" } : {}}
               >
                 <option value="">Select Blood Group</option>
                 <option>A+</option>
@@ -130,11 +181,11 @@ const PersonalInformation = (props) => {
                 <option>AB-</option>
               </Form.Control>
 
-              {/* {bloodGroupError ? (
+              {bloodGroupError ? (
                 <p style={{ color: "red" }}>Please choose blood group</p>
               ) : (
                 <p></p>
-              )} */}
+              )}
             </Form.Group>
           </Col>
           <Col sm={3}>
@@ -155,7 +206,9 @@ const PersonalInformation = (props) => {
               <b>Date of Joining</b>
             </label>
             <br />
-            <label className="itemResult">{user.joiningDate}</label>
+            <label className="itemResult">
+              {moment(user.joiningDate).format("DD-MM-YYYY")}
+            </label>
           </Col>
           <Col sm={3}>
             <label>
@@ -171,18 +224,18 @@ const PersonalInformation = (props) => {
                 onChange={(e) => setMaritalStatus(e.target.value)}
                 required
                 // disabled={disabled}
-                // style={bloodGroupError ? { borderColor: "red" } : {}}
+                style={maritalStatusError ? { borderColor: "red" } : {}}
               >
                 <option value="">Select Marital Status</option>
                 <option>Married</option>
                 <option>UnMarried</option>
               </Form.Control>
 
-              {/* {bloodGroupError ? (
-                <p style={{ color: "red" }}>Please choose blood group</p>
+              {maritalStatusError ? (
+                <p style={{ color: "red" }}>Please choose marital status</p>
               ) : (
                 <p></p>
-              )} */}
+              )}
             </Form.Group>
           </Col>
           <Col sm={3}>
@@ -241,27 +294,32 @@ const PersonalInformation = (props) => {
                 required
                 placeholder="Personal Email Id"
                 // disabled={disabled}
-                // style={aadharNumberError ? { borderColor: "red" } : {}}
+                style={emailError ? { borderColor: "red" } : {}}
               />
+              {emailError ? (
+                <p style={{ color: "red" }}>Please enter valid email</p>
+              ) : (
+                <p></p>
+              )}
             </Form.Group>
           </Col>
           <Col sm={3}>
             <label>
-              <b>Adhar No</b>
+              <b>Aadhaar Number</b>
             </label>
             <br />
             <label className="itemResult">{user.aadhaarNumber}</label>
           </Col>
           <Col sm={3}>
             <label>
-              <b>PAN No</b>
+              <b>PAN Number</b>
             </label>
             <br />
             <label className="itemResult">{user.panNo}</label>
           </Col>
           <Col sm={3}>
             <label>
-              <b>PF UAN No</b>
+              <b>PF UAN Number</b>
             </label>
             <br />
             <label className="itemResult">{user.pfUanNo}</label>
@@ -277,7 +335,7 @@ const PersonalInformation = (props) => {
               <b>Are you an EPS member in your earlier employment?</b>
             </label>
             <br />
-            <label className="itemResult">--</label>
+            <label className="itemResult">{user.epsMember}</label>
           </Col>
         </Row>
         <Row
@@ -325,15 +383,26 @@ const PersonalInformation = (props) => {
               <label className="itemResult">{user.reference2Email}</label>
             </Col>
             <Col sm={3}></Col>
-            <Col sm={3} style={{ textAlign: "right" }}>
-              {/* onClick={submitHandler} */}
+            {/* <Col sm={3} style={{ textAlign: "right" }}>
+              
               <br />
-              <button className="stepperButtons">Update</button>
-            </Col>
+              <button className="profileButtons">Update</button>
+            </Col> */}
           </Row>
         ) : (
           ""
         )}
+        <div
+          style={{
+            marginTop: "1rem",
+            marginBottom: "1rem",
+            textAlign: "right",
+          }}
+        >
+          <button className="profileButtons" onClick={submitHandler}>
+            Update
+          </button>
+        </div>
       </Form>
       <Row style={{ marginBottom: "2rem" }}>
         <Container fluid className="container-accordion">
