@@ -96,9 +96,9 @@ const HistoryView = () => {
         state.noticePeriod = 1
       }
       state.dateOfResignation = employeeData.dateOfResignation;
-      state.noticePeriod = employeeData.noticePeriod;
+      // state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
-      state.emailId = employeeData.emailId;
+      state.emailId = employeeData.personalEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
         employeeData.noticePeriodRecoveryDays !== null &&
@@ -669,7 +669,7 @@ const HistoryView = () => {
                           <label>
                             <b>Notice Period:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.noticePeriod}
+                              &nbsp;&nbsp; {state.noticePeriod == 1?`${state.noticePeriod} Month`:state.noticePeriod == 2?`${state.noticePeriod} Months`:""}
                             </label>
                           </label>
                         </div>

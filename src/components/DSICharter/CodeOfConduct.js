@@ -192,7 +192,7 @@ const CodeOfConduct = (props) => {
            const data = {
              dsiType: "Code of Conduct",
              employeeId: employeeProfileData.employeeId,
-             fileType: 25,
+             fileType: 19,
            };
            dsiCharterCreate(infoData, history, data,imageValue);
           })   
@@ -249,7 +249,7 @@ const CodeOfConduct = (props) => {
             const data = {
               dsiType: "Code of Conduct",
               employeeId: employeeProfileData.employeeId,
-              fileType: 25,
+              fileType: 19,
             };
 
           dsiCharterUpdate(infoData, data, imageValue,history);
