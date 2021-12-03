@@ -66,7 +66,7 @@ const Insurance = () => {
                 </Col>
                 <Col sm={3}>
                   <label>
-                    <b>Date Of Bith</b>
+                    <b>Date Of Birth</b>
                   </label>
                   <br />
                   <label className="itemResult">
