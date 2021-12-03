@@ -52,20 +52,34 @@ const InternShipLetter = () => {
             </p> */}
             <p>
             This is to certify that  {relivingLetterData !== undefined &&
-                  relivingLetterData.gender.toLowerCase() == "male"?
+                  (relivingLetterData.gender === "male"||
+                  relivingLetterData.gender === "MALE"||
+                  relivingLetterData.gender === "Male")?
                   `Mr.${relivingLetterData.employeeName}`
-                  :(relivingLetterData.gender.toLowerCase() == "female" && 
-                  relivingLetterData.maritalStatus.toLowerCase() == "single")?
+                  :((relivingLetterData.gender === "female"||
+                  relivingLetterData.gender == "FEMALE"||
+                  relivingLetterData.gender == "Female") && 
+                  relivingLetterData.maritalStatus === "single"||
+                  relivingLetterData.maritalStatus === "SINGLE"||
+                  relivingLetterData.maritalStatus === "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
                   :`Mrs.${relivingLetterData.employeeName}`} has 
             completed internship at {relivingLetterData.company} Pvt Ltd, from  
             <b>{relivingLetterData.dateOfJoining}</b> to  <b>{relivingLetterData.lastWorkingDate}</b> on
-           under the guidance of  {relivingLetterData.managerName}.
+           under the guidance of  {relivingLetterData.managerName}.<br/><br/>
 
-            During the period of her internship programme with us, 
-            we found she was punctual, hardworking and inquisitive.
+            During the period of {(relivingLetterData.gender === "male"||
+                  relivingLetterData.gender === "MALE"||
+                  relivingLetterData.gender === "Male")?"his":"her"} internship programme with us, 
+            we found {(relivingLetterData.gender === "male"||
+                  relivingLetterData.gender === "MALE"||
+                  relivingLetterData.gender === "Male")?"he":"she"}  was punctual, hardworking and inquisitive.
 
-            We wish her all the very best for her future endeavours.
+            We wish {(relivingLetterData.gender === "male"||
+                  relivingLetterData.gender === "MALE"||
+                  relivingLetterData.gender === "Male")?"his":"her"}  all the very best for {(relivingLetterData.gender === "male"||
+                  relivingLetterData.gender === "MALE"||
+                  relivingLetterData.gender === "Male")?"his":"her"}  future endeavours.
             </p>
             <p className="mt-5 ">
               <b>For {relivingLetterData.company} Pvt Ltd,</b>

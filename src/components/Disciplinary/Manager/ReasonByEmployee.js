@@ -41,7 +41,7 @@ const ReasonByEmployee = () => {
             </b>{" "}
             &nbsp; {disciplinarySearchData.managerName}
           </p>
-          <p>Decathlon Sports India</p>
+          <p> {disciplinarySearchData.company}</p>
           <br />
           <p>
             <b>Sub:</b> Reply to the Show Cause Notice issued on{" "}
@@ -55,8 +55,7 @@ const ReasonByEmployee = () => {
             </p>
             <br></br>
             <p>
-              I would like to here by detail my response towards the show cause
-              issued on{" "}
+            I would to explain my response towards the show cause issued on{" "}
               {disciplinarySearchData.disciplinaryAction.actionIssuedDate} and
               here is my explanation to the same.
             </p>
@@ -70,7 +69,7 @@ const ReasonByEmployee = () => {
             </p>
             <p className="">
               {" "}
-              Employee Id: <b>{disciplinarySearchData.employeeId}</b>
+              Employee ID: <b>{disciplinarySearchData.employeeId}</b>
             </p>
             <p className=""> Signatory:</p>
             <div className="float-right "></div>

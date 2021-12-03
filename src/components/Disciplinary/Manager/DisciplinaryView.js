@@ -7,7 +7,7 @@ import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import ReasonByEmployee from "../Manager/ReasonByEmployee";
 import WarningLetter from "../WarningManager/WarningLetter";
-
+import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter"
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
@@ -146,7 +146,8 @@ const DisciplinaryView = () => {
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
-          {disciplinarySearchData &&
+          {
+          disciplinarySearchData &&
           disciplinarySearchData &&
           disciplinarySearchData !== null &&
           disciplinarySearchData !== undefined &&
@@ -154,7 +155,8 @@ const DisciplinaryView = () => {
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" &&
-          disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
+          disciplinarySearchData.disciplinaryAction.reasonId == 2 
+          ? (
             <ShowCauseNotice />
           ) : (
             <NonPerformanceLetter />
@@ -175,10 +177,12 @@ const DisciplinaryView = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" ? (
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 
+          ? (
             <WarningLetter />
           ) : (
-            ""
+          <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
       </Modal>

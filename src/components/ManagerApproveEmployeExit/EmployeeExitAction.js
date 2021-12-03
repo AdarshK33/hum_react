@@ -288,6 +288,7 @@ const EmployeeExitAction = () => {
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
     const value = checkValidations();
+    console.log(value,"submit")
     if (value === true) {
       if (
         (RehireNo === true && state.remarks === "") ||
@@ -594,6 +595,7 @@ const EmployeeExitAction = () => {
                   <img
                     src={calendarImage}
                     alt="calendar"
+                    style={{marginLeft:"50px"}}
                     width="50px"
                     className="digital-signature"
                   />
@@ -1261,7 +1263,7 @@ const EmployeeExitAction = () => {
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
-                          Generate Letter
+                              Generate Reliving Letter
                         </button>
                       ) : (
                         ""

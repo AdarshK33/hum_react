@@ -612,7 +612,7 @@ const EmpResignation = () => {
                         <DatePicker
                           minDate={moment().toDate()}
                           value={moment(regDate).format("DD/MM/YYYY")}
-                          disabled={true}
+                          // disabled={true}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
                           className="form-control non-disable readTextBlue"
