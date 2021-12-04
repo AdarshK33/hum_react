@@ -88,6 +88,11 @@ const WeekOffForm = (props) => {
     setWeekOffList({ ...weekOffList, [e.target.name]: e.target.value });
   };
 
+  const isSunday = (date) => {
+    const day =date.getDay();
+    return day ===0;
+  };
+
   // useEffect(() => {
   //   let contractList = shiftContractNames.filter(
   //     (item) => item.contractType !== "Internship"
@@ -177,6 +182,7 @@ const WeekOffForm = (props) => {
                     onChange={(date) => setEffectiveDate(date)}
                     placeholderText="Select Effective From"
                     minDate={new Date()}
+                    filterDate={isSunday}
                     dateFormat="yyyy-MM-dd"
                   />{" "}
                 </div>
