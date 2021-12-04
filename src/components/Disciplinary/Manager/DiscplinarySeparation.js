@@ -14,6 +14,8 @@ import { SeparationContext } from "../../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "../../ManagerApproveEmployeExit/RelivingLetter";
 import TerminationLetter from "../../ManagerApproveEmployeExit/TerminationLetter";
+import NonPerformanceTerminationLetter from "./NonPerformanceTerminationLetter";
+import MisConductTerminationLetter from "./MisConductTerminationLetter"
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
@@ -946,10 +948,10 @@ console.log(terminationLetterData,"terminate")
           <Modal.Body>
             {terminationLetterData &&
             terminationLetterData !== undefined &&
-            terminationLetterData !== null ? (
-              <TerminationLetter />
+            terminationLetterData !== null && employeeData.reason == "Misconduct"? (
+              <MisConductTerminationLetter />
             ) : (
-              ""
+              <NonPerformanceTerminationLetter/>
             )}
             <br></br>
             <Row>
