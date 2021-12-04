@@ -47,7 +47,7 @@ const NoticePeriodListContainer = () => {
     ) {
       let tableData = noticePeriodList.map((item, index) => {
         return {
-          sno: index + 1,
+          sno: ((activePage-1)*10) + (index+1),
           dept: item.department,
           contractType: item.contractType,
           noticePeriod: `${item.noticePeriod} ${
@@ -86,7 +86,7 @@ const NoticePeriodListContainer = () => {
     setActivePage(page);
     setApiUrl(
       `/api/v1/notice/view?department=${searchInput}&page=${
-        activePage - 1
+        page-1
       }&size=${recordsPerPage}`
     );
   };
