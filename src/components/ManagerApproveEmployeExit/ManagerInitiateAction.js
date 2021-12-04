@@ -269,6 +269,7 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "Internship"
       ) {
         setIntern(true);
+        setLastDateSelection("");
         setLastWorkingDate(
           new Date(searchByCostData.joiningDate).setMonth(
             new Date(searchByCostData.joiningDate).getMonth() +

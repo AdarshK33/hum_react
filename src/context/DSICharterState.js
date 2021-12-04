@@ -218,7 +218,7 @@ export const DSICharterProvider = (props) => {
           console.log(response,data,"charterupload");
           state.charterAllResponse = response.data.data;
          
-          {data.fileType === 25?setCodeOfConduct(response.data.data) : setItCharter(response.data.data)}
+          {data.fileType === 19?setCodeOfConduct(response.data.data) : setItCharter(response.data.data)}
           if(charter == "CODEOFCONDUCT"){
             value.history.push("/itcharter")
           }

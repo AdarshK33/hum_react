@@ -1587,7 +1587,7 @@ console.log(intern,"8098709809808")
                                           {item.label}
                                         </option>
                                       );
-                                      }else if(state.empContractType.toLowerCase() == "fulltime" || state.empContractType == "parttime"){
+                                      }else if(state.empContractType == "fulltime" || state.empContractType == "Fulltime" || state.empContractType == "parttime"){
                                         return (
                                           <option key={item.value}>
                                             {item.label}

@@ -10,8 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { setQuarter } from "date-fns";
 const EmpResignation = () => {
-  const [regDate, setRegDate] = useState(new Date());
+  const [regDate, setRegDate] = useState();
   const [noticePeriod, setNoticePeriod] = useState(0);
   const [lastDate, setLastDate] = useState();
   const [reasonOfSepration, setReasonOfSepration] = useState("");
@@ -318,6 +319,7 @@ const EmpResignation = () => {
   const SubmitHandler = (e) => {
     e.preventDefault();
     var reasonId = 0;
+    console.log(lastDate, regDate, "lastDate");
     reasonOfSeparationList.map((item, i) => {
       if (reasonOfSeparationList[i].label === reasonOfSepration) {
         reasonId = reasonOfSeparationList[i].value;
@@ -334,7 +336,7 @@ const EmpResignation = () => {
         costCentreManagerEmailId: null,
         costCentreManagerName: null,
         costCentreName: user.costCentre,
-        dateOfResignation: regDate,
+        dateOfResignation: moment(regDate).format("YYYY-MM-DD"),
         personalEmail: emailId,
         empName: user.firstName + user.lastName,
         employeeComment: comments,
@@ -416,7 +418,12 @@ const EmpResignation = () => {
     //   setSubmitted(false);
     // }
   };
-
+  const handleResignationDate = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    setRegDate(AdjusteddateValue);
+  };
   return (
     <>
       <Container>
@@ -614,7 +621,7 @@ const EmpResignation = () => {
                           value={moment(regDate).format("DD/MM/YYYY")}
                           // disabled={true}
                           selected={regDate}
-                          onChange={(date) => setRegDate(date)}
+                          onChange={(e) => handleResignationDate(e)}
                           className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
@@ -801,6 +808,7 @@ const EmpResignation = () => {
                     <Col sm="7">
                       <a
                         href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
+                        target="_blank"
                         className="readTextBlue"
                       >
                         Click here
