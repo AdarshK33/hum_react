@@ -19,41 +19,23 @@ import {
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { OnBoardContext } from "../../context/OnBoardState";
-import Insurance from "./Insurance";
+import EducationAndWorkDoc from "./EducationAndWorkDoc";
 import PersonalDoc from "./PersonalDoc";
-import HolidayWorkingBonus from "./HolidayWorkingBonus";
-import { AppContext } from "../../context/AppState";
-import { PermissionContext } from "../../context/PermissionState";
+import OtherDocuments from "./OtherDocuments";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 import moment from "moment";
 
-const Benfits = () => {
-  const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
-  const [activeStep, setActiveStep] = useState(true);
-  // useEffect(() => {
-  //   if (
-  //     user !== null &&
-  //     user !== undefined &&
-  //     Object.keys(user).length !== 0 &&
-  //     rolePermission !== "" &&
-  //     rolePermission !== null &&
-  //     rolePermission !== undefined &&
-  //     (rolePermission === "costCenterManager" ||
-  //       rolePermission === "superCostCenterManager" ||
-  //       rolePermission === "admin")
-  //   ) {
-  //     if (user.department.toLowerCase() === "retail") {
-  //       setActiveStep(false);
-  //     } else {
-  //       setActiveStep(true);
-  //     }
-  //   }
-  // }, [user]);
+const Documents = () => {
+  const { DocumentView, documentsList } = useContext(EmployeeProfileContext);
+  useEffect(() => {
+    DocumentView();
+  }, []);
+
   return (
     <Fragment>
       <label>
-        <b>Benefits :</b>
+        <b>Documents :</b>
       </label>
       <Row
         style={{
@@ -69,23 +51,28 @@ const Benfits = () => {
           <Accordion preExpanded={["a"]}>
             <AccordionItem uuid="a">
               <AccordionItemHeading>
-                <AccordionItemButton>Insurance</AccordionItemButton>
+                <AccordionItemButton>Personal</AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <Insurance />
+                <PersonalDoc />
               </AccordionItemPanel>
             </AccordionItem>
 
             <AccordionItem>
               <AccordionItemHeading>
-                <AccordionItemButton
-                  style={activeStep ? {} : { background: "#aaa" }}
-                >
-                  Holiday Working Bonus
-                </AccordionItemButton>
+                <AccordionItemButton>Education and Work</AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                {activeStep ? <HolidayWorkingBonus /> : ""}
+                <EducationAndWorkDoc />
+              </AccordionItemPanel>
+            </AccordionItem>
+
+            <AccordionItem>
+              <AccordionItemHeading>
+                <AccordionItemButton>Other Documents</AccordionItemButton>
+              </AccordionItemHeading>
+              <AccordionItemPanel>
+                <OtherDocuments />
               </AccordionItemPanel>
             </AccordionItem>
           </Accordion>
@@ -94,4 +81,4 @@ const Benfits = () => {
     </Fragment>
   );
 };
-export default Benfits;
+export default Documents;

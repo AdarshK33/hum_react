@@ -13,6 +13,11 @@ const initial_state = {
   documentsList: [],
   insuranceData: [],
   otherDocumentsList: [],
+  insuranceTopUpData: [],
+  premiumViewData: [],
+  holidayWorkingBonusList: [],
+  EmployeesList: [],
+  total: 0,
 };
 
 export const EmployeeProfileContext = createContext();
@@ -21,6 +26,11 @@ export const EmployeeProfileProvider = ({ children }) => {
   const [loader, setLoader] = useState(false);
   const [letterShow, setLetterShow] = useState(false);
   const [state, dispatch] = useReducer(EmployeeProfileReducer, initial_state);
+  const [currentEmpId, setCurrentEmpId] = useState(0);
+
+  const setEmployeeId = (val) => {
+    setCurrentEmpId(val);
+  };
 
   const SetLetterView = (val) => {
     setLetterShow(val);
@@ -190,7 +200,41 @@ export const EmployeeProfileProvider = ({ children }) => {
     setLoader(true);
     console.log("updateAddress", updateData);
     return client
-      .post("/api/v1/employee/profile/update/holiday", updateData)
+      .post("/api/v1/employee/profile/update/holiday-bonus", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        HolidayWorkingBonusView(updateData.employeeId);
+
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const HolidayWorkingBonusView = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile/view/holiday-bonus?employeeId=" + empId)
+      .then((response) => {
+        state.holidayWorkingBonusList = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "HOLIDAY_WORKING_BONUS_VIEW",
+          payload: state.holidayWorkingBonusList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const UpdateRemuneration = (updateData) => {
+    setLoader(true);
+    console.log("updateAddress", updateData);
+    return client
+      .post("/api/v1/employee/profile/update/remuneration", updateData)
       .then((response) => {
         toast.info(response.data.message);
         console.log(response.data.message);
@@ -201,6 +245,20 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
+  const UpdateInsurance = (updateData) => {
+    setLoader(true);
+    console.log("updateAddress", updateData);
+    return client
+      .post("/api/v1/employee/profile/create", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const uploadFile = (fileInfo) => {
     console.log("uploadFile state", fileInfo);
     const photoFile = fileInfo.file;
@@ -295,9 +353,74 @@ export const EmployeeProfileProvider = ({ children }) => {
         console.log(error);
       });
   };
+  const insuranceTopUpView = (year) => {
+    console.log("insuranceTopUpView", year);
+    client
+      .get("/api/v1/employee/profile/view/premium?page=0&size=10&year=" + year)
+      .then((response) => {
+        state.insuranceTopUpData = response.data.data.data;
+        console.log("insuranceTopUpData", state.insuranceTopUpData);
+        return dispatch({
+          type: "EMP_INSURANCE_TOPUP_DATA",
+          payload: state.insuranceTopUpData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const premiumView = (insuranceId, EmpId) => {
+    console.log("premiumView", insuranceId, EmpId);
+    client
+      .get("/api/v1/employee/profile/view/premium/" + insuranceId + "/" + EmpId)
+      .then((response) => {
+        state.premiumViewData = response.data.data;
+        console.log("premiumViewData", state.premiumViewData);
+        return dispatch({
+          type: "EMP_PREMIUM_DATA",
+          payload: state.premiumViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // manager profile
+
+  const EmployeesListView = (key, pageNumber, role = 0) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/employee/profile/view?key=" +
+          key +
+          "&page=" +
+          pageNumber +
+          "&size=10&superManager=" +
+          role
+      )
+      .then((response) => {
+        state.EmployeesList = response.data.data.data;
+        state.total = response.data.data.total;
+        setLoader(false);
+        console.log(state.total);
+        console.log(response);
+
+        return dispatch({
+          type: "MANAGER_EMP_LISTING",
+          payload: state.EmployeesList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <EmployeeProfileContext.Provider
       value={{
+        setEmployeeId,
         addressView,
         EmergencyContactView,
         bankView,
@@ -314,6 +437,17 @@ export const EmployeeProfileProvider = ({ children }) => {
         UpdateHolidayWorkingBonus,
         InsuranceView,
         OtherDocumentView,
+        UpdateRemuneration,
+        insuranceTopUpView,
+        premiumView,
+        UpdateInsurance,
+        HolidayWorkingBonusView,
+        EmployeesListView,
+        EmployeesList: state.EmployeesList,
+        total: state.total,
+        holidayWorkingBonusList: state.holidayWorkingBonusList,
+        insuranceTopUpData: state.insuranceTopUpData,
+        premiumViewData: state.premiumViewData,
         otherDocumentsList: state.otherDocumentsList,
         insuranceData: state.insuranceData,
         letterShow: letterShow,
@@ -325,6 +459,7 @@ export const EmployeeProfileProvider = ({ children }) => {
         emergencyContactView: state.emergencyContactView,
         emergencyUpdate: state.emergencyUpdate,
         loader: loader,
+        currentEmpId: currentEmpId,
       }}
     >
       {children}
