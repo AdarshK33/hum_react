@@ -101,7 +101,7 @@ const ITCharter =(props)=>{
                 "employeeId":employeeProfileData.employeeId,
                 "isCodeOfConduct":item.isCodeOfConduct === null?false:true,
                 "isDsiItCharter":true,
-                "codeOfConductLetter":CODEOFCONDUCT
+                "codeOfConductLetter":item.codeOfConductLetter !== null?item.codeOfConductLetter:CODEOFCONDUCT
                 }
                 const doc = new jsPDF();    
                 //get table html
@@ -118,7 +118,7 @@ const ITCharter =(props)=>{
               blobStore.name = "itcharter.pdf"      
               const data = {"dsiType":"It Charter",
                           "employeeId":employeeProfileData.employeeId,
-                          "fileType":26}
+                          "fileType":20}
 
           dsiCharterUpdate(infoData,data,blobStore)
       });

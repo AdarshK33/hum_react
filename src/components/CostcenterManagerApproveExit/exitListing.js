@@ -335,20 +335,7 @@ const ExitListing = () => {
                                 item.status === 5 ||
                                 item.status === 6 ? (
                                   <Edit2 />
-                                ) : ((user.loginType == (7 || 3 || 9) ||
-                                    user.additionalRole == (7 || 3 || 9)) &&
-                                    item.isManager == true &&
-                                    item.status == 2) ||
-                                  ((user.loginType == (0 || 2 || 3) ||
-                                    (user.additionalRole == (0 || 2 || 3) &&
-                                      user.isManager == true &&
-                                      (item.isManager == null ||
-                                        item.isManager == "" ||
-                                        item.isManager == undefined ||
-                                        item.isManager !== true))) &&
-                                    item.status == 2) ? (
-                                  <Edit2 />
-                                ) : item.status === 0 || item.status === 8 ? (
+                                ) :item.status === 0 || item.status === 8 ? (
                                   <Link to={"/exit-action/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
@@ -356,7 +343,34 @@ const ExitListing = () => {
                                       }}
                                     />
                                   </Link>
-                                ) : (
+                                ) :(((
+                                  (user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
+                                   ||
+                                 (user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
+                                ) 
+                                &&
+                                item.isManager == true &&
+                                item.status == 2)
+                                 ||
+                                 ((
+                                  (user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
+                                   ||
+                                 (user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
+                                ) 
+                                &&
+                                item.isManager == false &&
+                                item.status == 2)
+                                ||
+
+                              ((
+                                (user.loginType == 0 ||user.loginType == 2 ||user.loginType == 3)
+                                ||
+                                (
+                                (user.additionalRole == 0 || user.additionalRole == 2 || user.additionalRole == 3)
+                                )
+                                 && user.isManager == true
+                                ) &&
+                                item.status == 2)) ? (
                                   <Link
                                     to={"/employee-info/" + item.employeeId}
                                   >
@@ -366,7 +380,7 @@ const ExitListing = () => {
                                       }}
                                     />
                                   </Link>
-                                )}
+                                ):<Edit2/>}
                               </td>
                             </tr>
                           </tbody>

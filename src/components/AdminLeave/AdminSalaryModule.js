@@ -33,6 +33,7 @@ import { AdminContext } from "../../context/AdminState";
 import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { PermissionContext } from "../../context/PermissionState";
+import { AppContext } from "../../context/AppState";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -79,6 +80,7 @@ const AdminSalaryModule = () => {
     costcenterByDepartment,
     costcenterByDepartmentData,
   } = useContext(OfferContext);
+  const { user } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const handleEditClose = () => setEditModal(false);
@@ -110,6 +112,7 @@ const AdminSalaryModule = () => {
       setCostCenter([]);
     }
   }, [costCenterList]);
+  console.log("set costCenter", costCenter);
 
   useEffect(() => {
     console.log("departmentName", departmentName);
@@ -391,21 +394,34 @@ const AdminSalaryModule = () => {
                   onChange={costCenterHandler}
                   required={true} isSearchable
                 /> */}
-                <MultiSelect
-                  options={
-                    costCenterList !== null
-                      ? costCenterList.map((e) => ({
-                          label: e.costCentreName,
-                          value: e.costCentreName,
-                        }))
-                      : []
-                  }
-                  value={costCenter}
-                  onChange={setCostCenterHandler}
-                  labelledBy={"Select"}
-                  hasSelectAll={true}
-                  disableSearch={false}
-                />
+                {costCenterList !== null &&
+                costCenterList !== undefined &&
+                Object.keys(costCenterList).length !== 0 &&
+                Object.keys(costCenterList).length === 1 ? (
+                  <input
+                    type="text"
+                    className="form-control Value"
+                    required
+                    readOnly
+                    value={user.costCentre}
+                  />
+                ) : (
+                  <MultiSelect
+                    options={
+                      costCenterList !== null
+                        ? costCenterList.map((e) => ({
+                            label: e.costCentreName,
+                            value: e.costCentreName,
+                          }))
+                        : []
+                    }
+                    value={costCenter}
+                    onChange={setCostCenterHandler}
+                    labelledBy={"Select"}
+                    hasSelectAll={true}
+                    disableSearch={false}
+                  />
+                )}
                 <div>
                   {error && (
                     <span style={{ color: "red" }}>
@@ -579,14 +595,14 @@ const AdminSalaryModule = () => {
                       Pending
                     </Button>
                   )}
-                  <Button
+                  {/* <Button
                     variant="danger"
                     onClick={() => {
                       setDeleteModal(true);
                     }}
                   >
                     Cancel{" "}
-                  </Button>
+                  </Button> */}
                 </div>
               ) : (
                 <div></div>
@@ -708,9 +724,11 @@ const AdminSalaryModule = () => {
                             <td>{item.statusDesc}</td>
                             <td>
                               {(rolePermission == "admin" &&
+                                moment().format("DD") <= "25" &&
                                 (item.statusDesc === "Pending" ||
                                   item.statusDesc === "Approved")) ||
-                              item.statusDesc === "Pending" ? (
+                              (moment().format("DD") <= "20" &&
+                                item.statusDesc === "Pending") ? (
                                 <Edit2
                                   onClick={() => {
                                     setEditModal(true);

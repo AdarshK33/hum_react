@@ -15,7 +15,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 // import PdfExample from "../PdfLetters/pdfexample";
 
 import "./exitForm.css";
-const EmployeeExitAction = () => {
+const EmployeeExitAction = (props) => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [modeOfSeparationReasonId,setModeOfSeparationReasonId] = useState("")
   const [RcryYes, setRcryYes] = useState(false);
@@ -43,6 +43,9 @@ const EmployeeExitAction = () => {
   const params = useParams();
 
   const paramsemployeeId = params["employeeid"];
+
+  const [showSignature, setShowSignature] = useState(false);
+  const [showRelivingModal, setShow] = useState(false);
 
   const [state, setState] = useState({
     exitId: "",
@@ -385,23 +388,27 @@ const EmployeeExitAction = () => {
 
   const handleConfirmation = (exitId, employeeId) => {
     if (state.modeOfSeparationId == 2) {
-      terminationConfirmation(exitId, employeeId);
+     terminationConfirmation(exitId, employeeId);
       viewTermination();
-      setModal(true)
       setLetterView(2)
+      setShow(true);
+      // setModal(true)
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
-      resignationConfirmation(exitId, employeeId);
+     resignationConfirmation(exitId, employeeId);
       viewResignation();
-      setModal(true)
       setLetterView(4)
+      setShow(true);
+      // setModal(true)
     }
-    // console.log(state.modeOfSeparationId, "sravani");
+     console.log(letterView, "sravani");
 
   };
   const handleClosePopup = () => {
     setMessage(false);
   };
-
+  const handleRelivingClose = () => {
+    setShow(false)
+  }
   const handleSubmit = () => {
     setMessage(true);
   };
@@ -424,39 +431,7 @@ const EmployeeExitAction = () => {
     const value = checkValidations();
     if (value === true) {
       if (intern == false) {
-        // const InfoData = {
-        //   company: state.company,
-        //   contractType: state.contractType,
-        //   costCentreManagerEmailId: state.costCentreManagerEmailId,
-        //   costCentreManagerName: state.costCentreManagerName,
-        //   costCentreName: state.costCentreName,
-        //   dateOfResignation: state.dateOfResignation,
-        //   personalEmailId: state.emailId,
-        //   employeeName: state.employeeName,
-        //   employeeComment: state.employeeComment,
-        //   employeeId: state.employeeId,
-        //   exitId: state.exitId,
-        //   hoursWorked: state.hoursWorked,
-        //   lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-        //   location: state.location,
-        //   managerCostCentre: state.managerCostCentre,
-        //   managerEmailId: state.managerEmailId,
-        //   managerId: state.managerId ? state.managerId : "",
-        //   managerName: state.managerName,
-        //   managerPosition: state.managerPosition,
-        //   modeOfSeparationId: state.modeOfSeparationId,
-        //   modeOfSeparationReasonId: state.modeOfSeparationReasonId,
-        //   noticePeriod: state.noticePeriod,
-        //   noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-        //   noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
-        //   position: state.position,
-        //   reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-        //   reason: state.reason,
-        //   reasonForResignation: state.reasonForResignation,
-        //   rehireRemark: state.remarks !== "" ? state.remarks : null,
-        //   status: 9,
-        //   withdraw:state.withdraw
-        // };
+      
         const InfoData = {
           company: employeeData.company,
           contractType: employeeData.contractType,
@@ -494,6 +469,7 @@ const EmployeeExitAction = () => {
         console.log("createExitData", InfoData);
         setSubmitted(true);
         UpdateEmplyoeeExist(InfoData);
+              setModal(true)
         // setPreview(true);
         // setSuccessModal(true);
       }
@@ -553,8 +529,24 @@ const EmployeeExitAction = () => {
             </Modal.Body>
           </Container>
         </Modal>
-       {letterView == 2?<RelievingLetter previewLetter={previewLetter} />:
+        { (letterView == 1 || letterView == 4||letterView == 2)?(
+        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {letterView == 2?(
+              <TerminationLetter />
+            ) : (letterView == 1 || letterView == 4) ? (
+              <RelievingLetter />
+            ) :"" }
+            <br></br>
+          </Modal.Body>
+        </Modal>
+      ) : (
+        ""
+      )}
+       {/* {letterView == 2?<RelievingLetter previewLetter={previewLetter} />:
         (letterView == 1 || letterView == 4)? <TerminationLetter terminationLetter={terminationLetter} /> :""}
+         */}
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
         {/* <PdfExample /> */}
         <div className="container-fluid">
@@ -1022,7 +1014,7 @@ const EmployeeExitAction = () => {
                         }
                         onClick={submitHandler}
                       >
-                        Save
+                        confirm 
                       </button>
 
                       {submitted ? (

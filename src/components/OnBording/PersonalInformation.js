@@ -1202,7 +1202,7 @@ const PersonalInformation = (props) => {
             </Form.Group>
           </div>
 
-          <div className="col-sm-4">
+          {/* <div className="col-sm-4">
             <Form.Group>
               <Form.Label>LGBT</Form.Label>
               <Form.Control
@@ -1217,10 +1217,10 @@ const PersonalInformation = (props) => {
                 <option> No</option>
               </Form.Control>
             </Form.Group>
-          </div>
-        </Row>
+          </div> */}
 
-        <Row style={{ marginBottom: "2rem" }}>
+
+
           <div className="col-sm-4">
             <Form.Group>
               <Form.Label>
@@ -1253,6 +1253,8 @@ const PersonalInformation = (props) => {
               )}
             </Form.Group>
           </div>
+                  </Row>
+                  <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-4">
             {candidateViewInfo !== null &&
             candidateViewInfo !== undefined &&
