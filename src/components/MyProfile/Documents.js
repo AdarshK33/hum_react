@@ -23,13 +23,15 @@ import EducationAndWorkDoc from "./EducationAndWorkDoc";
 import PersonalDoc from "./PersonalDoc";
 import OtherDocuments from "./OtherDocuments";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import { AppContext } from "../../context/AppState";
 
 import moment from "moment";
 
 const Documents = () => {
   const { DocumentView, documentsList } = useContext(EmployeeProfileContext);
+  const { user } = useContext(AppContext);
   useEffect(() => {
-    DocumentView();
+    DocumentView(user.employeeId);
   }, []);
 
   return (

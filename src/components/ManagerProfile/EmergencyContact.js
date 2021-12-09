@@ -9,8 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 const EmergencyContact = (props) => {
   const { candidateProfileData, addressView } = useContext(OnBoardContext);
-  const { emergencyContactView, EmergencyContactView, EmergencyContactUpdate } =
-    useContext(EmployeeProfileContext);
+  const {
+    emergencyContactView,
+    EmergencyContactView,
+    EmergencyContactUpdate,
+    currentEmpId,
+  } = useContext(EmployeeProfileContext);
   const [disabled, setDisableState] = useState(false);
   // acessing employeeId from params
 
@@ -40,7 +44,7 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
   useEffect(() => {
-    EmergencyContactView(candidateProfileData.employeeId);
+    EmergencyContactView(currentEmpId);
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
   useEffect(() => {
@@ -62,6 +66,19 @@ const EmergencyContact = (props) => {
         relationship: emergencyContactView.relationship,
       });
       setDataExist({ exist: true });
+    } else {
+      setState({
+        contactName: "",
+        addressLine: "",
+        employeeId: "",
+        contactId: "",
+        city: "",
+        country: "",
+        locality: "",
+        phoneNumber: "",
+        pinCode: "",
+        relationship: "",
+      });
     }
     console.log(state, "previous2");
   }, [emergencyContactView]);

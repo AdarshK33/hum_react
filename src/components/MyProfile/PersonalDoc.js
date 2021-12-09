@@ -64,7 +64,7 @@ const PersonalDoc = (props) => {
   ]);
 
   useEffect(() => {
-    DocumentView();
+    DocumentView(user.employeeId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {

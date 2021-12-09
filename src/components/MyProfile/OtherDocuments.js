@@ -44,8 +44,8 @@ const OtherDocuments = (props) => {
   ]);
 
   useEffect(() => {
-    DocumentView();
-    OtherDocumentView();
+    DocumentView(user.employeeId);
+    OtherDocumentView(user.employeeId);
   }, []);
   console.log("documentsList", documentsList);
   // useEffect(() => {

@@ -112,11 +112,11 @@ const Address = (props) => {
   const [addressValue, setAddressValue] = useState(0);
   // un commect
   useEffect(() => {
-    addressView();
+    addressView(user.employeeId);
     getCountryDetails();
     getCostCentreLocationDetails();
     stateData();
-    bankView();
+    bankView(user.employeeId);
   }, []);
 
   useEffect(() => {

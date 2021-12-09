@@ -31,7 +31,7 @@ const Insurance = () => {
   const [yearError, setYearError] = useState(false);
   const [sumValueError, setSumValueError] = useState(false);
   useEffect(() => {
-    InsuranceView();
+    InsuranceView(user.employeeId);
   }, []);
   useEffect(() => {
     if (year !== null && year !== undefined && year !== "") {

@@ -22,7 +22,7 @@ const EducationAndWorkDoc = (props) => {
   const [Name, setName] = useState("");
 
   useEffect(() => {
-    DocumentView();
+    DocumentView(user.employeeId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {

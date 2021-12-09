@@ -18,6 +18,7 @@ const OtherDocuments = (props) => {
     OtherDocumentView,
     otherDocumentsList,
     loader,
+    currentEmpId,
   } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [educationDocName, setEducationDocName] = useState("");
@@ -44,8 +45,8 @@ const OtherDocuments = (props) => {
   ]);
 
   useEffect(() => {
-    DocumentView();
-    OtherDocumentView();
+    DocumentView(currentEmpId);
+    OtherDocumentView(currentEmpId);
   }, []);
   console.log("documentsList", documentsList);
   // useEffect(() => {
@@ -147,7 +148,7 @@ const OtherDocuments = (props) => {
       if (fileUpload) {
         console.log("inside file info", fileUpload, fileName);
         const fileInfo = {
-          employeeId: user.employeeId,
+          employeeId: currentEmpId,
           file: fileUpload,
           fileName: fileName,
         };

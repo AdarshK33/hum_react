@@ -27,9 +27,11 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import moment from "moment";
 
 const Documents = () => {
-  const { DocumentView, documentsList } = useContext(EmployeeProfileContext);
+  const { DocumentView, documentsList, currentEmpId } = useContext(
+    EmployeeProfileContext
+  );
   useEffect(() => {
-    DocumentView();
+    DocumentView(currentEmpId);
   }, []);
 
   return (

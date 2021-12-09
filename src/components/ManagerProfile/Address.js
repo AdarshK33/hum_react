@@ -18,8 +18,14 @@ import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 const Address = (props) => {
   const { user } = useContext(AppContext);
-  const { addressView, addressViewData, bankView, UpdateAddress, uploadFile } =
-    useContext(EmployeeProfileContext);
+  const {
+    addressView,
+    addressViewData,
+    bankView,
+    UpdateAddress,
+    currentEmpId,
+    uploadFile,
+  } = useContext(EmployeeProfileContext);
   const {
     getCountryDetails,
     countryDetails,
@@ -112,11 +118,11 @@ const Address = (props) => {
   const [addressValue, setAddressValue] = useState(0);
   // un commect
   useEffect(() => {
-    addressView();
+    addressView(currentEmpId);
     getCountryDetails();
     getCostCentreLocationDetails();
     stateData();
-    bankView();
+    bankView(currentEmpId);
   }, []);
 
   useEffect(() => {
@@ -196,6 +202,26 @@ const Address = (props) => {
         addressId: addressViewData.presentAddress.addressId,
         addressType: addressViewData.presentAddress.addressType,
         employeeId: addressViewData.presentAddress.employeeId,
+      });
+    } else {
+      setState({
+        flatNumber: "",
+        street: "",
+        locality: "",
+        addressLine: "",
+        pinCode: "",
+        phoneNumber: "",
+        addressId: "",
+        addressType: "",
+        employeeId: "",
+
+        permanentFlatNumber: "",
+        permanentStreet: "",
+        permanentLocality: "",
+        permanentAddressLine: "",
+        permanentPinCode: "",
+        permanentPhoneNumber: "",
+        permanentAddressId: "",
       });
     }
   }, [addressViewData]);
@@ -881,7 +907,7 @@ const Address = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: user.employeeId,
+        employeeId: currentEmpId,
         file: fileUpload,
         fileType: fileType,
       };

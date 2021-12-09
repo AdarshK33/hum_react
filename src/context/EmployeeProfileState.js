@@ -18,6 +18,7 @@ const initial_state = {
   holidayWorkingBonusList: [],
   EmployeesList: [],
   total: 0,
+  EmpProfile: [],
 };
 
 export const EmployeeProfileContext = createContext();
@@ -35,10 +36,10 @@ export const EmployeeProfileProvider = ({ children }) => {
   const SetLetterView = (val) => {
     setLetterShow(val);
   };
-  const addressView = () => {
+  const addressView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/address")
+      .get("/api/v1/employee/profile/view/address?employeeId=" + empId)
       .then((response) => {
         state.addressViewData = response.data.data;
         //toast.info(response.data.message);
@@ -52,10 +53,12 @@ export const EmployeeProfileProvider = ({ children }) => {
         console.log(error);
       });
   };
-  const EmergencyContactView = () => {
+  const EmergencyContactView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/emergency/contact")
+      .get(
+        "/api/v1/employee/profile/view/emergency/contact?employeeId=" + empId
+      )
       .then((response) => {
         state.emergencyContactView = response.data.data;
         //toast.info(response.data.message);
@@ -70,10 +73,10 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
-  const bankView = () => {
+  const bankView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/bank")
+      .get("/api/v1/employee/profile/view/bank?employeeId=" + empId)
       .then((response) => {
         state.bankViewData = response.data.data;
         //toast.info(response.data.message);
@@ -88,10 +91,10 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
-  const RemunerationView = () => {
+  const RemunerationView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/remuneration")
+      .get("/api/v1/employee/profile/view/remuneration?employeeId=" + empId)
       .then((response) => {
         state.remunerationData = response.data.data;
         //toast.info(response.data.message);
@@ -106,10 +109,12 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
-  const CostCentreSplitView = () => {
+  const CostCentreSplitView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/cost-centre-split")
+      .get(
+        "/api/v1/employee/profile/view/cost-centre-split?employeeId=" + empId
+      )
       .then((response) => {
         state.costCentreSplitData = response.data.data;
         //toast.info(response.data.message);
@@ -272,7 +277,7 @@ export const EmployeeProfileProvider = ({ children }) => {
       .then((response) => {
         console.log(response, "res uploadFile");
         toast.info(response.data.message);
-        DocumentView();
+        DocumentView(fileInfo.employeeId);
       })
       .catch((error) => {
         // toast.info("Please upload a valid file");
@@ -293,17 +298,19 @@ export const EmployeeProfileProvider = ({ children }) => {
       .then((response) => {
         console.log(response, "res uploadFile");
         toast.info(response.data.message);
-        OtherDocumentView();
+        OtherDocumentView(fileInfo.employeeId);
       })
       .catch((error) => {
         // toast.info("Please upload a valid file");
         console.log(error);
       });
   };
-  const DocumentView = () => {
+  const DocumentView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/employee/document")
+      .get(
+        "/api/v1/employee/profile/view/employee/document?employeeId=" + empId
+      )
       .then((response) => {
         state.documentsList = response.data.data;
         //toast.info(response.data.message);
@@ -318,10 +325,13 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
-  const OtherDocumentView = () => {
+  const OtherDocumentView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/employee/other/document")
+      .get(
+        "/api/v1/employee/profile/view/employee/other/document?employeeId=" +
+          empId
+      )
       .then((response) => {
         state.otherDocumentsList = response.data.data;
         //toast.info(response.data.message);
@@ -336,10 +346,10 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
-  const InsuranceView = () => {
+  const InsuranceView = (empId) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/insurance")
+      .get("/api/v1/employee/profile/view/insurance?employeeId=" + empId)
       .then((response) => {
         state.insuranceData = response.data.data;
         //toast.info(response.data.message);
@@ -388,6 +398,26 @@ export const EmployeeProfileProvider = ({ children }) => {
   };
 
   // manager profile
+
+  const EmpProfileView = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile/profile?employeeId=" + empId)
+      .then((response) => {
+        state.EmpProfile = response.data.data;
+        setLoader(false);
+        console.log("Employeee ID=======>", empId);
+        console.log(response);
+
+        return dispatch({
+          type: "EMP_PROFILE",
+          payload: state.EmpProfile,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const EmployeesListView = (key, pageNumber, role = 0) => {
     setLoader(true);
@@ -443,6 +473,8 @@ export const EmployeeProfileProvider = ({ children }) => {
         UpdateInsurance,
         HolidayWorkingBonusView,
         EmployeesListView,
+        EmpProfileView,
+        EmpProfile: state.EmpProfile,
         EmployeesList: state.EmployeesList,
         total: state.total,
         holidayWorkingBonusList: state.holidayWorkingBonusList,

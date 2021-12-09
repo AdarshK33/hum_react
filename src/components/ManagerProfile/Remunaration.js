@@ -27,6 +27,7 @@ const Remuneration = () => {
     CostCentreSplitView,
     costCentreSplitData,
     UpdateRemuneration,
+    currentEmpId,
   } = useContext(EmployeeProfileContext);
   const [state, setState] = useState({
     salaryType: "",
@@ -37,8 +38,8 @@ const Remuneration = () => {
   const [vpfValue, setVpfValue] = useState("");
   const [vpfError, setVpfError] = useState(false);
   useEffect(() => {
-    RemunerationView();
-    CostCentreSplitView();
+    RemunerationView(currentEmpId);
+    CostCentreSplitView(currentEmpId);
   }, []);
   useEffect(() => {
     if (

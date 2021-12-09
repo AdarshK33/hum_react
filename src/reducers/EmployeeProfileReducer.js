@@ -27,6 +27,8 @@ const GroupReducer = (state, action) => {
       return { ...state, holidayWorkingBonusList: action.payload };
     case "MANAGER_EMP_LISTING":
       return { ...state, EmployeesList: action.payload };
+    case "EMP_PROFILE":
+      return { ...state, EmpProfile: action.payload };
     default:
       return state;
   }

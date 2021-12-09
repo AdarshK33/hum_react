@@ -6,12 +6,15 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppContext } from "../../context/AppState";
 
 const EmergencyContact = (props) => {
   const { candidateProfileData, addressView } = useContext(OnBoardContext);
   const { emergencyContactView, EmergencyContactView, EmergencyContactUpdate } =
     useContext(EmployeeProfileContext);
   const [disabled, setDisableState] = useState(false);
+
+  const { user } = useContext(AppContext);
   // acessing employeeId from params
 
   const [stateError, setStateError] = useState({
@@ -40,7 +43,7 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
   useEffect(() => {
-    EmergencyContactView(candidateProfileData.employeeId);
+    EmergencyContactView(user.employeeId);
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
   useEffect(() => {

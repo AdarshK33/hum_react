@@ -9,33 +9,38 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
 import moment from "moment";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 const WorkDetails = () => {
+  const { EmpProfileView, EmpProfile, currentEmpId } = useContext(
+    EmployeeProfileContext
+  );
   const { user } = useContext(AppContext);
   const { rolePermission, locationDetails, locationDetailsList } =
     useContext(PermissionContext);
   const [locationName, setLocationName] = useState("");
   useEffect(() => {
     locationDetails();
+    EmpProfileView(currentEmpId);
   }, []);
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     if (
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0 &&
+      EmpProfile !== null &&
+      EmpProfile !== undefined &&
+      Object.keys(EmpProfile).length !== 0 &&
       locationDetailsList &&
       locationDetailsList !== null &&
       locationDetailsList !== undefined &&
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {
+        if (item.locationId === EmpProfile.locationId) {
           setLocationName(item.locationName);
         }
       });
     }
-  }, [locationDetailsList, user]);
+  }, [locationDetailsList, EmpProfile]);
   return (
     <Fragment>
       <Form>
@@ -61,28 +66,28 @@ const WorkDetails = () => {
               <b>Email Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.email}</label>
+            <label className="itemResult">{EmpProfile.email}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Fed Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.fedId}</label>
+            <label className="itemResult">{EmpProfile.fedId}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Contract Type</b>
             </label>
             <br />
-            <label className="itemResult">{user.contractType}</label>
+            <label className="itemResult">{EmpProfile.contractType}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Department</b>
             </label>
             <br />
-            <label className="itemResult">{user.department}</label>
+            <label className="itemResult">{EmpProfile.department}</label>
           </Col>
         </Row>
         <Row
@@ -95,28 +100,28 @@ const WorkDetails = () => {
               <b>Position</b>
             </label>
             <br />
-            <label className="itemResult">{user.position}</label>
+            <label className="itemResult">{EmpProfile.position}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Designation</b>
             </label>
             <br />
-            <label className="itemResult">{user.designation}</label>
+            <label className="itemResult">{EmpProfile.designation}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Sport</b>
             </label>
             <br />
-            <label className="itemResult">{user.sport}</label>
+            <label className="itemResult">{EmpProfile.sport}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Cost Center</b>
             </label>
             <br />
-            <label className="itemResult">{user.costCentre}</label>
+            <label className="itemResult">{EmpProfile.costCentre}</label>
           </Col>
         </Row>
         <Row
@@ -136,7 +141,7 @@ const WorkDetails = () => {
               <b>Company Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.company}</label>
+            <label className="itemResult">{EmpProfile.company}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -144,7 +149,7 @@ const WorkDetails = () => {
             </label>
             <br />
             <label className="itemResult">
-              {moment(user.dateOfTransfer).format("DD-MM-YYYY")}
+              {moment(EmpProfile.dateOfTransfer).format("DD-MM-YYYY")}
             </label>
           </Col>
           <Col sm={3}>
@@ -152,7 +157,7 @@ const WorkDetails = () => {
               <b>Manager Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.managerId}</label>
+            <label className="itemResult">{EmpProfile.managerId}</label>
           </Col>
         </Row>
         <Row
@@ -165,14 +170,14 @@ const WorkDetails = () => {
               <b>Manager Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.managerName}</label>
+            <label className="itemResult">{EmpProfile.managerName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Probation Period</b>
             </label>
             <br />
-            <label className="itemResult">{user.probationPeriod}</label>
+            <label className="itemResult">{EmpProfile.probationPeriod}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -186,7 +191,7 @@ const WorkDetails = () => {
               <b>Recruitment Source</b>
             </label>
             <br />
-            <label className="itemResult">{user.recruitmentSource}</label>
+            <label className="itemResult">{EmpProfile.recruitmentSource}</label>
           </Col>
         </Row>
         <Row
@@ -199,7 +204,7 @@ const WorkDetails = () => {
               <b>NGO Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.ngoName}</label>
+            <label className="itemResult">{EmpProfile.ngoName}</label>
           </Col>
         </Row>
       </Form>

@@ -8,9 +8,13 @@ import ViewTheLetter from "./view";
 
 const EducationAndWorkDoc = (props) => {
   const { user } = useContext(AppContext);
-  const { DocumentView, documentsList, letterShow, SetLetterView } = useContext(
-    EmployeeProfileContext
-  );
+  const {
+    DocumentView,
+    documentsList,
+    letterShow,
+    SetLetterView,
+    currentEmpId,
+  } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [educationDocName, setEducationDocName] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
@@ -22,7 +26,7 @@ const EducationAndWorkDoc = (props) => {
   const [Name, setName] = useState("");
 
   useEffect(() => {
-    DocumentView();
+    DocumentView(currentEmpId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {

@@ -53,7 +53,7 @@ const BankDetails = (props) => {
     },
   ]);
   useEffect(() => {
-    bankView();
+    bankView(user.employeeId);
   }, []);
 
   useEffect(() => {

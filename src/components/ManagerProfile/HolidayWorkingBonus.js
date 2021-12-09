@@ -18,7 +18,9 @@ import { AppContext } from "../../context/AppState";
 
 const HolidayWorkingBonus = () => {
   const { HolidaysView, HolidaysList } = useContext(Employee360Context);
-  const { UpdateHolidayWorkingBonus } = useContext(EmployeeProfileContext);
+  const { UpdateHolidayWorkingBonus, currentEmpId } = useContext(
+    EmployeeProfileContext
+  );
   const [HolidayName, setHolidayName] = useState("");
   const [HolidayId, setHolidayId] = useState(0);
   const [HoloidayDate, setHolidayDate] = useState("");
@@ -70,7 +72,7 @@ const HolidayWorkingBonus = () => {
         Object.keys(HolidaysList).length !== 0
       ) {
         let data = {
-          employeeId: user.employeeId,
+          employeeId: currentEmpId,
           holidayDate: HoloidayDate,
           holidayName: HolidayName,
           holidayId: HolidayId,

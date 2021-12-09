@@ -153,6 +153,8 @@ import ViewWeekOff from "./components/MasterWeekOff/ViewWeekOff";
 import ViewWeekHours from "./components/MasterWeekHours/ViewWeekHours";
 import ManagerProfileListing from "./components/ManagerProfile/ManagerProfileListing";
 import ManagerProfileSteppers from "./components/ManagerProfile/ManagerProfileSteppers";
+import AdminDocVerfication from "./components/EmployeeVerification/AdminDocVerification";
+import EmployeeListing from "./components/EmployeeVerification/EmployeeListing";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -370,8 +372,8 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/employee360`}
-            // component={EmployeeDashboard}
-            component={ManagerProfileListing}
+            component={EmployeeDashboard}
+            // component={ManagerProfileListing}
           />
 
           <Route
@@ -385,6 +387,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/employee_profile/:employeeid`}
             component={ManagerProfileSteppers}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee_doc_verify/:employeeid`}
+            component={AdminDocVerfication}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
@@ -524,6 +531,7 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/document-management`}
             component={DocumentContainer}
+            // component={EmployeeListing}
           />
 
           <Route
