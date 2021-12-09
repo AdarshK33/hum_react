@@ -228,16 +228,28 @@ function Dashboard() {
     }
 
     for (let item in graphData[0].rosterCluster) {
-      if (graphData[0].rosterCluster[item].contractType === "Fulltime") {
+      if (
+        graphData[0].rosterCluster[item].contractType === "Fulltime" ||
+        graphData[0].rosterCluster[item].contractType === "fulltime"
+      ) {
         FTcluster = FTcluster + graphData[0].rosterCluster[item].workingHours;
       }
-      if (graphData[0].rosterCluster[item].contractType === "parttime") {
+      if (
+        graphData[0].rosterCluster[item].contractType === "parttime" ||
+        graphData[0].rosterCluster[item].contractType === "Parttime"
+      ) {
         PPTcluster = PPTcluster + graphData[0].rosterCluster[item].workingHours;
       }
-      if (graphData[0].rosterCluster[item].contractType === "internship") {
+      if (
+        graphData[0].rosterCluster[item].contractType === "Internship" ||
+        graphData[0].rosterCluster[item].contractType === "internship"
+      ) {
         INTcluster = INTcluster + graphData[0].rosterCluster[item].workingHours;
       }
-      if (graphData[0].rosterCluster[item].contractType === "temporary") {
+      if (
+        graphData[0].rosterCluster[item].contractType === "temporary" ||
+        graphData[0].rosterCluster[item].contractType === "Temporary"
+      ) {
         TPTcluster = TPTcluster + graphData[0].rosterCluster[item].workingHours;
       }
     }
@@ -247,13 +259,22 @@ function Dashboard() {
     clusterHours.push({ temporary: TPTcluster });
 
     for (let item in graphData[0].rosterStore) {
-      if (graphData[0].rosterStore[item].contractType === "Fulltime") {
+      if (
+        graphData[0].rosterStore[item].contractType === "Fulltime" ||
+        graphData[0].rosterStore[item].contractType === "fulltime"
+      ) {
         FTstore = FTstore + graphData[0].rosterStore[item].workingHours;
       }
-      if (graphData[0].rosterStore[item].contractType === "parttime") {
+      if (
+        graphData[0].rosterStore[item].contractType === "Parttime" ||
+        graphData[0].rosterStore[item].contractType === "parttime"
+      ) {
         PPTstore = PPTstore + graphData[0].rosterStore[item].workingHours;
       }
-      if (graphData[0].rosterStore[item].contractType === "internship") {
+      if (
+        graphData[0].rosterStore[item].contractType === "Internship" ||
+        graphData[0].rosterStore[item].contractType === "internship"
+      ) {
         INTstore = INTstore + graphData[0].rosterStore[item].workingHours;
       }
     }
@@ -266,6 +287,8 @@ function Dashboard() {
     dpshoursStore.splice(0, dpshoursStore.length);
     dpshoursCluster.splice(0, dpshoursCluster.length);
   }
+
+  console.log("clusterHours cal", clusterHours);
 
   return (
     <div>

@@ -66,7 +66,7 @@ const EditWorkInformation = () => {
     noticePeriodView,
     noticePeriodViewData,
     costcenterByDepartment,
-    costcenterByDepartmentData
+    costcenterByDepartmentData,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -88,7 +88,7 @@ const EditWorkInformation = () => {
 
   useEffect(() => {
     let nationList = countryList.filter(
-      (item) => item.nationality !== "Indian"
+      (item) => item.nationality !== "Indian" && item.nationality !== null
     );
     console.log("contract list", nationList);
     setNationalityList(nationList);
@@ -158,29 +158,40 @@ const EditWorkInformation = () => {
   }, [state.employmentType, state.department, state.position]);
 
   useEffect(() => {
-    if (state.employmentType !== ""&& state.employmentType !== undefined&&state.employmentType !== ""&& state.department !== null&&state.department !== undefined&&state.department !== "") {
+    if (
+      state.employmentType !== "" &&
+      state.employmentType !== undefined &&
+      state.employmentType !== "" &&
+      state.department !== null &&
+      state.department !== undefined &&
+      state.department !== ""
+    ) {
       noticePeriodView(state.employmentType, state.department);
     }
   }, [state.employmentType, state.department]);
 
   useEffect(() => {
     let superMangerFlag;
-    if (state.department !== null&&state.department !== undefined&&state.department !== "") {
-      console.log("state.department",state.department);
-      if(rolePermission == "superCostCenterManager"){
-        superMangerFlag=1
-        costcenterByDepartment( state.department,superMangerFlag);
-      }else{
-        superMangerFlag=0
-        costcenterByDepartment( state.department,superMangerFlag);
+    if (
+      state.department !== null &&
+      state.department !== undefined &&
+      state.department !== ""
+    ) {
+      console.log("state.department", state.department);
+      if (rolePermission == "superCostCenterManager") {
+        superMangerFlag = 1;
+        costcenterByDepartment(state.department, superMangerFlag);
+      } else {
+        superMangerFlag = 0;
+        costcenterByDepartment(state.department, superMangerFlag);
       }
-      
     }
-  }, [ state.department]);
+  }, [state.department]);
   useEffect(() => {
     if (
-      noticePeriodViewData !== null &&  noticePeriodViewData !== undefined && 
-       noticePeriodViewData !== "" &&
+      noticePeriodViewData !== null &&
+      noticePeriodViewData !== undefined &&
+      noticePeriodViewData !== "" &&
       Object.keys(noticePeriodViewData).length !== 0
     ) {
       setNoticePeriod(noticePeriodViewData.noticePeriod);
@@ -644,7 +655,7 @@ const EditWorkInformation = () => {
                   name="sports"
                   onChange={changeHandler}
                   disabled={disabled}
-                  required
+                  required={state.department === "Retail" ? true : false}
                 >
                   <option value="">Select Sports</option>
                   {sportsNames !== null &&
