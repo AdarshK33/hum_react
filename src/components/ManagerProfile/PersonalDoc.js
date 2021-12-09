@@ -16,6 +16,7 @@ const PersonalDoc = (props) => {
     SetLetterView,
     uploadFile,
     loader,
+    currentEmpId,
   } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [photoGraphName, setPhotoGraphName] = useState("");
@@ -64,7 +65,7 @@ const PersonalDoc = (props) => {
   ]);
 
   useEffect(() => {
-    DocumentView(user.employeeId);
+    DocumentView(currentEmpId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -219,7 +220,7 @@ const PersonalDoc = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: user.employeeId,
+        employeeId: currentEmpId,
         file: fileUpload,
         fileType: fileType,
       };

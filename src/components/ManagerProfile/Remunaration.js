@@ -19,16 +19,15 @@ import {
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
-import { AppContext } from "../../context/AppState";
 
 const Remuneration = () => {
-  const { user } = useContext(AppContext);
   const {
     RemunerationView,
     remunerationData,
     CostCentreSplitView,
     costCentreSplitData,
     UpdateRemuneration,
+    currentEmpId,
   } = useContext(EmployeeProfileContext);
   const [state, setState] = useState({
     salaryType: "",
@@ -39,8 +38,8 @@ const Remuneration = () => {
   const [vpfValue, setVpfValue] = useState("");
   const [vpfError, setVpfError] = useState(false);
   useEffect(() => {
-    RemunerationView(user.employeeId);
-    CostCentreSplitView(user.employeeId);
+    RemunerationView(currentEmpId);
+    CostCentreSplitView(currentEmpId);
   }, []);
   useEffect(() => {
     if (

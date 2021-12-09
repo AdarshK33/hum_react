@@ -8,17 +8,24 @@ import { AppContext } from "../../context/AppState";
 
 const WorkingBonusList = () => {
   const { user } = useContext(AppContext);
-  const { HolidayWorkingBonusView, holidayWorkingBonusList } = useContext(
-    EmployeeProfileContext
-  );
+  const {
+    HolidayWorkingBonusView,
+    holidayWorkingBonusList,
+    EmpProfile,
+    currentEmpId,
+  } = useContext(EmployeeProfileContext);
   const [actionStatus, setActionStatus] = useState("9");
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [employeeExitStatus, setEmployeeExitStatus] = useState("");
   useEffect(() => {
-    if (user !== null && user !== undefined && Object.keys(user).length !== 0) {
-      HolidayWorkingBonusView(user.employeeId);
+    if (
+      EmpProfile !== null &&
+      EmpProfile !== undefined &&
+      Object.keys(EmpProfile).length !== 0
+    ) {
+      HolidayWorkingBonusView(currentEmpId);
     }
   }, []);
   console.log("holidayWorkingBonusList", holidayWorkingBonusList);

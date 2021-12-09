@@ -17,9 +17,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
 const BankDetails = (props) => {
   const { user } = useContext(AppContext);
-  const { bankView, bankViewData, BankUpdate, uploadFile } = useContext(
-    EmployeeProfileContext
-  );
+  const { bankView, bankViewData, BankUpdate, uploadFile, currentEmpId } =
+    useContext(EmployeeProfileContext);
   const {
     bankCreate,
     bankSaveData,
@@ -53,7 +52,7 @@ const BankDetails = (props) => {
     },
   ]);
   useEffect(() => {
-    bankView(user.employeeId);
+    bankView(currentEmpId);
   }, []);
 
   useEffect(() => {
@@ -219,7 +218,7 @@ const BankDetails = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: user.employeeId,
+        employeeId: currentEmpId,
         file: fileUpload,
         fileType: fileType,
       };

@@ -19,7 +19,7 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
 import man from "../../assets/images/dashboard/userImage.png";
 
-const MyProfileSteppers = (props) => {
+const ManagerProfileSteppers = (props) => {
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
   const personalInfoRef = useRef();
@@ -218,14 +218,14 @@ const MyProfileSteppers = (props) => {
   console.log(stepCount, stepArray, "stepArray");
   return (
     <Fragment>
-      <Breadcrumb title="MY PROFILE" parent="MY PROFILE" />
+      <Breadcrumb title="EMPLOYEE PROFILE" parent="EMPLOYEE PROFILE" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>MY PROFILE </b>
+                  <b>EMPLOYEE PROFILE </b>
                 </div>
                 <div>
                   <Row style={{ marginTop: "1rem" }}>
@@ -404,4 +404,4 @@ const MyProfileSteppers = (props) => {
     </Fragment>
   );
 };
-export default MyProfileSteppers;
+export default ManagerProfileSteppers;

@@ -1,0 +1,8 @@
+.profileButtons {
+  width: 120px;
+  height: 35px;
+  background-color: #006ebb;
+  color: white;
+  border: 1px solid#006ebb;
+  margin-left: 40px;
+}
