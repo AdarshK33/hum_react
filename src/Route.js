@@ -373,9 +373,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/employee360`}
             component={EmployeeDashboard}
-            // component={ManagerProfileListing}
           />
-
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager_profile`}
+            component={ManagerProfileListing}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/manager360`}
             component={ManagerDashboard}
@@ -531,7 +533,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/document-management`}
             component={DocumentContainer}
-            // component={EmployeeListing}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee_doc_verification`}
+            component={EmployeeListing}
           />
 
           <Route

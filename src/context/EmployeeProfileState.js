@@ -19,6 +19,8 @@ const initial_state = {
   EmployeesList: [],
   total: 0,
   EmpProfile: [],
+  EmployeesDocsVerifyList: [],
+  EmpDocsData: [],
 };
 
 export const EmployeeProfileContext = createContext();
@@ -273,7 +275,7 @@ export const EmployeeProfileProvider = ({ children }) => {
     formData.append("fileType", fileInfo.fileType);
     console.log("uploadFile", photoFile);
     return client
-      .post("/api/v1/employee/profile/upload", formData)
+      .post("/api/v1/employee/documents/verification/upload/document", formData)
       .then((response) => {
         console.log(response, "res uploadFile");
         toast.info(response.data.message);
@@ -419,6 +421,52 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
+  const EmpDocsView = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/documents/verification/view?employeeId=" + empId)
+      .then((response) => {
+        state.EmpDocsData = response.data.data;
+        setLoader(false);
+        console.log("Employeee ID=======>", empId);
+        console.log(response);
+
+        return dispatch({
+          type: "EMP_DOCS_DATA",
+          payload: state.EmpDocsData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmployeesDocsVerifyListView = (key, pageNumber) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/employee/profile/view/pending?key=" +
+          key +
+          "&page=" +
+          pageNumber +
+          "&size=10"
+      )
+      .then((response) => {
+        state.EmployeesDocsVerifyList = response.data.data.data;
+        state.total = response.data.data.total;
+        setLoader(false);
+        console.log(state.total);
+        console.log(response);
+
+        return dispatch({
+          type: "EMP_DOCS_VERIFY_LISTING",
+          payload: state.EmployeesDocsVerifyList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const EmployeesListView = (key, pageNumber, role = 0) => {
     setLoader(true);
     client
@@ -447,6 +495,41 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
+  const DocApprove = (Id) => {
+    client
+      .get(
+        "/api/v1/employee/documents/verification/approve?documentVerificationId=" +
+          Id
+        // +
+        // "&remarks=" +
+        // remarks
+      )
+      .then((response) => {
+        console.log("response", response);
+        toast.info(response.data.message);
+        EmpDocsView(currentEmpId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const DocDisapprove = (Id, remarks) => {
+    client
+      .get(
+        "/api/v1/employee/documents/verification/reject?documentVerificationId=" +
+          Id +
+          "&remarks=" +
+          remarks
+      )
+      .then((response) => {
+        console.log("response", response);
+        toast.info(response.data.message);
+        EmpDocsView(currentEmpId);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <EmployeeProfileContext.Provider
       value={{
@@ -474,6 +557,12 @@ export const EmployeeProfileProvider = ({ children }) => {
         HolidayWorkingBonusView,
         EmployeesListView,
         EmpProfileView,
+        EmployeesDocsVerifyListView,
+        DocApprove,
+        DocDisapprove,
+        EmpDocsView,
+        EmpDocsData: state.EmpDocsData,
+        EmployeesDocsVerifyList: state.EmployeesDocsVerifyList,
         EmpProfile: state.EmpProfile,
         EmployeesList: state.EmployeesList,
         total: state.total,

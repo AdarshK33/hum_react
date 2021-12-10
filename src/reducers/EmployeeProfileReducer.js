@@ -29,6 +29,10 @@ const GroupReducer = (state, action) => {
       return { ...state, EmployeesList: action.payload };
     case "EMP_PROFILE":
       return { ...state, EmpProfile: action.payload };
+    case "EMP_DOCS_VERIFY_LISTING":
+      return { ...state, EmployeesDocsVerifyList: action.payload };
+    case "EMP_DOCS_DATA":
+      return { ...state, EmpDocsData: action.payload };
     default:
       return state;
   }
