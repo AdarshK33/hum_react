@@ -15,8 +15,8 @@ const EmployeeListing = () => {
   const {
     total,
     loader,
-    EmployeesListView,
-    EmployeesList,
+    EmployeesDocsVerifyListView,
+    EmployeesDocsVerifyList,
     currentEmpId,
     setEmployeeId,
   } = useContext(EmployeeProfileContext);
@@ -32,11 +32,7 @@ const EmployeeListing = () => {
   const [searchValue, setSearchValue] = useState("");
   const [role, setRole] = useState(0);
   useEffect(() => {
-    EmployeesListView(
-      "all",
-      pageCount,
-      rolePermission == "superCostCenterManager" ? 1 : 0
-    );
+    EmployeesDocsVerifyListView("all", pageCount);
     console.log("user role", user);
   }, []);
   console.log("ROLEEE", rolePermission);
@@ -51,10 +47,13 @@ const EmployeeListing = () => {
     }
   }, [rolePermission]);
   useEffect(() => {
-    if (EmployeesList !== null && EmployeesList !== undefined) {
-      setCurrentRecords(EmployeesList);
+    if (
+      EmployeesDocsVerifyList !== null &&
+      EmployeesDocsVerifyList !== undefined
+    ) {
+      setCurrentRecords(EmployeesDocsVerifyList);
     }
-  }, [EmployeesList, currentRecords]);
+  }, [EmployeesDocsVerifyList, currentRecords]);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,11 +68,11 @@ const EmployeeListing = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeesListView(searchValue, pageNumber - 1, role);
+      EmployeesDocsVerifyListView(searchValue, pageNumber - 1);
     } else {
-      EmployeesListView("all", pageNumber - 1, role);
+      EmployeesDocsVerifyListView("all", pageNumber - 1);
     }
-    setCurrentRecords(EmployeesList);
+    setCurrentRecords(EmployeesDocsVerifyList);
   };
 
   /*-----------------Pagination------------------*/
@@ -85,9 +84,9 @@ const EmployeeListing = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      EmployeesListView(searchValue, 0, role);
+      EmployeesDocsVerifyListView(searchValue, 0);
     } else {
-      EmployeesListView("all", 0, role);
+      EmployeesDocsVerifyListView("all", 0);
     }
   };
 
@@ -101,7 +100,10 @@ const EmployeeListing = () => {
 
   return (
     <Fragment>
-      <Breadcrumb title="MANAGER PROFILE LIST" parent="MANAGER PROFILE LIST" />
+      <Breadcrumb
+        title="EMPLOYEE DOCUMENTS VERIFICATION LIST"
+        parent="EMPLOYEE DOCUMENTS VERIFICATION LIST"
+      />
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -110,7 +112,7 @@ const EmployeeListing = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b>MANAGER PROFILE LIST</b>
+                <b>EMPLOYEE DOCUMENTS VERIFICATION LIST</b>
 
                 <div className="job-filter">
                   <div className="faq-form mr-2">
@@ -145,6 +147,7 @@ const EmployeeListing = () => {
                       <th scope="col">Employee Name</th>
                       <th scope="col">Cost Center Name</th>
                       <th scope="col">Position</th>
+                      <th scope="col">Status</th>
 
                       <th scope="col">Action</th>
                     </tr>
@@ -183,6 +186,7 @@ const EmployeeListing = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.costCentre}</td>
                             <td>{item.position}</td>
+                            <td>{item.status}</td>
                             <td>
                               <Link
                                 to={"/employee_doc_verify/" + item.employeeId}
