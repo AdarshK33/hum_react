@@ -305,7 +305,12 @@ const CandidateOnboarding = () => {
     console.log("handleChange names", e);
     setError(false);
     setFedError(false);
-    if (e.target.name === "email") {
+    if (
+      candidateData !== undefined &&
+      candidateData.workInformation !== undefined &&
+      candidateData.workInformation.contractType !== "Internship" &&
+      e.target.name === "email"
+    ) {
       if (!validateEmail(e.target.value)) {
         setError(true);
       } else {
@@ -463,7 +468,13 @@ const CandidateOnboarding = () => {
       setGenerateAppoint(true);
     } else {
       console.log("inside else");
-      if (employeeData.email === "" || employeeData.email === null) {
+      if (
+        (candidateData !== undefined &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation.contractType !== "Internship" &&
+          employeeData.email === "") ||
+        employeeData.email === null
+      ) {
         setError(true);
       }
       if (employeeData.fedId === "" || employeeData.fedId === null) {
@@ -637,7 +648,8 @@ const CandidateOnboarding = () => {
                 }
                 required
                 onChange={(e) => dateOfJoiningHandler(e)}
-                minDate={subDays(new Date(), 7)}
+                minDate={subDays(new Date(employeeData.joiningDate), 7)}
+                maxDate={new Date(employeeData.joiningDate)}
                 dateFormat="yyyy-MM-dd"
                 placeholderText="Date of Joining"
               />

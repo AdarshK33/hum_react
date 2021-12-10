@@ -48,7 +48,7 @@ const InternAppointmentLetter = (props) => {
                   className="appointmentHeader"
                 ></Modal.Header>
                 <Modal.Body className="appointmentLetter">
-                  <h4 className="text-center">Employment Contract</h4>
+                  <h4 className="text-center">Letter of Engagement</h4>
                   <h5 className="text-center">
                     {" "}
                     Emp ID: {offerLetterData.employeeId}
@@ -68,16 +68,24 @@ const InternAppointmentLetter = (props) => {
                     Dear <b>{offerLetterData.candidateName}</b>,
                   </p>
                   <p>
-                    We thank you for your interest in choosing Decathlon Sports
-                    India Pvt Ltd (DSIPL). We are in receipt of your application
-                    authorised by your institute/college/university to do an
-                    internship project on the topic <b>{offerLetterData.internshipCandidateOffer.department}</b>. As we
-                    believe your passion for sport and your values match those
-                    of our Company, we, at DSIPL, encourage academic aspirants
-                    to learn practical aspects of their academic curriculum. We
-                    are pleased to assign the project of your interest and we
-                    permit you to carry out the learning and we engage you as an
-                    intern for the period{" "}
+                    We thank you for your interest in choosing{" "}
+                    {offerLetterData.companyName === "Decathlon Sports India"
+                      ? "DSIPL"
+                      : offerLetterData.companyName}{" "}
+                    . We are in receipt of your application authorised by your
+                    institute/college/university to do an internship project on
+                    the topic{" "}
+                    <b>{offerLetterData.internshipCandidateOffer.department}</b>
+                    . As we believe your passion for sport and your values match
+                    those of our Company, we, at{" "}
+                    {offerLetterData.companyName === "Decathlon Sports India"
+                      ? "DSIPL"
+                      : offerLetterData.companyName}{" "}
+                    , encourage academic aspirants to learn practical aspects of
+                    their academic curriculum. We are pleased to assign the
+                    project of your interest and we permit you to carry out the
+                    learning and we engage you as an
+                    <b>intern</b> for the period{" "}
                     <b>
                       {moment(
                         offerLetterData.internshipCandidateOffer.fromDate
@@ -93,17 +101,22 @@ const InternAppointmentLetter = (props) => {
                   </p>
                   <p>
                     Your fixed stipend would be INR.{" "}
-                    <b>{offerLetterData.internshipCandidateOffer.stipend}</b> per
-                    month. This stipend is paid purely to manage your travel,
-                    record maintenance, project submission and any other
+                    <b>{offerLetterData.internshipCandidateOffer.stipend}</b>{" "}
+                    per
+                    <b>month</b>. This stipend is paid purely to manage your
+                    travel, record maintenance, project submission and any other
                     unforeseen project related expenses. Further it is to be
-                    noted that DSIPL will not be in receipt of any professional
-                    service from you which might result in financial gain in the
-                    form of revenue or profits. Hence, this stipend is not to be
-                    treated as a wage in any form.
+                    noted that{" "}
+                    {offerLetterData.companyName === "Decathlon Sports India"
+                      ? "DSIPL"
+                      : offerLetterData.companyName}{" "}
+                    will not be in receipt of any professional service from you
+                    which might result in financial gain in the form of revenue
+                    or profits. Hence, this stipend is not to be treated as a
+                    wage in any form.
                   </p>
 
-                  <p>
+                  {/* <p>
                     We are pleased to offer internship programme for period of{" "}
                     <b>
                       {
@@ -118,7 +131,7 @@ const InternAppointmentLetter = (props) => {
                     provided stipend{" "}
                     <b>{offerLetterData.internshipCandidateOffer.stipend}</b> per
                     month.
-                  </p>
+                  </p> */}
 
                   <p>
                     As mutually discussed, your engagement as as Intern is
@@ -126,19 +139,32 @@ const InternAppointmentLetter = (props) => {
                   </p>
                   <ol>
                     <li>
+                      {" "}
+                      You would be eligible for an accidental insurance, which
+                      would be communicated to you by your manager within 45
+                      days from the date of your joining.
+                    </li>
+                    <li>
                       <b>{offerLetterData.managerName}</b> will be responsible
                       to mentor and guide you in this phase of your professional
                       journey or any such manager assigned by the later.
                     </li>
                     <li>
-                      We at DSIPL strongly believe in your ability to manage
-                      yourself in the best interest of the Company. Fewer the
-                      rules better the productivity as far as we are concerned.
+                      We at{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "DSIPL"
+                        : offerLetterData.companyName}{" "}
+                      strongly believe in your ability to manage yourself in the
+                      best interest of the Company. Fewer the rules better the
+                      productivity as far as we are concerned.
                     </li>
                     <li>
-                       We trust you will enjoy the stay with DSIPL and take
-                      the utmost autonomy to complete your Project and enhance
-                      the learnings.
+                      We trust you will enjoy the stay with{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "DSIPL"
+                        : offerLetterData.companyName}{" "}
+                      and take the utmost autonomy to complete your Project and
+                      enhance the learnings.
                       <ol type="i">
                         <li>
                           We believe you will treat your team mates and
@@ -152,10 +178,14 @@ const InternAppointmentLetter = (props) => {
                           time{" "}
                         </li>
                         <li>
-                          When you are happy being a part of the DSIPL family,
-                          we expect you will be open to relocate to any location
-                          where the Company currently has stores or may be
-                          established or any other Group companies as deemed
+                          When you are happy being a part of the{" "}
+                          {offerLetterData.companyName ===
+                          "Decathlon Sports India"
+                            ? "DSIPL"
+                            : offerLetterData.companyName}{" "}
+                          family, we expect you will be open to relocate to any
+                          location where the Company currently has stores or may
+                          be established or any other Group companies as deemed
                           necessary{" "}
                         </li>
                         <li>
@@ -169,13 +199,22 @@ const InternAppointmentLetter = (props) => {
                           affect DSIPLs reputation or damage to property{" "}
                         </li>
                         <li>
-                          We at DSIPL, have a strict policy against sexual
-                          harassment. We believe that you will not engage in any
-                          form of sexual harassment towards any of the Company
-                          employees and the Company's customers. DSIPL also
-                          ensures a safe environment to all its employees and
-                          customers and strict action will be taken against any
-                          offender, be it employee or customer{" "}
+                          We at{" "}
+                          {offerLetterData.companyName ===
+                          "Decathlon Sports India"
+                            ? "DSIPL"
+                            : offerLetterData.companyName}
+                          , have a strict policy against sexual harassment. We
+                          believe that you will not engage in any form of sexual
+                          harassment towards any of the Company employees and
+                          the Company's customers.{" "}
+                          {offerLetterData.companyName ===
+                          "Decathlon Sports India"
+                            ? "DSIPL"
+                            : offerLetterData.companyName}{" "}
+                          also ensures a safe environment to all its employees
+                          and customers and strict action will be taken against
+                          any offender, be it employee or customer{" "}
                         </li>
                         <li>
                           All documents submitted by you to the Company shall be
@@ -189,9 +228,18 @@ const InternAppointmentLetter = (props) => {
                         <li>
                           In the event we find you have not abided by these, and
                           other regulations explained to you by your manager or
-                          if you do not share the values of DSIPL, we shall
-                          communicate the dis-continuance of this engagement
-                          with DSIPL to you at least 7 days in advance{" "}
+                          if you do not share the values of{" "}
+                          {offerLetterData.companyName ===
+                          "Decathlon Sports India"
+                            ? "DSIPL"
+                            : offerLetterData.companyName}
+                          , we shall communicate the dis-continuance of this
+                          engagement with{" "}
+                          {offerLetterData.companyName ===
+                          "Decathlon Sports India"
+                            ? "DSIPL"
+                            : offerLetterData.companyName}{" "}
+                          to you at least 7 days in advance{" "}
                         </li>
                         <li>
                           x. However, your engagement will be subjected to
@@ -229,6 +277,11 @@ const InternAppointmentLetter = (props) => {
                               of discipline
                             </li>
                             <li> habitual negligence or neglect of work</li>
+                            <li>
+                              unauthorised strike of work or inciting others to
+                              strike work in contravention of the provision of
+                              any law, or rule having the force of law.
+                            </li>
                           </ul>
                         </li>
                         <li>
@@ -237,7 +290,7 @@ const InternAppointmentLetter = (props) => {
                           be applicable to you from the date of your engagement
                           with Decathlon
                         </li>
-                        <li>
+                        {/* <li>
                           Any image taken of you during a Decathlon event or
                           during a photo-shoot shall be the property of
                           Decathlon and you consent to Decathlon's use of the
@@ -247,13 +300,24 @@ const InternAppointmentLetter = (props) => {
                           You should note that any information and data
                           collected during the course of your internship should
                           be kept confidential at all times.
+                        </li> */}
+                        <li>
+                          You’re learning progress will be evaluated on a
+                          quarterly basis by your leader/ mentor and shall be
+                          discussed with you for further guidance etc.
                         </li>
                       </ol>
                     </li>
                   </ol>
                   <br></br>
                   <p>
-                    <b>We welcome you to the Decathlon Family!</b>
+                    <b>
+                      We welcome you to the{" "}
+                      {offerLetterData.companyName === "Decathlon Sports India"
+                        ? "Decathlon"
+                        : offerLetterData.companyName}{" "}
+                      Family!
+                    </b>
                   </p>
                 </Modal.Body>
                 <div className="mb-3">
