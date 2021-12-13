@@ -56,7 +56,7 @@ const MisConductTerminationLetter = () => {
           <br/>
             <p>
               {" "}
-              <b>Sub:</b>Termination of your employment Misconduct{" "}
+              <b>Sub:</b><b>Termination of your employment Misconduct{" "}</b>
             </p>
     <div className=" ">
       <p className="mt-5 ">
@@ -93,11 +93,11 @@ const MisConductTerminationLetter = () => {
                 at in {terminationLetterData.company}. 
             The facts of the same are as below 
         <br />
-        
+        <br/>
         Your explanation is not justified, Hence the above acts of yours have 
         constituted serious misconduct in connection with the employer’s business 
         or property . 
-        
+        <br/>
         <br />
         Hence the above acts of yours have constituted serious misconduct in
             connection with the employer’s business or property.

@@ -357,8 +357,7 @@ const ExitListing = () => {
                                    ||
                                  (user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
                                 ) 
-                                &&
-                                item.isManager == false &&
+                                 && 
                                 item.status == 2)
                                 ||
 

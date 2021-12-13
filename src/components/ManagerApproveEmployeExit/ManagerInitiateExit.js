@@ -1581,13 +1581,13 @@ console.log(intern,"8098709809808")
                                     <option value=""></option>
                                     {modeOfSeparationList.map((item) => {
                                       console.log(state.empContractType,"state.empContractType")
-                                      if(state.empContractType == "internship" && item.label !== "Resignation"){
+                                      if(state.empContractType == "internship" && item.label !== "Termination" && item.label !== "Resignation"){
                                       return (
                                         <option key={item.value}>
                                           {item.label}
                                         </option>
                                       );
-                                      }else if(state.empContractType == "fulltime" || state.empContractType == "Fulltime" || state.empContractType == "parttime"){
+                                      }else if(state.empContractType == "fulltime" || state.empContractType == "Fulltime" ||  state.empContractType == "Parttime" || state.empContractType == "parttime"){
                                         return (
                                           <option key={item.value}>
                                             {item.label}
