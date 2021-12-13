@@ -19,7 +19,20 @@ const GroupReducer = (state, action) => {
       return { ...state, insuranceData: action.payload };
     case "OTHER_DOCUMENTS_VIEW":
       return { ...state, otherDocumentsList: action.payload };
-
+    case "EMP_INSURANCE_TOPUP_DATA":
+      return { ...state, insuranceTopUpData: action.payload };
+    case "EMP_PREMIUM_DATA":
+      return { ...state, premiumViewData: action.payload };
+    case "HOLIDAY_WORKING_BONUS_VIEW":
+      return { ...state, holidayWorkingBonusList: action.payload };
+    case "MANAGER_EMP_LISTING":
+      return { ...state, EmployeesList: action.payload };
+    case "EMP_PROFILE":
+      return { ...state, EmpProfile: action.payload };
+    case "EMP_DOCS_VERIFY_LISTING":
+      return { ...state, EmployeesDocsVerifyList: action.payload };
+    case "EMP_DOCS_DATA":
+      return { ...state, EmpDocsData: action.payload };
     default:
       return state;
   }

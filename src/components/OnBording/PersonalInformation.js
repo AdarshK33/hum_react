@@ -135,11 +135,15 @@ const PersonalInformation = (props) => {
   }, []);
 
   useEffect(() => {
-  candidateCountryList();
-}, []);
+    candidateCountryList();
+  }, []);
 
   useEffect(() => {
-    console.log("candidateProfileData1",candidateProfileData,candidateCountryData);
+    console.log(
+      "candidateProfileData1",
+      candidateProfileData,
+      candidateCountryData
+    );
 
     if (
       candidateProfileData !== null &&
@@ -149,17 +153,20 @@ const PersonalInformation = (props) => {
       console.log("inside if");
       if (candidateProfileData.contractType === "Local Expat") {
         let nationList = candidateCountryData.filter(
-          (item) => item.nationality !== "Indian"
+          (item) => item.nationality !== "Indian" && item.nationality !== null
         );
         console.log("options list", options);
         console.log("contract list", nationList);
         setNationlArray(nationList);
       } else {
+        let allNationList = candidateCountryData.filter(
+          (item) => item.nationality !== null
+        );
         console.log("inside else");
-        setNationlArray(candidateCountryData);
+        setNationlArray(allNationList);
       }
     }
-  }, [candidateProfileData,candidateCountryData]);
+  }, [candidateProfileData, candidateCountryData]);
 
   useEffect(() => {
     CandidateProfile();
@@ -1202,7 +1209,7 @@ const PersonalInformation = (props) => {
             </Form.Group>
           </div>
 
-          <div className="col-sm-4">
+          {/* <div className="col-sm-4">
             <Form.Group>
               <Form.Label>LGBT</Form.Label>
               <Form.Control
@@ -1217,10 +1224,8 @@ const PersonalInformation = (props) => {
                 <option> No</option>
               </Form.Control>
             </Form.Group>
-          </div>
-        </Row>
+          </div> */}
 
-        <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-4">
             <Form.Group>
               <Form.Label>
@@ -1253,6 +1258,8 @@ const PersonalInformation = (props) => {
               )}
             </Form.Group>
           </div>
+        </Row>
+        <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-4">
             {candidateViewInfo !== null &&
             candidateViewInfo !== undefined &&

@@ -6,15 +6,16 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AppContext } from "../../context/AppState";
 
 const EmergencyContact = (props) => {
   const { candidateProfileData, addressView } = useContext(OnBoardContext);
-  const { emergencyContactView, EmergencyContactView, EmergencyContactUpdate } =
-    useContext(EmployeeProfileContext);
+  const {
+    emergencyContactView,
+    EmergencyContactView,
+    EmergencyContactUpdate,
+    currentEmpId,
+  } = useContext(EmployeeProfileContext);
   const [disabled, setDisableState] = useState(false);
-
-  const { user } = useContext(AppContext);
   // acessing employeeId from params
 
   const [stateError, setStateError] = useState({
@@ -43,7 +44,7 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
   useEffect(() => {
-    EmergencyContactView(user.employeeId);
+    EmergencyContactView(currentEmpId);
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
   useEffect(() => {
@@ -65,6 +66,19 @@ const EmergencyContact = (props) => {
         relationship: emergencyContactView.relationship,
       });
       setDataExist({ exist: true });
+    } else {
+      setState({
+        contactName: "",
+        addressLine: "",
+        employeeId: "",
+        contactId: "",
+        city: "",
+        country: "",
+        locality: "",
+        phoneNumber: "",
+        pinCode: "",
+        relationship: "",
+      });
     }
     console.log(state, "previous2");
   }, [emergencyContactView]);

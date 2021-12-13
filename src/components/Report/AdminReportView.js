@@ -47,6 +47,8 @@ console.log(dates)
     }
 
     const getTdData =(data,item)=>{
+        console.log("getTdData item",item);
+        console.log("getTdData",data);
         let date = "";
         for(let i = 0 ; i < item.leaveReportWithDates.length;i++) {
             

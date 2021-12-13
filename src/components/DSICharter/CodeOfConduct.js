@@ -58,7 +58,7 @@ import Img51 from "./img/img51.png";
 import Img52 from "./img/img52.png";
 
 import "./charter.css";
-const html2pdf =require( "html2pdf.js")
+const html2pdf = require("html2pdf.js");
 
 const CodeOfConduct = (props) => {
   const {
@@ -74,7 +74,8 @@ const CodeOfConduct = (props) => {
     ITCHARTER,
     CODEOFCONDUCT,
     charterAllResponse,
-    uploadAllCharter,downloadFile
+    uploadAllCharter,
+    downloadFile,
   } = useContext(DSICharterContext);
 
   const [showModal, setShow] = useState(false);
@@ -148,7 +149,7 @@ const CodeOfConduct = (props) => {
     }
     return bytes;
   }
-  
+
   const handleSave = (e) => {
     e.preventDefault();
     if (
@@ -170,32 +171,39 @@ const CodeOfConduct = (props) => {
           isCodeOfConduct: true,
           isDsiItCharter: false,
         };
-        var element = document.getElementById('codeToPrint');
+        var element = document.getElementById("codeToPrint");
         var opt = {
-          margin:1,
-          filename:'myfile.pdf',
-          image:{ type: 'png', quality: 0.5 },
-          html2canvas:{ scale: 1 },
-          jsPDF:{ unit: 'in', format: 'letter', orientation: 'portrait' }
+          margin: 1,
+          filename: "myfile.pdf",
+          image: { type: "png", quality: 0.5 },
+          html2canvas: { scale: 1 },
+          jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
         };
         //html2pdf().from(element).set(opt).save();
-        var option ={
-          filename:"filecode.pdf"
-        }
-      // html2pdf(element)
-     // html2pdf().from(element).set(option).save();
-     
-     html2pdf().set(option).from(element).toContainer().toCanvas().toPdf().output('blob').then((item)=>{
-      console.log(item,"item")
-           var imageValue = item ;
-           imageValue.name = "codeofconduct.pdf";
-           const data = {
-             dsiType: "Code of Conduct",
-             employeeId: employeeProfileData.employeeId,
-             fileType: 19,
-           };
-           dsiCharterCreate(infoData, history, data,imageValue);
-          })   
+        var option = {
+          filename: "filecode.pdf",
+        };
+        // html2pdf(element)
+        // html2pdf().from(element).set(option).save();
+
+        html2pdf()
+          .set(option)
+          .from(element)
+          .toContainer()
+          .toCanvas()
+          .toPdf()
+          .output("blob")
+          .then((item) => {
+            console.log(item, "item");
+            var imageValue = item;
+            imageValue.name = "codeofconduct.pdf";
+            const data = {
+              dsiType: "Code of Conduct",
+              employeeId: employeeProfileData.employeeId,
+              fileType: 19,
+            };
+            dsiCharterCreate(infoData, history, data, imageValue);
+          });
         // var imageValue = codeBase64;
         // var bufferArray = base64ToArrayBuffer(imageValue);
         // var blobStore = new Blob([bufferArray], { type: "application/pdf" });
@@ -228,71 +236,88 @@ const CodeOfConduct = (props) => {
               isDsiItCharter: employeeProfileData.isDsiItCharter,
               itCharterLetter: ITCHARTER,
             };
-            var element = document.getElementById('codeToPrint');
+            var element = document.getElementById("codeToPrint");
             var opt = {
-              filename:'myfile.pdf',
-              image:{ type: 'png', quality: 0.5 },
-              html2canvas:{ scale: 1 },
-              jsPDF:{format: 'letter', orientation: 'portrait' }
+              filename: "myfile.pdf",
+              image: { type: "png", quality: 0.5 },
+              html2canvas: { scale: 1 },
+              jsPDF: { format: "letter", orientation: "portrait" },
             };
-            var option ={
-              filename:"filecode.pdf",
-              
-            }
-          // html2pdf(element)
-          // html2pdf().from(element).set(option).toContainer().toCanvas().toPdf().save();
-       
-          //  html2pdf().from(element).set(opt).save();
-          html2pdf().set(option).from(element).toContainer().toCanvas().toPdf().output('blob').then((item)=>{
-             var imageValue = item ;
-             imageValue.name = "codeofconduct.pdf"
-            const data = {
-              dsiType: "Code of Conduct",
-              employeeId: employeeProfileData.employeeId,
-              fileType: 19,
+            var option = {
+              filename: "filecode.pdf",
             };
+            // html2pdf(element)
+            // html2pdf().from(element).set(option).toContainer().toCanvas().toPdf().save();
 
-          dsiCharterUpdate(infoData, data, imageValue,history);
-           })   
+            //  html2pdf().from(element).set(opt).save();
+            html2pdf()
+              .set(option)
+              .from(element)
+              .toContainer()
+              .toCanvas()
+              .toPdf()
+              .output("blob")
+              .then((item) => {
+                var imageValue = item;
+                imageValue.name = "codeofconduct.pdf";
+                const data = {
+                  dsiType: "Code of Conduct",
+                  employeeId: employeeProfileData.employeeId,
+                  fileType: 19,
+                };
 
-          //   var imageValue = codeBase64 ;
-          //   var bufferArray = base64ToArrayBuffer(imageValue);
-          //   var blobStore = new Blob([bufferArray], {
-          //     type: "application/pdf",
-          //   });
-          //   blobStore.name = "codeofconduct.pdf";
+                dsiCharterUpdate(infoData, data, imageValue, history);
+              });
 
-          //   //var blob = window.URL.createObjectURL(blobStore);
-          //   const data = {
-          //     dsiType: "Code of Conduct",
-          //     employeeId: employeeProfileData.employeeId,
-          //     fileType: 25,
-          //   };
-          //   console.log(blobStore, "update");
+            //   var imageValue = codeBase64 ;
+            //   var bufferArray = base64ToArrayBuffer(imageValue);
+            //   var blobStore = new Blob([bufferArray], {
+            //     type: "application/pdf",
+            //   });
+            //   blobStore.name = "codeofconduct.pdf";
 
-          //  // dsiCharterUpdate(infoData, data, blobStore);
-          //   //  ExportPDFCharter(inputRef.current,item.charterId,19,employeeProfileData.employeeId);
-          //   props.history.push("/itcharter");
-          //   setShow(false);
+            //   //var blob = window.URL.createObjectURL(blobStore);
+            //   const data = {
+            //     dsiType: "Code of Conduct",
+            //     employeeId: employeeProfileData.employeeId,
+            //     fileType: 25,
+            //   };
+            //   console.log(blobStore, "update");
+
+            //  // dsiCharterUpdate(infoData, data, blobStore);
+            //   //  ExportPDFCharter(inputRef.current,item.charterId,19,employeeProfileData.employeeId);
+            //   props.history.push("/itcharter");
+            //   setShow(false);
           }
         });
       }
     }
   };
-  const handleDate = (data)=>{
-    let current = new Date(data)
-  let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
-  let hours = current.getHours();
-  let am_pm = (hours >= 12) ? "PM" : "AM";
-  let minutes = current.getMinutes()<10?("0"+current.getMinutes()):current.getMinutes()
-  if(hours >= 12){
-      hours -=12;
-  }
-  
-  let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
-  let dateTime = cDate ;
-  return dateTime
-  }
+  const handleDate = (data) => {
+    let current = new Date(data);
+    let cDate =
+      current.getDate() +
+      "-" +
+      (current.getMonth() + 1) +
+      "-" +
+      current.getFullYear();
+    let hours = current.getHours();
+    let am_pm = hours >= 12 ? "PM" : "AM";
+    let minutes =
+      current.getMinutes() < 10
+        ? "0" + current.getMinutes()
+        : current.getMinutes();
+    if (hours >= 12) {
+      hours -= 12;
+    }
+
+    let cTime =
+      hours == 0
+        ? "12" + ":" + minutes + "  " + am_pm
+        : hours + ":" + minutes + "  " + am_pm;
+    let dateTime = cDate + " " + cTime;
+    return dateTime;
+  };
   useEffect(() => {
     if (
       employeeProfileData !== undefined &&
@@ -320,25 +345,24 @@ const CodeOfConduct = (props) => {
         <Modal.Body>
           <div class="html-charter" id="codeToPrint" ref={inputRef}>
             <body>
-              <div  class="container-charter">
+              <div class="container-charter">
                 {/* <div style={{height:"260px"}}></div> */}
                 <img class="img-insert-charter" src={Img1} alt="page1" />
-              
+
                 <img class="img-insert-charter" src={Img2} alt="page2" />
                 <img class="img-insert-charter" src={Img3} alt="page3" />
                 <div class="html2pdf__page-break"></div>
 
                 <img class="img-insert-charter" src={Img4} alt="page4" />
-              
+
                 <img class="img-insert-charter" src={Img5} alt="page5" />
-                
-              
+
                 <img class="img-insert-charter" src={Img6} alt="page6" />
                 <div class="html2pdf__page-break"></div>
 
                 <img class="img-insert-charter" src={Img7} alt="page7" />
                 <img class="img-insert-charter" src={Img8} alt="page8" />
-      
+
                 <a href="https://decathlon.whispli.com/alerte" target="_blank">
                   <img class="img-insert-charter" src={Img9} alt="page9" />
                 </a>
@@ -408,12 +432,23 @@ const CodeOfConduct = (props) => {
                      <b>Date :</b><b style={{  padding: "20px"}}>{handleDate(new Date())}</b>
                      </div > */}
 
-                     <div style={{  padding: "20px"}}  >
-                     <b>Date :</b><b style={{  padding: "20px"}}>{handleDate(new Date())}</b><br/>
-                     <b>Employee ID :</b><b style={{  padding: "20px"}}>{employeeProfileData.employeeId}</b><br/>
-                     <b >Signed and Accepted by Employee  :</b><b style={{  padding: "20px"}}>{employeeProfileData.firstName + "  "+employeeProfileData.lastName}</b><br/>
-    </div>
-
+                <div style={{ padding: "20px" }}>
+                  <b>Date :</b>
+                  <b style={{ padding: "20px" }}>{handleDate(new Date())}</b>
+                  <br />
+                  <b>Employee ID :</b>
+                  <b style={{ padding: "20px" }}>
+                    {employeeProfileData.employeeId}
+                  </b>
+                  <br />
+                  <b>Signed and Accepted by Employee :</b>
+                  <b style={{ padding: "20px" }}>
+                    {employeeProfileData.firstName +
+                      "  " +
+                      employeeProfileData.lastName}
+                  </b>
+                  <br />
+                </div>
               </div>
             </body>
           </div>{" "}

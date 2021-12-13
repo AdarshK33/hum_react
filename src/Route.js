@@ -149,9 +149,13 @@ import CharterList from "./components/DSICharter/CharterList";
 import CharterEdit from "./components/DSICharter/CharterEdit";
 import EmployeeDashboard from "./components/Employee360/EmployeeDashboard";
 import ManagerDashboard from "./components/Employee360/ManagerDashboard";
-import ManagerProfileSteppers from "./components/MyProfile/MyProfileSteppers";
+import MyProfileSteppers from "./components/MyProfile/MyProfileSteppers";
 import ViewWeekOff from "./components/MasterWeekOff/ViewWeekOff";
 import ViewWeekHours from "./components/MasterWeekHours/ViewWeekHours";
+import ManagerProfileListing from "./components/ManagerProfile/ManagerProfileListing";
+import ManagerProfileSteppers from "./components/ManagerProfile/ManagerProfileSteppers";
+import AdminDocVerfication from "./components/EmployeeVerification/AdminDocVerification";
+import EmployeeListing from "./components/EmployeeVerification/EmployeeListing";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -319,6 +323,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
           />
+
           <Route
             path={`${process.env.PUBLIC_URL}/exit-initiate-action/:employeeid`}
             component={ManagerInitiateAction}
@@ -373,14 +378,26 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/employee360`}
             component={EmployeeDashboard}
           />
-
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager_profile`}
+            component={ManagerProfileListing}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/manager360`}
             component={ManagerDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/my_profile`}
+            component={MyProfileSteppers}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee_profile/:employeeid`}
             component={ManagerProfileSteppers}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee_doc_verify/:employeeid`}
+            component={AdminDocVerfication}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
@@ -520,6 +537,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/document-management`}
             component={DocumentContainer}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee_doc_verification`}
+            component={EmployeeListing}
           />
 
           <Route

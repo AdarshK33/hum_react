@@ -193,7 +193,7 @@ const PersonalInformation = (props) => {
               <b>Date of Joining Group</b>
             </label>
             <br />
-            <label className="itemResult">--</label>
+            <label className="itemResult">{user.actualJoiningDate}</label>
           </Col>
         </Row>
         <Row
