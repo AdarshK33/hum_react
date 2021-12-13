@@ -23,10 +23,12 @@ import EducationAndWorkDoc from "./EducationAndWorkDoc";
 import PersonalDoc from "./PersonalDoc";
 import OtherDocuments from "./OtherDocuments";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import { PermissionContext } from "../../context/PermissionState";
 
 import moment from "moment";
 
 const Documents = () => {
+  const { rolePermission } = useContext(PermissionContext);
   const { DocumentView, documentsList, currentEmpId } = useContext(
     EmployeeProfileContext
   );
@@ -51,25 +53,32 @@ const Documents = () => {
       <Row style={{ marginBottom: "2rem" }}>
         <Container fluid className="container-accordion">
           <Accordion preExpanded={["a"]}>
-            <AccordionItem uuid="a">
-              <AccordionItemHeading>
-                <AccordionItemButton>Personal</AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <PersonalDoc />
-              </AccordionItemPanel>
-            </AccordionItem>
+            {rolePermission === "admin" ? (
+              <AccordionItem uuid="a">
+                <AccordionItemHeading>
+                  <AccordionItemButton>Personal</AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <PersonalDoc />
+                </AccordionItemPanel>
+              </AccordionItem>
+            ) : (
+              ""
+            )}
+            {rolePermission === "admin" ? (
+              <AccordionItem>
+                <AccordionItemHeading>
+                  <AccordionItemButton>Education and Work</AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>
+                  <EducationAndWorkDoc />
+                </AccordionItemPanel>
+              </AccordionItem>
+            ) : (
+              ""
+            )}
 
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>Education and Work</AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <EducationAndWorkDoc />
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
+            <AccordionItem uuid={rolePermission !== "admin" ? "a" : ""}>
               <AccordionItemHeading>
                 <AccordionItemButton>Other Documents</AccordionItemButton>
               </AccordionItemHeading>

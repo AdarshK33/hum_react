@@ -404,7 +404,7 @@ const Remuneration = () => {
                   ) : (
                     ""
                   )}
-                  <Row>
+                  {/* <Row>
                     <Col sm={3}>
                       <label>
                         <b>VPF %</b>
@@ -445,7 +445,7 @@ const Remuneration = () => {
                         Update
                       </button>
                     </div>
-                  </Row>
+                  </Row> */}
                 </Form>
               </AccordionItemPanel>
             </AccordionItem>
