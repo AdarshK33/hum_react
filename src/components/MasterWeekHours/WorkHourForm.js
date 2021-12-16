@@ -23,7 +23,7 @@ const WorkHourForm = (props) => {
     breakHours: "",
   });
 
-  const [effectiveDate, setEffectiveDate] = useState(new Date());
+  const [effectiveDate, setEffectiveDate] = useState();
   const onCloseModal = () => {
     const setModal = props.createHandleClose;
     setModal();
@@ -100,8 +100,13 @@ const WorkHourForm = (props) => {
       setEffectiveDate(new Date());
     }
   };
+
   const handleChange = (e) => {
     setWorkHourList({ ...workHourList, [e.target.name]: e.target.value });
+  };
+  const isSunday = (date) => {
+    const day = date.getDay();
+    return day === 0;
   };
 
   // useEffect(() => {
@@ -211,6 +216,7 @@ const WorkHourForm = (props) => {
                     onChange={(date) => setEffectiveDate(date)}
                     placeholderText="Select Effective From"
                     minDate={new Date()}
+                    filterDate={isSunday}
                     dateFormat="yyyy-MM-dd"
                   />{" "}
                 </div>
