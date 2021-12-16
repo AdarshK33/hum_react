@@ -21,7 +21,7 @@ const OtherDocuments = (props) => {
     currentEmpId,
   } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
-  const [educationDocName, setEducationDocName] = useState("");
+  const [ethicsCharter, setEthicsCharter] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
   const [latestPayslipDocName, setLatestPayslipDocName] = useState("");
   const [collegeDocName, setCollegeDocName] = useState("");
@@ -49,30 +49,31 @@ const OtherDocuments = (props) => {
     OtherDocumentView(currentEmpId);
   }, []);
   console.log("documentsList", documentsList);
-  // useEffect(() => {
-  //   if (
-  //     documentsList &&
-  //     documentsList !== null &&
-  //     documentsList !== undefined &&
-  //     Object.keys(documentsList).length !== 0
-  //   ) {
-  //     documentsList.map((item, i) => {
-  //       if (item.documentType === 6) {
-  //         setEducationDocName(item.documentName);
-  //       } else if (item.documentType === 7) {
-  //         setRelivingDocName(item.documentName);
-  //       } else if (item.documentType === 8) {
-  //         setLatestPayslipDocName(item.documentName);
-  //       } else if (item.documentType === 15) {
-  //         setCollegeDocName(item.documentName);
-  //       } else if (item.documentType === 18) {
-  //         setAppointmentDocName(item.documentName);
-  //       } else if (item.documentType === 18) {
-  //         setSignedDocName(item.documentName);
-  //       }
-  //     });
-  //   }
-  // }, [documentsList]);
+  useEffect(() => {
+    if (
+      documentsList &&
+      documentsList !== null &&
+      documentsList !== undefined &&
+      Object.keys(documentsList).length !== 0
+    ) {
+      documentsList.map((item, i) => {
+        if (item.documentType === 28) {
+          setEthicsCharter(item.documentName);
+        }
+        //  else if (item.documentType === 7) {
+        //   setRelivingDocName(item.documentName);
+        // } else if (item.documentType === 8) {
+        //   setLatestPayslipDocName(item.documentName);
+        // } else if (item.documentType === 15) {
+        //   setCollegeDocName(item.documentName);
+        // } else if (item.documentType === 18) {
+        //   setAppointmentDocName(item.documentName);
+        // } else if (item.documentType === 18) {
+        //   setSignedDocName(item.documentName);
+        // }
+      });
+    }
+  }, [documentsList]);
   const downloadTheLetter = (e, name) => {
     e.preventDefault();
     console.log("check", name);
@@ -191,7 +192,7 @@ const OtherDocuments = (props) => {
               <b>Ethics Charter :</b>
             </label>
             <br />
-            <label className="itemResult">{educationDocName}</label>
+            <label className="itemResult">{ethicsCharter}</label>
           </Col>
           <Col sm={2}>
             <div
@@ -202,11 +203,9 @@ const OtherDocuments = (props) => {
               }}
             >
               <button
-                className={
-                  educationDocName ? "profileButtons" : "confirmButton"
-                }
-                onClick={(e, name) => showTheLetter(e, educationDocName)}
-                disabled={educationDocName ? false : true}
+                className={ethicsCharter ? "profileButtons" : "confirmButton"}
+                onClick={(e, name) => showTheLetter(e, ethicsCharter)}
+                disabled={ethicsCharter ? false : true}
               >
                 View
               </button>
@@ -221,11 +220,9 @@ const OtherDocuments = (props) => {
               }}
             >
               <button
-                className={
-                  educationDocName ? "profileButtons" : "confirmButton"
-                }
-                onClick={(e, name) => downloadTheLetter(e, educationDocName)}
-                disabled={educationDocName ? false : true}
+                className={ethicsCharter ? "profileButtons" : "confirmButton"}
+                onClick={(e, name) => downloadTheLetter(e, ethicsCharter)}
+                disabled={ethicsCharter ? false : true}
               >
                 Download
               </button>
