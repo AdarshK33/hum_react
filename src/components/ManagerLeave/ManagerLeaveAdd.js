@@ -40,7 +40,7 @@ const ManagerLeaveAdd = (props) => {
      const today = new Date()
      
      let nextYear = new Date()
-     nextYear.setFullYear(nextYear.getFullYear(), 11, 31)
+     nextYear.setFullYear(nextYear.getFullYear()+1, 11, 31)
  
      let currentYear = new Date()
      currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
