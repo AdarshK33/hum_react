@@ -22,6 +22,7 @@ const AdminShiftModal = (props) => {
   const [dayList, setDayList] = useState([]);
   const [employee, setEmployee] = useState([]);
   const [days, setDays] = useState([]);
+  const [daysList, setDaysList] = useState([]);
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
   const [contractType, setContractType] = useState([]);
@@ -89,7 +90,6 @@ const AdminShiftModal = (props) => {
     if (props.Date !== undefined) {
       getallWeeks(props.Date);
     }
-
     if (props.endDate !== undefined && props.startDate !== undefined) {
       console.log(
         "check dates",
@@ -146,7 +146,8 @@ const AdminShiftModal = (props) => {
     });
     setWeekDayList(weeks);
     setDayList(days);
-    setWeekDay(Date);
+    // setWeekDay(Date);
+    setDaysList(Date);
     // console.log(weeks, 'Shift year');
     //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays, adminCalculateWeekResult]);
@@ -154,13 +155,13 @@ const AdminShiftModal = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const validate = validation();
-    let WeekDate = weekDay;
+    let WeekDate = daysList;
     let weekNumber = date;
     if (weekNameData !== undefined) {
       weekNumber = weekNameData.split("-")[0].trim();
       weekNumber = weekNumber.split("Week")[1].trim();
     }
-    var loIsDate = new Date(weekDay);
+    var loIsDate = new Date(daysList);
     let day = Days[loIsDate.getDay()];
     if (
       adminWeekOffDataListHeader !== undefined &&
@@ -181,15 +182,16 @@ const AdminShiftModal = (props) => {
     }
 
     const newWeekOffAdminRoster = {
-      date: WeekDate,
+      date: WeekDate.map((e, i) => WeekDate[i].value),
       employeeIds: employee.map((e, i) => employee[i].value),
     };
-
+console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
     if (validate) {
       adminAddWeekOff(newWeekOffAdminRoster);
 
       setSelectedWeeks(1);
-      setWeekDay("");
+      // setWeekDay("");
+      setDaysList([]);
       setShowDay(false);
       props.handleClose();
       setAssignWeekOffButton(true);
@@ -248,6 +250,11 @@ const AdminShiftModal = (props) => {
       setMsg1(false);
     }
   };
+
+  const handleDayList1 = (options) => {
+    setDaysList(options);
+  };
+
   const handleEmployeeList1 = (options) => {
     setEmployee(options);
     if (options !== null) {
@@ -524,8 +531,34 @@ const AdminShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-
+                  
                   <div className="row py-2">
+                    <div className="col-sm-5 px-2">
+                      Select Day :<span style={{ color: "red" }}>*</span>
+                    </div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <Select
+                          name="filters"
+                          required
+                          placeholder="Select Day"
+                          defaultValue=""
+                          value={daysList}
+                          style={{ fontSize: "0.8rem" }}
+                          options={
+                            dayList !== null &&
+                            dayList.map((e) => ({
+                              label: e.day,
+                              value: e.date,
+                            }))
+                          }
+                          onChange={handleDayList1}
+                          isMulti
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* <div className="row py-2">
                     <div className="col-sm-5 px-2">
                       Select Day :<span style={{ color: "red" }}>*</span>
                     </div>
@@ -550,10 +583,10 @@ const AdminShiftModal = (props) => {
                                 </option>
                               );
                             })}
-                        </select>
+                        </select> 
                       </div>
                     </div>
-                  </div>
+                  </div>*/}
                   <div className="justify-content-center d-flex">
                     <button
                       className="btn btn-primary mb-2 mr-2"
