@@ -24,10 +24,13 @@ import { PermissionProvider } from "./context/PermissionState";
 import { SearchProvider } from "./context/SearchState";
 import { SupportProvider } from "./context/SupportState"
 import { GroupProvider } from './context/GroupState'
+import { WeekOffProvider } from "./context/WeekOffState";
+import { WorkHourProvider } from "./context/WorkHourState";
 /* import { OfferProvider } from './context/OfferState' */
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 
 
 //firebase Auth
@@ -52,6 +55,8 @@ function Root() {
                         <RoleManagementProvider>
                           <SearchProvider>
                             <AdminProvider>
+                            <WeekOffProvider>
+                            <WorkHourProvider>
                               <SupportProvider>
                                 <GroupProvider>
                                   <BrowserRouter basename={"/"}>
@@ -66,6 +71,8 @@ function Root() {
                                   {/* </Provider>  */}
                                 </GroupProvider>
                               </SupportProvider>
+                              </WorkHourProvider>
+                            </WeekOffProvider>
                             </AdminProvider>
                           </SearchProvider>
                         </RoleManagementProvider>
