@@ -57,6 +57,8 @@ import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
 import ViewGroup from "./components/group/ViewGroup";
 import RosterDashboard from "./components/rosterDashboard/rosterDashboard";
+import ViewWeekOff from "./components/MasterWeekOff/ViewWeekOff";
+import ViewWeekHours from "./components/MasterWeekHours/ViewWeekHours";
 /* import ManagerOfferRelease from './components/Offers/managerOfferRelease'
 import OfferReleaseList from './components/Offers/OfferReleaseList'
 import EditOfferRelease from './components/Offers/editOfferRelease' */
@@ -318,6 +320,16 @@ const RoutePath = () => {
                     <Route
                       path={`${process.env.PUBLIC_URL}/service-group`}
                       component={ViewGroup}
+                    />
+                  ) : e.path === "/master/week-off" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/week-off`}
+                      component={ViewWeekOff}
+                    />
+                  ) : e.path === "/master/work-hours" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/work-hours`}
+                      component={ViewWeekHours}
                     />
                   ) : (
                     ""
