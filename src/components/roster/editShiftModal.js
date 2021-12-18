@@ -138,14 +138,14 @@ const EditShiftModal = (props) => {
     function checkTimeValidation() {
 
       if (contractType === "Permanent" || contractType === "Internship") {
-        if (parseFloat(workingHours) === 9 || parseFloat(workingHours) === 0) {
+        if (parseFloat(workingHours) === 10 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
 
           setNineHourWarnMsg(true)
         }
         else {
           setNineHourWarnMsg(false)
-          setNineHourWarnMsg("* Shift should be 9 hours only")
+          setNineHourWarnMsg("* Shift should be 10 hours only")
           setShiftButton(true)
           setOneFiveWarnMsg(true)
           setOneToEightWarnMsg(true)
