@@ -136,7 +136,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(value1).getFullYear()
         }
         addPopup(newPopup)
         setEditMsg(true)
@@ -163,7 +163,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
         }
         addPopup(newPopup1)
         setEditMsg(true)
@@ -243,7 +243,9 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            // year: new Date().getFullYear()
+            year:new Date(endDate).getFullYear()
+            
         }
         const newLeave1 = {
             empId: employeeCostCenter,
@@ -258,7 +260,9 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            // year: new Date().getFullYear()
+            // year:moment(new Date(d3)).format("YYYY")
+            year:new Date(d3).getFullYear()
         }
         if (leave === '3') {
             console.log("newLeave maternity---------", newLeave1)

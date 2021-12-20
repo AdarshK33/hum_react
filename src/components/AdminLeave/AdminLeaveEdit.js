@@ -140,7 +140,7 @@ const AdminLeaveEdit = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(value1).getFullYear()
         }
         editPopup(newPopup)
         setEditMsg(true)
@@ -167,7 +167,7 @@ const AdminLeaveEdit = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
         }
         console.log("editPopupData", editPopupData)
         editPopup(editPopupData)
@@ -209,7 +209,7 @@ const AdminLeaveEdit = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            year: new Date(endDate).getFullYear()
         }
         const editLeave1 = {
             empId: empId,
@@ -224,7 +224,7 @@ const AdminLeaveEdit = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
         }
         if (leave === 3) {
             console.log("edit leave data for maternity----", editLeave1)
