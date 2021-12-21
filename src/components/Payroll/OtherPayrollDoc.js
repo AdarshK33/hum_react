@@ -72,7 +72,7 @@ const OtherPayrollDoc = (props) => {
               <thead>
                 <tr>
                   <th>Document Name</th>
-                  <th>view</th>
+                  <th>View</th>
                   <th>Download</th>
                 </tr>
               </thead>

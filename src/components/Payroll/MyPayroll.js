@@ -8,16 +8,27 @@ import React, {
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Breadcrumb from "../common/breadcrumb";
-import DocVerification from "../../components/CandidateVerification/DocVerification";
-import { OnBoardContext } from "../../context/OnBoardState";
-import { OfferContext } from "../../context/OfferState";
-import man from "../../assets/images/dashboard/userImage.png";
-import DatePicker from "react-datepicker";
+import { PayrollContext } from "../../context/PayrollState";
 import DropDowns from "./DropDowns";
+import { PermissionContext } from "../../context/PermissionState";
 
 const MyPayroll = (props) => {
+  const { rolePermission } = useContext(PermissionContext);
+  const { setManagerFlag, managerFlag } = useContext(PayrollContext);
   const [docType, setDocType] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
+  useEffect(() => {
+    if (
+      rolePermission === "admin" ||
+      rolePermission === "manager" ||
+      rolePermission === "costCenterManager" ||
+      rolePermission === "superCostCenterManager"
+    ) {
+      setManagerFlag(true);
+    } else {
+      setManagerFlag(false);
+    }
+  }, []);
   return (
     <Fragment>
       <Breadcrumb title="MY PAYROLL" parent="MY PAYROLL" />
@@ -36,13 +47,13 @@ const MyPayroll = (props) => {
                         className={tabIndex === 0 ? "activeTab" : "disabledTab"}
                         onClick={(e) => setTabIndex(0)}
                       >
-                        <label>Payroll Till August</label>
+                        <label>Payroll Till September</label>
                       </div>
                       <div
                         className={tabIndex === 1 ? "activeTab" : "disabledTab"}
                         onClick={(e) => setTabIndex(1)}
                       >
-                        <label>Payroll After August</label>
+                        <label>Payroll After September</label>
                       </div>
                     </div>
 
