@@ -59,7 +59,7 @@ const ExtensionLetter = () => {
             <br />
             <b>Employee Name: &nbsp;{extensionLetterData.empName}</b>
             <br />
-            <b>Employee Id: &nbsp;{extensionLetterData.empId}</b>
+            <b>Employee ID: &nbsp;{extensionLetterData.empId}</b>
           </p>
           {/* <p>Designation:{relivingLetterData.designation}</p> */}
           <p className="mt-5 ">
@@ -115,7 +115,7 @@ const ExtensionLetter = () => {
               <br />
               All the other terms and conditions of your appointment letter
               dated{" "}
-              <b>
+              {/* <b>
                 {" "}
                 {extensionLetterData.appointmentLetterDate !== null &&
                 extensionLetterData.appointmentLetterDate !== undefined
@@ -123,8 +123,8 @@ const ExtensionLetter = () => {
                       new Date(extensionLetterData.appointmentLetterDate)
                     ).format("DD-MM-YYYY")
                   : ""}
-              </b>
-              , shall remain the same.
+              </b> ,*/}
+              shall remain the same.
               <br />
               <br />
               Please sign the copy of this letter as receipt of acceptance.
@@ -135,6 +135,7 @@ const ExtensionLetter = () => {
             <p className="mt-2 ">
               <b>For {extensionLetterData.company} Pvt Ltd,</b>
             </p>
+            <p>Authorised Signatory</p>
             <div className="float-right "></div>
           </div>
         </Fragment>

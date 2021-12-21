@@ -127,7 +127,7 @@
 
 // export default ShowCauseNotice;
 
-//new template
+//new template misconduct show cause letter
 
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
@@ -180,7 +180,8 @@ const ShowCauseNotice = () => {
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
+              Dear ,
+              {/* <b>{disciplinarySearchData.employeeName},</b>{" "} */}
             </p>
             <br></br>
 
@@ -228,7 +229,7 @@ const ShowCauseNotice = () => {
               <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
             </p><br/>
             <p className="mt-5 ">
-            <b>Authorized Signatory</b>
+            <b>Authorised Signatory</b>
             </p>
             <div className="float-right "></div>
           </div>

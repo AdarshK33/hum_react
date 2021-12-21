@@ -80,16 +80,18 @@ const AppointmentLetter = () => {
               <b>{offerLetterData.companyName}</b>. As we believe your passion
               for sport and your values match those of our Company, we, at{" "}
               <b>{offerLetterData.companyName}</b>, are pleased to appoint you
-              as a Decathlon Permanent Employee on a Full Time basis, and your
+              as a <b>{offerLetterData.companyName}</b> Permanent Employee on a Full Time basis,
+               and your
               responsibilities would be those of a{" "}
               <b>{offerLetterData.position}</b> at our{" "}
               <b>{offerLetterData.location} </b>
               location effective
-              <b>{offerLetterData.permanentCandidateOffer.effectiveDate}</b> and
+              <b>{offerLetterData.permanentCandidateOffer.effectiveDate}</b> 
+              {/* and
               you will be on probation up to{" "}
               <b>{offerLetterData.probationPeriod}</b> month(s) or such extended
               period as specified by your Manager. Thereafter, your employment
-              confirmation would be informed to you in writing.
+              confirmation would be informed to you in writing. */}
             </p>
             <p>
               Your gross fixed compensation would be INR.{" "}
@@ -110,6 +112,15 @@ const AppointmentLetter = () => {
               and guide you in this phase of your professional journey or any
               such manager assigned by the later.
             </p>
+            <p>
+            We at  <b>{offerLetterData.companyName}</b> strongly believe in your ability 
+            to manage yourself in the best interest of the Company. Fewer the rules better 
+            the productivity as far as we are concerned.</p>
+              <p>
+        We trust you will enjoy working with <b>{offerLetterData.companyName}</b> and 
+        take the utmost autonomy to complete your responsibilities-
+
+            </p>
             <ol>
               <li>
                 We believe you will treat your team mates and customers with
@@ -122,8 +133,8 @@ const AppointmentLetter = () => {
                 incorporated from time to time
               </li>
               <li>
-                When you are happy being a part of the Decathlon family, we
-                expect you will be open to relocate to any location where the
+                When you are happy being a part of the {offerLetterData.companyName} family,
+                 we expect you will be open to relocate to any location where the
                 Company currently has stores or may be established or any other
                 Group companies as deemed necessary
               </li>
@@ -134,21 +145,21 @@ const AppointmentLetter = () => {
               <li>
                 Working for {offerLetterData.companyName} is a full time job!
                 While we believe in honesty in the job responsibility, we insist
-                you dedicate your working hours solely to Decathlon and not work
-                elsewhere, and also do not indulge in any trade or business
+                you dedicate your working hours solely to {offerLetterData.companyName} and 
+                not work elsewhere, and also do not indulge in any trade or business
                 owned by you or any third party
               </li>
               <li>
                 We hold transparency in high regard. You cannot involve yourself
                 in taking or giving bribe, gambling, theft, fraudulent practices
-                or any such act that might affect Decathlon reputation or damage
+                or any such act that might affect {offerLetterData.companyName} reputation or damage
                 to property
               </li>
               <li>
-                We at Decathlon have a strict policy against sexual harassment.
+                We at {offerLetterData.companyName} have a strict policy against sexual harassment.
                 We believe that you will not engage in any form of sexual
                 harassment towards any of the Company employees and the
-                Company's customers. Decathlon also ensures a safe environment
+                Company's customers. {offerLetterData.companyName} also ensures a safe environment
                 to all its employees and customers and strict action will be
                 taken against any offender, be it employee or customer
               </li>
@@ -165,13 +176,13 @@ const AppointmentLetter = () => {
               <li>
                 In the event we find you have not abided by these, and other
                 regulations explained to you by your manager or if you do not
-                share the values of Decathlon we shall communicate the
-                dis-continuance of employment with Decathlon to you at least 7
+                share the values of {offerLetterData.companyName} we shall communicate the
+                dis-continuance of employment with {offerLetterData.companyName} to you at least 7
                 days in advance during probation or 1 month in advance if your
                 employment is confirmed
               </li>
               <li>
-                Service rules under the Certified Standing Orders of Decathlon
+                Service rules under the Certified Standing Orders of {offerLetterData.companyName}
                 will be applicable to you from the date of certification of such
                 orders. The information on the certification of such standing
                 orders will be communicated to you electronically
@@ -215,14 +226,14 @@ const AppointmentLetter = () => {
                 </li>
               </ul>
               <li>
-                Any image taken of you during a Decathlon event or during a
-                photo-shoot shall be the property of Decathlon and you consent
-                to Decathlon's use of the such image in communication.
+                Any image taken of you during a {offerLetterData.companyName} event or during a
+                photo-shoot shall be the property of {offerLetterData.companyName} and you consent
+                to {offerLetterData.companyName}'s use of the such image in communication.
               </li>
               <li>
-                Apart from the above mentioned rules all rules specified under
-                the certified standing orders of Decathlon will be applicable to
-                you from the date of your joining Decathlon
+                Apart from the above mentioned rules, all rules specified under
+                the certified standing orders of {offerLetterData.companyName} will be applicable to
+                you from the date of your joining {offerLetterData.companyName}
               </li>
               <li>
                 Clause 4 of this employment contract shall continue to survive
@@ -241,8 +252,30 @@ const AppointmentLetter = () => {
               duplicate copy of this appointment letter
             </p>
             <p>
-              <b>We welcome you to the Decathlon Family!</b>
+              <b>We welcome you to the {offerLetterData.companyName} Family!</b>
             </p>
+            <Row>
+             <Col sm="8">
+             <p>For {offerLetterData.companyName}</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By </p>
+         {/* <p> Mr.{offerLetterData !== undefined &&
+          offerLetterData.managerName}</p> */}
+          
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+          {/* <p>Mr.{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p> */}
+              </Col>
+              </Row> <br/>
             <p className="text-center">
               <b>Annexure-1</b>
             </p>
@@ -418,12 +451,13 @@ const AppointmentLetter = () => {
               </tbody>
             </Table>
           </div>
+       
           {/* </Modal.Body> */}
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <Row>
               <Col>
                 <p>For {offerLetterData.companyName}</p>
-                <p>Authorised Signatory</p>
+                <p>Authorised Signatory</p> */}
                 {/* <button
                   className="signatureButtons"
                   onClick={() => addSignature()}
@@ -435,9 +469,9 @@ const AppointmentLetter = () => {
                 <p>Accepted By Me</p>
                 <p>Employee Signature</p>
                 <button className=" signatureButtons">Add Signature</button> */}
-              </Col>
+              {/* </Col>
             </Row>
-          </div>
+          </div> */}
           {/* {signaturePad && !saveLetter && (
             <div className="text-center mb-4">
               <button

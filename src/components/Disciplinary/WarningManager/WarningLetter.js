@@ -11,7 +11,7 @@ const WarningLetter = () => {
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
         <Fragment>
-          <h5 className="text-center"> ..WARNING LETTER </h5>
+          <h5 className="text-center"> WARNING LETTER </h5>
           <p className="">
             {" "}
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
@@ -80,7 +80,7 @@ const WarningLetter = () => {
               <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
             </p><br/>
             <p className="mt-5 ">
-            <b>Authorised Signatory</b>
+            <b>Authorized Signatory</b>
             </p>
             <p className="">
               {" "}

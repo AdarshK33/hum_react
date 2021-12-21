@@ -114,9 +114,9 @@ const ManagerInitiateExit = () => {
     useContext(PermissionContext);
     console.log(employeeData,"state",state,"7795")
 
-  useEffect(() => {
-    ViewEmployeeProfile();
-  }, []);
+  // useEffect(() => {
+  //   ViewEmployeeProfile();
+  // }, []);
 
   useEffect(() => {
     locationDetails();
@@ -135,13 +135,13 @@ const ManagerInitiateExit = () => {
   }, [EmpName]);
   console.log("employeeData", employeeData);
   useEffect(() => {
-    if (
-      employeeData &&
+    
+     if (
       employeeData &&
       employeeData !== null &&
       employeeData !== undefined &&
-      Object.keys(employeeData).length !== 0
-    ) {
+      Object.keys(employeeData).length
+    ){
       state.empName = employeeData.employeeName;
       state.exitId  = employeeData.exitId;
 
@@ -409,7 +409,8 @@ const ManagerInitiateExit = () => {
         setLastDateSelection(aboveDateValue)
         setLastWorkingDate(dateValue)
 
-//         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 && searchByCostData.noticePeriod == 0){
+//         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 
+//           && searchByCostData.noticePeriod == 0){
 //           setLastDateSelection(dateValue.setDate("20"))
 //           setLastWorkingDate(dateValue)
 //         }else {
@@ -423,27 +424,44 @@ const ManagerInitiateExit = () => {
         setIntern(false);
         setLastWorkingDate("")
       }
+    }else{
+      state.empName = ""
+      state.exitId  = ""
+      state.emailId = ""
+      state.empContractType = ""
+      state.empCostCenterName = ""
+      state.empLocation = ""
+      state.empPosition = ""
+      state.mngrName = ""
+      state.mngrId =  ""
+      state.mngrCostCenterName = ""
+      state.mngrPosition = ""
+      state.dateOfResignation = ""
+      setDateOfResignation("")
+      setLastWorkingDate("")
+      setEmpName("")
     }
   }, [searchByCostData]);
 
-  useEffect(() => {
-    if (
-      employeeProfileData &&
-      employeeProfileData &&
-      employeeProfileData !== null &&
-      employeeProfileData !== undefined &&
-      Object.keys(employeeProfileData).length !== 0
-    ) {
-      state.mngrName =
-        employeeProfileData.lastName !== null &&
-        employeeProfileData.lastName !== undefined
-          ? employeeProfileData.firstName + " " + employeeProfileData.lastName
-          : employeeProfileData.firstName;
-      state.mngrId = employeeProfileData.employeeId;
-      state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.position;
-    }
-  }, [employeeProfileData]);
+  // useEffect(() => {
+  //   if (
+  //     employeeProfileData &&
+  //     employeeProfileData &&
+  //     employeeProfileData !== null &&
+  //     employeeProfileData !== undefined &&
+  //     Object.keys(employeeProfileData).length !== 0
+  //   ) {
+  //     state.mngrName =
+  //       employeeProfileData.lastName !== null &&
+  //       employeeProfileData.lastName !== undefined
+  //         ? employeeProfileData.firstName + " " + employeeProfileData.lastName
+  //         : employeeProfileData.firstName;
+  //     state.mngrId = employeeProfileData.employeeId;
+  //     state.mngrCostCenterName = employeeProfileData.costCentre;
+  //     state.mngrPosition = employeeProfileData.position;
+  //   }
+  // }, [employeeProfileData]);
+
   console.log(ModeOfSeparationData);
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
@@ -462,72 +480,7 @@ const ManagerInitiateExit = () => {
       //   setFirstClick(true);
     }
   };
-  //   useEffect(() => {
-  //     if (
-  //       employeeData &&
-  //       employeeData &&
-  //       employeeData !== null &&
-  //       employeeData !== undefined &&
-  //       Object.keys(employeeData).length !== 0
-  //     ) {
-  //       //   state.empName = employeeData.employeeName;
-  //       state.empId = employeeData.employeeId;
-  //       state.empContractType = employeeData.contractType;
-  //       state.empCostCenterName = employeeData.costCentreName;
-  //       state.empLocation = employeeData.location;
-  //       state.empPosition = employeeData.position;
-  //       state.mngrName = employeeData.managerName;
-  //       state.mngrId = employeeData.managerId;
-  //       state.mngrCostCenterName = employeeData.managerCostCentre;
-  //       state.mngrPosition = employeeData.managerPosition;
-  //       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
-  //       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
-  //       state.dateOfResignation = employeeData.dateOfResignation;
-  //       state.noticePeriod = employeeData.noticePeriod;
-  //       state.lastWorkingDate = employeeData.lastWorkingDate;
-  //       state.emailId = employeeData.emailId;
-  //       state.comments = employeeData.employeeComment;
-  //       state.noticePeriodRcryDays =
-  //         employeeData.noticePeriodRecoveryDays !== null &&
-  //         employeeData.noticePeriodRecoveryDays !== undefined
-  //           ? employeeData.noticePeriodRecoveryDays
-  //           : "";
-
-  //       if (
-  //         employeeData.noticePeriodRecovery !== null &&
-  //         employeeData.noticePeriodRecovery !== undefined
-  //       ) {
-  //         if (employeeData.noticePeriodRecovery === 2) {
-  //           setRcryNo(true);
-  //           setRcryYes(false);
-  //         } else if (employeeData.noticePeriodRecovery === 1) {
-  //           setRcryNo(false);
-  //           setRcryYes(true);
-  //         } else if (employeeData.noticePeriodRecovery === 0) {
-  //           setRcryNo(false);
-  //           setRcryYes(false);
-  //         }
-  //       } else {
-  //         setRcryNo(false);
-  //         setRcryYes(false);
-  //       }
-  //       if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
-  //         if (employeeData.reHire === 2) {
-  //           setRehireNo(true);
-  //           setRehireYes(false);
-  //         } else if (employeeData.reHire === 1) {
-  //           setRehireNo(false);
-  //           setRehireYes(true);
-  //         } else if (employeeData.reHire === 0) {
-  //           setRehireNo(false);
-  //           setRehireYes(false);
-  //         }
-  //       } else {
-  //         setRehireNo(false);
-  //         setRehireYes(false);
-  //       }
-  //     }
-  //   }, [employeeData]);
+ 
   useEffect(() => {
     if (
       ModeOfSeparationData &&
@@ -1581,13 +1534,13 @@ console.log(intern,"8098709809808")
                                     <option value=""></option>
                                     {modeOfSeparationList.map((item) => {
                                       console.log(state.empContractType,"state.empContractType")
-                                      if(state.empContractType == "internship" && item.label !== "Resignation"){
+                                      if(state.empContractType == "internship" && item.label !== "Termination" && item.label !== "Resignation"){
                                       return (
                                         <option key={item.value}>
                                           {item.label}
                                         </option>
                                       );
-                                      }else if(state.empContractType == "fulltime" || state.empContractType == "Fulltime" || state.empContractType == "parttime"){
+                                      }else if(state.empContractType == "fulltime" || state.empContractType == "Fulltime" ||  state.empContractType == "Parttime" || state.empContractType == "parttime"){
                                         return (
                                           <option key={item.value}>
                                             {item.label}
@@ -2172,17 +2125,6 @@ console.log(intern,"8098709809808")
                                   Submit
                                 </button>
                               ) : (
-                                // <Button
-                                //   type="button"
-                                //   onClick={submitfinalRelivingLetter}
-                                //   style={{
-                                //     marginTop: "2rem",
-                                //     marginBottom: "2rem",
-                                //     textAlign: "center",
-                                //   }}
-                                // >
-                                //   Submit
-                                // </Button>
                                 ""
                               )}
                             </div>

@@ -3,7 +3,7 @@ import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import moment from "moment";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
-
+//new template 
 const NonPerformanceWarningLetter = () => {
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
   console.log(disciplinarySearchData);
@@ -50,7 +50,7 @@ const NonPerformanceWarningLetter = () => {
             <br></br> */}
 
             <p>
-              You have been associated {disciplinarySearchData.company}
+              You have been associated with {disciplinarySearchData.company}
               (“Decathlon/Company”),as a
               <b>{disciplinarySearchData.position}</b>.
               <br />
@@ -59,19 +59,20 @@ const NonPerformanceWarningLetter = () => {
               <b>
                 {disciplinarySearchData.disciplinaryAction.actionIssuedDate}{" "}
               </b>
-              , {disciplinarySearchData.company} issued to you a Show Cause notice, asking you for a
-              clear written explanation regarding your Non- Performance at work.
+              , {disciplinarySearchData.company} issued to you a Show Cause notice, 
+              asking you for a clear written explanation regarding your Non- Performance 
+              at work.
               {/* <b>{disciplinarySearchData.disciplinaryAction.managerComment} </b> */}
               <br />
               <br />
               In furtherance, your reply to show cause notice is not satisfactory 
               and justified. Therefore you are hereby warned and given an opportunity
                to improve the performance at work. You will be given 
-                {disciplinarySearchData.improvementPeriod}{" "}months to improve your performance and we shall
-                be reviewing your performance after completion 
-                of {disciplinarySearchData.improvementPeriod}{" "}months by your leader. If your performance
-                 does not improve within the given period appropriate disciplinary 
-                 action will follow.
+                {disciplinarySearchData.improvementPeriod}{" "}months to improve your 
+                performance and we shall be reviewing your performance after completion 
+                of {disciplinarySearchData.improvementPeriod}{" "}months by your leader.
+                 If your performance does not improve within the given period appropriate 
+                 disciplinary action will follow.
 
               <br />
               <br />

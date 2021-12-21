@@ -12,7 +12,7 @@ const ChangeEmployementType = ({ transferData }) => {
             <Col md={2}>Transfer Type: </Col>
             <Col md={8} className="text-primary">
               {transferData.transferType === "Employment Type Transfer"
-                ? "Change In Employement Type Transfer"
+                ? "Change In Employment Type Transfer"
                 : transferData.transferType}
             </Col>
           </Row>
@@ -53,7 +53,7 @@ const ChangeEmployementType = ({ transferData }) => {
             controlId="transferInitiationDept"
           >
             <Col md={2} className="py-0">
-              Change Employement:
+              Change Employment:
             </Col>
 
             <Col md={4} className="text-primary">

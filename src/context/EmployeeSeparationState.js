@@ -81,6 +81,13 @@ export const EmploeeSeparationProvider = ({children}) => {
         console.log(error);
       });
   };
+  const setEmpDataNull=()=>{
+    state.employeeData = null
+    return dispatch({
+      type: "EMPLOYEE_DATA_BY_ID",
+      payload: state.employeeData,
+    });
+  }
   const makeEmployeeDataNull = () => {
     state.employeeData = {};
     return dispatch({
@@ -310,6 +317,7 @@ export const EmploeeSeparationProvider = ({children}) => {
         resignationConfirmation,
         TerminationFromDesciplinary,
         EmployeeSeparationListExitView,
+        setEmpDataNull,
         employeeProfileData: state.employeeProfileData,
         resignationConfirmationStatus: state.resignationConfirmationStatus,
         employeeId: state.employeeId,

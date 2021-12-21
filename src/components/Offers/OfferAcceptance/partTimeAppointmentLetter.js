@@ -45,7 +45,9 @@ const PartTimeAppointmentLetter = (props) => {
   const [signaturePad, setSignature] = useState(false);
   return (
     <Container className="letterStyle">
-      {candidateLetterData && candidateLetterData.partTimeCandidateOffer ? (
+      {
+     // candidateLetterData && candidateLetterData.partTimeCandidateOffer 
+      true? (
         <div className="appointmentLetter">
           <h4 className="text-center">Employment Contract</h4>
           <h5 className="text-center">
@@ -65,10 +67,10 @@ const PartTimeAppointmentLetter = (props) => {
             Dear <b>{candidateLetterData.candidateName}</b>,
           </p>
           <p>
-            Thank for your interest in choosing Decathlon Sports India Pvt Ltd
-            (DSIPL). As we believe your passion for sport and your values match
-            those of our Company, we, at DSIPL, are pleased to appoint you as a
-            Decathlon Permanent Employee on a part time basis, and your
+            Thank for your interest in choosing {candidateLetterData.companyName} Pvt Ltd
+            . As we believe your passion for sport and your values match
+            those of our Company, we, at {candidateLetterData.companyName}, are pleased to appoint you as a
+             {candidateLetterData.companyName} Permanent Employee on a part time basis, and your
             responsibilities would be those of a{" "}
             <b>{candidateLetterData.position}</b> at our{" "}
             <b>{candidateLetterData.location}</b> location effective{" "}
@@ -103,12 +105,12 @@ const PartTimeAppointmentLetter = (props) => {
           </p>
 
           <p>
-            We at Decathlon strongly believe in your ability to manage yourself
+            We at  {candidateLetterData.companyName} strongly believe in your ability to manage yourself
             in the best interest of the Company. Fewer the rules better the
             productivity as far as we are concerned.
           </p>
           <p>
-            We trust you will enjoy working with Decathlon and take the utmost
+            We trust you will enjoy working with  {candidateLetterData.companyName} and take the utmost
             autonomy to complete your responsibilities-
           </p>
           <ol>
@@ -123,7 +125,7 @@ const PartTimeAppointmentLetter = (props) => {
               incorporated from time to time
             </li>
             <li>
-              When you are happy being a part of the Decathlon family, we expect
+              When you are happy being a part of the {candidateLetterData.companyName} family, we expect
               you will be open to relocate to any location where the Company
               currently has stores or may be established or any other Group
               companies as deemed necessary
@@ -133,18 +135,26 @@ const PartTimeAppointmentLetter = (props) => {
               prefer you not share it with other team members
             </li>
             <li>
-              We hold transparency in high regard. You cannot involve yourself
-              in taking or giving bribe, gambling, theft, fraudulent practices
-              or any such act that might affect Decathlon reputation or damage
-              to property
+            Working for {candidateLetterData.companyName} is a full time job! 
+            While we believe in honesty in the job responsibility, we insist you dedicate
+             your working hours solely to {candidateLetterData.companyName}, and 
+             not work elsewhere,and also do not indulge in any trade or business 
+             owned by you or any third party
+
             </li>
             <li>
-              We at DSIPL, have a strict policy against sexual harassment. We
-              believe that you will not engage in any form of sexual harassment
-              towards any of the Company employees and the Company's customers.
-              DSIPL also ensures a safe environment to all its employees and
-              customers and strict action will be taken against any offender, be
-              it employee or customer
+              We hold transparency in high regard. You cannot involve yourself
+              in taking or giving bribe, gambling, theft, fraudulent practices
+              or any such act that might affect  {candidateLetterData.companyName} 
+              reputation or damage to property
+            </li>
+            <li>
+              We at {candidateLetterData.companyName}, have a strict policy against 
+              sexual harassment. We believe that you will not engage in any form 
+              of sexual harassment towards any of the Company employees and the 
+              Company's customers.{candidateLetterData.companyName} also ensures 
+              a safe environment to all its employees and customers and strict 
+              action will be taken against any offender, be it employee or customer
             </li>
             <li>
               All documents submitted by you to the Company shall be subjected
@@ -153,7 +163,24 @@ const PartTimeAppointmentLetter = (props) => {
             <li>
               In the event you feel you cannot be a part of our culture and
               environment, kindly communicate your desire to depart at least 7
-              days in advance
+              days in advance  during probation or 1 month in advance if your 
+              employment is confirmed
+
+            </li>
+            <li>
+            In the event we find you have not abided by these, and
+             other regulations explained to you by your manager or if 
+             you do not share the values of Prodin, we shall communicate 
+             the dis-continuance of employment with Prodin to you at least 
+             7 days in advance during probation or 1 month in advance if
+              your employment is confirmed
+            </li>
+            <li>
+            Service rules under the Certified Standing Orders of 
+            {candidateLetterData.companyName}will be applicable to you from 
+            the date of certification of such orders.The information on the 
+            certification of such standing orders will be communicated to 
+            you electronically
             </li>
             <li>
               However, your employment will be subjected to immediate
@@ -192,14 +219,14 @@ const PartTimeAppointmentLetter = (props) => {
               </li>
             </ul>
             <li>
-              Any image taken of you during a Decathlon event or during a
-              photo-shoot shall be the property of Decathlon and you consent to
-              Decathlon's use of the such image in communication.
+              Any image taken of you during a  {candidateLetterData.companyName} event or during a
+              photo-shoot shall be the property of  {candidateLetterData.companyName} and you consent to
+               {candidateLetterData.companyName}'s use of the such image in communication.
             </li>
             <li>
               Apart from the above mentioned rules all rules specified under the
-              certified standing orders of Decathlon will be applicable to you
-              from the date of your joining Decathlon
+              certified standing orders of  {candidateLetterData.companyName} will be applicable to you
+              from the date of your joining  {candidateLetterData.companyName}
             </li>
             <li>
               Clause 4 of this employment contract shall continue to survive
@@ -218,12 +245,12 @@ const PartTimeAppointmentLetter = (props) => {
             duplicate copy of this appointment letter
           </p>
           <p>
-            <b>We welcome you to the Decathlon Family!</b>
+            <b>We welcome you to the {candidateLetterData.companyName} Family!</b>
           </p>
           <div className="mb-3">
             <Row>
               <Col>
-                <p>For Decathlon Sports India Pvt Ltd</p>
+                <p>For {candidateLetterData.companyName} Pvt Ltd</p>
                 <p>Authorised Signatory</p>
               </Col>
               <Col style={{ textAlign: "end" }}>
