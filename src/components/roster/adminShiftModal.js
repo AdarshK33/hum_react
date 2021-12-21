@@ -185,7 +185,7 @@ const AdminShiftModal = (props) => {
       date: WeekDate.map((e, i) => WeekDate[i].value),
       employeeIds: employee.map((e, i) => employee[i].value),
     };
-
+console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
     if (validate) {
       adminAddWeekOff(newWeekOffAdminRoster);
 
