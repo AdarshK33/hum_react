@@ -220,9 +220,9 @@ export const RosterProvider = ({ children }) => {
       });
 
   }
-  const availableShifts = () => {
+  const availableShifts = (week,year) => {
 
-    client.get('/shift/view/employee')
+    client.get("/shift/view/employee?weekName="+week+"&year="+year)
       .then((response) => {
         // console.log(response,"ava")
         state.availableShiftData = response.data.data
@@ -455,14 +455,14 @@ export const RosterProvider = ({ children }) => {
 
 
 
-  const adminRosterAvailableShift = (contractType, costCenter1) => {
+  const adminRosterAvailableShift = (contractType, costCenter1, week,year) => {
 
     if (contractType === undefined) {
       contractType = "Permanent"
     }
 
 
-    client.get('/shift/view/store/active?contract_type=' + contractType + '&storeId=' + costCenter1)
+    client.get('/shift/view/store/active?contract_type=' + contractType + '&storeId=' + costCenter1+"&weekName="+week +"&year="+year)
       .then((response) => {
         state.adminRosterAvailableShiftList = response.data.data;
         console.log("admin calculate week ", state.adminRosterAvailableShiftList)
