@@ -60,12 +60,15 @@ const InternationalTransfer = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    initiationEmpData !== null &&
+    if(initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0 &&
+      Object.keys(initiationEmpData).length > 0){
       setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
-      );
+      )
+    }else{
+      setSearchInput("")
+    }
   }, [initiationEmpData]);
 
   useEffect(() => {
@@ -417,7 +420,7 @@ const InternationalTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation details saved successfully, Admin has been
+              Transfer initiation details saved successfully, Admin has been
               notified
             </label>
             <div className="text-center mb-2">

@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import moment from "moment";
 import { TransferContext } from "../../../context/TransferState";
 import LoaderIcon from "../../Loader/LoaderIcon";
+import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 
 const TransferInitationLetter = ({ transferId }) => {
   const { getTransferData, transferData, loader } = useContext(TransferContext);
@@ -26,7 +27,7 @@ const TransferInitationLetter = ({ transferId }) => {
           <h5 className="text-center"> TRANSFER LETTER</h5>
           <p>To,</p>
           <p>Name:{transferData.employeeName}</p>
-          <p>EmployeeId: {transferData.currentEmployeeId}</p>
+          <p>Employee ID: {transferData.currentEmployeeId}</p>
 
           <div className=" ">
             <p className="mt-5 ">
@@ -54,8 +55,13 @@ const TransferInitationLetter = ({ transferId }) => {
               unchanged.
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India India Pvt Ltd,</b>
+              <b> Decathlon Sports India India Pvt Ltd,</b>
             </p>
+            <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+             </Row>
             <div className="float-right "></div>
           </div>
         </Fragment>

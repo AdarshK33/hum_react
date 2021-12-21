@@ -107,21 +107,48 @@ const MitUpload = () => {
   return (
     <div className="module-reports">
       <ToastContainer />
-      <Breadcrumb title="MIT UPLOAD" parent="MIT UPLOAD" />
+      <Breadcrumb title="ALL UPLOAD" parent="ALL UPLOAD" />
       <Container fluid>
         <div className="card" style={{ borderRadius: "1rem" }}>
           <div className="OnBoardHeading">
-            <b className="align-middle">Mit Upload</b>
+            <b className="align-middle">All Upload</b>
           </div>
           <div className="module-reports-form mx-5 my-5">
             <Form>
+            <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="reportModuleName"
+              >
+                <Form.Label column sm="3">
+                    Select Company Name:
+                </Form.Label>
+                <Col sm="8">
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    value={company}
+                    placeholder="Select Template"
+                    name="company"
+                    required
+                    onChange={(e) => setCompany(e.target.value)}
+                  >
+                    <option value="">Select Company</option>
+                    <option value="Sports Title">Sports Title</option>
+                    <option value="User Sports">User Sports</option>
+                    <option value="Actual DOJ">Actual DOJ</option>
+                 
+              
+                  </Form.Control>
+                </Col>
+              </Form.Group>
               <Form.Group
                 as={Row}
                 className="mb-3"
                 controlId="reportModuleName"
               >
                 <Form.Label column sm="3">
-                   Mit upload template name:
+                    Upload template name:
                 </Form.Label>
                 <Col sm="8">
                   <Form.Control

@@ -81,7 +81,8 @@ const PartTimeToFullTimeLetter = () => {
             </p>
             <p>
               We are pleased to appoint you as Permanent Employee on a Full Time
-              basis, You will be designated as <b>{offerLetterData.position}</b>{" "}
+              basis at {offerLetterData.companyName}, and
+              {/* You will be designated as <b>{offerLetterData.position}</b>{" "} */}
               your responsibilities would be those of a{" "}
               <b>{offerLetterData.position}</b> at our
               <b>{offerLetterData.location} </b> location effective
@@ -183,7 +184,7 @@ const PartTimeToFullTimeLetter = () => {
               </li>
               <li>
                 Service rules under the Certified Standing Orders of{" "}
-                {offerLetterData.companyName}
+                {/* {offerLetterData.companyName} */}
                 will be applicable to you from the date of certification of such
                 orders. The information on the certification of such standing
                 orders will be communicated to you electronically
@@ -237,7 +238,7 @@ const PartTimeToFullTimeLetter = () => {
                 Apart from the above mentioned rules all rules specified under
                 the certified standing orders of {offerLetterData.companyName}{" "}
                 will be applicable to you from the date of your joining{" "}
-                {offerLetterData.companyName}
+                {/* {offerLetterData.companyName} */}
               </li>
               <li>
                 Clause 4 of this employment contract shall continue to survive
@@ -434,11 +435,11 @@ const PartTimeToFullTimeLetter = () => {
             </Table>
           </div>
           {/* </Modal.Body> */}
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <Row>
               <Col>
                 <p>For {offerLetterData.companyName}</p>
-                <p>Authorised Signatory</p>
+                <p>Authorised Signatory</p> */}
                 {/* <button
                     className="signatureButtons"
                     onClick={() => addSignature()}
@@ -450,9 +451,31 @@ const PartTimeToFullTimeLetter = () => {
                   <p>Accepted By Me</p>
                   <p>Employee Signature</p>
                   <button className=" signatureButtons">Add Signature</button> */}
-              </Col>
+              {/* </Col>
             </Row>
-          </div>
+          </div> */}
+          <Row>
+             <Col sm="8">
+             <p>For {offerLetterData.companyName}</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By </p>
+         <p> Mr.{offerLetterData !== undefined &&
+          offerLetterData.managerName}</p>
+          
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+          <p>Mr.{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
+              </Col>
+              </Row>
           {/* {signaturePad && !saveLetter && (
               <div className="text-center mb-4">
                 <button

@@ -84,7 +84,7 @@ const FullTimeToPartTimeLetter = () => {
             <p>
               We note that you have expressed your intention & desire to
               continue to work with {offerLetterData.companyName} on PART TIME
-              BASIS due to your own personal reasons. Based on your request,
+              BASIS . Based on your request,
               mutual discussions, wherein consequent to change in employment to
               Part Time Employment, there would be consequential change in the
               service conditions, namely, the remuneration, contributions to PF
@@ -107,7 +107,7 @@ const FullTimeToPartTimeLetter = () => {
             </p>
             <p>
               Please take note that the letter of appointment dated{" "}
-              <b>{offerLetterData.partTimeCandidateOffer.effectiveDate}</b>
+              <b>{offerLetterData.partTimeCandidateOffer.effectiveDate}</b>{" "}
               shall cease with immediate effect and becomes null & void.
             </p>
             <p>
@@ -120,7 +120,9 @@ const FullTimeToPartTimeLetter = () => {
             </p>
             <p>
               Your gross fixed compensation would be INR.{" "}
-              <b>{offerLetterData.partTimeCandidateOffer.rate}</b> per hour. You
+              <b>{offerLetterData.partTimeCandidateOffer.rate}</b> per hour.You are also entitled 
+              for a monthly statutory/non-statutory bonus which will be at a maximum 0.0% of your
+               gross monthly fixed compensation. You
               are entitled to all the social security benefits like PF, ESIC (as
               per applicability), & bonus as specified in the respective
               statutory acts. Further, sufficient holidays keep one motivated in
@@ -152,7 +154,7 @@ const FullTimeToPartTimeLetter = () => {
             <p>responsibilities-</p>
             <ol>
               <li>
-                We believe you will treat your team mates and customers with
+                We believe you will treat your teamates and customers with
                 utmost respect
               </li>
               <li>
@@ -172,14 +174,7 @@ const FullTimeToPartTimeLetter = () => {
                 Your salary and its components are strictly confidential and we
                 prefer you not share it with other team members
               </li>
-              <li>
-                Working for {offerLetterData.companyName} is a full time job!
-                While we believe in honesty in the job responsibility, we insist
-                you dedicate your working hours solely to{" "}
-                {offerLetterData.companyName} and not work elsewhere, and also
-                do not indulge in any trade or business owned by you or any
-                third party
-              </li>
+   
               <li>
                 We hold transparency in high regard. You cannot involve yourself
                 in taking or giving bribe, gambling, theft, fraudulent practices
@@ -202,8 +197,9 @@ const FullTimeToPartTimeLetter = () => {
               <li>
                 In the event you feel you cannot be a part of our culture and
                 environment, kindly communicate your desire to depart at least 7
-                days in advance during probation or 1 month in advance if your
-                employment is confirmed
+                days in advance 
+                {/* during probation or 1 month in advance if your
+                employment is confirmed */}
               </li>
               <li>
                 In the event we find you have not abided by these, and other
@@ -211,16 +207,16 @@ const FullTimeToPartTimeLetter = () => {
                 share the values of {offerLetterData.companyName} we shall
                 communicate the dis-continuance of employment with{" "}
                 {offerLetterData.companyName} to you at least 7 days in advance
-                during probation or 1 month in advance if your employment is
-                confirmed
+                {/* during probation or 1 month in advance if your employment is
+                confirmed */}
               </li>
-              <li>
+              {/* <li>
                 Service rules under the Certified Standing Orders of{" "}
                 {offerLetterData.companyName}
                 will be applicable to you from the date of certification of such
                 orders. The information on the certification of such standing
                 orders will be communicated to you electronically
-              </li>
+              </li> */}
               <li>
                 However, your employment will be subjected to immediate
                 termination on the following conditions prescribed in the
@@ -276,6 +272,14 @@ const FullTimeToPartTimeLetter = () => {
                 Clause 4 of this employment contract shall continue to survive
                 even after any form of termination of this employment contract.
               </li>
+              {/* <li>
+                Working for {offerLetterData.companyName} is a full time job!
+                While we believe in honesty in the job responsibility, we insist
+                you dedicate your working hours solely to{" "}
+                {offerLetterData.companyName} and not work elsewhere, and also
+                do not indulge in any trade or business owned by you or any
+                third party
+              </li> */}
             </ol>
             <p>
               <b>
@@ -467,11 +471,35 @@ const FullTimeToPartTimeLetter = () => {
             </Table> */}
           </div>
           {/* </Modal.Body> */}
-          <div className="mb-3">
+          <Row>
+             <Col sm="8">
+             <p>For {offerLetterData.companyName}</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By </p>
+         <p> Mr.{offerLetterData !== undefined &&
+          offerLetterData.managerName}</p>
+          
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+          <p>Mr.{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
+              </Col>
+              </Row>
+              
+           {/* <div className="mb-3">
             <Row>
               <Col>
                 <p>For {offerLetterData.companyName}</p>
-                <p>Authorised Signatory</p>
+                <p>Authorised Signatory</p> */}
+
                 {/* <button
                       className="signatureButtons"
                       onClick={() => addSignature()}
@@ -483,9 +511,11 @@ const FullTimeToPartTimeLetter = () => {
                     <p>Accepted By Me</p>
                     <p>Employee Signature</p>
                     <button className=" signatureButtons">Add Signature</button> */}
-              </Col>
+              {/* </Col>
             </Row>
-          </div>
+          </div> 
+       */}
+
           {/* {signaturePad && !saveLetter && (
                 <div className="text-center mb-4">
                   <button

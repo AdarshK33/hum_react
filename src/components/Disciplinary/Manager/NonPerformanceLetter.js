@@ -113,7 +113,7 @@
 
 // export default NonPerformanceLetter;
 
-//new template
+//new template Non performance  show cause notice letter 
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../../assets/images/calendar-image.png";
@@ -168,7 +168,8 @@ const NonPerformanceLetter = () => {
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
+              Dear,
+             {/* <b>{disciplinarySearchData.employeeName},</b>{" "} */}
             </p>
             <br></br>
 
@@ -216,7 +217,7 @@ const NonPerformanceLetter = () => {
               <b>For{" "} {disciplinarySearchData.company} Pvt Ltd,</b>
             </p><br/>
             <p className="mt-5 ">
-            <b>Authorized Signatory</b>
+            <b>Authorised Signatory</b>
             </p>
             <div className="float-right "></div>
           </div>
