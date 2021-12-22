@@ -16,13 +16,14 @@ import {
 } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import WeekOffForm from "./WeekOffForm";
+import EditWeekOffForm from "./EditWeekOffForm";
 import Breadcrumb from "../common/breadcrumb";
 import { Edit, Edit2, Eye, Search } from "react-feather";
 import { RosterContext } from "../../context/RosterState";
 import { WeekOffContext } from "../../context/WeekOffState";
 import moment from "moment";
 const ViewWeekOff = () => {
-  const { weekOffView, total, loader, weekOffDetails } =
+  const { weekOffView, total, loader, weekOffDetails,viewWeekOffById } =
     useContext(WeekOffContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const [pageCount, setPageCount] = useState(0);
@@ -33,6 +34,7 @@ const ViewWeekOff = () => {
   const totalRecords = total;
 
   const [createShow, setCreateShow] = useState(false);
+  const [editModal, setEditModal] = useState(false)
   const [contractType, setContractType] = useState("");
   const [currentRecords, setCurrentRecords] = useState([]);
   const indexOfLastRecord = currentPage * recordPerPage;
@@ -81,7 +83,7 @@ const ViewWeekOff = () => {
       weekOffView("all", pageCount);
     }
   };
-
+  const editHandleClose = () => setEditModal(false)
   console.log("setCreateShow", createShow);
   return (
     console.log(new Date().getFullYear()),
@@ -90,6 +92,10 @@ const ViewWeekOff = () => {
         <WeekOffForm
           createShow={createShow}
           createHandleClose={createHandleClose}
+        />
+         <EditWeekOffForm
+          modal={editModal} 
+          editHandleClose={editHandleClose}
         />
         <Breadcrumb title="Week Off" parent="Week Off" />
         <div className="container-fluid">
@@ -131,6 +137,7 @@ const ViewWeekOff = () => {
                 <th>Effective From</th>
                 <th>Contract Type</th>
                 <th>Number of weekoffs</th>
+                <th>Edit</th>
               </tr>
             </thead>
             {loader === true &&
@@ -166,6 +173,15 @@ const ViewWeekOff = () => {
 
                       <td>{item.contractType}</td>
                       <td>{item.numberOfWeekOffs}</td>
+                      {new Date(item.effectiveDate) <= new Date()?
+                      <td>
+                      <Edit2/></td>:
+                      <td style={{color:"blue"}}><Edit2 onClick={() => {    
+                              setEditModal(true);
+                              viewContractTypes()
+                              viewWeekOffById(item.weekOffId)
+                            }} />
+                            </td>}
                     </tr>
                   </tbody>
                 );

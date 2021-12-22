@@ -9,6 +9,16 @@ const GroupReducer = (state, action) => {
         total: action.total,
         loader: action.loader,
       };
+      case "VIEW_WEEKOFF_BY_ID":
+      return {
+        ...state,
+        weekOffById: action.payload
+      };
+      case "WEEKOFF_UPDATE":
+      return {
+        ...state,
+        weekoffEditData: action.payload
+      };
   }
 };
 export default GroupReducer;
