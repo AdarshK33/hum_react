@@ -477,7 +477,7 @@ const FullTimeToPartTimeLetter = () => {
              </Col>
               <Col sm="4">
               <p> Accepted By Me</p>
-              <p>Mr.{offerLetterData !== undefined &&
+              <p>{offerLetterData !== undefined &&
           offerLetterData.candidateName}
           </p>
               </Col>
