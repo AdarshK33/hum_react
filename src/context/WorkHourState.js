@@ -8,6 +8,8 @@ const initial_state = {
   workHourDetails: [],
   total: {},
   data: [],
+  workHourById:[],
+  workHourEditData:[]
 };
 
 export const WorkHourContext = createContext();
@@ -66,16 +68,58 @@ export const WorkHourProvider = (props) => {
       });
   };
 
+  const viewWorkHourById = (id) => {
+    console.log("weekHourViewid", id);
+    client
+      .get(
+        "/working_hours/view/id?id="+id
+      )
+      .then((response) => {
+        console.log("response", response.data.data);
+        state.workHourById = response.data.data;
+        return dispatch({
+          type: "VIEW_WORKHOUR_BY_ID",
+          payload: state.workHourById
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const workHourEdit = (data) => {
+    setLoader(true);
+    client
+      .post("/working_hours/update", data)
+      .then((response) => {
+        state.workHourEditData = response.data.data;
+        toast.info(response.data.message);
+        setLoader(false);
+        workHourView("all", 0);
+        return dispatch({
+          type: "WORKHOUR_UPDATE",
+          payload: state.workHourEditData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <WorkHourContext.Provider
       value={{
         workHourCreate,
         workHourView,
         setLoader,
+        workHourEdit,
+        viewWorkHourById,
         loader: loader,
         workHourData: state.workHourData,
         workHourDetails: state.workHourDetails,
         total: state.total,
+        workHourEditData:state.workHourEditData,
+        workHourById:state.workHourById
       }}
     >
       {props.children}
