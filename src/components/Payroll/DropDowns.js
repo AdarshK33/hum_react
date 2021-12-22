@@ -70,7 +70,6 @@ const DropDowns = (props) => {
               value={docType}
               onChange={(e) => setDocType(e.target.value)}
               required
-              //   style={countryError ? { borderColor: "red" } : {}}
             >
               <option value="">Select Document Type</option>
               <option value="Payslip">Payslip</option>
@@ -80,11 +79,6 @@ const DropDowns = (props) => {
               <option value="Form 16">Form 16</option>
               <option value="Form 12BB">Form 12BB</option>
             </Form.Control>
-            {/* {HolidayError ? (
-                <p style={{ color: "red" }}> Please choose Holiday</p>
-              ) : (
-                <p></p>
-              )} */}
           </Form.Group>
         </Col>
       </Row>
@@ -103,9 +97,6 @@ const DropDowns = (props) => {
                 style={{ color: "#313131" }}
                 onClick={searchValueHandler}
               />
-              {/* {empErrMsg !== "" && (
-                <span className="text-danger">{empErrMsg}</span>
-              )} */}
             </Form.Group>
           </Col>
         </Row>

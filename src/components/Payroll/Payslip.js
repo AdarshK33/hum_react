@@ -8,8 +8,14 @@ import React, {
 import { Row, Col, Form, Button, Table } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { PayrollContext } from "../../context/PayrollState";
+import ViewTheLetter from "./view";
+import { DocsVerifyContext } from "../../context/DocverificationState";
 
 const Payslip = (props) => {
+  const { letterShow, SetLetterView, currentEmpId } =
+    useContext(PayrollContext);
+  const { downloadFile } = useContext(DocsVerifyContext);
   const [docType, setDocType] = useState("");
   const [current, setCurrent] = useState(true);
   const [select, setSelect] = useState(false);
@@ -18,17 +24,21 @@ const Payslip = (props) => {
   const [fromMonth, setFromMonth] = useState(new Date());
   const [toMonth, setToMonth] = useState(new Date());
   const [tillSeptember, setTillSeptember] = useState(true);
-  useEffect(() => {
-    if (parseInt(new Date().getMonth()) >= 10) {
-      setTillSeptember(false);
-      setCurrent(false);
-      setSelect(true);
-    } else {
-      setTillSeptember(true);
-      setCurrent(true);
-      setSelect(false);
-    }
-  }, []);
+  const [currentYear, setCurrentYear] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [LetterName, setLetterName] = useState("");
+  const [Name, setName] = useState("");
+  // useEffect(() => {
+  //   if (parseInt(new Date().getMonth()) >= 10) {
+  //     setTillSeptember(false);
+  //     setCurrent(false);
+  //     setSelect(true);
+  //   } else {
+  //     setTillSeptember(true);
+  //     setCurrent(true);
+  //     setSelect(false);
+  //   }
+  // }, []);
   const handleCurrentChange = (e) => {
     setCurrent(e.target.checked);
     setSelect(!e.target.checked);
@@ -37,19 +47,61 @@ const Payslip = (props) => {
     setSelect(e.target.checked);
     setCurrent(!e.target.checked);
   };
-  const dateOfBirthHandler = (date, type) => {
-    var AdjusteddateValue = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
-    );
-    console.log("type", type);
-    if (type === "fromYear") {
-      console.log("type", type);
-      setFromYear(new Date(AdjusteddateValue).getFullYear());
-    }
-  };
+  const downloadTheLetter = (e, name) => {
+    e.preventDefault();
+    console.log("check", name);
 
+    downloadFile(name);
+  };
+  const showTheLetter = (e, name) => {
+    e.preventDefault();
+    console.log("check", name);
+    if (name !== null && name !== undefined) {
+      let splitStr = name.split(".");
+
+      if (
+        splitStr[1] !== null &&
+        splitStr[1] !== undefined &&
+        splitStr[1] !== "" &&
+        splitStr[1].toLowerCase() === "pdf"
+      ) {
+        console.log(splitStr[1]);
+        setName("PDF");
+      } else {
+        console.log(splitStr[0]);
+        setName("JPG");
+      }
+    }
+    setLetterName(name);
+    SetLetterView(true);
+    // return <ViewTheLetter DocName={e} />;
+  };
+  const currentSubmitHandler = (e) => {
+    e.preventDefault();
+    const ReqPayload = {
+      current: 1,
+      employeeId: currentEmpId,
+      fromMonth: currentMonth,
+      fromYear: currentYear,
+      toMonth: 0,
+      toYear: 0,
+    };
+  };
+  const selectSubmitHandler = (e) => {
+    e.preventDefault();
+    const ReqPayload = {
+      current: 0,
+      employeeId: currentEmpId,
+      fromMonth: fromMonth,
+      fromYear: fromYear,
+      toMonth: toMonth,
+      toYear: toYear,
+    };
+  };
   return (
     <Fragment>
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+
       {tillSeptember ? (
         <Row>
           <Col sm={3} className="ml-2 mb-4">
@@ -63,7 +115,9 @@ const Payslip = (props) => {
                   //   required={required}
                   onChange={handleCurrentChange}
                 />
-                <label>Current Month</label>
+                <label>
+                  <strong>Current Month</strong>
+                </label>
               </div>
             </Form.Group>
           </Col>
@@ -78,7 +132,9 @@ const Payslip = (props) => {
                   //   required={required}
                   onChange={handleSelectChange}
                 />
-                <label>Select Months</label>
+                <label>
+                  <strong>Select Months</strong>
+                </label>
               </div>
             </Form.Group>
           </Col>
@@ -94,7 +150,8 @@ const Payslip = (props) => {
             <div className="onBoard-date">
               <DatePicker
                 className="form-control onBoard-view"
-                selected={new Date()}
+                selected={currentYear}
+                onChange={(e) => setCurrentYear(e)}
                 required
                 placeholderText="Select Year"
                 dateFormat="yyyy"
@@ -110,7 +167,8 @@ const Payslip = (props) => {
             <div className="onBoard-date">
               <DatePicker
                 className="form-control onBoard-view"
-                selected={new Date()}
+                selected={currentMonth}
+                onChange={(e) => setCurrentMonth(e)}
                 maxDate={new Date(new Date().getFullYear(), "9")}
                 required
                 disabled={true}
@@ -124,9 +182,7 @@ const Payslip = (props) => {
             <button
               style={{ marginTop: "2rem" }}
               className={true ? "profileButtons" : "confirmButton"}
-              // onClick={(e, name) =>
-              //   showTheLetter(e, photoGraphName)
-              // }
+              onClick={currentSubmitHandler}
               // disabled={photoGraphName ? false : true}
             >
               Submit
@@ -223,9 +279,7 @@ const Payslip = (props) => {
             <Col sm={2}>
               <button
                 className={true ? "profileButtons" : "confirmButton"}
-                // onClick={(e, name) =>
-                //   showTheLetter(e, photoGraphName)
-                // }
+                onClick={selectSubmitHandler}
                 // disabled={photoGraphName ? false : true}
               >
                 Submit
