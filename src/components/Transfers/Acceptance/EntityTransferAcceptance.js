@@ -444,7 +444,7 @@ const EntityTransferAcceptance = () => {
         {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            Tansfer Initiation done successfully!
+            Transfer Initiation done successfully!
           </label>
         </Modal.Body>
         <Modal.Footer>
@@ -456,7 +456,7 @@ const EntityTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Approved details saved successfully
+              Transfer Approved details saved successfully
             </label>
 
             <div className="text-center mb-2">
@@ -554,7 +554,7 @@ const EntityTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer letter details saved successfully, employee has been
+              Transfer letter details saved successfully, manager has been
               notified
             </label>
 

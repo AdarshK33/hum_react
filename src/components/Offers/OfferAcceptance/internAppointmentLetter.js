@@ -38,10 +38,12 @@ const InternAppointmentLetter = (props) => {
   const [signaturePad, setSignature] = useState(false);
   return (
     <Container className="letterStyle">
-      {typeof candidateLetterData &&
-      candidateLetterData.internshipCandidateOffer !== undefined &&
-      candidateLetterData.internshipCandidateOffer !== null &&
-      Object.keys(candidateLetterData.internshipCandidateOffer).length !== 0 ? (
+      {
+      // typeof candidateLetterData &&
+      // candidateLetterData.internshipCandidateOffer !== undefined &&
+      // candidateLetterData.internshipCandidateOffer !== null &&
+      // Object.keys(candidateLetterData.internshipCandidateOffer).length !== 0 
+      true? (
         <div className="appointmentLetter">
           <h4 className="text-center">Employment Contract</h4>
           <h5 className="text-center">
@@ -64,7 +66,8 @@ const InternAppointmentLetter = (props) => {
             We thank you for your interest in choosing Decathlon Sports India
             Pvt Ltd (DSIPL). We are in receipt of your application authorised by
             your institute/college/university to do an internship project on the
-            topic <b>{candidateLetterData.internshipCandidateOffer.department}</b>. As we believe your passion for sport and
+            topic <b>{candidateLetterData.internshipCandidateOffer.department == undefined?"":
+            candidateLetterData.internshipCandidateOffer.department}</b>. As we believe your passion for sport and
             your values match those of our Company, we, at DSIPL, encourage
             academic aspirants to learn practical aspects of their academic
             curriculum. We are pleased to assign the project of your interest
@@ -233,22 +236,44 @@ const InternAppointmentLetter = (props) => {
             <b>We welcome you to the Decathlon Family!</b>
           </p>
           <div className="mb-3">
-            <Row>
+
+            {/* <Row>
               <Col>
                 <p>For {candidateLetterData.companyName} Pvt. Ltd</p>
-                <p>Authorised Signatory</p>
+                <p>Authorised Signatory</p> */}
                 {/* <button
                   className="signatureButtons"
                   onClick={() => addSignature()}
                 >
                   Add Signature
                 </button> */}
-              </Col>
+              {/* </Col>
               <Col style={{ textAlign: "end" }}>
                 <p>Accepted By Me</p>
                 <p>Employee Signature</p>
               </Col>
-            </Row>
+
+            </Row> */}
+            
+             <Row>
+             <Col sm="8">
+             <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By Me</p>
+              <p>Mr.{candidateLetterData !== undefined &&
+          candidateLetterData.candidateName}
+          </p>
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+              </Col>
+              </Row>
           </div>
         </div>
       ) : (

@@ -610,7 +610,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer letter details saved successfully, manager has notified
+              Transfer letter details saved successfully, manager has notified
             </label>
 
             <div className="text-center mb-2">

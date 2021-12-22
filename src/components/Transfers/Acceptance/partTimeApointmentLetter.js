@@ -224,10 +224,10 @@ const PartTimeAppointmentLetter = () => {
           </p>
           {/* </Modal.Body> */}
           <div className="mb-3">
-            <Row>
+            {/* <Row>
               <Col>
-                <p>For {offerLetterData.companyName}</p>
-                <p>Authorised Signatory</p>
+                <p>For {offerLetterData.companyName} Pvt Ltd</p>
+                <p>Authorised Signatory</p> */}
                 {/* <button
                         className="signatureButtons"
                         onClick={() => addSignature()}
@@ -241,8 +241,28 @@ const PartTimeAppointmentLetter = () => {
                       <button className=" signatureButtons">
                         Add Signature
                       </button> */}
+              {/* </Col>
+            </Row> */}
+            <Row>
+             <Col sm="8">
+             <p>For {offerLetterData.companyName} Pvt Ltd</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By Me</p>
+              <p>Mr.{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
+          
               </Col>
-            </Row>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+              </Col>
+              </Row>
           </div>
           {/* {signaturePad && !saveLetter && (
                   <div className="text-center mb-4">
