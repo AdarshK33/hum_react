@@ -263,9 +263,9 @@ const AppointmentLetter = (props) => {
               <b>We welcome you to the {candidateLetterData.companyName} Family!</b>
             </p>
             <div className="mb-3">
-            <Row>
+            {/* <Row>
               <Col>
-                <p>For {candidateLetterData.companyName}</p>
+                <p>For {candidateLetterData.companyName} Pvt Ltd </p>
                 <p>Authorised Signatory</p>
                 <button
                   className="signatureButtons"
@@ -278,7 +278,26 @@ const AppointmentLetter = (props) => {
                 <p>Accepted By Me</p>
                 <p>Employee Signature</p>
               </Col>
-            </Row>
+            </Row> */}
+            <Row>
+             <Col sm="8">
+             <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By Me</p>
+              <p>Mr.{candidateLetterData !== undefined &&
+          candidateLetterData.candidateName}
+          </p>
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+              </Col>
+              </Row>
           </div>
             <p className="text-center">
               <b>Annexure-1</b>

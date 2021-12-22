@@ -251,7 +251,7 @@ const InternationalTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Approved details saved successfully, employee has been
+              Transfer Approved details saved successfully, employee has been
               notified
             </label>
             <div className="text-center mb-2">

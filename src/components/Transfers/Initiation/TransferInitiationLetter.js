@@ -55,7 +55,7 @@ const TransferInitationLetter = ({ transferId }) => {
               unchanged.
             </p>
             <p className="mt-5 ">
-              <b> Decathlon Sports India India Pvt Ltd,</b>
+              <b> {transferData.companyName} Pvt Ltd,</b>
             </p>
             <Row>
              <Col sm="8">

@@ -369,7 +369,7 @@ const ChangeEmployementType = () => {
         {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            Tansfer Initiation done successfully!
+            Transfer Initiation done successfully!
           </label>
         </Modal.Body>
         <Modal.Footer>

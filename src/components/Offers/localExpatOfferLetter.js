@@ -67,7 +67,7 @@ const LocalExpatOfferLetter = () => {
               shall be confirmed and communicated to you in writing
             </li>
           </ol>
-          <p>For {offerLetterData.companyName}</p>
+          <p>For {offerLetterData.companyName} Pvt Ltd</p>
           <br></br>
           <div>
             <p id="title" className="offerHeader">

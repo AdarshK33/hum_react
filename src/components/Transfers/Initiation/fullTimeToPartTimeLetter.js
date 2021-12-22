@@ -473,13 +473,13 @@ const FullTimeToPartTimeLetter = () => {
           {/* </Modal.Body> */}
           <Row>
              <Col sm="8">
-             <p>For {offerLetterData.companyName}</p>
+             <p>For {offerLetterData.companyName} Pvt Ltd</p>
              </Col>
               <Col sm="4">
-              <p> Accepted By </p>
-         <p> Mr.{offerLetterData !== undefined &&
-          offerLetterData.managerName}</p>
-          
+              <p> Accepted By Me</p>
+              <p>Mr.{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
               </Col>
               </Row>
               <Row>
@@ -488,9 +488,6 @@ const FullTimeToPartTimeLetter = () => {
              </Col>
               <Col sm="4">
               <p> Employee Signature</p>
-          <p>Mr.{offerLetterData !== undefined &&
-          offerLetterData.candidateName}
-          </p>
               </Col>
               </Row>
               

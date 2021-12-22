@@ -456,7 +456,7 @@ const PartTimeToFullTimeLetter = () => {
           </div> */}
           <Row>
              <Col sm="8">
-             <p>For {offerLetterData.companyName}</p>
+             <p>For {offerLetterData.companyName} Pvt Ltd</p>
              </Col>
               <Col sm="4">
               <p> Accepted By </p>

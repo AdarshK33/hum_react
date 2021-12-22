@@ -114,9 +114,9 @@ const ManagerInitiateExit = () => {
     useContext(PermissionContext);
     console.log(employeeData,"state",state,"7795")
 
-  // useEffect(() => {
-  //   ViewEmployeeProfile();
-  // }, []);
+  useEffect(() => {
+    ViewEmployeeProfile();
+  }, []);
 
   useEffect(() => {
     locationDetails();
@@ -443,27 +443,29 @@ const ManagerInitiateExit = () => {
     }
   }, [searchByCostData]);
 
-  // useEffect(() => {
-  //   if (
-  //     employeeProfileData &&
-  //     employeeProfileData &&
-  //     employeeProfileData !== null &&
-  //     employeeProfileData !== undefined &&
-  //     Object.keys(employeeProfileData).length !== 0
-  //   ) {
-  //     state.mngrName =
-  //       employeeProfileData.lastName !== null &&
-  //       employeeProfileData.lastName !== undefined
-  //         ? employeeProfileData.firstName + " " + employeeProfileData.lastName
-  //         : employeeProfileData.firstName;
-  //     state.mngrId = employeeProfileData.employeeId;
-  //     state.mngrCostCenterName = employeeProfileData.costCentre;
-  //     state.mngrPosition = employeeProfileData.position;
-  //   }
-  // }, [employeeProfileData]);
+  useEffect(() => {
+    if (
+      employeeProfileData &&
+      employeeProfileData &&
+      employeeProfileData !== null &&
+      employeeProfileData !== undefined &&
+      Object.keys(employeeProfileData).length !== 0
+    ) {
+      state.mngrName =
+        employeeProfileData.lastName !== null &&
+        employeeProfileData.lastName !== undefined
+          ? employeeProfileData.firstName + " " + employeeProfileData.lastName
+          : employeeProfileData.firstName;
+      state.mngrId = employeeProfileData.employeeId;
+      state.mngrCostCenterName = employeeProfileData.costCentre;
+      state.mngrPosition = employeeProfileData.position;
+    }
+  }, [employeeProfileData]);
+  
 
   console.log(ModeOfSeparationData);
   console.log("searchByCostData", searchByCostData);
+  console.log(employeeProfileData,"employeeProfileData")
   const searchDataHandler = () => {
     if (EmpName !== null) {
       searchByEmployee(EmpName);
@@ -2144,3 +2146,4 @@ console.log(intern,"8098709809808")
 };
 
 export default ManagerInitiateExit;
+
