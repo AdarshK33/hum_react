@@ -259,9 +259,9 @@ const AppointmentLetter = () => {
              <p>For {offerLetterData.companyName} Pvt Ltd</p>
              </Col>
               <Col sm="4">
-              <p> Accepted By </p>
-         {/* <p> Mr.{offerLetterData !== undefined &&
-          offerLetterData.managerName}</p> */}
+              <p> Accepted By Me</p>
+         <p> {offerLetterData !== undefined &&
+          offerLetterData.candidateName}</p>
           
               </Col>
               </Row>

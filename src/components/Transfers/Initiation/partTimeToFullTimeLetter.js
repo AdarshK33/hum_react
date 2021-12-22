@@ -460,8 +460,9 @@ const PartTimeToFullTimeLetter = () => {
              </Col>
               <Col sm="4">
               <p> Accepted By </p>
-         <p> Mr.{offerLetterData !== undefined &&
-          offerLetterData.managerName}</p>
+              <p>{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
           
               </Col>
               </Row>
@@ -471,9 +472,7 @@ const PartTimeToFullTimeLetter = () => {
              </Col>
               <Col sm="4">
               <p> Employee Signature</p>
-          <p>Mr.{offerLetterData !== undefined &&
-          offerLetterData.candidateName}
-          </p>
+       
               </Col>
               </Row>
           {/* {signaturePad && !saveLetter && (
