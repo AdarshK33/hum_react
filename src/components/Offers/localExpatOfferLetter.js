@@ -70,7 +70,7 @@ const LocalExpatOfferLetter = () => {
           <p>For {offerLetterData.companyName} Pvt Ltd</p>
           <br></br>
            <p>Thanking you</p>
-          <p>Manager Name :{candidateLetterData.managerName}</p>
+          <p>Manager Name :{offerLetterData.managerName}</p>
           <div>
             <p id="title" className="offerHeader">
               Salary Annexure
