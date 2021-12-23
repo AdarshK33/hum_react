@@ -1002,12 +1002,11 @@ const EmployeeExitAction = () => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={2}>
+                        {/* <Col sm={2}>
                           <div>
                             <label>
                               <b>Exit Feedback Form:</b>
                               <label className="itemResult">
-                                {/* &nbsp;&nbsp; {InfoState.empName} */}
                               </label>
                             </label>
                           </div>
@@ -1024,7 +1023,7 @@ const EmployeeExitAction = () => {
                               </a>
                             </label>
                           </div>
-                        </Col>
+                        </Col> */}
                       </Row>
                     ) : (
                       ""

@@ -399,22 +399,22 @@ const PromotionInitiate = () => {
       ) {
         setSubmitted(true);
         setDirecting(false);
-        // if (
-        //   user !== null &&
-        //   user !== undefined &&
-        //   (user.loginType == 7 || user.additionalRole === "7")
-        // ) {
-        //   PromotionCreate(infoData, 2);
-        // } else if (
-        //   user !== null &&
-        //   user !== undefined &&
-        //   (user.additionalRole === "1" || user.loginType == "1")
-        // ) {
-        //   PromotionCreate(infoData, 1);
-        //   setPreview(true);
-        // } else {
-        //   PromotionCreate(infoData);
-        // }
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole == "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
         // PromotionCreate(infoData);
         console.log("all okay1", infoData);
       } else if (
@@ -425,22 +425,22 @@ const PromotionInitiate = () => {
         setSubmitted(true);
         setDirecting(false);
 
-        // if (
-        //   user !== null &&
-        //   user !== undefined &&
-        //   (user.loginType == 7 || user.additionalRole === "7")
-        // ) {
-        //   PromotionCreate(infoData, 2);
-        // } else if (
-        //   user !== null &&
-        //   user !== undefined &&
-        //   (user.additionalRole === "1" || user.loginType == "1")
-        // ) {
-        //   PromotionCreate(infoData, 1);
-        //   setPreview(true);
-        // } else {
-        //   PromotionCreate(infoData);
-        // }
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole == "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
         // PromotionCreate(infoData);
         console.log("all okay2", infoData);
       } else if (
@@ -451,23 +451,23 @@ const PromotionInitiate = () => {
         // setModelStatus(true);
         setSubmitted(true);
         // PromotionCreate(infoData);
-        // if (
-        //   user !== null &&
-        //   user !== undefined &&
-        //   (user.loginType == 7 || user.additionalRole === "7")
-        // ) {
-        //   PromotionCreate(infoData, 2);
-        // } else if (
-        //   user !== null &&
-        //   user !== undefined &&
-        //   (user.additionalRole === "1" || user.loginType == "1")
-        // ) {
-        //   PromotionCreate(infoData, 1);
-        //   setPreview(true);
-        // } else {
-        //   PromotionCreate(infoData);
-        // }
-        // console.log("all okay3", infoData);
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole == "7")
+        ) {
+          PromotionCreate(infoData, 2);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole == "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData);
+        }
+        console.log("all okay3", infoData);
       } else {
         console.log("NOT OK", infoData);
       }

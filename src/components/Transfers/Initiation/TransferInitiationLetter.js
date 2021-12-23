@@ -24,7 +24,7 @@ const TransferInitationLetter = ({ transferId }) => {
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
           <br></br>
-          <h5 className="text-center"> TRANSFER LETTER</h5>
+          {/* <h5 className="text-center"> TRANSFER LETTER</h5> */}
           <p>To,</p>
           <p>Name:{transferData.employeeName}</p>
           <p>Employee ID: {transferData.currentEmployeeId}</p>
@@ -55,7 +55,7 @@ const TransferInitationLetter = ({ transferId }) => {
               unchanged.
             </p>
             <p className="mt-5 ">
-              <b> {transferData.companyName} Pvt Ltd,</b>
+              <b> {transferData.currentCompany} Pvt Ltd,</b>
             </p>
             <Row>
              <Col sm="8">

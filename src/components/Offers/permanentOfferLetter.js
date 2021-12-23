@@ -69,6 +69,8 @@ const PermanentOfferLetter = () => {
           </ol>
           <p>For {offerLetterData.companyName}</p>
           <br></br>
+          <p>Thanking you</p>
+          <p>Manager Name :{offerLetterData.managerName}</p>
           <div>
             <p id="title" className="offerHeader">
               Salary Annexure

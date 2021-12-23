@@ -57,7 +57,7 @@ const RelivingLetter = () => {
               working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>.
               <br/><br/>
                We hereby confirm that you have been working in {relivingLetterData.company}
-                since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>.
+                {" "}since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>.
                 <br/><br/>
                Please be informed that you shall be bound by the relevant clause of your
               appointment letter which states that you shall not use, disclose,

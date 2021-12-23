@@ -56,7 +56,7 @@ const MisConductTerminationLetter = () => {
           <br/>
             <p>
               {" "}
-              <b>Sub:</b><b>Termination of your employment Misconduct{" "}</b>
+              <b>Sub:</b><b>Termination of your employment {" "}</b>
             </p>
     <div className=" ">
       <p className="mt-5 ">
@@ -112,23 +112,23 @@ const MisConductTerminationLetter = () => {
       </p>
       <p>
             Thanking you,
-            </p>		<br/>
-            <p className="mt-5 ">
+            </p>	 
+                <Row>
+             <Col sm="8">
+             <p className="mt-5 ">
                 <b>For {terminationLetterData.company} Pvt Ltd,</b>
               </p>
-                <Row>
-             <Col sm="8"></Col>
+             </Col>
               <Col sm="4">
               <p> Accepted By
-          Mr.{terminationLetterData !== undefined &&
+          {terminationLetterData !== undefined &&
           terminationLetterData.costCentreManagerName}
           </p>
               </Col>
               </Row>
               <p>
-            Authorized Signatory <br/>
-              Manager<br/>
-            Name:  {terminationLetterData !== undefined &&
+            Authorized Signatory </p>
+            <p>Manager Name:  {terminationLetterData !== undefined &&
             terminationLetterData.managerName} 
             </p>
       <div className="float-right "></div>

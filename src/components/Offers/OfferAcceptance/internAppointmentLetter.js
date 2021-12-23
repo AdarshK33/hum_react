@@ -261,7 +261,7 @@ const InternAppointmentLetter = (props) => {
              </Col>
               <Col sm="4">
               <p> Accepted By Me</p>
-              <p>Mr.{candidateLetterData !== undefined &&
+              <p>{candidateLetterData !== undefined &&
           candidateLetterData.candidateName}
           </p>
               </Col>
