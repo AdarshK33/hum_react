@@ -334,7 +334,7 @@ const EntityTransfer = () => {
         currentManagerId: initiationEmpData.currentManagerId,
         currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
         currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: newEntity,
+        promotedCompany: newEntity.toLowerCase()==="dsi"? "Decathlon Sports India":newEntity,
         promotedContractType: initiationEmpData.promotedContractType,
         promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,

@@ -7,6 +7,8 @@ import RelievingLetter from "./Relieving Letter";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TerminationLetter from "./TerminationLetter";
+import NonPerformanceTerminationLetter from "./NonPerformanceTerminationLetter"
+import MisConductTerminationLetter from "./MisConductTerminationLetter"
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -533,11 +535,13 @@ const EmployeeExitAction = (props) => {
         <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
-            {letterView == 2?(
-              <TerminationLetter />
-            ) : (letterView == 1 || letterView == 4) ? (
+            {(letterView == 1 || letterView == 4) ? (
               <RelievingLetter />
-            ) :"" }
+            ) :(letterView == 2 && employeeData.disciplinaryReasonId == 2)? (
+              <MisConductTerminationLetter />
+            ) : (
+              <NonPerformanceTerminationLetter/>
+            )}
             <br></br>
           </Modal.Body>
         </Modal>
@@ -789,12 +793,11 @@ const EmployeeExitAction = (props) => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={2}>
+                        {/* <Col sm={2}>
                           <div>
                             <label>
                               <b>Exit Feedback Form:</b>
                               <label className="itemResult">
-                                {/* &nbsp;&nbsp; {InfoState.employeeName} */}
                               </label>
                             </label>
                           </div>
@@ -810,7 +813,7 @@ const EmployeeExitAction = (props) => {
                               </a>
                             </label>
                           </div>
-                        </Col>
+                        </Col> */}
                       </Row>
                     ) : (
                       ""

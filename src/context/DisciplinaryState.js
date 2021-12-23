@@ -28,8 +28,10 @@ export const DisciplinaryProvider = (props) => {
           key +
           "&page=" +
           pageNumber +
-          "&size=10&superManager=" +
-          role+"$super"
+          "&size=10&superManager=" 
+          +
+          role
+          // +"$super"
       )
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;

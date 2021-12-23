@@ -262,15 +262,35 @@ const LocalExpactAppointmentLetter = (props) => {
             </p><br/>
             <div className="mb-3">
             <Row>
+             <Col sm="8">
+             <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By Me</p>
+              <p>{candidateLetterData !== undefined &&
+          candidateLetterData.candidateName}
+          </p>
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+              </Col>
+              </Row>
+{/*               
+            <Row>
               <Col>
-                <p>For {candidateLetterData.companyName}</p>
+                <p>For {candidateLetterData.companyName} Pvt Ltd</p>
                 <p>Authorised Signatory</p>
               </Col>
               <Col style={{ textAlign: "end" }}>
                 <p>Accepted By Me</p>
                 <p>Employee Signature</p>
               </Col>
-            </Row>
+            </Row> */}
           </div>
             <p className="text-center">
               <b>Annexure-1</b>
