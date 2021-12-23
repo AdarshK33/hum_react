@@ -116,12 +116,15 @@ const ChangeEmployementType = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    initiationEmpData !== null &&
+    if(initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0 &&
-      setSearchInput(
+      Object.keys(initiationEmpData).length > 0){     
+         setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
       );
+      }else{
+        setSearchInput("")
+      }
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
@@ -352,7 +355,7 @@ const ChangeEmployementType = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              The employee is intern, employement change transfer is not
+              The employee is intern, employment change transfer is not
               available for interns
             </label>
 
@@ -366,7 +369,7 @@ const ChangeEmployementType = () => {
         {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-            Tansfer Initiation done successfully!
+            Transfer Initiation done successfully!
           </label>
         </Modal.Body>
         <Modal.Footer>
@@ -378,7 +381,7 @@ const ChangeEmployementType = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation details saved successfully!
+              Transfer initiation details saved successfully!
             </label>
 
             <div className="text-center mb-2">
@@ -469,7 +472,7 @@ const ChangeEmployementType = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation letter details saved successfully
+              Transfer initiation letter details saved successfully
             </label>
 
             <div className="text-center mb-2">

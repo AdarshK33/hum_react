@@ -12,6 +12,7 @@ const TransferReducer = (state, action) => {
         ...state,
         transferList: action.payload,
         initiationStatus: false,
+        initiationEmpData: null,
         total: action.total,
       };
     case "FETCH_TRANSFER_LIST_ERR":

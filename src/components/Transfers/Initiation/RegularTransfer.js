@@ -171,12 +171,15 @@ const RegularTransfer = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    initiationEmpData !== null &&
+    if(initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0 &&
+      Object.keys(initiationEmpData).length > 0){
       setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
-      );
+      )
+    }else{
+      setSearchInput("")
+    }
   }, [initiationEmpData]);
 
   const transferTypeHandler = (e) => {
@@ -524,7 +527,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer can't be proceed with out change
+              Transfer can't be proceed with out change
             </label>
 
             <div className="text-center mb-2">
@@ -538,7 +541,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation details saved successfully
+              Transfer initiation details saved successfully
             </label>
 
             <div className="text-center mb-2">
@@ -607,7 +610,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer letter details saved successfully, manager has notified
+              Transfer letter details saved successfully, manager has notified
             </label>
 
             <div className="text-center mb-2">

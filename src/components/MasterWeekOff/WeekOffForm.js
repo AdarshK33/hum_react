@@ -24,7 +24,7 @@ const WeekOffForm = (props) => {
   const [effectiveDateError, setEffectiveDateError] = useState(false);
   const [weekOffError, setWeekOffError] = useState(false);
   const [contactTypeError, setContactTypeError] = useState(false);
-  const [effectiveDate, setEffectiveDate] = useState(new Date());
+  const [effectiveDate, setEffectiveDate] = useState();
   const onCloseModal = () => {
     const setModal = props.createHandleClose;
     setModal();
@@ -89,8 +89,8 @@ const WeekOffForm = (props) => {
   };
 
   const isSunday = (date) => {
-    const day =date.getDay();
-    return day ===0;
+    const day = date.getDay();
+    return day === 0;
   };
 
   // useEffect(() => {

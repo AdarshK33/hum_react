@@ -23,15 +23,17 @@ const EndOfProbationLetter = () => {
             {" "}
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
-          <br></br>
-          <h5 className="text-center">TERMINATION OF PROBATIONARY PERIOD</h5>
-
+          {/* <br></br>
+          <h5 className="text-center">TERMINATION OF PROBATIONARY PERIOD</h5> */}
           <p>
-            Name:
+            <b>To,</b>
+          </p>
+          <p>
+           Employee  Name:
             {endLetterData.empName}
           </p>
           <p>
-            EmployeeId:
+            Employee ID:
             {endLetterData.empId}
           </p>
           <p>
@@ -57,7 +59,8 @@ const EndOfProbationLetter = () => {
               </b>{" "}
               We have observed that your performance in the company is
               unsatisfactory and hereby your employment with company is
-              terminated. Please sign the copy of this letter as receipt of
+              terminated. <br/><br/>
+              Please sign the copy of this letter as receipt of
               acceptance.
               <br />
               <br />
@@ -66,6 +69,7 @@ const EndOfProbationLetter = () => {
             <p className="mt-5 ">
               <b>For {endLetterData.company} Pvt Ltd,</b>
             </p>
+            <p>Authorised Signatory</p>
             <div className="float-right "></div>
           </div>
         </Fragment>

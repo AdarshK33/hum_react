@@ -411,7 +411,7 @@ const EditPFDeclaration = (props) => {
                 <div>
                   <label>
                     Are you a member of employer pension scheme in your previous
-                    employement ?
+                    employment ?
                   </label>
                   {memberOfPensionSchemaError ? (
                     <p style={{ color: "red" }}>

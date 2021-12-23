@@ -758,7 +758,7 @@ const CandidateOnboarding = () => {
                 : ""}
             </label>
           </Col>
-          <Col sm={4}>
+          {/* <Col sm={4}>
             <label className="mr-3">Application Date:</label>
             <label>
               {candidateData.candidateInformation !== undefined &&
@@ -766,7 +766,7 @@ const CandidateOnboarding = () => {
                 ? candidateData.candidateInformation.createdDate
                 : ""}
             </label>
-          </Col>
+          </Col> */}
         </Row>
         {candidateData !== undefined &&
         candidateData.workInformation !== undefined &&

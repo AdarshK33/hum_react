@@ -77,7 +77,7 @@ const PermanentOfferLetter = () => {
               appointment shall be confirmed and communicated to you in writing
             </li>
           </ol>
-          <p>For {candidateLetterData.companyName}</p>
+          <p>For {candidateLetterData.companyName} Pvt Ltd</p>
           <br></br>
           <p>Thanking you</p>
           <p>Manager Name</p>
@@ -164,13 +164,13 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Conveyance Allowance </td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Leave Travel Allowance</td>
                   <td>
@@ -194,13 +194,13 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Medical Expense Reimbursement </td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
                   <td>0.00</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>Special Allowance </td>
                   <td>
@@ -308,7 +308,7 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Employer ESIC</td>
                   <td className="boldText">
                     {Math.round(
@@ -331,7 +331,7 @@ const PermanentOfferLetter = () => {
                       candidateLetterData.permanentCandidateOffer.employerESIC
                     ) * 12}
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td>CTC </td>
                   <td className="boldText">

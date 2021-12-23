@@ -160,12 +160,15 @@ const EntityTransfer = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    initiationEmpData !== null &&
+    if(initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0 &&
+      Object.keys(initiationEmpData).length > 0){
       setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
       );
+      }else{
+        setSearchInput("")
+      }
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
@@ -371,7 +374,7 @@ const EntityTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer initiation details saved successfully, manager has been
+              Transfer initiation details saved successfully, manager has been
               notified
             </label>
 
@@ -442,7 +445,7 @@ const EntityTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation letter generated successfully!
+              Transfer Initiation letter generated successfully!
             </label>
 
             <div className="text-center mb-2">

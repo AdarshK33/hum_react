@@ -44,9 +44,9 @@ const PartTimeOfferLetter = () => {
               ).format("DD-MM-YYYY")}
             </li>
             <li>
-              Your gross salary will not exceed{" "}
-              <span className="boldText">{candidateLetterData.fixedGross}</span>{" "}
-              per Hourly
+              Your monthly gross salary will not exceed{" "}
+              Rs. <span className="boldText">{candidateLetterData.fixedGross}</span>{" "}
+               per Hourly
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
@@ -77,10 +77,10 @@ const PartTimeOfferLetter = () => {
               in writing
             </li>
           </ol>
-          <p>
+          {/* <p>
             Also, please sign the duplicate of this offer as your acceptance and
             forward the same to us.
-          </p>
+          </p> */}
           <br></br>
           <p>For {candidateLetterData.companyName} Pvt. Ltd</p>
           <br></br>

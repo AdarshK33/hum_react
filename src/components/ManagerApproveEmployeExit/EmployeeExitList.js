@@ -23,6 +23,7 @@ const EmployeeExitList = () => {
     total,
     changeEmployeeId,
     makeEmployeeDataNull,
+    setEmpDataNull,
   } = useContext(EmployeeSeparationContext);
   const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
@@ -36,10 +37,10 @@ const EmployeeExitList = () => {
     EmployeeSeparationListView("all", pageCount, actionStatus);
   }, []);
 
-  // useEffect(() => {
-  //   MakeCostCenterDataNull();
-  //   makeEmployeeDataNull()
-  // }, []);
+  useEffect(() => {
+    setEmpDataNull()
+    MakeCostCenterDataNull()
+  }, []);
   console.log("---->", EmployeeSeparationList);
 
   // useEffect(() => {

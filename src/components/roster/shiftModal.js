@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Container, Form, Modal, Tabs, Tab } from "react-bootstrap";
+import Select from "react-select";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import "./roster.css";
@@ -20,7 +21,7 @@ const ShiftModal = (props) => {
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [empData, setEmpData] = useState();
   const [weekNameData, setWeekNameData] = useState();
-
+  const [daysList, setDaysList] = useState([]);
   const {
     weekDays,
     weekOffDays,
@@ -63,6 +64,7 @@ const ShiftModal = (props) => {
       );
     }
     setWeekDay(props.Date);
+    setDaysList(props.Date)
   }, [props.empData, props.Date, props.endDate, props.startDate]);
   useEffect(() => {
     console.log("shiftDateWeek", shiftDateWeek);
@@ -102,13 +104,15 @@ const ShiftModal = (props) => {
   const submitForm = (e) => {
     e.preventDefault();
     // console.log('Submit form', e.target.value);
-    let WeekDate = weekDay;
+    // let WeekDate = weekDay;
+    let WeekDate = daysList
     let weekNumber = date;
     if (weekNameData !== undefined) {
       weekNumber = weekNameData.split("-")[0].trim();
       weekNumber = weekNumber.split("Week")[1].trim();
     }
-    var loIsDate = new Date(weekDay);
+    // var loIsDate = new Date(weekDay);
+    var loIsDate = new Date(daysList);
     let day = days[loIsDate.getDay()];
     for (let i = 0; i < empData.length; i++) {
       if (empData[i].weekName.includes(weekNumber)) {
@@ -126,13 +130,14 @@ const ShiftModal = (props) => {
     setModal();
 
     const newWeekOff = {
-      date: WeekDate,
+      date: WeekDate.map((e, i) => WeekDate[i].value),
       employeeId: user.employeeId,
     };
 
     addWeekOff(newWeekOff);
     console.log("newWeekOff data", newWeekOff);
     setSelectedWeeks(1);
+    setDaysList([]);
     setWeekDay("");
     setShowDay(false);
   };
@@ -187,10 +192,14 @@ const ShiftModal = (props) => {
     // console.log("Submit")
   };
 
-  const setWeekDayHandler = (e) => {
-    let newDay = e.target.value;
-    setWeekDay(newDay);
-    //  console.log("new Day", newDay)
+  // const setWeekDayHandler = (e) => {
+  //   let newDay = e.target.value;
+  //   setWeekDay(newDay);
+  //    console.log("new Day", newDay)
+  // };
+
+  const handleDayList1 = (options) => {
+    setDaysList(options);
   };
 
   return (
@@ -293,7 +302,7 @@ const ShiftModal = (props) => {
                     </div>
                   </div>
 
-                  <div className="row py-2">
+                  {/* <div className="row py-2">
                     <div className="col-sm-5 px-2">Select day :</div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
@@ -318,6 +327,32 @@ const ShiftModal = (props) => {
                               );
                             })}
                         </select>
+                      </div>
+                    </div>
+                  </div> */}
+                        <div className="row py-2">
+                    <div className="col-sm-5 px-2">
+                      Select Day :<span style={{ color: "red" }}>*</span>
+                    </div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <Select
+                          name="filters"
+                          required
+                          placeholder="Select Day"
+                          defaultValue=""
+                          value={daysList}
+                          style={{ fontSize: "0.8rem" }}
+                          options={
+                            dayList !== null &&
+                            dayList.map((e) => ({
+                              label: e.day,
+                              value: e.date,
+                            }))
+                          }
+                          onChange={handleDayList1}
+                          isMulti
+                        />
                       </div>
                     </div>
                   </div>

@@ -16,7 +16,9 @@ const ConfirmationLetter = () => {
     ViewConfirmationLetter,
     loader,
   } = useContext(ProbationContext);
+
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
+  console.log(cnfLetterData,relivingLetterData,"relivingLetterData")
   return (
     <Fragment>
       {loader ? (
@@ -65,7 +67,12 @@ const ConfirmationLetter = () => {
                   : ""}
               </b>
               . All the other terms and conditions of your appointment letter
-              dated {/* {relivingLetterData.date} */}
+              dated {" "}{cnfLetterData.appointmentLetterDate !== null &&
+                cnfLetterData.appointmentLetterDate !== undefined
+                  ? moment(new Date(cnfLetterData.appointmentLetterDate)).format(
+                      "DD-MM-YYYY"
+                    )
+                  : ""}
               shall remain same.
               <br />
               <br />
@@ -78,6 +85,7 @@ const ConfirmationLetter = () => {
             <p className="mt-2 ">
               <b>For {cnfLetterData.company} Pvt Ltd,</b>
             </p>
+            <p>Authorised Signatory</p>
             <div className="float-right "></div>
           </div>
         </Fragment>

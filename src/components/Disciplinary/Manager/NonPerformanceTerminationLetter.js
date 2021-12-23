@@ -53,9 +53,9 @@ const NonPerformanceTerminationLetter = () => {
           </p>
           </p>
           <br/>
-            <p>
+          <p>
               {" "}
-              <b>Sub:</b>Termination of your employment..{" "}
+              <b>Sub:</b><b>Termination of your employment Misconduct{" "}</b>
             </p>
     <div className=" ">
       <p className="mt-5 ">
@@ -79,9 +79,11 @@ const NonPerformanceTerminationLetter = () => {
               (“entity name/prodin/indeca”) as{" "}{terminationLetterData !== 
               undefined && terminationLetterData.position}.
               <br/>
+              <br/>
               You have been working under a Performance Improvement 
               Plan (PIP) designed to assist you in achieving a satisfactory
                level of performance.
+               <br/>
                <br/>
                Unfortunately, you have not improved your performance to a 
                consistent acceptable standard as required. On Date {terminationLetterData !== undefined &&
@@ -89,16 +91,17 @@ const NonPerformanceTerminationLetter = () => {
                 you were issued with a written warning in 
                 relation to your poor performance. 
                 <br/>
+                <br/>
                 This PIP period has now ended and it is time to assess your 
                 performance over that period and your performance has not met
                  the required standard.
+                <br/>
                 <br/>
                 The performance over this period has been unsatisfactory.
                  Specifically, {terminationLetterData !== undefined &&
                   terminationLetterData.reason}{" "}
 
         <br />
-     
         <br />
 
              Therefore, you are hereby terminated from your employment with 

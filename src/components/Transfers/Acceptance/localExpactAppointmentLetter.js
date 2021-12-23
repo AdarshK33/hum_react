@@ -251,6 +251,26 @@ const LocalExpactAppointmentLetter = () => {
             <p>
               <b>We welcome you to the {offerLetterData.companyName} Family!</b>
             </p>
+            <Row>
+             <Col sm="8">
+             <p>For {offerLetterData.companyName} Pvt Ltd</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By Me</p>
+              <p>{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
+          
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+              </Col>
+              </Row>
             <p className="text-center">
               <b>Annexure-1</b>
             </p>
@@ -442,10 +462,10 @@ const LocalExpactAppointmentLetter = () => {
           </div>
           {/* </Modal.Body> */}
           <div className="mb-3">
-            <Row>
+            {/* <Row>
               <Col>
-                <p>For {offerLetterData.companyName}</p>
-                <p>Authorised Signatory</p>
+                <p>For {offerLetterData.companyName} Pvt Ltd</p>
+                <p>Authorised Signatory</p> */}
                 {/* <button
                       className="signatureButtons"
                       onClick={() => addSignature()}
@@ -457,8 +477,8 @@ const LocalExpactAppointmentLetter = () => {
                     <p>Accepted By Me</p>
                     <p>Employee Signature</p>
                     <button className=" signatureButtons">Add Signature</button> */}
-              </Col>
-            </Row>
+              {/* </Col>
+            </Row> */}
           </div>
           {/* {signaturePad && !saveLetter && (
                 <div className="text-center mb-4">

@@ -19,7 +19,7 @@ import MisConductTerminationLetter from "./MisConductTerminationLetter"
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
-const DisciplinarySeparation = () => {
+const DisciplinarySeparation = (props) => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [changeInSeparation, setChangeInSeparation] = useState(0);
   const [RcryYes, setRcryYes] = useState(false);
@@ -551,6 +551,9 @@ const DisciplinarySeparation = () => {
     setModal(false);
     setSuccessModal(false);
   };
+  const handleCloseMessage = () =>{
+    props.history.push("/")
+  }
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -938,7 +941,7 @@ console.log(terminationLetterData,"terminate")
                 .format("YYYY-MM-DD")}
             </label>
             <div className="text-center">
-              <Button onClick={handleRelivingClose}>Close</Button>
+              <Button onClick={handleCloseMessage}>Close</Button>
             </div>
           </Modal.Body>
         </Modal>
@@ -948,7 +951,7 @@ console.log(terminationLetterData,"terminate")
           <Modal.Body>
             {terminationLetterData &&
             terminationLetterData !== undefined &&
-            terminationLetterData !== null && employeeData.reason == "Misconduct"? (
+            terminationLetterData !== null && employeeData.disciplinaryReasonId == 2? (
               <MisConductTerminationLetter />
             ) : (
               <NonPerformanceTerminationLetter/>

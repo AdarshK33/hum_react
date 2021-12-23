@@ -7,7 +7,8 @@ import AcceptModal from "./AcceptModal";
 import RejectModal from "./RejectModal";
 //import {  Page } from 'react-pdf'
 import fileName from "../../../assets/file.pdf";
-import insuranceFile from "../../../assets/Insurance_Benefit_2021.pdf";
+import insuranceFile1 from "../../../assets/Insurance_Benefit_2021.pdf";
+import insuranceFile from "../../../assets/Insurance_Benefits.pdf";
 import appointmentFile from "../../../assets/Full_Time_Appointment.pdf";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRight, ChevronLeft } from "react-feather";
@@ -43,7 +44,7 @@ const OfferAccept = (props) => {
     candidateProfileData,
     generateCandidateLetter,
     candidateLetterData,
-    candidateCountryList
+    candidateCountryList,
   } = useContext(OnBoardContext);
   const { candidateRejectOffer, candidateAcceptOffer, offerAcceptData } =
     useContext(CandidateContext);
@@ -76,11 +77,14 @@ const OfferAccept = (props) => {
 
   useEffect(() => {
     console.log("candidateProfileData offer accept", candidateProfileData);
-    if(candidateProfileData!==null&&candidateProfileData!==undefined&&Object.keys(candidateProfileData).length!==0){
+    if (
+      candidateProfileData !== null &&
+      candidateProfileData !== undefined &&
+      Object.keys(candidateProfileData).length !== 0
+    ) {
       viewCandidateId(candidateProfileData.candidateId);
       generateCandidateLetter(candidateProfileData.candidateId);
     }
-    
   }, [candidateProfileData]);
 
   const showLetterClick = (e) => {
@@ -253,7 +257,7 @@ const OfferAccept = (props) => {
                 <Container className="last-container">
                   <Row>
                     <Col sm={2}>
-                      {/* {pageNumber <= 1 ? (
+                      {pageNumber <= 1 ? (
                         <ChevronLeft
                           disabled
                           style={{
@@ -272,7 +276,7 @@ const OfferAccept = (props) => {
                             marginTop: "20rem",
                           }}
                         />
-                      )} */}
+                      )}
                     </Col>
                     <Col sm={8}>
                       <Document
@@ -283,7 +287,7 @@ const OfferAccept = (props) => {
                       </Document>
                     </Col>
                     <Col sm={2}>
-                      {/* {pageNumber === numPages ? (
+                      {pageNumber === numPages ? (
                         <ChevronRight
                           disabled
                           style={{
@@ -301,7 +305,7 @@ const OfferAccept = (props) => {
                             marginTop: "20rem",
                           }}
                         />
-                      )} */}
+                      )}
                     </Col>
                   </Row>
 
@@ -511,7 +515,7 @@ const OfferAccept = (props) => {
                 <Container className="last-container">
                   <Row>
                     <Col sm={2}>
-                      {/* {pageNumber <= 1 ? (
+                      {pageNumber <= 1 ? (
                         <ChevronLeft
                           disabled
                           style={{
@@ -530,7 +534,7 @@ const OfferAccept = (props) => {
                             marginTop: "20rem",
                           }}
                         />
-                      )} */}
+                      )}
                     </Col>
                     <Col sm={8}>
                       <Document
@@ -541,7 +545,7 @@ const OfferAccept = (props) => {
                       </Document>
                     </Col>
                     <Col sm={2}>
-                      {/* {pageNumber === numPages ? (
+                      {pageNumber === numPages ? (
                         <ChevronRight
                           disabled
                           style={{
@@ -559,7 +563,7 @@ const OfferAccept = (props) => {
                             marginTop: "20rem",
                           }}
                         />
-                      )} */}
+                      )}
                     </Col>
                   </Row>
 

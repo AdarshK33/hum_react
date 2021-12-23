@@ -122,6 +122,7 @@ import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/Manage
 import ModuleReports from "./components/ModuleReports/ModuleReports";
 /* MIT reports */
 import MitReports from "./components/MitReports/MitReports";
+import MitUpload from "././components/MitReports/MitUpload";
 
 /* Notice Period Module */
 import NoticePeriodListContainer from "./components/NoticePeriod/List/ListContainer";
@@ -182,7 +183,10 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/emp360`}
         component={EmployeeDashboard}
       /> */}
-
+     <Route
+            path={`${process.env.PUBLIC_URL}/reports/mit-upload`}
+            component={MitUpload}
+          />
       <Route
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
