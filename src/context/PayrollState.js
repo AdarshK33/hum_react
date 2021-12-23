@@ -4,23 +4,8 @@ import { client } from "../utils/axios";
 import { toast } from "react-toastify";
 // import { SeparationContext } from "./SepearationState";
 const initial_state = {
-  addressViewData: [],
-  emergencyContactView: [],
-  bankViewData: [],
-  remunerationData: [],
-  costCentreSplitData: [],
-  emergencyUpdate: [],
-  documentsList: [],
-  insuranceData: [],
-  otherDocumentsList: [],
-  insuranceTopUpData: [],
-  premiumViewData: [],
-  holidayWorkingBonusList: [],
-  EmployeesList: [],
-  total: 0,
-  EmpProfile: [],
-  EmployeesDocsVerifyList: [],
-  EmpDocsData: [],
+  payslipViewData: {},
+  otherDocViewData: {},
 };
 
 export const PayrollContext = createContext();
@@ -42,17 +27,24 @@ export const PayrollProvider = ({ children }) => {
   const SetLetterView = (val) => {
     setLetterShow(val);
   };
-  const addressView = (empId) => {
+  const PayrollOtherDocView = (docName, empId, year) => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile/view/address?employeeId=" + empId)
+      .get(
+        "/api/v1/payroll/documents/view/other?documentName=" +
+          docName +
+          "&employeeId=" +
+          empId +
+          "&year=" +
+          year
+      )
       .then((response) => {
-        state.addressViewData = response.data.data;
+        state.otherDocViewData = response.data.data;
         //toast.info(response.data.message);
         setLoader(false);
         return dispatch({
-          type: "ADDRESS_VIEW",
-          payload: state.addressViewData,
+          type: "PAYROLL_OTHER_DOC_VIEW",
+          payload: state.otherDocViewData,
         });
       })
       .catch((error) => {
@@ -60,13 +52,51 @@ export const PayrollProvider = ({ children }) => {
       });
   };
 
+  const PayrollPayslipsView = (data) => {
+    setLoader(true);
+    client
+      .post("/api/v1/payroll/documents/view", data)
+      .then((response) => {
+        console.log(response.data.data);
+        state.payslipViewData = response.data.data;
+        toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "PAYSLIP_VIEW",
+          payload: state.payslipViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const makePayslipViewDataNull = () => {
+    state.payslipViewData = null;
+    return dispatch({
+      type: "PAYSLIP_VIEW",
+      payload: state.payslipViewData,
+    });
+  };
+  const makePayrollOtherDocDataNull = () => {
+    state.otherDocViewData = null;
+    return dispatch({
+      type: "PAYROLL_OTHER_DOC_VIEW",
+      payload: state.otherDocViewData,
+    });
+  };
+
   return (
     <PayrollContext.Provider
       value={{
         setEmployeeId,
-        addressView,
         SetLetterView,
         setManagerFlag,
+        PayrollPayslipsView,
+        makePayslipViewDataNull,
+        PayrollOtherDocView,
+        makePayrollOtherDocDataNull,
+        otherDocViewData: state.otherDocViewData,
+        payslipViewData: state.payslipViewData,
         managerFlag: managerFlag,
         letterShow: letterShow,
         loader: loader,

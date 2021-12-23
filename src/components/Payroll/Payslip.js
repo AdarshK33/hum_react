@@ -13,32 +13,50 @@ import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 
 const Payslip = (props) => {
-  const { letterShow, SetLetterView, currentEmpId } =
-    useContext(PayrollContext);
+  const {
+    letterShow,
+    SetLetterView,
+    currentEmpId,
+    PayrollPayslipsView,
+    payslipViewData,
+    makePayslipViewDataNull,
+    loader,
+  } = useContext(PayrollContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [docType, setDocType] = useState("");
   const [current, setCurrent] = useState(true);
   const [select, setSelect] = useState(false);
   const [fromYear, setFromYear] = useState(new Date());
   const [toYear, setToYear] = useState(new Date());
-  const [fromMonth, setFromMonth] = useState(new Date());
-  const [toMonth, setToMonth] = useState(new Date());
+  const [fromMonth, setFromMonth] = useState(
+    parseInt(new Date().getMonth()) > 8
+      ? new Date(new Date(new Date().getFullYear(), "8"))
+      : new Date()
+  );
+  const [toMonth, setToMonth] = useState(
+    parseInt(new Date().getMonth()) > 8
+      ? new Date(new Date(new Date().getFullYear(), "8"))
+      : new Date()
+  );
   const [tillSeptember, setTillSeptember] = useState(true);
   const [currentYear, setCurrentYear] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
-  // useEffect(() => {
-  //   if (parseInt(new Date().getMonth()) >= 10) {
-  //     setTillSeptember(false);
-  //     setCurrent(false);
-  //     setSelect(true);
-  //   } else {
-  //     setTillSeptember(true);
-  //     setCurrent(true);
-  //     setSelect(false);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (parseInt(new Date().getMonth()) > 8) {
+      setTillSeptember(false);
+      setCurrent(false);
+      setSelect(true);
+    } else {
+      setTillSeptember(true);
+      setCurrent(true);
+      setSelect(false);
+    }
+  }, []);
+  useEffect(() => {
+    makePayslipViewDataNull();
+  }, [current, select]);
   const handleCurrentChange = (e) => {
     setCurrent(e.target.checked);
     setSelect(!e.target.checked);
@@ -81,23 +99,28 @@ const Payslip = (props) => {
     const ReqPayload = {
       current: 1,
       employeeId: currentEmpId,
-      fromMonth: currentMonth,
-      fromYear: currentYear,
+      fromMonth: parseInt(new Date(currentMonth).getMonth()) + 1,
+      fromYear: parseInt(new Date(currentYear).getFullYear()),
       toMonth: 0,
       toYear: 0,
     };
+    console.log(ReqPayload);
+    PayrollPayslipsView(ReqPayload);
   };
   const selectSubmitHandler = (e) => {
     e.preventDefault();
     const ReqPayload = {
       current: 0,
       employeeId: currentEmpId,
-      fromMonth: fromMonth,
-      fromYear: fromYear,
-      toMonth: toMonth,
-      toYear: toYear,
+      fromMonth: parseInt(new Date(fromMonth).getMonth()) + 1,
+      fromYear: parseInt(new Date(fromYear).getFullYear()),
+      toMonth: parseInt(new Date(toMonth).getMonth()) + 1,
+      toYear: parseInt(new Date(toYear).getFullYear()),
     };
+    console.log(ReqPayload);
+    PayrollPayslipsView(ReqPayload);
   };
+  console.log("payslipViewData", payslipViewData);
   return (
     <Fragment>
       {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
@@ -229,7 +252,7 @@ const Payslip = (props) => {
                 <DatePicker
                   className="form-control onBoard-view"
                   selected={fromMonth}
-                  maxDate={new Date(new Date().getFullYear(), "9")}
+                  maxDate={new Date(new Date().getFullYear(), "8")}
                   onChange={(e) => setFromMonth(e)}
                   required
                   placeholderText="Select Month"
@@ -264,7 +287,7 @@ const Payslip = (props) => {
                 <DatePicker
                   className="form-control onBoard-view"
                   selected={toMonth}
-                  maxDate={new Date(new Date().getFullYear(), "9")}
+                  maxDate={new Date(new Date().getFullYear(), "8")}
                   onChange={(e) => setToMonth(e)}
                   required
                   placeholderText="Select Month"
@@ -280,7 +303,6 @@ const Payslip = (props) => {
               <button
                 className={true ? "profileButtons" : "confirmButton"}
                 onClick={selectSubmitHandler}
-                // disabled={photoGraphName ? false : true}
               >
                 Submit
               </button>
@@ -300,38 +322,64 @@ const Payslip = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {/* {EmpDocsData &&
-                    Object.keys(EmpDocsData).length &&
-                    EmpDocsData.map((item) => {
-                      return ( */}
-                <tr>
-                  <td>documentName</td>
-                  <td>
-                    <button
-                      className={true ? "profileButtons" : "confirmButton"}
-                      // onClick={(e, name) =>
-                      //   showTheLetter(e, photoGraphName)
-                      // }
-                      // disabled={photoGraphName ? false : true}
-                    >
-                      View
-                    </button>
-                  </td>
-                  <td>
-                    {" "}
-                    <button
-                      className={true ? "profileButtons" : "confirmButton"}
-                      // onClick={(e, name) =>
-                      //   downloadTheLetter(e, photoGraphName)
-                      // }
-                      // disabled={photoGraphName ? false : true}
-                    >
-                      Download
-                    </button>
-                  </td>
-                </tr>
-                {/* //   );
-                    // })} */}
+                {loader ? (
+                  <tr>
+                    <td></td>
+                    <td>
+                      <div
+                        className="loader-box loader"
+                        style={{ width: "100% !important" }}
+                      >
+                        <div className="loader">
+                          <div className="line bg-primary"></div>
+                          <div className="line bg-primary"></div>
+                          <div className="line bg-primary"></div>
+                          <div className="line bg-primary"></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                ) : payslipViewData && Object.keys(payslipViewData).length ? (
+                  payslipViewData.map((item) => {
+                    return (
+                      <tr>
+                        <td>{item.documentLink}</td>
+                        <td>
+                          <button
+                            className={
+                              true ? "profileButtons" : "confirmButton"
+                            }
+                            onClick={(e, name) =>
+                              showTheLetter(e, item.documentLink)
+                            }
+                          >
+                            View
+                          </button>
+                        </td>
+                        <td>
+                          {" "}
+                          <button
+                            className={
+                              true ? "profileButtons" : "confirmButton"
+                            }
+                            onClick={(e, name) =>
+                              downloadTheLetter(e, item.documentLink)
+                            }
+                          >
+                            Download
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td></td>
+                    <td>No Documents Found</td>
+                    <td></td>
+                  </tr>
+                )}
               </tbody>
             </Table>
           </div>

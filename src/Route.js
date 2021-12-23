@@ -155,7 +155,8 @@ import ManagerProfileListing from "./components/ManagerProfile/ManagerProfileLis
 import ManagerProfileSteppers from "./components/ManagerProfile/ManagerProfileSteppers";
 import AdminDocVerfication from "./components/EmployeeVerification/AdminDocVerification";
 import EmployeeListing from "./components/EmployeeVerification/EmployeeListing";
-import MyPayroll from "./components/Payroll/MyPayroll";
+import EmpPayroll from "./components/Payroll/EmpPayroll";
+import ManagerPayroll from "./components/Payroll/ManagerPayroll";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -449,8 +450,17 @@ const RoutePath = () => {
           />
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
-            // component={ProbationList}
-            component={MyPayroll}
+            component={ProbationList}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/my_payroll`}
+            component={EmpPayroll}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/payroll/documents_download`}
+            component={ManagerPayroll}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/promotion-initiate`}

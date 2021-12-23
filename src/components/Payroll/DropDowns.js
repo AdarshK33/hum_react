@@ -18,13 +18,26 @@ import { SeparationContext } from "../../context/SepearationState";
 const DropDowns = (props) => {
   const { searchByCostCenter, searchByCostData } =
     useContext(SeparationContext);
-  const { setManagerFlag, managerFlag, setEmployeeId, currentEmpId } =
-    useContext(PayrollContext);
+  const {
+    setManagerFlag,
+    managerFlag,
+    setEmployeeId,
+    currentEmpId,
+    makePayrollOtherDocDataNull,
+    makePayslipViewDataNull,
+  } = useContext(PayrollContext);
   const [docType, setDocType] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [empNameId, setEmpNameId] = useState("");
+
+  useEffect(() => {
+    makePayrollOtherDocDataNull();
+    makePayslipViewDataNull();
+  }, [docType]);
   const searchValueHandler = (e) => {
     e.preventDefault();
+    makePayrollOtherDocDataNull();
+    makePayslipViewDataNull();
     if (
       searchInput !== null &&
       searchInput !== undefined &&
@@ -73,11 +86,11 @@ const DropDowns = (props) => {
             >
               <option value="">Select Document Type</option>
               <option value="Payslip">Payslip</option>
-              <option value="It Statment">It Statment</option>
-              <option value="It Declaration">It Declaration</option>
-              <option value="It Proofs">It Proofs</option>
+              <option value="IT statement">It Statment</option>
+              <option value="IT declaration">It Declaration</option>
+              <option value="IT proofs">It Proofs</option>
               <option value="Form 16">Form 16</option>
-              <option value="Form 12BB">Form 12BB</option>
+              <option value="Form 12 BB">Form 12BB</option>
             </Form.Control>
           </Form.Group>
         </Col>
@@ -106,7 +119,7 @@ const DropDowns = (props) => {
           docType === "Payslip" ? (
             <Payslip />
           ) : docType ? (
-            <OtherPayrollDoc />
+            <OtherPayrollDoc docType={docType} />
           ) : (
             ""
           )
@@ -114,7 +127,7 @@ const DropDowns = (props) => {
       ) : docType === "Payslip" ? (
         <Payslip />
       ) : docType ? (
-        <OtherPayrollDoc />
+        <OtherPayrollDoc docType={docType} />
       ) : (
         ""
       )}

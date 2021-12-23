@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { SeparationContext } from "../../context/SepearationState";
+import { PayrollContext } from "../../context/PayrollState";
 
 const ViewTheLetter = ({ DocName, Name }) => {
-  const { SetLetterView } = useContext(SeparationContext);
+  const { SetLetterView } = useContext(PayrollContext);
   const [show, setShow] = useState(true);
   const [name, setName] = useState("");
 

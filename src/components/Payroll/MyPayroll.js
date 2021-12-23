@@ -17,18 +17,7 @@ const MyPayroll = (props) => {
   const { setManagerFlag, managerFlag } = useContext(PayrollContext);
   const [docType, setDocType] = useState("");
   const [tabIndex, setTabIndex] = useState(0);
-  useEffect(() => {
-    if (
-      rolePermission === "admin" ||
-      rolePermission === "manager" ||
-      rolePermission === "costCenterManager" ||
-      rolePermission === "superCostCenterManager"
-    ) {
-      setManagerFlag(true);
-    } else {
-      setManagerFlag(false);
-    }
-  }, []);
+
   return (
     <Fragment>
       <Breadcrumb title="MY PAYROLL" parent="MY PAYROLL" />
