@@ -177,10 +177,24 @@ if(weekOffById!==null&&weekOffById!==undefined&&weekOffById&&Object.keys(weekOff
                   )}
                 </Col>
               </Row>
-  
+
               <Row>
                 <Col sm={12}>
-                  {/* <Form.Group> */}
+                  <Form.Group>
+                    <Form.Label>Select Effective From</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="effectiveDate"
+                      placeholderText="Select Effective From"
+                      disabled
+                      value={moment(effectiveDate).format("DD-MM-YYYY")}
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+  
+              {/* <Row>
+                <Col sm={12}>
                   <Form.Label>Select Effective From</Form.Label>
                   <br></br>
                   <div>
@@ -194,16 +208,17 @@ if(weekOffById!==null&&weekOffById!==undefined&&weekOffById&&Object.keys(weekOff
                       minDate={new Date()}
                       filterDate={isSunday}
                       dateFormat="yyyy-MM-dd"
+                      disabled
                     />{" "}
                   </div>
-                  {/* </Form.Group> */}
+
                   {effectiveDateError ? (
                     <p style={{ color: "red" }}>Please Enter the valid Input</p>
                   ) : (
                     ""
                   )}
                 </Col>
-              </Row>
+              </Row> */}
               <Row>
                 <Col sm={12}>
                   <br></br>
