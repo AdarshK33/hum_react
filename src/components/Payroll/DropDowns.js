@@ -11,6 +11,7 @@ import { Search } from "react-feather";
 import DatePicker from "react-datepicker";
 import Payslip from "./Payslip";
 import OtherPayrollDoc from "./OtherPayrollDoc";
+import Select from "react-select";
 
 import { PayrollContext } from "../../context/PayrollState";
 import { SeparationContext } from "../../context/SepearationState";
@@ -25,11 +26,14 @@ const DropDowns = (props) => {
     currentEmpId,
     makePayrollOtherDocDataNull,
     makePayslipViewDataNull,
+    empSearchByCostCenter,
+    empSearchByCostData,
   } = useContext(PayrollContext);
   const [docType, setDocType] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [empNameId, setEmpNameId] = useState("");
-
+  const [empOptions, setEmpOptions] = useState([{ value: " ", label: " " }]);
+  const [empSelected, setEmpSelected] = useState([]);
   useEffect(() => {
     makePayrollOtherDocDataNull();
     makePayslipViewDataNull();
@@ -43,35 +47,50 @@ const DropDowns = (props) => {
       searchInput !== undefined &&
       searchInput !== ""
     ) {
-      searchByCostCenter(searchInput);
+      empSearchByCostCenter(searchInput);
     } else {
       setEmpNameId("");
       setEmployeeId("");
     }
   };
 
-  useEffect(() => {
-    if (
-      searchByCostData !== null &&
-      searchByCostData !== undefined &&
-      Object.keys(searchByCostData).length
-    ) {
-      let name =
-        searchByCostData.firstName +
-        " " +
-        searchByCostData.lastName +
-        " " +
-        searchByCostData.employeeId;
-      setEmpNameId(name);
-      setSearchInput(name);
-      setEmployeeId(searchByCostData.employeeId);
+  const ChangeSearchOption = (option) => {
+    console.log("option", option);
+    if (option) {
+      setEmpSelected(option);
+      setEmpNameId(option.value);
+      setSearchInput(option.vlaue);
+      setEmployeeId(option.value);
     } else {
       setEmpNameId("");
       setSearchInput("");
       setEmployeeId("");
     }
-  }, [searchByCostData]);
-  console.log("empNameId", empNameId);
+  };
+  useEffect(() => {
+    empSearchByCostCenter("");
+  }, []);
+  useEffect(() => {
+    if (
+      empSearchByCostData !== null &&
+      empSearchByCostData !== undefined &&
+      Object.keys(empSearchByCostData).length
+    ) {
+      let tempArray = [];
+      empSearchByCostData.map((item, i) => {
+        tempArray.push({
+          label: item.firstName + "" + item.lastName + " " + item.employeeId,
+          value: item.employeeId,
+        });
+      });
+      setEmpOptions(tempArray);
+    } else {
+      setEmpOptions([]);
+    }
+  }, [empSearchByCostData]);
+
+  console.log("empOptions", empOptions);
+  console.log("empSearchByCostData", empSearchByCostData);
   return (
     <Fragment>
       <Row className="mt-3">
@@ -95,25 +114,48 @@ const DropDowns = (props) => {
           </Form.Group>
         </Col>
       </Row>
+
       {managerFlag ? (
-        <Row className="mt-3">
+        <Row className="mt-3 mb-3">
           <Col sm={10}>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                placeholder="Search Employee Id/Name"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <Search
-                className="search-icon mr-1"
-                style={{ color: "#313131" }}
-                onClick={searchValueHandler}
-              />
-            </Form.Group>
+            <div>
+              <Select
+                name="Week"
+                options={
+                  empOptions && Object.keys(empOptions).length
+                    ? empOptions.map((item) => ({
+                        label: item.label,
+                        value: item.value,
+                      }))
+                    : []
+                }
+                value={empSelected}
+                onChange={ChangeSearchOption}
+                placeholder="Search Employee/Id"
+                isSearchable
+                // className="rosterSelect"
+              ></Select>
+            </div>
           </Col>
         </Row>
-      ) : null}
+      ) : // <Row className="mt-3">
+      //   <Col sm={10}>
+      //     <Form.Group>
+      //       <Form.Control
+      //         type="text"
+      //         placeholder="Search Employee Id/Name"
+      //         value={searchInput}
+      //         onChange={(e) => setSearchInput(e.target.value)}
+      //       />
+      //       <Search
+      //         className="search-icon mr-1"
+      //         style={{ color: "#313131" }}
+      //         onClick={searchValueHandler}
+      //       />
+      //     </Form.Group>
+      //   </Col>
+      // </Row>
+      null}
       {managerFlag ? (
         empNameId !== "" && empNameId ? (
           docType === "Payslip" ? (

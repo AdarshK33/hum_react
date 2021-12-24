@@ -26,12 +26,15 @@ const MyPayroll = (props) => {
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
-                <div className="OnBoardHeading">
+                <div className="OnBoardHeading" style={{ padding: "5px" }}>
                   <b>MY PAYROLL</b>
                 </div>
                 <div>
                   <Row className="mt-3 ml-4">
-                    <div className="tabsHeading">
+                    <div
+                      className="tabsHeading"
+                      style={{ marginBottom: "1rem" }}
+                    >
                       <div
                         className={tabIndex === 0 ? "activeTab" : "disabledTab"}
                         onClick={(e) => setTabIndex(0)}
