@@ -39,13 +39,17 @@ const MyPayroll = (props) => {
                         className={tabIndex === 0 ? "activeTab" : "disabledTab"}
                         onClick={(e) => setTabIndex(0)}
                       >
-                        <label>Payroll Till September</label>
+                        <label style={{ paddingTop: "5px" }}>
+                          Payroll Till September
+                        </label>
                       </div>
                       <div
                         className={tabIndex === 1 ? "activeTab" : "disabledTab"}
                         onClick={(e) => setTabIndex(1)}
                       >
-                        <label>Payroll After September</label>
+                        <label style={{ paddingTop: "5px" }}>
+                          Payroll After September
+                        </label>
                       </div>
                     </div>
 

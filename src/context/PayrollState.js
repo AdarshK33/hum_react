@@ -91,7 +91,7 @@ export const PayrollProvider = ({ children }) => {
         if (response.data.data === null) {
           state.empSearchByCostData = response.data.data;
           console.log("response.data.data", response.data.data);
-          toast.info(response.data.message);
+          // toast.info(response.data.message);
         } else {
           state.empSearchByCostData = response.data.data;
           console.log("response.data.data[0]", response.data.data[0]);
