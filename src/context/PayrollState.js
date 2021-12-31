@@ -84,6 +84,29 @@ export const PayrollProvider = ({ children }) => {
       payload: state.otherDocViewData,
     });
   };
+  const empSearchByCostCenter = (key) => {
+    client
+      .get("/api/v1/employee/role_based_search?key=" + key)
+      .then((response) => {
+        if (response.data.data === null) {
+          state.empSearchByCostData = response.data.data;
+          console.log("response.data.data", response.data.data);
+          // toast.info(response.data.message);
+        } else {
+          state.empSearchByCostData = response.data.data;
+          console.log("response.data.data[0]", response.data.data[0]);
+        }
+        console.log("response", response);
+        console.log("search Emp response", state.searchEmpData1);
+        return dispatch({
+          type: "EMP_SEARCH_BY_COST_DATA",
+          payload: state.empSearchByCostData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <PayrollContext.Provider
@@ -95,6 +118,8 @@ export const PayrollProvider = ({ children }) => {
         makePayslipViewDataNull,
         PayrollOtherDocView,
         makePayrollOtherDocDataNull,
+        empSearchByCostCenter,
+        empSearchByCostData: state.empSearchByCostData,
         otherDocViewData: state.otherDocViewData,
         payslipViewData: state.payslipViewData,
         managerFlag: managerFlag,
