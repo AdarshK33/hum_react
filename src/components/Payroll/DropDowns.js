@@ -11,6 +11,8 @@ import { Search } from "react-feather";
 import DatePicker from "react-datepicker";
 import Payslip from "./Payslip";
 import OtherPayrollDoc from "./OtherPayrollDoc";
+import Select from "react-select";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
 import { PayrollContext } from "../../context/PayrollState";
 import { SeparationContext } from "../../context/SepearationState";
@@ -25,53 +27,101 @@ const DropDowns = (props) => {
     currentEmpId,
     makePayrollOtherDocDataNull,
     makePayslipViewDataNull,
+    empSearchByCostCenter,
+    empSearchByCostData,
   } = useContext(PayrollContext);
   const [docType, setDocType] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [empNameId, setEmpNameId] = useState("");
+  const [empOptions, setEmpOptions] = useState([{ id: " ", name: " " }]);
+  const [empSelected, setEmpSelected] = useState([]);
+  const [searchString, setSearchString] = useState("");
 
-  useEffect(() => {
-    makePayrollOtherDocDataNull();
-    makePayslipViewDataNull();
-  }, [docType]);
-  const searchValueHandler = (e) => {
-    e.preventDefault();
-    makePayrollOtherDocDataNull();
-    makePayslipViewDataNull();
-    if (
-      searchInput !== null &&
-      searchInput !== undefined &&
-      searchInput !== ""
-    ) {
-      searchByCostCenter(searchInput);
+  const handleOnSearch = (string, results) => {
+    //console.lo("changing", string, results);
+    setEmpNameId("");
+    setEmployeeId("");
+    setSearchString(string);
+  };
+
+  const handleOnClear = () => {
+    //console.lo("Cleared");
+    setSearchString("");
+    setEmpNameId("");
+    setEmployeeId("");
+  };
+
+  const handleOnSelect = (string) => {
+    //console.lo("string", string);
+    if (string && Object.keys(string).length) {
+      setSearchString(string.name);
+      setEmpNameId(string.id);
+      setEmployeeId(string.id);
     } else {
       setEmpNameId("");
       setEmployeeId("");
     }
   };
+  useEffect(() => {
+    makePayrollOtherDocDataNull();
+    makePayslipViewDataNull();
+  }, [docType]);
+  // const searchValueHandler = (e) => {
+  //   e.preventDefault();
+  //   makePayrollOtherDocDataNull();
+  //   makePayslipViewDataNull();
+  //   if (
+  //     searchInput !== null &&
+  //     searchInput !== undefined &&
+  //     searchInput !== ""
+  //   ) {
+  //     empSearchByCostCenter(searchInput);
+  //   } else {
+  //     setEmpNameId("");
+  //     setEmployeeId("");
+  //   }
+  // };
 
+  // const ChangeSearchOption = (option) => {
+  //   //console.lo("option", option);
+  //   if (option) {
+  //     setEmpSelected(option);
+  //     setEmpNameId(option.value);
+  //     setSearchInput(option.vlaue);
+  //     setEmployeeId(option.value);
+  //   } else {
+  //     setEmpNameId("");
+  //     setSearchInput("");
+  //     setEmployeeId("");
+  //   }
+  // };
+  useEffect(() => {
+    if (searchString) {
+      empSearchByCostCenter(searchString);
+    }
+  }, [searchString]);
   useEffect(() => {
     if (
-      searchByCostData !== null &&
-      searchByCostData !== undefined &&
-      Object.keys(searchByCostData).length
+      empSearchByCostData !== null &&
+      empSearchByCostData !== undefined &&
+      Object.keys(empSearchByCostData).length
     ) {
-      let name =
-        searchByCostData.firstName +
-        " " +
-        searchByCostData.lastName +
-        " " +
-        searchByCostData.employeeId;
-      setEmpNameId(name);
-      setSearchInput(name);
-      setEmployeeId(searchByCostData.employeeId);
+      let tempArray = [];
+      empSearchByCostData.map((item, i) => {
+        tempArray.push({
+          name: item.firstName + "" + item.lastName + " " + item.employeeId,
+          id: item.employeeId,
+        });
+      });
+      setEmpOptions(tempArray);
     } else {
-      setEmpNameId("");
-      setSearchInput("");
-      setEmployeeId("");
+      setEmpOptions([]);
     }
-  }, [searchByCostData]);
-  console.log("empNameId", empNameId);
+  }, [empSearchByCostData]);
+
+  //console.lo("empOptions", empOptions);
+  //console.lo("empSearchByCostData", empSearchByCostData);
+  //console.lo("empNameId", empNameId);
   return (
     <Fragment>
       <Row className="mt-3">
@@ -95,25 +145,73 @@ const DropDowns = (props) => {
           </Form.Group>
         </Col>
       </Row>
+
       {managerFlag ? (
-        <Row className="mt-3">
-          <Col sm={10}>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                placeholder="Search Employee Id/Name"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-              />
-              <Search
-                className="search-icon mr-1"
-                style={{ color: "#313131" }}
-                onClick={searchValueHandler}
-              />
-            </Form.Group>
-          </Col>
+        <Row className="mt-3 mb-3" style={{ marginLeft: "0px" }}>
+          <div
+            style={{
+              width: "82%",
+              zIndex: "1",
+              border: "0px",
+            }}
+          >
+            <ReactSearchAutocomplete
+              styling={{
+                borderRadius: "5px",
+                boxShadow: "none",
+                height: "37px",
+              }}
+              placeholder="Search Employee Name/Id"
+              inputDebounce={10}
+              items={empOptions}
+              onSearch={handleOnSearch}
+              onSelect={handleOnSelect}
+              onClear={handleOnClear}
+              inputSearchString={searchString}
+              showIcon={false}
+            />
+          </div>
         </Row>
-      ) : null}
+      ) : // <Row className="mt-3 mb-3">
+      //   <Col sm={10}>
+      //     <div>
+      //       <Select
+      //         name="Week"
+      //         options={
+      //           empOptions && Object.keys(empOptions).length
+      //             ? empOptions.map((item) => ({
+      //                 label: item.label,
+      //                 value: item.value,
+      //               }))
+      //             : []
+      //         }
+      //         value={empSelected}
+      //         onChange={ChangeSearchOption}
+      //         placeholder="Search Employee/Id"
+      //         isSearchable
+      //         // className="rosterSelect"
+      //       ></Select>
+      //     </div>
+      //   </Col>
+      // </Row>
+      // <Row className="mt-3">
+      //   <Col sm={10}>
+      //     <Form.Group>
+      //       <Form.Control
+      //         type="text"
+      //         placeholder="Search Employee Id/Name"
+      //         value={searchInput}
+      //         onChange={(e) => setSearchInput(e.target.value)}
+      //       />
+      //       <Search
+      //         className="search-icon mr-1"
+      //         style={{ color: "#313131" }}
+      //         onClick={searchValueHandler}
+      //       />
+      //     </Form.Group>
+      //   </Col>
+      // </Row>
+      null}
       {managerFlag ? (
         empNameId !== "" && empNameId ? (
           docType === "Payslip" ? (

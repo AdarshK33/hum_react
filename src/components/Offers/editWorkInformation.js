@@ -87,12 +87,18 @@ const EditWorkInformation = () => {
   }, []);
 
   useEffect(() => {
-    let nationList = countryList.filter(
-      (item) => item.nationality !== "Indian" && item.nationality !== null
-    );
-    console.log("contract list", nationList);
-    setNationalityList(nationList);
-  }, [countryList]);
+    if (state.employmentType === "Internship") {
+      let nationList = countryList.filter((item) => item.nationality !== null);
+      console.log("contract list", nationList);
+      setNationalityList(nationList);
+    } else {
+      let nationList = countryList.filter(
+        (item) => item.nationality !== "Indian" && item.nationality !== null
+      );
+      console.log("contract list", nationList);
+      setNationalityList(nationList);
+    }
+  }, [countryList, state.employmentType]);
 
   useEffect(() => {
     if (
@@ -477,41 +483,7 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )}
-            <Col sm={3}>
-              <Form.Group>
-                <Form.Label>Designation</Form.Label>
-                {state.employmentType === "Internship" ? (
-                  <Form.Control
-                    type="text"
-                    value="Intern"
-                    className="form-input"
-                    readOnly
-                  />
-                ) : (
-                  <Form.Control
-                    as="select"
-                    value={state.designation}
-                    className="form-input"
-                    name="designation"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Designation</option>
-                    {designationName !== null &&
-                      designationName !== undefined &&
-                      designationName.length > 0 &&
-                      designationName.map((item) => {
-                        return (
-                          <option key={item.designationId}>
-                            {item.designation}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                )}
-              </Form.Group>
-            </Col>
+
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Department</Form.Label>
@@ -536,8 +508,6 @@ const EditWorkInformation = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-          </Row>
-          <Row>
             <Col sm={3}>
               {state.employmentType === "Internship" ? (
                 <Form.Group className="reactDate">
@@ -578,6 +548,43 @@ const EditWorkInformation = () => {
                   </Form.Control>
                 </Form.Group>
               )}
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Designation</Form.Label>
+                {state.employmentType === "Internship" ? (
+                  <Form.Control
+                    type="text"
+                    value="Intern"
+                    className="form-input"
+                    readOnly
+                  />
+                ) : (
+                  <Form.Control
+                    as="select"
+                    value={state.designation}
+                    className="form-input"
+                    name="designation"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Designation</option>
+                    {designationName !== null &&
+                      designationName !== undefined &&
+                      designationName.length > 0 &&
+                      designationName.map((item) => {
+                        return (
+                          <option key={item.designationId}>
+                            {item.designation}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                )}
+              </Form.Group>
             </Col>
             <Col sm={3}>
               <Form.Group>
@@ -785,30 +792,30 @@ const EditWorkInformation = () => {
             </Col>
           </Row>
           <Row>
-            <Col sm={3}>
-              {state.employmentType === "Internship" ? (
-                ""
-              ) : (
-                // <Form.Group>
-                //   <Form.Label>Internship Duration</Form.Label>
-                //   <Form.Control
-                //     as="select"
-                //     value={state.internship}
-                //     className="form-input"
-                //     name="internship"
-                //     onChange={changeHandler}
-                //     disabled={disabled}
-                //     required
-                //   >
-                //     <option value="">Select Internship Duration</option>
-                //     <option value="1">1 Month</option>
-                //     <option value="2">2 Month</option>
-                //     <option value="3">3 Month</option>
-                //     <option value="4">4 Month</option>
-                //     <option value="5">5 Month</option>
-                //     <option value="6">6 Month</option>
-                //   </Form.Control>
-                // </Form.Group>
+            {state.employmentType === "Internship" ? (
+              ""
+            ) : (
+              // <Form.Group>
+              //   <Form.Label>Internship Duration</Form.Label>
+              //   <Form.Control
+              //     as="select"
+              //     value={state.internship}
+              //     className="form-input"
+              //     name="internship"
+              //     onChange={changeHandler}
+              //     disabled={disabled}
+              //     required
+              //   >
+              //     <option value="">Select Internship Duration</option>
+              //     <option value="1">1 Month</option>
+              //     <option value="2">2 Month</option>
+              //     <option value="3">3 Month</option>
+              //     <option value="4">4 Month</option>
+              //     <option value="5">5 Month</option>
+              //     <option value="6">6 Month</option>
+              //   </Form.Control>
+              // </Form.Group>
+              <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Notice Period</Form.Label>
                   <Form.Control
@@ -827,8 +834,9 @@ const EditWorkInformation = () => {
                     <option value="3">3 Month</option>
                   </Form.Control>
                 </Form.Group>
-              )}
-            </Col>
+              </Col>
+            )}
+
             {state.employmentType === "Internship" ? (
               ""
             ) : (
@@ -894,7 +902,8 @@ const EditWorkInformation = () => {
               </Col>
             )} */}
 
-            {state.employmentType === "Local Expat" && (
+            {(state.employmentType === "Local Expat" ||
+              state.employmentType === "Internship") && (
               <React.Fragment>
                 <Col sm={3}>
                   <Form.Group>

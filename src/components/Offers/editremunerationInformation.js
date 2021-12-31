@@ -20,6 +20,7 @@ const EditRemunerationInformation = (props) => {
   const [viewApiCall, setViewApiCall] = useState(false);
   const [parmanentGrossLimit, setParmanentGrossLimit] = useState(false);
   const [partTimeGrossLimit, setPartTimeGrossLimit] = useState(false);
+  const [internshipGrossLimit, setInternshipGrossLimit] = useState(false);
   const [bonusLimit, setBonusLimit] = useState(false);
   const [localExpatGrossLimit, setLocalExpatGrossLimit] = useState(false);
   const {
@@ -90,17 +91,18 @@ const EditRemunerationInformation = (props) => {
       // setStipened(candidateData.remuneration.stipend);
     }
     console.log("candidateData remuneration2", candidateData);
-
   }, [candidateData.workInformation, getBonusByContractType]);
 
   useEffect(() => {
     console.log("candidateData getBonusByContractType", getBonusByContractType);
     if (
       getBonusByContractType !== null &&
-      getBonusByContractType !== undefined&&getBonusByContractType!==""&&Object.keys(getBonusByContractType).length!==0
+      getBonusByContractType !== undefined &&
+      getBonusByContractType !== "" &&
+      Object.keys(getBonusByContractType).length !== 0
     ) {
       setMonthlyBonus(getBonusByContractType.bonus);
-    }else{
+    } else {
       setMonthlyBonus(0);
     }
   }, [getBonusByContractType]);
@@ -140,225 +142,296 @@ const EditRemunerationInformation = (props) => {
   const changeHandler = (e) => {
     console.log("changeHandler", e);
     console.log("contracttype", workInfoViewData.contractType);
-      if (
-        (candidateData !== null &&
+    if (
+      (candidateData !== null &&
         candidateData !== undefined &&
-        Object.keys(candidateData).length !== 0&&
+        Object.keys(candidateData).length !== 0 &&
         candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Internship") ||
-        (workInfoViewData !== null &&
+        candidateData.workInformation !== undefined &&
+        Object.keys(candidateData.workInformation).length !== 0 &&
+        candidateData.workInformation.contractType === "Internship") ||
+      (workInfoViewData !== null &&
         workInfoViewData !== undefined &&
-        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Internship")
+        Object.keys(workInfoViewData).length !== 0 &&
+        workInfoViewData.contractType === "Internship")
+    ) {
+      if (
+        typeof e === "undefined" ||
+        e === "" ||
+        (e + "").includes(" ", "-", ".", "/", "+")
       ) {
+        console.log("inside intern if", e);
+        setStipened(e);
+        setStipenedError(true);
+        setFixedGross(0);
+        setFixedGrossError(false);
+        setInternshipGrossLimit(false);
+        setParmanentGrossLimit(false);
+        setPartTimeGrossLimit(false);
+        setLocalExpatGrossLimit(false);
+      } else {
         if (
-          typeof e === "undefined" ||
-          e === "" ||
-          (e + "").includes(" ", "-", ".", "/", "+")
+          workInfoViewData.contractType === "Internship" &&
+          workInfoViewData.nationality !== "Indian"
         ) {
-          console.log("inside intern if", e);
+          if (stipened < 7500) {
+            setStipened(e);
+            setStipenedError(false);
+            setInternshipGrossLimit(true);
+            setFixedGross(0);
+            setFixedGrossError(false);
+            setParmanentGrossLimit(false);
+            setPartTimeGrossLimit(false);
+            setLocalExpatGrossLimit(false);
+          } else {
+            setStipened(e);
+            setStipenedError(false);
+            setFixedGross(0);
+            setFixedGrossError(false);
+            setParmanentGrossLimit(false);
+            setPartTimeGrossLimit(false);
+            setLocalExpatGrossLimit(false);
+            setInternshipGrossLimit(false);
+          }
+        } else {
           setStipened(e);
-          setStipenedError(true);
+          setStipenedError(false);
           setFixedGross(0);
           setFixedGrossError(false);
           setParmanentGrossLimit(false);
           setPartTimeGrossLimit(false);
           setLocalExpatGrossLimit(false);
-        } else {
-          console.log("inside intern else", e);
-          setStipened(e);
-          setStipenedError(false);
-          setFixedGross(0);
-          setFixedGrossError(false);
-          setParmanentGrossLimit(false);
-          setPartTimeGrossLimit(false);
-          setLocalExpatGrossLimit(false);
         }
       }
+    }
 
-      if (
-        (candidateData !== null &&
+    if (
+      (candidateData !== null &&
         candidateData !== undefined &&
-        Object.keys(candidateData).length !== 0&&
+        Object.keys(candidateData).length !== 0 &&
         candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Fulltime") ||
-        (workInfoViewData !== null &&
+        candidateData.workInformation !== undefined &&
+        Object.keys(candidateData.workInformation).length !== 0 &&
+        candidateData.workInformation.contractType === "Fulltime") ||
+      (workInfoViewData !== null &&
         workInfoViewData !== undefined &&
-        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Fulltime")
+        Object.keys(workInfoViewData).length !== 0 &&
+        workInfoViewData.contractType === "Fulltime")
+    ) {
+      console.log("inside Fulltime", e);
+      if (
+        typeof e === "undefined" ||
+        e === "" ||
+        e.includes(" ", "-", ".", "/", "+")
       ) {
-        console.log("inside Fulltime", e);
-        if (
-          typeof e === "undefined" ||
-          e === "" ||
-          e.includes(" ", "-", ".", "/", "+")
-        ) {
-          console.log("inside Fulltime1", e);
-          setFixedGross(e);
-          setFixedGrossError(true);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setPartTimeGrossLimit(false);
-          setLocalExpatGrossLimit(false);
-        } else if (e < 18000) {
-          console.log("inside Fulltime2", e);
-          setFixedGross(e);
-          setFixedGrossError(false);
-          setParmanentGrossLimit(true);
-          setStipened(0);
-          setStipenedError(false);
-          setPartTimeGrossLimit(false);
-          setLocalExpatGrossLimit(false);
-        } else {
-          console.log("inside Fulltime3", e);
-          setFixedGross(e);
-          setFixedGrossError(false);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setPartTimeGrossLimit(false);
-          setLocalExpatGrossLimit(false);
-        }
+        console.log("inside Fulltime1", e);
+        setFixedGross(e);
+        setFixedGrossError(true);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setPartTimeGrossLimit(false);
+        setLocalExpatGrossLimit(false);
+      } else if (e < 18000) {
+        console.log("inside Fulltime2", e);
+        setFixedGross(e);
+        setFixedGrossError(false);
+        setParmanentGrossLimit(true);
+        setStipened(0);
+        setStipenedError(false);
+        setPartTimeGrossLimit(false);
+        setLocalExpatGrossLimit(false);
+      } else {
+        console.log("inside Fulltime3", e);
+        setFixedGross(e);
+        setFixedGrossError(false);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setPartTimeGrossLimit(false);
+        setLocalExpatGrossLimit(false);
       }
+    }
 
-      if (
-        (candidateData !== null &&
+    if (
+      (candidateData !== null &&
         candidateData !== undefined &&
-        Object.keys(candidateData).length !== 0&&
+        Object.keys(candidateData).length !== 0 &&
         candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Parttime") ||
-        (workInfoViewData !== null &&
+        candidateData.workInformation !== undefined &&
+        Object.keys(candidateData.workInformation).length !== 0 &&
+        candidateData.workInformation.contractType === "Parttime") ||
+      (workInfoViewData !== null &&
         workInfoViewData !== undefined &&
-        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Parttime")
+        Object.keys(workInfoViewData).length !== 0 &&
+        workInfoViewData.contractType === "Parttime")
+    ) {
+      if (
+        typeof e === "undefined" ||
+        e === "" ||
+        e.includes(" ", "-", ".", "/", "+")
       ) {
-        if (
-          typeof e === "undefined" ||
-          e === "" ||
-          e.includes(" ", "-", ".", "/", "+")
-        ) {
-          console.log("inside part time1", e);
-          setFixedGross(e);
-          setFixedGrossError(true);
-          setPartTimeGrossLimit(false);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setLocalExpatGrossLimit(false);
-        } else if (e < 90 || e > 400) {
-          console.log("inside part time2", e);
-          setFixedGross(e);
-          setFixedGrossError(false);
-          setPartTimeGrossLimit(true);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setLocalExpatGrossLimit(false);
-        } else {
-          console.log("inside part time3", e);
-          setFixedGross(e);
-          setFixedGrossError(false);
-          setPartTimeGrossLimit(false);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setLocalExpatGrossLimit(false);
-        }
+        console.log("inside part time1", e);
+        setFixedGross(e);
+        setFixedGrossError(true);
+        setPartTimeGrossLimit(false);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setLocalExpatGrossLimit(false);
+      } else if (e < 90 || e > 400) {
+        console.log("inside part time2", e);
+        setFixedGross(e);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(true);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setLocalExpatGrossLimit(false);
+      } else {
+        console.log("inside part time3", e);
+        setFixedGross(e);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(false);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setLocalExpatGrossLimit(false);
       }
+    }
 
-      if (
-        (candidateData !== null &&
+    if (
+      (candidateData !== null &&
         candidateData !== undefined &&
-        Object.keys(candidateData).length !== 0&&
+        Object.keys(candidateData).length !== 0 &&
         candidateData.workInformation !== null &&
-        candidateData.workInformation !== undefined&&Object.keys(candidateData.workInformation).length !== 0&&candidateData.workInformation.contractType === "Local Expat") ||
-        (workInfoViewData !== null &&
+        candidateData.workInformation !== undefined &&
+        Object.keys(candidateData.workInformation).length !== 0 &&
+        candidateData.workInformation.contractType === "Local Expat") ||
+      (workInfoViewData !== null &&
         workInfoViewData !== undefined &&
-        Object.keys(workInfoViewData).length !== 0&&workInfoViewData.contractType === "Local Expat")
+        Object.keys(workInfoViewData).length !== 0 &&
+        workInfoViewData.contractType === "Local Expat")
+    ) {
+      if (
+        typeof e === "undefined" ||
+        e === "" ||
+        e.includes(" ", "-", ".", "/", "+")
       ) {
-        if (
-          typeof e === "undefined" ||
-          e === "" ||
-          e.includes(" ", "-", ".", "/", "+")
-        ) {
-          console.log("inside local expat1", e);
-          setFixedGross(e);
-          setFixedGrossError(true);
-          setLocalExpatGrossLimit(false);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setPartTimeGrossLimit(false);
-        } else if (e < 25000) {
-          console.log("inside local expat2", e);
-          setFixedGross(e);
-          setFixedGrossError(false);
-          setLocalExpatGrossLimit(true);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setPartTimeGrossLimit(false);
-        } else {
-          console.log("inside local expat3", e);
-          setFixedGross(e);
-          setFixedGrossError(false);
-          setLocalExpatGrossLimit(false);
-          setParmanentGrossLimit(false);
-          setStipened(0);
-          setStipenedError(false);
-          setPartTimeGrossLimit(false);
-        }
+        console.log("inside local expat1", e);
+        setFixedGross(e);
+        setFixedGrossError(true);
+        setLocalExpatGrossLimit(false);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setPartTimeGrossLimit(false);
+      } else if (e < 25000) {
+        console.log("inside local expat2", e);
+        setFixedGross(e);
+        setFixedGrossError(false);
+        setLocalExpatGrossLimit(true);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setPartTimeGrossLimit(false);
+      } else {
+        console.log("inside local expat3", e);
+        setFixedGross(e);
+        setFixedGrossError(false);
+        setLocalExpatGrossLimit(false);
+        setParmanentGrossLimit(false);
+        setStipened(0);
+        setStipenedError(false);
+        setPartTimeGrossLimit(false);
       }
+    }
   };
 
   const submitHandler = (e) => {
     console.log(saveclick);
     console.log("inside edit submit", candidateData);
     let remunerationinfo;
-    let fixedGrossEmpty=false;
-    let stipendEmpty=false;
+    let fixedGrossEmpty = false;
+    let stipendEmpty = false;
     e.preventDefault();
     console.log(
       "remuneration Info1",
       fixedGross,
       monthlyBonus,
       stipened,
-      user.role,remunerationData,remunerationViewData,saveclick
+      user.role,
+      remunerationData,
+      remunerationViewData,
+      saveclick
     );
-    console.log("submit error check",fixedGrossError,
-    stipenedError,
-    parmanentGrossLimit,
-    partTimeGrossLimit,
-    localExpatGrossLimit,fixedGrossEmpty,stipendEmpty);
+    console.log(
+      "submit error check",
+      fixedGrossError,
+      stipenedError,
+      parmanentGrossLimit,
+      partTimeGrossLimit,
+      localExpatGrossLimit,
+      fixedGrossEmpty,
+      stipendEmpty
+    );
 
-
-    if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType !== "Internship") {
-if(fixedGross===undefined||fixedGross===null||fixedGross===0){
-  fixedGrossEmpty=true;
-  toast.error("Please Enter the valid FixedGross");
-}else{
-  fixedGrossEmpty=false;
-}
+    if (
+      workInfoViewData !== null &&
+      workInfoViewData !== undefined &&
+      Object.keys(workInfoViewData).length !== 0 &&
+      workInfoViewData.contractType !== "Internship"
+    ) {
+      if (fixedGross === undefined || fixedGross === null || fixedGross === 0) {
+        fixedGrossEmpty = true;
+        toast.error("Please Enter the valid FixedGross");
+      } else {
+        fixedGrossEmpty = false;
+      }
     }
 
-    if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType === "Internship") {
-      if(stipened===undefined||stipened===null||stipened===0){
-        stipendEmpty=true;
+    if (
+      workInfoViewData !== null &&
+      workInfoViewData !== undefined &&
+      Object.keys(workInfoViewData).length !== 0 &&
+      workInfoViewData.contractType === "Internship"
+    ) {
+      if (stipened === undefined || stipened === null || stipened === 0) {
+        stipendEmpty = true;
         toast.error("Please Enter the valid Stipend");
-      }else{
-        stipendEmpty=false;
-      }
+      } else {
+        if (
+          workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          Object.keys(workInfoViewData).length !== 0 &&
+          workInfoViewData.contractType === "Internship" &&
+          workInfoViewData.nationality !== "Indian"
+        ) {
+          if (stipened < 75000) {
+            stipendEmpty = true;
+            toast.error("Please Enter the valid Stipend");
+          } else {
+            stipendEmpty = false;
           }
-    if (fixedGrossEmpty===false&&stipendEmpty===false&&
+        }
+      }
+    }
+
+    if (
+      fixedGrossEmpty === false &&
+      stipendEmpty === false &&
       fixedGrossError === false &&
       stipenedError === false &&
       parmanentGrossLimit === false &&
       partTimeGrossLimit === false &&
       localExpatGrossLimit === false
     ) {
-      if ((
-        candidateData.candidateInformation !== null ||
-        candidateData.candidateInformation !== undefined ||
-        Object.keys(candidateData.candidateInformation).length !== 0) &&
-          saveclick === false) {
+      if (
+        (candidateData.candidateInformation !== null ||
+          candidateData.candidateInformation !== undefined ||
+          Object.keys(candidateData.candidateInformation).length !== 0) &&
+        saveclick === false
+      ) {
         console.log("first click");
         setSaveclick(true);
         remunerationinfo = {
@@ -560,6 +633,10 @@ if(fixedGross===undefined||fixedGross===null||fixedGross===0){
                       {stipenedError ? (
                         <p style={{ color: "red" }}>
                           This field cannot be empty
+                        </p>
+                      ) : internshipGrossLimit ? (
+                        <p style={{ color: "red" }}>
+                          Stipend should be above 75000
                         </p>
                       ) : (
                         ""
