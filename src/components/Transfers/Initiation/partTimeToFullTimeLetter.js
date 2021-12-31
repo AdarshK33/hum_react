@@ -259,6 +259,28 @@ const PartTimeToFullTimeLetter = () => {
             <p>
               <b>We welcome you to the {offerLetterData.companyName} Family!</b>
             </p>
+            <Row>
+             <Col sm="8">
+             <p>For {offerLetterData.companyName} Pvt Ltd</p>
+             </Col>
+              <Col sm="4">
+              <p> Accepted By </p>
+              <p>{offerLetterData !== undefined &&
+          offerLetterData.candidateName}
+          </p>
+          
+              </Col>
+              </Row>
+              <Row>
+             <Col sm="8">
+             <p>Authorised Signatory</p>
+             </Col>
+              <Col sm="4">
+              <p> Employee Signature</p>
+       
+              </Col>
+              </Row>
+              
             <p className="text-center">
               <b>Annexure-1</b>
             </p>
@@ -454,27 +476,7 @@ const PartTimeToFullTimeLetter = () => {
               {/* </Col>
             </Row>
           </div> */}
-          <Row>
-             <Col sm="8">
-             <p>For {offerLetterData.companyName} Pvt Ltd</p>
-             </Col>
-              <Col sm="4">
-              <p> Accepted By </p>
-              <p>{offerLetterData !== undefined &&
-          offerLetterData.candidateName}
-          </p>
-          
-              </Col>
-              </Row>
-              <Row>
-             <Col sm="8">
-             <p>Authorised Signatory</p>
-             </Col>
-              <Col sm="4">
-              <p> Employee Signature</p>
        
-              </Col>
-              </Row>
           {/* {signaturePad && !saveLetter && (
               <div className="text-center mb-4">
                 <button

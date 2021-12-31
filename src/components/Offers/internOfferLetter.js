@@ -47,6 +47,8 @@ const InternOfferLetter = () => {
           <br></br>
           <p>For {offerLetterData.companyName} Pvt. Ltd</p>
           <br></br>
+            <p>Thanking you</p>
+          <p>Manager Name :{offerLetterData.managerName}</p>
         </Fragment>
       ) : (
         ""

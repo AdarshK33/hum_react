@@ -27,7 +27,8 @@ const InternShipLetter = () => {
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
           <br></br>
-          <h5 className="text-center"> INTERNSHIP EXPERIENCE LETTER</h5>
+          <h5 className="text-center">TO WHOMSOEVER IT MAY CONCERN</h5>
+          {/* <h5 className="text-center"> INTERNSHIP EXPERIENCE LETTER</h5> */}
 {/* 
           <p>Name:{relivingLetterData !== undefined &&
                   relivingLetterData.gender.toLowerCase() == "male"?

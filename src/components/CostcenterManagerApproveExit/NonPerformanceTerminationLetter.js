@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
-import calendarImage from "../../../assets/images/calendar-image.png";
+import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
-import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const NonPerformanceTerminationLetter = () => {
   const { terminationLetterData,loader, fetchTerminationLetterData } = useContext(

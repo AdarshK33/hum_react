@@ -85,7 +85,7 @@ const PartTimeOfferLetter = () => {
           <p>For {candidateLetterData.companyName} Pvt. Ltd</p>
           <br></br>
           <p>Thanking you</p>
-          <p>Manager Name</p>
+          <p>Manager Name :{candidateLetterData.managerName}</p>
         </Fragment>
       ) : (
         ""

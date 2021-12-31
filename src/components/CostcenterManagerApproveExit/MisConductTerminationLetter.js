@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
-import calendarImage from "../../../assets/images/calendar-image.png";
+import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
-import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
-const NonPerformanceTerminationLetter = () => {
+const MisConductTerminationLetter = () => {
   const { terminationLetterData,loader, fetchTerminationLetterData } = useContext(
     EmployeeSeparationContext
   );
+  //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
       {loader ? (
@@ -47,13 +48,13 @@ const NonPerformanceTerminationLetter = () => {
             terminationLetterData.employeeId}
            </p>
           <p>
-           <b>Address:</b>&nbsp;&nbsp;
+           <b>Address :</b>&nbsp;&nbsp;
            {terminationLetterData !== undefined &&
            terminationLetterData.address}
           </p>
           </p>
           <br/>
-          <p>
+            <p>
               {" "}
               <b>Sub:</b><b>Termination of your employment {" "}</b>
             </p>
@@ -75,37 +76,33 @@ const NonPerformanceTerminationLetter = () => {
       <br></br>
 
       <p>
-      You have been associated with{terminationLetterData.company}
+      You have been associated with{terminationLetterData.company} at its 
+      {terminationLetterData.address} location as {terminationLetterData.designation}.
+
+                {/* You have been associated {terminationLetterData.company}
+              You have been associated {terminationLetterData.company} 
               (“entity name/prodin/indeca”) as{" "}{terminationLetterData !== 
-              undefined && terminationLetterData.position}.
-              <br/>
-              <br/>
-              You have been working under a Performance Improvement 
-              Plan (PIP) designed to assist you in achieving a satisfactory
-               level of performance.
-               <br/>
-               <br/>
-               Unfortunately, you have not improved your performance to a 
-               consistent acceptable standard as required. On Date {terminationLetterData !== undefined &&
-                  terminationLetterData.dateOfResignation},
-                you were issued with a written warning in 
-                relation to your poor performance. 
-                <br/>
-                <br/>
-                This PIP period has now ended and it is time to assess your 
-                performance over that period and your performance has not met
-                 the required standard.
-                <br/>
-                <br/>
-                The performance over this period has been unsatisfactory.
-                 Specifically, {terminationLetterData !== undefined &&
+              undefined && terminationLetterData.position}. */}
+
+              This is reference to the Show Cause letter dated on{" "}
+                {terminationLetterData !== undefined &&
+                  terminationLetterData.dateOfResignation}. It has come 
+              to our knowledge that you have indulged in act of misconduct{" "}
+                {terminationLetterData !== undefined &&
                   terminationLetterData.reason}{" "}
-
+                at in {terminationLetterData.company}. 
+            The facts of the same are as below 
         <br />
+        <br/>
+        Your explanation is not justified, Hence the above acts of yours have 
+        constituted serious misconduct in connection with the employer’s business 
+        or property . 
+        <br/>
         <br />
-
+        Hence the above acts of yours have constituted serious misconduct in
+            connection with the employer’s business or property.
              Therefore, you are hereby terminated from your employment with 
-             {terminationLetterData.company} / Prodin / Indeca with immediate effect as on{" "}
+             {terminationLetterData.company} with immediate effect as on{" "}
             {terminationLetterData !== undefined &&
             terminationLetterData.lastWorkingDate}. Your full and final
             settlement post calculations of any dues from you will be 
@@ -115,8 +112,7 @@ const NonPerformanceTerminationLetter = () => {
       </p>
       <p>
             Thanking you,
-            </p>	
-          
+            </p>	 
                 <Row>
              <Col sm="8">
              <p className="mt-5 ">
@@ -126,14 +122,15 @@ const NonPerformanceTerminationLetter = () => {
               <Col sm="4">
               <p> Accepted By
           {terminationLetterData !== undefined &&
-          terminationLetterData.employeeName}
+          terminationLetterData.costCentreManagerName}
           </p>
               </Col>
               </Row>
               <p>
-            Authorized Signatory</p>
-             <p> Manager Name:  {terminationLetterData !== undefined &&
-            terminationLetterData.managerName} </p>
+            Authorized Signatory </p>
+            <p>Manager Name:  {terminationLetterData !== undefined &&
+            terminationLetterData.managerName} 
+            </p>
       <div className="float-right "></div>
     </div>
   </Fragment>      
@@ -144,5 +141,4 @@ const NonPerformanceTerminationLetter = () => {
   );
 };
 
-export default NonPerformanceTerminationLetter;
-
+export default MisConductTerminationLetter;
