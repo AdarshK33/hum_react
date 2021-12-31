@@ -53,6 +53,7 @@ import { DSICharterProvider } from "./context/DSICharterState";
 import { WeekOffProvider } from "./context/WeekOffState";
 import { WorkHourProvider } from "./context/WorkHourState";
 import { PayrollProvider } from "./context/PayrollState";
+import {DocumentUploadProvider} from "./context/DocumentUploadState"
 //firebase Auth
 function Root() {
   useEffect(() => {
@@ -99,6 +100,7 @@ function Root() {
                                                                         <NoticePeriodProvider>
                                                                           <InsuranceProvider>
                                                                             <MitProvider>
+                                                                              <DocumentUploadProvider>
                                                                               <DocumentManagementProvider>
                                                                                 <BrowserRouter
                                                                                   basename={
@@ -114,6 +116,7 @@ function Root() {
                                                                                   </ScrollContext>
                                                                                 </BrowserRouter>
                                                                               </DocumentManagementProvider>
+                                                                              </DocumentUploadProvider>
                                                                             </MitProvider>
                                                                           </InsuranceProvider>
                                                                         </NoticePeriodProvider>
