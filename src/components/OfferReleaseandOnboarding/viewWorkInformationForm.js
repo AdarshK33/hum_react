@@ -55,7 +55,7 @@ const EditWorkInformation = () => {
     cityData,
     cityList,
     managerList,
-    allManagerList
+    allManagerList,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -215,19 +215,7 @@ const EditWorkInformation = () => {
                 )}
               </Form.Group>
             </Col>
-            <Col sm={3}>
-              <Form.Group>
-                <Form.Label>Designation</Form.Label>
-                <br></br>
-                {state.employmentType === "Internship" ? (
-                  <Form.Label className="headingColor">Intern</Form.Label>
-                ) : (
-                  <Form.Label className="headingColor">
-                    {state.designation}
-                  </Form.Label>
-                )}
-              </Form.Group>
-            </Col>
+
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Department</Form.Label>
@@ -237,8 +225,6 @@ const EditWorkInformation = () => {
                 </Form.Label>
               </Form.Group>
             </Col>
-          </Row>
-          <Row className="mt-4">
             <Col sm={3}>
               {state.employmentType === "Internship" ? (
                 <Form.Group className="reactDate">
@@ -255,6 +241,21 @@ const EditWorkInformation = () => {
                   </Form.Label>
                 </Form.Group>
               )}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Designation</Form.Label>
+                <br></br>
+                {state.employmentType === "Internship" ? (
+                  <Form.Label className="headingColor">Intern</Form.Label>
+                ) : (
+                  <Form.Label className="headingColor">
+                    {state.designation}
+                  </Form.Label>
+                )}
+              </Form.Group>
             </Col>
             <Col sm={3}>
               <Form.Group>
@@ -392,17 +393,17 @@ const EditWorkInformation = () => {
             </Col>
           </Row>
           <Row className="mt-4">
-            <Col sm={3}>
-              {state.employmentType === "Internship" ? (
-                ""
-              ) : (
-                // <Form.Group>
-                //   <Form.Label>Internship Duration</Form.Label>
-                //   <br></br>
-                //   <Form.Label className="headingColor">
-                //     {state.internship} Month
-                //   </Form.Label>
-                // </Form.Group>
+            {state.employmentType === "Internship" ? (
+              ""
+            ) : (
+              // <Form.Group>
+              //   <Form.Label>Internship Duration</Form.Label>
+              //   <br></br>
+              //   <Form.Label className="headingColor">
+              //     {state.internship} Month
+              //   </Form.Label>
+              // </Form.Group>
+              <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Notice Period</Form.Label>
                   <br></br>
@@ -410,8 +411,9 @@ const EditWorkInformation = () => {
                     {state.noticePeriod} Month
                   </Form.Label>
                 </Form.Group>
-              )}
-            </Col>
+              </Col>
+            )}
+
             {state.employmentType === "Internship" ? (
               ""
             ) : (
@@ -426,16 +428,17 @@ const EditWorkInformation = () => {
               </Col>
             )}
 
-{state.employmentType === "Local Expat" && (
-                <Col sm={3}>
-                  <Form.Group>
-                    <Form.Label>Nationality</Form.Label>
-                    <br></br>
-                    <Form.Label className="headingColor">
-                      {state.nationality}
-                    </Form.Label>
-                  </Form.Group>
-                </Col>
+            {(state.employmentType === "Local Expat" ||
+              state.employmentType === "Internship") && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Nationality</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.nationality}
+                  </Form.Label>
+                </Form.Group>
+              </Col>
             )}
             {/* {(state.employmentType === "Internship" ||
               state.employmentType === "Permanent" ||
@@ -463,8 +466,8 @@ const EditWorkInformation = () => {
               </Col>
             )} */}
           </Row>
-          
-            {/* {state.employmentType === "Local Expat" && (
+
+          {/* {state.employmentType === "Local Expat" && (
               <React.Fragment>
                 <Col sm={3}>
                   <Form.Group>
@@ -475,7 +478,7 @@ const EditWorkInformation = () => {
                     </Form.Label>
                   </Form.Group>
                 </Col> */}
-                {/* <Col sm={3}>
+          {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date of Issue</Form.Label>
                     <br></br>
@@ -484,7 +487,7 @@ const EditWorkInformation = () => {
                     </Form.Label>
                   </Form.Group>
                 </Col> */}
-                {/* <Col sm={3}>
+          {/* <Col sm={3}>
                   <Form.Group className="reactDate">
                     <Form.Label>Date Of Validity</Form.Label>
                     <br></br>
@@ -493,7 +496,7 @@ const EditWorkInformation = () => {
                     </Form.Label>
                   </Form.Group>
                 </Col> */}
-              {/* </React.Fragment>
+          {/* </React.Fragment>
             )} */}
           {state.recuritment === "NGO" ? (
             <Row className="mt-4">

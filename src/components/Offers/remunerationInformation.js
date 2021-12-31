@@ -21,6 +21,7 @@ const RemunerationInformation = (props) => {
   const [viewApiCall, setViewApiCall] = useState(false);
   const [parmanentGrossLimit, setParmanentGrossLimit] = useState(false);
   const [partTimeGrossLimit, setPartTimeGrossLimit] = useState(false);
+  const [internshipGrossLimit, setInternshipGrossLimit] = useState(false);
   const [bonusLimit, setBonusLimit] = useState(false);
   const [localExpatGrossLimit, setLocalExpatGrossLimit] = useState(false);
   const {
@@ -79,18 +80,18 @@ const RemunerationInformation = (props) => {
     }
     console.log("candidateData remuneration2", candidateData);
     console.log("workInformationData remuneration", workInformationData);
-
-
   }, [candidateData.workInformation]);
 
   useEffect(() => {
     console.log("getBonusByContractType", getBonusByContractType);
     if (
       getBonusByContractType !== null &&
-      getBonusByContractType !== undefined&&getBonusByContractType!==""&&Object.keys(getBonusByContractType).length!==0
+      getBonusByContractType !== undefined &&
+      getBonusByContractType !== "" &&
+      Object.keys(getBonusByContractType).length !== 0
     ) {
       setMonthlyBonus(getBonusByContractType.bonus);
-    }else{
+    } else {
       setMonthlyBonus(0);
     }
   }, [getBonusByContractType]);
@@ -191,6 +192,34 @@ const RemunerationInformation = (props) => {
           setLocalExpatGrossLimit(false);
         }
       }
+      if (
+        (candidateData !== null &&
+          candidateData !== undefined &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation !== undefined &&
+          Object.keys(candidateData.workInformation).length !== 0 &&
+          candidateData.workInformation.contractType === "Internship" &&
+          candidateData.workInformation.nationality !== "Indian") ||
+        (workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          Object.keys(workInfoViewData).length !== 0 &&
+          workInfoViewData.contractType === "Internship" &&
+          workInfoViewData.nationality !== "Indian")
+      ) {
+        if (stipened) {
+          if (stipened < 75000) {
+            setStipenedError(false);
+            setInternshipGrossLimit(true);
+          } else {
+            setStipenedError(false);
+            setInternshipGrossLimit(false);
+          }
+        } else {
+          setStipenedError(true);
+          setInternshipGrossLimit(false);
+        }
+      }
     }
   }, [candidateData.workInformation, workInfoViewData]);
 
@@ -206,19 +235,45 @@ const RemunerationInformation = (props) => {
         console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
         setStipened(e);
         setStipenedError(true);
+        setInternshipGrossLimit(false);
         setFixedGross(0);
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
         setPartTimeGrossLimit(false);
         setLocalExpatGrossLimit(false);
       } else {
-        setStipened(e);
-        setStipenedError(false);
-        setFixedGross(0);
-        setFixedGrossError(false);
-        setParmanentGrossLimit(false);
-        setPartTimeGrossLimit(false);
-        setLocalExpatGrossLimit(false);
+        if (
+          workInfoViewData.contractType === "Internship" &&
+          workInfoViewData.nationality !== "Indian"
+        ) {
+          if (stipened < 7500) {
+            setStipened(e);
+            setStipenedError(false);
+            setInternshipGrossLimit(true);
+            setFixedGross(0);
+            setFixedGrossError(false);
+            setParmanentGrossLimit(false);
+            setPartTimeGrossLimit(false);
+            setLocalExpatGrossLimit(false);
+          } else {
+            setStipened(e);
+            setStipenedError(false);
+            setFixedGross(0);
+            setFixedGrossError(false);
+            setParmanentGrossLimit(false);
+            setPartTimeGrossLimit(false);
+            setLocalExpatGrossLimit(false);
+            setInternshipGrossLimit(false);
+          }
+        } else {
+          setStipened(e);
+          setStipenedError(false);
+          setFixedGross(0);
+          setFixedGrossError(false);
+          setParmanentGrossLimit(false);
+          setPartTimeGrossLimit(false);
+          setLocalExpatGrossLimit(false);
+        }
       }
     }
 
@@ -337,33 +392,61 @@ const RemunerationInformation = (props) => {
       workInfoViewData
     );
 
-   
-let fixedGrossEmpty=false;
-let stipendEmpty=false;
-if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType !== "Internship") {
-if(fixedGross===undefined||fixedGross===null||fixedGross===0){
-  fixedGrossEmpty=true;
-  toast.error("Please Enter the valid FixedGross");
-}else{
-  fixedGrossEmpty=false;
-}
-}
-if (workInfoViewData!==null &&workInfoViewData!==undefined&&Object.keys(workInfoViewData).length!==0 && workInfoViewData.contractType === "Internship") {
-  if(stipened===undefined||stipened===null||stipened===0){
-    stipendEmpty=true;
-    toast.error("Please Enter the valid Stipend");
-  }else{
-    stipendEmpty=false;
-  }
+    let fixedGrossEmpty = false;
+    let stipendEmpty = false;
+    if (
+      workInfoViewData !== null &&
+      workInfoViewData !== undefined &&
+      Object.keys(workInfoViewData).length !== 0 &&
+      workInfoViewData.contractType !== "Internship"
+    ) {
+      if (fixedGross === undefined || fixedGross === null || fixedGross === 0) {
+        fixedGrossEmpty = true;
+        toast.error("Please Enter the valid FixedGross");
+      } else {
+        fixedGrossEmpty = false;
       }
+    }
+    if (
+      workInfoViewData !== null &&
+      workInfoViewData !== undefined &&
+      Object.keys(workInfoViewData).length !== 0 &&
+      workInfoViewData.contractType === "Internship"
+    ) {
+      if (stipened === undefined || stipened === null || stipened === 0) {
+        stipendEmpty = true;
+        toast.error("Please Enter the valid Stipend");
+      } else {
+        if (
+          workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          Object.keys(workInfoViewData).length !== 0 &&
+          workInfoViewData.contractType === "Internship" &&
+          workInfoViewData.nationality !== "Indian"
+        ) {
+          if (stipened < 75000) {
+            stipendEmpty = true;
+            toast.error("Please Enter the valid Stipend");
+          } else {
+            stipendEmpty = false;
+          }
+        }
+      }
+    }
 
-console.log("submit error check",fixedGrossError,
-stipenedError,
-parmanentGrossLimit,
-partTimeGrossLimit,
-localExpatGrossLimit,
-fixedGrossEmpty,stipendEmpty);
-    if (fixedGrossEmpty===false&&stipendEmpty===false&&
+    console.log(
+      "submit error check",
+      fixedGrossError,
+      stipenedError,
+      parmanentGrossLimit,
+      partTimeGrossLimit,
+      localExpatGrossLimit,
+      fixedGrossEmpty,
+      stipendEmpty
+    );
+    if (
+      fixedGrossEmpty === false &&
+      stipendEmpty === false &&
       fixedGrossError === false &&
       stipenedError === false &&
       parmanentGrossLimit === false &&
@@ -437,7 +520,7 @@ fixedGrossEmpty,stipendEmpty);
 
   return (
     <Fragment>
-    <ToastContainer />
+      <ToastContainer />
       <Form>
         <Row>
           <Fragment>
@@ -462,6 +545,10 @@ fixedGrossEmpty,stipendEmpty);
                     />
                     {stipenedError ? (
                       <p style={{ color: "red" }}>This field cannot be empty</p>
+                    ) : internshipGrossLimit ? (
+                      <p style={{ color: "red" }}>
+                        Stipend should be above 75000
+                      </p>
                     ) : (
                       ""
                     )}
