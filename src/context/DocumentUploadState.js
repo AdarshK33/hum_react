@@ -6,6 +6,7 @@ import { saveAs } from "file-saver";
 
 const initialState = {
     documentUploadData: {},
+    employeeProfileData: {},
 };
 
 export const DocumentUploadContext = createContext();
@@ -24,7 +25,8 @@ export const DocumentUploadProvider = (props) => {
       .then((response) => {
         console.log(response, "reponse excel");
         setLoader(false);
-        var documentUploadData =response.data.data
+        ViewEmployeeUpload()
+         state.documentUploadData =response.data.data
         return dispatch({
           type: "DOCUMENT_UPLOAD_LIST",
           payload: state.documentUploadData,
@@ -36,14 +38,34 @@ export const DocumentUploadProvider = (props) => {
       });
   };
 
+  const ViewEmployeeUpload = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/admin/uploads/view")
+      .then((response) => {
+        console.log(response,"ViewEmployeeUpload")
+        state.employeeUploadData = response.data.data;
+        setLoader(false);
+        console.log("employee profile", response);
 
+        return dispatch({
+          type: "EMPLOYEE_UPLOAD",
+          payload: state.employeeUploadData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <DocumentUploadContext.Provider
       value={{
         loader,
         getDocumentUpload,
+        ViewEmployeeUpload,
         documentUploadData:state.documentUploadData,
+        employeeUploadData:state.employeeUploadData
       }}
     >
       {props.children}

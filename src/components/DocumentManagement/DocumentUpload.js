@@ -29,15 +29,19 @@ import {
 import {DocumentUploadContext} from "../../context/DocumentUploadState"
 
 const DocumentUpload = () => {
-  const { getDocumentUpload,documentUploadData,loader } = useContext(DocumentUploadContext);
+  const { getDocumentUpload,documentUploadData,loader,ViewEmployeeUpload
+  ,employeeUploadData } = useContext(DocumentUploadContext);
   const [document, setDocument] = useState("");
   const [fileUpload, setFileUpload] = useState();
   const [currentRecords, setCurrentRecords] = useState([]);
+  const[fileInputName,setFileInputName]= useState("")
 
-  
+  useEffect(()=>{
+    ViewEmployeeUpload()
+  },[])
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
-
+    setFileInputName(event.target.files[0].name)
     console.log("clicked", fileObj);
     if (
       fileObj !== undefined &&
@@ -117,7 +121,21 @@ const DocumentUpload = () => {
     }
   
   };
-console.log(document,fileUpload)
+  const handleDate = (data)=>{
+    let current = new Date(data)
+  let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
+  let hours = current.getHours();
+  let am_pm = (hours >= 12) ? "PM" : "AM";
+  let minutes = current.getMinutes()<10?("0"+current.getMinutes()):current.getMinutes()
+  if(hours >= 12){
+      hours -=12;
+  }
+  
+  let cTime = hours==0?("12" + ":" + minutes +"  "+ am_pm):(hours + ":" + minutes +"  "+ am_pm)
+  let dateTime = cDate + '   ' + cTime;
+  return dateTime
+  }
+console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
   return (
     <div className="module-reports">
       <ToastContainer />
@@ -178,8 +196,9 @@ console.log(document,fileUpload)
                     <div className="fileInput">
                   <label 
                   className="fileInputField">
-                    &nbsp;&nbsp;
-                    Select Document Here
+                    {fileInputName ? fileInputName :
+                    <label>&nbsp;&nbsp;
+                    Select Document Here</label>}
                     <input
                       type="file"
                       placeholder="Select Document"
@@ -228,9 +247,10 @@ console.log(document,fileUpload)
             <Table className="tableWrapper table table-borderless">
               <thead>
                 <tr>
+                  <th>SL.No</th>
                   <th>Document Name</th>
                   <th>Uploaded Date</th>
-                  <th>Action</th>
+                  {/* <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -252,17 +272,24 @@ console.log(document,fileUpload)
                     </td>
                     <td></td>
                   </tr>
-                ) : documentUploadData && Object.keys(documentUploadData).length ? (
-                  documentUploadData.map((item) => {
+                ) : employeeUploadData && Object.keys(employeeUploadData).length ? (
+                  employeeUploadData.map((item,i) => {
                     return (
                       <tr>
-                        <td>{item.documentLink}</td>
+                        <td>{i+1}</td>
+                        <td>{item.documentName}</td>
                         <td>
-                          {}
+                          {item.auditField !== null &&
+                          item.auditField !== "" &&
+                          item.auditField !== undefined &&
+                          item.auditField.createdDate !== null &&
+                          item.auditField.createdDate !== " " &&
+                          item.auditField.createdDate !== undefined?
+                          handleDate(item.auditField.createdDate):''}
                         </td>
-                        <td>
-                        {}
-                        </td>
+                        {/* <td>
+                        Delete
+                        </td> */}
                       </tr>
                     );
                   })

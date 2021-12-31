@@ -6,6 +6,11 @@ const DocumentUploadReducer = (state, action) => {
             ...state,
             documentUploadData: action.payload,
           };
+          case "EMPLOYEE_UPLOAD":
+          return {
+            ...state,
+            employeeUploadData: action.payload,
+          };
       default:
         return state;
     }
