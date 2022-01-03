@@ -250,7 +250,8 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
+    educationDocuments !== null &&
+    Object.keys(educationDocuments).length !== 0 &&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 17
@@ -260,7 +261,8 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
+    educationDocuments !== null &&
+    Object.keys(educationDocuments).length !== 0 &&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 24
@@ -487,61 +489,31 @@ const DocVerification = () => {
                         Download
                       </button>
                     </td>
-                    {item.statusDesc !== null &&
-                    item.documentType === 1 &&
-                    (item.adminStatus === 1 || item.adminStatus === 2) ? (
-                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
-                    ) : item.statusDesc !== null &&
+                    {
+                      // item.statusDesc !== null &&
+                      // item.documentType === 1 &&
+                      // (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      //   <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                      // ) :
+                      item.statusDesc !== null &&
                       item.documentType === 5 &&
                       (item.adminStatus === 1 || item.adminStatus === 2) ? (
-                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
-                    ) : item.statusDesc !== null &&
-                      item.documentType === 4 &&
-                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
-                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
-                    ) : (
-                      <td className=" buttonMargin1">
-                        {rolePermission == "admin" &&
-                        item.documentType === 1 &&
-                        item.adminStatus === 0 ? (
-                          <button
-                            className="approveButton ml-4"
-                            onClick={() =>
-                              handleApproveDocument(
-                                item.documentId,
-                                candidateId
-                              )
-                            }
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {rolePermission == "admin" &&
-                        item.documentType === 5 &&
-                        item.adminStatus === 0 ? (
-                          <button
-                            className="approveButton ml-4"
-                            disabled={rejectStatus === "FAIL" ? true : false}
-                            onClick={() =>
-                              handleApproveDocument(
-                                item.documentId,
-                                candidateId
-                              )
-                            }
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {rolePermission == "admin" &&
+                        <td className="buttonMargin1">
+                          {item.adminStatusDesc}
+                        </td>
+                      ) : item.statusDesc !== null &&
                         item.documentType === 4 &&
+                        (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                        <td className="buttonMargin1">
+                          {item.adminStatusDesc}
+                        </td>
+                      ) : (
+                        <td className=" buttonMargin1">
+                          {/* {rolePermission == "admin" &&
+                        item.documentType === 1 &&
                         item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
-                            disabled={rejectStatus === "FAIL" ? true : false}
                             onClick={() =>
                               handleApproveDocument(
                                 item.documentId,
@@ -553,98 +525,142 @@ const DocVerification = () => {
                           </button>
                         ) : (
                           ""
-                        )}
-                        {rolePermission == "admin" &&
-                        item.documentType === 1 &&
-                        item.adminStatus === 0 ? (
-                          <button
-                            className="approveButton ml-4"
-                            disabled={
-                              disApproveAadhar !== undefined &&
-                              disApproveAadhar === "FAIL"
-                                ? true
-                                : false
-                            }
-                            style={
-                              disApproveAadhar !== undefined &&
-                              disApproveAadhar === "FAIL"
-                                ? { opacity: "0.6" }
-                                : { opacity: "1" }
-                            }
-                            onClick={() =>
-                              handleDisApproveDocument(item.documentId)
-                            }
-                          >
-                            Disapprove
-                          </button>
-                        ) : rolePermission == "admin" &&
+                        )} */}
+                          {rolePermission == "admin" &&
                           item.documentType === 5 &&
                           item.adminStatus === 0 ? (
-                          <button
-                            className="approveButton ml-4"
-                            disabled={
-                              disApproveAadhar !== undefined &&
-                              disApproveAadhar === "FAIL"
-                                ? true
-                                : false
-                            }
-                            style={
-                              disApproveAadhar !== undefined &&
-                              disApproveAadhar === "FAIL"
-                                ? { opacity: "0.6" }
-                                : { opacity: "1" }
-                            }
-                            onClick={() =>
-                              handleDisApproveDocument(item.documentId)
-                            }
-                          >
-                            Disapprove
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                        {rolePermission == "admin" &&
-                        item.documentType === 4 &&
-                        item.adminStatus === 0 ? (
-                          <button
-                            className="approveButton ml-4"
-                            disabled={
-                              disApproveAadhar !== undefined &&
-                              disApproveAadhar === "FAIL"
-                                ? true
-                                : false
-                            }
-                            style={
-                              disApproveAadhar !== undefined &&
-                              disApproveAadhar === "FAIL"
-                                ? { opacity: "0.6" }
-                                : { opacity: "1" }
-                            }
-                            onClick={() =>
-                              handleDisApproveDocument(item.documentId)
-                            }
-                          >
-                            Disapprove
-                          </button>
-                        ) : (
-                          <div></div>
-                        )}
-                      </td>
-                    )}
-                    {(item.documentType === 1 ||
-                      item.documentType === 5 ||
-                      item.documentType === 4) && (
-                      <td className="buttonMargin1">
-                        {item.remark !== null ? item.remark : "N/A"}
-                      </td>
-                    )}
-                    {(item.documentType === 1 ||
-                      item.documentType === 5 ||
-                      item.documentType === 4) && (
-                      <td className="buttonMargin1">
-                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
-                      </td>
-                    )}
+                            <button
+                              className="approveButton ml-4"
+                              disabled={rejectStatus === "FAIL" ? true : false}
+                              onClick={() =>
+                                handleApproveDocument(
+                                  item.documentId,
+                                  candidateId
+                                )
+                              }
+                            >
+                              Approve
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {rolePermission == "admin" &&
+                          item.documentType === 4 &&
+                          item.adminStatus === 0 ? (
+                            <button
+                              className="approveButton ml-4"
+                              disabled={rejectStatus === "FAIL" ? true : false}
+                              onClick={() =>
+                                handleApproveDocument(
+                                  item.documentId,
+                                  candidateId
+                                )
+                              }
+                            >
+                              Approve
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {
+                            // rolePermission == "admin" &&
+                            // item.documentType === 1 &&
+                            // item.adminStatus === 0 ? (
+                            //   <button
+                            //     className="approveButton ml-4"
+                            //     disabled={
+                            //       disApproveAadhar !== undefined &&
+                            //       disApproveAadhar === "FAIL"
+                            //         ? true
+                            //         : false
+                            //     }
+                            //     style={
+                            //       disApproveAadhar !== undefined &&
+                            //       disApproveAadhar === "FAIL"
+                            //         ? { opacity: "0.6" }
+                            //         : { opacity: "1" }
+                            //     }
+                            //     onClick={() =>
+                            //       handleDisApproveDocument(item.documentId)
+                            //     }
+                            //   >
+                            //     Disapprove
+                            //   </button>
+                            // ) :
+                            rolePermission == "admin" &&
+                            item.documentType === 5 &&
+                            item.adminStatus === 0 ? (
+                              <button
+                                className="approveButton ml-4"
+                                disabled={
+                                  disApproveAadhar !== undefined &&
+                                  disApproveAadhar === "FAIL"
+                                    ? true
+                                    : false
+                                }
+                                style={
+                                  disApproveAadhar !== undefined &&
+                                  disApproveAadhar === "FAIL"
+                                    ? { opacity: "0.6" }
+                                    : { opacity: "1" }
+                                }
+                                onClick={() =>
+                                  handleDisApproveDocument(item.documentId)
+                                }
+                              >
+                                Disapprove
+                              </button>
+                            ) : (
+                              ""
+                            )
+                          }
+                          {rolePermission == "admin" &&
+                          item.documentType === 4 &&
+                          item.adminStatus === 0 ? (
+                            <button
+                              className="approveButton ml-4"
+                              disabled={
+                                disApproveAadhar !== undefined &&
+                                disApproveAadhar === "FAIL"
+                                  ? true
+                                  : false
+                              }
+                              style={
+                                disApproveAadhar !== undefined &&
+                                disApproveAadhar === "FAIL"
+                                  ? { opacity: "0.6" }
+                                  : { opacity: "1" }
+                              }
+                              onClick={() =>
+                                handleDisApproveDocument(item.documentId)
+                              }
+                            >
+                              Disapprove
+                            </button>
+                          ) : (
+                            <div></div>
+                          )}
+                        </td>
+                      )
+                    }
+                    {
+                      // item.documentType === 1 ||
+                      (item.documentType === 5 || item.documentType === 4) && (
+                        <td className="buttonMargin1">
+                          {item.remark !== null ? item.remark : "N/A"}
+                        </td>
+                      )
+                    }
+                    {
+                      // item.documentType === 1 ||
+                      (item.documentType === 5 || item.documentType === 4) && (
+                        <td className="buttonMargin1">
+                          {item.verifiedDate !== null
+                            ? item.verifiedDate
+                            : "N/A"}
+                        </td>
+                      )
+                    }
                   </tr>
                 </tbody>
               );
@@ -822,19 +838,20 @@ const DocVerification = () => {
                       item.documentType === 12 &&
                       (item.adminStatus === 1 || item.adminStatus === 2) ? (
                       <td className="buttonMargin1">{item.adminStatusDesc}</td>
-                    ): item.statusDesc !== null &&
-                    item.documentType === 6 &&
-                    (item.adminStatus === 1 || item.adminStatus === 2) ? (
-                    <td className="buttonMargin1">{item.adminStatusDesc}</td>
-                  ): item.statusDesc !== null &&
-                  item.documentType === 15 &&
-                  (item.adminStatus === 1 || item.adminStatus === 2) ? (
-                  <td className="buttonMargin1">{item.adminStatusDesc}</td>
-                ): item.statusDesc !== null &&
-                item.documentType === 16 &&
-                (item.adminStatus === 1 || item.adminStatus === 2) ? (
-                <td className="buttonMargin1">{item.adminStatusDesc}</td>
-              ) : (
+                    ) : // item.statusDesc !== null &&
+                    //   item.documentType === 6 &&
+                    //   (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                    //   <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                    // ) :
+                    item.statusDesc !== null &&
+                      item.documentType === 15 &&
+                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                    ) : item.statusDesc !== null &&
+                      item.documentType === 16 &&
+                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
+                    ) : (
                       <td className=" buttonMargin1">
                         {rolePermission == "admin" &&
                         item.documentType === 10 &&
@@ -890,7 +907,7 @@ const DocVerification = () => {
                         ) : (
                           ""
                         )}
-                        {rolePermission == "admin" &&
+                        {/* {rolePermission == "admin" &&
                         item.documentType === 6 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -907,7 +924,7 @@ const DocVerification = () => {
                           </button>
                         ) : (
                           ""
-                        )}
+                        )} */}
                         {rolePermission == "admin" &&
                         item.documentType === 15 &&
                         item.adminStatus === 0 ? (
@@ -1023,7 +1040,7 @@ const DocVerification = () => {
                         ) : (
                           ""
                         )}
-                        {rolePermission == "admin" &&
+                        {/* {rolePermission == "admin" &&
                         item.documentType === 6 &&
                         item.adminStatus === 0 ? (
                           <button
@@ -1048,7 +1065,7 @@ const DocVerification = () => {
                           </button>
                         ) : (
                           ""
-                        )}
+                        )} */}
                         {rolePermission == "admin" &&
                         item.documentType === 15 &&
                         item.adminStatus === 0 ? (
