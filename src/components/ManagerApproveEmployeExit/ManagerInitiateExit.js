@@ -691,7 +691,7 @@ const ManagerInitiateExit = () => {
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
-            dateOfResignation: null,
+            dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
             personalEmail: state.emailId,
             empName: EmpName,
             employeeComment: null,
@@ -1565,9 +1565,9 @@ console.log(intern,"8098709809808")
                           </Col>
                         
                          {/* } */}
-                        {intern ? (
+                        {/* {intern ? (
                           ""
-                        ) : (
+                        ) : ( */}
                           <Col sm={2}>
                             <div>
                               <label>
@@ -1578,10 +1578,10 @@ console.log(intern,"8098709809808")
                               </label>
                             </div>
                           </Col>
-                        )}
+                        {/* )}
                         {intern ? (
                           ""
-                        ) : (
+                        ) : ( */}
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1622,7 +1622,7 @@ console.log(intern,"8098709809808")
                               )}
                             </div>
                           </Col>
-                        )}
+                        {/* )} */}
 
                         <Col sm={2}>
                           <div>

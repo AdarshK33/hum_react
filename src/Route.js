@@ -122,7 +122,7 @@ import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/Manage
 import ModuleReports from "./components/ModuleReports/ModuleReports";
 /* MIT reports */
 import MitReports from "./components/MitReports/MitReports";
-import MitUpload from "././components/MitReports/MitUpload";
+import DocumentUpload from "./components/DocumentManagement/DocumentUpload";
 
 /* Notice Period Module */
 import NoticePeriodListContainer from "./components/NoticePeriod/List/ListContainer";
@@ -183,10 +183,6 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/emp360`}
         component={EmployeeDashboard}
       /> */}
-     <Route
-            path={`${process.env.PUBLIC_URL}/reports/mit-upload`}
-            component={MitUpload}
-          />
       <Route
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
@@ -206,6 +202,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
+           <Route
+            path={`${process.env.PUBLIC_URL}/documents-upload`}
+            component={DocumentUpload}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
@@ -261,6 +261,7 @@ const RoutePath = () => {
             to={`${process.env.PUBLIC_URL}/codeofconduct`}
             component={CodeOfConduct}
           />
+
           {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} /> */}
           {/* Sample page */}
           <Route

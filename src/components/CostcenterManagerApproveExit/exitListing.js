@@ -21,7 +21,7 @@ const ExitListing = () => {
     changeEmployeeId,
     ViewEmployeeProfile,
   } = useContext(EmployeeSeparationContext);
-  const { user } = useContext(AppContext);
+  const { user ,getUserInfo} = useContext(AppContext);
 
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -29,6 +29,7 @@ const ExitListing = () => {
 
   useEffect(() => {
     EmployeeSeparationListExitView("all", pageCount, 9);
+    getUserInfo()
   }, []);
 
   console.log("---->", EmployeeSeparationExitList);
@@ -344,32 +345,33 @@ const ExitListing = () => {
                                     />
                                   </Link>
                                 ) :(((
-                                  (user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
+                                  (user.loginType == 1 || user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
                                    ||
-                                 (user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
+                                 (user.additionalRole == 1 || user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
                                 ) 
                                 &&
                                 item.isManager == true &&
                                 item.status == 2)
                                  ||
                                  ((
-                                  (user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
+                                  (user.loginType == 1 || user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
                                    ||
-                                 (user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
+                                 (user.additionalRole == 1 || user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
                                 ) 
                                  && 
                                 item.status == 2)
-                                ||
+                              //   ||
 
-                              ((
-                                (user.loginType == 0 ||user.loginType == 2 ||user.loginType == 3)
-                                ||
-                                (
-                                (user.additionalRole == 0 || user.additionalRole == 2 || user.additionalRole == 3)
-                                )
-                                 && user.isManager == true
-                                ) &&
-                                item.status == 2)) ? (
+                              // ((
+                              //   (user.loginType == 0 ||user.loginType == 2 ||user.loginType == 3)
+                              //   ||
+                              //   (
+                              //   (user.additionalRole == 0 || user.additionalRole == 2 || user.additionalRole == 3)
+                              //   )
+                              //    && user.isManager == true
+                              //   ) &&
+                              //   item.status == 2)
+                                ) ? (
                                   <Link
                                     to={"/employee-info/" + item.employeeId}
                                   >
