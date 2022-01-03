@@ -160,6 +160,7 @@ const DropDowns = (props) => {
                 borderRadius: "5px",
                 boxShadow: "none",
                 height: "37px",
+                fontSize: "13px",
               }}
               placeholder="Search Employee Name/Id"
               inputDebounce={10}
