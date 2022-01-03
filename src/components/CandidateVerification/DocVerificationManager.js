@@ -166,7 +166,8 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
+    educationDocuments !== null &&
+    Object.keys(educationDocuments).length !== 0 &&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 17
@@ -176,7 +177,8 @@ const DocVerification = () => {
       });
   educationDocuments =
     educationDocuments !== undefined &&
-    educationDocuments !== null &&Object.keys(educationDocuments).length !== 0&&
+    educationDocuments !== null &&
+    Object.keys(educationDocuments).length !== 0 &&
     educationDocuments
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType !== 24
@@ -647,7 +649,7 @@ const DocVerification = () => {
                     )}
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
-                    item.documentType >= 7 &&
+                    item.documentType >= 6 &&
                     item.documentType !== 24 &&
                     item.documentType !== 14 &&
                     item.documentType !== 17 &&
@@ -657,7 +659,7 @@ const DocVerification = () => {
                     item.documentType !== 15 &&
                     item.documentType !== 12 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
-                    ) : item.documentType >= 7 &&
+                    ) : item.documentType >= 6 &&
                       item.documentType !== 24 &&
                       item.documentType !== 14 &&
                       item.documentType !== 15 &&
@@ -714,7 +716,7 @@ const DocVerification = () => {
 
                     {item.remark !== null ? (
                       <td className="buttonMargin1">
-                        {item.documentType >= 7 &&
+                        {item.documentType >= 6 &&
                           item.documentType !== 24 &&
                           item.documentType !== 14 &&
                           item.documentType !== 15 &&
@@ -727,7 +729,7 @@ const DocVerification = () => {
                           item.remark}
                       </td>
                     ) : (
-                      item.documentType >= 7 &&
+                      item.documentType >= 6 &&
                       item.documentType !== 24 &&
                       item.documentType !== 14 &&
                       item.documentType !== 15 &&
@@ -740,7 +742,7 @@ const DocVerification = () => {
                     )}
                     {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
-                        {item.documentType >= 7 &&
+                        {item.documentType >= 6 &&
                           item.documentType !== 24 &&
                           item.documentType !== 14 &&
                           item.documentType !== 15 &&
@@ -752,7 +754,7 @@ const DocVerification = () => {
                           item.verifiedDate}
                       </td>
                     ) : (
-                      item.documentType >= 7 &&
+                      item.documentType >= 6 &&
                       item.documentType !== 24 &&
                       item.documentType !== 14 &&
                       item.documentType !== 15 &&
