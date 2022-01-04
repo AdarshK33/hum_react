@@ -97,7 +97,7 @@ const RosterTable = (storeID) => {
         // console.log(typeof Number(e.target.value), 'e.target');
         const currentYear = new Date().getFullYear();
         if( e.target.value !== "Select month" && storeID.storeId) 
-        adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
+        adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, currentYear);
     }
 
     const weekSelected = e => {
