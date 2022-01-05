@@ -30,7 +30,8 @@ import {
 import {DocumentUploadContext} from "../../context/DocumentUploadState"
 
 const DocumentUpload = () => {
-  const { getDocumentUpload,documentUploadData,loader,ViewEmployeeUpload
+  const { getDocumentUpload,documentUploadData,loader,ViewEmployeeUpload,
+    downloadDocumentUpload,downloadDocumentUploadData
   ,employeeUploadData } = useContext(DocumentUploadContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
@@ -299,8 +300,7 @@ const DocumentUpload = () => {
                   <th>SL.No</th>
                   <th>Document Name</th>
                   <th>Uploaded Date</th>
-                  <th>Download</th>
-                  <th>Action</th>
+                  {/* <th>Download</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -338,22 +338,15 @@ const DocumentUpload = () => {
                           item.auditField.createdDate !== undefined?
                           handleDate(item.auditField.createdDate):''}
                         </td>
-                        <td>
+                        {/* <td>
                 <Button
                   variant="primary"
                   type="button"
+                  onClick={(e) => downloadDocumentUpload(item.uploadId,item.auditField.createdDate)}
                 >
                   Download
                 </Button>
-                    </td>
-                    <td>
-                <Button
-                  variant="primary"
-                  type="button"
-                >
-                  Edit
-                </Button>
-                    </td>
+                    </td> */}
                       </tr>
                     ) 
                      })): (
