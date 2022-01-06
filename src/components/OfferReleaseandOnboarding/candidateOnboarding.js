@@ -716,11 +716,13 @@ const CandidateOnboarding = () => {
                 {RoleList !== null &&
                   RoleList !== undefined &&
                   RoleList.map((item, i) => {
-                    return (
-                      <option key={i} value={item.roleId}>
-                        {item.roleDesc}
-                      </option>
-                    );
+                    if (item.roleDesc !== "Administrator") {
+                      return (
+                        <option key={i} value={item.roleId}>
+                          {item.roleDesc}
+                        </option>
+                      );
+                    }
                   })}
               </Form.Control>
             </Col>
