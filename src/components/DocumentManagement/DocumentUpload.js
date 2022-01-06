@@ -6,7 +6,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DocumentManagement.css";
 import { ToastContainer, toast } from "react-toastify";
-
+import { PermissionContext } from "../../context/PermissionState";
+import { AppContext } from "../../context/AppState";
 import MultiSelect from "react-multi-select-component";
 import {
   format,
@@ -29,16 +30,58 @@ import {
 import {DocumentUploadContext} from "../../context/DocumentUploadState"
 
 const DocumentUpload = () => {
-  const { getDocumentUpload,documentUploadData,loader,ViewEmployeeUpload
+  const { getDocumentUpload,documentUploadData,loader,ViewEmployeeUpload,
+    downloadDocumentUpload,downloadDocumentUploadData
   ,employeeUploadData } = useContext(DocumentUploadContext);
+  const { rolePermission } = useContext(PermissionContext);
+  const { user } = useContext(AppContext);
   const [document, setDocument] = useState("");
   const [fileUpload, setFileUpload] = useState();
   const [currentRecords, setCurrentRecords] = useState([]);
   const[fileInputName,setFileInputName]= useState("")
-
+  const [role , setRole] = useState(0)
   useEffect(()=>{
     ViewEmployeeUpload()
   },[])
+
+  useEffect(() => {
+    if (rolePermission == "admin"){
+      setRole(1);
+    } else {
+      setRole(0);
+    }
+  }, [rolePermission]);
+
+  useEffect(() => {
+    if (employeeUploadData !== null && employeeUploadData !== undefined){
+      let tempArray = []
+        employeeUploadData.map((item,i)=>{
+          if(item !== "" && item !== undefined && item !== null &&
+          item.documentName !== "" && item.documentName !== undefined && 
+          item.documentName !== null){
+        if(rolePermission !== "admin" && (user.loginType === "4" || 
+        user.additionalRole === "4")){
+          if(item.documentName === "Bonus Finance" ||
+          item.documentName === "Bonus Admin"){
+            tempArray.push(item)
+          }
+        }else if(rolePermission === "admin" && (user.loginType === "4" 
+        || user.additionalRole === "4")){
+              tempArray.push(item)
+            
+        }else if(rolePermission === "admin"){
+          if(item.documentName !== "Bonus Finance" &&
+          item.documentName !== "Bonus Admin"){
+            tempArray.push(item)
+          }
+        }
+      }
+       })
+       setCurrentRecords(tempArray)
+    }
+  }, [employeeUploadData])
+
+  console.log(rolePermission,"rolePermission")
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     setFileInputName(event.target.files[0].name)
@@ -135,7 +178,8 @@ const DocumentUpload = () => {
   let dateTime = cDate + '   ' + cTime;
   return dateTime
   }
-console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
+    console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
+    var k=0;
   return (
     <div className="module-reports">
       <ToastContainer />
@@ -166,12 +210,17 @@ console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
                     onChange={(e) => setDocument(e.target.value)}
                   >
                     <option value="">Select Template</option>
-                    <option value="0">Sports Title</option>
+                    {((role === 0) && (user.loginType === "4" || user.additionalRole === "4"))?
+                    <><option value="4">Bonus Upload Financial</option>
+                    <option value="5">Bonus Upload Admin</option></>:
+                      (role === 1 )?
+                    <><option value="0">Sports Title</option>
                     <option value="1">User Sports</option>
                     <option value="2">Actual DOJ</option>
                     <option value="3">Bank</option>
-                    <option value="4">Bonus Upload Financial</option>
-                    <option value="5">Bonus Upload Admin</option>
+                   { ((role === 1 || role === 0) && (user.loginType === "4" || user.additionalRole === "4"))?
+                    <><option value="4">Bonus Upload Financial</option>
+                    <option value="5">Bonus Upload Admin</option></>:""}
                     <option value="6">Employee Nomination</option>
                     <option value="7">Expats Id Creation</option>
                     <option value="8">Holiday Bonus</option>
@@ -180,22 +229,22 @@ console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
                     <option value="11">New Joiner</option>
                     <option value="12">Salary</option>
                     <option value="13">Update User Cost Center</option>
-                    <option value="14">Work Location</option>
+                    <option value="14">Work Location</option></>:""}
               
                   </Form.Control>
                 </Col>
               </Form.Group>
                <Form.Group 
                 as={Row}
-                className="mb-3"
+                // className="mb-3"
                 controlId="reportModuleName">    
                    <Form.Label column sm="2">
                     Select Document:
                 </Form.Label>
                                 <Col sm="8">      
-                    <div className="fileInput">
+                    <div className="fileInput_upload">
                   <label 
-                  className="fileInputField">
+                  className="fileInputField_upload">
                     {fileInputName ? fileInputName :
                     <label>&nbsp;&nbsp;
                     Select Document Here</label>}
@@ -243,14 +292,15 @@ console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
               </Row>
               <Row>
         <Col sm={10}>
+        <div className="table-responsive">
           <div className="mt-5">
-            <Table className="tableWrapper table table-borderless">
-              <thead>
+            <Table id="table-to-xls" className="table table-hover">
+              <thead >
                 <tr>
                   <th>SL.No</th>
                   <th>Document Name</th>
                   <th>Uploaded Date</th>
-                  {/* <th>Action</th> */}
+                  {/* <th>Download</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -272,11 +322,12 @@ console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
                     </td>
                     <td></td>
                   </tr>
-                ) : employeeUploadData && Object.keys(employeeUploadData).length ? (
-                  employeeUploadData.map((item,i) => {
+                ) : currentRecords && Object.keys(currentRecords).length ? (
+                  currentRecords.map((item,i) => {
+                    k=k+1
                     return (
                       <tr>
-                        <td>{i+1}</td>
+                        <td>{k}</td>
                         <td>{item.documentName}</td>
                         <td>
                           {item.auditField !== null &&
@@ -288,20 +339,26 @@ console.log(document,fileUpload,employeeUploadData,"employeeUploadData")
                           handleDate(item.auditField.createdDate):''}
                         </td>
                         {/* <td>
-                        Delete
-                        </td> */}
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={(e) => downloadDocumentUpload(item.uploadId,item.auditField.createdDate)}
+                >
+                  Download
+                </Button>
+                    </td> */}
                       </tr>
-                    );
-                  })
-                ) : (
+                    ) 
+                     })): (
                   <tr>
                     <td></td>
                     <td>No Documents Found</td>
                     <td></td>
                   </tr>
-                )}
+                     )}
               </tbody>
             </Table>
+          </div>
           </div>
         </Col>
       </Row>
