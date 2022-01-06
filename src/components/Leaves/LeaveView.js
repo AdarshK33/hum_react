@@ -25,8 +25,8 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
     const [numberOfDays, setNumberOfDays] = useState()
-    const[currentYear,setCurrentYear]=useState(true)
-    const[checkTheYear,setCheckTheYear]=useState(new Date().getFullYear()=== "2022"? false : true )
+    const[currentYear,setCurrentYear]=useState(new Date().getFullYear()== "2022"? false :true )
+    const[checkTheYear,setCheckTheYear]=useState(new Date().getFullYear()== "2022"? false : true )
     let [pageCount, setPageCount] = useState(0)
     
     const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList, loader, total }
@@ -76,8 +76,8 @@ const LeaveView = () => {
 
     useEffect(() => {
         console.log("currentYear",currentYear);
-        viewLeaveData(user.employeeId,"2021")
-    }, [user.employeeId])
+        viewLeaveData(user.employeeId,new Date().getFullYear())
+    }, [user.employeeId,deleteModal])
 
     
     useEffect(() => {

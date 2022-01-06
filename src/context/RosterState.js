@@ -458,7 +458,7 @@ export const RosterProvider = ({ children }) => {
   const adminRosterAvailableShift = (contractType, costCenter1, week,year) => {
 
     if (contractType === undefined) {
-      contractType = "Permanent"
+      contractType = "Fulltime"
     }
 
 

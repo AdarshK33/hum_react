@@ -96,7 +96,7 @@ const CreateShiftModal = (props) => {
     function checkTimeValidation() {
 
 
-      if (contractType === "Permanent" || contractType === "Internship") {
+      if (contractType === "Fulltime" || contractType === "Internship") {
         if ((parseFloat(workingHours) >=9 &&parseFloat(workingHours) <=10)|| parseFloat(workingHours) === 0) {
           setShiftButton(false)
           setNineHourWarnMsg(true)
@@ -448,7 +448,7 @@ const CreateShiftModal = (props) => {
 
 
 
-                    if ((parseFloat(workingHours) > 5 && (nineHourWarnMsg === true) && (contractType === "Permanent" || contractType === "Internship"))) {
+                    if ((parseFloat(workingHours) > 5 && (nineHourWarnMsg === true) && (contractType === "Fulltime" || contractType === "Internship"))) {
                       return (<div>
                         <div className="row">
                           <div className="col-sm-6">

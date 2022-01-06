@@ -46,6 +46,9 @@ const AdminLeaveAdd = (props) => {
     let currentYear = new Date()
     currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
 
+    let currentYearEnd = new Date()
+    currentYearEnd.setFullYear(currentYearEnd.getFullYear(), 11, 31)
+    
     useEffect(() => {
         CostCenter()
     }, [])
@@ -97,12 +100,11 @@ const AdminLeaveAdd = (props) => {
         //For disable the To Date initially
         setDisable(false)
 
-        if (value <= new Date()) {
+        let DayValue = parseInt(new Date(date).getDate())
+        if (DayValue < parseInt(new Date().getDate()) ) {
             setMax(true);
             setMin(false);
-        }
-
-        if (value > new Date()) {
+        }else if (DayValue >= parseInt(new Date().getDate())) {
             setMin(true);
             setMax(false);
         }
@@ -411,7 +413,7 @@ const AdminLeaveAdd = (props) => {
                                             <div>
                                                 <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
-                                                    minDate={currentYear} maxDate={nextYear}
+                                                    minDate={currentYear} maxDate={currentYearEnd}
                                                     placeholderText="From Date" required />
                                             </div>
                                         </Form.Group>
@@ -431,7 +433,7 @@ const AdminLeaveAdd = (props) => {
                                             <div><Form.Label>To Date</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startDate} maxDate={nextYear}
+                                                minDate={startDate} maxDate={currentYearEnd}
                                                 placeholderText="To Date" required /></div>
                                         </div>
                                     }
