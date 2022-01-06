@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useCallback, useReducer, useState } from "react";
 import { client } from "../utils/axios";
 import PermissionReducer from "../reducers/PermissionReducer";
 import { toast } from "react-toastify";
@@ -17,6 +17,23 @@ export const PermissionContext = createContext();
 export const PermissionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PermissionReducer, initial_state);
   const [loader, setLoader] = useState(false);
+
+  const debounce = (func) => {
+    let timer;
+    return function (...args) {
+      const context = this;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout((handler) => {
+        timer = null;
+        func.apply(context, args);
+      }, 500);
+    };
+  };
+
+  const DebounceSearching = (functionHandler) => {
+    const optimizedSearch = useCallback(debounce(functionHandler), []);
+    return optimizedSearch;
+  };
 
   const editPermission = (val) => {
     // console.log("====================NAV================");
@@ -211,6 +228,7 @@ export const PermissionProvider = ({ children }) => {
         viewServiceGroup,
         createServiceGroup,
         permissionRoleAccess,
+        DebounceSearching,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,

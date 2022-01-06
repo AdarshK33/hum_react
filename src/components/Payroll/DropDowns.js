@@ -3,6 +3,7 @@ import React, {
   useState,
   useContext,
   useEffect,
+  useCallback,
   useRef,
 } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
@@ -16,10 +17,12 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
 import { PayrollContext } from "../../context/PayrollState";
 import { SeparationContext } from "../../context/SepearationState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const DropDowns = (props) => {
   const { searchByCostCenter, searchByCostData } =
     useContext(SeparationContext);
+  const { DebounceSearching } = useContext(PermissionContext);
   const {
     setManagerFlag,
     managerFlag,
@@ -37,12 +40,27 @@ const DropDowns = (props) => {
   const [empSelected, setEmpSelected] = useState([]);
   const [searchString, setSearchString] = useState("");
 
+  // const debounce = (func) => {
+  //   let timer;
+  //   return function (...args) {
+  //     const context = this;
+  //     if (timer) clearTimeout(timer);
+  //     timer = setTimeout((handler) => {
+  //       timer = null;
+  //       func.apply(context, args);
+  //     }, 500);
+  //   };
+  // };
+
   const handleOnSearch = (string, results) => {
     //console.lo("changing", string, results);
     setEmpNameId("");
     setEmployeeId("");
     setSearchString(string);
+    empSearchByCostCenter(string);
   };
+  // const optimizedSearch = useCallback(debounce(handleOnSearch), []);
+  const optimizedSearch = DebounceSearching(handleOnSearch);
 
   const handleOnClear = () => {
     //console.lo("Cleared");
@@ -95,11 +113,11 @@ const DropDowns = (props) => {
   //     setEmployeeId("");
   //   }
   // };
-  useEffect(() => {
-    if (searchString) {
-      empSearchByCostCenter(searchString);
-    }
-  }, [searchString]);
+  // useEffect(() => {
+  //   if (searchString) {
+  //     empSearchByCostCenter(searchString);
+  //   }
+  // }, [searchString]);
   useEffect(() => {
     if (
       empSearchByCostData !== null &&
@@ -165,7 +183,7 @@ const DropDowns = (props) => {
               placeholder="Search Employee Name/Id"
               inputDebounce={10}
               items={empOptions}
-              onSearch={handleOnSearch}
+              onSearch={optimizedSearch}
               onSelect={handleOnSelect}
               onClear={handleOnClear}
               inputSearchString={searchString}
