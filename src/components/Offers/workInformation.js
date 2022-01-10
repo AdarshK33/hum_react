@@ -213,18 +213,14 @@ const WorkInformation = (props) => {
     }
   }, [noticePeriodViewData]);
   useEffect(() => {
-    if (
-      state.employmentType !== "" &&
-      state.department !== "" &&
-      state.position !== ""
-    ) {
+    if (state.employmentType !== "" && state.department !== "") {
       viewBonusByContarctType(
         state.employmentType,
         state.department,
-        state.position
+        "position"
       );
     }
-  }, [state.employmentType, state.department, state.position]);
+  }, [state.employmentType, state.department]);
   // useEffect(() => {
   //   console.log("inside candidateData", candidateData);
   //   if (

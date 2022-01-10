@@ -241,8 +241,7 @@ const ViewBonus = () => {
                       <td>{item.bonus}</td>
 
                       <td>
-                        {item.month > new Date().getMonth() &&
-                        item.year >= new Date().getFullYear() ? (
+                        {new Date(item.effectiveDate) > new Date() ? (
                           <Edit2
                             style={{ color: "blue" }}
                             onClick={() => {

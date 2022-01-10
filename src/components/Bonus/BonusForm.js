@@ -126,7 +126,7 @@ const BonusForm = (props) => {
       bonusId: 0,
       contractType: bonusList.contractType,
       department: bonusList.department,
-      position: bonusList.position,
+      effectiveDate: effectiveDate,
       // month: parseInt(moment(month).format("MM")),
       // year: parseInt(moment(year).format("YYYY")),
     };
@@ -292,7 +292,7 @@ const BonusForm = (props) => {
                       selected={effectiveDate}
                       onChange={(date) => setEffectiveDate(date)}
                       placeholderText="Select Effective Date"
-                      maxDate={new Date()}
+                      minDate={new Date()}
                       dateFormat="yyyy-MM-dd"
                     />{" "}
                   </div>

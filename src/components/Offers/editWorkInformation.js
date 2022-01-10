@@ -152,16 +152,15 @@ const EditWorkInformation = () => {
   useEffect(() => {
     if (
       state.employmentType !== "" &&
-      state.department !== "" &&
-      state.position !== ""
+      state.department !== "" 
     ) {
       viewBonusByContarctType(
         state.employmentType,
         state.department,
-        state.position
+        "position"
       );
     }
-  }, [state.employmentType, state.department, state.position]);
+  }, [state.employmentType, state.department]);
 
   useEffect(() => {
     if (

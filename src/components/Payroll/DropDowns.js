@@ -54,10 +54,14 @@ const DropDowns = (props) => {
 
   const handleOnSearch = (string, results) => {
     //console.lo("changing", string, results);
-    setEmpNameId("");
-    setEmployeeId("");
-    setSearchString(string);
-    empSearchByCostCenter(string);
+    if (string) {
+      setEmpNameId("");
+      setEmployeeId("");
+      setSearchString(string);
+      empSearchByCostCenter(string);
+    } else {
+      setSearchString("");
+    }
   };
   // const optimizedSearch = useCallback(debounce(handleOnSearch), []);
   const optimizedSearch = DebounceSearching(handleOnSearch);
