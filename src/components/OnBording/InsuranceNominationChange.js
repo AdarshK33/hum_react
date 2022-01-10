@@ -332,6 +332,8 @@ const InsuranceNomination = (props) => {
     }
   }, [sumInsuredId]);
   console.log("premiumViewData", premiumViewData);
+  console.log("candidateProfileData", candidateProfileData,sumInsuredId);
+
 
   useEffect(() => {
     if (

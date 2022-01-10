@@ -41,7 +41,7 @@ const EditBonus = (props) => {
       bonusId: getBonusDetailsById.bonusId,
       contractType: state.contractType,
       department: state.department,
-      position: state.position,
+      effectiveDate: effectiveDate,
       // month:
       //   typeof month === "number"
       //     ? month
@@ -73,10 +73,17 @@ const EditBonus = (props) => {
       bonus: getBonusDetailsById.bonus,
       contractType: getBonusDetailsById.contractType,
       department: getBonusDetailsById.department,
-      position: getBonusDetailsById.position,
+
       // month: getBonusDetailsById.month,
       // year: getBonusDetailsById.year,
     });
+    if (
+      getBonusDetailsById &&
+      Object.keys(getBonusDetailsById).length &&
+      getBonusDetailsById.effectiveDate
+    ) {
+      setEffectiveDate(new Date(getBonusDetailsById.effectiveDate));
+    }
     // setYear(getBonusDetailsById.year);
     // setMonth(getBonusDetailsById.month);
     // need to change it as a effective date
@@ -205,7 +212,7 @@ const EditBonus = (props) => {
                     selected={effectiveDate}
                     onChange={(date) => setEffectiveDate(date)}
                     placeholderText="Select Effective Date"
-                    maxDate={new Date()}
+                    minDate={new Date()}
                     dateFormat="yyyy-MM-dd"
                   />{" "}
                 </div>
