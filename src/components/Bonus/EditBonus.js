@@ -31,7 +31,7 @@ const EditBonus = (props) => {
     close();
   };
   const [year, setYear] = useState("");
-  const [month, setMonth] = useState("");
+  const [effectiveDate, setEffectiveDate] = useState(new Date());
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
@@ -41,13 +41,13 @@ const EditBonus = (props) => {
       bonusId: getBonusDetailsById.bonusId,
       contractType: state.contractType,
       department: state.department,
-      position: state.position,
-      month:
-        typeof month === "number"
-          ? month
-          : parseInt(moment(month).format("MM")),
-      year:
-        typeof year === "number" ? year : parseInt(moment(year).format("YYYY")),
+      effectiveDate: effectiveDate,
+      // month:
+      //   typeof month === "number"
+      //     ? month
+      //     : parseInt(moment(month).format("MM")),
+      // year:
+      //   typeof year === "number" ? year : parseInt(moment(year).format("YYYY")),
     };
     console.log(data);
     updateBonus(data);
@@ -73,12 +73,20 @@ const EditBonus = (props) => {
       bonus: getBonusDetailsById.bonus,
       contractType: getBonusDetailsById.contractType,
       department: getBonusDetailsById.department,
-      position: getBonusDetailsById.position,
+
       // month: getBonusDetailsById.month,
       // year: getBonusDetailsById.year,
     });
-    setYear(getBonusDetailsById.year);
-    setMonth(getBonusDetailsById.month);
+    if (
+      getBonusDetailsById &&
+      Object.keys(getBonusDetailsById).length &&
+      getBonusDetailsById.effectiveDate
+    ) {
+      setEffectiveDate(new Date(getBonusDetailsById.effectiveDate));
+    }
+    // setYear(getBonusDetailsById.year);
+    // setMonth(getBonusDetailsById.month);
+    // need to change it as a effective date
   }, [getBonusDetailsById]);
   const getSelectedYear = (year) => {
     if (year !== undefined) {
@@ -130,7 +138,7 @@ const EditBonus = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col sm={12}>
               <Form.Group>
                 <Form.Label>Select Position:</Form.Label>
@@ -154,7 +162,7 @@ const EditBonus = (props) => {
                 </Form.Control>
               </Form.Group>
             </Col>
-          </Row>
+          </Row> */}
           <Row>
             <Col sm={12}>
               <Form.Group>
@@ -194,27 +202,24 @@ const EditBonus = (props) => {
 
           <Row>
             <Col sm={12}>
-              {/* <Form.Group> */}
-              <Form.Label>Select Month</Form.Label>
-              <br></br>
-              <div>
-                <DatePicker
-                  name="month"
-                  className="dateClass"
-                  selected={month}
-                  value={typeof month === "number" ? getMonth(month) : month}
-                  // defaultValue={state.month}
-                  onChange={(date) => setMonth(date)}
-                  placeholderText="Select Start Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </div>
-              {/* </Form.Group> */}
+              <Form.Group>
+                <Form.Label>Select Effective Date</Form.Label>
+                <br></br>
+                <div>
+                  <DatePicker
+                    name="month"
+                    className="dateClass"
+                    selected={effectiveDate}
+                    onChange={(date) => setEffectiveDate(date)}
+                    placeholderText="Select Effective Date"
+                    minDate={new Date()}
+                    dateFormat="yyyy-MM-dd"
+                  />{" "}
+                </div>
+              </Form.Group>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col sm={12}>
               <Form.Group>
                 <Form.Label>Select Year</Form.Label>
@@ -233,7 +238,7 @@ const EditBonus = (props) => {
                 />{" "}
               </Form.Group>
             </Col>
-          </Row>
+          </Row> */}
           <Button onClick={updateBonusDetails}>Save</Button>
           <Button className="cancelButton" onClick={onCloseModal}>
             Cancel

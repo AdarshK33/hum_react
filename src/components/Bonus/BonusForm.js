@@ -21,7 +21,7 @@ const BonusForm = (props) => {
     department: "",
     position: "",
   });
-  const [month, setMonth] = useState(new Date());
+  const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [year, setYear] = useState(new Date());
   const { departmentView, departmentName, designationView, designationName } =
     useContext(OfferContext);
@@ -33,7 +33,7 @@ const BonusForm = (props) => {
   const [departmentError, setDepartmentError] = useState(false);
   const [positionError, setPositionError] = useState(false);
   const [contactTypeError, setContactTypeError] = useState(false);
-  const [monthError, setMonthError] = useState(false);
+  const [effectiveDateError, setEffectiveDateError] = useState(false);
   const [yearError, setYearError] = useState(false);
   const onCloseModal = () => {
     /*  const resetValue = {
@@ -74,10 +74,10 @@ const BonusForm = (props) => {
       setPositionError(true);
     }
 
-    if (month !== "") {
-      setMonthError(false);
+    if (effectiveDate !== "") {
+      setEffectiveDateError(false);
     } else {
-      setMonthError(true);
+      setEffectiveDateError(true);
     }
 
     if (year !== "") {
@@ -105,9 +105,9 @@ const BonusForm = (props) => {
       "departmentError",
       departmentError,
       bonusList.department,
-      "monthError",
-      monthError,
-      month,
+      "effectiveDateError",
+      effectiveDateError,
+      effectiveDate,
       "yearError",
       yearError,
       year
@@ -126,9 +126,9 @@ const BonusForm = (props) => {
       bonusId: 0,
       contractType: bonusList.contractType,
       department: bonusList.department,
-      position: bonusList.position,
-      month: parseInt(moment(month).format("MM")),
-      year: parseInt(moment(year).format("YYYY")),
+      effectiveDate: effectiveDate,
+      // month: parseInt(moment(month).format("MM")),
+      // year: parseInt(moment(year).format("YYYY")),
     };
     bonusCreate(data);
     onCloseModal();
@@ -201,7 +201,7 @@ const BonusForm = (props) => {
                 )}
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col sm={12}>
                 <Form.Group>
                   <Form.Label>Select Position:</Form.Label>
@@ -230,7 +230,7 @@ const BonusForm = (props) => {
                   ""
                 )}
               </Col>
-            </Row>
+            </Row> */}
             <Row>
               <Col sm={12}>
                 <Form.Group>
@@ -282,31 +282,29 @@ const BonusForm = (props) => {
 
             <Row>
               <Col sm={12}>
-                {/* <Form.Group> */}
-                <Form.Label>Select Month</Form.Label>
-                <br></br>
-                <div>
-                  <DatePicker
-                    name="month"
-                    className="dateClass"
-                    selected={month}
-                    onChange={(date) => setMonth(date)}
-                    placeholderText="Select Start Month"
-                    dateFormat="MM"
-                    minDate={new Date()}
-                    showMonthYearPicker
-                    showFullMonthYearPicker
-                  />{" "}
-                </div>
-                {/* </Form.Group> */}
-                {monthError ? (
+                <Form.Group>
+                  <Form.Label>Select Effective Date</Form.Label>
+                  <br></br>
+                  <div>
+                    <DatePicker
+                      name="EffectiveDate"
+                      className="dateClass"
+                      selected={effectiveDate}
+                      onChange={(date) => setEffectiveDate(date)}
+                      placeholderText="Select Effective Date"
+                      minDate={new Date()}
+                      dateFormat="yyyy-MM-dd"
+                    />{" "}
+                  </div>
+                </Form.Group>
+                {effectiveDateError ? (
                   <p style={{ color: "red" }}>Please Enter the valid Input</p>
                 ) : (
                   ""
                 )}
               </Col>
             </Row>
-            <Row>
+            {/* <Row>
               <Col sm={12}>
                 <Form.Group>
                   <Form.Label>Select Year</Form.Label>
@@ -327,7 +325,7 @@ const BonusForm = (props) => {
                   ""
                 )}
               </Col>
-            </Row>
+            </Row> */}
 
             <Button type="submit" className="submitButton">
               Save

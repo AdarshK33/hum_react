@@ -3,6 +3,8 @@ import { client } from "../utils/axios";
 import BonusReducer from "../reducers/BonusReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
+// import { ConditionPosition } from "ag-grid-community/dist/lib/filter/provided/simpleFilter";
+import moment from "moment";
 
 const initial_state = {
   bonusData: [],
@@ -112,15 +114,20 @@ export const BonusProvider = (props) => {
       });
   };
   /* bonus according to contract type*/
-  const viewBonusByContarctType = (contractType, department, position) => {
+  const viewBonusByContarctType = (
+    contractType,
+    department,
+    position,
+    effectiveDate= moment(new Date).format("yyyy-MM-DD")
+  ) => {
     client
       .get(
         "/api/v1/bonus/view?contractType=" +
           contractType +
           "&department=" +
           department +
-          "&position=" +
-          position
+          "&effectiveDate=" +
+          effectiveDate
       )
       .then((response) => {
         state.getBonusByContractType = response.data.data;

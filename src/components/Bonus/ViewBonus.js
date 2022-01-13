@@ -202,10 +202,8 @@ const ViewBonus = () => {
                 <th>S.No</th>
                 <th>Department</th>
                 <th>Contract Type</th>
-                <th>Position</th>
+                <th>Effective Date</th>
                 <th>Bonus %</th>
-                <th>Month</th>
-                <th>Year</th>
                 <th>Edit</th>
               </tr>
             </thead>
@@ -238,15 +236,12 @@ const ViewBonus = () => {
                     <tr>
                       <td>{i + 1 + indexOfFirstRecord}</td>
                       <td>{item.department}</td>
-
                       <td>{item.contractType}</td>
-                      <td>{item.position}</td>
+                      <td>{item.effectiveDate}</td>
                       <td>{item.bonus}</td>
-                      <td>{getMonthList(item.month)}</td>
-                      <td>{item.year}</td>
+
                       <td>
-                        {item.month > new Date().getMonth() &&
-                        item.year >= new Date().getFullYear() ? (
+                        {new Date(item.effectiveDate) > new Date() ? (
                           <Edit2
                             style={{ color: "blue" }}
                             onClick={() => {
