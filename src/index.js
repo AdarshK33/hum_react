@@ -54,6 +54,7 @@ import { WeekOffProvider } from "./context/WeekOffState";
 import { WorkHourProvider } from "./context/WorkHourState";
 import { PayrollProvider } from "./context/PayrollState";
 import {DocumentUploadProvider} from "./context/DocumentUploadState"
+import {PartTimeSalaryInputProvider} from "./context/PartTimeSalaryInputState"
 //firebase Auth
 function Root() {
   useEffect(() => {
@@ -100,6 +101,7 @@ function Root() {
                                                                         <NoticePeriodProvider>
                                                                           <InsuranceProvider>
                                                                             <MitProvider>
+                                                                              <PartTimeSalaryInputProvider>
                                                                               <DocumentUploadProvider>
                                                                               <DocumentManagementProvider>
                                                                                 <BrowserRouter
@@ -117,6 +119,7 @@ function Root() {
                                                                                 </BrowserRouter>
                                                                               </DocumentManagementProvider>
                                                                               </DocumentUploadProvider>
+                                                                              </PartTimeSalaryInputProvider>
                                                                             </MitProvider>
                                                                           </InsuranceProvider>
                                                                         </NoticePeriodProvider>
