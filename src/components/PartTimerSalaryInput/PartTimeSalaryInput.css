@@ -1,0 +1,67 @@
+    .OnBoardHeading {
+    height: 50px;
+    background-color: #006ebb;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .container-accordion .accordion__button:hover {
+    background-color: #006ebb;
+  }
+  .container-accordion .accordion {
+    border: none;
+    border-radius: 0;
+  }
+  .container-accordion .accordion__item + .accordion__item {
+    border-top: none;
+  }
+  .container-accordion .accordion__button:before {
+    display: none;
+  }
+  .container-accordion .accordion__button:after {
+    display: block;
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 12px;
+    border-bottom: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(-45deg);
+    float: right;
+    clear: both;
+  }
+  .container-accordion .accordion__button[aria-expanded="true"]::after,
+  .container-accordion .accordion__button[aria-selected="true"]::after {
+    transform: rotate(45deg);
+  }
+  .container-accordion .form-input.form-control {
+    border-radius: 12.25rem;
+  }
+  .container-accordion .reactDate.form-group .react-datepicker-wrapper {
+    display: block !important;
+  }
+  .main-container.container {
+    /* margin-top: 4rem; */
+    padding: 4rem 0;
+    text-align: center;
+    background-color: white;
+  }
+ 
+  .part-date-error input.form-control.part-view {
+    height: 34px;
+    width: 130%;
+    border: 1px solid red;
+  }
+  .part-date-error .react-datepicker-wrapper {
+    width: 80% !important;
+  }
+  .part-date .react-datepicker-wrapper {
+    width: 80% !important;
+  }
+  .part-date input.form-control.part-view {
+    height: 34px;
+    width: 130%;
+  }
+  

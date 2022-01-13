@@ -51,9 +51,18 @@ export const DocumentUploadProvider = (props) => {
     console.log(formData,"formDataDocument")
     client
       .post(
-        "/api/v1/admin/uploads/download" ,formData)
+        "/api/v1/admin/uploads/download",formData,{
+          responseType: "arraybuffer",
+        })
       .then((response) => {
         console.log(response, "reponse excel");
+        var blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        
+        var fileName = "export.xlsx";
+        saveAs(blob, fileName);
+        toast.info(response.data.message);
         setLoader(false);
          state.downloadDocumentUploadData =response.data.data
         return dispatch({

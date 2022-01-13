@@ -159,6 +159,8 @@ import EmployeeListing from "./components/EmployeeVerification/EmployeeListing";
 import EmpPayroll from "./components/Payroll/EmpPayroll";
 import ManagerPayroll from "./components/Payroll/ManagerPayroll";
 
+import PartTimerSalaryInput from "./components/PartTimerSalaryInput/PartTimerSalaryInput"
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -178,7 +180,10 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/onboard`}
         component={OnBoardingStepper}
       />
-
+        {/* <Route
+            path={`${process.env.PUBLIC_URL}/promotion-list`}
+            component={PartTimerSalaryInput}
+          /> */}
       {/* <Route
         path={`${process.env.PUBLIC_URL}/emp360`}
         component={EmployeeDashboard}
@@ -202,6 +207,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
+           <Route
+            path={`${process.env.PUBLIC_URL}/part-time-salary`}
+            component={PartTimerSalaryInput}
+          />
            <Route
             path={`${process.env.PUBLIC_URL}/documents-upload`}
             component={DocumentUpload}
