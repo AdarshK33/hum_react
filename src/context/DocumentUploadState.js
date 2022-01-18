@@ -46,7 +46,7 @@ export const DocumentUploadProvider = (props) => {
     let formData = {
     "fromDate":moment(new Date(fromDate)).format("YYYY-MM-DD"),
     "moduleName":moduleName - 1,
-    "toDate": moment(new Date()).format("YYYY-MM-DD") 
+    "toDate": moment(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+1)).format("YYYY-MM-DD") 
     }
     console.log(formData,"formDataDocument")
     client
