@@ -716,7 +716,7 @@ const EmpResignation = () => {
                           value={moment(lastDate).format("DD/MM/YYYY")}
                           selected={lastDate}
                           minDate={moment().toDate()}
-                          maxDate={lastDateSelection}
+                          // maxDate={lastDateSelection}
                           onChange={(date) => setLastDate(date)}
                           className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"

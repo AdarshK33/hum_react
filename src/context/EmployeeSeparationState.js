@@ -175,13 +175,15 @@ export const EmploeeSeparationProvider = ({children}) => {
       });
   };
 
-  const UpdateEmplyoeeExist = (updateInfo) => {
+  const UpdateEmplyoeeExist = (updateInfo,employeeId) => {
     // setLoader(true);
     client
       .post("/api/v1/separation/employee-exit/update", updateInfo)
       .then((response) => {
         state.updateResponse = response.data.data;
         toast.info(response.data.message);
+        // ViewEmployeeDataById(employeeId)
+        fetchRelievingLetterData(employeeId)
         setLoader(false);
         console.log("updated response", state.updateResponse);
         return dispatch({

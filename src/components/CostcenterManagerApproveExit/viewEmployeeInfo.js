@@ -441,7 +441,7 @@ const EmployeeExitAction = (props) => {
           costCentreManagerName: employeeData.costCentreManagerName,
           costCentreName: employeeData.costCentreName,
           dateOfResignation: employeeData.dateOfResignation,
-          personalEmailId: state.emailId,
+          personalEmailId: state.personalEmailId,
           empName: employeeData.empName,
           employeeComment: employeeData.employeeComment,
           employeeId: employeeData.employeeId,
@@ -470,13 +470,14 @@ const EmployeeExitAction = (props) => {
         };
         console.log("createExitData", InfoData);
         setSubmitted(true);
-        UpdateEmplyoeeExist(InfoData);
+        UpdateEmplyoeeExist(InfoData,paramsemployeeId);
               setModal(true)
         // setPreview(true);
         // setSuccessModal(true);
       }
     }
   };
+  console.log(state)
   return (
     console.log(state.status),
     (
@@ -761,8 +762,8 @@ const EmployeeExitAction = (props) => {
                               onChange={(e) => dateOfBirthHandler1(e)}
                               dateFormat="yyyy-MM-dd"
                               placeholderText="YYYY-MM-DD"
-                              // disabled={disabled}
-                            />
+                              disabled={submitted}
+                              />
                           </div>
                           {lastWorkingDateError ? (
                             <p style={{ color: "red" }}>

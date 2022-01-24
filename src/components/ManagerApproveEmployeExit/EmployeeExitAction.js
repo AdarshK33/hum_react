@@ -317,7 +317,7 @@ const EmployeeExitAction = (props) => {
           costCentreManagerName: employeeData.costCentreManagerName,
           costCentreName: employeeData.costCentreName,
           dateOfResignation: employeeData.dateOfResignation,
-          personalEmailId: state.emailId,
+          personalEmailId: state.personalEmailId,
           empName: employeeData.empName,
           employeeComment: employeeData.employeeComment,
           employeeId: employeeData.employeeId,
@@ -345,7 +345,7 @@ const EmployeeExitAction = (props) => {
           withdraw: employeeData.withdraw,
         };
         console.log("save ", InfoData);
-        UpdateEmplyoeeExist(InfoData);
+        UpdateEmplyoeeExist(InfoData,employeeData.employeeId);
       }
     }
     if (
@@ -492,7 +492,7 @@ const EmployeeExitAction = (props) => {
           costCentreManagerName: employeeData.costCentreManagerName,
           costCentreName: employeeData.costCentreName,
           dateOfResignation: employeeData.dateOfResignation,
-          personalEmailId: state.emailId,
+          personalEmailId: state.personalEmailId,
           empName: employeeData.empName,
           employeeComment: employeeData.employeeComment,
           employeeId: employeeData.employeeId,
@@ -519,7 +519,7 @@ const EmployeeExitAction = (props) => {
           status: 8,
           withdraw: employeeData.withdraw,
         };
-        UpdateEmplyoeeExist(InfoData);
+        UpdateEmplyoeeExist(InfoData,employeeData.employeeId);
         setSuccessModal(true);
         setPreview(true);
         console.log("in else", InfoData);
