@@ -12,7 +12,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 
-const EmployeeExitAction = () => {
+const EmployeeExitAction = (props) => {
   const params = useParams();
 
   const paramsemployeeId = params["employeeid"];
@@ -40,7 +40,7 @@ const EmployeeExitAction = () => {
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
-
+  const [lastWorkingDate,setlastWorkingDate] = useState(new Date())
   const [showAddModal, setShowAddModal] = useState(false);
 
   const [state, setState] = useState({
@@ -132,6 +132,13 @@ const EmployeeExitAction = () => {
               ? employeeData.internshipPeriod
               : 0)
         );
+        setlastWorkingDate(new Date(employeeData.joiningDate).setMonth(
+          new Date(employeeData.joiningDate).getMonth() +
+            (employeeData.internshipPeriod !== null &&
+            employeeData.internshipPeriod !== undefined
+              ? employeeData.internshipPeriod
+              : 0)
+        ))
       } else if (
         state.empContractType === "Fulltime" ||
         state.empContractType === "fulltime" ||
@@ -148,14 +155,20 @@ const EmployeeExitAction = () => {
         );
         setLastDateSelection(aboveDateValue);
         state.lastWorkingDate = dateValue;
+        setlastWorkingDate(dateValue)
       } else {
         state.lastWorkingDate = "";
+        setlastWorkingDate("")
       }
       state.lastWorkingDate =
         employeeData.lastWorkingDate !== null &&
         employeeData.lastWorkingDate !== undefined
           ? new Date(employeeData.lastWorkingDate)
           : new Date();
+          setlastWorkingDate(employeeData.lastWorkingDate !== null &&
+            employeeData.lastWorkingDate !== undefined
+              ? new Date(employeeData.lastWorkingDate)
+              : new Date())
       state.personalEmailId = employeeData.personalEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
@@ -311,7 +324,7 @@ const EmployeeExitAction = () => {
           employeeName: employeeData.employeeName,
           exitId: employeeData.exitId,
           hoursWorked: employeeData.hoursWorked,
-          lastWorkingDate: state.lastWorkingDate,
+          lastWorkingDate: lastWorkingDate,
           location: employeeData.location,
           managerCostCentre: employeeData.managerCostCentre,
           managerEmailId: employeeData.managerEmailId,
@@ -451,12 +464,13 @@ const EmployeeExitAction = () => {
     setSubmitted(false);
     setPreview(false);
   };
-  const dateOfBirthHandler1 = (e, date) => {
-    e.preventDefault();
+  const dateOfBirthHandler1 = (e) => {
+    console.log(e,"dateOfBirthHandler1")
     var AdjusteddateValue = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
+      e.getTime() - e.getTimezoneOffset() * 60000
     );
     state.lastWorkingDate = AdjusteddateValue;
+    setlastWorkingDate(AdjusteddateValue)
   };
   const submitHandler = (e) => {
     console.log("submit handler");
@@ -485,7 +499,7 @@ const EmployeeExitAction = () => {
           employeeName: employeeData.employeeName,
           exitId: employeeData.exitId,
           hoursWorked: employeeData.hoursWorked,
-          lastWorkingDate: state.lastWorkingDate,
+          lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
           location: employeeData.location,
           managerCostCentre: employeeData.managerCostCentre,
           managerEmailId: employeeData.managerEmailId,
@@ -512,7 +526,10 @@ const EmployeeExitAction = () => {
       }
     }
   };
-  console.log(state);
+  console.log(relivingLetterData,"relivingLetterData",modeOfSeparation);
+  const handleRelivingClose1 = ()=>{
+   props.history.push("/exit-approval") 
+  }
   return (
     <Fragment>
       {employeeData !== null &&
@@ -558,7 +575,7 @@ const EmployeeExitAction = () => {
                   ? terminationLetterData.lastWorkingDate
                   : relivingLetterData !== null &&
                     relivingLetterData !== undefined &&
-                    (modeOfSeparation == "Resignation" || modeOfSeparation == 1)
+                    (modeOfSeparation == "Employee Resignation" || modeOfSeparation == 1)
                   ? relivingLetterData.lastWorkingDate
                   : new Date(),
                 "YYYY-MM-DD"
@@ -567,7 +584,7 @@ const EmployeeExitAction = () => {
                 .format("YYYY-MM-DD")}
             </label>
             <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose}>Close</Button>
+              <Button onClick={handleRelivingClose1}>Close</Button>
             </div>
           </Modal.Body>
         </Modal>
@@ -916,21 +933,18 @@ const EmployeeExitAction = () => {
                                   : "onBoard-date"
                               }
                             >
-                              <DatePicker
-                                className="form-control onBoard-view"
-                                value={state.lastWorkingDate}
-                                selected={state.lastWorkingDate}
-                                name="lastWorkingDate"
-                                minDate={new Date()}
-                                minDate={moment().toDate()}
-                                maxDate={lastDateSelection}
-                                // required
-                                onChange={(e) => dateOfBirthHandler1(e)}
-                                dateFormat="yyyy-MM-dd"
-                                placeholderText="YYYY-MM-DD"
-
-                                // disabled={disabled}
-                              />
+                                <DatePicker
+                          minDate={moment().toDate()}
+                          value={moment(lastWorkingDate).format("YYYY-MM-DD")}
+                          name="lastWorkingDate"
+                          selected={lastWorkingDate}
+                          maxDate={lastDateSelection}
+                          onChange={(e) => dateOfBirthHandler1(e)}
+                          className="form-control onBoard-view"
+                          dateFormat="yyyy-MM-dd"
+                          placeholderText="YYYY-MM-DD"
+                          required
+                        />
                             </div>
                             {lastWorkingDateError ? (
                               <p style={{ color: "red" }}>
@@ -1035,7 +1049,18 @@ const EmployeeExitAction = () => {
                         marginBottom: "3rem",
                       }}
                     >
-                      <Col sm={12}>
+                       <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Approver:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.mngrName}
+                              &nbsp; {state.mngrId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      {/* <Col sm={8}>
                         <div>
                           <label>
                             <b>Comments:</b>
@@ -1044,7 +1069,8 @@ const EmployeeExitAction = () => {
                             </label>
                           </label>
                         </div>
-                      </Col>
+                      </Col> */}
+
                     </Row>
                     <Row
                       style={{

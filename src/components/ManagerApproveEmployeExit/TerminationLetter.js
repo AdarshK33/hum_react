@@ -83,7 +83,7 @@ const TerminationLetter = () => {
                 {terminationLetterData !== undefined &&
                   terminationLetterData.reason}{" "}
                 at in {terminationLetterData.company}. 
-            The facts of the same are as below 
+                {" "}The facts of the same are as below 
         <br />
      
         <br />
@@ -92,7 +92,7 @@ const TerminationLetter = () => {
              Therefore, you are hereby terminated from your employment with Decathlon
              Sports India Pvt Ltd / Prodin / Indeca with immediate effect as on{" "}
             {terminationLetterData !== undefined &&
-            terminationLetterData.lastWorkingDate}. Your full and final
+            terminationLetterData.lastWorkingDate}. Y{" "}our full and final
             settlement post calculations of any dues from you will be 
             recovered and shall be paid to you during the next payroll cycle.
         <br />

@@ -7,6 +7,8 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { PermissionContext } from "../../context/PermissionState";
+
 import { AppContext } from "../../context/AppState";
 const ExitListing = () => {
   const {
@@ -22,17 +24,25 @@ const ExitListing = () => {
     ViewEmployeeProfile,
   } = useContext(EmployeeSeparationContext);
   const { user ,getUserInfo} = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
 
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
+  const [role,setRole] = useState(0)
   useEffect(() => {
     EmployeeSeparationListExitView("all", pageCount, 9);
     getUserInfo()
   }, []);
-
+  useEffect(() => {
+    if (rolePermission == "superCostCenterManager") {
+      setRole(1);
+    } else {
+      setRole(0);
+    }
+  }, [rolePermission]);
   console.log("---->", EmployeeSeparationExitList);
+  console.log(rolePermission,"rolePermission")
 
   // useEffect(() => {
   //   if (
@@ -336,7 +346,15 @@ const ExitListing = () => {
                                 item.status === 5 ||
                                 item.status === 6 ? (
                                   <Edit2 />
-                                ) :item.status === 0 || item.status === 8 ? (
+                                ) :(item.status === 0 && rolePermission === "manager")?(
+                                  <Link to={"/exit-action/" + item.employeeId}>
+                                    <Edit2
+                                      onClick={() => {
+                                        fetchEmployeeDetails(item.employeeId);
+                                      }}
+                                    />
+                                  </Link>
+                                ):item.status === 8 ? (
                                   <Link to={"/exit-action/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {

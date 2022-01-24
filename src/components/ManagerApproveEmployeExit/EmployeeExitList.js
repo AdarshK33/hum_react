@@ -8,6 +8,7 @@ import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import { SeparationContext } from "../../context/SepearationState";
+import { PermissionContext } from "../../context/PermissionState";
 // import { RoleManagementContext } from "../../context/RoleManagementState";
 // import { AdminContext } from "../../context/AdminState";
 
@@ -27,16 +28,24 @@ const EmployeeExitList = () => {
   } = useContext(EmployeeSeparationContext);
   const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
+  const { rolePermission } = useContext(PermissionContext);
+
   const [actionStatus, setActionStatus] = useState("9");
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [employeeExitStatus, setEmployeeExitStatus] = useState("");
-
+  const [role,setRole] = useState(0)
   useEffect(() => {
     EmployeeSeparationListView("all", pageCount, actionStatus);
   }, []);
-
+  useEffect(() => {
+    if (rolePermission == "superCostCenterManager") {
+      setRole(1);
+    } else {
+      setRole(0);
+    }
+  }, [rolePermission]);
   useEffect(() => {
     setEmpDataNull()
     MakeCostCenterDataNull()
@@ -114,7 +123,6 @@ const EmployeeExitList = () => {
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);

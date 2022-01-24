@@ -138,8 +138,8 @@ const EmpResignation = () => {
         new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
       );
       setLastDateSelection(aboveDateValue);
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(2))))
       setEmailId(user.personalEmail);
-      setLastDate(dateValue);
       console.log(dateValue, aboveDateValue, "2");
     } else {
       setNoticePeriod(1);
@@ -148,7 +148,7 @@ const EmpResignation = () => {
         new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
       );
       setLastDateSelection(aboveDateValue);
-      setLastDate(dateValue);
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(1))))
       setEmailId(user.personalEmail);
       console.log(dateValue, aboveDateValue, "1");
     }
@@ -164,6 +164,7 @@ const EmpResignation = () => {
     ) {
       console.log(employeeData, "inuse");
       setRegDate(new Date(employeeData.dateOfResignation));
+      setLastDate(new Date(employeeData.lastWorkingDate));
       var noticeValue = 0;
       // setLastDate(new Date(employeeData.lastWorkingDate));
       if (
@@ -180,7 +181,6 @@ const EmpResignation = () => {
           new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
         );
         setLastDateSelection(aboveDateValue);
-        setLastDate(dateValue);
         console.log(dateValue, aboveDateValue, "2");
       } else {
         setNoticePeriod(1);
@@ -191,7 +191,6 @@ const EmpResignation = () => {
           new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
         );
         setLastDateSelection(aboveDateValue);
-        setLastDate(dateValue);
         console.log(dateValue, aboveDateValue, "1");
       }
 
@@ -202,7 +201,7 @@ const EmpResignation = () => {
       console.log(employeeData, "98098098098");
     }
   }, [employeeData]);
-  console.log(employeeData);
+  console.log(employeeData,"employeeData");
   useEffect(() => {
     if (
       employeeData &&
@@ -337,14 +336,14 @@ const EmpResignation = () => {
         costCentreManagerName: null,
         costCentreName: user.costCentre,
         dateOfResignation: moment(regDate).format("YYYY-MM-DD"),
-        personalEmail: emailId,
+        personalEmailId: emailId,
         empName: user.firstName + user.lastName,
         employeeComment: comments,
         employeeId: user.employeeId,
         employeeName: user.firstName + user.lastName,
         exitId: 0,
         hoursWorked: 0,
-        lastWorkingDate: lastDate,
+        lastWorkingDate:moment(lastDate).format("YYYY-MM-DD"),
         location: user.locationId,
         managerCostCentre: null,
         managerEmailId: null,
@@ -422,6 +421,8 @@ const EmpResignation = () => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
+    var AdjusteddateValue1 = new Date(AdjusteddateValue)
+    setLastDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(noticePeriod)))
     setRegDate(AdjusteddateValue);
   };
   return (
