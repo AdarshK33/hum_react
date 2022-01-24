@@ -685,7 +685,7 @@ const ManagerInitiateExit = () => {
           console.log("createExitData", data2);
           // setSubmitted(true);
           
-          UpdateEmplyoeeExist(data2);
+          UpdateEmplyoeeExist(data2,state.empId);
           setSubmitLetter(true);
           setLetterSent(true);
           setShow(true);
@@ -734,7 +734,7 @@ const ManagerInitiateExit = () => {
             status: 6,
           };
           console.log("createExitData", data1);
-          UpdateEmplyoeeExist(data1);
+          UpdateEmplyoeeExist(data1,state.empId);
           setSubmitLetter(true);
           setLetterSent(true);
           setShow(true);
