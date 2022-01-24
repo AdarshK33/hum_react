@@ -40,7 +40,7 @@ const ManagerInitiateExit = () => {
   const [withdrwaThis, setWithdrawThis] = useState(false);
 
   const [dateOfResignation, setDateOfResignation] = useState(new Date());
-  const [lastWorkingDate, setLastWorkingDate] = useState("");
+  const [lastWorkingDate, setLastWorkingDate] = useState(new Date());
   const [intern, setIntern] = useState(false);
   const [EmpName, setEmpName] = useState();
 
@@ -78,6 +78,7 @@ const ManagerInitiateExit = () => {
     mngrCostCenterName: "",
     mngrPosition: "",
     modeOfSeparationReasonId: "",
+    modeOfSeparationReasonLabel:"",
     noticePeriod: "",
     emailId: "",
     comments: "",
@@ -168,13 +169,16 @@ const ManagerInitiateExit = () => {
       ) {
         state.lastWorkingDate = (new Date(employeeData.joiningDate).setMonth(new Date(employeeData.joiningDate).getMonth() + (((employeeData.internshipPeriod !== null && employeeData.internshipPeriod !== undefined)?employeeData.internshipPeriod:0))))
       } else if (
-        state.empContractType === "Fulltime" ||
-        state.empContractType === "fulltime" ||state.empContractType === "parttime" ||
-        state.empContractType === "PartTime"
+        state.empContractType === "Fulltime" || state.empContractType === "fulltime"
+         || state.empContractType === "parttime" ||
+        state.empContractType === "PartTime" || 
+        state.empContractType === "Parttime"
       ) {
-              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
+              var dateValue = new Date(new Date().setMonth(new Date().getMonth() + parseInt(state.noticePeriod)))
         let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
-        setLastDateSelection(aboveDateValue)
+        setLastWorkingDate(dateValue)
+
+         setLastDateSelection(aboveDateValue)
         state.lastWorkingDate = dateValue
 
       } else {
@@ -304,8 +308,8 @@ const ManagerInitiateExit = () => {
         setRehireNo(false);
         setRcryYes(false);
         setRcryNo(false);
-        setDateOfResignation("");
-        setLastWorkingDate("");
+        setDateOfResignation(new Date());
+        setLastWorkingDate(new Date());
         setPreview(false);
         ViewEmployeeDataById(state.empId)
       }
@@ -396,18 +400,21 @@ const ManagerInitiateExit = () => {
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
+        state.noticePeriod = searchByCostData.internshipPeriod
+        // setDateOfResignation(new Date(searchByCostData.joiningDate))
         setIntern(true);
-        setLastWorkingDate(new Date(searchByCostData.joiningDate).setMonth(new Date(searchByCostData.joiningDate).getMonth() + (((searchByCostData.internshipPeriod !== null && searchByCostData.internshipPeriod !== undefined)?searchByCostData.internshipPeriod:0))))
-      } else if (
+         var data = new Date(searchByCostData.joiningDate).setMonth(new Date(searchByCostData.joiningDate).getMonth() + (((searchByCostData.internshipPeriod !== null && searchByCostData.internshipPeriod !== undefined)?searchByCostData.internshipPeriod:0)))
+           setLastWorkingDate(new Date(data))
+      } else if(
         state.empContractType === "Fulltime" ||
-        state.empContractType === "fulltime" ||state.empContractType === "parttime" ||
-        state.empContractType === "PartTime"
-      ) {
-              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
+        state.empContractType === "fulltime" || state.empContractType === "parttime" ||
+        state.empContractType === "Parttime"
+      ){
+              var dateValue = new Date(new Date().setMonth(new Date().getMonth()+parseInt(state.noticePeriod)))
+              setLastWorkingDate(dateValue)
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth()+(parseInt(state.noticePeriod) + 1)))
         setIntern(false);
         setLastDateSelection(aboveDateValue)
-        setLastWorkingDate(dateValue)
 
 //         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 
 //           && searchByCostData.noticePeriod == 0){
@@ -420,9 +427,9 @@ const ManagerInitiateExit = () => {
 //         }
 // console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
 
-      } else {
+      }else{
         setIntern(false);
-        setLastWorkingDate("")
+        setLastWorkingDate(new Date())
       }
     }else{
       state.empName = ""
@@ -437,8 +444,8 @@ const ManagerInitiateExit = () => {
       state.mngrCostCenterName = ""
       state.mngrPosition = ""
       state.dateOfResignation = ""
-      setDateOfResignation("")
-      setLastWorkingDate("")
+      // setDateOfResignation("")
+      // setLastWorkingDate("")
       setEmpName("")
     }
   }, [searchByCostData]);
@@ -463,7 +470,6 @@ const ManagerInitiateExit = () => {
   }, [employeeProfileData]);
   
 
-  console.log(ModeOfSeparationData);
   console.log("searchByCostData", searchByCostData);
   console.log(employeeProfileData,"employeeProfileData")
   const searchDataHandler = () => {
@@ -685,6 +691,15 @@ const ManagerInitiateExit = () => {
           setShow(true);
        
         } else if (intern === true) {
+          var reasonId = 0;
+          reasonOfSeparationList.map((item, i) => {
+            if (
+              reasonOfSeparationList[i].label === state.modeOfSeparationReasonId
+            ) {
+              reasonId = reasonOfSeparationList[i].value;
+              console.log(reasonOfSeparationList[i].value);
+            }
+          });
           const data1 = {
             company: null,
             contractType: state.empContractType,
@@ -706,13 +721,13 @@ const ManagerInitiateExit = () => {
             managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
-            modeOfSeparationId: 3,
-            modeOfSeparationReasonId: 4,
+            modeOfSeparationId: 6,
+            modeOfSeparationReasonId:reasonId,
             noticePeriod: state.noticePeriod,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
             position: state.empLocation,
-            reHire: 0,
+            reHire:RehireYes ? 1 : RehireNo ? 2 : 0,
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
@@ -789,7 +804,7 @@ const ManagerInitiateExit = () => {
     state.empCostCenterName = "";
     state.emailId = ""
     state.noticePeriod = ""
-    setLastWorkingDate("");
+    setLastWorkingDate(new Date());
     makeEmployeeDataNull();
     makeSearchEmp1DataNull();
   };
@@ -805,10 +820,18 @@ const ManagerInitiateExit = () => {
       setRemarkError(true);
     }
   };
+  const changeHandler1 =(e)=>{
+    var data = e.target.value
+    console.log(e.target.name,data,"changeHandler1")
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+  }
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
-    } else {
+    }else{
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -838,7 +861,10 @@ const ManagerInitiateExit = () => {
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     // console.log("AdjusteddateValue");
+    var AdjusteddateValue1 = new Date(AdjusteddateValue)
+    setLastWorkingDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(state.noticePeriod)))
     setDateOfResignation(AdjusteddateValue);
+
   };
 
   const dateOfBirthHandler1 = (date) => {
@@ -1035,7 +1061,7 @@ const ManagerInitiateExit = () => {
             costCentreManagerName: null,
             costCentreName: null,
             dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-            personalEmail: state.emailId,
+            personalEmailId: state.emailId,
             empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
@@ -1069,15 +1095,24 @@ const ManagerInitiateExit = () => {
           //   empResign(data1);
           setSuccessModal(true);
           //  TerminationFromDesciplinary(false);
-        } else if (intern === true) {
+        } else if (intern === true){
+          var reasonId = 0;
+          reasonOfSeparationList.map((item, i) => {
+            if (
+              reasonOfSeparationList[i].label === state.modeOfSeparationReasonId
+            ) {
+              reasonId = reasonOfSeparationList[i].value;
+              console.log(reasonOfSeparationList[i].value);
+            }
+          });
           const data1 = {
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
-            dateOfResignation: null,
-            personalEmail: state.emailId,
+            dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+            personalEmailId: state.emailId,
             empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
@@ -1091,17 +1126,17 @@ const ManagerInitiateExit = () => {
             managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
-            modeOfSeparationId: 3,
-            modeOfSeparationReasonId: 4,
+            modeOfSeparationId: 6,
+            modeOfSeparationReasonId:reasonId,
             noticePeriod: state.noticePeriod,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
             position: state.empLocation,
-            reHire: 0,
+            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 6,
+            status: 8,
           };
           console.log("createExitData", data1);
           //   empResign(createExitData);
@@ -1117,7 +1152,7 @@ const ManagerInitiateExit = () => {
       }
     }
   };
-console.log(intern,"8098709809808")
+console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
   return (
     <Fragment>
       {termination?<Modal
@@ -1173,7 +1208,8 @@ console.log(intern,"8098709809808")
               The details have been saved successfully <br />
               The relieving letter will be sent to the employee on{" "}
               {moment(((terminationLetterData !== null && terminationLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
-              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1)?relivingLetterData.lastWorkingDate:new Date(), "YYYY-MM-DD")
+              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1)?relivingLetterData.lastWorkingDate:
+              modeOfSeparation === "End of Contract"?relivingLetterData.lastWorkingDate:new Date(), "YYYY-MM-DD")
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
             </label>
@@ -1438,7 +1474,7 @@ console.log(intern,"8098709809808")
                 </Col>: <Col sm={4}>
                         <div>
                             <label>
-                            <b>Internship contract end date:</b>
+                            Internship contract end date:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
                               </label>
@@ -1599,6 +1635,8 @@ console.log(intern,"8098709809808")
                                   >
                                     <DatePicker
                                       className="form-control onBoard-view"
+                                      value={moment(dateOfResignation).format("YYYY-MM-DD")}
+
                                       selected={dateOfResignation}
                                       name="dateOfResignation"
                                       minDate={moment().toDate()}
@@ -1647,11 +1685,12 @@ console.log(intern,"8098709809808")
                                 >
                                   <DatePicker
                                     className="form-control onBoard-view"
+                                    value={new Date(moment(lastWorkingDate).format("YYYY-MM-DD"))}
                                     selected={lastWorkingDate}
                                     name="lastWorkingDate"
                                     minDate={new Date()}
-                                    minDate={moment().toDate()}
-                                      maxDate={lastDateSelection}
+                                     minDate={moment().toDate()}
+                                     //maxDate={intern === true?"":lastDateSelection}
                                     // required
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
@@ -1763,7 +1802,7 @@ console.log(intern,"8098709809808")
                                     name="modeOfSeparationReasonId"
                                     options={reasonOfSeparationList}
                                     value={state.modeOfSeparationReasonId}
-                                    onChange={changeHandler}
+                                    onChange={changeHandler1}
                                     //   disabled={disabled}
                                     style={
                                       modOfSepReasonError
@@ -1773,8 +1812,9 @@ console.log(intern,"8098709809808")
                                   >
                                     <option value=""></option>
                                     {reasonOfSeparationList.map((item) => {
+                                      console.log(item,"item")
                                       return (
-                                        <option key={item.value}>
+                                        <option name={item.value} key={item.value}>
                                           {item.label}
                                         </option>
                                       );
@@ -1882,6 +1922,24 @@ console.log(intern,"8098709809808")
                           </Form.Group>
                         </Col></>:""}
                       </Row>
+                      <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >                  <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Approver:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.mngrName}
+                              &nbsp; {state.mngrId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                  </Row>
                       {/* <Row
                     style={{
                       marginLeft: "2rem",
@@ -1927,7 +1985,6 @@ console.log(intern,"8098709809808")
                       </div>
                     </Col>
                   </Row> */}
-                      {!intern ? (
                         <Row
                           style={{
                             marginTop: "2rem",
@@ -1935,7 +1992,8 @@ console.log(intern,"8098709809808")
                             marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={2}>
+                           {intern === false?
+                            <><Col sm={2}>
                             <div>
                               <label>Notice Period Recovery Days</label>
                             </div>
@@ -1974,7 +2032,7 @@ console.log(intern,"8098709809808")
                                 )}
                               </Form.Group>
                             )}
-                          </Col>
+                          </Col></>:""}
 
                           <Col sm={2}>
                             <div>
@@ -2031,9 +2089,6 @@ console.log(intern,"8098709809808")
                             </Form.Group>
                           </Col>
                         </Row>
-                      ) : (
-                        ""
-                      )}
 
                       <Row>
                         <Col

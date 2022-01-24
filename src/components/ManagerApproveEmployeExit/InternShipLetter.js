@@ -64,23 +64,23 @@ const InternShipLetter = () => {
                   relivingLetterData.maritalStatus === "SINGLE"||
                   relivingLetterData.maritalStatus === "Single")?
                   `Miss. ${relivingLetterData.employeeName}`
-                  :`Mrs.${relivingLetterData.employeeName}`} has 
-            completed internship at {relivingLetterData.company} Pvt Ltd, from  
-            <b>{relivingLetterData.dateOfJoining}</b> to  <b>{relivingLetterData.lastWorkingDate}</b> on
+                  :`Mrs.${relivingLetterData.employeeName}`}{" "} has 
+            completed internship at {relivingLetterData.company} Pvt Ltd, from{" "}  
+            <b>{relivingLetterData.dateOfJoining}</b>{" "} to  <b>{relivingLetterData.lastWorkingDate}</b>{" "} on
            under the guidance of  {relivingLetterData.managerName}.<br/><br/>
 
             During the period of {(relivingLetterData.gender === "male"||
                   relivingLetterData.gender === "MALE"||
-                  relivingLetterData.gender === "Male")?"his":"her"} internship programme with us, 
+                  relivingLetterData.gender === "Male")?"his":"her"}{" "} internship programme with us, 
             we found {(relivingLetterData.gender === "male"||
                   relivingLetterData.gender === "MALE"||
-                  relivingLetterData.gender === "Male")?"he":"she"}  was punctual, hardworking and inquisitive.
+                  relivingLetterData.gender === "Male")?"he":"she"}{" "}  was punctual, hardworking and inquisitive.
 
             We wish {(relivingLetterData.gender === "male"||
                   relivingLetterData.gender === "MALE"||
-                  relivingLetterData.gender === "Male")?"his":"her"}  all the very best for {(relivingLetterData.gender === "male"||
+                  relivingLetterData.gender === "Male")?"his":"her"}{" "}  all the very best for {(relivingLetterData.gender === "male"||
                   relivingLetterData.gender === "MALE"||
-                  relivingLetterData.gender === "Male")?"his":"her"}  future endeavours.
+                  relivingLetterData.gender === "Male")?"his":"her"}{" "}  future endeavours.
             </p>
             <p className="mt-5 ">
               <b>For {relivingLetterData.company} Pvt Ltd,</b>

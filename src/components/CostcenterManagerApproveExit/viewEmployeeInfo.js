@@ -448,7 +448,7 @@ const EmployeeExitAction = (props) => {
           employeeName: employeeData.employeeName,
           exitId: employeeData.exitId,
           hoursWorked: employeeData.hoursWorked,
-          lastWorkingDate: lastWorkingDate,
+          lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
           location: employeeData.location,
           managerCostCentre: employeeData.managerCostCentre,
           managerEmailId: employeeData.managerEmailId,
@@ -836,6 +836,25 @@ const EmployeeExitAction = (props) => {
                         </div>
                       </Col>
                     </Row> */}
+                        <Row
+                      style={{
+                        marginTop: "2rem",
+                        marginLeft: "2rem",
+                        marginBottom: "2rem",
+                      }}
+                    >       
+                                 <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Approver:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.managerName}
+                              &nbsp; {state.managerId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
                     <Row
                       style={{
                         marginTop: "2rem",
