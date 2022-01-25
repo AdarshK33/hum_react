@@ -806,7 +806,7 @@ const EmpResignation = () => {
                     <Form.Label column sm="5" className="labels-data">
                       Exit Feedback Form:
                     </Form.Label>
-                    <Col sm="7">
+                    {submitted === false?<Col sm="7">
                       <a
                         href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
                         target="_blank"
@@ -814,7 +814,16 @@ const EmpResignation = () => {
                       >
                         Click here
                       </a>
-                    </Col>
+                    </Col>:
+                    <Col sm="7">
+                  
+                      <Form.Control
+                        type="text"
+                        value={"Feedback Form Filled"}
+                        readOnly
+                        className="disabledValue readTextBlue"
+                      />
+                    </Col>}
                   </Form.Group>
                 </Col>
               </Row>

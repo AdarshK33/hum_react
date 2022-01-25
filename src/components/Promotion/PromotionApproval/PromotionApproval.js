@@ -286,8 +286,7 @@ const PromotionApproval = (props) => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Promotion rejected,the Manager/Admin has been notified
-            </label>
+            Promotion Rejected successfully, request sent to Manager/CostCenterManager            </label>
             <div className="text-center mb-2">
               <Link to={"/promotion-list"}>
                 <Button onClick={handleCloseValue}>Close</Button>

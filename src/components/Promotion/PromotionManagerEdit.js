@@ -109,6 +109,8 @@ const PromotionManagerEdit = (props) => {
     generatePromotionLetter,
     promotionLetterData,
   } = useContext(PromotionContext);
+  const { rolePermission } = useContext(PermissionContext);
+
   useEffect(() => {
     if (
       promotionIdData !== null &&
