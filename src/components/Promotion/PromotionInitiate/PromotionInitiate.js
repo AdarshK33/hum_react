@@ -270,12 +270,12 @@ const PromotionInitiate = () => {
           setNewFixedGrossError("");
         }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (state.newFixedGross < state.oldFixedGross) {
+        if (newFixedGross < 18000 || newFixedGross == 18000) {
+          setNewFixedGrossError("Value should be above 18000");
+        }else if(state.newFixedGross == state.oldFixedGross) {
           setNewFixedGrossError(
             "Fixed gross should be greater than old fixed gross"
           );
-        } else if (newFixedGross < 18000 || newFixedGross == 18000) {
-          setNewFixedGrossError("Value should be above 18000");
         } else {
           setNewFixedGrossError("");
         }
@@ -353,7 +353,8 @@ const PromotionInitiate = () => {
       newFixedGross !== undefined &&
       positionId !== undefined &&
       departmentId !== undefined &&
-      empName !== undefined
+      empName !== undefined && (state.promotionType == 1 && 
+        (state.oldFixedGross < state.newFixedGross) || state.promotionType == 0)
     ) {
       const infoData = {
         validatedAdminId: null,
@@ -476,7 +477,6 @@ const PromotionInitiate = () => {
       // toast.error("Data is not filled Properly")
     }
   };
-  console.log(promotioManagerList, "promotioManagerList");
   const handleCloseValue = () => {
     setModelStatus(false);
     setContractTypeStatus(false);
@@ -594,9 +594,11 @@ const PromotionInitiate = () => {
           setNewFixedGrossError("");
         }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (e.target.value < 18000 || e.target.value == 18000) {
+        if (e.target.value < 18000 || e.target.value == 18000){
           setNewFixedGrossError("Value should be above 18000");
-        } else {
+        }else if(e.target.value == state.oldFixedGross){
+          setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+        }else{
           setNewFixedGrossError("");
         }
       }
@@ -624,13 +626,15 @@ const PromotionInitiate = () => {
 
     console.log(state, promotionIdData, "state");
   };
-  const submitfinalRelivingLetter = (e) => {
+  const handleChangeLetterSubmit = (e) => {
     e.preventDefault();
+    console.log("submit")
     if (
       promotionIdData !== null &&
       promotionIdData !== undefined &&
       Object.keys(promotionIdData).length !== 0
     ) {
+      console.log("in if")
       const infoData = {
         adminValidatedDate: promotionIdData["adminValidatedDate"],
         validatedAdminId: promotionIdData["validatedAdminId"],
@@ -670,7 +674,7 @@ const PromotionInitiate = () => {
         remarks: promotionIdData["remarks"],
         status: 3,
       };
-      // PromotionCreate(infoData);
+      PromotionCreate(infoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
@@ -716,7 +720,6 @@ const PromotionInitiate = () => {
     setSaveLetter(true);
     setShow(false);
   };
-
   return (
     <Fragment>
       <ToastContainer />
@@ -1526,7 +1529,7 @@ const PromotionInitiate = () => {
                                             ? " confirmButton "
                                             : "stepperButtons"
                                         }
-                                        onClick={submitfinalRelivingLetter}
+                                        onClick={handleChangeLetterSubmit}
                                       >
                                         Submit
                                       </button>
