@@ -101,14 +101,23 @@ const EditLeave = (props) => {
         //For disable the To Date initially
         setDisable(false)
 
-        let DayValue = parseInt(new Date(date).getDate())
-        if (DayValue < parseInt(new Date().getDate()) ) {
+        // let DayValue = parseInt(new Date(date).getDate())
+        // if (DayValue < parseInt(new Date().getDate()) ) {
+        //     setMax(true);
+        //     setMin(false);
+        // }else if (DayValue >= parseInt(new Date().getDate())) {
+        //     setMin(true);
+        //     setMax(false);
+        // } 
+        
+        if (moment(date)
+        .isBefore(moment()) ) {
             setMax(true);
             setMin(false);
-        }else if (DayValue >= parseInt(new Date().getDate())) {
+        }else {
             setMin(true);
             setMax(false);
-        }       
+        }
         setEditMsg(false)
 
     }
