@@ -156,8 +156,8 @@ const ActionPage = () => {
           disciplinarySearchData.disciplinaryAction.reasonDetails;
         state.showCauseLetterSCIN =
           disciplinarySearchData.disciplinaryAction.showCauseLetter;
-        state.showCauseNoticeSCIN =
-          disciplinarySearchData.disciplinaryAction.showCauseNotice;
+        // state.showCauseNoticeSCIN =
+        //   disciplinarySearchData.disciplinaryAction.showCauseNotice;
         state.statusDescSCIN =
           disciplinarySearchData.disciplinaryAction.statusDesc;
         state.warningIssuedSCIN =
@@ -327,7 +327,7 @@ const ActionPage = () => {
           reason: state.reasonSCIN,
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
-          showCauseNotice: state.showCauseNoticeSCIN,
+          // showCauseNotice: state.showCauseNoticeSCIN,
           status: 0,
           statusDesc: state.statusDescSCIN,
           warningIssued: state.warningIssuedSCIN,
@@ -377,7 +377,7 @@ const ActionPage = () => {
       console.log("search data is null");
     }
   };
-
+console.log(disciplinarySearchData,"disciplinarySearchData")
   return (
     <Fragment>
       {/* letter */}

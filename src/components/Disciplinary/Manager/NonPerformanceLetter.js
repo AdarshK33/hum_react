@@ -181,7 +181,7 @@ const NonPerformanceLetter = () => {
               <br />
               <br />
               <p>
-                It is reported against you that you have been not been
+                It is reported against you that you have not been
                 performing the assigned tasks. Thus, on verifying your
                 performances as detailed below, it demonstrates very clearly
                 that your performance has been much below the performance levels
