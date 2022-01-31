@@ -284,7 +284,7 @@ const IssueShowCauseNotice = () => {
           reasonDetailsId:
             disciplinarySearchData.disciplinaryAction.reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
-          showCauseNotice: null,
+         //  showCauseNotice: null, //31/1/2022
           status: 0,
           // rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: null,
@@ -516,7 +516,7 @@ const IssueShowCauseNotice = () => {
           reasonDetailsId:
             changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
-          showCauseNotice: null,
+          // showCauseNotice: null,
           status:
             rolePermission == "admin"
               ? 13

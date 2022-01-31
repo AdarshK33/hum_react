@@ -258,7 +258,7 @@ const PromotionApproval = (props) => {
           <Modal.Body className="mx-auto">
             <label className="text-center">
               {user !== null && user !== undefined && rolePermission == "admin"
-                ? "Promotion details saved successfully, request sent to the manager"
+                ? `Promotion details saved successfully, request sent to the ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center":"Manager"}`
                 : user !== null &&
                   user !== undefined &&
                   rolePermission == "costCenterManager"

@@ -713,7 +713,8 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                         </div>
                       </Col>
                     </Row>
-                    {state.modeOfSeparationId == 4?<> <Row
+{/*                     
+                     {state.modeOfSeparationId == 4?<> <Row
                       style={{
                         marginLeft: "2rem",
                         marginTop: "1rem",
@@ -725,7 +726,6 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                           <label>
                             <b>Exit Feedback Form:</b>
                             <label className="itemResult">
-                              {/* &nbsp;&nbsp; {InfoState.empName} */}
                             </label>
                           </label>
                         </div>
@@ -758,6 +758,7 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                         </div>
                       </Col>
                     </Row></>:""}
+                      */}
                     <Row
                           style={{
                             marginTop: "2rem",
