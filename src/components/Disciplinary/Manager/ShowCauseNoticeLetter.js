@@ -138,6 +138,7 @@ import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 const ShowCauseNotice = () => {
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
+  console.log(disciplinarySearchData,"disciplinarySearchData")
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
@@ -188,7 +189,7 @@ const ShowCauseNotice = () => {
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}
               Private Limited (“Decathlon/{disciplinarySearchData.company}),
-               as{" "}
+               as a {" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <p>

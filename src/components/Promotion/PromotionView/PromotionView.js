@@ -108,7 +108,7 @@ const PromotionView = (props) => {
         bonus: promotionIdData["bonus"],
         managerValidatedDate:promotionIdData["managerValidatedDate"],
         adminValidatedDate:promotionIdData["adminValidatedDate"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
         costCentreManagerId: promotionIdData["costCentreManagerId"],

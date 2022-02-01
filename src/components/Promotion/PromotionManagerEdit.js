@@ -53,7 +53,7 @@ const PromotionManagerEdit = (props) => {
     validatedManagerId: "",
     validatedManagerName: "",
     bonus: 0,
-    bonusInPercentage: 0,
+    // bonusInPercentage: 0,
     costCentre: "",
     costCentreManagerEmail: "",
     costCentreManagerId: "",
@@ -139,7 +139,7 @@ const PromotionManagerEdit = (props) => {
         validatedManagerId: promotionIdData["validatedManagerId"],
         validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
         costCentreManagerId: promotionIdData["costCentreManagerId"],
@@ -222,7 +222,7 @@ const PromotionManagerEdit = (props) => {
         validatedManagerId: promotionIdData["validatedManagerId"],
         validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
         costCentreManagerId: promotionIdData["costCentreManagerId"],
@@ -335,7 +335,7 @@ const PromotionManagerEdit = (props) => {
       validatedManagerId: promotionIdData["validatedManagerId"],
       validatedManagerName: promotionIdData["validatedManagerName"],
       bonus: promotionIdData["bonus"],
-      bonusInPercentage: promotionIdData["bonusInPercentage"],
+      // bonusInPercentage: promotionIdData["bonusInPercentage"],
       costCentre: promotionIdData["costCentre"],
       costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
       costCentreManagerId: promotionIdData["costCentreManagerId"],
@@ -823,7 +823,93 @@ const PromotionManagerEdit = (props) => {
                             </div>
                           </Col>
                         </Row>
-
+                          {<>
+                          
+                                                    <Row
+                                                    style={{
+                                                      marginLeft: "2rem",
+                                                      marginTop: "1rem",
+                                                      marginBottom: "3rem",
+                                                    }}
+                                                  >
+                                                    <>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label>Validated by Costcenter Leader:</label>
+                                                        </div>
+                                                      </Col>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label className="itemResult">
+                                                            {state.validatedManagerName}
+                                                          </label>
+                                                        </div>
+                                                      </Col>
+                                                    </>
+                                                    <>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label>Date:</label>
+                                                        </div>
+                                                      </Col>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label className="itemResult">
+                                                            {state.managerValidatedDate !== null &&
+                                                            state.managerValidatedDate !== undefined &&
+                                                            state.managerValidatedDate !== ""
+                                                              ? moment(state.managerValidatedDate).format(
+                                                                  "DD-MM-YYYY"
+                                                                )
+                                                              : ""}
+                                                          </label>
+                                                        </div>
+                                                      </Col>
+                                                    </>
+                                                  </Row>
+                                                  <Row
+                                                    style={{
+                                                      marginLeft: "2rem",
+                                                      marginTop: "1rem",
+                                                      marginBottom: "3rem",
+                                                    }}
+                                                  >
+                                                    <>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label>Validated by Admin:</label>
+                                                        </div>
+                                                      </Col>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label className="itemResult">
+                                                            {state.validatedAdminName}
+                                                          </label>
+                                                        </div>
+                                                      </Col>
+                                                    </>
+                                                    <>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label>Date:</label>
+                                                        </div>
+                                                      </Col>
+                                                      <Col sm={2}>
+                                                        <div>
+                                                          <label className="itemResult">
+                                                            {state.adminValidatedDate !== null &&
+                                                            state.adminValidatedDate !== undefined &&
+                                                            state.adminValidatedDate !== ""
+                                                              ? moment(state.adminValidatedDate).format(
+                                                                  "DD-MM-YYYY"
+                                                                )
+                                                              : ""}
+                                                          </label>
+                                                        </div>
+                                                      </Col>
+                                                    </>
+                                                  </Row></>
+                          }
                         <Row
                           style={{
                             marginLeft: "2rem",
