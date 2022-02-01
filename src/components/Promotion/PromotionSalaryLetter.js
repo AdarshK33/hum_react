@@ -148,7 +148,7 @@ const PromotionSalaryLetter = () => {
               && promotionLetterData.effectiveDate !== ""?
               moment(promotionLetterData.effectiveDate).format("DD-MM-YYYY"):""}</b>. You
               will be reporting to {" "}
-              <b>Ms./Mr.{promotionLetterData.reportingManagerName},</b>. All the other
+              <b>{promotionLetterData.reportingManagerName},</b>. All the other
               terms and conditions of your appointment letter dated{" "}
               <b>{promotionLetterData.appointmentLetterDate !== null && promotionLetterData.appointmentLetterDate !== undefined 
               && promotionLetterData.appointmentLetterDate !== ""?

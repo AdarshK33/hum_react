@@ -346,17 +346,23 @@ const PromotionInitiate = () => {
       positionId !== "" &&
       departmentId !== "" &&
       empName !== "" &&
+      effectiveDate !== "" &&
+      reportingManagerName !== "" &&
       newDepartment !== null &&
       reason !== null &&
       newFixedGross !== null &&
       positionId !== null &&
       departmentId !== null &&
       empName !== null &&
+      effectiveDate !== null &&
+      reportingManagerName !== null &&
       newDepartment !== undefined &&
       reason !== undefined &&
       newFixedGross !== undefined &&
       positionId !== undefined &&
       departmentId !== undefined &&
+      effectiveDate !== undefined &&
+      reportingManagerName !== undefined &&
       empName !== undefined && (state.promotionType == 1 && 
         (state.oldFixedGross < state.newFixedGross) || state.promotionType == 0)
     ) {
@@ -777,7 +783,7 @@ const PromotionInitiate = () => {
                 <>
                   <br></br>
                   <button
-                    className={"stepperButtons"}
+                    className={"stepperButtonsLetter"}
                     onClick={digitalSignature}
                   >
                     Add digital signature
@@ -1485,7 +1491,7 @@ const PromotionInitiate = () => {
                                     className={
                                       saveLetter
                                         ? "confirmButton"
-                                        : "stepperButtons"
+                                        : "PromotionstepperButtons"
                                     }
                                     onClick={generateLetterClick}
                                   >
