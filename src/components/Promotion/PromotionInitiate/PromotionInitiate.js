@@ -347,7 +347,7 @@ const PromotionInitiate = () => {
       departmentId !== "" &&
       empName !== "" &&
       effectiveDate !== "" &&
-      reportingManagerName !== "" &&
+      //reportingManagerName !== "" &&
       newDepartment !== null &&
       reason !== null &&
       newFixedGross !== null &&
@@ -355,14 +355,14 @@ const PromotionInitiate = () => {
       departmentId !== null &&
       empName !== null &&
       effectiveDate !== null &&
-      reportingManagerName !== null &&
+    //reportingManagerName !== null &&
       newDepartment !== undefined &&
       reason !== undefined &&
       newFixedGross !== undefined &&
       positionId !== undefined &&
       departmentId !== undefined &&
       effectiveDate !== undefined &&
-      reportingManagerName !== undefined &&
+      //reportingManagerName !== undefined &&
       empName !== undefined && (state.promotionType == 1 && 
         (state.oldFixedGross < state.newFixedGross) || state.promotionType == 0)
     ) {
