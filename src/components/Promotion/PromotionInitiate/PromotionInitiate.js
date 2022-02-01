@@ -272,11 +272,15 @@ const PromotionInitiate = () => {
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
         if (newFixedGross < 18000 || newFixedGross == 18000) {
           setNewFixedGrossError("Value should be above 18000");
-        }else if(state.newFixedGross == state.oldFixedGross) {
-          setNewFixedGrossError(
-            "Fixed gross should be greater than old fixed gross"
-          );
-        } else {
+        }else if(state.newFixedGross > 18000){
+          if(state.newFixedGross < state.oldFixedGross ){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else if(state.newFixedGross == state.oldFixedGross){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else{
+            setNewFixedGrossError("");
+          }
+        }else{
           setNewFixedGrossError("");
         }
       }
@@ -362,7 +366,7 @@ const PromotionInitiate = () => {
         validatedManagerId: null,
         validatedManagerName: null,
         bonus: 0,
-        bonusInPercentage: 0,
+        // bonusInPercentage: 0,
         costCentre: state.costCentre,
         costCentreManagerEmail: null,
         costCentreManagerId: null,
@@ -596,8 +600,14 @@ const PromotionInitiate = () => {
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
         if (e.target.value < 18000 || e.target.value == 18000){
           setNewFixedGrossError("Value should be above 18000");
-        }else if(e.target.value == state.oldFixedGross){
-          setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+        }else if(e.target.value > 18000){
+          if(e.target.value < state.oldFixedGross ){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else if(e.target.value == state.oldFixedGross){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else{
+            setNewFixedGrossError("");
+          }
         }else{
           setNewFixedGrossError("");
         }
@@ -643,7 +653,7 @@ const PromotionInitiate = () => {
         validatedManagerId: promotionIdData["validatedManagerId"],
         validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
         costCentreManagerId: promotionIdData["costCentreManagerId"],
