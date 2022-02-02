@@ -50,8 +50,8 @@ const NonPerformanceWarningLetter = () => {
             <br></br> */}
 
             <p>
-              You have been associated with {disciplinarySearchData.company}
-              (“Decathlon/Company”),as a
+              You have been associated with {disciplinarySearchData.company}{" "}
+              Private Limited , as a{" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <br />
@@ -59,7 +59,7 @@ const NonPerformanceWarningLetter = () => {
               <b>
                 {disciplinarySearchData.disciplinaryAction.actionIssuedDate}{" "}
               </b>
-              , {disciplinarySearchData.company} issued to you a Show Cause notice, 
+              , {disciplinarySearchData.company}{" "}issued to you a Show Cause notice, 
               asking you for a clear written explanation regarding your Non- Performance 
               at work.
               {/* <b>{disciplinarySearchData.disciplinaryAction.managerComment} </b> */}
@@ -67,10 +67,10 @@ const NonPerformanceWarningLetter = () => {
               <br />
               In furtherance, your reply to show cause notice is not satisfactory 
               and justified. Therefore you are hereby warned and given an opportunity
-               to improve the performance at work. You will be given 
-                {disciplinarySearchData.improvementPeriod}{" "}months to improve your 
+               to improve the performance at work. You will be given{" "}
+                {disciplinarySearchData.disciplinaryWarning.improvementPeriod}{" "}months to improve your 
                 performance and we shall be reviewing your performance after completion 
-                of {disciplinarySearchData.improvementPeriod}{" "}months by your leader.
+                of {disciplinarySearchData.disciplinaryWarning.improvementPeriod}{" "}months by your leader.
                  If your performance does not improve within the given period appropriate 
                  disciplinary action will follow.
 

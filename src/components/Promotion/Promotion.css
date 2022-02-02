@@ -11,6 +11,22 @@
 .container-accordion .accordion__button:hover {
   background-color: #006ebb;
 }
+.PromotionstepperButtons {
+  width: 200px;
+  height: 30px;
+  background-color: #006ebb;
+  color: #fff;
+  border: 1px solid#006ebb;
+  margin-left: 40px;
+}
+.stepperButtonsLetter {
+  width: 137px;
+  height: 30px;
+  background-color: #006ebb;
+  color: #fff;
+  border: 1px solid#006ebb;
+  margin-left: 10px;
+}
 .container-accordion .accordion {
   border: none;
   border-radius: 0;

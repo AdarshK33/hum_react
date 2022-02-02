@@ -552,7 +552,7 @@ const DisciplinarySeparation = (props) => {
     setSuccessModal(false);
   };
   const handleCloseMessage = () =>{
-    props.history.push("/")
+    props.history.push("/disciplinary")
   }
   const handleInfoClose = () => {
     setShowInfoModal(false);
@@ -1063,7 +1063,7 @@ console.log(terminationLetterData,"terminate")
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="itemResult">
-              Resignation for this employee {EmpName} has already been initiated
+              Resignation for this employee {EmpName} has already been initated
             </label>
 
             <div className="text-center mb-2">
