@@ -76,8 +76,8 @@ const MisConductTerminationLetter = () => {
       <br></br>
 
       <p>
-      You have been associated with{terminationLetterData.company} at its 
-      {terminationLetterData.address} location as {terminationLetterData.designation}.
+      You have been associated with{" "}{terminationLetterData.company}{" "} at its 
+      {terminationLetterData.address}{" "}location as{" "}{terminationLetterData.designation}.
 
                 {/* You have been associated {terminationLetterData.company}
               You have been associated {terminationLetterData.company} 
@@ -86,7 +86,7 @@ const MisConductTerminationLetter = () => {
 
               This is reference to the Show Cause letter dated on{" "}
                 {terminationLetterData !== undefined &&
-                  terminationLetterData.dateOfResignation}. It has come 
+                  terminationLetterData.dateOfResignation}.{" "}It has come 
               to our knowledge that you have indulged in act of misconduct{" "}
                 {terminationLetterData !== undefined &&
                   terminationLetterData.reason}{" "}
@@ -101,8 +101,8 @@ const MisConductTerminationLetter = () => {
         <br />
         Hence the above acts of yours have constituted serious misconduct in
             connection with the employer’s business or property.
-             Therefore, you are hereby terminated from your employment with 
-             {terminationLetterData.company} with immediate effect as on{" "}
+             Therefore, you are hereby terminated from your employment with{" "} 
+             {terminationLetterData.company}{" "} with immediate effect as on{" "}
             {terminationLetterData !== undefined &&
             terminationLetterData.lastWorkingDate}. Your full and final
             settlement post calculations of any dues from you will be 
@@ -120,7 +120,7 @@ const MisConductTerminationLetter = () => {
               </p>
              </Col>
               <Col sm="4">
-              <p> Accepted By
+              <p> Accepted By{" "}
           {terminationLetterData !== undefined &&
           terminationLetterData.costCentreManagerName}
           </p>

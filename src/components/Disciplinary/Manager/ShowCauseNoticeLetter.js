@@ -188,7 +188,7 @@ const ShowCauseNotice = () => {
 
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}
-              Private Limited (“Decathlon/{disciplinarySearchData.company}),
+              Private Limited,
                as a {" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />

@@ -75,8 +75,8 @@ const NonPerformanceTerminationLetter = () => {
       <br></br>
 
       <p>
-      You have been associated with{terminationLetterData.company}
-              (“entity name/prodin/indeca”) as{" "}{terminationLetterData !== 
+      You have been associated with{" "}{terminationLetterData.company}{" "}
+               as{" "}{terminationLetterData !== 
               undefined && terminationLetterData.position}.
               <br/>
               <br/>
@@ -86,7 +86,7 @@ const NonPerformanceTerminationLetter = () => {
                <br/>
                <br/>
                Unfortunately, you have not improved your performance to a 
-               consistent acceptable standard as required. On Date {terminationLetterData !== undefined &&
+               consistent acceptable standard as required. On Date{" "}{terminationLetterData !== undefined &&
                   terminationLetterData.dateOfResignation},
                 you were issued with a written warning in 
                 relation to your poor performance. 
@@ -98,13 +98,13 @@ const NonPerformanceTerminationLetter = () => {
                 <br/>
                 <br/>
                 The performance over this period has been unsatisfactory.
-                 Specifically, {terminationLetterData !== undefined &&
+                 Specifically,{" "}{terminationLetterData !== undefined &&
                   terminationLetterData.reason}{" "}
-
+              {/* warningIssuedDate */}
         <br />
         <br />
 
-             Therefore, you are hereby terminated from your employment with 
+             Therefore, you are hereby terminated from your employment with{" "} 
              {terminationLetterData.company} / Prodin / Indeca with immediate effect as on{" "}
             {terminationLetterData !== undefined &&
             terminationLetterData.lastWorkingDate}. Your full and final
@@ -124,9 +124,9 @@ const NonPerformanceTerminationLetter = () => {
               </p>
              </Col>
               <Col sm="4">
-              <p> Accepted By
+              <p> Accepted By{" "}
           {terminationLetterData !== undefined &&
-          terminationLetterData.employeeName}
+          terminationLetterData.costCentreManagerName}
           </p>
               </Col>
               </Row>

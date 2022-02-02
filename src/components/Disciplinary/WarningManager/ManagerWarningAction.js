@@ -999,7 +999,7 @@ const ManagerWarningAction = (props) => {
           <Modal.Body className="mx-auto">
             <label className="text-center">
               Employee disciplinary action issue resolved details saved
-              successfully, employe has been notified
+              successfully, employee has been notified
             </label>
             <div className="text-center">
               <Button onClick={handleClose1}>Close</Button>
@@ -1079,7 +1079,7 @@ const ManagerWarningAction = (props) => {
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
                   Warning letter details saved successfully, sent for cost
-                  manager confirmation
+                  center manager confirmation
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
@@ -1184,7 +1184,7 @@ const ManagerWarningAction = (props) => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Warning details saved successfully.
+              Warning letter details saved successfully.
             </label>
 
             <div className="text-center mb-2">
@@ -2025,7 +2025,7 @@ const ManagerWarningAction = (props) => {
                         ) : (
                           ""
                         )}
-                        {issueWarningStatus === "no" ||
+                        {issueWarningStatus === "no" && acceptEmployeeReason == "no" ||
                         (disciplinarySearchData !== null &&
                           disciplinarySearchData !== undefined &&
                           Object.keys(disciplinarySearchData).length !== 0 &&

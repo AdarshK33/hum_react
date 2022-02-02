@@ -481,7 +481,7 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
                 </label>
               ) : (
                 <label className="text-center">
-                  Warning details saved successfully.
+                  Warning letter details saved successfully.
                 </label>
               )
             ) : disciplinarySearchData &&

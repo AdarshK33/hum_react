@@ -50,8 +50,8 @@ const WarningLetter = () => {
             <br></br> */}
 
             <p>
-              You have been associated {disciplinarySearchData.company}
-              (“Decathlon/Company”) as a
+              You have been associated {disciplinarySearchData.company}{" "}
+              Private Limited as a{ " "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <br />
@@ -59,7 +59,7 @@ const WarningLetter = () => {
               <b>
                 {disciplinarySearchData.disciplinaryAction.actionIssuedDate}{" "}
               </b>
-              , {disciplinarySearchData.company} issued to you a Show Cause notice, asking you for a
+              , {disciplinarySearchData.company}{" "}issued to you a Show Cause notice, asking you for a
               clear written explanation regarding the following accusations-
               <b>{disciplinarySearchData.disciplinaryAction.managerComment} </b>
               <br />
