@@ -1,9 +1,22 @@
-import React, { Fragment, useState, useContext, useRef } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+} from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { ProbationContext } from "../../context/ProbationState";
+import { E_signContext } from "../../context/E_signState";
+import jsPDF from "jspdf";
+import pdfMake from "pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import { useHistory, useParams } from "react-router-dom";
 
 const ConfirmationLetter1 = () => {
   const {
@@ -14,28 +27,117 @@ const ConfirmationLetter1 = () => {
     LetterSaved,
     ViewProbationDataById,
   } = useContext(ProbationContext);
+  const { EmpProfileView, EmpProfile } = useContext(EmployeeProfileContext);
+  const history = useHistory();
+
+  const handleCloseNotify = () => {
+    setShowNotify(false);
+    history.push("../probation");
+  };
+
+  useEffect(() => {
+    EmpProfileView(cnfLetterData.empId);
+  }, [cnfLetterData]);
+
+  const { UploadEsignDoc, EsignLoader, settingInfo, showinfo, uploadResponse } =
+    useContext(E_signContext);
   const [show, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
   const { uploadBase64Image, ExportPDFandUpload } =
     useContext(DocsVerifyContext);
+  const [showNotify, setShowNotify] = useState(false);
   const ref = React.createRef();
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
     setLetterView(false);
   };
+  useEffect(() => {
+    if (showinfo === "true") {
+      setShowNotify(true);
+    } else {
+      setShowNotify(false);
+    }
+  }, [showinfo, uploadResponse]);
+
   console.log("ShowCNF->", show);
   const HandleSaveLetter = () => {
     setSaveLetter(true);
-    ExportPDFandUpload(inputRef.current, cnfLetterData.empId, 2);
+    // ExportPDFandUpload(inputRef.current, cnfLetterData.empId, 2);
+
+    const doc = new jsPDF();
+    //get table html
+    const pdfTable = document.getElementById("itcharter");
+    //html to pdf format
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+
+    const documentDefinition = { content: html };
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    // pdfMake.createPdf(documentDefinition).open();
+
+    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+    console.log("doc--.-.", pdfDocGenerator.pageCount);
+
+    pdfDocGenerator.getBuffer((buffer) => {
+      var blobStore = new Blob([buffer], { type: "application/pdf" });
+      blobStore.name = "esignDoc.pdf";
+      console.log("blobStore", blobStore);
+
+      const data = {
+        recipient1: {
+          observer: "false",
+          pageNo: "1",
+          reason: "testing",
+          location: "Bangalore",
+          rectangle: "0,0,150,100",
+          name: EmpProfile.firstName,
+          // "John Doe",
+          email: "rajasekhar@theretailinsights.com",
+          //  EmpProfile.email,,
+          phoneNumber: EmpProfile.phone,
+          // "+91 8074058844",
+          signature_type: "All",
+        },
+      };
+      const eSignDetails = {
+        orgId: "6180cd3596d65ededc7d30f6",
+        checkOrder: "true",
+        reminder: "true",
+        reminder_duration: 12,
+        eStampRequired: "false",
+        signature_expiry: "08/07/2022",
+      };
+
+      UploadEsignDoc(data, eSignDetails, blobStore);
+    });
+
     console.log("inputRef.current-->", inputRef.current);
     setShow(false);
-    setSaveTheLetter(true);
+    // setSaveTheLetter(true);
   };
+  const handleLoaderClose = () => {};
   return (
     <Fragment>
+      <Modal show={EsignLoader} onHide={handleLoaderClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          <div
+            className="loader-box loader"
+            style={{ width: "100% !important" }}
+          >
+            <div className="loader">
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
       {typeof cnfLetterData !== undefined ? (
         // {true ? (
+
         <Modal show={show} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
@@ -52,7 +154,7 @@ const ConfirmationLetter1 = () => {
                 </div>
               </div>
             ) : (
-              <div id="capture" ref={inputRef}>
+              <div id="itcharter" ref={inputRef}>
                 <div>
                   <p className="">
                     {" "}
