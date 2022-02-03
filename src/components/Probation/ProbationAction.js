@@ -673,11 +673,14 @@ const ProbationAction = () => {
         <Modal show={showNotify} onHide={handleCloseNotify} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label>
-              Notification sent successfully to <b>email:{EmpProfile.email}</b>{" "}
-              and <b>phone number:{EmpProfile.phone}</b> to complete e-sign
-              process
-            </label>
+            <div className="text-center">
+              <label>
+                Notification sent successfully to{" "}
+                <b>email:{EmpProfile.email}</b> and{" "}
+                <b>phone number:{EmpProfile.phone}</b> to complete e-sign
+                process
+              </label>
+            </div>
             <div className="text-center mb-2">
               <Button
                 onClick={handleCloseNotify}
@@ -1405,7 +1408,7 @@ const ProbationAction = () => {
                           ) : (
                             ""
                           )}
-                          {previewGeneratedLetter &&
+                          {/* {previewGeneratedLetter &&
                           probationData &&
                           probationData &&
                           probationData !== null &&
@@ -1439,7 +1442,7 @@ const ProbationAction = () => {
                             </button>
                           ) : (
                             ""
-                          )}
+                          )} */}
                           {showSignature && previewGeneratedLetter === true && (
                             <div className="preview-section">
                               <br></br>

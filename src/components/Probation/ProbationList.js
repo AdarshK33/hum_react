@@ -12,6 +12,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
+import { E_signContext } from "../../context/E_signState";
 import "./probation.css";
 import moment from "moment";
 const ProbationList = () => {
@@ -26,6 +27,7 @@ const ProbationList = () => {
     empId,
     loader,
   } = useContext(ProbationContext);
+  const { getReference, notification } = useContext(E_signContext);
   //   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
   //     useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
@@ -248,6 +250,10 @@ const ProbationList = () => {
   const fetchEmployeeDetails = (employeeId) => {
     changeEmpId(employeeId);
     ViewProbationDataById(employeeId);
+  };
+  const GoToLetterView = (refId) => {
+    console.log(refId);
+    getReference(refId);
   };
   return (
     <Fragment>
@@ -489,6 +495,7 @@ const ProbationList = () => {
                       <th scope="col">Status</th>
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
+                      <th scope="col">View Signed Document</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -600,21 +607,23 @@ const ProbationList = () => {
                               )}
                             </td>
 
-                            {/* {user !== null &&
-                            user !== undefined &&
-                            user.role !== "ADMIN" ? (
+                            {item.refId !== null &&
+                            item.refId !== undefined &&
+                            item.refId !== "" ? (
                               <td>
-                                <Link to="/offer-relase-and-onboard">
+                                <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      fetchCandidateDetails(item.candidateId);
+                                      GoToLetterView(item.refId);
                                     }}
                                   />
                                 </Link>
                               </td>
                             ) : (
-                              ""
-                            )} */}
+                              <td>
+                                <AlertCircle />
+                              </td>
+                            )}
                           </tr>
                         </tbody>
                       );

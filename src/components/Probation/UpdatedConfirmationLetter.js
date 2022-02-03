@@ -30,35 +30,28 @@ const ConfirmationLetter1 = () => {
   const { EmpProfileView, EmpProfile } = useContext(EmployeeProfileContext);
   const history = useHistory();
 
-  const handleCloseNotify = () => {
-    setShowNotify(false);
-    history.push("../probation");
-  };
-
   useEffect(() => {
-    EmpProfileView(cnfLetterData.empId);
+    if (
+      cnfLetterData &&
+      Object.keys(cnfLetterData).length &&
+      cnfLetterData.empId !== null &&
+      cnfLetterData.empId !== undefined
+    ) {
+      EmpProfileView(cnfLetterData.empId);
+    }
   }, [cnfLetterData]);
 
   const { UploadEsignDoc, EsignLoader, settingInfo, showinfo, uploadResponse } =
     useContext(E_signContext);
   const [show, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
-  const { uploadBase64Image, ExportPDFandUpload } =
-    useContext(DocsVerifyContext);
-  const [showNotify, setShowNotify] = useState(false);
+
   const ref = React.createRef();
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
     setLetterView(false);
   };
-  useEffect(() => {
-    if (showinfo === "true") {
-      setShowNotify(true);
-    } else {
-      setShowNotify(false);
-    }
-  }, [showinfo, uploadResponse]);
 
   console.log("ShowCNF->", show);
   const HandleSaveLetter = () => {
@@ -90,11 +83,11 @@ const ConfirmationLetter1 = () => {
           reason: "testing",
           location: "Bangalore",
           rectangle: "0,0,150,100",
-          name: EmpProfile.firstName,
+          name: EmpProfile.firstName ? EmpProfile.firstName : null,
           // "John Doe",
           email: "rajasekhar@theretailinsights.com",
-          //  EmpProfile.email,,
-          phoneNumber: EmpProfile.phone,
+          //  EmpProfile.email ?EmpProfile.email: null ,,
+          phoneNumber: EmpProfile.phone ? EmpProfile.phone : null,
           // "+91 8074058844",
           signature_type: "All",
         },
@@ -108,7 +101,7 @@ const ConfirmationLetter1 = () => {
         signature_expiry: "08/07/2022",
       };
 
-      UploadEsignDoc(data, eSignDetails, blobStore);
+      UploadEsignDoc(data, eSignDetails, blobStore, cnfLetterData.empId);
     });
 
     console.log("inputRef.current-->", inputRef.current);
@@ -198,7 +191,12 @@ const ConfirmationLetter1 = () => {
                 </div>
               </div>
             )}
-            {!saveLetter && !loader ? (
+            {!saveLetter &&
+            !loader &&
+            cnfLetterData &&
+            Object.keys(cnfLetterData).length &&
+            cnfLetterData.empId !== null &&
+            cnfLetterData.empId !== undefined ? (
               <Row>
                 <Col sm={4}></Col>
                 <Col sm={5}>
