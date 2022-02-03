@@ -60,7 +60,7 @@ const ConfirmationLetter1 = () => {
 
     const doc = new jsPDF();
     //get table html
-    const pdfTable = document.getElementById("itcharter");
+    const pdfTable = document.getElementById("cnfLetter");
     //html to pdf format
     var html = htmlToPdfmake(pdfTable.innerHTML);
 
@@ -147,7 +147,7 @@ const ConfirmationLetter1 = () => {
                 </div>
               </div>
             ) : (
-              <div id="itcharter" ref={inputRef}>
+              <div id="cnfLetter" ref={inputRef}>
                 <div>
                   <p className="">
                     {" "}

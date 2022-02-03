@@ -36,7 +36,7 @@ const PromotionApproval = (props) => {
     managerValidatedDate: "",
     adminValidatedDate: "",
     bonus: 0,
-    bonusInPercentage: 0,
+    // bonusInPercentage: 0,
     costCentre: "",
     costCentreManagerEmail: "",
     costCentreManagerId: "",
@@ -124,7 +124,7 @@ const PromotionApproval = (props) => {
         managerValidatedDate: promotionIdData["managerValidatedDate"],
         adminValidatedDate: promotionIdData["adminValidatedDate"],
         bonus: promotionIdData["bonus"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
         costCentreManagerId: promotionIdData["costCentreManagerId"],
@@ -258,7 +258,7 @@ const PromotionApproval = (props) => {
           <Modal.Body className="mx-auto">
             <label className="text-center">
               {user !== null && user !== undefined && rolePermission == "admin"
-                ? "Promotion details saved successfully, request sent to the manager"
+                ? `Promotion details saved successfully, request sent to the ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center":"Manager"}`
                 : user !== null &&
                   user !== undefined &&
                   rolePermission == "costCenterManager"
@@ -286,8 +286,7 @@ const PromotionApproval = (props) => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Promotion rejected,the Manager/Admin has been notified
-            </label>
+            Promotion Rejected successfully, request sent to Manager/CostCenterManager            </label>
             <div className="text-center mb-2">
               <Link to={"/promotion-list"}>
                 <Button onClick={handleCloseValue}>Close</Button>

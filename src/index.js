@@ -55,6 +55,7 @@ import { WorkHourProvider } from "./context/WorkHourState";
 import { PayrollProvider } from "./context/PayrollState";
 import { DocumentUploadProvider } from "./context/DocumentUploadState";
 import { E_signProvider } from "./context/E_signState";
+import { PartTimeSalaryInputProvider } from "./context/PartTimeSalaryInputState";
 //firebase Auth
 function Root() {
   useEffect(() => {
@@ -88,51 +89,53 @@ function Root() {
                                               <EmployeeProfileProvider>
                                                 <PayrollProvider>
                                                   <E_signProvider>
-                                                    <DSICharterProvider>
-                                                      <WeekOffProvider>
-                                                        <WorkHourProvider>
-                                                          <SeparationProvider>
-                                                            <ProbationProvider>
-                                                              <DisciplinaryProvider>
-                                                                <MyDocsProvider>
-                                                                  <PromotionProvider>
-                                                                    <BonusProvider>
-                                                                      <TransferProvider>
-                                                                        <ModuleReportProvider>
-                                                                          <NoticePeriodProvider>
-                                                                            <InsuranceProvider>
-                                                                              <MitProvider>
-                                                                                <DocumentUploadProvider>
-                                                                                  <DocumentManagementProvider>
-                                                                                    <BrowserRouter
-                                                                                      basename={
-                                                                                        "/"
-                                                                                      }
-                                                                                    >
-                                                                                      <ScrollContext>
-                                                                                        <WithAxios>
-                                                                                          <CandidateWithAxios>
-                                                                                            <RoutePath />
-                                                                                          </CandidateWithAxios>
-                                                                                        </WithAxios>
-                                                                                      </ScrollContext>
-                                                                                    </BrowserRouter>
-                                                                                  </DocumentManagementProvider>
-                                                                                </DocumentUploadProvider>
-                                                                              </MitProvider>
-                                                                            </InsuranceProvider>
-                                                                          </NoticePeriodProvider>
-                                                                        </ModuleReportProvider>
-                                                                      </TransferProvider>
-                                                                    </BonusProvider>
-                                                                  </PromotionProvider>
-                                                                </MyDocsProvider>
-                                                              </DisciplinaryProvider>
-                                                            </ProbationProvider>
-                                                          </SeparationProvider>
-                                                        </WorkHourProvider>
-                                                      </WeekOffProvider>
-                                                    </DSICharterProvider>
+                                                    <PartTimeSalaryInputProvider>
+                                                      <DSICharterProvider>
+                                                        <WeekOffProvider>
+                                                          <WorkHourProvider>
+                                                            <SeparationProvider>
+                                                              <ProbationProvider>
+                                                                <DisciplinaryProvider>
+                                                                  <MyDocsProvider>
+                                                                    <PromotionProvider>
+                                                                      <BonusProvider>
+                                                                        <TransferProvider>
+                                                                          <ModuleReportProvider>
+                                                                            <NoticePeriodProvider>
+                                                                              <InsuranceProvider>
+                                                                                <MitProvider>
+                                                                                  <DocumentUploadProvider>
+                                                                                    <DocumentManagementProvider>
+                                                                                      <BrowserRouter
+                                                                                        basename={
+                                                                                          "/"
+                                                                                        }
+                                                                                      >
+                                                                                        <ScrollContext>
+                                                                                          <WithAxios>
+                                                                                            <CandidateWithAxios>
+                                                                                              <RoutePath />
+                                                                                            </CandidateWithAxios>
+                                                                                          </WithAxios>
+                                                                                        </ScrollContext>
+                                                                                      </BrowserRouter>
+                                                                                    </DocumentManagementProvider>
+                                                                                  </DocumentUploadProvider>
+                                                                                </MitProvider>
+                                                                              </InsuranceProvider>
+                                                                            </NoticePeriodProvider>
+                                                                          </ModuleReportProvider>
+                                                                        </TransferProvider>
+                                                                      </BonusProvider>
+                                                                    </PromotionProvider>
+                                                                  </MyDocsProvider>
+                                                                </DisciplinaryProvider>
+                                                              </ProbationProvider>
+                                                            </SeparationProvider>
+                                                          </WorkHourProvider>
+                                                        </WeekOffProvider>
+                                                      </DSICharterProvider>
+                                                    </PartTimeSalaryInputProvider>
                                                   </E_signProvider>
                                                 </PayrollProvider>
                                               </EmployeeProfileProvider>

@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
+import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter"
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory, useParams } from "react-router-dom";
@@ -416,10 +417,11 @@ const CostCenterManagerAction = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" ? (
+          disciplinarySearchData.disciplinaryWarning !== "" && 
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
             <WarningLetter />
           ) : (
-            ""
+            <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
       </Modal>
@@ -465,9 +467,20 @@ const CostCenterManagerAction = () => {
             Object.keys(disciplinarySearchData).length !== 0 &&
             disciplinarySearchData.disciplinaryWarning !== null &&
             disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 2 &&
             disciplinarySearchData.disciplinaryWarning !== "" ? (
               <WarningLetter />
-            ) : disciplinarySearchData &&
+            ) :disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 1 &&
+            disciplinarySearchData.disciplinaryWarning !== "" ?
+            (<NonPerformanceWarningLetter/>)
+            : disciplinarySearchData &&
               disciplinarySearchData &&
               disciplinarySearchData !== null &&
               disciplinarySearchData !== undefined &&

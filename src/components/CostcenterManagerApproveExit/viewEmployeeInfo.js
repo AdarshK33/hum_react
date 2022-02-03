@@ -441,14 +441,14 @@ const EmployeeExitAction = (props) => {
           costCentreManagerName: employeeData.costCentreManagerName,
           costCentreName: employeeData.costCentreName,
           dateOfResignation: employeeData.dateOfResignation,
-          personalEmailId: state.emailId,
+          personalEmailId: state.personalEmailId,
           empName: employeeData.empName,
           employeeComment: employeeData.employeeComment,
           employeeId: employeeData.employeeId,
           employeeName: employeeData.employeeName,
           exitId: employeeData.exitId,
           hoursWorked: employeeData.hoursWorked,
-          lastWorkingDate: lastWorkingDate,
+          lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
           location: employeeData.location,
           managerCostCentre: employeeData.managerCostCentre,
           managerEmailId: employeeData.managerEmailId,
@@ -470,13 +470,14 @@ const EmployeeExitAction = (props) => {
         };
         console.log("createExitData", InfoData);
         setSubmitted(true);
-        UpdateEmplyoeeExist(InfoData);
+        UpdateEmplyoeeExist(InfoData,paramsemployeeId);
               setModal(true)
         // setPreview(true);
         // setSuccessModal(true);
       }
     }
   };
+  console.log(state)
   return (
     console.log(state.status),
     (
@@ -761,8 +762,8 @@ const EmployeeExitAction = (props) => {
                               onChange={(e) => dateOfBirthHandler1(e)}
                               dateFormat="yyyy-MM-dd"
                               placeholderText="YYYY-MM-DD"
-                              // disabled={disabled}
-                            />
+                              disabled={submitted}
+                              />
                           </div>
                           {lastWorkingDateError ? (
                             <p style={{ color: "red" }}>
@@ -836,6 +837,25 @@ const EmployeeExitAction = (props) => {
                         </div>
                       </Col>
                     </Row> */}
+                        <Row
+                      style={{
+                        marginTop: "2rem",
+                        marginLeft: "2rem",
+                        marginBottom: "2rem",
+                      }}
+                    >       
+                                 <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Approver:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.managerName}
+                              &nbsp; {state.managerId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
                     <Row
                       style={{
                         marginTop: "2rem",

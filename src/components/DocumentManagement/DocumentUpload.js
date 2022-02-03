@@ -294,13 +294,13 @@ const DocumentUpload = () => {
         <Col sm={10}>
         <div className="table-responsive">
           <div className="mt-5">
-            <Table id="table-to-xls" className="table table-hover">
-              <thead >
-                <tr>
-                  <th>SL.No</th>
-                  <th>Document Name</th>
-                  <th>Uploaded Date</th>
-                  {/* <th>Download</th> */}
+            <Table className="tableWrapper table">
+              <thead  >
+                <tr >
+                  <th >SL.No</th>
+                  <th >Document Name</th>
+                  <th >Uploaded Date</th>
+                  <th >Download</th>
                 </tr>
               </thead>
               <tbody>
@@ -338,7 +338,7 @@ const DocumentUpload = () => {
                           item.auditField.createdDate !== undefined?
                           handleDate(item.auditField.createdDate):''}
                         </td>
-                        {/* <td>
+                        <td>
                 <Button
                   variant="primary"
                   type="button"
@@ -346,7 +346,7 @@ const DocumentUpload = () => {
                 >
                   Download
                 </Button>
-                    </td> */}
+                    </td>
                       </tr>
                     ) 
                      })): (

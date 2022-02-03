@@ -138,8 +138,8 @@ const EmpResignation = () => {
         new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
       );
       setLastDateSelection(aboveDateValue);
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(2))))
       setEmailId(user.personalEmail);
-      setLastDate(dateValue);
       console.log(dateValue, aboveDateValue, "2");
     } else {
       setNoticePeriod(1);
@@ -148,7 +148,7 @@ const EmpResignation = () => {
         new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
       );
       setLastDateSelection(aboveDateValue);
-      setLastDate(dateValue);
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(1))))
       setEmailId(user.personalEmail);
       console.log(dateValue, aboveDateValue, "1");
     }
@@ -164,6 +164,7 @@ const EmpResignation = () => {
     ) {
       console.log(employeeData, "inuse");
       setRegDate(new Date(employeeData.dateOfResignation));
+      setLastDate(new Date(employeeData.lastWorkingDate));
       var noticeValue = 0;
       // setLastDate(new Date(employeeData.lastWorkingDate));
       if (
@@ -180,7 +181,6 @@ const EmpResignation = () => {
           new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
         );
         setLastDateSelection(aboveDateValue);
-        setLastDate(dateValue);
         console.log(dateValue, aboveDateValue, "2");
       } else {
         setNoticePeriod(1);
@@ -191,7 +191,6 @@ const EmpResignation = () => {
           new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
         );
         setLastDateSelection(aboveDateValue);
-        setLastDate(dateValue);
         console.log(dateValue, aboveDateValue, "1");
       }
 
@@ -202,7 +201,7 @@ const EmpResignation = () => {
       console.log(employeeData, "98098098098");
     }
   }, [employeeData]);
-  console.log(employeeData);
+  console.log(employeeData,"employeeData");
   useEffect(() => {
     if (
       employeeData &&
@@ -337,14 +336,14 @@ const EmpResignation = () => {
         costCentreManagerName: null,
         costCentreName: user.costCentre,
         dateOfResignation: moment(regDate).format("YYYY-MM-DD"),
-        personalEmail: emailId,
+        personalEmailId: emailId,
         empName: user.firstName + user.lastName,
         employeeComment: comments,
         employeeId: user.employeeId,
         employeeName: user.firstName + user.lastName,
         exitId: 0,
         hoursWorked: 0,
-        lastWorkingDate: lastDate,
+        lastWorkingDate:moment(lastDate).format("YYYY-MM-DD"),
         location: user.locationId,
         managerCostCentre: null,
         managerEmailId: null,
@@ -422,6 +421,8 @@ const EmpResignation = () => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
+    var AdjusteddateValue1 = new Date(AdjusteddateValue)
+    setLastDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(noticePeriod)))
     setRegDate(AdjusteddateValue);
   };
   return (
@@ -715,7 +716,7 @@ const EmpResignation = () => {
                           value={moment(lastDate).format("DD/MM/YYYY")}
                           selected={lastDate}
                           minDate={moment().toDate()}
-                          maxDate={lastDateSelection}
+                          // maxDate={lastDateSelection}
                           onChange={(date) => setLastDate(date)}
                           className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"
@@ -805,7 +806,7 @@ const EmpResignation = () => {
                     <Form.Label column sm="5" className="labels-data">
                       Exit Feedback Form:
                     </Form.Label>
-                    <Col sm="7">
+                    {submitted === false?<Col sm="7">
                       <a
                         href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform"
                         target="_blank"
@@ -813,7 +814,16 @@ const EmpResignation = () => {
                       >
                         Click here
                       </a>
-                    </Col>
+                    </Col>:
+                    <Col sm="7">
+                  
+                      <Form.Control
+                        type="text"
+                        value={"Feedback Form Filled"}
+                        readOnly
+                        className="disabledValue readTextBlue"
+                      />
+                    </Col>}
                   </Form.Group>
                 </Col>
               </Row>

@@ -139,7 +139,7 @@ export const PromotionProvider = (props) => {
         console.log("response--->", state.promotionCreate);
         console.log(response);
         toast.info(response.data.message);
-
+        ViewPromotionById(response.data.data.promotionId)
         if (
           Approve === 1 &&
           response.data !== null &&
@@ -165,7 +165,6 @@ export const PromotionProvider = (props) => {
         } else {
           setCreatedPromotion(true);
         }
-        ViewPromotionById(response.data.data.promotionId)
         setLoader(false);
         return dispatch({
           type: "PROMOTION_CREATE",

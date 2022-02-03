@@ -53,7 +53,7 @@ const RelivingLetter = () => {
             <p>
               With reference to your resignation. We would like to inform you
               that your resignation has been accepted and you are relieved from
-              the services of the {relivingLetterData.company} on the closing of
+              the services of the {relivingLetterData.company} {" "}on the closing of
               working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>.
               <br/><br/>
                We hereby confirm that you have been working in {relivingLetterData.company}
@@ -71,7 +71,7 @@ const RelivingLetter = () => {
               commitment to the {relivingLetterData.company}.
                <br/><br/>
               He left the services of the {relivingLetterData.company}
-              on his own accord. We wish him all the best in his future
+              {" "}on his own accord. We wish him all the best in his future
               endeavours.
             </p>
             <p className="mt-5 ">

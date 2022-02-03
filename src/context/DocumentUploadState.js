@@ -46,14 +46,23 @@ export const DocumentUploadProvider = (props) => {
     let formData = {
     "fromDate":moment(new Date(fromDate)).format("YYYY-MM-DD"),
     "moduleName":moduleName - 1,
-    "toDate": moment(new Date()).format("YYYY-MM-DD") 
+    "toDate": moment(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+1)).format("YYYY-MM-DD") 
     }
     console.log(formData,"formDataDocument")
     client
       .post(
-        "/api/v1/admin/uploads/download" ,formData)
+        "/api/v1/admin/uploads/download",formData,{
+          responseType: "arraybuffer",
+        })
       .then((response) => {
         console.log(response, "reponse excel");
+        var blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        
+        var fileName = "export.xlsx";
+        saveAs(blob, fileName);
+        toast.info(response.data.message);
         setLoader(false);
          state.downloadDocumentUploadData =response.data.data
         return dispatch({

@@ -87,7 +87,6 @@ const ManagerInitiateAction = (props) => {
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
-
   const {
     employeeData,
     ModeOfSeparationData,
@@ -172,8 +171,8 @@ const ManagerInitiateAction = (props) => {
         setRehireNo(false);
         setRcryYes(false);
         setRcryNo(false);
-        setDateOfResignation("");
-        setLastWorkingDate("");
+        setDateOfResignation(new Date());
+        setLastWorkingDate(new Date());
         setPreview(false);
         ViewEmployeeDataById(state.empId);
       }
@@ -268,6 +267,7 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
+        state.noticePeriod = employeeData.internshipPeriod
         setIntern(true);
         setLastDateSelection("");
         setLastWorkingDate(
@@ -330,6 +330,7 @@ const ManagerInitiateAction = (props) => {
       state.reasonForResignation = employeeData.reasonForResignation;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
+       setDateOfResignation(new Date(employeeData.dateOfResignation))
       if (
         employeeData.department == "AFS" ||
         employeeData.department == "IT" ||
@@ -344,6 +345,8 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
+        state.noticePeriod = employeeData.internshipPeriod
+        setIntern(true)
         state.lastWorkingDate = new Date(employeeData.joiningDate).setMonth(
           new Date(employeeData.joiningDate).getMonth() +
             (employeeData.internshipPeriod !== null &&
@@ -382,7 +385,7 @@ const ManagerInitiateAction = (props) => {
         employeeData.noticePeriodRecoveryDays !== undefined
           ? employeeData.noticePeriodRecoveryDays
           : "";
-      if (employeeData.status === 8) {
+      if (employeeData.status === 8){
         setSubmitted(true);
         // setSuccessModal(true);
         setPreview(true);
@@ -408,13 +411,13 @@ const ManagerInitiateAction = (props) => {
         setRcryYes(false);
       }
       if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
-        if (employeeData.reHire === 2) {
+        if (employeeData.reHire === 2){
           setRehireNo(true);
           setRehireYes(false);
-        } else if (employeeData.reHire === 1) {
+        }else if(employeeData.reHire === 1){
           setRehireNo(false);
           setRehireYes(true);
-        } else if (employeeData.reHire === 0) {
+        }else if(employeeData.reHire === 0){
           setRehireNo(false);
           setRehireYes(false);
         }
@@ -581,7 +584,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
           costCentreManagerName: null,
           costCentreName: null,
           dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-          personalEmail: state.emailId,
+          personalEmailId: state.emailId,
           empName: EmpName,
           employeeComment: null,
           employeeId: state.empId,
@@ -610,7 +613,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
 
         console.log("createExitData", data2);
         // setSubmitted(true);
-        UpdateEmplyoeeExist(data2);
+        UpdateEmplyoeeExist(data2,state.empId);
         setSubmitLetter(true);
         setLetterSent(true);
         setShow(true);
@@ -622,7 +625,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
           costCentreManagerName: null,
           costCentreName: null,
           dateOfResignation: null,
-          personalEmail: state.emailId,
+          personalEmailId: state.emailId,
           empName: EmpName,
           employeeComment: null,
           employeeId: state.empId,
@@ -649,7 +652,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
           status: 6,
         };
         console.log("createExitData", data1);
-        UpdateEmplyoeeExist(data1);
+        UpdateEmplyoeeExist(data1,state.empId);
         setSubmitLetter(true);
         setLetterSent(true);
         setShow(true);
@@ -690,6 +693,10 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
       console.log("termination");
     } else if (e.target.value == "5" || e.target.value == "End Of Probation") {
       ViewProbationEndLetter(employeeData.employeeId);
+      handleShow();
+      console.log("end of probation");
+    }else if (e.target.value == "6" || e.target.value == "End Of Internship") {
+      fetchRelievingLetterData(employeeData.employeeId);
       handleShow();
       console.log("end of probation");
     }
@@ -753,12 +760,15 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
 
     console.log(e.target.value);
   };
+  console.log(reasonOfSeparationList,modeOfSeparationList,"modeOfSeparationList")
 
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     // console.log("AdjusteddateValue");
+    var AdjusteddateValue1 = new Date(AdjusteddateValue)
+    setLastWorkingDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(state.noticePeriod)))
     setDateOfResignation(AdjusteddateValue);
   };
 
@@ -956,7 +966,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
             costCentreManagerName: null,
             costCentreName: null,
             dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-            personalEmail: state.emailId,
+            personalEmailId: state.emailId,
             empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
@@ -998,7 +1008,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
             costCentreManagerName: null,
             costCentreName: null,
             dateOfResignation: null,
-            personalEmail: state.emailId,
+            personalEmailId: state.emailId,
             empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
@@ -1038,6 +1048,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
       }
     }
   };
+  console.log(intern,"intern",searchByCostData)
   console.log(
     state,
     modeOfSeparation,
@@ -1098,7 +1109,11 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                     (modeOfSeparation == "End Of Probation" ||
                       modeOfSeparation == 5)
                   ? endLetterData.exitDate
-                  : new Date(),
+                  :relivingLetterData !== null &&
+                  relivingLetterData !== undefined &&
+                  (modeOfSeparation == "End of Contract" || modeOfSeparation == 6)
+                ? relivingLetterData.lastWorkingDate
+                : new Date(),
                 "YYYY-MM-DD"
               )
                 .add(1, "days")
@@ -1451,21 +1466,6 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                             <label>Type of Separation:</label>
                           </div>
                         </Col>
-                        {intern ? (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; End Of Internship
-                                </label>
-                              )}
-                            </div>
-                          </Col>
-                        ) : (
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1512,10 +1512,6 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                               )}
                             </div>
                           </Col>
-                        )}
-                        {intern ? (
-                          ""
-                        ) : (
                           <Col sm={2}>
                             <div>
                               <label>
@@ -1528,10 +1524,6 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                               </label>
                             </div>
                           </Col>
-                        )}
-                        {intern ? (
-                          ""
-                        ) : (
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1557,8 +1549,8 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                       dateFormat="yyyy-MM-dd"
                                       placeholderText="YYYY-MM-DD"
                                       minDate={new Date()}
-                                      // disabled={disabled}
-                                    />
+                                      disabled={state.status == 8?true:false}
+                                      />
                                   </div>
                                   {dateOfResignError ? (
                                     <p style={{ color: "red" }}>
@@ -1572,7 +1564,6 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                               )}
                             </div>
                           </Col>
-                        )}
                         {modeOfSeparation !== 5 ? (
                           <Col sm={2}>
                             <div>
@@ -1604,14 +1595,13 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                     name="lastWorkingDate"
                                     minDate={new Date()}
                                     minDate={moment().toDate()}
-                                    maxDate={lastDateSelection}
+                                    // maxDate={lastDateSelection}
                                     // required
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-
-                                    // disabled={disabled}
-                                  />
+                                    disabled={state.status == 8?true:false}
+                                    />
                                 </div>
                                 {lastWorkingDateError ? (
                                   <p style={{ color: "red" }}>
@@ -1689,21 +1679,6 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                             <label>Reason of Separation:</label>
                           </div>
                         </Col>
-                        {intern ? (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; End Of Internship
-                                </label>
-                              )}
-                            </div>
-                          </Col>
-                        ) : (
                           <Col sm={2}>
                             <div>
                               {false ? (
@@ -1753,7 +1728,6 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                               )}
                             </div>
                           </Col>
-                        )}
 
                         <Col sm={2}>
                           <div>
@@ -1775,7 +1749,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                   style={{
                                     borderColor: "#006ebb",
                                   }}
-                                  //   disabled={!RcryYes}
+                                  disabled={state.status == 8?true:false}
                                   name="emailId"
                                   value={state.emailId}
                                   onChange={(e) => changeHandler(e)}
@@ -1897,7 +1871,24 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                       </div>
                     </Col>
                   </Row> */}
-                      {!intern ? (
+                        <Row
+                          style={{
+                            marginTop: "2rem",
+                            marginLeft: "2rem",
+                            marginBottom: "2rem",
+                          }}
+                        >                  <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Approver:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.mngrName}
+                              &nbsp; {state.mngrId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                  </Row>
                         <Row
                           style={{
                             marginTop: "2rem",
@@ -1905,7 +1896,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                             marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={2}>
+                                               {!intern ? <> <Col sm={2}>
                             <div>
                               <label>Notice Period Recovery Days</label>
                             </div>
@@ -1945,7 +1936,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                               </Form.Group>
                             )}
                           </Col>
-
+                                  </>:""}
                           <Col sm={2}>
                             <div>
                               <label>
@@ -1972,7 +1963,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                   value="yes"
                                   checked={RehireYes}
                                   // required={required}
-                                  disabled={modeOfSeparation === 5}
+                                  disabled={modeOfSeparation === 5 || state.status == 8?true:false}
                                   style={
                                     RehireError ? { borderColor: "red" } : {}
                                   }
@@ -1992,7 +1983,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                   value="no"
                                   checked={RehireNo}
                                   // required={required}
-                                  disabled={modeOfSeparation === 5}
+                                  disabled={modeOfSeparation === 5 || state.status == 8?true:false}
                                   style={
                                     RehireError ? { borderColor: "red" } : {}
                                   }
@@ -2003,9 +1994,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                             </Form.Group>
                           </Col>
                         </Row>
-                      ) : (
-                        ""
-                      )}
+                    
 
                       <Row>
                         <Col

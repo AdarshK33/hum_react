@@ -106,6 +106,7 @@ import { PromotionContext } from "../../context/PromotionState";
 
 const PromotionLetter = () => {
   const { promotionLetterData, loader } = useContext(PromotionContext);
+  console.log(promotionLetterData,"promotionLetterData")
 
   return (
     <Fragment>
@@ -161,8 +162,14 @@ const PromotionLetter = () => {
                 promotionLetterData.effectiveDate !== undefined 
                 && promotionLetterData.effectiveDate !== ""?
                 moment(promotionLetterData.effectiveDate).format("DD-MM-YYYY"):""
-              }</b>. You will be reporting to 
-              <b>Ms./Mr. {promotionLetterData.reportingManagerName}</b> . All
+              }</b>. You will be reporting to {" "}
+              <b> {promotionLetterData !== undefined &&
+              promotionLetterData.managerGender == "MALE"?
+              `Mr.${promotionLetterData.reportingManagerName}`
+              :(promotionLetterData.managerGender == "FEMALE" && 
+              promotionLetterData.managerMaritalStatus == "Single")?
+              `Miss. ${promotionLetterData.reportingManagerName}`
+              :`Mrs.${promotionLetterData.reportingManagerName}`}</b> . All
               the other terms and conditions of your appointment letter shall remain
               the same.
             </p>

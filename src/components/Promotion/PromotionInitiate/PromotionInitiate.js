@@ -270,13 +270,17 @@ const PromotionInitiate = () => {
           setNewFixedGrossError("");
         }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (state.newFixedGross < state.oldFixedGross) {
-          setNewFixedGrossError(
-            "Fixed gross should be greater than old fixed gross"
-          );
-        } else if (newFixedGross < 18000 || newFixedGross == 18000) {
+        if (newFixedGross < 18000 || newFixedGross == 18000) {
           setNewFixedGrossError("Value should be above 18000");
-        } else {
+        }else if(state.newFixedGross > 18000){
+          if(state.newFixedGross < state.oldFixedGross ){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else if(state.newFixedGross == state.oldFixedGross){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else{
+            setNewFixedGrossError("");
+          }
+        }else{
           setNewFixedGrossError("");
         }
       }
@@ -342,18 +346,25 @@ const PromotionInitiate = () => {
       positionId !== "" &&
       departmentId !== "" &&
       empName !== "" &&
+      effectiveDate !== "" &&
+      //reportingManagerName !== "" &&
       newDepartment !== null &&
       reason !== null &&
       newFixedGross !== null &&
       positionId !== null &&
       departmentId !== null &&
       empName !== null &&
+      effectiveDate !== null &&
+    //reportingManagerName !== null &&
       newDepartment !== undefined &&
       reason !== undefined &&
       newFixedGross !== undefined &&
       positionId !== undefined &&
       departmentId !== undefined &&
-      empName !== undefined
+      effectiveDate !== undefined &&
+      //reportingManagerName !== undefined &&
+      empName !== undefined && (state.promotionType == 1 && 
+        (state.oldFixedGross < state.newFixedGross) || state.promotionType == 0)
     ) {
       const infoData = {
         validatedAdminId: null,
@@ -361,7 +372,7 @@ const PromotionInitiate = () => {
         validatedManagerId: null,
         validatedManagerName: null,
         bonus: 0,
-        bonusInPercentage: 0,
+        // bonusInPercentage: 0,
         costCentre: state.costCentre,
         costCentreManagerEmail: null,
         costCentreManagerId: null,
@@ -476,7 +487,6 @@ const PromotionInitiate = () => {
       // toast.error("Data is not filled Properly")
     }
   };
-  console.log(promotioManagerList, "promotioManagerList");
   const handleCloseValue = () => {
     setModelStatus(false);
     setContractTypeStatus(false);
@@ -594,9 +604,17 @@ const PromotionInitiate = () => {
           setNewFixedGrossError("");
         }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (e.target.value < 18000 || e.target.value == 18000) {
+        if (e.target.value < 18000 || e.target.value == 18000){
           setNewFixedGrossError("Value should be above 18000");
-        } else {
+        }else if(e.target.value > 18000){
+          if(e.target.value < state.oldFixedGross ){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else if(e.target.value == state.oldFixedGross){
+            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
+          }else{
+            setNewFixedGrossError("");
+          }
+        }else{
           setNewFixedGrossError("");
         }
       }
@@ -624,13 +642,15 @@ const PromotionInitiate = () => {
 
     console.log(state, promotionIdData, "state");
   };
-  const submitfinalRelivingLetter = (e) => {
+  const handleChangeLetterSubmit = (e) => {
     e.preventDefault();
+    console.log("submit")
     if (
       promotionIdData !== null &&
       promotionIdData !== undefined &&
       Object.keys(promotionIdData).length !== 0
     ) {
+      console.log("in if")
       const infoData = {
         adminValidatedDate: promotionIdData["adminValidatedDate"],
         validatedAdminId: promotionIdData["validatedAdminId"],
@@ -639,7 +659,7 @@ const PromotionInitiate = () => {
         validatedManagerId: promotionIdData["validatedManagerId"],
         validatedManagerName: promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
         costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
         costCentreManagerId: promotionIdData["costCentreManagerId"],
@@ -670,7 +690,7 @@ const PromotionInitiate = () => {
         remarks: promotionIdData["remarks"],
         status: 3,
       };
-      // PromotionCreate(infoData);
+      PromotionCreate(infoData);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
@@ -716,7 +736,6 @@ const PromotionInitiate = () => {
     setSaveLetter(true);
     setShow(false);
   };
-
   return (
     <Fragment>
       <ToastContainer />
@@ -764,7 +783,7 @@ const PromotionInitiate = () => {
                 <>
                   <br></br>
                   <button
-                    className={"stepperButtons"}
+                    className={"stepperButtonsLetter"}
                     onClick={digitalSignature}
                   >
                     Add digital signature
@@ -1472,7 +1491,7 @@ const PromotionInitiate = () => {
                                     className={
                                       saveLetter
                                         ? "confirmButton"
-                                        : "stepperButtons"
+                                        : "PromotionstepperButtons"
                                     }
                                     onClick={generateLetterClick}
                                   >
@@ -1526,7 +1545,7 @@ const PromotionInitiate = () => {
                                             ? " confirmButton "
                                             : "stepperButtons"
                                         }
-                                        onClick={submitfinalRelivingLetter}
+                                        onClick={handleChangeLetterSubmit}
                                       >
                                         Submit
                                       </button>
