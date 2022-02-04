@@ -1,17 +1,42 @@
-import React, { Fragment, useState, useContext, useRef } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+} from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { ProbationContext } from "../../context/ProbationState";
+import { E_signContext } from "../../context/E_signState";
+import jsPDF from "jspdf";
+import pdfMake from "pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import { useHistory, useParams } from "react-router-dom";
 
 const ExtensionLetter1 = () => {
   const { extensionLetterData, loader, setLetterView, setSaveTheLetter } =
     useContext(ProbationContext);
+  const { EmpProfileView, EmpProfile } = useContext(EmployeeProfileContext);
+  useEffect(() => {
+    if (
+      extensionLetterData &&
+      Object.keys(extensionLetterData).length &&
+      extensionLetterData.empId !== null &&
+      extensionLetterData.empId !== undefined
+    ) {
+      EmpProfileView(extensionLetterData.empId);
+    }
+  }, [extensionLetterData]);
+  const { UploadEsignDoc, EsignLoader, settingInfo, showinfo, uploadResponse } =
+    useContext(E_signContext);
   const [show, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
-  const { uploadBase64Image, ExportPDFandUpload } =
-    useContext(DocsVerifyContext);
+
   const ref = React.createRef();
   const inputRef = useRef(null);
   const handleClose = () => {
@@ -19,14 +44,78 @@ const ExtensionLetter1 = () => {
     setLetterView(false);
   };
   const HandleSaveLetter = () => {
-    ExportPDFandUpload(inputRef.current, extensionLetterData.empId, 3);
-    setShow(false);
     setSaveLetter(true);
-    setLetterView(false);
-    setSaveTheLetter(true);
+    // ExportPDFandUpload(inputRef.current, extensionLetterData.empId, 2);
+
+    const doc = new jsPDF();
+    //get table html
+    const pdfTable = document.getElementById("extLetter");
+    //html to pdf format
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+
+    const documentDefinition = { content: html };
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    // pdfMake.createPdf(documentDefinition).open();
+
+    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+    console.log("doc--.-.", pdfDocGenerator.pageCount);
+
+    pdfDocGenerator.getBuffer((buffer) => {
+      var blobStore = new Blob([buffer], { type: "application/pdf" });
+      blobStore.name = "esignDoc.pdf";
+      console.log("blobStore", blobStore);
+
+      const data = {
+        recipient1: {
+          observer: "false",
+          pageNo: "1",
+          reason: "testing",
+          location: "Bangalore",
+          rectangle: "0,0,150,100",
+          name: EmpProfile.firstName ? EmpProfile.firstName : null,
+          // "John Doe",
+          email: "rajasekhar@theretailinsights.com",
+          //  EmpProfile.email ?EmpProfile.email: null ,,
+          phoneNumber: EmpProfile.phone ? EmpProfile.phone : null,
+          // "+91 8074058844",
+          signature_type: "All",
+        },
+      };
+      const eSignDetails = {
+        orgId: "6180cd3596d65ededc7d30f6",
+        checkOrder: "true",
+        reminder: "true",
+        reminder_duration: 12,
+        eStampRequired: "false",
+        signature_expiry: "08/07/2022",
+      };
+
+      UploadEsignDoc(data, eSignDetails, blobStore, extensionLetterData.empId);
+    });
+
+    console.log("inputRef.current-->", inputRef.current);
+    setShow(false);
+    // setSaveTheLetter(true);
   };
+  const handleLoaderClose = () => {};
   return (
     <Fragment>
+      <Modal show={EsignLoader} onHide={handleLoaderClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          <div
+            className="loader-box loader"
+            style={{ width: "100% !important" }}
+          >
+            <div className="loader">
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+              <div className="line bg-primary"></div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
       {typeof extensionLetterData !== undefined ? (
         // {true ? (
         <Modal show={show} onHide={handleClose} size="md">
@@ -45,7 +134,7 @@ const ExtensionLetter1 = () => {
                 </div>
               </div>
             ) : (
-              <div id="capture" ref={inputRef}>
+              <div id="extLetter" ref={inputRef}>
                 <h5 className="text-center">
                   {" "}
                   <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>

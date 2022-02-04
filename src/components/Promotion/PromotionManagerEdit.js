@@ -440,7 +440,7 @@ const PromotionManagerEdit = (props) => {
                 <>
                   <br></br>
                   <button
-                    className={"stepperButtons"}
+                    className={"stepperButtonsLetter"}
                     onClick={digitalSignature}
                   >
                     Add digital signature
@@ -981,7 +981,7 @@ const PromotionManagerEdit = (props) => {
                                   // disabled={!submitted}
                                   className={saveLetter
                                     ? "confirmButton"
-                                    : "stepperButtons"}
+                                    : "PromotionstepperButtons"}
                                   onClick={generateLetterClick}
                                 >
                                   Generate Promotion Letter
