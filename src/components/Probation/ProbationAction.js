@@ -675,10 +675,8 @@ const ProbationAction = () => {
           <Modal.Body className="mx-auto">
             <div className="text-center">
               <label>
-                Notification sent successfully to{" "}
-                <b>email:{EmpProfile.email}</b> and{" "}
-                <b>phone number:{EmpProfile.phone}</b> to complete e-sign
-                process
+                Notification sent successfully to <b>{EmpProfile.email}</b> and{" "}
+                <b>{EmpProfile.phone}</b> to complete e-sign process
               </label>
             </div>
             <div className="text-center mb-2">

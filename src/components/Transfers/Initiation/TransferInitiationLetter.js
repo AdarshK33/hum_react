@@ -36,7 +36,7 @@ const TransferInitationLetter = ({ transferId }) => {
             </p>
 
             <p>
-              This is bring to your kind notice that your position has been
+              This is to bring to your kind notice that your position has been
               changed to <b>{transferData.promotedPosition}</b> and working
               location to <b>{transferData.promotedLocationName}</b> effective
               from{" "}
@@ -58,10 +58,10 @@ const TransferInitationLetter = ({ transferId }) => {
               <b> {transferData.currentCompany} Pvt Ltd,</b>
             </p>
             <Row>
-             <Col sm="8">
-             <p>Authorised Signatory</p>
-             </Col>
-             </Row>
+              <Col sm="8">
+                <p>Authorised Signatory</p>
+              </Col>
+            </Row>
             <div className="float-right "></div>
           </div>
         </Fragment>

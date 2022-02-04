@@ -84,7 +84,7 @@ const LocalExpactAppointmentLetter = () => {
               Time basis, and your responsibilities would be those of a{" "}
               <b>{offerLetterData.position}</b> at our{" "}
               <b>{offerLetterData.location} </b>
-              location effective
+              location effective{" "}
               <b>{offerLetterData.permanentCandidateOffer.effectiveDate}</b> and
               you will be on probation up to{" "}
               <b>{offerLetterData.probationPeriod}</b> month(s) or such extended
@@ -252,25 +252,25 @@ const LocalExpactAppointmentLetter = () => {
               <b>We welcome you to the {offerLetterData.companyName} Family!</b>
             </p>
             <Row>
-             <Col sm="8">
-             <p>For {offerLetterData.companyName} Pvt Ltd</p>
-             </Col>
-              <Col sm="4">
-              <p> Accepted By Me</p>
-              <p>{offerLetterData !== undefined &&
-          offerLetterData.candidateName}
-          </p>
-          
+              <Col sm="8">
+                <p>For {offerLetterData.companyName} Pvt Ltd</p>
               </Col>
-              </Row>
-              <Row>
-             <Col sm="8">
-             <p>Authorised Signatory</p>
-             </Col>
               <Col sm="4">
-              <p> Employee Signature</p>
+                <p> Accepted By Me</p>
+                <p>
+                  {offerLetterData !== undefined &&
+                    offerLetterData.candidateName}
+                </p>
               </Col>
-              </Row>
+            </Row>
+            <Row>
+              <Col sm="8">
+                <p>Authorised Signatory</p>
+              </Col>
+              <Col sm="4">
+                <p> Employee Signature</p>
+              </Col>
+            </Row>
             <p className="text-center">
               <b>Annexure-1</b>
             </p>
@@ -466,7 +466,7 @@ const LocalExpactAppointmentLetter = () => {
               <Col>
                 <p>For {offerLetterData.companyName} Pvt Ltd</p>
                 <p>Authorised Signatory</p> */}
-                {/* <button
+            {/* <button
                       className="signatureButtons"
                       onClick={() => addSignature()}
                     >
@@ -477,7 +477,7 @@ const LocalExpactAppointmentLetter = () => {
                     <p>Accepted By Me</p>
                     <p>Employee Signature</p>
                     <button className=" signatureButtons">Add Signature</button> */}
-              {/* </Col>
+            {/* </Col>
             </Row> */}
           </div>
           {/* {signaturePad && !saveLetter && (

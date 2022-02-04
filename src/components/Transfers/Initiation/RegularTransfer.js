@@ -78,18 +78,15 @@ const RegularTransfer = () => {
       Object.keys(initiationEmpData).length !== 0 &&
       newDeptName !== "" &&
       newDeptName !== null &&
-      newDeptName !== undefined &&
-      newPositionName !== "" &&
-      newPositionName !== null &&
-      newPositionName !== undefined
+      newDeptName !== undefined
     ) {
       viewBonusByContarctType(
         initiationEmpData.currentContractType,
         newDeptName,
-        newPositionName
+        "newPositionName"
       );
     }
-  }, [newDeptName, newPositionName]);
+  }, [newDeptName]);
   console.log("getBonusByContractType->", getBonusByContractType);
   useEffect(() => {
     if (
@@ -171,14 +168,16 @@ const RegularTransfer = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    if(initiationEmpData !== null &&
+    if (
+      initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0){
+      Object.keys(initiationEmpData).length > 0
+    ) {
       setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
-      )
-    }else{
-      setSearchInput("")
+      );
+    } else {
+      setSearchInput("");
     }
   }, [initiationEmpData]);
 
@@ -527,7 +526,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Transfer can't be proceed with out change
+              Transfer can't be proceed without change
             </label>
 
             <div className="text-center mb-2">
@@ -610,7 +609,8 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Transfer letter details saved successfully, manager has notified
+              Transfer letter details saved successfully, manager has been
+              notified
             </label>
 
             <div className="text-center mb-2">

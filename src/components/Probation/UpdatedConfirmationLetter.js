@@ -89,7 +89,7 @@ const ConfirmationLetter1 = () => {
           //  EmpProfile.email ?EmpProfile.email: null ,,
           phoneNumber: EmpProfile.phone ? EmpProfile.phone : null,
           // "+91 8074058844",
-          signature_type: "All",
+          signature_type: "Aadhaar",
         },
       };
       const eSignDetails = {
