@@ -16,6 +16,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import ConfirmationLetter1 from "./UpdatedConfirmationLetter";
 import ExtensionLetter1 from "./UpdatedExtensionLetter";
 import PdfView from "./ViewLetter";
+import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import { E_signContext } from "../../context/E_signState";
 
 const ProbationAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -51,6 +53,7 @@ const ProbationAction = () => {
   const [dateDisable, setDateDisable] = useState(true);
   const [extDATE, setExtDate] = useState("");
   const history = useHistory();
+  const [showNotify, setShowNotify] = useState(false);
   const { employeeid } = useParams();
 
   const [state, setState] = useState({
@@ -71,7 +74,9 @@ const ProbationAction = () => {
     relivingLetterData,
     ModeOfSeparationView,
   } = useContext(EmployeeSeparationContext);
-
+  const { EmpProfileView, EmpProfile } = useContext(EmployeeProfileContext);
+  const { UploadEsignDoc, EsignLoader, settingInfo, showinfo, uploadResponse } =
+    useContext(E_signContext);
   const {
     updateProbation,
     probUpdateResponse,
@@ -95,6 +100,14 @@ const ProbationAction = () => {
   useEffect(() => {
     ViewProbationDataById(employeeid);
   }, [employeeid]);
+  useEffect(() => {
+    if (showinfo) {
+      setShowNotify(true);
+      setSaveTheLetter(false);
+    } else {
+      setShowNotify(false);
+    }
+  }, [showinfo]);
   console.log("probationData->", probationData);
 
   useEffect(() => {
@@ -226,6 +239,11 @@ const ProbationAction = () => {
 
   const digitalSignature = () => {
     setShowSignature(true);
+  };
+  const handleCloseNotify = () => {
+    setShowNotify(false);
+    settingInfo(false);
+    history.push("../probation");
   };
 
   const submitfinalRelivingLetter = (e) => {
@@ -633,26 +651,51 @@ const ProbationAction = () => {
         <PdfView letter={probationData.probationConfirmationLetter} />
       ) : (
         ""
-      )}
+      )} */}
       {ViewLetter &&
       ShowViewLetterModel &&
       probationData !== null &&
       probationData !== undefined &&
       Object.keys(probationData).length !== 0 &&
       (probationData.status === 5 || probationData.status === 1) ? (
-        <ConfirmationLetter />
+        <ConfirmationLetter1 />
       ) : ViewLetter &&
         ShowViewLetterModel &&
         probationData !== null &&
         probationData !== undefined &&
         Object.keys(probationData).length !== 0 &&
         (probationData.status === 6 || probationData.status === 2) ? (
-        <ExtensionLetter />
+        <ExtensionLetter1 />
       ) : (
         ""
-      )} */}
+      )}
+      {EmpProfile && Object.keys(EmpProfile).length ? (
+        <Modal show={showNotify} onHide={handleCloseNotify} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <div className="text-center">
+              <label>
+                Notification sent successfully to{" "}
+                <b>email:{EmpProfile.email}</b> and{" "}
+                <b>phone number:{EmpProfile.phone}</b> to complete e-sign
+                process
+              </label>
+            </div>
+            <div className="text-center mb-2">
+              <Button
+                onClick={handleCloseNotify}
+                style={{ marginLeft: "1rem" }}
+              >
+                Close
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
+      ) : (
+        ""
+      )}
 
-      <Modal show={ViewLetter} onHide={closeTheLetter} size="md">
+      {/* <Modal show={ViewLetter} onHide={closeTheLetter} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
           {probationData !== null &&
@@ -670,10 +713,7 @@ const ProbationAction = () => {
           )}
           <br></br>
           <Row>
-            {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
+            
 
             {showSignature ? (
               <Fragment>
@@ -709,7 +749,7 @@ const ProbationAction = () => {
             ""
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal show={showRej} onHide={handleRejectionClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -1368,7 +1408,7 @@ const ProbationAction = () => {
                           ) : (
                             ""
                           )}
-                          {previewGeneratedLetter &&
+                          {/* {previewGeneratedLetter &&
                           probationData &&
                           probationData &&
                           probationData !== null &&
@@ -1402,7 +1442,7 @@ const ProbationAction = () => {
                             </button>
                           ) : (
                             ""
-                          )}
+                          )} */}
                           {showSignature && previewGeneratedLetter === true && (
                             <div className="preview-section">
                               <br></br>
