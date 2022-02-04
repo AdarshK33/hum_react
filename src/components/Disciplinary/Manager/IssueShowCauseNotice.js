@@ -602,22 +602,21 @@ const IssueShowCauseNotice = () => {
                 undefined ? (
               disciplinarySearchData.disciplinaryAction.reportingType === 1 ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, employee has
+                  Show cause notice details saved successfully, Employee has
                   been notified.
                 </label>
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, sent for cost
-                  center manager confirmation.
+                  Show cause notice details saved successfully, sent for Cost Center Manager confirmation.
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, sent for super
-                  cost center manager confirmation.
+                  Show cause notice details saved successfully, sent for Super
+                  Cost Center Manager confirmation.
                 </label>
               ) : rolePermission == "superCostCenterManager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, sent for admin
+                  Show cause notice details saved successfully, sent for Admin
                   confirmation.
                 </label>
               ) : (

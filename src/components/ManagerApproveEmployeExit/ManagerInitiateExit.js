@@ -518,7 +518,7 @@ const ManagerInitiateExit = () => {
       setModeOfSeparationList(tempArr);
     }
   }, [ModeOfSeparationData]);
-  console.log("modeOfSeparationList", modeOfSeparationList);
+  console.log(ModeOfSeparationData,"modeOfSeparationList", modeOfSeparationList);
 
   useEffect(() => {
     if (

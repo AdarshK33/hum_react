@@ -7,6 +7,7 @@ import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 const ReasonByEmployee = () => {
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
+  console.log(disciplinarySearchData,"disciplinarySearchData")
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
@@ -28,18 +29,18 @@ const ReasonByEmployee = () => {
               {disciplinarySearchData !== null &&
               disciplinarySearchData !== undefined &&
               Object.keys(disciplinarySearchData).legth !== 0 &&
-              disciplinarySearchData.gender !== null &&
-              disciplinarySearchData.gender !== undefined &&
-              disciplinarySearchData.maritalStatus !== null &&
-              disciplinarySearchData.maritalStatus !== undefined
-                ? disciplinarySearchData.gender === "MALE"
+              disciplinarySearchData.initiatedByGender !== null &&
+              disciplinarySearchData.initiatedByGender !== undefined &&
+              disciplinarySearchData.initiatedByMarital !== null &&
+              disciplinarySearchData.initiatedByMarital !== undefined
+                ? disciplinarySearchData.initiatedByGender === "MALE"
                   ? "Mr."
-                  : disciplinarySearchData.maritalStatus === "Married"
+                  : disciplinarySearchData.initiatedByMarital === "Married"
                   ? "Mrs."
                   : "Miss"
                 : "Mr./Ms."}
             </b>{" "}
-            &nbsp; {disciplinarySearchData.managerName}
+            &nbsp; {disciplinarySearchData.initiatedByName}
           </p>
           <p> {disciplinarySearchData.company}</p>
           <br />
@@ -51,7 +52,7 @@ const ReasonByEmployee = () => {
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{disciplinarySearchData.managerName},</b>{" "}
+              Dear <b>{disciplinarySearchData.initiatedByName},</b>{" "}
             </p>
             <br></br>
             <p>

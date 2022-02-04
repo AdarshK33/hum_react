@@ -479,7 +479,15 @@ const ManagerWarningAction = (props) => {
           reasonId: state.disciplinaryAction.reasonId,
           showCauseLetter: state.disciplinaryAction.showCauseLetter,
           showCauseNotice: state.disciplinaryAction.showCauseNotice,
-          status: 0,
+          // status: 0,
+          status:
+          rolePermission == "admin"
+            ? 14
+            : rolePermission == "superCostCenterManager"
+            ? 13
+            : rolePermission == "costCenterManager"
+            ? 12
+            : 11,
           statusDesc: state.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -707,7 +715,8 @@ const ManagerWarningAction = (props) => {
                 reasonDetails: state.disciplinaryWarning.reasonDetails,
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
                 reasonId: state.disciplinaryWarning.reasonId,
-                status: rolePermission == "costCenterManager" ? 2 : 0,
+                // status: rolePermission == "costCenterManager" ? 2 : 0,
+                  status:0,
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 initiatedRole: state.disciplinaryWarning.initiatedRole,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
