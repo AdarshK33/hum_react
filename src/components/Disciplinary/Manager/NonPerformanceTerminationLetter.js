@@ -76,7 +76,7 @@ const NonPerformanceTerminationLetter = () => {
 
       <p>
       You have been associated with{" "}{terminationLetterData.company}{" "}
-               as{" "}{terminationLetterData !== 
+               as a{" "}{terminationLetterData !== 
               undefined && terminationLetterData.position}.
               <br/>
               <br/>
