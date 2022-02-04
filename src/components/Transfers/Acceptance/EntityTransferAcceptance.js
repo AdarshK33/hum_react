@@ -114,13 +114,13 @@ const EntityTransferAcceptance = () => {
 
   useEffect(() => {
     if (
-      transferData !== null &&
-      transferData !== undefined &&
-      Object.keys(transferData).length !== 0
+      newCostCentre !== null &&
+      newCostCentre !== undefined &&
+      newCostCentre !== ""
     ) {
-      getCostCentreLocationDetails(transferData.promotedCostCentre);
+      getCostCentreLocationDetails(newCostCentre);
     }
-  }, [transferData]);
+  }, [newCostCentre]);
   useEffect(() => {
     if (searchValue !== "") {
       getTransferInitiationEmpData(searchValue);
@@ -554,7 +554,7 @@ const EntityTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Transfer letter details saved successfully, manager has been
+              Transfer letter details saved successfully, employee has been
               notified
             </label>
 
