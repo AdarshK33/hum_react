@@ -25,12 +25,15 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
     const [numberOfDays, setNumberOfDays] = useState()
+    const[currentYear,setCurrentYear]=useState(new Date().getFullYear()== "2022"? false :true )
+    const[checkTheYear,setCheckTheYear]=useState(new Date().getFullYear()== "2022"? false : true )
     let [pageCount, setPageCount] = useState(0)
     
     const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList, loader, total }
         = useContext(LeaveContext);
 
     const [currentRecords, setCurrentRecords] = useState([])
+    const [selectyear, setSelectyear] = useState(new Date().getFullYear())
     const { user } = useContext(AppContext);
 
     useEffect(() => {
@@ -53,7 +56,7 @@ const LeaveView = () => {
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
      /* currentRecords = leaveEmpList !== null && leaveEmpList !== undefined ? leaveEmpList.slice(indexOfFirstRecord, indexOfLastRecord) : []; */
 
-
+// const currentYear= new Date().getFullYear()
     const handlePageChange = pageNumber => {
         setPageCount(pageNumber-1)
         setCurrentPage(pageNumber);
@@ -72,23 +75,38 @@ const LeaveView = () => {
     const handleDeleteClose = () => setDeleteModal(false)
 
     useEffect(() => {
-        viewLeaveData(user.employeeId)
-    }, [user.employeeId])
+        console.log("currentYear",currentYear);
+        viewLeaveData(user.employeeId,new Date().getFullYear())
+    }, [user.employeeId,deleteModal])
 
     
     useEffect(() => {
         viewEmpLeaveData(user.employeeId, pageCount)
        
     }, [user.employeeId, pageCount])
-   
+
+    const handlechange = (year) => {
+        console.log("currentYear",currentYear,year);
+        viewLeaveData(user.employeeId,year)  
+    }
 
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
             <div className="container-fluid">
+            {checkTheYear?
+            <div className="row">
+                    <div className="col-sm-12 main-heading-row">
+                    <input style={{width:"30px"}} type="radio" checked={currentYear} name="year" onClick={()=>{setCurrentYear(true);handlechange("2021");}} /><label style={{marginTop:"-5px"}}>2021</label> 
+                    <input style={{width:"30px"}} type="radio" checked={!currentYear} name="year" onClick={()=>{setCurrentYear(false);handlechange("2022");}}/><label style={{marginTop:"-5px"}} >2022</label> 
+                    </div>
+                </div>
+                :""}
+                {currentYear?
+                <Fragment>     
                 <div className="row">
                     <div className="col-sm-12 main-heading-row">
-                        <h5 className="main-heading">Leaves</h5>
+                        <h5 className="main-heading">Leaves ( 2021 )</h5>
                     </div>
                 </div>
                 <Row className="row">
@@ -168,7 +186,94 @@ const LeaveView = () => {
                     </Col>
                     <Col className="col-12 col-md-1"></Col>
                 </Row>
-
+                </Fragment>
+:""}
+               {!currentYear ? 
+               <Fragment>
+               <div className="row">
+                    <div className="col-sm-12 main-heading-row">
+                        <h5 className="main-heading">Leaves ( 2022 )</h5>
+                    </div>
+                </div>
+                <Row className="row">
+                    <Col className="col-12 col-md-2"></Col>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
+                        <Card className="h-100">
+                            <Card.Body>
+                                <Row className="text-center">
+                                    <h6 style={{ fontWeight: 'bold' }}>General Leaves</h6>
+                                </Row>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
+                                    <img src={calendarImage} alt="calendar" width='50px' />
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Row className="text-center">
+                                            <p>Available:{leaveDataList !== undefined && leaveDataList.eligibleLeave ?
+                                                (leaveDataList.leaveApplied.General == null ? leaveDataList.eligibleLeave.General :
+                                                    ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' :
+                                                        (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General))) :
+                                                ''}</p>
+                                        </Row>
+                                        <Row className="text-center">
+                                            <p>Taken:{leaveDataList !== undefined && leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General == null ? '0' : leaveDataList.leaveApplied.General) :
+                                                0}</p>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
+                        <Card className="h-100">
+                            <Card.Body>
+                                <Row className="text-center">
+                                    <h6 style={{ fontWeight: 'bold', color: 'red' }}>LOP</h6>
+                                </Row>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
+                                    <img src={calendarImage} alt="" width='50px' />
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Row className="text-center">
+                                            <p>Taken:{leaveDataList !== undefined && leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.LOP == null ? '0' : leaveDataList.leaveApplied.LOP) :
+                                                ''}</p>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
+                        <Card className="h-100">
+                            <Card.Body>
+                                <Row className="text-center">
+                                    <h6 style={{ fontWeight: 'bold', color: 'green' }}>Other Leaves</h6>
+                                </Row>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
+                                    <img src={calendarImage} alt="" width='50px' />
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Row className="text-center">
+                                            <p>Available:{leaveDataList !== undefined && leaveDataList.eligibleLeave ?
+                                                (leaveDataList.leaveApplied.GrantLeave == null ? leaveDataList.eligibleLeave.GrantLeave :
+                                                    (leaveDataList.eligibleLeave.GrantLeave - leaveDataList.leaveApplied.GrantLeave)) :
+                                                ''}</p>
+                                        </Row>
+                                        <Row className="text-center">
+                                            <p>Taken: {leaveDataList !== undefined && leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.GrantLeave == null ? '0' : leaveDataList.leaveApplied.GrantLeave) :
+                                                ''}</p>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col className="col-12 col-md-1"></Col>
+                </Row>
+                </Fragment>
+:""}
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>

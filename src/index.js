@@ -43,6 +43,7 @@ import {
   SeparationProvider,
 } from "./context/SepearationState";
 import { ProbationProvider } from "./context/ProbationState";
+/* import { OfferProvider } from './context/OfferState' */
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import CandidateWithAxios from "./utils/canditateLogin";
@@ -77,6 +78,8 @@ function Root() {
                         <RoleManagementProvider>
                           <SearchProvider>
                             <AdminProvider>
+                            <WeekOffProvider>
+                            <WorkHourProvider>
                               <SupportProvider>
                                 <GroupProvider>
                                   <OfferProvider>
@@ -147,6 +150,8 @@ function Root() {
                                   {/* </Provider>  */}
                                 </GroupProvider>
                               </SupportProvider>
+                              </WorkHourProvider>
+                            </WeekOffProvider>
                             </AdminProvider>
                           </SearchProvider>
                         </RoleManagementProvider>
