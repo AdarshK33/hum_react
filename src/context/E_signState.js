@@ -110,7 +110,7 @@ export const E_signProvider = ({ children }) => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             <div className="text-center">
-              <label>This document is not yet signed by employee</label>
+              <label>This document is in e-sign process</label>
             </div>
             <div className="text-center mb-2">
               <Button onClick={handleClose} style={{ marginLeft: "1rem" }}>

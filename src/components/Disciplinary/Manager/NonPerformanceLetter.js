@@ -176,7 +176,7 @@ const NonPerformanceLetter = () => {
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}
               Private Limited ,
-              as{" "}
+              as a{" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <br />

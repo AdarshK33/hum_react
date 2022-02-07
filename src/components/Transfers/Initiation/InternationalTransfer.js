@@ -60,14 +60,16 @@ const InternationalTransfer = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    if(initiationEmpData !== null &&
+    if (
+      initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0){
+      Object.keys(initiationEmpData).length > 0
+    ) {
       setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
-      )
-    }else{
-      setSearchInput("")
+      );
+    } else {
+      setSearchInput("");
     }
   }, [initiationEmpData]);
 
@@ -333,7 +335,7 @@ const InternationalTransfer = () => {
       setManagerErrMsg("Please select manager");
     }
 
-    if (newMangerMailId === "") {
+    if (newMangerMailId === "" || !newMangerMailId.includes("@")) {
       validForm = false;
       setManagerMailIdErrMsg("Please enter manager email");
     }

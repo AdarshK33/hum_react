@@ -561,7 +561,7 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData.disciplinaryWarning !== null &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== ""
-                ? "Warning letter issued successfully , the employee has been notified."
+                ? "Warning letter details saved successfully, the employee has been notified."
                 : "Show cause notice issued successfully , the employee has been notified."}
             </label>
 
