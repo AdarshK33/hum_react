@@ -88,7 +88,7 @@ const ConfirmationLetter1 = () => {
           email: "rajasekhar@theretailinsights.com",
           //  EmpProfile.email ?EmpProfile.email: null ,,
           phoneNumber: EmpProfile.phone ? EmpProfile.phone : null,
-          // "+91 8074058844",
+          // "+91 8074058844,,,",
           signature_type: "Aadhaar",
         },
       };
