@@ -47,6 +47,9 @@ const AdminLeaveAdd = (props) => {
   let currentYear = new Date();
   currentYear.setFullYear(currentYear.getFullYear(), 0, 1);
 
+  let currentYearEnd = new Date()
+  currentYearEnd.setFullYear(currentYearEnd.getFullYear(), 11, 31)
+  
   useEffect(() => {
     CostCenter();
   }, []);
@@ -99,14 +102,13 @@ const AdminLeaveAdd = (props) => {
     //For disable the To Date initially
     setDisable(false);
 
-    if (value <= new Date()) {
-      setMax(true);
-      setMin(false);
-    }
-
-    if (value > new Date()) {
-      setMin(true);
-      setMax(false);
+    if (moment(date)
+    .isBefore(moment()) ) {
+        setMax(true);
+        setMin(false);
+    }else {
+        setMin(true);
+        setMax(false);
     }
     setEditMsg(false);
   };
@@ -481,7 +483,7 @@ const AdminLeaveAdd = (props) => {
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
                           minDate={currentYear}
-                          maxDate={nextYear}
+                          maxDate={currentYearEnd}
                           placeholderText="From Date"
                           required
                         />
@@ -518,7 +520,7 @@ const AdminLeaveAdd = (props) => {
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
                           minDate={startDate}
-                          maxDate={nextYear}
+                          maxDate={currentYearEnd}
                           placeholderText="To Date"
                           required
                         />

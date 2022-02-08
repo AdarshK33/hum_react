@@ -253,10 +253,11 @@ export const RosterProvider = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
-  };
-  const availableShifts = () => {
-    client
-      .get("/api/v1/shift/view/employee")
+
+  }
+  const availableShifts = (week,year) => {
+
+    client.get("/api/v1/shift/view/employee?weekName="+week+"&year="+year)
       .then((response) => {
         // console.log(response,"ava")
         state.availableShiftData = response.data.data;
@@ -649,18 +650,14 @@ export const RosterProvider = ({ children }) => {
       });
   };
 
-  const adminRosterAvailableShift = (contractType, costCenter1) => {
+  const adminRosterAvailableShift = (contractType, costCenter1, week,year) => {
+
     if (contractType === undefined) {
-      contractType = "Fulltime";
+      contractType = "Fulltime"
     }
 
-    client
-      .get(
-        "/api/v1/shift/view/store/active?contract_type=" +
-          contractType +
-          "&storeId=" +
-          costCenter1
-      )
+
+    client.get('/api/v1/shift/view/store/active?contract_type=' + contractType + '&storeId=' + costCenter1+"&weekName="+week +"&year="+year)
       .then((response) => {
         state.adminRosterAvailableShiftList = response.data.data;
         console.log(

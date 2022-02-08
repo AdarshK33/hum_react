@@ -16,13 +16,14 @@ import {
 } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import WorkHourForm from "./WorkHourForm";
+import EditWorkHourForm from "./EditWorkHourForm";
 import Breadcrumb from "../common/breadcrumb";
 import { Edit, Edit2, Eye, Search } from "react-feather";
 import { RosterContext } from "../../context/RosterState";
 import { WorkHourContext } from "../../context/WorkHourState";
 import moment from "moment";
 const ViewWorkHours = () => {
-  const { workHourView, total, loader, workHourDetails } =
+  const { workHourView, total, loader, workHourDetails,viewWorkHourById } =
     useContext(WorkHourContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const [pageCount, setPageCount] = useState(0);
@@ -35,6 +36,7 @@ const ViewWorkHours = () => {
   const [createShow, setCreateShow] = useState(false);
   const [contractType, setContractType] = useState("");
   const [currentRecords, setCurrentRecords] = useState([]);
+  const [editModal, setEditModal] = useState(false)
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   useEffect(() => {
@@ -81,7 +83,7 @@ const ViewWorkHours = () => {
       workHourView("all", pageCount);
     }
   };
-
+  const editHandleClose = () => setEditModal(false)
   console.log("setCreateShow", createShow);
   return (
     console.log(new Date().getFullYear()),
@@ -90,6 +92,10 @@ const ViewWorkHours = () => {
         <WorkHourForm
           createShow={createShow}
           createHandleClose={createHandleClose}
+        />
+        <EditWorkHourForm
+          modal={editModal} 
+          editHandleClose={editHandleClose}
         />
         <Breadcrumb title="Work Hours" parent="Work Hours" />
         <div className="container-fluid">
@@ -133,6 +139,7 @@ const ViewWorkHours = () => {
                 <th>Shift Hours/Day</th>
                 <th>Work Hours/Day</th>
                 <th>Break Hours/Day</th>
+                <th>Edit</th>
               </tr>
             </thead>
             {loader === true &&
@@ -170,6 +177,14 @@ const ViewWorkHours = () => {
                       <td>{item.shiftHours}</td>
                       <td>{item.workHours}</td>
                       <td>{item.breakHours}</td>
+                      {new Date(item.effectiveDate) <= new Date()?
+                      <td>
+                      <Edit2/></td>:<td style={{color:"blue"}}><Edit2  onClick={() => {    
+                              setEditModal(true);
+                              viewContractTypes();
+                              viewWorkHourById(item.workingId)
+                            }} /></td>}
+                            
                     </tr>
                   </tbody>
                 );

@@ -101,34 +101,19 @@ const CreateShiftModal = (props) => {
     setInvalidText(false);
     setShowText(false);
     function checkTimeValidation() {
+
+
       if (contractType === "Fulltime" || contractType === "Internship") {
-        if (parseFloat(workingHours) === 10 || parseFloat(workingHours) === 0) {
-          setShiftButton(false);
-          setNineHourWarnMsg(true);
-        } else {
-          setNineHourWarnMsg(false);
-          setNineHourWarnMsg("* Shift should be 10 hours only");
-          setShiftButton(true);
-          setOneFiveWarnMsg(true);
-          setOneToEightWarnMsg(true);
+        if ((parseFloat(workingHours) >=9 &&parseFloat(workingHours) <=10)|| parseFloat(workingHours) === 0) {
+          setShiftButton(false)
+          setNineHourWarnMsg(true)
         }
-      } else if (
-        ctime != 0.0 &&
-        dtime != 0.0 &&
-        contractType === "Internship (young persons)"
-      ) {
-        if (
-          (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 5) ||
-          parseFloat(workingHours) === 0
-        ) {
-          setShiftButton(false);
-          setOneFiveWarnMsg(true);
-        } else {
-          setOneFiveWarnMsg(false);
-          setOneFiveWarnMsg("* Shift should be 1 to 5 hours");
-          setShiftButton(true);
-          setOneToEightWarnMsg(true);
-          setNineHourWarnMsg(true);
+        else {
+          setNineHourWarnMsg(false)
+          setNineHourWarnMsg("* Shift should be 9-10 hours only")
+          setShiftButton(true)
+          setOneFiveWarnMsg(true)
+          setOneToEightWarnMsg(true)
         }
       } else if (
         (ctime != 0.0 && dtime != 0.0 && contractType === "Parttime") ||

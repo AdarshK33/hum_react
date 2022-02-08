@@ -9,6 +9,16 @@ const GroupReducer = (state, action) => {
         total: action.total,
         loader: action.loader,
       };
+      case "VIEW_WORKHOUR_BY_ID":
+      return {
+        ...state,
+        workHourById: action.payload
+      };
+      case "WORKHOUR_UPDATE":
+      return {
+        ...state,
+        workHourEditData: action.payload
+      };
   }
 };
 export default GroupReducer;
