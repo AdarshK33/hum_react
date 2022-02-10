@@ -9,7 +9,7 @@ import "../../assets/css/search.css";
 import Pagination from "react-js-pagination";
 import { Edit2, Trash2, Search } from "react-feather";
 import AdminLeaveAdd from "./AdminLeaveAdd";
-
+import moment from 'moment'
 const AdminLeavesList = (props) => {
   const [modal, setModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -229,7 +229,7 @@ const AdminLeavesList = (props) => {
                             <td>{item.fromDate}</td>
                             <td>{item.toDate}</td>
                             <td>
-                              {item.leaveTypeId === 3 ? (
+                              {item.leaveTypeId === 3||moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD")) ? (
                                 <Edit2
                                   disabled
                                   style={{ color: "lightgray" }}
@@ -292,7 +292,7 @@ const AdminLeavesList = (props) => {
                             <td>{item.fromDate}</td>
                             <td>{item.toDate}</td>
                             <td>
-                              {item.leaveTypeId === 3 ? (
+                              {item.leaveTypeId === 3 ||moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD"))? (
                                 <Edit2
                                   disabled
                                   style={{ color: "lightgray" }}
