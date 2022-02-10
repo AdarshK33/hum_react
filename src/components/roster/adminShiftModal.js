@@ -47,7 +47,9 @@ const AdminShiftModal = (props) => {
     adminCalculateWeek,
     adminCalculateWeekResult,
   } = useContext(RosterContext);
-
+useEffect(() => {
+  setSelectedWeeks("")
+}, [])
   let Days = [
     "Sunday",
     "Monday",
@@ -113,6 +115,7 @@ const AdminShiftModal = (props) => {
     props.cid,
     props.endDate,
     props.startDate,
+    selectedWeeks
   ]);
   //my store id
 
@@ -122,6 +125,21 @@ const AdminShiftModal = (props) => {
     console.log("props.shiftDate", props.shiftDate);
 
     console.log("props cluster id  ========" + props.cid);
+   
+    console.log("week number",selectedWeeks,weekDayList);
+    if(weekDayList!== null &&weekDayList!==undefined){
+
+    
+    let selectedWeekDetails = weekDayList.filter(
+      (item) => item.weekId == selectedWeeks 
+    );
+    console.log("selectedWeekDetails-->",selectedWeekDetails);
+    if(selectedWeekDetails && selectedWeekDetails !== null &&
+      selectedWeekDetails !== undefined && Object.keys(selectedWeekDetails).length){
+    adminRosterAvailableShift(props.contractType, props.mystoreId,selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);
+    availableShifts(selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);  
+  }}
+  
     weekOffDays(shiftDateWeek);
   }, [selectedWeeks]);
 
@@ -150,7 +168,7 @@ const AdminShiftModal = (props) => {
     setDaysList(Date);
     // console.log(weeks, 'Shift year');
     //  console.log(days, 'Shift day');
-  }, [props.shiftDate, weekDays]);
+  }, [props.shiftDate, weekDays, adminCalculateWeekResult]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -185,7 +203,7 @@ const AdminShiftModal = (props) => {
       date: WeekDate.map((e, i) => WeekDate[i].value),
       employeeIds: employee.map((e, i) => employee[i].value),
     };
-console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
+    console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
     if (validate) {
       adminAddWeekOff(newWeekOffAdminRoster);
 
@@ -314,40 +332,48 @@ console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
             >
               <Tab eventKey="shift" title="Assign Shift">
                 <form onSubmit={onSubmit1}>
-                  <div className="row py-2">
+
+                <div className="row py-2">
                     <div className="col-sm-5 px-2">
-                      Available Shifts :<span style={{ color: "red" }}>*</span>
+                      Select Week :<span style={{ color: "red" }}>*</span>
                     </div>
-                    {/* Name :<h1>{firstName}{contractType}</h1> */}
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select
                           className="form-control"
-                          style={{ fontSize: "0.8rem" }}
                           required
-                          onChange={setShiftAdminList}
+                          value={selectedWeeks}
+                          onChange={handleWeeksChange}
                         >
-                          <option value="">Select Shift</option>
-                          {adminRosterAvailableShiftList !== null &&
-                            adminRosterAvailableShiftList.map((item, i) => {
+                          <option value="">Select Week</option>
+
+                          {weekDayList !== null &&
+                            weekDayList.map((item, i) => {
                               return (
                                 <option
-                                  key={item.value}
-                                  value={item.shiftMasterId}
+                                  key={item.weekId}
+                                  selected={item.selected}
+                                  value={item.weekId}
                                 >
-                                  {item.startTime +
-                                    "-" +
-                                    item.endTime +
-                                    "(" +
-                                    item.shiftType +
-                                    ")"}
+                                  {item.weekName + " - " + item.year}
                                 </option>
                               );
                             })}
                         </select>
                       </div>
                     </div>
+                    <h6
+                      style={{
+                        color: "red",
+                        fontFamily: "work-Sans, sans-serif",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                    >
+                      {msg}
+                    </h6>
                   </div>
+                 
                   {/* SELECT EMPLOYEE */}
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">
@@ -393,43 +419,37 @@ console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
 
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">
-                      Select Week :<span style={{ color: "red" }}>*</span>
+                      Available Shifts :<span style={{ color: "red" }}>*</span>
                     </div>
+                    {/* Name :<h1>{firstName}{contractType}</h1> */}
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select
                           className="form-control"
+                          style={{ fontSize: "0.8rem" }}
                           required
-                          value={selectedWeeks}
-                          onChange={handleWeeksChange}
+                          onChange={setShiftAdminList}
                         >
-                          <option value="">Select Week</option>
-
-                          {weekDayList !== null &&
-                            weekDayList.map((item, i) => {
+                          <option value="">Select Shift</option>
+                          {adminRosterAvailableShiftList !== null &&
+                            adminRosterAvailableShiftList.map((item, i) => {
                               return (
                                 <option
-                                  key={item.weekId}
-                                  selected={item.selected}
-                                  value={item.weekId}
+                                  key={item.value}
+                                  value={item.shiftMasterId}
                                 >
-                                  {item.weekName + " - " + item.year}
+                                  {item.startTime +
+                                    "-" +
+                                    item.endTime +
+                                    "(" +
+                                    item.shiftType +
+                                    ")"}
                                 </option>
                               );
                             })}
                         </select>
                       </div>
                     </div>
-                    <h6
-                      style={{
-                        color: "red",
-                        fontFamily: "work-Sans, sans-serif",
-                        fontSize: "12px",
-                        marginLeft: "5px",
-                      }}
-                    >
-                      {msg}
-                    </h6>
                   </div>
 
                   <div className="row py-2">
@@ -541,6 +561,7 @@ console.log("newWeekOffAdminRoster",newWeekOffAdminRoster);
                       </div>
                     </div>
                   </div>
+                  
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">
                       Select Day :<span style={{ color: "red" }}>*</span>

@@ -160,7 +160,9 @@ import EmpPayroll from "./components/Payroll/EmpPayroll";
 import ManagerPayroll from "./components/Payroll/ManagerPayroll";
 
 import PartTimerSalaryInput from "./components/PartTimerSalaryInput/PartTimerSalaryInput"
-
+/* import ManagerOfferRelease from './components/Offers/managerOfferRelease'
+import OfferReleaseList from './components/Offers/OfferReleaseList'
+import EditOfferRelease from './components/Offers/editOfferRelease' */
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
