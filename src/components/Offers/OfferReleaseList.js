@@ -164,7 +164,7 @@ const OfferReleaseList = () => {
                       viewCandidateId(0);
                     }}
                   >
-                    Initate Offer
+                    Initiate Offer
                   </Button>
                 </Link>
               </div>
