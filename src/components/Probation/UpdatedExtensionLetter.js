@@ -7,8 +7,15 @@ import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const ExtensionLetter1 = () => {
-  const { extensionLetterData, loader, setLetterView } =
-    useContext(ProbationContext);
+  const {
+    updateProbation,
+    ViewProbationDataById,
+    probationData,
+    extensionLetterData,
+    loader,
+    setLetterView,
+    empId,
+  } = useContext(ProbationContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -23,6 +30,31 @@ const ExtensionLetter1 = () => {
   };
   const HandleSaveLetter = () => {
     setSaveLetter(true);
+    const InfoData = {
+      company: probationData.company,
+      costCentre: probationData.costCentre,
+      dateOfJoining: probationData.dateOfJoining,
+      dueDays: probationData.dueDays,
+      emailId: probationData.emailId,
+      empId: probationData.empId,
+      empName: probationData.empName,
+      probationConfirmationDate: probationData.probationConfirmationDate,
+      probationConfirmationLetter: probationData.probationConfirmationLetter,
+      probationExtensionEndDate: probationData.probationExtensionEndDate,
+      probationExtensionPeriod: probationData.probationExtensionPeriod,
+      probationExtensionStartDate: null,
+      probationId: probationData.probationId,
+      reason: probationData.reason,
+      probationPeriod: probationData.probationPeriod,
+      remarks: probationData.remarks,
+      reminderSent: probationData.reminderSent,
+      status:
+        probationData.status === 5 ? 1 : probationData.status === 6 ? 2 : 3,
+    };
+
+    console.log("InfoData", InfoData);
+    updateProbation(InfoData, probationData.empId);
+    ViewProbationDataById(empId);
     const infoData = {
       inputRef: inputRef,
       empId: extensionLetterData.empId,
@@ -36,13 +68,7 @@ const ExtensionLetter1 = () => {
       "getBoundingClientRect",
       inputRef.current.getBoundingClientRect()
     );
-    CreatePdfAndUpload(
-      infoData,
-      "40," +
-        parseInt(1000 + parseInt(inputRef.current.getBoundingClientRect().y)) /
-          2 +
-        ",150,100"
-    );
+    CreatePdfAndUpload(infoData, "35,260,185,360");
     setShow(false);
   };
   return (
@@ -66,7 +92,7 @@ const ExtensionLetter1 = () => {
               </div>
             ) : (
               <div id="extLetter" ref={inputRef}>
-                <h5 className="text-center">
+                <h5 style={{ textAlign: "center" }}>
                   {" "}
                   <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>
                 </h5>
