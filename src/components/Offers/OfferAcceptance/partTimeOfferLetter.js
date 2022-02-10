@@ -52,7 +52,7 @@ const PartTimeOfferLetter = () => {
               You may also receive a bonus on monthly basis and which would be
               to a maximum of{" "}
               <span className="boldText">{candidateLetterData.bonus} %</span> of
-              your monthly gross salary.Your manager will explain to you the
+              your monthly gross salary. Your manager will explain to you the
               calculation of such bonus
             </li>
             <li>

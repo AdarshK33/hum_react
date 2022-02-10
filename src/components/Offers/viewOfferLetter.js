@@ -87,7 +87,7 @@ const ViewOfferLetter = () => {
             <Row>
               <Col sm={4}></Col>
               <Col sm={5}>
-                <p>Documents are available in Document Managenment</p>
+                <p>Documents are available in Document Management</p>
                 {/* <Button type="button" onClick={offerLetterClick}>
                   Preview Offer Letter
                 </Button> */}

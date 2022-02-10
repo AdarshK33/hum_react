@@ -6049,7 +6049,7 @@ const InsuranceNomination = (props) => {
                 <a onClick={handleIsuranceForm}>
                   {" "}
                   <u className="itemResult">
-                    Download Insurance Nomination Form
+                  Please download the form, attest the signature and re-upload the form
                   </u>
                 </a>
                 <br />

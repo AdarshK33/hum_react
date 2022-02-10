@@ -12,6 +12,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
 import { AppContext } from "../../context/AppState";
+import moment from "moment";
 
 const LeaveView = () => {
 
@@ -89,7 +90,7 @@ const LeaveView = () => {
         console.log("currentYear",currentYear,year);
         viewLeaveData(user.employeeId,year)  
     }
-
+    
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -330,11 +331,13 @@ const LeaveView = () => {
                                                 <td>{item.numberOfDays}</td>
                                                 <td>{item.fromDate}</td>
                                                 <td>{item.toDate}</td>
-                                                <td><Edit2 onClick={() => {
+
+                                                <td>{moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD"))?<Edit2 disabled
+                                  style={{ color: "lightgray" }}/>:<Edit2 onClick={() => {
                                                     setEditModal(true); setLeaveTypeId(item.leaveTypeId);
                                                     setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
                                                     setltId(item.ltId); setNumberOfDays(item.numberOfDays)
-                                                }} />
+                                                }} />}
                                                 </td>
                                                 <td><Trash2 onClick={() => {
                                                     setDeleteModal(true); setltId(item.ltId)
