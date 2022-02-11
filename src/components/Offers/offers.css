@@ -91,7 +91,9 @@ span.boldText {
 .digital-signature {
   margin-left: 100px;
 }
-
+.digital-signature1 {
+  margin-left: -262px;
+}
 .signature-text {
   color: rgb(42, 203, 243);
   text-align: center;

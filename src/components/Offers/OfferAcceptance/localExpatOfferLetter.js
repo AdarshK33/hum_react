@@ -46,7 +46,7 @@ const LocalExpatOfferLetter = () => {
               ).format("DD-MM-YYYY")}
             </li>
             <li>
-              Your monthly gross salary will not exceed Rs.{" "}
+              Your monthly gross salary will not exceed $.{" "}
               <span className="boldText">
                 {candidateLetterData.permanentCandidateOffer.grossSalary}
               </span>
