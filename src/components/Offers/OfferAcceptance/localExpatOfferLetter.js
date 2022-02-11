@@ -323,12 +323,14 @@ const LocalExpatOfferLetter = () => {
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      candidateLetterData.permanentCandidateOffer.ctc
+                      candidateLetterData.permanentCandidateOffer.ctc+
+                      candidateLetterData.bonusAmt
                     )}
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      candidateLetterData.permanentCandidateOffer.ctc
+                      candidateLetterData.permanentCandidateOffer.ctc+
+                      candidateLetterData.bonusAmt
                     ) * 12}
                   </td>
                 </tr>

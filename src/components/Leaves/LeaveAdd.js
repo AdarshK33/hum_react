@@ -68,12 +68,15 @@ const LeaveAdd = (props) => {
   let currentYear = new Date();
   currentYear.setFullYear(currentYear.getFullYear(), 0, 1);
 
-  const fromDateHandler = (date) => {
-    let value = date;
-    setStartDate(value);
-    setEndDate(null);
-    setEditMsg(false);
-    /* if (endDate === null){
+    let currentYearEnd = new Date()
+    currentYearEnd.setFullYear(currentYearEnd.getFullYear(), 11, 31)
+
+    const fromDateHandler = (date) => {
+        let value = date
+        setStartDate(value);
+        setEndDate(null)
+        setEditMsg(false)
+        /* if (endDate === null){
             setDisable(true)
             
             console.log("endDtae in condition", endDate)
@@ -82,49 +85,59 @@ const LeaveAdd = (props) => {
     //For disable the To Date initially
     setDisable(false);
 
-    if (value <= new Date()) {
-      setMax(true);
-      setMin(false);
+        //For disable the To Date initially
+        setDisable(false)
+        // let DayValue = parseInt(new Date(date).getDate())
+        // if (DayValue < parseInt(new Date().getDate()) ) {
+        //     setMax(true);
+        //     setMin(false);
+        // }else if (DayValue >= parseInt(new Date().getDate())) {
+        //     setMin(true);
+        //     setMax(false);
+        // }
+        if (moment(date)
+        .isBefore(moment()) ) {
+            setMax(true);
+            setMin(false);
+        }else {
+            setMin(true);
+            setMax(false);
+        }
+        setEditMsg(false)
     }
 
-    if (value > new Date()) {
-      setMin(true);
-      setMax(false);
-    }
+    const toDateHandler = (date) => {
+        let value1 = date
+        setEndDate(value1);
 
-    setEditMsg(false);
+        var newData
+        if (startDate > new Date()) {
+            newData = 'Planned'
+        }
+        else {
+            newData = 'Unplanned'
+        }
+
+        const newPopup = {
+            empId: user.employeeId,
+            fromDate: moment(startDate).format("YYYY-MM-DD"),
+            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: newData,
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 1,
+            toDate: moment(value1).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: new Date(value1).getFullYear()
+        }
+
+        addPopup(newPopup)
+        setEditMsg(true)
   };
 
-  const toDateHandler = (date) => {
-    let value1 = date;
-    setEndDate(value1);
-
-    var newData;
-    if (startDate > new Date()) {
-      newData = "Planned";
-    } else {
-      newData = "Unplanned";
-    }
-
-    const newPopup = {
-      empId: user.employeeId,
-      fromDate: moment(startDate).format("YYYY-MM-DD"),
-      /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
-      leaveCategory: newData,
-      /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
-      leaveTypeId: leave,
-      ltId: 0,
-      numberOfDays: 0,
-      reason: "string",
-      status: 1,
-      toDate: moment(value1).format("YYYY-MM-DD"),
-      viewLeavePopup: 0,
-      year: new Date().getFullYear(),
-    };
-
-    addPopup(newPopup);
-    setEditMsg(true);
-  };
 
   const setStartMaternityDateHandler = (date) => {
     let value2 = date;
@@ -388,7 +401,7 @@ const LeaveAdd = (props) => {
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
                           minDate={currentYear}
-                          maxDate={nextYear}
+                          maxDate={currentYearEnd}
                           placeholderText="From Date"
                           required
                         />
@@ -425,7 +438,7 @@ const LeaveAdd = (props) => {
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
                           minDate={startDate}
-                          maxDate={nextYear}
+                          maxDate={currentYearEnd}
                           placeholderText="To Date"
                           required
                         />

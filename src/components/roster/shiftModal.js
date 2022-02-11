@@ -68,9 +68,23 @@ const ShiftModal = (props) => {
   }, [props.empData, props.Date, props.endDate, props.startDate]);
   useEffect(() => {
     console.log("shiftDateWeek", shiftDateWeek);
+    console.log("week number",selectedWeeks,weekDayList);
+    if(weekDayList!== null &&weekDayList!==undefined){
+
+    
+    let selectedWeekDetails = weekDayList.filter(
+      (item) => item.weekId == selectedWeeks 
+    );
+    console.log("selectedWeekDetails-->",selectedWeekDetails);
+    if(selectedWeekDetails && selectedWeekDetails !== null &&
+      selectedWeekDetails !== undefined && Object.keys(selectedWeekDetails).length){
+        availableShifts(selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);
+    }}
     weekOffDays(shiftDateWeek);
   }, [selectedWeeks]);
-
+  useEffect(() => {
+    setSelectedWeeks("")
+  }, [])
   // useEffect(() => {
   //   setdate(props.weekName.split('Week')[1].trim())
   //   // setSelectedWeeks(props.weekName)
@@ -99,7 +113,7 @@ const ShiftModal = (props) => {
     // setWeekDay(shiftDate)
     // console.log(weeks, 'Shift year');
     //  console.log(days, 'Shift day');
-  }, [props.shiftDate, weekDays]);
+  }, [props.shiftDate, weekDays, adminCalculateWeekResult]);
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -216,12 +230,41 @@ const ShiftModal = (props) => {
               onSelect={(k) => setKey(k)}
             >
               <Tab eventKey="shift" title="Assign Shift">
-                <div className="row py-2 pt-4">
+              <div className="row py-2">
+                    <div className="col-sm-5 px-2">Select Week :</div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <select
+                          className="form-control"
+                          required
+                          value={selectedWeeks}
+                          onChange={handleWeeksChange}
+                        >
+                          <option value="">Select Week</option>
+
+                          {weekDayList !== null &&
+                            weekDayList.map((item, i) => {
+                              return (
+                                <option
+                                  key={item.weekId}
+                                  selected={item.selected}
+                                  value={item.weekId}
+                                >
+                                  {item.weekName + " - " + item.year}
+                                </option>
+                              );
+                            })}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                <div className="row py-2 ">
                   <div className="col-sm-6 px-2">Employee Name:</div>
                   <div className="col-sm-6 px-2">
                     {user.firstName} - {user.employeeId}
                   </div>
                 </div>
+                
                 <div className="row py-2">
                   <div className="col-sm-5 px-2">
                     Available Shifts :

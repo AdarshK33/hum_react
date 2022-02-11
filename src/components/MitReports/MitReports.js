@@ -98,7 +98,7 @@ const MitReports = () => {
                     selected={year}
                     className="mitDates"
                     onChange={(date) => setYear(date)}
-                    minDate={new Date("2021")}
+                    minDate={new Date("2010")}
                     placeholderText="Select Year"
                     dateFormat="yyyy"
                     showYearPicker
@@ -125,7 +125,8 @@ const MitReports = () => {
                     placeholderText="Select Month"
                     dateFormat="MM"
                     showMonthYearPicker
-                    showFullMonthYearPicker
+                    // showFullMonthYearPicker
+                    showTwoColumnMonthYearPicker
                     required
                   />{" "}
                 </Col>

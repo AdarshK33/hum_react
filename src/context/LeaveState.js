@@ -147,11 +147,11 @@ export const LeaveProvider = ({ children }) => {
   };
 
   // View Leave Data
-  const viewLeaveData = (empId1) => {
-    console.log("data list for leave", empId1);
+  const viewLeaveData = (empId1,year) => {
+    console.log("data list for leave", empId1,year);
     if (empId1 !== null && empId1 !== undefined) {
       client
-        .get("/api/v1/leave_transaction/view/" + empId1)
+        .get("/api/v1/leave_transaction/view/" + empId1+"?page=0&size=10&year="+year)
         .then((response) => {
           state.leaveDataList = response.data.data.data;
           console.log(

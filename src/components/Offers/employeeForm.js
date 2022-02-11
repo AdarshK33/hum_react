@@ -593,12 +593,14 @@ const EmployeeForm = (props) => {
               type="checkbox"
               name="refrence"
               checked={yesChecked}
+              disabled={disabled}
               onChange={checkedYesHandler}
             />
             &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
             <input
               type="checkbox"
               name="refrence"
+              disabled={disabled}
               checked={noChecked}
               onChange={checkedNoHandler}
             />

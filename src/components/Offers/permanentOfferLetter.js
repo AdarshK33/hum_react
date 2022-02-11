@@ -308,11 +308,14 @@ const PermanentOfferLetter = () => {
                     )}
                   </td>
                   <td className="boldText">
-                    {Math.round(offerLetterData.permanentCandidateOffer.ctc)}
+                    {Math.round(offerLetterData.permanentCandidateOffer.ctc+
+                        offerLetterData.bonusAmt)}
                   </td>
                   <td className="boldText">
-                    {Math.round(offerLetterData.permanentCandidateOffer.ctc) *
+                    {Math.round(offerLetterData.permanentCandidateOffer.ctc+
+                        offerLetterData.bonusAmt) *
                       12}
+                    )
                   </td>
                 </tr>
               </tbody>

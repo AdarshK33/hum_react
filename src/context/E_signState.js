@@ -3,6 +3,10 @@ import E_signReducer from "../reducers/E_signReducer";
 import { Button, Modal } from "react-bootstrap";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import pdfMake from "pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
 
 const initial_state = {
   uploadResponse: [],
@@ -19,6 +23,13 @@ export const E_signProvider = ({ children }) => {
   const [notification, setNotif] = useState(false);
   const [DocName, setDocName] = useState("");
   const [docShow, setDocShow] = useState(false);
+  const history = useHistory();
+  const [notificationState, setNotificationState] = useState({
+    email: "",
+    phNo: "",
+    history: "",
+    path: "",
+  });
   const handleClose = () => {
     setNotif(false);
   };
@@ -29,10 +40,71 @@ export const E_signProvider = ({ children }) => {
   const setNotification = (val) => {
     setNotif(val);
   };
-
-  const settingInfo = (val) => {
-    setShowInfo(val);
+  const handleCloseNotify = () => {
+    setShowInfo(false);
+    console.log("(notificationState.path)", notificationState.path);
+    notificationState.history.push(notificationState.path);
   };
+
+  const CreatePdfAndUpload = (
+    infoData,
+    rectangle = "0,0,150,100",
+    location = "Bangalore",
+    reason = "testing"
+  ) => {
+    const pdfTable = infoData.inputRef.current;
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    var last_page = null;
+    const documentDefinition = {
+      content: html,
+      footer: function (currentPage, pageCount) {
+        last_page = pageCount;
+      },
+    };
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    // pdfMake.createPdf(documentDefinition).open();
+
+    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+
+    pdfDocGenerator.getBuffer((buffer) => {
+      var blobStore = new Blob([buffer], { type: "application/pdf" });
+      blobStore.name = "esignDoc.pdf";
+      console.log("blobStore", blobStore);
+
+      const data = {
+        recipient1: {
+          observer: "false",
+          pageNo: last_page.toString(),
+          reason: reason,
+          location: location,
+          rectangle: rectangle,
+          name: infoData.empName,
+          email: "rajasekhar@theretailinsights.com",
+          //  infoData.empEmail,
+          phoneNumber: infoData.empPhNo,
+          // "+91 8074058844,,,",
+          signature_type: "Aadhaar",
+        },
+      };
+      const eSignDetails = {
+        orgId: "6180cd3596d65ededc7d30f6",
+        checkOrder: "true",
+        reminder: "true",
+        reminder_duration: 12,
+        eStampRequired: "false",
+        signature_expiry: "08/07/2022",
+      };
+      UploadEsignDoc(data, eSignDetails, blobStore, infoData.empId);
+    });
+    setNotificationState({
+      email: infoData.empEmail,
+      phNo: infoData.empPhNo,
+      history: infoData.history,
+      path: infoData.path,
+    });
+    console.log("inputRef.current-->", infoData.inputRef.current);
+  };
+
   const UploadEsignDoc = (data, eSignDetails, blob, empId) => {
     setLoader(true);
     const formData = new FormData();
@@ -51,23 +123,16 @@ export const E_signProvider = ({ children }) => {
         console.log("uploadResponse", response);
         console.log("uploadResponse.data", response.data.requests[0]);
         //toast.info(response.data.message);
-        // if (
-        //   response.data &&
-        //   response.data.requests[0] &&
-        //   response.data.requests[0].refId
-        // ) {
-        //   getReference(parseInt(response.data.requests[0].refId));
-        // }
         setLoader(false);
         // setSaveTheLetter(true);
-        settingInfo(true);
+        setShowInfo(true);
         return dispatch({
           type: "UPLOAD_ESIGN",
           payload: state.uploadResponse,
         });
       })
       .catch((error) => {
-        settingInfo(false);
+        setShowInfo(false);
         console.log(error);
       });
   };
@@ -105,6 +170,48 @@ export const E_signProvider = ({ children }) => {
 
   return (
     <div>
+      {EsignLoader ? (
+        <Modal show={EsignLoader} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            <div
+              className="loader-box loader"
+              style={{ width: "100% !important" }}
+            >
+              <div className="loader">
+                <div className="line bg-primary"></div>
+                <div className="line bg-primary"></div>
+                <div className="line bg-primary"></div>
+                <div className="line bg-primary"></div>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+      ) : null}
+      {showinfo ? (
+        <Modal show={showinfo} onHide={handleCloseNotify} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <div className="text-center">
+              <label>
+                Notification sent successfully to{" "}
+                <b>{notificationState.email}</b> and{" "}
+                <b>{notificationState.phNo}</b> to complete e-sign process
+              </label>
+            </div>
+            <div className="text-center mb-2">
+              <Button
+                onClick={handleCloseNotify}
+                style={{ marginLeft: "1rem" }}
+              >
+                Close
+              </Button>
+            </div>
+          </Modal.Body>
+        </Modal>
+      ) : (
+        ""
+      )}
       {notification ? (
         <Modal show={notification} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -146,8 +253,8 @@ export const E_signProvider = ({ children }) => {
         value={{
           UploadEsignDoc,
           getReference,
-          settingInfo,
           setNotification,
+          CreatePdfAndUpload,
           uploadResponse: state.uploadResponse,
           referenceResponse: state.referenceResponse,
           showinfo: showinfo,
