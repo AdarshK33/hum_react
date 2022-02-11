@@ -24,6 +24,7 @@ const GenerateOfferLetter = () => {
     offerLetterData,
     finalSubmitOfferLetter,
     candidateData,
+    workInfoViewData
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
@@ -46,6 +47,21 @@ const GenerateOfferLetter = () => {
       Object.keys(candidateData.remuneration).length !== 0
     ) {
       setOfferButtonEnable(true);
+      //changes 
+      let remunerationDataInfo =
+    candidateData !== null &&
+    candidateData !== undefined &&
+    candidateData.remuneration;
+    if((
+      candidateData.workInformation.contractType ===
+        "Parttime") &&
+      (remunerationDataInfo.fixedGross > 400)){
+           console.log("in side yes",remunerationDataInfo.fixedGross)
+          setOfferButtonEnable(false);
+         }else{
+          setOfferButtonEnable(true);
+         }
+         //changes
     } else {
       setOfferButtonEnable(false);
     }
@@ -184,17 +200,17 @@ const GenerateOfferLetter = () => {
                 )}
                 <br></br>
                 <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <p>Thanking you</p>
                     <p>{offerLetterData.managerName}</p>
-                  </Col>
-                  <Col sm={6} className="signature-center-text">
+                  </Col> */}
+                  <Col sm={6} className="signature-text">
                     {showSignature ? (
                       <img
                         src={calendarImage}
                         alt="calendar"
                         width="50px"
-                        className="digital-signature"
+                        className="digital-signature1"
                       />
                     ) : (
                       <>
