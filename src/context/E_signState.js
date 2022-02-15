@@ -94,7 +94,14 @@ export const E_signProvider = ({ children }) => {
         eStampRequired: "false",
         signature_expiry: "08/07/2022",
       };
-      UploadEsignDoc(data, eSignDetails, blobStore, infoData.empId);
+      UploadEsignDoc(
+        data,
+        eSignDetails,
+        blobStore,
+        infoData.empId,
+        infoData.candidateId,
+        infoData.module
+      );
     });
     setNotificationState({
       email: infoData.empEmail,
@@ -105,7 +112,14 @@ export const E_signProvider = ({ children }) => {
     console.log("inputRef.current-->", infoData.inputRef.current);
   };
 
-  const UploadEsignDoc = (data, eSignDetails, blob, empId) => {
+  const UploadEsignDoc = (
+    data,
+    eSignDetails,
+    blob,
+    empId = 0,
+    candidateId = 0,
+    module
+  ) => {
     setLoader(true);
     const formData = new FormData();
     formData.append("file", blob, blob.name);
@@ -117,7 +131,15 @@ export const E_signProvider = ({ children }) => {
     console.log("eSignDetails", eSignDetails);
     console.log("formData", formData);
     client
-      .post("/api/v1/e-sign/initiateTest?employeeId=" + empId, formData)
+      .post(
+        "/api/v1/e-sign/initiateTest?candidateId=" +
+          candidateId +
+          "&employeeId=" +
+          empId +
+          "&moduleName=" +
+          module,
+        formData
+      )
       .then((response) => {
         state.uploadResponse = response.data;
         console.log("uploadResponse", response);
