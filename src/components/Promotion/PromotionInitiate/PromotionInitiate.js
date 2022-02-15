@@ -126,7 +126,7 @@ const PromotionInitiate = () => {
       state.departmentId !== null &&
       state.departmentId !== undefined
     ) {
-      PositionNew(state.departmentId);
+      PositionNew(state.departmentId,state.oldPosition);
     }
   }, [departmentNew]);
 
