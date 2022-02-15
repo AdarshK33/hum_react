@@ -231,6 +231,7 @@ const AdminRoster = () => {
                           <DatePicker
                             className="form-control shift-view"
                             selected={endDate.toDate()}
+                            minDate={new Date(startDate)}
                             dateFormat="yyyy-MM-dd"
                             required
                             onCalendarClose={() => {

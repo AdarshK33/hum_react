@@ -139,6 +139,7 @@ const Roster = () => {
                         <DatePicker
                           className="form-control"
                           selected={endDate.toDate()}
+                          minDate={new Date(startDate)}
                           dateFormat="yyyy-MM-dd"
                           required
                           onChange={(date) =>
