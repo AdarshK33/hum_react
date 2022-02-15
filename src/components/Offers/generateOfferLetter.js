@@ -55,7 +55,15 @@ const GenerateOfferLetter = () => {
     if((
       candidateData.workInformation.contractType ===
         "Parttime") &&
-      (remunerationDataInfo.fixedGross > 400)){
+      (remunerationDataInfo.fixedGross > 400)||
+      (
+        candidateData.workInformation.contractType ===
+          "Fulltime") &&
+        (remunerationDataInfo.fixedGross < 18000)||(
+          candidateData.workInformation.contractType ===
+            "Local Expat") &&
+          (remunerationDataInfo.fixedGross < 25000)
+      ){
            console.log("in side yes",remunerationDataInfo.fixedGross)
           setOfferButtonEnable(false);
          }else{

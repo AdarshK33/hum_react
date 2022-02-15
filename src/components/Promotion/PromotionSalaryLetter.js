@@ -115,25 +115,31 @@ const PromotionSalaryLetter = () => {
           </p>
           <br></br>
           <p>To,</p>
-          <p>Employee Name:{promotionLetterData !== undefined &&
+          <p>Employee Name:
+            {/* {promotionLetterData !== undefined &&
               promotionLetterData.gender == "MALE"?
               `Mr.${promotionLetterData.empName}`
               :(promotionLetterData.gender == "FEMALE" && 
               promotionLetterData.maritalStatus == "Single")?
               `Miss. ${promotionLetterData.empName}`
-              :`Mrs.${promotionLetterData.empName}`}</p>
+              :`Mrs.${promotionLetterData.empName}`} */}
+             {promotionLetterData.empName}
+              </p>
           <p>Employee ID:{promotionLetterData.employeeId}</p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              <b>Dear</b> <b>{promotionLetterData !== undefined &&
+              <b>Dear</b> <b>
+                {/* {promotionLetterData !== undefined &&
               promotionLetterData.gender == "MALE"?
               `Mr.${promotionLetterData.empName}`
               :(promotionLetterData.gender == "FEMALE" && 
               promotionLetterData.maritalStatus == "Single")?
               `Miss. ${promotionLetterData.empName}`
-              :`Mrs.${promotionLetterData.empName}`},</b>{" "}
+              :`Mrs.${promotionLetterData.empName}`} */}
+              {promotionLetterData.empName}
+              ,</b>{" "}
             </p>
             <br></br>
             <p>
@@ -148,13 +154,16 @@ const PromotionSalaryLetter = () => {
               && promotionLetterData.effectiveDate !== ""?
               moment(promotionLetterData.effectiveDate).format("DD-MM-YYYY"):""}</b>. You
               will be reporting to {" "}
-              <b>{promotionLetterData !== undefined &&
+              <b>
+                {/* {promotionLetterData !== undefined &&
               promotionLetterData.managerGender == "MALE"?
               `Mr.${promotionLetterData.reportingManagerName}`
               :(promotionLetterData.managerGender == "FEMALE" && 
               promotionLetterData.managerMaritalStatus == "Single")?
               `Miss. ${promotionLetterData.reportingManagerName}`
-              :`Mrs.${promotionLetterData.reportingManagerName}`}</b>. All the other
+              :`Mrs.${promotionLetterData.reportingManagerName}`} */}
+              {promotionLetterData.reportingManagerName}
+              </b>. All the other
               terms and conditions of your appointment letter dated{" "}
               <b>{promotionLetterData.appointmentLetterDate !== null && promotionLetterData.appointmentLetterDate !== undefined 
               && promotionLetterData.appointmentLetterDate !== ""?

@@ -89,17 +89,16 @@ export const PromotionProvider = (props) => {
       });
   };
 
-  const PositionNew = (depId) => {
+  const PositionNew = (depId,oldPosition) => {
     setLoader(true);
+    console.log(oldPosition)
     client
       .get("/api/v1/position/view/deptId?deptId=" + depId)
       .then((response) => {
-        state.positionNew = response.data.data;
-
+        state.positionNew = response.data.data.filter(item =>item.position !== oldPosition)
         setLoader(false);
         console.log("--->", state.positionNew);
         console.log(response);
-
         return dispatch({
           type: "POSITION_NEW",
           payload: state.positionNew,

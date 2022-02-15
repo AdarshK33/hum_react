@@ -750,7 +750,7 @@ const WorkInformation = (props) => {
                     stateList.map((item, i) => {
                       return (
                         <option key={i} value={item.stateId}>
-                          {item.stateName}
+                          {item.cityName}/{item.stateName}
                         </option>
                       );
                     })}
