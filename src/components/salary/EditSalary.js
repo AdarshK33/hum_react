@@ -180,8 +180,14 @@ const onSubmit = e => {
         year: year
 
     }
-    console.log("EditSalary request",EditSalary)
-    salaryEdit(EditSalary, props.costCenter)
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: [props.costCenter],
+      year: year
+    }
+    salaryEdit(EditSalary, salaryData)
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;
@@ -250,7 +256,7 @@ return (
                                 <Form.Control as="input" size="sm" name="contractType" value={contractType}
                                     readOnly />
                             </Col>
-                            {contractType === 'permanent' ?
+                            {contractType === 'Fulltime' ?
                                 <Fragment>
                                     <Form.Label column sm="3" className="padding-right">Extra Hours:</Form.Label>
                                     <Col sm="9" className="padding-left">
@@ -275,6 +281,7 @@ return (
                                         <Form.Control as="input" type="number" size="sm" name="extraHours" value={extraHours === null ? 0 : extraHours}
                                             onChange={(event) => setExtraHours(event.target.value)}  readOnly
                                             id="total" />
+                                            {extraHours>130?<p style={{color:"Red"}}>Extra Hours should not exceed 130 hrs</p>:""}
                                     </Col>
 
                                 </Fragment>

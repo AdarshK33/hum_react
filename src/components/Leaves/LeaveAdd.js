@@ -58,10 +58,13 @@ const LeaveAdd = (props) => {
     const today = new Date()
 
     let nextYear = new Date()
-    nextYear.setFullYear(nextYear.getFullYear(), 11, 31)
+    nextYear.setFullYear(nextYear.getFullYear()+1, 11, 31)
 
     let currentYear = new Date()
     currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
+
+    let currentYearEnd = new Date()
+    currentYearEnd.setFullYear(currentYearEnd.getFullYear(), 11, 31)
 
     const fromDateHandler = (date) => {
         let value = date
@@ -77,17 +80,22 @@ const LeaveAdd = (props) => {
 
         //For disable the To Date initially
         setDisable(false)
-
-        if (value <= new Date()) {
+        // let DayValue = parseInt(new Date(date).getDate())
+        // if (DayValue < parseInt(new Date().getDate()) ) {
+        //     setMax(true);
+        //     setMin(false);
+        // }else if (DayValue >= parseInt(new Date().getDate())) {
+        //     setMin(true);
+        //     setMax(false);
+        // }
+        if (moment(date)
+        .isBefore(moment()) ) {
             setMax(true);
             setMin(false);
-        }
-
-        if (value > new Date()) {
+        }else {
             setMin(true);
             setMax(false);
         }
-
         setEditMsg(false)
     }
 
@@ -116,7 +124,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(value1).getFullYear()
         }
 
         addPopup(newPopup)
@@ -144,7 +152,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
         }
         addPopup(newPopup1)
         setEditMsg(true)
@@ -224,7 +232,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
         }
 
         var newData
@@ -248,7 +256,8 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            // year: new Date().getFullYear()
+            year: new Date(endDate).getFullYear()
         }
         console.log("newLeave empId-----", newLeave.empId)
         if (leave === '3') {
@@ -348,7 +357,7 @@ const LeaveAdd = (props) => {
                                             <div>
                                                 <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
-                                                    minDate={currentYear} maxDate={nextYear}
+                                                    minDate={currentYear} maxDate={currentYearEnd}
                                                     placeholderText="From Date" required />
                                             </div>
                                         </Form.Group>
@@ -368,7 +377,7 @@ const LeaveAdd = (props) => {
                                             <div><Form.Label>To Date:</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startDate} maxDate={nextYear}
+                                                minDate={startDate} maxDate={currentYearEnd}
                                                 placeholderText="To Date" required /></div>
                                         </div>
                                     }

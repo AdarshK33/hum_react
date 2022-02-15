@@ -55,3 +55,10 @@ thead th {
 .shift-date input.form-control.shift-view {
     height: 40px;
 }
+button.btn.btn-square.bg-secondary.btn-sm{
+    background-color: #d3d3d3!important;
+}
+button.btn.btn-square.bg-secondary.btn-sm:hover{
+    background-color: #5d5d5d!important;
+    color:white
+}

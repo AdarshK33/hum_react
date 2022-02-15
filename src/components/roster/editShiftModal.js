@@ -17,8 +17,8 @@ const EditShiftModal = (props) => {
 
 
 
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
@@ -70,7 +70,6 @@ const EditShiftModal = (props) => {
     setStartBreakTime(singleShiftList.breakStartTime)
     setStatus(singleShiftList.status)
     setCostCenterName(props.shiftData.storeId)
-    //console.log("1---->"+getSingleCluster.employeeIds);
 
   }, [props])
 
@@ -81,6 +80,22 @@ const EditShiftModal = (props) => {
 
     }
   }, [user.costCentre, user.loginType]);
+
+  useEffect(() => {
+    if(shiftType === 'NA'){
+      setErrorMsg('')
+      setWorkingHour(0);
+      setTimeErrorMsg('')
+      setShowBreakDuration(false)
+      setBreakNumber(0)
+      setInvalidText(false)
+      setStartBreakTime('')
+      setEndBreakTIme('');
+      setNineHourWarnMsg('')
+      setOneToEightWarnMsg('')
+      setOneFiveWarnMsg('')
+    }
+  },[shiftType])
 
   const getContractType = (e) => {
     let data = e.target.value
@@ -93,10 +108,16 @@ const EditShiftModal = (props) => {
 
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
-    if (ctime === 0.00 || dtime === 0.00 ) {
-      /* setWorkingHour('00.00'); */
+    if (ctime === 0.00 || dtime === 0.00 || shiftType === 'NA' ) {
+      
       setShiftButton(false)
         setErrorMsg('')
+        setWorkingHour(0);
+        setTimeErrorMsg('')
+        setShowBreakDuration(false)
+        setBreakNumber(0)
+    
+        
     }else{
       if (ctime != 0.00 && dtime != 0.00 &&  ctime === dtime || dtime < ctime ) {
         setErrorMsg("Invalid Shift Time");
@@ -116,15 +137,14 @@ const EditShiftModal = (props) => {
 
     function checkTimeValidation() {
 
-      if (contractType === "Permanent" || contractType === "Internship") {
-        if (parseFloat(workingHours) === 9 || parseFloat(workingHours) === 0) {
+      if (contractType === "Fulltime" || contractType === "Internship") {
+        if ((parseFloat(workingHours) >=9 &&parseFloat(workingHours) <=10) || parseFloat(workingHours) === 0) {
           setShiftButton(false)
-
           setNineHourWarnMsg(true)
         }
         else {
           setNineHourWarnMsg(false)
-          setNineHourWarnMsg("* Shift should be 9 hours only")
+          setNineHourWarnMsg("* Shift should be 9-10 hours only")
           setShiftButton(true)
           setOneFiveWarnMsg(true)
           setOneToEightWarnMsg(true)
@@ -200,8 +220,8 @@ const EditShiftModal = (props) => {
 
       e.preventDefault();
       const newShift = {
-        startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-        endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+        startTime: shiftType === 'NA' ? "00:00:00" :  moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+        endTime: shiftType === 'NA' ? "00:00:00" :  moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
         contractType,
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
@@ -223,15 +243,15 @@ const EditShiftModal = (props) => {
 
         e.preventDefault();
         const newShift = {
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          startTime: shiftType === 'NA' ? "00:00:00" :  moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: shiftType === 'NA' ? "00:00:00" :  moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
           contractType,
           shiftType,
           shiftMasterId: singleShiftList.shiftMasterId,
           workingHours: 0,
           storeId: costCenterName,
-          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-          breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
+          breakStartTime: shiftType === 'NA' ? 0 :  moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakEndTime: shiftType === 'NA' ? 0 :  moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
           status: status
         }
         // alert(JSON.stringify(newShift));
@@ -249,15 +269,15 @@ const EditShiftModal = (props) => {
         e.preventDefault();
         const validate = validation();
         const newShift = {
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          startTime: shiftType === 'NA' ? "00:00:00" :  moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: shiftType === 'NA' ? "00:00:00" :  moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
           contractType,
           shiftType,
           shiftMasterId: singleShiftList.shiftMasterId,
           workingHours: 0,
           storeId: costCenterName,
-          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-          breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakStartTime: shiftType === 'NA' ? 0 :  moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakEndTime: shiftType === 'NA' ? 0 :  moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
           status: status
         }
         // alert(JSON.stringify(newShift));
@@ -326,11 +346,32 @@ const EditShiftModal = (props) => {
 
                   </div>
                   <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1"> Shift Type</label>
+                        <select
+                          className="form-control"
+                          defaultValue={singleShiftList.shiftType}
+                          onChange={(e) => setShiftType(e.target.value)}
+                          value={shiftType}>
+                          <option value='NA'>N/A</option>
+                          <option>Captain</option>
+                          <option>On Duty</option>
+                          <option>General</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
                         {/* <h1>{moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  */}
                         <label htmlFor="exampleFormControlInput1">From Time</label>
                         <br />
+                        {shiftType === 'NA' ?
+                         <input type='text' onChange={(e) => setEndTime(e.target.value)} value='00:00'
+                          disabled className="form-control" />
+                          :
                         <DatePicker
                           className="form-control"
                           // selected={startTime}
@@ -345,13 +386,18 @@ const EditShiftModal = (props) => {
                           value={moment(startTime, ["HH:mm:ss"]).format("HH:mm ")}
 
                           defaultValue={moment(singleShiftList.startTime, ["HH:mm:ss"]).format("HH:mm ")}
-                        />
+                        />}
                       </div>
                     </div>
 
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">End Time</label>
+                        <br/>
+                        {shiftType === 'NA' ?
+                         <input type='text' onChange={(e) => setEndTime(e.target.value)} value='00:00'
+                          disabled className="form-control" />
+                          :
                         <DatePicker
                           // selected={endTime}
                           className="form-control"
@@ -366,7 +412,7 @@ const EditShiftModal = (props) => {
                           dateFormat="HH:mm"
                           value={moment(endTime, ["HH:mm:ss"]).format("HH:mm ")}
                           defaultValue={moment(singleShiftList.endTime, ["HH:mm:ss"]).format("HH:mm ")}
-                        />
+                        />}
                       </div>
                     </div>
                   </div>
@@ -390,7 +436,7 @@ const EditShiftModal = (props) => {
                   }
 
                   {(() => {
-                    if ((parseFloat(workingHours) > 5 && (nineHourWarnMsg === true) && (contractType === "Permanent" || contractType === "Internship"))) {
+                    if ((parseFloat(workingHours) > 5 && (nineHourWarnMsg === true) && (contractType === "Fulltime" || contractType === "Internship"))) {
                       return (<div>
                         <div className="row">
                           <div className="col-sm-6">
@@ -527,7 +573,7 @@ const EditShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
+                 {/*  <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
@@ -541,14 +587,9 @@ const EditShiftModal = (props) => {
                           <option>On Duty</option>
                           <option>General</option>
                         </select>
-                        {/* <input type="text"
-                          placeholder={singleShiftList.shiftType}
-                          className="form-control"
-                          readOnly
-                        /> */}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
 
 

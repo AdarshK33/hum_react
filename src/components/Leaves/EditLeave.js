@@ -35,10 +35,13 @@ const EditLeave = (props) => {
     const today = new Date()
     
     let nextYear = new Date()
-    nextYear.setFullYear(nextYear.getFullYear(), 11, 31)
+    nextYear.setFullYear(nextYear.getFullYear()+1, 11, 31)
 
     let currentYear = new Date()
     currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
+
+    let currentYearEnd = new Date()
+    currentYearEnd.setFullYear(currentYearEnd.getFullYear(), 11, 31)
 
     useEffect(() => {
         setStartDate(new Date(props.fromDate))
@@ -98,12 +101,20 @@ const EditLeave = (props) => {
         //For disable the To Date initially
         setDisable(false)
 
-        if (value <= new Date()) {
+        // let DayValue = parseInt(new Date(date).getDate())
+        // if (DayValue < parseInt(new Date().getDate()) ) {
+        //     setMax(true);
+        //     setMin(false);
+        // }else if (DayValue >= parseInt(new Date().getDate())) {
+        //     setMin(true);
+        //     setMax(false);
+        // } 
+        
+        if (moment(date)
+        .isBefore(moment()) ) {
             setMax(true);
             setMin(false);
-        }
-
-        if (value > new Date()) {
+        }else {
             setMin(true);
             setMax(false);
         }
@@ -137,7 +148,7 @@ const EditLeave = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(value1).getFullYear()
         }
         editPopup(newPopup)
         setEditMsg(true)
@@ -166,7 +177,7 @@ console.log("value 2", value2)
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
         }
         console.log("editPopupData", editPopupData)
         editPopup(editPopupData)
@@ -208,7 +219,8 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            year: new Date(d3).getFullYear()
+            
         }
         var newData
         if(startDate > new Date()){
@@ -230,7 +242,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: new Date().getFullYear()
+            year: new Date(endDate).getFullYear()
         }
         if (leave === 3) {
           console.log("edit leave data for maternity----", editLeave)
@@ -361,7 +373,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={currentYear} maxDate={nextYear}
+                                                minDate={currentYear} maxDate={currentYearEnd}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>
@@ -381,7 +393,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                             <div><Form.Label>To Date:</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startDate} maxDate={nextYear}
+                                                minDate={startDate} maxDate={currentYearEnd}
                                                 placeholderText="To Date" required /></div>
                                         </div>
                                     }
