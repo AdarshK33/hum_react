@@ -53,12 +53,14 @@ const ConfirmationLetter1 = () => {
     };
 
     console.log("InfoData", InfoData);
-    updateProbation(InfoData, probationData.empId);
+    // updateProbation(InfoData, probationData.empId);
     ViewProbationDataById(empId);
 
     const infoData = {
       inputRef: inputRef,
       empId: cnfLetterData.empId,
+      candidateId: 0,
+      module: "Probation",
       empName: user.firstName + " " + user.lastName,
       empEmail: "rajasekhar@theretailinsights.com",
       empPhNo: user.phone,
