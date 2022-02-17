@@ -58,6 +58,8 @@ const ExtensionLetter1 = () => {
     const infoData = {
       inputRef: inputRef,
       empId: extensionLetterData.empId,
+      candidateId: 0,
+      module: "Probation",
       empName: user.firstName + " " + user.lastName,
       empEmail: "rajasekhar@theretailinsights.com",
       empPhNo: user.phone,

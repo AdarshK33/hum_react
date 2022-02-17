@@ -49,14 +49,26 @@ export const E_signProvider = ({ children }) => {
   const CreatePdfAndUpload = (
     infoData,
     rectangle = "0,0,150,100",
-    location = "Bangalore",
-    reason = "testing"
+    firstPageSign = false,
+    location = "Bangalore"
   ) => {
     const pdfTable = infoData.inputRef.current;
     var html = htmlToPdfmake(pdfTable.innerHTML);
     var last_page = null;
     const documentDefinition = {
       content: html,
+      tableAutoSize: true,
+      styles: {
+        "with-margin": {
+          marginTop: 43, // apply a margin with the specific class is used
+        },
+      },
+      pageBreakBefore: function (currentNode) {
+        return (
+          currentNode.style &&
+          currentNode.style.indexOf("pdf-pagebreak-before") > -1
+        );
+      },
       footer: function (currentPage, pageCount) {
         last_page = pageCount;
       },
@@ -74,8 +86,8 @@ export const E_signProvider = ({ children }) => {
       const data = {
         recipient1: {
           observer: "false",
-          pageNo: last_page.toString(),
-          reason: reason,
+          pageNo: firstPageSign ? "1" : last_page.toString(),
+          reason: "",
           location: location,
           rectangle: rectangle,
           name: infoData.empName,
@@ -94,7 +106,14 @@ export const E_signProvider = ({ children }) => {
         eStampRequired: "false",
         signature_expiry: "08/07/2022",
       };
-      UploadEsignDoc(data, eSignDetails, blobStore, infoData.empId);
+      UploadEsignDoc(
+        data,
+        eSignDetails,
+        blobStore,
+        infoData.empId,
+        infoData.candidateId,
+        infoData.module
+      );
     });
     setNotificationState({
       email: infoData.empEmail,
@@ -105,7 +124,14 @@ export const E_signProvider = ({ children }) => {
     console.log("inputRef.current-->", infoData.inputRef.current);
   };
 
-  const UploadEsignDoc = (data, eSignDetails, blob, empId) => {
+  const UploadEsignDoc = (
+    data,
+    eSignDetails,
+    blob,
+    empId = 0,
+    candidateId = 0,
+    module
+  ) => {
     setLoader(true);
     const formData = new FormData();
     formData.append("file", blob, blob.name);
@@ -117,7 +143,15 @@ export const E_signProvider = ({ children }) => {
     console.log("eSignDetails", eSignDetails);
     console.log("formData", formData);
     client
-      .post("/api/v1/e-sign/initiateTest?employeeId=" + empId, formData)
+      .post(
+        "/api/v1/e-sign/initiateTest?candidateId=" +
+          candidateId +
+          "&employeeId=" +
+          empId +
+          "&moduleName=" +
+          module,
+        formData
+      )
       .then((response) => {
         state.uploadResponse = response.data;
         console.log("uploadResponse", response);
