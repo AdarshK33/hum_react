@@ -6,7 +6,7 @@ import { OfferContext } from "../../context/OfferState";
 import moment from "moment";
 
 const PermanentOfferLetter = () => {
-  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+  const { createCandidateResponse, generateOfferLetter, offerLetterData,number2text } =
     useContext(OfferContext);
 
   return (
@@ -38,7 +38,7 @@ const PermanentOfferLetter = () => {
             <li>
               Your monthly gross salary will not exceed Rs.{" "}
               <span className="boldText">
-                {offerLetterData.permanentCandidateOffer.grossSalary}
+                {offerLetterData.permanentCandidateOffer.grossSalary} ({number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))})
               </span>
               . Refer to the salary annexure mentioned below
             </li>
@@ -315,7 +315,7 @@ const PermanentOfferLetter = () => {
                     {Math.round(offerLetterData.permanentCandidateOffer.ctc+
                         offerLetterData.bonusAmt) *
                       12}
-                    )
+                    
                   </td>
                 </tr>
               </tbody>

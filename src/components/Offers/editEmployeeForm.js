@@ -563,7 +563,7 @@ const EditEmployeeForm = () => {
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     className="form-input"
-                    type="text"
+                    type="email"
                     value={refEmail1}
                     readOnly
                     required
@@ -623,7 +623,7 @@ const EditEmployeeForm = () => {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   className="form-input"
-                  type="text"
+                  type="email"
                   readOnly
                   required
                   value={empName2 === "" ? "" : refEmail2}
