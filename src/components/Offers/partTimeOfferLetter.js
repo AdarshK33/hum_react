@@ -49,7 +49,7 @@ const PartTimeOfferLetter = () => {
         "getBoundingClientRect",
         inputRef.current.getBoundingClientRect()
       );
-      CreatePdfAndUpload(infoData, "35,200,185,300");
+      CreatePdfAndUpload(infoData, "35,210,185,310");
       setShow(false);
     }
   };

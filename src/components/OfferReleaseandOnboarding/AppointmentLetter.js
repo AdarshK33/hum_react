@@ -76,7 +76,7 @@ const AppointmentLetter = (props) => {
               </div>
             ) : (
               <div ref={inputRef}>
-                <h4 style={{ textAlign: "center" }}>Employment Contract---</h4>
+                <h4 style={{ textAlign: "center" }}>Employment Contract</h4>
                 <h5 style={{ textAlign: "center" }}>
                   {" "}
                   Emp ID: {offerLetterData.employeeId}
@@ -363,14 +363,18 @@ const AppointmentLetter = (props) => {
                 <p>
                   <b>We welcome you to the Decathlon Family!</b>
                 </p>
-                <p style={{ textAlign: "center" }}>
+                <p style={{ textAlign: "center" }} class="pdf-pagebreak-before">
                   <b>Annexure-1</b>
                 </p>
 
-                <Table bordered size="sm">
+                <Table
+                  bordered
+                  size="sm"
+                  data-pdfmake="{'widths':[250,'*','auto']}"
+                >
                   <thead>
                     <tr>
-                      <th style={{ columnSpan: "8" }}>Salary Structure</th>
+                      <th>Salary Structure</th>
                       <th>Monthly</th>
                       <th>Annually</th>
                     </tr>
@@ -535,31 +539,7 @@ const AppointmentLetter = (props) => {
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ columnSpan: "10" }}>
-                        <p>
-                          * Please note that if you are drawing a monthly gross
-                          salary upto 21000 then you would get a minimum of INR.
-                          583/per month for the number of months that you have
-                          worked in any Financial year or a maximum upto{" "}
-                          {offerLetterData.bonus} % of your Monthly fixed gross
-                          basis the criterion mentioned by your manager from
-                          time to time
-                        </p>
-                        <p>
-                          + Please note that if you are drawing monthly gross
-                          more than 21000 then you can earn maximum upto{" "}
-                          {offerLetterData.bonus} % of your Monthly fixed gross
-                          basis the criterion mentioned by your manager from
-                          time to time
-                        </p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-                <Table bordered size="sm">
-                  <tbody>
-                    <tr>
-                      <td>
+                      <td colspan="3">
                         <p>
                           * Please note that if you are drawing a monthly gross
                           salary upto 21000 then you would get a minimum of INR.
@@ -581,16 +561,41 @@ const AppointmentLetter = (props) => {
                   </tbody>
                 </Table>
 
-                <Row>
-                  <Col>
-                    <p>For {offerLetterData.companyName}</p>
-                    <p>Authorised Signatory</p>
-                  </Col>
-                  <Col style={{ textAlign: "end" }}>
-                    <p>Accepted By Me</p>
-                    <p>Employee Signature</p>
-                  </Col>
-                </Row>
+                <div style={{ width: "100%" }}>
+                  {/* stylings are not accepting by html to pdf */}
+                  <p>
+                    For {offerLetterData.companyName}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                    &nbsp; Accepted By Me
+                  </p>
+                </div>
+                <div style={{ width: "100%" }}>
+                  <p>
+                    Authorised Signatory
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Employee Signature
+                  </p>
+                </div>
               </div>
             )}
             {!loader ? (

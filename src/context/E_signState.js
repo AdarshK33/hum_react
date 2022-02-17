@@ -49,14 +49,26 @@ export const E_signProvider = ({ children }) => {
   const CreatePdfAndUpload = (
     infoData,
     rectangle = "0,0,150,100",
-    location = "Bangalore",
-    reason = "testing"
+    firstPageSign = false,
+    location = "Bangalore"
   ) => {
     const pdfTable = infoData.inputRef.current;
     var html = htmlToPdfmake(pdfTable.innerHTML);
     var last_page = null;
     const documentDefinition = {
       content: html,
+      tableAutoSize: true,
+      styles: {
+        "with-margin": {
+          marginTop: 43, // apply a margin with the specific class is used
+        },
+      },
+      pageBreakBefore: function (currentNode) {
+        return (
+          currentNode.style &&
+          currentNode.style.indexOf("pdf-pagebreak-before") > -1
+        );
+      },
       footer: function (currentPage, pageCount) {
         last_page = pageCount;
       },
@@ -74,8 +86,8 @@ export const E_signProvider = ({ children }) => {
       const data = {
         recipient1: {
           observer: "false",
-          pageNo: last_page.toString(),
-          reason: reason,
+          pageNo: firstPageSign ? "1" : last_page.toString(),
+          reason: "",
           location: location,
           rectangle: rectangle,
           name: infoData.empName,
