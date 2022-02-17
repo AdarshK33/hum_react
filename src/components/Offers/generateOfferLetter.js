@@ -33,6 +33,7 @@ const GenerateOfferLetter = () => {
     offerLetterData,
     finalSubmitOfferLetter,
     candidateData,
+    workInfoViewData,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
@@ -55,6 +56,25 @@ const GenerateOfferLetter = () => {
       Object.keys(candidateData.remuneration).length !== 0
     ) {
       setOfferButtonEnable(true);
+      //changes
+      let remunerationDataInfo =
+        candidateData !== null &&
+        candidateData !== undefined &&
+        candidateData.remuneration;
+      if (
+        (candidateData.workInformation.contractType === "Parttime" &&
+          remunerationDataInfo.fixedGross > 400) ||
+        (candidateData.workInformation.contractType === "Fulltime" &&
+          remunerationDataInfo.fixedGross < 18000) ||
+        (candidateData.workInformation.contractType === "Local Expat" &&
+          remunerationDataInfo.fixedGross < 25000)
+      ) {
+        console.log("in side yes", remunerationDataInfo.fixedGross);
+        setOfferButtonEnable(false);
+      } else {
+        setOfferButtonEnable(true);
+      }
+      //changes
     } else {
       setOfferButtonEnable(false);
     }
