@@ -205,7 +205,7 @@ const OfferReleaseList = () => {
                       ) : (
                         ""
                       )}
-                      <th scope="col">View Signed Document</th>
+                      <th scope="col">View Signed Offer Letter</th>
                     </tr>
                   </thead>
                   {loader === true &&
