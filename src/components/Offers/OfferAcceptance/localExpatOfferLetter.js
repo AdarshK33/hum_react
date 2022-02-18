@@ -46,7 +46,7 @@ const LocalExpatOfferLetter = () => {
               ).format("DD-MM-YYYY")}
             </li>
             <li>
-              Your monthly gross salary will not exceed Rs.{" "}
+              Your monthly gross salary will not exceed $.{" "}
               <span className="boldText">
                 {candidateLetterData.permanentCandidateOffer.grossSalary}
               </span>
@@ -105,13 +105,8 @@ const LocalExpatOfferLetter = () => {
                   <td>Fixed Gross </td>
                   <td>{candidateLetterData.fixedGross}</td>
                   <td>{candidateLetterData.fixedGross * 12}</td>
-                  <td>
-                    {candidateLetterData.fixedGross }
-                  </td>
-                  <td>
-                    {candidateLetterData.fixedGross  *
-                      12}
-                  </td>
+                  <td>{candidateLetterData.fixedGross}</td>
+                  <td>{candidateLetterData.fixedGross * 12}</td>
                 </tr>
                 <tr>
                   <td>Basic Salary </td>
@@ -227,12 +222,14 @@ const LocalExpatOfferLetter = () => {
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      candidateLetterData.permanentCandidateOffer.grossSalary + candidateLetterData.bonusAmt
+                      candidateLetterData.permanentCandidateOffer.grossSalary +
+                        candidateLetterData.bonusAmt
                     )}
                   </td>
                   <td className="boldText">
                     {Math.round(
-                      (candidateLetterData.permanentCandidateOffer.grossSalary + candidateLetterData.bonusAmt) *
+                      (candidateLetterData.permanentCandidateOffer.grossSalary +
+                        candidateLetterData.bonusAmt) *
                         12
                     )}
                   </td>

@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import "./offers.css";
@@ -8,6 +14,9 @@ import PermanentOfferLetter from "./permanentOfferLetter";
 import InternOfferLetter from "./internOfferLetter";
 import LocalExpatOfferLetter from "./localExpatOfferLetter";
 import { Link } from "react-router-dom";
+import pdfMake from "pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
 
 const GenerateOfferLetter = () => {
   const [showModal, setShow] = useState(false);
@@ -24,6 +33,7 @@ const GenerateOfferLetter = () => {
     offerLetterData,
     finalSubmitOfferLetter,
     candidateData,
+    workInfoViewData,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
@@ -46,6 +56,25 @@ const GenerateOfferLetter = () => {
       Object.keys(candidateData.remuneration).length !== 0
     ) {
       setOfferButtonEnable(true);
+      //changes
+      let remunerationDataInfo =
+        candidateData !== null &&
+        candidateData !== undefined &&
+        candidateData.remuneration;
+      if (
+        (candidateData.workInformation.contractType === "Parttime" &&
+          remunerationDataInfo.fixedGross > 400) ||
+        (candidateData.workInformation.contractType === "Fulltime" &&
+          remunerationDataInfo.fixedGross < 18000) ||
+        (candidateData.workInformation.contractType === "Local Expat" &&
+          remunerationDataInfo.fixedGross < 25000)
+      ) {
+        console.log("in side yes", remunerationDataInfo.fixedGross);
+        setOfferButtonEnable(false);
+      } else {
+        setOfferButtonEnable(true);
+      }
+      //changes
     } else {
       setOfferButtonEnable(false);
     }
@@ -65,9 +94,21 @@ const GenerateOfferLetter = () => {
     console.log("offer letter response", offerLetterData);
     // }
   };
-
+  const ref = React.createRef();
+  const inputRef = useRef(null);
   const saveOfferLetter = () => {
     setSaveLetter(true);
+    const pdfTable = inputRef.current;
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    var last_page = null;
+    const documentDefinition = {
+      content: html,
+      footer: function (currentPage, pageCount) {
+        last_page = pageCount;
+      },
+    };
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.createPdf(documentDefinition).open();
     setShow(false);
   };
 
@@ -111,46 +152,66 @@ const GenerateOfferLetter = () => {
   };
   return (
     <Fragment>
+      {(previewLetter || showModal) &&
+      offerLetterData &&
+      offerLetterData.contractType !== undefined &&
+      offerLetterData.contractType !== null &&
+      offerLetterData.contractType === "Fulltime" ? (
+        <PermanentOfferLetter />
+      ) : (previewLetter || showModal) &&
+        offerLetterData &&
+        offerLetterData.contractType !== undefined &&
+        offerLetterData.contractType !== null &&
+        offerLetterData.contractType === "Parttime" ? (
+        <PartTimeOfferLetter />
+      ) : (previewLetter || showModal) &&
+        offerLetterData &&
+        offerLetterData.contractType !== undefined &&
+        offerLetterData.contractType !== null &&
+        offerLetterData.contractType === "Local Expat" ? (
+        <LocalExpatOfferLetter />
+      ) : previewLetter || showModal ? (
+        <InternOfferLetter />
+      ) : null}
+
       {offerButtonEnable === true ? (
         <Fragment>
           <Form onSubmit={submitHandler}>
-            {!saveLetter ? (
-              <Row>
-                <Col sm={5}></Col>
-                <Col sm={2}>
-                  <Button type="button" onClick={offerLetterClick}>
-                    Generate Offer Letter
-                  </Button>
-                </Col>
-              </Row>
-            ) : (
-              <div className="preview-section">
-                <Button type="button" onClick={previewOfferLetter}>
-                  Preview Offer Letter
-                </Button>
-                <br></br>
-                <br></br>
-                <img src={calendarImage} alt="calendar" width="200px" />
-                <br></br>
-                <br></br>
-                {letterSent ? (
-                  ""
-                ) : (
-                  <Button
-                    type="button"
-                    onClick={submitOfferLetter}
-                    style={{ textAlign: "center" }}
-                  >
-                    Submit
-                  </Button>
-                )}
-              </div>
-            )}
+            {
+              !saveLetter ? (
+                <Row>
+                  <Col sm={5}></Col>
+                  <Col sm={2}>
+                    <Button type="button" onClick={offerLetterClick}>
+                      Generate Offer Letter
+                    </Button>
+                  </Col>
+                </Row>
+              ) : null
+              // <div className="preview-section">
+              //   <Button type="button" onClick={previewOfferLetter}>
+              //     Preview Offer Letter
+              //   </Button>
+              //   <br></br>
+              //   <br></br>
+              //   <img src={calendarImage} alt="calendar" width="200px" />
+              //   <br></br>
+              //   <br></br>
+              //   {letterSent ? (
+              //     ""
+              //   ) : (
+              //     <Button
+              //       type="button"
+              //       onClick={submitOfferLetter}
+              //       style={{ textAlign: "center" }}
+              //     >
+              //       Submit
+              //     </Button>
+              //   )}
+              // </div>
+            }
           </Form>
-
-          <Modal show={showModal} onHide={handleClose} size="md">
-            <Modal.Header closeButton className="modal-line"></Modal.Header>
-            {submitLetter ? (
+          {/* {submitLetter ? (
               <Modal.Body>
                 <div className="offer-letter-message ">
                   <p>Offer Letter Sent to Candidate</p>
@@ -162,69 +223,7 @@ const GenerateOfferLetter = () => {
                   </Link>
                 </div>
               </Modal.Body>
-            ) : previewLetter || showModal ? (
-              <Modal.Body>
-                {offerLetterData &&
-                offerLetterData.contractType !== undefined &&
-                offerLetterData.contractType !== null &&
-                offerLetterData.contractType === "Fulltime" ? (
-                  <PermanentOfferLetter />
-                ) : offerLetterData &&
-                  offerLetterData.contractType !== undefined &&
-                  offerLetterData.contractType !== null &&
-                  offerLetterData.contractType === "Parttime" ? (
-                  <PartTimeOfferLetter />
-                ) : offerLetterData &&
-                  offerLetterData.contractType !== undefined &&
-                  offerLetterData.contractType !== null &&
-                  offerLetterData.contractType === "Local Expat" ? (
-                  <LocalExpatOfferLetter />
-                ) : (
-                  <InternOfferLetter />
-                )}
-                <br></br>
-                <Row>
-                  <Col sm={6}>
-                    <p>Thanking you</p>
-                    <p>{offerLetterData.managerName}</p>
-                  </Col>
-                  <Col sm={6} className="signature-center-text">
-                    {showSignature ? (
-                      <img
-                        src={calendarImage}
-                        alt="calendar"
-                        width="50px"
-                        className="digital-signature"
-                      />
-                    ) : (
-                      <>
-                        <p className="signature-text">Your signature</p>
-                        <Button variant="primary" onClick={digitalSignature}>
-                          Add digital signature
-                        </Button>
-                      </>
-                    )}
-                  </Col>
-                </Row>
-                {showSignature && !previewLetter ? (
-                  <Row>
-                    <Col sm={4}></Col>
-                    <Col sm={5}>
-                      <br></br>
-                      <br></br>
-                      <Button variant="primary" onClick={saveOfferLetter}>
-                        Save Changes
-                      </Button>
-                    </Col>
-                  </Row>
-                ) : (
-                  ""
-                )}
-              </Modal.Body>
-            ) : (
-              ""
-            )}
-          </Modal>
+            ) :  */}
         </Fragment>
       ) : (
         <p style={{ color: "red", textAlign: "center" }}>
