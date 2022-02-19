@@ -40,6 +40,7 @@ const initial_state = {
   itCharterResponse:"",
   rejectUpdate: [],
   adminRejectUpdate: [],
+  candidateVerificationList:[]
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -642,6 +643,42 @@ export const DocsVerificationProvider = (props) => {
       })
   );
 };
+
+  // Offer List api
+  const candidateVerificationView = (key, page, status = 5) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/candidate/view/verification?key=" +
+          key +
+          "&overAllStatus=" +
+          status +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&superManager=" +
+          0
+      )
+      .then((response) => {
+        state.candidateVerificationList = response.data.data.data;
+        state.data = response.data.data;
+        state.total = state.data.total;
+        setLoader(false);
+        console.log("candidateList response", state.candidateVerificationList);
+        return dispatch({
+          type: "CANDIDATE_VERIFICATION_LIST",
+          payload: state.candidateVerificationList,
+          loader: loader,
+          data: state.data,
+          total: state.total,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     console.log(state),
     (
@@ -679,6 +716,7 @@ export const DocsVerificationProvider = (props) => {
           ExportPDFandUploadInsurance,
           ExportPDFITCharter,
           uploadITCharter,
+          candidateVerificationView,
           itCharterResponse:state.itCharterResponse,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
@@ -707,6 +745,7 @@ export const DocsVerificationProvider = (props) => {
           verificationPermanentCityList: state.verificationPermanentCityList,
           rejectUpdate: state.rejectUpdate,
           adminRejectUpdate: state.adminRejectUpdate,
+          candidateVerificationList:state.candidateVerificationList
         }}
       >
         {" "}

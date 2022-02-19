@@ -14,7 +14,7 @@ const AppointmentLetter = (props) => {
     candidateData,
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
-    loader,
+    loader,number2text
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -125,7 +125,7 @@ const AppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your gross fixed compensation would be INR.{" "}
-                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>.
+                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>({number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))}).
                   You are also entitled for a monthly statutory/non-statutory
                   bonus which will be at a maximum{" "}
                   <b>{offerLetterData.bonus}</b> % of your gross monthly fixed

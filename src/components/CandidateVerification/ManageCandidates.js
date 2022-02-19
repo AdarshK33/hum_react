@@ -30,15 +30,17 @@ const CandidateList = () => {
     fetchPfDetails,
     verificationDocsView,
     downloadDocument,
+    candidateVerificationView,
+    candidateVerificationList
   } = useContext(DocsVerifyContext);
   useEffect(() => {
-    candidateView("all", pageCount);
+    candidateVerificationView("all", pageCount);
   }, []);
   useEffect(() => {
-    if (candidateList !== null && candidateList !== undefined) {
-      setCurrentRecords(candidateList);
+    if (candidateVerificationList !== null && candidateVerificationList !== undefined) {
+      setCurrentRecords(candidateVerificationList);
     }
-  }, [candidateList, currentRecords]);
+  }, [candidateVerificationList, currentRecords]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -52,20 +54,20 @@ const CandidateList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      candidateView(searchValue, pageNumber - 1);
+      candidateVerificationView(searchValue, pageNumber - 1);
     }
     if (docStatus === "Pending") {
-      candidateView("all", pageNumber - 1, 0);
+      candidateVerificationView("all", pageNumber - 1, 0);
     } else if (docStatus === "In Progress") {
-      candidateView("all", pageNumber - 1, 3);
+      candidateVerificationView("all", pageNumber - 1, 3);
     } else if (docStatus === "Approved") {
-      candidateView("all", pageNumber - 1, 1);
+      candidateVerificationView("all", pageNumber - 1, 1);
     } else if (docStatus === "Disapproved") {
-      candidateView("all", pageNumber - 1, 2);
+      candidateVerificationView("all", pageNumber - 1, 2);
     } else {
-      candidateView("all", pageNumber - 1);
+      candidateVerificationView("all", pageNumber - 1);
     }
-    setCurrentRecords(candidateList);
+    setCurrentRecords(candidateVerificationList);
   };
 
   const searchHandler = (e) => {
@@ -77,9 +79,9 @@ const CandidateList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      candidateView(searchValue, pageCount);
+      candidateVerificationView(searchValue, pageCount);
     } else {
-      candidateView("all", pageCount);
+      candidateVerificationView("all", pageCount);
     }
   };
   const handleView = (photo) => {
@@ -101,15 +103,15 @@ const CandidateList = () => {
     setCurrentPage(1);
     setSearchValue("");
     if (e.target.value === "Pending") {
-      candidateView("all", 0, 0);
+      candidateVerificationView("all", 0, 0);
     } else if (e.target.value === "In Progress") {
-      candidateView("all", 0, 3);
+      candidateVerificationView("all", 0, 3);
     } else if (e.target.value === "Approved") {
-      candidateView("all", 0, 1);
+      candidateVerificationView("all", 0, 1);
     } else if (e.target.value === "Disapproved") {
-      candidateView("all", 0, 2);
+      candidateVerificationView("all", 0, 2);
     } else {
-      candidateView("all", 0);
+      candidateVerificationView("all", 0);
     }
   };
 
@@ -190,8 +192,8 @@ const CandidateList = () => {
               </tr>
             </thead>
             {loader === true &&
-            candidateList !== null &&
-            candidateList !== undefined ? (
+            candidateVerificationList !== null &&
+            candidateVerificationList !== undefined ? (
               <tbody>
                 <tr>
                   <td colSpan="12">
@@ -209,10 +211,10 @@ const CandidateList = () => {
                   </td>
                 </tr>
               </tbody>
-            ) : candidateList !== undefined &&
-              candidateList !== null &&
-              candidateList.length > 0 ? (
-              candidateList.map((item, i) => {
+            ) : candidateVerificationList !== undefined &&
+            candidateVerificationList !== null &&
+            candidateVerificationList.length > 0 ? (
+              candidateVerificationList.map((item, i) => {
                 return (
                   <tbody key={item.candidateId}>
                     <tr>
@@ -303,7 +305,7 @@ const CandidateList = () => {
           </Table>
         </div>
       </div>
-      {candidateList !== null && candidateList !== undefined && (
+      {candidateVerificationList !== null && candidateVerificationList !== undefined && (
         <Pagination
           itemClass="page-item"
           linkClass="page-link"

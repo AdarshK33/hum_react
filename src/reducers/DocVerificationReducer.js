@@ -57,8 +57,15 @@ const GroupReducer = (state, action) => {
       case "INSURANCE_BASE64_UPLOAD":
         return { ...state, insuranceResponse: action.payload };
           case "ITCHARTER_BASE64_UPLOAD":
-          return { ...state, itCharterResponse: action.payload };
-          
+          return { ...state, itCharterResponse: action.payload }; 
+          case "CANDIDATE_VERIFICATION_LIST":
+            return {
+              ...state,
+              candidateVerificationList: action.payload,
+              loader: action.loader,
+              data: action.data,
+              total: action.total,
+            };    
           }
         
 };

@@ -641,7 +641,7 @@ const EmployeeForm = (props) => {
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     className="form-input"
-                    type="text"
+                    type="email"
                     value={empName1 === "" ? "" : refEmail1}
                     /*  value={refEmail1} */
                     onChange={(e) => setRefEmail1(e.target.value)}
@@ -704,7 +704,7 @@ const EmployeeForm = (props) => {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   className="form-input"
-                  type="text"
+                  type="email"
                   readOnly
                   required
                   value={empName2 === "" ? "" : refEmail2}
