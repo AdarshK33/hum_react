@@ -636,7 +636,7 @@ const DocVerification = () => {
                     {item.documentType === 1 ||
                       ((item.documentType === 5 || item.documentType === 4) && (
                         <td className="buttonMargin1">
-                          {item.remark !== null ? item.remark : "N/A"}
+                          {item.remark !== null ? item.remark : ""}
                         </td>
                       ))}
                     {item.documentType === 1 ||
@@ -1110,7 +1110,7 @@ const DocVerification = () => {
                       item.documentType === 11 ||
                       item.documentType === 12) && (
                       <td className="buttonMargin1">
-                        {item.remark !== null ? item.remark : "N/A"}
+                        {item.remark !== null ? item.remark : ""}
                       </td>
                     )}
                     {(item.documentType === 10 ||

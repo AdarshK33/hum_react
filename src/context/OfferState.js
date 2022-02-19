@@ -29,7 +29,8 @@ const initial_state = {
   submitAppointmentLetter: {},
   noticePeriodViewData: {},
   costcenterByDepartmentData:[],
-  allCostCenterList:[]
+  allCostCenterList:[],
+  positionByDepartmentData:[]
 };
 
 export const OfferContext = createContext();
@@ -533,6 +534,24 @@ export const OfferProvider = (props) => {
       });
   };
 
+  const positionByDepartment = (department) => {
+    console.log("department,superMangerFlag",  department);
+    return client
+      .get("/api/v1/position/view/deptId?deptId="+department
+      )
+      .then((response) => {
+        state.positionByDepartmentData = response.data.data;
+        console.log("positionByDepartmentData.message", state.positionByDepartmentData);
+        return dispatch({
+          type: "POSITION_BY_DEPARTMENT",
+          payload: state.positionByDepartmentData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
     // All Cost Center List
     const AllCostCenter = (superMangerFlag) => {
       client
@@ -660,6 +679,7 @@ export const OfferProvider = (props) => {
         costcenterByDepartment,
         AllCostCenter,
         number2text,
+        positionByDepartment,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -685,7 +705,8 @@ export const OfferProvider = (props) => {
         submitAppointmentLetter: state.submitAppointmentLetter,
         noticePeriodViewData: state.noticePeriodViewData,
         costcenterByDepartmentData:state.costcenterByDepartmentData,
-        allCostCenterList:state.allCostCenterList
+        allCostCenterList:state.allCostCenterList,
+        positionByDepartmentData:state.positionByDepartmentData
       }}
     >
       {props.children}

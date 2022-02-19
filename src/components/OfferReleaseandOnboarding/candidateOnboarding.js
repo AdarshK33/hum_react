@@ -5,6 +5,8 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { DashboardContext } from "../../context/DashboardState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
+import { useHistory } from "react-router-dom";
+
 import {
   format,
   startOfMonth,
@@ -112,6 +114,7 @@ const CandidateOnboarding = () => {
   const [mandatory, setMandatory] = useState(false);
   const [generateAppoint, setGenerateAppoint] = useState(false);
   const [joiningError, setJoiningError] = useState(false);
+  let history = useHistory();
   useEffect(() => {
     if (
       candidateData !== undefined &&
@@ -124,6 +127,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
+  console.log("RoleList",RoleList);
 
   useEffect(() => {
     if (
@@ -374,7 +378,11 @@ const CandidateOnboarding = () => {
     }
   };
 
-  const handleClose = () => setSubmitModal(false);
+  const handleClose = () => {
+    setSubmitModal(false)
+    history.push("/offer-release-list")
+  }
+  ;
   const previewAppointmentLetter = () => {
     console.log("candidateData id", candidateData);
     if (
@@ -604,7 +612,8 @@ const CandidateOnboarding = () => {
         {submitLetter ? (
           <Modal.Body>
             <div className="offer-letter-message ">
-              <p>Appointment Letter has been Sent to the Candidate</p>
+              {/* <p>Appointment Letter has been Sent to the Candidate</p> */}
+              <p>Onboarding is completed and Employee Record has been created</p>
               <br></br>
               <Button type="button" onClick={handleClose}>
                 Close
@@ -716,7 +725,7 @@ const CandidateOnboarding = () => {
                 {RoleList !== null &&
                   RoleList !== undefined &&
                   RoleList.map((item, i) => {
-                    if (item.roleDesc !== "Administrator") {
+                    if (item.roleName !== "ADMIN"&&item.roleName!=="IT_ADMIN") {
                       return (
                         <option key={i} value={item.roleId}>
                           {item.roleDesc}

@@ -463,7 +463,7 @@ const DocVerification = () => {
                       item.status === 2 &&
                       item.remark !== null
                         ? item.remark
-                        : "N/A"}
+                        : ""}
                     </td>
                     <td className="buttonMargin1">
                       {item.documentType !== 4 &&
@@ -738,7 +738,7 @@ const DocVerification = () => {
                       item.documentType !== 10 &&
                       item.documentType !== 11 &&
                       item.documentType !== 12 &&
-                      item.status === 1 && <td className="buttonMargin1">NA</td>
+                      item.status === 1 && <td className="buttonMargin1"></td>
                     )}
                     {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
@@ -763,7 +763,7 @@ const DocVerification = () => {
                       item.documentType !== 10 &&
                       item.documentType !== 11 &&
                       item.documentType !== 12 && (
-                        <td className="buttonMargin1">NA</td>
+                        <td className="buttonMargin1"></td>
                       )
                     )}
                   </tr>

@@ -160,7 +160,7 @@ const PersonalInformation = (props) => {
         setNationlArray(nationList);
       } else {
         let allNationList = candidateCountryData.filter(
-          (item) => item.nationality !== null
+          (item) => item.nationality === "Indian" && item.nationality !== null
         );
         console.log("inside else");
         setNationlArray(allNationList);
