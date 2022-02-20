@@ -24,6 +24,7 @@ const ViewWorkInformation = () => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    managerName:null,
     expatUser: "",
     passportNumber: "",
     nationality: "",
@@ -81,6 +82,10 @@ const ViewWorkInformation = () => {
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.workInformation;
+      let managerName =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.managerName;
 
     if (workData !== null && workData !== undefined) {
       setState({
@@ -95,6 +100,7 @@ const ViewWorkInformation = () => {
         internship: workData.internshipPeriod,
         noticePeriod: workData.noticePeriod,
         managerId: workData.managerId,
+        managerName:managerName,
         expatUser: workData.expatUser,
         passportNumber: workData.passportNumber,
         nationality: workData.nationality,
@@ -321,20 +327,20 @@ const ViewWorkInformation = () => {
               ) : (
                 <Form.Control
                   as="select"
-                  value={state.managerId}
+                  value={state.managerName-state.managerId}
                   className="form-input disable-arrow"
                   name="managerId"
                   disabled="true"
                   required
                 >
-                  <option value="">Select ManagerId</option>
-                  {allManagerList.map((item, i) => {
+                  <option value="">{state.managerName}-{state.managerId}</option>
+                  {/* {allManagerList.map((item, i) => {
                     return (
                       <option key={i} value={item.employeeId}>
                         {item.firstName}-{item.employeeId}
                       </option>
                     );
-                  })}
+                  })} */}
                 </Form.Control>
               )}
             </Form.Group>
