@@ -603,7 +603,7 @@ const EditRemunerationInformation = (props) => {
                             workInfoViewData.contractType === "Local Expat")) &&
                         fixedGross < 25000 ? (
                         <p style={{ color: "red" }}>
-                          Value should be greater than 25000{" "}
+                          Value should be greater than $ 25000{" "}
                         </p>
                       ) : (
                         ""

@@ -65,7 +65,7 @@ const FullTimeToPartTimeLetter = () => {
           <h5 className="text-center">
             <b>Change from Full time to Part Time </b>
           </h5>
-          <h5 className="text-center"> Emp ID: {offerLetterData.employeeId}</h5>
+          {/* <h5 className="text-center"> Emp ID: {offerLetterData.employeeId}</h5> */}
           <div>
             <p className="float-left">To,</p>
             <p className="float-right">Date: {moment().format("DD-MM-YYYY")}</p>
@@ -128,14 +128,14 @@ const FullTimeToPartTimeLetter = () => {
               statutory acts. Further, sufficient holidays keep one motivated in
               a work environment.
             </p>
-            <p>
+            {/* <p>
               You would be entitled to non-statutory benefits such as Health &
               Social Security Insurance. Further you would be eligible to earn
               monthly performance bonus to a maximum of{" "}
               <b>{offerLetterData.bonus}</b>% . Monthly performance bonus is
               payable subject to the successful achievement of individual and
               Company goals as specified by your manager from time to time.
-            </p>
+            </p> */}
             <p>
               <b>{offerLetterData.managerName}</b> will be responsible to mentor
               and guide you in this phase of your professional journey or any

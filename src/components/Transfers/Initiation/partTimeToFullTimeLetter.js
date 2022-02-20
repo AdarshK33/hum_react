@@ -63,7 +63,7 @@ const PartTimeToFullTimeLetter = () => {
           <h5 className="text-center">
             <b>Change from Part time to Full Time </b>
           </h5>
-          <h5 className="text-center"> Emp ID: {offerLetterData.employeeId}</h5>
+          {/* <h5 className="text-center"> Emp ID: {offerLetterData.employeeId}</h5> */}
           <div>
             <p className="float-left">To,</p>
             <p className="float-right">Date: {moment().format("DD-MM-YYYY")}</p>
@@ -358,11 +358,7 @@ const PartTimeToFullTimeLetter = () => {
                     )}
                   </td>
                 </tr>
-                <tr>
-                  <td>Monthly Bonus/ Statutory Bonus*+ </td>
-                  <td>{Math.round(offerLetterData.bonusAmt)}</td>
-                  <td>{Math.round(offerLetterData.bonusAmt * 12)}</td>
-                </tr>
+               
                 <tr>
                   <td className="boldText">Gross Salary </td>
                   <td className="boldText">
@@ -390,19 +386,10 @@ const PartTimeToFullTimeLetter = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td>Gratuity </td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.permanentCandidateOffer.gratuity
-                    )}
-                  </td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.permanentCandidateOffer.gratuity * 12
-                    )}
-                  </td>
+                  <td>Monthly Bonus/ Statutory Bonus*+ </td>
+                  <td>{Math.round(offerLetterData.bonusAmt)}</td>
+                  <td>{Math.round(offerLetterData.bonusAmt * 12)}</td>
                 </tr>
-
                 <tr>
                   <td>Employer ESIC</td>
                   <td className="boldText">
@@ -416,6 +403,21 @@ const PartTimeToFullTimeLetter = () => {
                     ) * 12}
                   </td>
                 </tr>
+                <tr>
+                  <td>Gratuity </td>
+                  <td>
+                    {Math.round(
+                      offerLetterData.permanentCandidateOffer.gratuity
+                    )}
+                  </td>
+                  <td>
+                    {Math.round(
+                      offerLetterData.permanentCandidateOffer.gratuity * 12
+                    )}
+                  </td>
+                </tr>
+
+              
                 <tr>
                   <td>
                     <b>CTC </b>

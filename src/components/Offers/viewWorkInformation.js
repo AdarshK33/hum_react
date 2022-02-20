@@ -109,7 +109,7 @@ const ViewWorkInformation = () => {
       setCollege(workData.collegeName);
     }
   }, [candidateData]);
-
+  console.log("workData",candidateData.workInformation,"state",state,"allmanagerlist",allManagerList,locationName,"managerlist",managerList)
   useEffect(() => {
     setStateValue(locationName.stateId);
     setCity(locationName.locationId);
