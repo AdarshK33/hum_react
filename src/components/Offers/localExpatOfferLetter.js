@@ -128,7 +128,7 @@ const LocalExpatOfferLetter = () => {
                   </li>
                   <li>
                     Your monthly gross salary will not exceed $.{" "}
-                    <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>({number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))})
+                    <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>(INR. {number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))})
                     . Refer to the salary annexure mentioned below
                   </li>
                   <li>

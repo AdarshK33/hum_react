@@ -31,10 +31,10 @@ const AppointmentLetter = (props) => {
 
   const HandleSaveLetter = () => {
     // setSaveLetter(true);
-    // if (candidateData && Object.keys(candidateData).length) {
-    //   finalSubmitAppointmentLetter(
-    //     candidateData.candidateInformation.candidateId
-    //   );
+    if (candidateData && Object.keys(candidateData).length) {
+      finalSubmitAppointmentLetter(
+        candidateData.candidateInformation.candidateId
+      );
     console.log("HandleSaveLetter");
     const infoData = {
       inputRef: inputRef,
@@ -53,7 +53,7 @@ const AppointmentLetter = (props) => {
     );
     CreatePdfAndUpload(infoData, "35,200,185,300");
     setShow(false);
-    // }
+    }
   };
 
   return (
@@ -125,7 +125,7 @@ const AppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your gross fixed compensation would be INR.{" "}
-                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>({number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))}).
+                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
                   You are also entitled for a monthly statutory/non-statutory
                   bonus which will be at a maximum{" "}
                   <b>{offerLetterData.bonus}</b> % of your gross monthly fixed
@@ -160,7 +160,7 @@ const AppointmentLetter = (props) => {
                   We trust you will enjoy working with{" "}
                   <b>
                     {offerLetterData.companyName === "Decathlon Sports India"
-                      ? "Decathlon"
+                      ? "DSIPL"
                       : offerLetterData.companyName}
                   </b>{" "}
                   and take the utmost autonomy to complete your
@@ -181,7 +181,7 @@ const AppointmentLetter = (props) => {
                     When you are happy being a part of the{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
-                        ? "Decathlon"
+                        ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
                     family, we expect you will be open to relocate to any

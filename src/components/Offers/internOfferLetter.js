@@ -121,7 +121,7 @@ const InternOfferLetter = () => {
                   ).format("DD-MM-YYYY")}{" "}
                   at {offerLetterData.companyName} Pvt. Ltd. You will be
                   provided stipend{" "}
-                  {offerLetterData.internshipCandidateOffer.stipend} ({number2text(parseInt(offerLetterData.internshipCandidateOffer.stipend))}) per month.
+                  {offerLetterData.internshipCandidateOffer.stipend} per month.
                 </p>
 
                 <p>
