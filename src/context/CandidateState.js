@@ -36,7 +36,7 @@ export const CandidateProvider = ({ children }) => {
             CandidateProfile();
             data.history.push("/offer");
           } else {
-            toast.error("Bad Credentials");
+            toast.error(response.data.message);
           }
         }
       })

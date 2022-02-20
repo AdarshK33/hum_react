@@ -5940,11 +5940,16 @@ const InsuranceNomination = (props) => {
                         <option value="">--Select--</option>
                         <option value="Father">Father</option>
                         <option value="Mother">Mother</option>
-                        <option value="Father-inlaw">Father-In-Law</option>
+                       {candidatePersonalInfoData &&
+          candidatePersonalInfoData.maritalStatus !== null &&
+          candidatePersonalInfoData.maritalStatus !== undefined &&
+          (candidatePersonalInfoData.maritalStatus === "married") |
+            (candidatePersonalInfoData.maritalStatus === "Married")?
+            <><option value="Father-inlaw">Father-In-Law</option>
                         <option value="Mother-Inlaw">Mother-In-Law</option>
                         <option value="Spouse">Spouse</option>
                         <option value="Child1">Child 1</option>
-                        <option value="Child2">Child 2</option>
+                        <option value="Child2">Child 2</option></>:<></>}
                       </Form.Control>
                       {nomineeRelationshipError ? (
                         <p style={{ color: "red" }}>

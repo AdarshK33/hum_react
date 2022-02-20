@@ -281,7 +281,9 @@ export const OfferProvider = (props) => {
     console.log("locationName response", state.locationName,state.managerList,state.allManagerList);
     return dispatch({
       type: "LOCATION",
-      payload: (state.locationName, state.managerList,state.allManagerList),
+      payload: state.locationName ,
+      managerList:state.managerList,
+      allManagerList:state.allManagerList
     });
 
     /* .get("/api/v1/location/view/" + costCenter)
