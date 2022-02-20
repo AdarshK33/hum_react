@@ -504,6 +504,14 @@ export const OfferProvider = (props) => {
       });
   };
 
+  const setNoticePeriodNull=()=>{
+    state.noticePeriodViewData=null
+    return dispatch({
+      type: "NOTICE_PERIOD_VIEW",
+      payload: state.noticePeriodViewData,
+    });
+  }
+
   const noShowCandidate = (candidateId, searchValue, pageCount) => {
     setLoader(true);
     return client
@@ -682,6 +690,7 @@ export const OfferProvider = (props) => {
         AllCostCenter,
         number2text,
         positionByDepartment,
+        setNoticePeriodNull,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,

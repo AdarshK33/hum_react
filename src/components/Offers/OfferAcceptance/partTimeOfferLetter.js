@@ -7,7 +7,7 @@ import { OnBoardContext } from "../../../context/OnBoardState";
 const PartTimeOfferLetter = () => {
   const { createCandidateResponse, generateOfferLetter, offerLetterData } =
     useContext(OfferContext);
-  const { generateCandidateLetter, candidateLetterData } =
+  const { generateCandidateLetter, candidateLetterData,number2text } =
     useContext(OnBoardContext);
   //   console.log("today", moment().format("DD-MM-YYYY"));
   return (
@@ -46,7 +46,7 @@ const PartTimeOfferLetter = () => {
             <li>
               Your monthly gross salary will not exceed{" "}
               Rs. <span className="boldText">{candidateLetterData.fixedGross}</span>{" "}
-               per Hourly
+              (INR. {number2text(parseInt(candidateLetterData.fixedGross))}) per Hourly
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
