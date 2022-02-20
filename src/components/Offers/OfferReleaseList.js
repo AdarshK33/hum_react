@@ -11,6 +11,7 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
+import { E_signContext } from "../../context/E_signState";
 
 const OfferReleaseList = () => {
   const {
@@ -23,6 +24,7 @@ const OfferReleaseList = () => {
   } = useContext(OfferContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
+  const { getReference, notification } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
@@ -116,6 +118,10 @@ const OfferReleaseList = () => {
     setNoShowId(e.target.name);
     setInfoModelShow(true);
   };
+  const GoToLetterView = (refId) => {
+    console.log(refId);
+    getReference(refId);
+  };
   return (
     <Fragment>
       <Modal show={infoModalShow} onHide={handleModalClose} size="md" centered>
@@ -190,6 +196,7 @@ const OfferReleaseList = () => {
                       ) : (
                         ""
                       )}
+
                       <th scope="col">No Show</th>
                       {user !== null &&
                       user !== undefined &&
@@ -198,6 +205,7 @@ const OfferReleaseList = () => {
                       ) : (
                         ""
                       )}
+                      <th scope="col">View Signed Offer Letter</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -331,6 +339,7 @@ const OfferReleaseList = () => {
                                 />
                               </div>
                             </td>
+
                             {user !== null &&
                             user !== undefined &&
                             rolePermission === "admin" ? (
@@ -355,6 +364,23 @@ const OfferReleaseList = () => {
                               </td>
                             ) : (
                               ""
+                            )}
+                            {item.refId !== null &&
+                            item.refId !== undefined &&
+                            item.refId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
+                                    onClick={() => {
+                                      GoToLetterView(item.refId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
+                              </td>
                             )}
                           </tr>
                         </tbody>

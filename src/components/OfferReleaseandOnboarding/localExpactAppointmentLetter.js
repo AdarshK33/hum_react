@@ -25,7 +25,7 @@ const LocalExpactAppointmentLetter = (props) => {
     offerLetterData,
     candidateData,
     finalSubmitAppointmentLetter,
-    submitAppointmentLetter,
+    submitAppointmentLetter,number2text
   } = useContext(OfferContext);
   const [showLetter, setShow] = useState(true);
   const [previewClick, setPreviewClick] = useState(false);
@@ -119,7 +119,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <p>
                     Your gross fixed compensation would be INR.{" "}
                     <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
-                    . You are also entitled for a monthly
+                    ({number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))}). You are also entitled for a monthly
                     statutory/non-statutory bonus which will be at a maximum{" "}
                     <b>{offerLetterData.bonus}</b> % of your gross monthly fixed
                     compensation. You are entitled to all the social security

@@ -13,7 +13,7 @@ import { OfferContext } from "../../context/OfferState";
 import moment from "moment";
 
 const PartTimeAppointmentLetter = (props) => {
-  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+  const { createCandidateResponse, generateOfferLetter, offerLetterData,number2text } =
     useContext(OfferContext);
   const [showLetter, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
@@ -106,7 +106,7 @@ const PartTimeAppointmentLetter = (props) => {
                   <br></br>
                   <p>
                     Your gross fixed compensation would be INR.{" "}
-                    <b>{offerLetterData.partTimeCandidateOffer.grossSalary}</b>{" "}
+                    <b>{offerLetterData.partTimeCandidateOffer.grossSalary}</b>{" "}({number2text(parseInt(offerLetterData.partTimeCandidateOffer.grossSalary))})
                     per hour. You are entitled to all the social security
                     benefits like PF, ESIC (as per applicability), & bonus as
                     specified in the respective statutory acts. Further,
