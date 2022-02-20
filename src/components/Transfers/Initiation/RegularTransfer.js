@@ -767,7 +767,7 @@ const RegularTransfer = () => {
                                className="text-primary"
                                aria-label="transferInitiationCostCentre"
                               placeholder="Select Cost Center"
-                              disabled={
+                              isDisabled={
                                 costCentreNoChange || newDeptName === "" ? true : false
                               }
                               options={
@@ -779,7 +779,6 @@ const RegularTransfer = () => {
                                     }))
                                   :[]
                               }
-                              onChange={changeCostCentreHandler}
                               required
                               isSearchable
                             /> */}
