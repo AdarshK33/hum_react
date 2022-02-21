@@ -24,7 +24,7 @@ import { OfferContext } from "../../context/OfferState";
 import man from "../../assets/images/dashboard/userImage.png";
 
 const OnBoardingStepper = (props) => {
-  const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
+  const { CandidateProfile, candidateProfileData, documentView, documentViewData } = useContext(OnBoardContext);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
@@ -114,6 +114,11 @@ const OnBoardingStepper = (props) => {
   //   });
   //   setStep(tempArray);
   // };
+
+  useEffect(() => {
+    documentView(candidateProfileData.candidateId);
+  }, [candidateProfileData]);
+  console.log("documentViewData", documentViewData);
 
   const handleIconChange = (num) => {
     if (num >= 0 && num <= 6) {
@@ -300,9 +305,9 @@ const OnBoardingStepper = (props) => {
 
                         <div
                           type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[1].idValue);
-                          }}
+                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
+                             handleIconChange(stepArray[1].idValue);}:null
+                          }
                           className={stepArray[1].step}
                         >
                           <div style={{ paddingTop: "4px", fontSize: "24px" }}>
@@ -324,9 +329,9 @@ const OnBoardingStepper = (props) => {
 
                         <div
                           type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[2].idValue);
-                          }}
+                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
+                            handleIconChange(stepArray[2].idValue);}:null
+                          }
                           className={stepArray[2].step}
                         >
                           <div style={{ paddingTop: "4px", fontSize: "23px" }}>
@@ -345,9 +350,9 @@ const OnBoardingStepper = (props) => {
 
                         <div
                           type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[3].idValue);
-                          }}
+                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
+                            handleIconChange(stepArray[3].idValue);}:null
+                          }
                           className={stepArray[3].step}
                         >
                           <div style={{ paddingTop: "0px", fontSize: "31px" }}>
@@ -369,9 +374,9 @@ const OnBoardingStepper = (props) => {
                           <React.Fragment>
                             <div
                               type="button"
-                              onClick={() => {
-                                handleIconChange(stepArray[4].idValue);
-                              }}
+                              onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
+                                handleIconChange(stepArray[4].idValue);}:null
+                              }
                               className={stepArray[4].step}
                             >
                               <div
@@ -400,9 +405,9 @@ const OnBoardingStepper = (props) => {
                           <React.Fragment>
                             <div
                               type="button"
-                              onClick={() => {
-                                handleIconChange(stepArray[5].idValue);
-                              }}
+                              onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
+                                handleIconChange(stepArray[5].idValue);}:null
+                              }
                               className={stepArray[5].step}
                             >
                               <div
@@ -427,9 +432,9 @@ const OnBoardingStepper = (props) => {
                         )}
                         <div
                           type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[6].idValue);
-                          }}
+                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
+                            handleIconChange(stepArray[6].idValue);}:null
+                          }
                           className={stepArray[6].step}
                         >
                           <div style={{ paddingTop: "2px", fontSize: "26px" }}>
