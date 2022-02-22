@@ -53,7 +53,7 @@ const ConfirmationLetter1 = () => {
     };
 
     console.log("InfoData", InfoData);
-    // updateProbation(InfoData, probationData.empId);
+    updateProbation(InfoData, probationData.empId);
     ViewProbationDataById(empId);
 
     const infoData = {
@@ -62,7 +62,7 @@ const ConfirmationLetter1 = () => {
       candidateId: 0,
       module: "Probation",
       empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
+      empEmail: "amit.kumar@qsometech.com",
       empPhNo: user.phone,
       history: history,
       path: "../probation",
