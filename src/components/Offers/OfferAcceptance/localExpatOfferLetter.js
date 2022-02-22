@@ -15,7 +15,7 @@ import { OnBoardContext } from "../../../context/OnBoardState";
 const LocalExpatOfferLetter = () => {
   const { createCandidateResponse, generateOfferLetter, offerLetterData } =
     useContext(OfferContext);
-  const { generateCandidateLetter, candidateLetterData } =
+  const { generateCandidateLetter, candidateLetterData,number2text } =
     useContext(OnBoardContext);
   return (
     <Container className="letterStyle">
@@ -48,7 +48,7 @@ const LocalExpatOfferLetter = () => {
             <li>
               Your monthly gross salary will not exceed $.{" "}
               <span className="boldText">
-                {candidateLetterData.permanentCandidateOffer.grossSalary}
+              {candidateLetterData.permanentCandidateOffer.grossSalary}(INR. {number2text(parseInt(candidateLetterData.permanentCandidateOffer.grossSalary))}).
               </span>
               . Refer to the salary annexure mentioned below
             </li>

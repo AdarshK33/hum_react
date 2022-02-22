@@ -82,11 +82,11 @@ const EditRemunerationInformation = (props) => {
       candidateData.workInformation !== null &&
       candidateData.workInformation !== undefined
     ) {
-      viewBonusByContarctType(
-        candidateData.workInformation.contractType,
-        candidateData.workInformation.department,
-        candidateData.workInformation.position
-      );
+      // viewBonusByContarctType(
+      //   candidateData.workInformation.contractType,
+      //   candidateData.workInformation.department,
+      //   candidateData.workInformation.position
+      // );
       // setFixedGross(candidateData.remuneration.fixedGross);
       // setStipened(candidateData.remuneration.stipend);
     }

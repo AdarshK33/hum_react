@@ -101,7 +101,7 @@ const InternAppointmentLetter = (props) => {
                   </p>
                   <p>
                     Your fixed stipend would be INR.{" "}
-                    <b>{offerLetterData.internshipCandidateOffer.stipend}</b>{" "}({number2text(parseInt(offerLetterData.internshipCandidateOffer.stipend))})
+                    <b>{offerLetterData.internshipCandidateOffer.stipend}</b>{" "}
                     per
                     <b>month</b>. This stipend is paid purely to manage your
                     travel, record maintenance, project submission and any other

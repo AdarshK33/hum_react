@@ -119,7 +119,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <p>
                     Your gross fixed compensation would be INR.{" "}
                     <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
-                    ({number2text(parseInt(offerLetterData.permanentCandidateOffer.grossSalary))}). You are also entitled for a monthly
+                    . You are also entitled for a monthly
                     statutory/non-statutory bonus which will be at a maximum{" "}
                     <b>{offerLetterData.bonus}</b> % of your gross monthly fixed
                     compensation. You are entitled to all the social security
@@ -154,7 +154,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     We trust you will enjoy working with{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
-                        ? "Decathlon"
+                        ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
                     and take the utmost autonomy to complete your
@@ -176,7 +176,7 @@ const LocalExpactAppointmentLetter = (props) => {
                       <b>
                         {offerLetterData.companyName ===
                         "Decathlon Sports India"
-                          ? "Decathlon"
+                          ? "DSIPL"
                           : offerLetterData.companyName}
                       </b>{" "}
                       family, we expect you will be open to relocate to any
