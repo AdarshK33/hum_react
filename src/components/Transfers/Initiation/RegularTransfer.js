@@ -154,7 +154,7 @@ const RegularTransfer = () => {
             ? parseInt(bonus)
             : 0,
         promotedRelocationBonus: parseInt(relocationBonus),
-        status: 0,
+        status: 3,
         transferId: 0,
         transferType: transferType,
       };
@@ -316,8 +316,31 @@ const RegularTransfer = () => {
 
   const submitfinalTransferLetter = (e) => {
     e.preventDefault();
-    setLetterSent(true);
-    setShowLetterSubmitModal(true);
+    const validFormRes = validateForm();
+    if (validFormRes === true && isAllNoChangesAreChecked() === false) {
+      const initiationData = {
+        ...initiationEmpData,
+        promotedCostCentre: newCostCentre,
+        promotedDepartment: newDeptName,
+        promotedFixedGross: parseInt(newGross),
+        promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
+        promotedLocation: parseInt(newLocation),
+        promotedManagerId: newManager,
+        promotedPosition: newPositionName,
+        promotedMonthlyBonus:
+          bonus !== "" && bonus !== null && bonus !== undefined
+            ? parseInt(bonus)
+            : 0,
+        promotedRelocationBonus: parseInt(relocationBonus),
+        status: 0,
+        transferId: 0,
+        transferType: transferType,
+      };
+      createTransferInitiation(initiationData)
+      setLetterSent(true);
+      setShowLetterSubmitModal(true);
+      }
+ 
   };
 
   const noChangeDeptHandler = (e) => {
@@ -733,40 +756,15 @@ const RegularTransfer = () => {
               </div>
             </Col>
             <Col md={4}>
-              <Form.Control
-                as="select"
-                className="text-primary"
-                aria-label="transferInitiationCostCentre"
-                value={newCostCentre}
-                placeholder="Select Cost Centre"
-                disabled={
-                  costCentreNoChange || newDeptName === "" ? true : false
-                }
-                onChange={changeCostCentreHandler}
-              >
-                <option value="">Select Cost Centre</option>
-                {costCentreData !== null &&
-                  costCentreData !== undefined &&
-                  costCentreData.length > 0 &&
-                  costCentreData.map((item) => {
-                    return (
-                      <option
-                        key={`cost_centre_${item.costCentreName}`}
-                        value={item.costCentreName}
-                      >
-                        {item.costCentreName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-
-                            {/* <Select
+             { costCentreNoChange == false?
+                            <Select
                               name="filters"
                               as="select"
-                              // value={newCostCentre}
+                               defaultValue={newCostCentre}
                                className="text-primary"
                                aria-label="transferInitiationCostCentre"
                               placeholder="Select Cost Center"
+                              onChange={changeCostCentreHandler}
                               isDisabled={
                                 costCentreNoChange || newDeptName === "" ? true : false
                               }
@@ -781,7 +779,32 @@ const RegularTransfer = () => {
                               }
                               required
                               isSearchable
-                            /> */}
+                            />:<Form.Control
+                            as="select"
+                            className="text-primary"
+                            aria-label="transferInitiationCostCentre"
+                            value={newCostCentre}
+                            placeholder="Select Cost Centre"
+                            disabled={
+                              costCentreNoChange || newDeptName === "" ? true : false
+                            }
+                            onChange={changeCostCentreHandler}
+                          >
+                            <option value="">Select Cost Centre</option>
+                            {costCentreData !== null &&
+                              costCentreData !== undefined &&
+                              costCentreData.length > 0 &&
+                              costCentreData.map((item) => {
+                                return (
+                                  <option
+                                    key={`cost_centre_${item.costCentreName}`}
+                                    value={item.costCentreName}
+                                  >
+                                    {item.costCentreName}
+                                  </option>
+                                );
+                              })}
+                          </Form.Control>}
               {costCentreErrMsg !== "" && (
                 <span className="text-danger">{costCentreErrMsg}</span>
               )}

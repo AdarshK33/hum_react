@@ -7,7 +7,7 @@ import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory, useParams } from "react-router-dom";
 import Breadcrumb from "../../common/breadcrumb";
 
-const RegularTransferAcceptance = () => {
+const RegularTransferAction = () => {
   const { transferId } = useParams();
   const {
     createTransferInitiation,
@@ -83,7 +83,16 @@ const RegularTransferAcceptance = () => {
         transferData.promotedLocation !== null &&
         transferData.promotedLocation !== undefined
       ) {
-        setNewLocation(transferData.promotedLocation);
+        costCentreLocationData !== null &&
+          costCentreLocationData !== undefined &&
+          Object.keys(costCentreLocationData).length !==
+            0 &&
+          costCentreLocationData.map((item) => {
+            if(item.stateId === transferData.promotedLocation){
+              setNewLocation(item.stateName);
+
+            }
+          })
       } else {
         setNewLocation("");
       }
@@ -226,8 +235,6 @@ const RegularTransferAcceptance = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const validFormRes = validateForm();
-    if (validFormRes === true) {
       const InfoData = {
         currentCompany: transferData.currentCompany,
         currentContractType: transferData.currentContractType,
@@ -257,69 +264,18 @@ const RegularTransferAcceptance = () => {
         promotedMonthlyBonus: transferData.promotedMonthlyBonus,
         promotedPosition: transferData.promotedPosition,
         promotedRelocationBonus: transferData.promotedRelocationBonus,
-        promotedTermOfProject: transferData.promotedTermOfProject,
-        remark: null,
-        status: 1,
+        status: 0,
         transferId: transferData.transferId,
-        transferLetter: null,
         transferType: transferData.transferType,
       };
       console.log(InfoData);
       createTransferInitiation(InfoData);
       setFormValid(true);
-    }
-  };
-  const RejectHandler = (e) => {
-    e.preventDefault();
-    setReject(true);
-    if (
-      state.remarks !== "" &&
-      state.remarks !== null &&
-      state.remarks !== undefined
-    ) {
-      const InfoData = {
-        currentCompany: transferData.currentCompany,
-        currentContractType: transferData.currentContractType,
-        currentCostCentre: transferData.currentCostCentre,
-        currentCountry: transferData.currentCountry,
-        currentDepartment: transferData.currentDepartment,
-        currentDesignation: transferData.currentDesignation,
-        currentEmployeeId: transferData.currentEmployeeId,
-        currentFixedGross: transferData.currentFixedGross,
-        currentJoiningDate: transferData.currentJoiningDate,
-        currentLocation: transferData.currentLocation,
-        currentManagerId: transferData.currentManagerId,
-        currentMonthlyBonus: transferData.currentMonthlyBonus,
-        currentPosition: transferData.currentPosition,
-        promotedCompany: transferData.promotedCompany,
-        promotedContractType: transferData.promotedContractType,
-        promotedCostCentre: transferData.promotedCostCentre,
-        promotedCountry: transferData.promotedCountry,
-        promotedDateOfReturn: transferData.promotedDateOfReturn,
-        promotedDepartment: transferData.promotedDepartment,
-        promotedDesignation: transferData.promotedDesignation,
-        promotedEmployeeId: transferData.promotedEmployeeId,
-        promotedFixedGross: transferData.promotedFixedGross,
-        promotedJoiningDate: transferData.promotedJoiningDate,
-        promotedLocation: transferData.promotedLocation,
-        promotedManagerId: transferData.promotedManagerId,
-        promotedMonthlyBonus: transferData.promotedMonthlyBonus,
-        promotedPosition: transferData.promotedPosition,
-        promotedRelocationBonus: transferData.promotedRelocationBonus,
-        promotedTermOfProject: transferData.promotedTermOfProject,
-        remark: state.remarks,
-        status: 2,
-        transferId: transferData.transferId,
-        transferLetter: null,
-        transferType: transferData.transferType,
-      };
-      console.log(InfoData);
-      createTransferInitiation(InfoData);
-    } else {
-      setModal(true);
-    }
+      setLetterSent(true);
+    setShowLetterSubmitModal(true);
   };
 
+console.log(transferData,"transferData")
   return (
     <Fragment>
       {/* <ToastContainer /> */}
@@ -347,22 +303,6 @@ const RegularTransferAcceptance = () => {
             )}
             <div className="text-center mb-2">
               <Button onClick={() => handleSaveRemarks()}>Save</Button>
-            </div>
-          </Modal.Body>
-        </Container>
-      </Modal>
-      <Modal show={modalShow} onHide={handleModalClose} centered>
-        <Container>
-          <Modal.Header closeButton className="modalHeader"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              {reject === true
-                ? "Transfer rejected details saved successfully!"
-                : "Transfer accepted details saved successfully"}
-            </label>
-
-            <div className="text-center mb-2">
-              <Button onClick={handleModalClose}>Close</Button>
             </div>
           </Modal.Body>
         </Container>
@@ -440,14 +380,14 @@ const RegularTransferAcceptance = () => {
           </Modal.Body>
         </Container>
       </Modal>
-      <Breadcrumb title="TRANSFER ACCEPTANCE" parent="TRANSFER ACCEPTANCE" />
+      <Breadcrumb title="TRANSFER ACTION" parent="TRANSFER ACTION" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>TRANSFER ACCEPTANCE </b>
+                  <b>TRANSFER ACTION </b>
                 </div>
                 {loader === true ? (
                   <div
@@ -553,33 +493,8 @@ const RegularTransferAcceptance = () => {
                           <Col md={4} className="text-primary">
                             {transferData.currentLocationName}
                           </Col>
-                          <Col md={{ span: 4, offset: 2 }}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="transferAcceptanceLocation"
-                              value={newLocation}
-                              placeholder="Select Location"
-                              onChange={changeLocationHandler}
-                            >
-                              <option>Select Location</option>
-                              {costCentreLocationData !== null &&
-                                costCentreLocationData !== undefined &&
-                                Object.keys(costCentreLocationData).length !==
-                                  0 &&
-                                costCentreLocationData.map((item) => {
-                                  return (
-                                    <option value={item.stateId}>
-                                      {item.stateName}
-                                    </option>
-                                  );
-                                })}
-                            </Form.Control>
-                            {locationErrMsg !== "" && (
-                              <span className="text-danger">
-                                {locationErrMsg}
-                              </span>
-                            )}
+                          <Col md={{ span: 4, offset: 2 }} className="text-primary">
+                            {newLocation}
                           </Col>
                         </Form.Group>
 
@@ -630,7 +545,7 @@ const RegularTransferAcceptance = () => {
                           ""
                         )}
 
-                        <Row>
+                        {/* <Row>
                           <Col
                             style={{
                               marginTop: "2rem",
@@ -706,7 +621,49 @@ const RegularTransferAcceptance = () => {
                                 </div>
                               )}
                           </Col>
-                        </Row>
+                        </Row> */}
+                         <Row>
+            <Col
+              style={{
+                marginTop: "2rem",
+                marginBottom: "2rem",
+                textAlign: "center",
+              }}
+            >
+              <button
+                disabled={true}
+                className={"confirmButton"}
+              >
+                Save
+              </button>
+              { (
+                <button
+                  className={"LettersButtons"}
+                  onClick={showTransferLetterModal}
+                >
+                  {previewTransferLetter
+                    ? "Preview Transfer Letter"
+                    : "Generate Transfer Letter"}
+                </button>
+              )}
+
+               {previewTransferLetter && (
+                <div className="preview-section">
+                  <br></br>
+                  <br></br>
+                  <img src={calendarImage} alt="calendar" width="200px" />
+                  <br></br>
+                  <button
+                    disabled={letterSent}
+                    className={letterSent ? "confirmButton" : "stepperButtons"}
+                    onClick={submitHandler}
+                  >
+                    Submit
+                  </button>
+                </div>
+              )}
+            </Col>
+          </Row>
                       </Col>
                     </Row>
                   </Form>
@@ -720,4 +677,4 @@ const RegularTransferAcceptance = () => {
   );
 };
 
-export default RegularTransferAcceptance;
+export default RegularTransferAction;
