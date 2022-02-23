@@ -7,6 +7,8 @@ import ShiftModal from "./shiftModal";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
 import "./roster.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Roster = () => {
   const [startDate, setStartDate] = useState(moment());
@@ -20,12 +22,16 @@ const Roster = () => {
   const { user } = useContext(AppContext);
   const handleClose = () => setModal(false);
   const handleShow = (item, weekId, weekName) => {
+    if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
+      toast.error("past date");
+    }else{
     console.log(item, "item onclick");
     setDate(item);
     setweekName(weekName);
     setshiftDate(weekId);
     setModal(true);
     availableShifts();
+    }
   };
 
   useEffect(() => {

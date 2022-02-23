@@ -648,13 +648,7 @@ const IssueShowCauseNotice = () => {
           </Modal.Body>
         </Modal>
       ) : previewLetter || showShowCauseNoticeModal ? (
-        <Modal
-          show={showShowCauseNoticeModal}
-          onHide={handleShowCauseLetterClose}
-          size="md"
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
+        <Fragment>
             {disciplinarySearchData &&
             disciplinarySearchData &&
             disciplinarySearchData !== null &&
@@ -715,8 +709,7 @@ const IssueShowCauseNotice = () => {
             ) : (
               ""
             )}
-          </Modal.Body>
-        </Modal>
+          </Fragment>
       ) : (
         ""
       )}
