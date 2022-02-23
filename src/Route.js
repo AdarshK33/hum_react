@@ -466,14 +466,14 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/employee-info/:employeeid`}
             component={viewEmployeeInfo}
           />
-          <Route
+          {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={PromotionList}
-          />
-           {/* <Route
+          /> */}
+           <Route
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={MasterHistory}
-          /> */}
+          />
              {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={EmployeeList}

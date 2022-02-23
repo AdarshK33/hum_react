@@ -57,6 +57,7 @@ import { PayrollProvider } from "./context/PayrollState";
 import { DocumentUploadProvider } from "./context/DocumentUploadState";
 import { E_signProvider } from "./context/E_signState";
 import { PartTimeSalaryInputProvider } from "./context/PartTimeSalaryInputState";
+import {EmployeeHistoryProvider} from "./context/EmployeeHistoryState"
 //firebase Auth
 function Root() {
   useEffect(() => {
@@ -103,6 +104,7 @@ function Root() {
                                                                     <PromotionProvider>
                                                                       <BonusProvider>
                                                                         <TransferProvider>
+                                                                          <EmployeeHistoryProvider>
                                                                           <ModuleReportProvider>
                                                                             <NoticePeriodProvider>
                                                                               <InsuranceProvider>
@@ -128,6 +130,7 @@ function Root() {
                                                                               </InsuranceProvider>
                                                                             </NoticePeriodProvider>
                                                                           </ModuleReportProvider>
+                                                                          </EmployeeHistoryProvider>
                                                                         </TransferProvider>
                                                                       </BonusProvider>
                                                                     </PromotionProvider>

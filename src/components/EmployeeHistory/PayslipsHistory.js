@@ -9,7 +9,7 @@ import moment from 'moment'
 import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-const SalaryHistory = (props) => {
+const PaySlipsHistory = (props) => {
     const reportList = props.SalaryHistoryList
     const {loader } = useContext(LeaveContext)
    
@@ -98,7 +98,7 @@ console.log(dates)
                     </div>
                   </Col>
                   <Col sm={2} style={{marginTop: "5px" }}>
-                    <b>Salary History</b>
+                    <b>PaySlips History</b>
                   </Col>
                 </Row></div>
 
@@ -173,4 +173,4 @@ console.log(dates)
     );
 };
 
-export default SalaryHistory;
+export default PaySlipsHistory;

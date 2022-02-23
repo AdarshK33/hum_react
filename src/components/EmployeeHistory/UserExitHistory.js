@@ -9,8 +9,8 @@ import moment from 'moment'
 import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-const SalaryHistory = (props) => {
-    const reportList = props.SalaryHistoryList
+const UserExitHistory = (props) => {
+    const reportList = props.UserExitHistoryList
     const {loader } = useContext(LeaveContext)
    
 console.log("startDate", props.startDate)
@@ -98,7 +98,7 @@ console.log(dates)
                     </div>
                   </Col>
                   <Col sm={2} style={{marginTop: "5px" }}>
-                    <b>Salary History</b>
+                    <b>User Exit History</b>
                   </Col>
                 </Row></div>
 
@@ -106,12 +106,21 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S. No</th>
-                                            <th>Final Gross</th>
-                                            <th>Effective Date</th>
-                                            <th>Updated By</th>
-                                            <th>Updated On</th>
-                                           
+                                            <th>Leaving Date</th>
+                                            <th>Resign Date</th>
+                                            <th>Notice Payable Days</th>
+                                            <th>Notice Recovery Days</th>
+                                            <th>Leaves Encashment</th>
+                                            <th>Monthly Bonus Payment</th>
+                                            <th>Holiday Working Bonus</th>
+                                            <th>Bonus Remarks</th>
+                                            <th>Gratuity</th>
+                                            <th>LOP</th>
+                                            <th>Other Recovery Amount</th>
+                                            <th>Other Recovery Remarks</th>
+                                            <th>Exit Initiated By</th>
+                                            <th>Exit Initiated On</th>
+
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -173,4 +182,4 @@ console.log(dates)
     );
 };
 
-export default SalaryHistory;
+export default UserExitHistory;

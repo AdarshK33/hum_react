@@ -1,231 +1,204 @@
 import React, { Fragment, useEffect, useContext, useState } from "react";
-import { Form, Row, Button } from "react-bootstrap";
+import { Form, Row,Col, Button } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
-import { LeaveContext } from "../../context/LeaveState";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import { AdminContext } from "../../context/AdminState";
-import SalaryHistory from "./SalaryHistory";
 import { AppContext } from "../../context/AppState";
 import "../Leaves/Leaves.css";
 import MultiSelect from "react-multi-select-component";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EmployeeContractDetails from "./EmployeeContractDetails";
+import SalaryHistory from "./SalaryHistory";
+import BonusHistory from "./BonusHistory"
+import CostCenterHistory from "./CostCenterHistory";
+import BankDetailsHistory from "./BankDetailsHistory"
+import AadhaarHistory from "./AadhaarHistory"
+import AccessAndRightHistory from "./AccessAndRightHistory"
+import ManagerHistory from "./ManagerHistory"
+import UserDocuments from "./UserDocuments"
+import OtherTaxableIncomeHistory from "./OtherTaxableIncomeHistory"
+import UserExitHistory from "./UserExitHistory"
+import PayslipsHistory from "./PayslipsHistory"
+import ItStatementHistory from "./ItStatementHistory"
+import DISP from "./DISP"
+import InsuranceNominationHistory from "./InsuranceNominationHistory"
+import SportHistory from "./SportHistory"
 import { PermissionContext } from "../../context/PermissionState";
 
 const MasterHistory = () => {
-  const [reportType, setReportType] = useState("");
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [yearly, setYearly] = useState();
-  const [leave, setLeave] = useState([]);
-  const [costCenter, setCostCenter] = useState("");
-  const [employeeCostCenter, setEmployeeCostCenter] = useState([]);
-  const [stepCount, setStepNumber] = useState(0);
+
+  const [stepCount, setStepNumber] = useState(null);
+  const [currentRecords,setCurrentRecords] = useState()
   const [dropDownData,setDropDownData] = useState([{
     name:"EMPLOYEE_CONTRACT_DETAILS",value:0
-  },{name:"SALARY_HISTORY",value:1}])
+  },{name:"SALARY_HISTORY",value:1},
+  {name:"BONUS_HISTORY",value:2},
+  {name:"COST_CENTER_HISTORY",value:3},
+  {name:"BANK_DETAILS_HISTORY",value:4},
+  {name:"AADHAAR_HISTORY",value:5},
+  {name:"ACCESS_AND_RIGHTS_HISTORY",value:6},
+  {name:"MANAGER_HISTORY",value:7},
+  {name:"USER_DOCUMENTS",value:8},
+  {name:"OTHER_TAXABLE_INCOME_HISTORY",value:9},
+  {name:"User Exit History",value:10},
+  {name:"Payslips History",value:11},
+  {name:"ItStatement History",value:12},
+  {name:"DISP",value:13},
+  {name:"Insurance Nomination History",value:14},
+  {name:"Sport History",value:15},
+
+])
+
   const { user } = useContext(AppContext);
-
-  const reportTypeList = [
-    { reportTypeData: "Monthly", id: 1 },
-    { reportTypeData: "Yearly", id: 2 },
-  ];
-
-  const { getLeaveReport, leaveTypeReport, reportLeave, reportList } =
-    useContext(LeaveContext);
-  const { CostCenter, costCenterList, employeeIdData } =
-    useContext(AdminContext);
   const { rolePermission } = useContext(PermissionContext);
+  
   useEffect(() => {
-    CostCenter();
+  
   }, []);
 
-  var previousYear = new Date().getFullYear() - 1;
-
-  var nextYear = new Date().getFullYear() + 1;
-
-  useEffect(() => {
-    if (
-      rolePermission !== "admin" &&
-      rolePermission !== "superCostCenterManager"
-    ) {
-      setCostCenter(user.costCentre);
-      employeeIdData(user.costCentre);
-      console.log("data1", user.costCentre);
-    }
-  }, [user.costCentre, user.loginType]);
-
-  useEffect(() => {
-    getLeaveReport();
-  }, []);
-
-  const setCostCenterHandler = (options) => {
-    let data1 = options !== null ? options.value : "";
-    setCostCenter(options);
-    employeeIdData(data1);
-    console.log("data1", data1);
-  };
-  const setEmployeeCostCenterHandler = (options) => {
-    setEmployeeCostCenter(options);
+ 
+  const setDropDownSelectHandler = (options) => {
     setStepNumber(options[0].value)
     console.log("options", options);
   };
-  const fromDateHandler = (date) => {
-    let value = date;
-    console.log("fromDate", value);
-    setStartDate(value);
-  };
 
-  const toDateHandler = (date) => {
-    let value1 = date;
-    console.log("toDate", value1);
-    setEndDate(value1);
-  };
 
-  const setLeaveHandler = (options) => {
-    setLeave(options);
-  };
-
-  const setReportTypeHandler = (e) => {
-    setReportType(e.target.value);
-    setStartDate();
-    setEndDate();
-  };
-
-  const validation = () => {
-    let flag = true;
-    if (costCenter === "") {
-      toast.error("Select Cost Center");
-      flag = false;
-      return;
-    }
-    if (leave.length === 0) {
-      toast.error("Select Leave Category");
-      flag = false;
-      return;
-    }
-    if (employeeCostCenter.length === 0) {
-      toast.error("Select Employee Id");
-      flag = false;
-      return;
-    }
-
-    return flag;
-  };
 
   const submitData = (e) => {
-    e.preventDefault();
-    const validate = validation();
-    let leaveIds = [];
-    for (let i = 0; i < leave.length; i++) {
-      if (leave[i].value === 1) {
-        leaveIds.push(0);
-        leaveIds.push(leave[i].value);
-      } else {
-        leaveIds.push(leave[i].value);
-      }
-    }
-    console.log("leaveIds", leaveIds);
+    // e.preventDefault();
 
-    const reportData = {
-      employeeIds: employeeCostCenter.map(
-        (e, i) => employeeCostCenter[i].value
-      ),
-      fromDate:
-        reportType === "Monthly"
-          ? moment(startDate).format("YYYY-MM-DD")
-          : "string",
-      leaveTypeIds: leaveIds,
-      toDate:
-        reportType === "Monthly"
-          ? moment(endDate).format("YYYY-MM-DD")
-          : "string",
-      year: reportType === "Monthly" ? "string" : yearly,
-    };
-    /*  const yearReportData = {
-            employeeIds:  employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
-            fromDate: 'string',
-            leaveTypeIds: leaveIds,
-            toDate: 'string',
-            year: yearly
-        } */
-    if (validate) {
-      reportLeave(reportData);
-    }
-
-    /*  if(reportType === 'Monthly' ){
-            console.log("leaveTypeIds",monthReportData)
-            reportLeave(monthReportData)
-        }
-        if(reportType === 'Yearly'){
-            reportLeave(yearReportData)
-        } */
-
-    setReportType("");
-    setCostCenter(costCenter);
-    setEmployeeCostCenter([]);
-    /* setStartDate()
-        setEndDate() */
-    setLeave([]);
   };
+  console.log(dropDownData,"dropDownData")
   return (
     <Fragment>
       <Breadcrumb title="Master History" parent="Master History" />
       <div className="container-fluid">
         <Form onSubmit={submitData}>
           <Row>
-            <div className="col-sm-4">
+            <Col sm={4}>
               <Form.Group>
                 <Form.Label>Employee Id</Form.Label>{" "}
                 <span style={{ color: "red" }}>*</span>
-                 {/* <Select
+                 <Select
                                 name="filters"
                                 placeholder="Select Employee Id"
-                                value={employeeCostCenter} 
+                                value={stepCount} 
                                 style={{fontSize:"0.8rem"}}
                                 options={dropDownData !== null  ?
-                                 dropDownData.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
-                                onChange={setEmployeeCostCenterHandler}
-                                isMulti required isSearchable /> */}
-                <MultiSelect
-                  options={
-                    dropDownData !== null
-                      ? dropDownData.map((e) => ({
-                          label: e.name,
-                          value: e.value,
-                        }))
-                      : []
-                  }
-                  value={employeeCostCenter}
-                  onChange={setEmployeeCostCenterHandler}
+                                 dropDownData.map(e => ({label: e.name, value: e.value})):[]}
+                                onChange={setDropDownSelectHandler}
+                                isMulti required isSearchable />
+                {/* <MultiSelect
+                 options={dropDownData.map((e) => ({
+                        label: e.name,
+                        value: e.value,
+                      }))
+                }
+                  value={stepCount}
+                  onChange={setDropDownSelectHandler}
                   labelledBy={"Select Employee Id"}
+                  hasSelectAll={true}
                   disableSearch={false}
-                />
+                /> */}
               </Form.Group>
-            </div>
-            <div className="col-sm-4">
-          <Button type="submit" className="submitButton" >
+            </Col>
+            <Col sm={4} style={{paddingTop:"28px",paddingLeft:"50px"}} >
+          <Button type="submit" class="btn btn-primary" >
             Search
           </Button>
-          </div>
+          </Col>
           </Row>
         </Form>
       </div>
-      {/* <SalaryHistory
-        AdminReportList={reportList}
-        startDate={startDate}
-        endDate={endDate}
-      /> */}
+
         {(() => {
                           switch (stepCount) {
-                            case 1:
+                            case 0:
                               return (
-                                <SalaryHistory
+                                <EmployeeContractDetails EmployeeContractDetailList={currentRecords}
                                 />
                               );
+                            case 1:
+                              return (
+                                <SalaryHistory SalaryHistoryList={currentRecords}
+                                />
+                              );
+                              case 2:
+                                return (
+                                  <BonusHistory BonusHistoryList={currentRecords}
+                                  />
+                                );
+                                case 3:
+                                  return (
+                                    <CostCenterHistory CostCenterHistoryList={currentRecords}
+                                    />
+                                  );
+                                  case 4:
+                                    return (
+                                      <BankDetailsHistory BankDetailsHistoryList={currentRecords}
+                                      />
+                                    );
+                                    case 5:
+                                      return (
+                                        <AadhaarHistory AadhaarHistoryList={currentRecords}
+                                        />
+                                      );
+                                      case 6:
+                                        return (
+                                          <AccessAndRightHistory AccessAndRightHistoryList={currentRecords}
+                                          />
+                                        );
+                                        case 7:
+                                          return (
+                                            <ManagerHistory ManagerHistoryList={currentRecords}
+                                            />
+                                          );
+                                          case 8:
+                                            return (
+                                              <UserDocuments BankDetailsHistoryList={currentRecords}
+                                              />
+                                            );
+                                            case 9:
+                                              return (
+                                                <OtherTaxableIncomeHistory OtherTaxableIncomeHistoryList={currentRecords}
+                                                />
+                                              );
+                                              case 10:
+                                                return (
+                                                  <UserExitHistory UserExitHistoryList={currentRecords}
+                                                  />
+                                                );
+                                                case 11:
+                                                  return (
+                                                    <PayslipsHistory PayslipsHistoryList={currentRecords}
+                                                    />
+                                                  );
+                                                  case 12:
+                                                    return (
+                                                      <ItStatementHistory UserExitHistoryList={currentRecords}
+                                                      />
+                                                    );
+                                                    case 13:
+                                                      return (
+                                                        <DISP DISPList={currentRecords}
+                                                        />
+                                                      );
+                                                      case 14:
+                                                      return (
+                                                        <InsuranceNominationHistory InsuranceNominationHistoryList={currentRecords}
+                                                        />
+                                                      );
+                                                      case 15:
+                                                      return (
+                                                        <SportHistory SportHistoryList={currentRecords}
+                                                        />
+                                                      );
+                              default:return (
+                                <BankDetailsHistory BankDetailsHistoryList={currentRecords}
+                                />
+                              )
                            
                           }
                         })()}

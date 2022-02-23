@@ -2,14 +2,11 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search, AlertCircle } from "react-feather";
-import { PromotionContext } from "../../context/PromotionState";
+import { Edit2, Eye, Search, AlertCircle,LogOut } from "react-feather";
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { DocsVerifyContext } from "../../context/DocverificationState";
-import { RoleManagementContext } from "../../context/RoleManagementState";
-import { SeparationContext } from "../../context/SepearationState";
 import "./EmployeeHistory.css";
 import moment from "moment";
 import { AdminContext } from "../../context/AdminState";
@@ -18,20 +15,13 @@ import { PermissionContext } from "../../context/PermissionState";
 
 const EmployeeList = () => {
   const {
-    promotionListView,
-    promotionIdData,
-    ViewPromotionById,
-    promotionList,
+    ViewEmployeeHistoryData,
+    employeeHistoryData,
     loader,
     total,
-    ViewPromotionByEmployee,
-    promotionByEmployee,
-  } = useContext(PromotionContext);
-  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
-    useContext(DocsVerifyContext);
+  } = useContext(EmployeeHistoryContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
-  const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([{
     employeeId:"DSI000011",
@@ -43,9 +33,7 @@ const EmployeeList = () => {
     createdBy:"Prashant"
   }]);
   const [searchValue, setSearchValue] = useState("");
-  const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
-  const [promotionStatus, setPromotionStatus] = useState("");
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [role, setRole] = useState(0);
@@ -60,9 +48,6 @@ const EmployeeList = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 
   useEffect(() => {
-    MakeCostCenterDataNull();
-  }, []);
-  useEffect(() => {
     if (rolePermission == "superCostCenterManager") {
       setRole(1);
     } else {
@@ -73,19 +58,7 @@ const EmployeeList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageNumber - 1,6,role);
-    } else if (promotionStatus === "Pending") {
-      promotionListView("all", pageNumber - 1, 0,role);
-    } else if (promotionStatus === "In Progress") {
-      promotionListView("all", pageNumber - 1, 1,role);
-    } else if (promotionStatus === "Approved") {
-      promotionListView("all", pageNumber - 1, 3,role);
-    } else if (promotionStatus === "Rejected") {
-      promotionListView("all", pageNumber - 1, 4,role);
-    } else if (promotionStatus === "Approve In Progress") {
-      promotionListView("all", pageNumber - 1, 5,role);
-    } else {
-      promotionListView("all", pageNumber - 1,6,role);
+      ViewEmployeeHistoryData(searchValue, pageNumber - 1,6,role);
     }
   };
 
@@ -95,23 +68,22 @@ const EmployeeList = () => {
   };
 
   const searchDataHandler = () => {
-    setPromotionStatus("");
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageCount,6,role);
+      ViewEmployeeHistoryData(searchValue, pageCount,6,role);
     } else {
-      promotionListView("all", 0,6,role);
+      ViewEmployeeHistoryData("all", 0,6,role);
     }
   };
 
   useEffect(() => {
-    promotionListView(searchValue, pageCount,6,rolePermission == "superCostCenterManager" ? 1 : 0
+    ViewEmployeeHistoryData(searchValue, pageCount,6,rolePermission == "superCostCenterManager" ? 1 : 0
     );
     console.log("user role------>", user);
   }, []);
 
-  console.log(rolePermission,promotionList, "promotionlist3");
+  console.log(rolePermission,employeeHistoryData, "employeeHistoryData");
   const fromDateHandler = (date) => {
     let value = date;
     console.log("fromDate", value);
@@ -131,7 +103,7 @@ const EmployeeList = () => {
         <Row>
           <Col sm={12}>
           <Row>
-              <div className="col-sm-4">
+              <Col sm={4}>
                 <Form.Group>
                   <Form.Label>From Date</Form.Label>{" "}
                   <span style={{ color: "red" }}>*</span>
@@ -147,15 +119,15 @@ const EmployeeList = () => {
                     />
                   </div>
                 </Form.Group>
-              </div>
-              <div className="col-sm-4">
+              </Col>
+              <Col sm={4}>
                 <Form.Group>
                   <Form.Label>To Date</Form.Label>{" "}
                   <span style={{ color: "red" }}>*</span>
                   <div>
                     <DatePicker
                       selected={endDate}
-                      // onChange={(e) => toDateHandler(e)}
+                     onChange={(e) => toDateHandler(e)}
                       className="form-control"
                       dateFormat="yyyy-MM-dd"
                       minDate={startDate}
@@ -163,12 +135,12 @@ const EmployeeList = () => {
                     />
                   </div>
                 </Form.Group>
-              </div>
-              <div className="col-sm-4">
+              </Col>
+              <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
               <Button type="submit" className="submitButton">
             Export as master
           </Button>
-              </div>
+              </Col>
             </Row>
             <div className="card" style={{ overflowX: "auto" }}>
               <div
@@ -176,7 +148,7 @@ const EmployeeList = () => {
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
                 <Row>
-                  <Col>
+                  <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -202,7 +174,7 @@ const EmployeeList = () => {
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={2} style={{ marginTop: "5px" }}>
+                  <Col sm={2} style={{ marginTop: "5px",textAlign:"center" }}>
                     <b>EMPLOYEE LIST</b>
                   </Col>
                 </Row>
@@ -229,7 +201,8 @@ const EmployeeList = () => {
                   
                     </tr>
                   </thead>
-                  {loader === true &&
+                  {
+                   loader === true &&
                   currentRecords !== null &&
                   currentRecords !== undefined ? (
                     <tbody>
@@ -251,8 +224,9 @@ const EmployeeList = () => {
                     </tbody>
                   ) : currentRecords !== undefined &&
                     currentRecords !== null &&
-                    currentRecords.length > 0 &&
-                    total > 0 ? (
+                    currentRecords.length > 0 
+                    // && total > 0
+                     ? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={item.promotionId}>
@@ -266,18 +240,21 @@ const EmployeeList = () => {
                            <td>{item.createdBy}</td>
                            <td>{item.active}</td>
                             <td>
+                            <div style={{  paddingTop: "1px",  fontSize: "24px" }}>
                               <Edit2/>
+                              </div>
                             </td>
                             <td>
-                              <Link to={"/view-promotion/" + item.employeeId}>
+                              <Link to={"" + item.employeeId}>
                               <div style={{  paddingTop: "2px",  fontSize: "24px" }}>
                             <i className="fa fa-history"></i>
                           </div>
                               </Link>
                             </td>
                             <td>
-                              <div style={{  paddingTop: "2px",  fontSize: "24px" }}>
-                            <i className="fas fa-sign-in-alt"></i>
+                              <div style={{fontSize: "24px" }}>
+                            {/* <i className="fas fa-sign-in-alt"></i> */}
+                            <LogOut/>
                           </div>
                             </td>
                           </tr>

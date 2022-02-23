@@ -9,8 +9,8 @@ import moment from 'moment'
 import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-const SalaryHistory = (props) => {
-    const reportList = props.SalaryHistoryList
+const BankDetailsHistory = (props) => {
+    const reportList = props.BankDetailsHistoryList
     const {loader } = useContext(LeaveContext)
    
 console.log("startDate", props.startDate)
@@ -71,7 +71,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  <Col sm={4}>
                     <div
                       style={{
                         width: "65%",
@@ -97,8 +97,8 @@ console.log(dates)
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={2} style={{marginTop: "5px" }}>
-                    <b>Salary History</b>
+                  <Col sm={8} style={{  textAlign:"center",marginTop: "5px" }}>
+                    <b>BANK DETAILS HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -106,12 +106,15 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S. No</th>
-                                            <th>Final Gross</th>
-                                            <th>Effective Date</th>
+                                            <th>S .No</th>
+                                            <th>Account Number</th>
+                                            <th>Bank Name</th>
+                                            <th>IFSC</th>
+                                            <th>PAN</th>
                                             <th>Updated By</th>
                                             <th>Updated On</th>
-                                           
+
+
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -140,7 +143,7 @@ console.log(dates)
                                                         <td>{item.leaveReports.username}</td>
                                                         <td>{item.leaveReports.costCentre}</td>
                                                         <td>{item.leaveReports.workLocation}</td>
-                                                
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -173,4 +176,4 @@ console.log(dates)
     );
 };
 
-export default SalaryHistory;
+export default BankDetailsHistory;
