@@ -24,6 +24,7 @@ const ViewWorkInformation = () => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    managerName:null,
     expatUser: "",
     passportNumber: "",
     nationality: "",
@@ -57,6 +58,8 @@ const ViewWorkInformation = () => {
     allManagerList,
     costcenterByDepartment,
     costcenterByDepartmentData,
+    positionByDepartment,
+    positionByDepartmentData
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -79,6 +82,10 @@ const ViewWorkInformation = () => {
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.workInformation;
+      let managerName =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.managerName;
 
     if (workData !== null && workData !== undefined) {
       setState({
@@ -93,6 +100,7 @@ const ViewWorkInformation = () => {
         internship: workData.internshipPeriod,
         noticePeriod: workData.noticePeriod,
         managerId: workData.managerId,
+        managerName:managerName,
         expatUser: workData.expatUser,
         passportNumber: workData.passportNumber,
         nationality: workData.nationality,
@@ -107,7 +115,7 @@ const ViewWorkInformation = () => {
       setCollege(workData.collegeName);
     }
   }, [candidateData]);
-
+  console.log("workData",candidateData.workInformation,"state",state,"allmanagerlist",allManagerList,locationName,"managerlist",managerList)
   useEffect(() => {
     setStateValue(locationName.stateId);
     setCity(locationName.locationId);
@@ -116,6 +124,7 @@ const ViewWorkInformation = () => {
   }, [locationName]);
   useEffect(() => {
     let superMangerFlag;
+    let departmentId;
     if (
       state.department !== null &&
       state.department !== undefined &&
@@ -124,10 +133,21 @@ const ViewWorkInformation = () => {
       console.log("state.department", state.department);
       if (rolePermission == "superCostCenterManager") {
         superMangerFlag = 1;
+        departmentId = departmentName.filter(
+          (item) => item.departmentName === state.department
+        );
+        console.log("departmentId",departmentId);
         costcenterByDepartment(state.department, superMangerFlag);
+        positionByDepartment(departmentId[0].deptId)
+
       } else {
         superMangerFlag = 0;
+        departmentId = departmentName.filter(
+          (item) => item.departmentName === state.department
+        );
+        console.log("departmentId",departmentId);
         costcenterByDepartment(state.department, superMangerFlag);
+        positionByDepartment(departmentId[0].deptId)
       }
     }
   }, [state.department]);
@@ -220,13 +240,13 @@ const ViewWorkInformation = () => {
                   readOnly
                   disabled="true"
                 >
-                  {designationName !== null &&
-                    designationName !== undefined &&
-                    designationName.length > 0 &&
-                    designationName.map((item) => {
+                  {positionByDepartmentData !== null &&
+                    positionByDepartmentData !== undefined &&
+                    positionByDepartmentData.length > 0 &&
+                    positionByDepartmentData.map((item) => {
                       return (
-                        <option key={item.designationId}>
-                          {item.designation}
+                        <option key={item.positionId}>
+                          {item.position}
                         </option>
                       );
                     })}
@@ -255,13 +275,13 @@ const ViewWorkInformation = () => {
                   readOnly
                   disabled="true"
                 >
-                  {designationName !== null &&
-                    designationName !== undefined &&
-                    designationName.length > 0 &&
-                    designationName.map((item) => {
+                  {positionByDepartmentData !== null &&
+                    positionByDepartmentData !== undefined &&
+                    positionByDepartmentData.length > 0 &&
+                    positionByDepartmentData.map((item) => {
                       return (
-                        <option key={item.designationId}>
-                          {item.designation}
+                        <option key={item.positionId}>
+                          {item.position}
                         </option>
                       );
                     })}
@@ -307,20 +327,20 @@ const ViewWorkInformation = () => {
               ) : (
                 <Form.Control
                   as="select"
-                  value={state.managerId}
+                  value={state.managerName-state.managerId}
                   className="form-input disable-arrow"
                   name="managerId"
                   disabled="true"
                   required
                 >
-                  <option value="">Select ManagerId</option>
-                  {allManagerList.map((item, i) => {
+                  <option value="">{state.managerName}-{state.managerId}</option>
+                  {/* {allManagerList.map((item, i) => {
                     return (
                       <option key={i} value={item.employeeId}>
                         {item.firstName}-{item.employeeId}
                       </option>
                     );
-                  })}
+                  })} */}
                 </Form.Control>
               )}
             </Form.Group>

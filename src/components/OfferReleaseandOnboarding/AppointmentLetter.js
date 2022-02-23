@@ -15,6 +15,7 @@ const AppointmentLetter = (props) => {
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
     loader,
+    number2text,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -31,40 +32,40 @@ const AppointmentLetter = (props) => {
   console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
     // setSaveLetter(true);
-    // if (candidateData && Object.keys(candidateData).length) {
-    //   finalSubmitAppointmentLetter(
-    //     candidateData.candidateInformation.candidateId
-    //   );
-    console.log("HandleSaveLetter");
-    const infoData = {
-      inputRef: inputRef,
-      empId: 0,
-      candidateId: candidateData.candidateInformation.candidateId,
-      module: "Appointment",
-      empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
-      empPhNo: user.phone,
-      history: history,
-      path: "../offer-release-list",
-      recipient2: {
-        rectangle: "430,250,580,350",
-        name:
-          candidateData.candidateInformation.firstName +
-          " " +
-          candidateData.candidateInformation.lastName,
-        email: "rajasekhar@theretailinsights.com",
-        //  candidateData.candidateInformation.personalEmail,
-        phoneNumber: candidateData.candidateInformation.empPhNo,
-        // "+91 8074058844,,,",
-      },
-    };
-    console.log(
-      "getBoundingClientRect",
-      inputRef.current.getBoundingClientRect()
-    );
-    CreatePdfAndUpload(infoData, "35,250,185,350");
-    setShow(false);
-    // }
+    if (candidateData && Object.keys(candidateData).length) {
+      finalSubmitAppointmentLetter(
+        candidateData.candidateInformation.candidateId
+      );
+      console.log("HandleSaveLetter");
+      const infoData = {
+        inputRef: inputRef,
+        empId: 0,
+        candidateId: candidateData.candidateInformation.candidateId,
+        module: "Offer",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "rajasekhar@theretailinsights.com",
+        empPhNo: user.phone,
+        history: history,
+        path: "../offer-release-list",
+        recipient2: {
+          rectangle: "430,250,580,350",
+          name:
+            candidateData.candidateInformation.firstName +
+            " " +
+            candidateData.candidateInformation.lastName,
+          email: "rajasekhar@theretailinsights.com",
+          //  candidateData.candidateInformation.personalEmail,
+          phoneNumber: candidateData.candidateInformation.empPhNo,
+          // "+91 8074058844,,,",
+        },
+      };
+      console.log(
+        "getBoundingClientRect",
+        inputRef.current.getBoundingClientRect()
+      );
+      CreatePdfAndUpload(infoData, "35,250,185,350");
+      setShow(false);
+    }
   };
 
   return (
@@ -136,7 +137,7 @@ const AppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your gross fixed compensation would be INR.{" "}
-                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>.
+                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
                   You are also entitled for a monthly statutory/non-statutory
                   bonus which will be at a maximum{" "}
                   <b>{offerLetterData.bonus}</b> % of your gross monthly fixed
@@ -171,7 +172,7 @@ const AppointmentLetter = (props) => {
                   We trust you will enjoy working with{" "}
                   <b>
                     {offerLetterData.companyName === "Decathlon Sports India"
-                      ? "Decathlon"
+                      ? "DSIPL"
                       : offerLetterData.companyName}
                   </b>{" "}
                   and take the utmost autonomy to complete your
@@ -192,7 +193,7 @@ const AppointmentLetter = (props) => {
                     When you are happy being a part of the{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
-                        ? "Decathlon"
+                        ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
                     family, we expect you will be open to relocate to any

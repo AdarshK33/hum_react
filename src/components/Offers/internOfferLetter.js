@@ -14,7 +14,7 @@ const InternOfferLetter = () => {
     offerLetterData,
     loader,
     finalSubmitOfferLetter,
-    candidateData,
+    candidateData,number2text
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();

@@ -500,6 +500,7 @@ const EditEmployeeForm = () => {
                 value={email}
                 onChange={emailChangeHandler}
                 required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                 placeholder="Personal Email ID"
                 disabled={disabled}
               />
@@ -563,7 +564,7 @@ const EditEmployeeForm = () => {
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     className="form-input"
-                    type="text"
+                    type="email"
                     value={refEmail1}
                     readOnly
                     required
@@ -623,7 +624,7 @@ const EditEmployeeForm = () => {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   className="form-input"
-                  type="text"
+                  type="email"
                   readOnly
                   required
                   value={empName2 === "" ? "" : refEmail2}

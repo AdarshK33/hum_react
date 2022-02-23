@@ -576,6 +576,7 @@ const EmployeeForm = (props) => {
                 name="personalEmail"
                 value={state.personalEmail}
                 onChange={changeHandler}
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                 required
                 placeholder="Personal Email ID"
                 disabled={disabled}
@@ -641,7 +642,7 @@ const EmployeeForm = (props) => {
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     className="form-input"
-                    type="text"
+                    type="email"
                     value={empName1 === "" ? "" : refEmail1}
                     /*  value={refEmail1} */
                     onChange={(e) => setRefEmail1(e.target.value)}
@@ -704,7 +705,7 @@ const EmployeeForm = (props) => {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   className="form-input"
-                  type="text"
+                  type="email"
                   readOnly
                   required
                   value={empName2 === "" ? "" : refEmail2}

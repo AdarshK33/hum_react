@@ -40,7 +40,7 @@ const LocalExpactAppointmentLetter = (props) => {
       inputRef: inputRef,
       empId: 0,
       candidateId: candidateData.candidateInformation.candidateId,
-      module: "Appointment",
+      module: "Offer",
       empName: user.firstName + " " + user.lastName,
       empEmail: "rajasekhar@theretailinsights.com",
       empPhNo: user.phone,
@@ -193,7 +193,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     When you are happy being a part of the{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
-                        ? "Decathlon"
+                        ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
                     family, we expect you will be open to relocate to any
@@ -246,7 +246,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     customers.{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
-                        ? "Decathlon"
+                        ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
                     also ensures a safe environment to all its employees and

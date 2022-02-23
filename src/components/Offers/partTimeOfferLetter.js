@@ -14,7 +14,7 @@ const PartTimeOfferLetter = () => {
     offerLetterData,
     loader,
     finalSubmitOfferLetter,
-    candidateData,
+    candidateData,number2text
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -116,7 +116,7 @@ const PartTimeOfferLetter = () => {
                     </li>
                     <li>
                       Your gross salary will not exceed{" "}
-                      <b>{offerLetterData.fixedGross}</b> per Hourly
+                      <b>{offerLetterData.fixedGross}</b>(INR. {number2text(parseInt(offerLetterData.fixedGross))}) per Hourly
                     </li>
                     <li>
                       You may also receive a bonus on monthly basis and which

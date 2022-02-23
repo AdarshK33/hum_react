@@ -116,15 +116,17 @@ const ChangeEmployementType = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    if(initiationEmpData !== null &&
+    if (
+      initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0){     
-         setSearchInput(
+      Object.keys(initiationEmpData).length > 0
+    ) {
+      setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
       );
-      }else{
-        setSearchInput("")
-      }
+    } else {
+      setSearchInput("");
+    }
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
@@ -182,8 +184,68 @@ const ChangeEmployementType = () => {
 
   const submitfinalTransferLetter = (e) => {
     e.preventDefault();
-    setLetterSent(true);
-    setShowLetterSubmitModal(true);
+
+    if (
+      initiationEmpData.currentContractType === "internship" ||
+      initiationEmpData.currentContractType === "Internship"
+    ) {
+      setInfoModalShow(true);
+    } else {
+      const validFormRes = validateForm();
+      if (validFormRes === true) {
+        const InfoData = {
+          currentCompany: initiationEmpData.currentCompany,
+          currentContractType: initiationEmpData.currentContractType,
+          currentCostCentre: initiationEmpData.currentCostCentre,
+          currentCountry: initiationEmpData.currentCountry,
+          currentDepartment: initiationEmpData.currentDepartment,
+          currentDesignation: initiationEmpData.currentDesignation,
+          currentEmployeeId: initiationEmpData.currentEmployeeId,
+          currentFixedGross: initiationEmpData.currentFixedGross,
+          currentJoiningDate: initiationEmpData.currentJoiningDate,
+          currentLocation: initiationEmpData.currentLocation,
+          currentManagerId: initiationEmpData.currentManagerId,
+          currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
+          currentPosition: initiationEmpData.currentPosition,
+          promotedCompany: initiationEmpData.currentCompany,
+          promotedContractType:
+            newEmployement !== null && newEmployement !== ""
+              ? newEmployement === "From Part Time to Full Time"
+                ? "Fulltime"
+                : "parttime"
+              : null,
+          salaryType:
+            newEmployement !== null && newEmployement !== ""
+              ? newEmployement === "From Part Time to Full Time"
+                ? "Monthly"
+                : "Hourly"
+              : null,
+          promotedCostCentre: initiationEmpData.promotedCostCentre,
+          promotedCountry: initiationEmpData.promotedCountry,
+          // promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
+          promotedDepartment: initiationEmpData.promotedDepartment,
+          promotedDesignation: initiationEmpData.promotedDesignation,
+          promotedEmployeeId: initiationEmpData.currentEmployeeId,
+          promotedFixedGross: parseInt(newGross),
+          promotedJoiningDate: moment(DateOfTransfer).format("YYYY-MM-DD"),
+          promotedLocation: initiationEmpData.currentLocation,
+          promotedManagerId: initiationEmpData.currentManagerId,
+          promotedMonthlyBonus: initiationEmpData.currentMonthlyBonus,
+          promotedPosition: initiationEmpData.currentPosition,
+          promotedRelocationBonus: initiationEmpData.currentMonthlyBonus,
+          promotedTermOfProject: initiationEmpData.promotedTermOfProject,
+          status: 0,
+          transferId: transferData.transferId,
+          transferType: transferData.transferType,
+        };
+        console.log(InfoData);
+        createTransferInitiation(InfoData);
+        setFormValid(true);
+        setLetterSent(true);
+        setShowLetterSubmitModal(true);
+        // setModalShow(true);
+      }
+    }
   };
 
   const handleLetterSubmitModalClose = () => {
@@ -334,7 +396,7 @@ const ChangeEmployementType = () => {
           promotedRelocationBonus: initiationEmpData.currentMonthlyBonus,
           promotedTermOfProject: initiationEmpData.promotedTermOfProject,
           remark: null,
-          status: 0,
+          status: 3,
           transferId: 0,
           transferLetter: null,
           transferType: "Employment Type Transfer",
@@ -391,37 +453,37 @@ const ChangeEmployementType = () => {
         </Container>
       </Modal>
 
-      <Modal
+      {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {transferData !== null &&
-          transferData !== undefined &&
-          Object.keys(transferData).length !== 0 &&
-          transferData.promotedContractType !== null &&
-          transferData.promotedContractType !== undefined &&
-          transferData.promotedContractType !== "" &&
-          (transferData.promotedContractType === "Fulltime" ||
-            transferData.promotedContractType === "fulltime") ? (
-            <PartTimeToFullTimeLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.promotedContractType !== null &&
-            transferData.promotedContractType !== undefined &&
-            transferData.promotedContractType !== "" &&
-            (transferData.promotedContractType === "parttime" ||
-              transferData.promotedContractType === "Parttime") ? (
-            <FullTimeToPartTimeLetter />
-          ) : (
-            ""
-          )}
+        <Modal.Body> */}
+      {transferData !== null &&
+      transferData !== undefined &&
+      Object.keys(transferData).length !== 0 &&
+      transferData.promotedContractType !== null &&
+      transferData.promotedContractType !== undefined &&
+      transferData.promotedContractType !== "" &&
+      (transferData.promotedContractType === "Fulltime" ||
+        transferData.promotedContractType === "fulltime") ? (
+        <PartTimeToFullTimeLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.promotedContractType !== null &&
+        transferData.promotedContractType !== undefined &&
+        transferData.promotedContractType !== "" &&
+        (transferData.promotedContractType === "parttime" ||
+          transferData.promotedContractType === "Parttime") ? (
+        <FullTimeToPartTimeLetter />
+      ) : (
+        ""
+      )}
 
-          {/* <TransferInitationLetter transferId={initiationTransferId} /> */}
-          <br></br>
+      {/* <TransferInitationLetter transferId={initiationTransferId} /> */}
+      {/* <br></br>
           <Row>
             {showSignature ? (
               <>
@@ -460,7 +522,7 @@ const ChangeEmployementType = () => {
             </Row>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showLetterSubmitModal}
@@ -578,7 +640,8 @@ const ChangeEmployementType = () => {
                       {initiationEmpData !== null &&
                       initiationEmpData !== undefined &&
                       initiationEmpData !== "" &&
-                      initiationEmpData.currentContractType.toLowerCase() === "fulltime" ? (
+                      initiationEmpData.currentContractType.toLowerCase() ===
+                        "fulltime" ? (
                         <option value="From Full Time to Part Time">
                           From Full Time to Part Time
                         </option>
@@ -733,12 +796,12 @@ const ChangeEmployementType = () => {
                     onClick={showTransferLetterModal}
                   >
                     {previewTransferLetter
-                      ? "Preview Transfer Letter"
+                      ? "Generate Transfer Letter"
                       : "Generate Transfer Letter"}
                   </button>
                 )}
 
-                {initiationStatus && previewTransferLetter && (
+                {/* {initiationStatus && previewTransferLetter && (
                   <div className="preview-section">
                     <br></br>
                     <br></br>
@@ -754,7 +817,7 @@ const ChangeEmployementType = () => {
                       Submit
                     </button>
                   </div>
-                )}
+                )} */}
               </Col>
             </Row>
           </div>

@@ -67,6 +67,8 @@ const EditWorkInformation = () => {
     noticePeriodViewData,
     costcenterByDepartment,
     costcenterByDepartmentData,
+    positionByDepartment,
+    positionByDepartmentData
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -177,6 +179,7 @@ const EditWorkInformation = () => {
 
   useEffect(() => {
     let superMangerFlag;
+    let departmentId;
     if (
       state.department !== null &&
       state.department !== undefined &&
@@ -185,10 +188,20 @@ const EditWorkInformation = () => {
       console.log("state.department", state.department);
       if (rolePermission == "superCostCenterManager") {
         superMangerFlag = 1;
+        departmentId = departmentName.filter(
+          (item) => item.departmentName === state.department
+        );
+        console.log("departmentId",departmentId);
         costcenterByDepartment(state.department, superMangerFlag);
+        positionByDepartment(departmentId[0].deptId)
       } else {
         superMangerFlag = 0;
+        departmentId = departmentName.filter(
+          (item) => item.departmentName === state.department
+        );
+        console.log("departmentId",departmentId);
         costcenterByDepartment(state.department, superMangerFlag);
+        positionByDepartment(departmentId[0].deptId)
       }
     }
   }, [state.department]);
@@ -534,13 +547,13 @@ const EditWorkInformation = () => {
                     required
                   >
                     <option value="">Select Position</option>
-                    {designationName !== null &&
-                      designationName !== undefined &&
-                      designationName.length > 0 &&
-                      designationName.map((item) => {
+                    {positionByDepartmentData !== null &&
+                      positionByDepartmentData !== undefined &&
+                      positionByDepartmentData.length > 0 &&
+                      positionByDepartmentData.map((item) => {
                         return (
-                          <option key={item.designationId}>
-                            {item.designation}
+                          <option key={item.positionId}>
+                            {item.position}
                           </option>
                         );
                       })}
@@ -571,13 +584,13 @@ const EditWorkInformation = () => {
                     required
                   >
                     <option value="">Select Designation</option>
-                    {designationName !== null &&
-                      designationName !== undefined &&
-                      designationName.length > 0 &&
-                      designationName.map((item) => {
+                    {positionByDepartmentData !== null &&
+                      positionByDepartmentData !== undefined &&
+                      positionByDepartmentData.length > 0 &&
+                      positionByDepartmentData.map((item) => {
                         return (
-                          <option key={item.designationId}>
-                            {item.designation}
+                          <option key={item.positionId}>
+                            {item.position}
                           </option>
                         );
                       })}

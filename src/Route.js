@@ -118,6 +118,9 @@ import EntityTransferAcceptance from "./components/Transfers/Acceptance/EntityTr
 import InternationalTransferAcceptance from "./components/Transfers/Acceptance/InternationalTransferAcceptance";
 import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/ManagerInitiateAction";
 
+import RegularTransferAction from "./components/Transfers/Action/RegularTransferAction"
+import EntityTransferAction from "./components/Transfers/Action/EntityTransferAction"
+import ChangeEmployementTypeAction from "./components/Transfers/Action/ChangeEmployementTypeAction"
 /* All module reports */
 import ModuleReports from "./components/ModuleReports/ModuleReports";
 /* MIT reports */
@@ -160,6 +163,9 @@ import EmpPayroll from "./components/Payroll/EmpPayroll";
 import ManagerPayroll from "./components/Payroll/ManagerPayroll";
 
 import PartTimerSalaryInput from "./components/PartTimerSalaryInput/PartTimerSalaryInput"
+
+import EmployeeList from "./components/EmployeeHistory/EmployeeList"
+import MasterHistory from "./components/EmployeeHistory/MasterHistory"
 /* import ManagerOfferRelease from './components/Offers/managerOfferRelease'
 import OfferReleaseList from './components/Offers/OfferReleaseList'
 import EditOfferRelease from './components/Offers/editOfferRelease' */
@@ -464,6 +470,14 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={PromotionList}
           />
+           {/* <Route
+            path={`${process.env.PUBLIC_URL}/promotion-list`}
+            component={MasterHistory}
+          /> */}
+             {/* <Route
+            path={`${process.env.PUBLIC_URL}/promotion-list`}
+            component={EmployeeList}
+          /> */}
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
@@ -506,13 +520,25 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/view-transfer/:transferId`}
             component={TransferView}
           />
+            <Route
+            path={`${process.env.PUBLIC_URL}/changeinemp-transfer/:transferId`}
+            component={ChangeEmployementTypeAction}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/transfer/:transferId`}
             component={RegularTransferAcceptance}
           />
           <Route
+            path={`${process.env.PUBLIC_URL}/transferaction/:transferId`}
+            component={RegularTransferAction}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/entity-transfer/:transferId`}
             component={EntityTransferAcceptance}
+          />
+           <Route
+            path={`${process.env.PUBLIC_URL}/entity-transferaction/:transferId`}
+            component={EntityTransferAction}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/international-transfer/:transferId`}

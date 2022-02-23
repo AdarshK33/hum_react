@@ -252,8 +252,58 @@ const EntityTransferAcceptance = () => {
 
   const submitfinalTransferLetter = (e) => {
     e.preventDefault();
-    setLetterSent(true);
-    setShowLetterSubmitModal(true);
+    const validFormRes = validateForm();
+    console.log("validFormRes", validFormRes);
+    if (validFormRes === true) {
+      const InfoData = {
+        currentCompany: transferData.currentCompany,
+        currentContractType: transferData.currentContractType,
+        currentCostCentre: transferData.currentCostCentre,
+        currentCountry: transferData.currentCountry,
+        currentDepartment: transferData.currentDepartment,
+        currentDesignation: transferData.currentDesignation,
+        currentEmployeeId: transferData.currentEmployeeId,
+        currentFixedGross: transferData.currentFixedGross,
+        currentJoiningDate: transferData.currentJoiningDate,
+        currentLocation:
+          transferData.currentLocation !== null &&
+          transferData.currentLocation !== undefined
+            ? transferData.currentLocation
+            : 0,
+        currentManagerId: transferData.currentManagerId,
+        currentMonthlyBonus: transferData.currentMonthlyBonus,
+        currentPosition: transferData.currentPosition,
+        promotedCompany: transferData.promotedCompany,
+        promotedContractType: transferData.promotedContractType,
+        promotedCostCentre: newCostCentre,
+        promotedCountry: transferData.promotedCountry,
+        promotedDateOfReturn: transferData.promotedDateOfReturn,
+        promotedDepartment: newDeptName,
+        promotedDesignation: transferData.promotedDesignation,
+        promotedEmployeeId: transferData.promotedEmployeeId,
+        promotedFixedGross: parseInt(newGross),
+        promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
+        promotedLocation: parseInt(newLocation),
+        promotedManagerId: transferData.promotedManagerId,
+        promotedMonthlyBonus:
+          bonus !== "" && bonus !== null && bonus !== undefined
+            ? parseInt(bonus)
+            : 0,
+        promotedPosition: newPositionName,
+        promotedRelocationBonus: parseInt(relocationBonus),
+        promotedTermOfProject: transferData.promotedTermOfProject,
+        remark: null,
+        status: 1,
+        transferId: transferData.transferId,
+        transferLetter: null,
+        transferType: transferData.transferType,
+      };
+      console.log(InfoData);
+      createTransferInitiation(InfoData);
+      setFormValid(true);
+      setLetterSent(true);
+      setShowLetterSubmitModal(true);
+    }
   };
 
   const handleLetterSubmitModalClose = () => {
@@ -425,7 +475,7 @@ const EntityTransferAcceptance = () => {
         promotedRelocationBonus: parseInt(relocationBonus),
         promotedTermOfProject: transferData.promotedTermOfProject,
         remark: null,
-        status: 1,
+        status: 3,
         transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
@@ -466,43 +516,43 @@ const EntityTransferAcceptance = () => {
         </Container>
       </Modal>
 
-      <Modal
+      {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {loader ? (
-            <LoaderIcon />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Fulltime" ||
-              transferData.currentContractType === "fulltime") ? (
-            <ApointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "parttime" ||
-              transferData.currentContractType === "Parttime") ? (
-            <PartTimeAppointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Local Expat" ||
-              transferData.currentContractType === "local expat") ? (
-            <LocalExpactAppointmentLetter />
-          ) : (
-            ""
-          )}
-          <br></br>
+        <Modal.Body> */}
+      {loader ? (
+        <LoaderIcon />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Fulltime" ||
+          transferData.currentContractType === "fulltime") ? (
+        <ApointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "parttime" ||
+          transferData.currentContractType === "Parttime") ? (
+        <PartTimeAppointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Local Expat" ||
+          transferData.currentContractType === "local expat") ? (
+        <LocalExpactAppointmentLetter />
+      ) : (
+        ""
+      )}
+      {/* <br></br>
 
           <Row>
             {showSignature ? (
@@ -542,7 +592,7 @@ const EntityTransferAcceptance = () => {
             </Row>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showLetterSubmitModal}
@@ -1168,11 +1218,11 @@ const EntityTransferAcceptance = () => {
                                 onClick={showTransferLetterModal}
                               >
                                 {previewTransferLetter
-                                  ? "Preview Appointment Letter"
+                                  ? "Generate Appointment Letter"
                                   : "Generate Appointment Letter"}
                               </button>
                             )}
-
+                            {/* 
                             {initiationStatus && previewTransferLetter && (
                               <div className="preview-section">
                                 <br></br>
@@ -1195,7 +1245,7 @@ const EntityTransferAcceptance = () => {
                                   Submit
                                 </button>
                               </div>
-                            )}
+                            )} */}
                           </Col>
                         </Row>
                       </Col>

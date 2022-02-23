@@ -82,11 +82,11 @@ const EditRemunerationInformation = (props) => {
       candidateData.workInformation !== null &&
       candidateData.workInformation !== undefined
     ) {
-      viewBonusByContarctType(
-        candidateData.workInformation.contractType,
-        candidateData.workInformation.department,
-        candidateData.workInformation.position
-      );
+      // viewBonusByContarctType(
+      //   candidateData.workInformation.contractType,
+      //   candidateData.workInformation.department,
+      //   candidateData.workInformation.position
+      // );
       // setFixedGross(candidateData.remuneration.fixedGross);
       // setStipened(candidateData.remuneration.stipend);
     }
@@ -603,7 +603,7 @@ const EditRemunerationInformation = (props) => {
                             workInfoViewData.contractType === "Local Expat")) &&
                         fixedGross < 25000 ? (
                         <p style={{ color: "red" }}>
-                          Value should be greater than 25000{" "}
+                          Value should be greater than $ 25000{" "}
                         </p>
                       ) : (
                         ""

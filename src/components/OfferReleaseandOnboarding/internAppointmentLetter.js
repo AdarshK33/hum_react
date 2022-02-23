@@ -40,7 +40,7 @@ const InternAppointmentLetter = (props) => {
       inputRef: inputRef,
       empId: 0,
       candidateId: candidateData.candidateInformation.candidateId,
-      module: "Appointment",
+      module: "Offer",
       empName: user.firstName + " " + user.lastName,
       empEmail: "rajasekhar@theretailinsights.com",
       empPhNo: user.phone,

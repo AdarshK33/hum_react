@@ -106,7 +106,8 @@ import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const PromotionLetter = () => {
-  const { promotionLetterData, loader } = useContext(PromotionContext);
+  const { promotionLetterData, loader, promotionIdData, PromotionCreate } =
+    useContext(PromotionContext);
   console.log(promotionLetterData, "promotionLetterData");
 
   const { user } = useContext(AppContext);
@@ -122,23 +123,70 @@ const PromotionLetter = () => {
     // setLetterView(false);
   };
   const HandleSaveLetter = () => {
-    const infoData = {
-      inputRef: inputRef,
-      empId: promotionLetterData.employeeId,
-      candidateId: 0,
-      module: "Promotion",
-      empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
-      empPhNo: user.phone,
-      history: history,
-      path: "../promotion-list",
-    };
-    console.log(
-      "getBoundingClientRect",
-      inputRef.current.getBoundingClientRect()
-    );
-    CreatePdfAndUpload(infoData, "35,280,185,380");
-    setShow(false);
+    if (
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
+    ) {
+      const InfoData = {
+        adminValidatedDate: promotionIdData["adminValidatedDate"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        managerValidatedDate: promotionIdData["managerValidatedDate"],
+        validatedManagerId: promotionIdData["validatedManagerId"],
+        validatedManagerName: promotionIdData["validatedManagerName"],
+        bonus: promotionIdData["bonus"],
+        // bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
+        effectiveDate: promotionIdData["effectiveDate"],
+        emailId: null,
+        empName: promotionIdData["empName"],
+        employeeId: promotionIdData["employeeId"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
+        newDepartment: promotionIdData["newDepartment"],
+        newFixedGross: promotionIdData["newFixedGross"],
+        oldDepartment: promotionIdData["oldDepartment"],
+        oldFixedGross: promotionIdData["oldFixedGross"],
+        oldPosition: promotionIdData["oldPosition"],
+        positionId: promotionIdData["positionId"],
+        promotedPosition: promotionIdData["promotedPosition"],
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: null,
+        reason: promotionIdData["reason"],
+        relocationBonus: promotionIdData["relocationBonus"],
+        salaryEffectiveDate: promotionIdData["salaryEffectiveDate"],
+        promotionType: promotionIdData["promotionType"],
+        remarks: promotionIdData["remarks"],
+        status: 3,
+      };
+      PromotionCreate(InfoData);
+
+      const infoData = {
+        inputRef: inputRef,
+        empId: promotionLetterData.employeeId,
+        candidateId: 0,
+        module: "Promotion",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "rajasekhar@theretailinsights.com",
+        empPhNo: user.phone,
+        history: history,
+        path: "../promotion-list",
+      };
+      console.log(
+        "getBoundingClientRect",
+        inputRef.current.getBoundingClientRect()
+      );
+      CreatePdfAndUpload(infoData, "35,330,185,430");
+      setShow(false);
+    }
   };
 
   return (

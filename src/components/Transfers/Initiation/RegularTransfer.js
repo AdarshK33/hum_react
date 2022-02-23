@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 import { Search } from "react-feather";
+import Select from "react-select";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
@@ -153,7 +154,7 @@ const RegularTransfer = () => {
             ? parseInt(bonus)
             : 0,
         promotedRelocationBonus: parseInt(relocationBonus),
-        status: 0,
+        status: 3,
         transferId: 0,
         transferType: transferType,
       };
@@ -223,7 +224,9 @@ const RegularTransfer = () => {
   };
 
   const changeCostCentreHandler = (e) => {
-    setNewCostCentre(e.target.value);
+    console.log(e,"targetValue")
+    // setNewCostCentre(e.target.value);
+         setNewCostCentre(e.value);
     setCostCentreErrMsg("");
     MakeCostCenterDependienciesNull();
   };
@@ -313,8 +316,31 @@ const RegularTransfer = () => {
 
   const submitfinalTransferLetter = (e) => {
     e.preventDefault();
-    setLetterSent(true);
-    setShowLetterSubmitModal(true);
+    const validFormRes = validateForm();
+    if (validFormRes === true && isAllNoChangesAreChecked() === false) {
+      const initiationData = {
+        ...initiationEmpData,
+        promotedCostCentre: newCostCentre,
+        promotedDepartment: newDeptName,
+        promotedFixedGross: parseInt(newGross),
+        promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
+        promotedLocation: parseInt(newLocation),
+        promotedManagerId: newManager,
+        promotedPosition: newPositionName,
+        promotedMonthlyBonus:
+          bonus !== "" && bonus !== null && bonus !== undefined
+            ? parseInt(bonus)
+            : 0,
+        promotedRelocationBonus: parseInt(relocationBonus),
+        status: 0,
+        transferId: 0,
+        transferType: transferType,
+      };
+      createTransferInitiation(initiationData)
+      setLetterSent(true);
+      setShowLetterSubmitModal(true);
+      }
+ 
   };
 
   const noChangeDeptHandler = (e) => {
@@ -730,32 +756,55 @@ const RegularTransfer = () => {
               </div>
             </Col>
             <Col md={4}>
-              <Form.Control
-                as="select"
-                className="text-primary"
-                aria-label="transferInitiationCostCentre"
-                value={newCostCentre}
-                placeholder="Select Cost Centre"
-                disabled={
-                  costCentreNoChange || newDeptName === "" ? true : false
-                }
-                onChange={changeCostCentreHandler}
-              >
-                <option value="">Select Cost Centre</option>
-                {costCentreData !== null &&
-                  costCentreData !== undefined &&
-                  costCentreData.length > 0 &&
-                  costCentreData.map((item) => {
-                    return (
-                      <option
-                        key={`cost_centre_${item.costCentreName}`}
-                        value={item.costCentreName}
-                      >
-                        {item.costCentreName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
+             { costCentreNoChange == false?
+                            <Select
+                              name="filters"
+                              as="select"
+                               defaultValue={newCostCentre}
+                               className="text-primary"
+                               aria-label="transferInitiationCostCentre"
+                              placeholder="Select Cost Center"
+                              onChange={changeCostCentreHandler}
+                              isDisabled={
+                                costCentreNoChange || newDeptName === "" ? true : false
+                              }
+                              options={
+                                costCentreData !== null
+                                  ?costCentreData.map((item) => ({
+                                    key:`cost_centre_${item.costCentreName}`,
+                                      label: item.costCentreName,
+                                      value: item.costCentreName,
+                                    }))
+                                  :[]
+                              }
+                              required
+                              isSearchable
+                            />:<Form.Control
+                            as="select"
+                            className="text-primary"
+                            aria-label="transferInitiationCostCentre"
+                            value={newCostCentre}
+                            placeholder="Select Cost Centre"
+                            disabled={
+                              costCentreNoChange || newDeptName === "" ? true : false
+                            }
+                            onChange={changeCostCentreHandler}
+                          >
+                            <option value="">Select Cost Centre</option>
+                            {costCentreData !== null &&
+                              costCentreData !== undefined &&
+                              costCentreData.length > 0 &&
+                              costCentreData.map((item) => {
+                                return (
+                                  <option
+                                    key={`cost_centre_${item.costCentreName}`}
+                                    value={item.costCentreName}
+                                  >
+                                    {item.costCentreName}
+                                  </option>
+                                );
+                              })}
+                          </Form.Control>}
               {costCentreErrMsg !== "" && (
                 <span className="text-danger">{costCentreErrMsg}</span>
               )}

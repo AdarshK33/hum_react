@@ -28,7 +28,8 @@ const PartTimerSalaryInput = () => {
   const [hoursWorkedError, setHoursWorkedError] = useState(null);
   const [toDateError, setToDateError] = useState(null);
   const [fromDateError, setFromDateError] = useState(null);
-  
+  const [successMessage, setSuccessMessage] = useState(false);
+
   const {
     ViewEmployeeData,employeeData,CreateSalaryInput,createdData
   } = useContext(PartTimeSalaryInputContext);
@@ -256,12 +257,31 @@ const fixedGrossValidation = () =>{
         toDate: state.toDate,
       };
       CreateSalaryInput(infoData);
+      setSuccessMessage(true)
   }
   }
-
+  const handleCloseValue = () => {
+    setSuccessMessage(false);
+  };
   return (
     <Fragment>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
+      <Modal
+        show={successMessage}
+        onHide={handleCloseValue}
+        size="md"
+        centered
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label className="text-center">
+          Parttime Employee Details Created successfully
+          </label>
+          <div className="text-center mb-2">
+              <Button onClick={handleCloseValue}>Close</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Breadcrumb title="PARTTIMER SALARY INPUT" parent="PARTTIMER SALARY INPUT" />
       <div className="container-fluid">
         <div className="row">
@@ -502,18 +522,18 @@ const fixedGrossValidation = () =>{
                                         selected={state.toDate}
                               
                                         name="toDate"
-                                        // minDate={moment().toDate()}
+                                         minDate={new Date(state.fromDate)}
                                         required
                                         onChange={(e) => toDateHandler(e)}
                                         dateFormat="dd-MM-yyyy"
                                         placeholderText="DD-MM-YYYY"
-                                        minDate={
-                                          new Date(
-                                            new Date().getFullYear(),
-                                              new Date().getMonth() - 1
-                                            ,21
-                                          )
-                                        }
+                                        // minDate={
+                                        //   new Date(
+                                        //     new Date().getFullYear(),
+                                        //       new Date().getMonth() - 1
+                                        //     ,21
+                                        //   )
+                                        // }
                                         maxDate={
                                           new Date(
                                             new Date().getFullYear(),

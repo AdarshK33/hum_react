@@ -1,10 +1,12 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
+import { useHistory } from "react-router-dom";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { DashboardContext } from "../../context/DashboardState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
+
 import {
   format,
   startOfMonth,
@@ -112,6 +114,7 @@ const CandidateOnboarding = () => {
   const [mandatory, setMandatory] = useState(false);
   const [generateAppoint, setGenerateAppoint] = useState(false);
   const [joiningError, setJoiningError] = useState(false);
+  let history = useHistory();
   useEffect(() => {
     if (
       candidateData !== undefined &&
@@ -124,6 +127,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
+  console.log("RoleList",RoleList);
 
   useEffect(() => {
     if (
@@ -341,10 +345,11 @@ const CandidateOnboarding = () => {
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email)) {
       if (
-        email.indexOf(
-          "@decathlon.com",
-          email.length - "@decathlon.com".length
-        ) !== -1
+        // email.indexOf(
+        //   "@decathlon.com",
+        //   email.length - "@decathlon.com".length
+        // ) !== -1
+        email.includes("@decathlon.com")
       ) {
         return true;
       } else {
@@ -374,7 +379,9 @@ const CandidateOnboarding = () => {
     }
   };
 
-  const handleClose = () => setSubmitModal(false);
+  const handleClose = () => {
+    setSubmitModal(false);
+  history.push("/offer-release-list")}
   const previewAppointmentLetter = () => {
     console.log("candidateData id", candidateData);
     if (
@@ -447,7 +454,7 @@ const CandidateOnboarding = () => {
 
     setCostCentersData(costCenterData);
     if (
-      // (validateEmail(employeeData.email) &&
+       validateEmail(employeeData.email) &&
       //   alphaNumeric(employeeData.fedId) &&
       employeeData.role !== null &&
       employeeData.role !== "" &&
@@ -473,7 +480,7 @@ const CandidateOnboarding = () => {
           candidateData.workInformation !== undefined &&
           candidateData.workInformation.contractType !== "Internship" &&
           employeeData.email === "") ||
-        employeeData.email === null
+        employeeData.email === null || !employeeData.email.includes("@decathlon.com")
       ) {
         setError(true);
       }
@@ -604,7 +611,8 @@ const CandidateOnboarding = () => {
         {submitLetter ? (
           <Modal.Body>
             <div className="offer-letter-message ">
-              <p>Appointment Letter has been Sent to the Candidate</p>
+              {/* <p>Appointment Letter has been Sent to the Candidate</p> */}
+              <p>Onboarding is completed and Employee Record has been created</p>
               <br></br>
               <Button type="button" onClick={handleClose}>
                 Close
@@ -716,7 +724,7 @@ const CandidateOnboarding = () => {
                 {RoleList !== null &&
                   RoleList !== undefined &&
                   RoleList.map((item, i) => {
-                    if (item.roleDesc !== "Administrator") {
+                    if (item.roleName !== "ADMIN"&&item.roleName!=="IT_ADMIN") {
                       return (
                         <option key={i} value={item.roleId}>
                           {item.roleDesc}

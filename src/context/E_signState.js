@@ -87,20 +87,34 @@ export const E_signProvider = ({ children }) => {
         data = {
           recipient1: {
             observer: "false",
-            pageNo: firstPageSign ? "1" : last_page.toString(),
+            pageNo:
+              firstPageSign === true
+                ? "1"
+                : firstPageSign === 3
+                ? "3"
+                : firstPageSign === false
+                ? last_page.toString()
+                : last_page.toString(),
             reason: "",
             location: location,
             rectangle: rectangle,
             name: infoData.empName,
-            email: "rajasekhar@theretailinsights.com",
-            //  infoData.empEmail,
+            email: infoData.empEmail,
+            //  ,
             phoneNumber: infoData.empPhNo,
             // "+91 8074058844,,,",
             signature_type: "Aadhaar",
           },
           recipient2: {
             observer: "false",
-            pageNo: firstPageSign ? "1" : last_page.toString(),
+            pageNo:
+              firstPageSign === true
+                ? "1"
+                : firstPageSign === 3
+                ? "3"
+                : firstPageSign === false
+                ? last_page.toString()
+                : last_page.toString(),
             reason: "",
             location: location,
             rectangle: infoData.recipient2.rectangle,

@@ -40,7 +40,10 @@ const GroupReducer = (state, action) => {
       return { ...state, designationName: action.payload };
 
     case "LOCATION":
-      return { ...state, ...action.payload };
+      return { ...state,locationName:action.payload,
+        allManagerList:action.allManagerList,
+        managerList:action.managerList 
+      };
 
     case "REMUNERATION_DATA":
       return { ...state, remunerationData: action.payload };
@@ -72,6 +75,8 @@ const GroupReducer = (state, action) => {
       return { ...state, noticePeriodViewData: action.payload };
       case "COSTCENTER_BY_DEPARTMENT":
       return { ...state, costcenterByDepartmentData: action.payload };
+      case "POSITION_BY_DEPARTMENT":
+        return { ...state, positionByDepartmentData: action.payload };
       case "ALL_COST_CENTER_DATA":
         return { ...state, allCostCenterList: action.payload };
     default:

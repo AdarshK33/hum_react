@@ -94,8 +94,10 @@ const PersonalInformation = (props) => {
   const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [saveClick, setSaveClick] = useState(false);
   const [disabilityStatus, setDisabilityStatus] = useState(false);
-  const [dateOfIssue, setDateOfIssue] = useState(null);
-  const [dateOfValidity, setDateOfValidity] = useState(null);
+  const [dateOfIssue, setDateOfIssue] = useState("");
+  const [dateOfValidity, setDateOfValidity] = useState("");
+  const [dateOfIssueError, setDateOfIssueError] = useState(false);
+  const [dateOfValidityError, setDateOfValidityError] = useState(false);
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -160,7 +162,7 @@ const PersonalInformation = (props) => {
         setNationlArray(nationList);
       } else {
         let allNationList = candidateCountryData.filter(
-          (item) => item.nationality !== null
+          (item) => item.nationality === "Indian" && item.nationality !== null
         );
         console.log("inside else");
         setNationlArray(allNationList);
@@ -547,6 +549,53 @@ const PersonalInformation = (props) => {
       return true;
     }
   };
+
+  const DateOfIssueValidations = () => {
+
+    if (
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      Object.keys(candidateViewInfo).length !== 0 &&
+      candidateViewInfo.contractType === "Local Expat"
+    ) {
+      console.log("dateOfIssue",dateOfIssue);
+      // if (state.passport !== "" && passPortValid.test(state.passport)) {
+      if (dateOfIssue) {
+        setDateOfIssueError(false);
+        console.log("dateOfIssuesucess");
+        return true;
+      } else {
+        setDateOfIssueError(true);
+        console.log("dateOfIssueerror");
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const DateOfValidityValidations = () => {
+    if (
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      Object.keys(candidateViewInfo).length !== 0 &&
+      candidateViewInfo.contractType === "Local Expat"
+    ) {
+      console.log("dateOfValidity",dateOfValidity);
+      // if (state.passport !== "" && passPortValid.test(state.passport)) {
+      if (dateOfValidity) {
+        setDateOfValidityError(false);
+        console.log("dateOfValiditysucess");
+        return true;
+      } else {
+        setDateOfValidityError(true);
+        console.log("dateOfValidityerror");
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
   const dateOfIssueHandler = (date) => {
     setDateOfIssue(date);
   };
@@ -703,6 +752,8 @@ const PersonalInformation = (props) => {
       (nationalityValidation() === true) &
       (bloodGroupValidation() === true) &
       (PassPortNumberValidations() === true) &
+      (DateOfIssueValidations() === true) &
+      (DateOfValidityValidations() === true) &
       (disabilityDocValidation() === true) &
       (validateCheckBoxesForGender(
         genderCheckM,
@@ -852,7 +903,7 @@ const PersonalInformation = (props) => {
           candidateProfileData.maritalStatus !== undefined &&
           candidateProfileData.maritalStatus !== ""
         ) {
-          if (candidateProfileData.maritalStatus !== maritalStatus) {
+          if (candidateProfileData.maritalStatus.toLocaleLowerCase() !== maritalStatus.toLowerCase()) {
             DeleteAllInsuranceNominations(candidateProfileData.candidateId);
             UpdateNomineeStatus(candidateProfileData.candidateId, false);
             const doInsuranceNomineeFalse = props.MakeFalse;
@@ -1389,28 +1440,28 @@ const PersonalInformation = (props) => {
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Issue"
                   disabled={disabled}
+                  style={dateOfIssueError ? { borderColor: "red" } : {}}
                 />
-                {/* {passDOIError ? (
+                {dateOfIssueError ? (
                   <p style={{ color: "red" }}>
-                    Please enter valid passport number
+                    Please enter valid Date
                   </p>
                 ) : (
                   <p></p>
-                )} */}
+                )}
               </Form.Group>
             ) : (
               ""
             )}
           </div>
-        </Row>
-        <Row>
+        
           <div className="col-sm-4">
             {candidateViewInfo !== null &&
             candidateViewInfo !== undefined &&
             Object.keys(candidateViewInfo).length !== 0 &&
             candidateViewInfo.contractType === "Local Expat" ? (
               <Form.Group className="reactDate">
-                <Form.Label>Date Of Validity</Form.Label>
+                <Form.Label>Date Of Validity<span style={{ color: "red" }}>*</span></Form.Label>
                 <DatePicker
                   className="form-control form-input"
                   selected={dateOfValidity}
@@ -1420,15 +1471,15 @@ const PersonalInformation = (props) => {
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Validity"
                   disabled={disabled}
-                />
-
-                {/* {passDOVError ? (
-                  <p style={{ color: "red" }}>
-                    Please enter valid passport number
-                  </p>
-                ) : (
-                  <p></p>
-                )} */}
+                  style={dateOfValidityError ? { borderColor: "red" } : {}}
+                  />
+                  {dateOfValidityError ? (
+                    <p style={{ color: "red" }}>
+                      Please enter valid Date
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
               </Form.Group>
             ) : (
               ""

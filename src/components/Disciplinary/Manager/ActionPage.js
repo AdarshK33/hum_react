@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "./ShowCauseNoticeLetter";
 import NonPerformanceLetter from "./NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
-import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter"
+import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { PermissionContext } from "../../../context/PermissionState";
@@ -377,7 +377,7 @@ const ActionPage = () => {
       console.log("search data is null");
     }
   };
-console.log(disciplinarySearchData,"disciplinarySearchData")
+  console.log(disciplinarySearchData, "disciplinarySearchData");
   return (
     <Fragment>
       {/* letter */}
@@ -421,7 +421,7 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
           disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
             <WarningLetter />
           ) : (
-            <NonPerformanceWarningLetter/>
+            <NonPerformanceWarningLetter />
           )}
         </Modal.Body>
       </Modal>
@@ -502,7 +502,8 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
                 </label>
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, sent for Cost Center Manager confirmation.
+                  Show cause notice details saved successfully, sent for Cost
+                  Center Manager confirmation.
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
@@ -530,25 +531,20 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showShowCauseNoticeModal ? (
-        <Modal
-          show={showShowCauseNoticeModal}
-          onHide={handleShowCauseLetterClose}
-          size="md"
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {disciplinarySearchData &&
-            disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryWarning !== null &&
-            disciplinarySearchData.disciplinaryWarning !== undefined &&
-            disciplinarySearchData.disciplinaryWarning !== "" &&
-            disciplinarySearchData.disciplinaryWarning.reasonId == 2?(
-              <WarningLetter />
-            ): disciplinarySearchData &&
+      ) : null}
+      {previewLetter || showShowCauseNoticeModal ? (
+        <div>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
+            <WarningLetter />
+          ) : disciplinarySearchData &&
             disciplinarySearchData !== null &&
             disciplinarySearchData !== undefined &&
             Object.keys(disciplinarySearchData).length !== 0 &&
@@ -556,69 +552,21 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
             disciplinarySearchData.disciplinaryWarning !== undefined &&
             disciplinarySearchData.disciplinaryWarning !== "" &&
             disciplinarySearchData.disciplinaryWarning.reasonId == 1 ? (
-              <NonPerformanceWarningLetter />
-            ) :disciplinarySearchData &&
-              disciplinarySearchData &&
-              disciplinarySearchData !== null &&
-              disciplinarySearchData !== undefined &&
-              Object.keys(disciplinarySearchData).length !== 0 &&
-              disciplinarySearchData.disciplinaryAction !== null &&
-              disciplinarySearchData.disciplinaryAction !== undefined &&
-              disciplinarySearchData.disciplinaryAction !== "" &&
-              disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
-              <ShowCauseNotice />
-            ) : (
-              <NonPerformanceLetter />
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+            <NonPerformanceWarningLetter />
+          ) : disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            disciplinarySearchData.disciplinaryAction !== "" &&
+            disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
+            <ShowCauseNotice />
+          ) : (
+            <NonPerformanceLetter />
+          )}
+        </div>
       ) : (
         ""
       )}
@@ -1187,7 +1135,7 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
                           ) : (
                             ""
                           )}
-                          {saveLetter ? (
+                          {/* {saveLetter ? (
                             <button
                               style={{ marginLeft: "-4px" }}
                               className={"LettersButtonsExtra"}
@@ -1209,9 +1157,9 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
                             </button>
                           ) : (
                             ""
-                          )}
+                          )} */}
 
-                          {saveLetter && (
+                          {/* {saveLetter && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
@@ -1239,7 +1187,7 @@ console.log(disciplinarySearchData,"disciplinarySearchData")
                                 ""
                               )}
                             </div>
-                          )}
+                          )} */}
                         </Col>
                       </Row>
                     </Col>

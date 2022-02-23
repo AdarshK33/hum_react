@@ -28,6 +28,7 @@ const ManagerOfferRelease = () => {
     workInfoViewData,
     workInfoView,
     remunerationData,
+    setNoticePeriodNull
   } = useContext(OfferContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
@@ -38,6 +39,7 @@ const ManagerOfferRelease = () => {
   useEffect(() => {
     console.log(createCandidateResponse);
     console.log("manager......offer");
+    setNoticePeriodNull()
   }, []);
   useEffect(() => {
     if (

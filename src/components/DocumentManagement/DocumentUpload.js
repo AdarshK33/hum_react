@@ -84,7 +84,6 @@ const DocumentUpload = () => {
   console.log(rolePermission,"rolePermission")
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
-    setFileInputName(event.target.files[0].name)
     console.log("clicked", fileObj);
     if (
       fileObj !== undefined &&
@@ -95,6 +94,7 @@ const DocumentUpload = () => {
       fileObj.name !== "" &&
       (fileObj.name.includes(".xlsx") || fileObj.name.includes(".xls"))
     ) {
+      setFileInputName(event.target.files[0].name)
       setFileUpload(fileObj);
     } else {
       toast.error("Please select a valid file to upload");
