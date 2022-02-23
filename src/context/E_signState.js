@@ -82,22 +82,53 @@ export const E_signProvider = ({ children }) => {
       var blobStore = new Blob([buffer], { type: "application/pdf" });
       blobStore.name = "esignDoc.pdf";
       console.log("blobStore", blobStore);
-
-      const data = {
-        recipient1: {
-          observer: "false",
-          pageNo: firstPageSign ? "1" : last_page.toString(),
-          reason: "",
-          location: location,
-          rectangle: rectangle,
-          name: infoData.empName,
-          email: "rajasekhar@theretailinsights.com",
-          //  infoData.empEmail,
-          phoneNumber: infoData.empPhNo,
-          // "+91 8074058844,,,",
-          signature_type: "Aadhaar",
-        },
-      };
+      var data = {};
+      if (infoData.recipient2) {
+        data = {
+          recipient1: {
+            observer: "false",
+            pageNo: firstPageSign ? "1" : last_page.toString(),
+            reason: "",
+            location: location,
+            rectangle: rectangle,
+            name: infoData.empName,
+            email: "rajasekhar@theretailinsights.com",
+            //  infoData.empEmail,
+            phoneNumber: infoData.empPhNo,
+            // "+91 8074058844,,,",
+            signature_type: "Aadhaar",
+          },
+          recipient2: {
+            observer: "false",
+            pageNo: firstPageSign ? "1" : last_page.toString(),
+            reason: "",
+            location: location,
+            rectangle: infoData.recipient2.rectangle,
+            name: infoData.recipient2.name,
+            email: "dasarirajasekharreddy@gmail.com",
+            //  infoData.recipient2.email,
+            phoneNumber: "+91 8074058844", // infoData.recipient2.phoneNumber,
+            // "+91 8074058844,,,",
+            signature_type: "Aadhaar",
+          },
+        };
+      } else {
+        data = {
+          recipient1: {
+            observer: "false",
+            pageNo: firstPageSign ? "1" : last_page.toString(),
+            reason: "",
+            location: location,
+            rectangle: rectangle,
+            name: infoData.empName,
+            email: "rajasekhar@theretailinsights.com",
+            //  infoData.empEmail,
+            phoneNumber: infoData.empPhNo,
+            // "+91 8074058844,,,",
+            signature_type: "Aadhaar",
+          },
+        };
+      }
       const eSignDetails = {
         orgId: "6180cd3596d65ededc7d30f6",
         checkOrder: "true",

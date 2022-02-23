@@ -1244,46 +1244,23 @@ const CandidateOnboarding = () => {
           </Button>
         </Row>
       )}
-      {generateAppoint === true ? (
-        !previewLetter ? (
-          <div className="px-5 mx-auto mt-5">
-            <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
-            <Row className="text-center mt-4">
-              <Button
-                type="button"
-                className="px-5 mb-4 previewButton"
-                onClick={() => generateAppointmentLetter()}
-              >
-                Generate Appointment Letter
-              </Button>
-            </Row>
-          </div>
-        ) : (
-          <div className="px-5 mx-auto mt-5">
-            <h5 style={{ fontWeight: 700 }}>APPOINTMENT LETTER</h5>
-            <div className="preview-section">
-              {/* <Row className="text-center mt-3"> */}
-              <Button
-                type="button"
-                className="px-5 mb-4 previewButton"
-                onClick={() => previewAppointmentLetter()}
-              >
-                Preview Appointment Letter
-              </Button>
-              <br></br>
-              <br></br>
-              <img src={calendarImage} alt="calendar" width="300px" />
-              <br></br>
-              <br></br>
-
-              {/* </Row> */}
-            </div>
-          </div>
-        )
+      {generateAppoint === true && !previewLetter ? (
+        <div className="px-5 mx-auto mt-5">
+          <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
+          <Row className="text-center mt-4">
+            <Button
+              type="button"
+              className="px-5 mb-4 previewButton"
+              onClick={() => generateAppointmentLetter()}
+            >
+              Generate Appointment Letter
+            </Button>
+          </Row>
+        </div>
       ) : (
         ""
       )}
-      {previewLetter === true && letterSent === false && (
+      {/* {previewLetter === true && letterSent === false && (
         <div className="preview-section">
           <Button
             type="button"
@@ -1293,7 +1270,7 @@ const CandidateOnboarding = () => {
             Save & Submit
           </Button>
         </div>
-      )}
+      )} */}
       {/* <div
         style={{
           marginTop: "2rem",
