@@ -163,6 +163,9 @@ import EmpPayroll from "./components/Payroll/EmpPayroll";
 import ManagerPayroll from "./components/Payroll/ManagerPayroll";
 
 import PartTimerSalaryInput from "./components/PartTimerSalaryInput/PartTimerSalaryInput"
+
+import EmployeeList from "./components/EmployeeHistory/EmployeeList"
+import MasterHistory from "./components/EmployeeHistory/MasterHistory"
 /* import ManagerOfferRelease from './components/Offers/managerOfferRelease'
 import OfferReleaseList from './components/Offers/OfferReleaseList'
 import EditOfferRelease from './components/Offers/editOfferRelease' */
@@ -463,10 +466,18 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/employee-info/:employeeid`}
             component={viewEmployeeInfo}
           />
-          <Route
+          {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion-list`}
             component={PromotionList}
+          /> */}
+           <Route
+            path={`${process.env.PUBLIC_URL}/promotion-list`}
+            component={MasterHistory}
           />
+             {/* <Route
+            path={`${process.env.PUBLIC_URL}/promotion-list`}
+            component={EmployeeList}
+          /> */}
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
