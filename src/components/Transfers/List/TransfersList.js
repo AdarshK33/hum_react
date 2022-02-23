@@ -95,11 +95,13 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
+                item.status === 3 ?true :
                   item.promotedManagerId === user.employeeId &&
                   item.status === 0
                     ? true
                     : false,
                 link:
+                item.status === 3 ?`/transferaction/${item.transferId}`:
                   item.promotedManagerId === user.employeeId &&
                   item.status === 0
                     ? `/transfer/${item.transferId}`
@@ -132,12 +134,13 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  // true,
+                item.status === 3 ? true :
                   item.promotedManagerId === user.employeeId &&
                   item.status === 0
                     ? true
                     : false,
                 link:
+                item.status === 3 ?`/entity-transferaction/${item.transferId}`:
                   item.promotedManagerId === user.employeeId &&
                   item.status === 0
                     ? `/entity-transfer/${item.transferId}`
@@ -164,7 +167,15 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active: false,
+                active: item.status === 3
+                ? true
+                : false,
+                link:
+                item.status === 3 ?`/changeinemp-transfer/${item.transferId}`
+                  // item.promotedManagerId === user.employeeId &&
+                  // item.status === 0
+                  //   ? `/entity-transfer/${item.transferId}`
+                    : "",
               },
             },
           };
