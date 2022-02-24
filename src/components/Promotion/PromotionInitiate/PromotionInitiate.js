@@ -126,7 +126,7 @@ const PromotionInitiate = () => {
       state.departmentId !== null &&
       state.departmentId !== undefined
     ) {
-      PositionNew(state.departmentId,state.oldPosition);
+      PositionNew(state.departmentId, state.oldPosition);
     }
   }, [departmentNew]);
 
@@ -272,15 +272,19 @@ const PromotionInitiate = () => {
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
         if (newFixedGross < 18000 || newFixedGross == 18000) {
           setNewFixedGrossError("Value should be above 18000");
-        }else if(state.newFixedGross > 18000){
-          if(state.newFixedGross < state.oldFixedGross ){
-            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
-          }else if(state.newFixedGross == state.oldFixedGross){
-            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
-          }else{
+        } else if (state.newFixedGross > 18000) {
+          if (state.newFixedGross < state.oldFixedGross) {
+            setNewFixedGrossError(
+              "Fixed gross should be greater than old fixed gross"
+            );
+          } else if (state.newFixedGross == state.oldFixedGross) {
+            setNewFixedGrossError(
+              "Fixed gross should be greater than old fixed gross"
+            );
+          } else {
             setNewFixedGrossError("");
           }
-        }else{
+        } else {
           setNewFixedGrossError("");
         }
       }
@@ -355,7 +359,7 @@ const PromotionInitiate = () => {
       departmentId !== null &&
       empName !== null &&
       effectiveDate !== null &&
-    //reportingManagerName !== null &&
+      //reportingManagerName !== null &&
       newDepartment !== undefined &&
       reason !== undefined &&
       newFixedGross !== undefined &&
@@ -363,8 +367,10 @@ const PromotionInitiate = () => {
       departmentId !== undefined &&
       effectiveDate !== undefined &&
       //reportingManagerName !== undefined &&
-      empName !== undefined && (state.promotionType == 1 && 
-        (state.oldFixedGross < state.newFixedGross) || state.promotionType == 0)
+      empName !== undefined &&
+      ((state.promotionType == 1 &&
+        state.oldFixedGross < state.newFixedGross) ||
+        state.promotionType == 0)
     ) {
       const infoData = {
         validatedAdminId: null,
@@ -604,17 +610,21 @@ const PromotionInitiate = () => {
           setNewFixedGrossError("");
         }
       } else if (contractType === "Fulltime" || contractType === "fulltime") {
-        if (e.target.value < 18000 || e.target.value == 18000){
+        if (e.target.value < 18000 || e.target.value == 18000) {
           setNewFixedGrossError("Value should be above 18000");
-        }else if(e.target.value > 18000){
-          if(e.target.value < state.oldFixedGross ){
-            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
-          }else if(e.target.value == state.oldFixedGross){
-            setNewFixedGrossError("Fixed gross should be greater than old fixed gross");
-          }else{
+        } else if (e.target.value > 18000) {
+          if (e.target.value < state.oldFixedGross) {
+            setNewFixedGrossError(
+              "Fixed gross should be greater than old fixed gross"
+            );
+          } else if (e.target.value == state.oldFixedGross) {
+            setNewFixedGrossError(
+              "Fixed gross should be greater than old fixed gross"
+            );
+          } else {
             setNewFixedGrossError("");
           }
-        }else{
+        } else {
           setNewFixedGrossError("");
         }
       }
@@ -644,13 +654,13 @@ const PromotionInitiate = () => {
   };
   const handleChangeLetterSubmit = (e) => {
     e.preventDefault();
-    console.log("submit")
+    console.log("submit");
     if (
       promotionIdData !== null &&
       promotionIdData !== undefined &&
       Object.keys(promotionIdData).length !== 0
     ) {
-      console.log("in if")
+      console.log("in if");
       const infoData = {
         adminValidatedDate: promotionIdData["adminValidatedDate"],
         validatedAdminId: promotionIdData["validatedAdminId"],
@@ -739,8 +749,21 @@ const PromotionInitiate = () => {
   return (
     <Fragment>
       <ToastContainer />
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {promotionIdData.promotionType === 0 ? (
+            <PromotionLetters />
+          ) : promotionIdData.promotionType === 1 ? (
+            <PromotionSalaryLetters />
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        ""
+      )}
 
-      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+      {/* <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body className="mx-auto">
@@ -811,8 +834,8 @@ const PromotionInitiate = () => {
           </Modal.Body>
         ) : (
           ""
-        )}
-      </Modal>
+        )} 
+      </Modal>*/}
       <Modal
         show={contractTypeStatus}
         onHide={handleCloseValue}
@@ -1501,7 +1524,7 @@ const PromotionInitiate = () => {
                                   ""
                                 )
                               }
-                              {
+                              {/* {
                                 // user !== null &&
                                 // user !== undefined &&
                                 // Object.keys(user).length !== 0 &&
@@ -1518,8 +1541,8 @@ const PromotionInitiate = () => {
                                 ) : (
                                   ""
                                 )
-                              }
-                              {
+                              } */}
+                              {/* {
                                 // user !== null &&
                                 //   user !== undefined &&
                                 //   Object.keys(user).length !== 0 &&
@@ -1554,7 +1577,7 @@ const PromotionInitiate = () => {
                                     )}
                                   </div>
                                 )
-                              }
+                              } */}
                             </div>
                           </Col>
                         </Row>

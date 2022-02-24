@@ -304,7 +304,6 @@ const EntityTransferAcceptance = () => {
       setLetterSent(true);
       setShowLetterSubmitModal(true);
     }
-   
   };
 
   const handleLetterSubmitModalClose = () => {
@@ -517,43 +516,43 @@ const EntityTransferAcceptance = () => {
         </Container>
       </Modal>
 
-      <Modal
+      {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {loader ? (
-            <LoaderIcon />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Fulltime" ||
-              transferData.currentContractType === "fulltime") ? (
-            <ApointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "parttime" ||
-              transferData.currentContractType === "Parttime") ? (
-            <PartTimeAppointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Local Expat" ||
-              transferData.currentContractType === "local expat") ? (
-            <LocalExpactAppointmentLetter />
-          ) : (
-            ""
-          )}
-          <br></br>
+        <Modal.Body> */}
+      {loader ? (
+        <LoaderIcon />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Fulltime" ||
+          transferData.currentContractType === "fulltime") ? (
+        <ApointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "parttime" ||
+          transferData.currentContractType === "Parttime") ? (
+        <PartTimeAppointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Local Expat" ||
+          transferData.currentContractType === "local expat") ? (
+        <LocalExpactAppointmentLetter />
+      ) : (
+        ""
+      )}
+      {/* <br></br>
 
           <Row>
             {showSignature ? (
@@ -593,7 +592,7 @@ const EntityTransferAcceptance = () => {
             </Row>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showLetterSubmitModal}
@@ -1219,11 +1218,11 @@ const EntityTransferAcceptance = () => {
                                 onClick={showTransferLetterModal}
                               >
                                 {previewTransferLetter
-                                  ? "Preview Appointment Letter"
+                                  ? "Generate Appointment Letter"
                                   : "Generate Appointment Letter"}
                               </button>
                             )}
-
+                            {/* 
                             {initiationStatus && previewTransferLetter && (
                               <div className="preview-section">
                                 <br></br>
@@ -1246,7 +1245,7 @@ const EntityTransferAcceptance = () => {
                                   Submit
                                 </button>
                               </div>
-                            )}
+                            )} */}
                           </Col>
                         </Row>
                       </Col>

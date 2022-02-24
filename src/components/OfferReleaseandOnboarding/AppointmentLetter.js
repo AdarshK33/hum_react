@@ -14,7 +14,8 @@ const AppointmentLetter = (props) => {
     candidateData,
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
-    loader,number2text
+    loader,
+    number2text,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -28,31 +29,42 @@ const AppointmentLetter = (props) => {
     setShow(false);
     // setLetterView(false);
   };
-
+  console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
     // setSaveLetter(true);
     if (candidateData && Object.keys(candidateData).length) {
       finalSubmitAppointmentLetter(
         candidateData.candidateInformation.candidateId
       );
-    console.log("HandleSaveLetter");
-    const infoData = {
-      inputRef: inputRef,
-      empId: 0,
-      candidateId: candidateData.candidateInformation.candidateId,
-      module: "Appointment",
-      empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
-      empPhNo: user.phone,
-      history: history,
-      path: "../offer-release-list",
-    };
-    console.log(
-      "getBoundingClientRect",
-      inputRef.current.getBoundingClientRect()
-    );
-    CreatePdfAndUpload(infoData, "35,200,185,300");
-    setShow(false);
+      console.log("HandleSaveLetter");
+      const infoData = {
+        inputRef: inputRef,
+        empId: 0,
+        candidateId: candidateData.candidateInformation.candidateId,
+        module: "Offer",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "rajasekhar@theretailinsights.com",
+        empPhNo: user.phone,
+        history: history,
+        path: "../offer-release-list",
+        recipient2: {
+          rectangle: "430,250,580,350",
+          name:
+            candidateData.candidateInformation.firstName +
+            " " +
+            candidateData.candidateInformation.lastName,
+          email: "rajasekhar@theretailinsights.com",
+          //  candidateData.candidateInformation.personalEmail,
+          phoneNumber: candidateData.candidateInformation.empPhNo,
+          // "+91 8074058844,,,",
+        },
+      };
+      console.log(
+        "getBoundingClientRect",
+        inputRef.current.getBoundingClientRect()
+      );
+      CreatePdfAndUpload(infoData, "35,250,185,350");
+      setShow(false);
     }
   };
 
@@ -561,7 +573,7 @@ const AppointmentLetter = (props) => {
                   </tbody>
                 </Table>
 
-                <div style={{ width: "100%" }}>
+                <div style={{ marginLeft: "2rem" }}>
                   {/* stylings are not accepting by html to pdf */}
                   <p>
                     For {offerLetterData.companyName}
@@ -579,7 +591,7 @@ const AppointmentLetter = (props) => {
                     &nbsp; Accepted By Me
                   </p>
                 </div>
-                <div style={{ width: "100%" }}>
+                <div style={{ marginLeft: "3rem" }}>
                   <p>
                     Authorised Signatory
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

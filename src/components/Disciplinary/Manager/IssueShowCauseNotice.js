@@ -284,7 +284,7 @@ const IssueShowCauseNotice = () => {
           reasonDetailsId:
             disciplinarySearchData.disciplinaryAction.reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
-         //  showCauseNotice: null, //31/1/2022
+          //  showCauseNotice: null, //31/1/2022
           status: 0,
           // rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: null,
@@ -607,7 +607,8 @@ const IssueShowCauseNotice = () => {
                 </label>
               ) : rolePermission == "manager" ? (
                 <label className="text-center">
-                  Show cause notice details saved successfully, sent for Cost Center Manager confirmation.
+                  Show cause notice details saved successfully, sent for Cost
+                  Center Manager confirmation.
                 </label>
               ) : rolePermission == "costCenterManager" ? (
                 <label className="text-center">
@@ -647,69 +648,23 @@ const IssueShowCauseNotice = () => {
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showShowCauseNoticeModal ? (
-        <Fragment>
-            {disciplinarySearchData &&
-            disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined &&
-            state.disciplinaryAction !== null &&
-            changeInReason == 2 ? (
-              <ShowCauseNotice />
-            ) : (
-              <NonPerformanceLetter />
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Fragment>
+      ) : null}
+      {previewLetter || showShowCauseNoticeModal ? (
+        <div>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          state.disciplinaryAction !== null &&
+          changeInReason == 2 ? (
+            <ShowCauseNotice />
+          ) : (
+            <NonPerformanceLetter />
+          )}
+        </div>
       ) : (
         ""
       )}
