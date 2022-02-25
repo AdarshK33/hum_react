@@ -31,40 +31,40 @@ const LocalExpactAppointmentLetter = (props) => {
   console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
     // setSaveLetter(true);
-    // if (candidateData && Object.keys(candidateData).length) {
-    //   finalSubmitAppointmentLetter(
-    //     candidateData.candidateInformation.candidateId
-    //   );
-    console.log("HandleSaveLetter");
-    const infoData = {
-      inputRef: inputRef,
-      empId: 0,
-      candidateId: candidateData.candidateInformation.candidateId,
-      module: "Offer",
-      empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
-      empPhNo: user.phone,
-      history: history,
-      path: "../offer-release-list",
-      recipient2: {
-        rectangle: "430,160,580,260",
-        name:
-          candidateData.candidateInformation.firstName +
-          " " +
-          candidateData.candidateInformation.lastName,
-        email: "rajasekhar@theretailinsights.com",
-        //  candidateData.candidateInformation.personalEmail,
-        phoneNumber: candidateData.candidateInformation.empPhNo,
-        // "+91 8074058844,,,",
-      },
-    };
-    console.log(
-      "getBoundingClientRect",
-      inputRef.current.getBoundingClientRect()
-    );
-    CreatePdfAndUpload(infoData, "35,160,185,260");
-    setShow(false);
-    // }
+    if (candidateData && Object.keys(candidateData).length) {
+      finalSubmitAppointmentLetter(
+        candidateData.candidateInformation.candidateId
+      );
+      console.log("HandleSaveLetter");
+      const infoData = {
+        inputRef: inputRef,
+        empId: 0,
+        candidateId: candidateData.candidateInformation.candidateId,
+        module: "Appointment",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "amit.kumar@qsometech.com",
+        empPhNo: user.phone,
+        history: history,
+        path: "../offer-release-list",
+        recipient2: {
+          rectangle: "430,160,580,260",
+          name:
+            candidateData.candidateInformation.firstName +
+            " " +
+            candidateData.candidateInformation.lastName,
+          email: "kamala.nagaraj@decathlon.com",
+          //  candidateData.candidateInformation.personalEmail,
+          phoneNumber: candidateData.candidateInformation.empPhNo,
+          // "+91 8074058844,,,",
+        },
+      };
+      console.log(
+        "getBoundingClientRect",
+        inputRef.current.getBoundingClientRect()
+      );
+      CreatePdfAndUpload(infoData, "35,160,185,260");
+      setShow(false);
+    }
   };
 
   return (

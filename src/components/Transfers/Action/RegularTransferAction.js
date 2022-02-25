@@ -85,14 +85,12 @@ const RegularTransferAction = () => {
       ) {
         costCentreLocationData !== null &&
           costCentreLocationData !== undefined &&
-          Object.keys(costCentreLocationData).length !==
-            0 &&
+          Object.keys(costCentreLocationData).length !== 0 &&
           costCentreLocationData.map((item) => {
-            if(item.stateId === transferData.promotedLocation){
+            if (item.stateId === transferData.promotedLocation) {
               setNewLocation(item.stateName);
-
             }
-          })
+          });
       } else {
         setNewLocation("");
       }
@@ -235,47 +233,47 @@ const RegularTransferAction = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-      const InfoData = {
-        currentCompany: transferData.currentCompany,
-        currentContractType: transferData.currentContractType,
-        currentCostCentre: transferData.currentCostCentre,
-        currentCountry: transferData.currentCountry,
-        currentDepartment: transferData.currentDepartment,
-        currentDesignation: transferData.currentDesignation,
-        currentEmployeeId: transferData.currentEmployeeId,
-        currentFixedGross: transferData.currentFixedGross,
-        currentJoiningDate: transferData.currentJoiningDate,
-        currentLocation: transferData.currentLocation,
-        currentManagerId: transferData.currentManagerId,
-        currentMonthlyBonus: transferData.currentMonthlyBonus,
-        currentPosition: transferData.currentPosition,
-        promotedCompany: transferData.promotedCompany,
-        promotedContractType: transferData.promotedContractType,
-        promotedCostCentre: transferData.promotedCostCentre,
-        promotedCountry: transferData.promotedCountry,
-        promotedDateOfReturn: transferData.promotedDateOfReturn,
-        promotedDepartment: transferData.promotedDepartment,
-        promotedDesignation: transferData.promotedDesignation,
-        promotedEmployeeId: transferData.promotedEmployeeId,
-        promotedFixedGross: transferData.promotedFixedGross,
-        promotedJoiningDate: transferData.promotedJoiningDate,
-        promotedLocation: newLocation,
-        promotedManagerId: transferData.promotedManagerId,
-        promotedMonthlyBonus: transferData.promotedMonthlyBonus,
-        promotedPosition: transferData.promotedPosition,
-        promotedRelocationBonus: transferData.promotedRelocationBonus,
-        status: 0,
-        transferId: transferData.transferId,
-        transferType: transferData.transferType,
-      };
-      console.log(InfoData);
-      createTransferInitiation(InfoData);
-      setFormValid(true);
-      setLetterSent(true);
+    const InfoData = {
+      currentCompany: transferData.currentCompany,
+      currentContractType: transferData.currentContractType,
+      currentCostCentre: transferData.currentCostCentre,
+      currentCountry: transferData.currentCountry,
+      currentDepartment: transferData.currentDepartment,
+      currentDesignation: transferData.currentDesignation,
+      currentEmployeeId: transferData.currentEmployeeId,
+      currentFixedGross: transferData.currentFixedGross,
+      currentJoiningDate: transferData.currentJoiningDate,
+      currentLocation: transferData.currentLocation,
+      currentManagerId: transferData.currentManagerId,
+      currentMonthlyBonus: transferData.currentMonthlyBonus,
+      currentPosition: transferData.currentPosition,
+      promotedCompany: transferData.promotedCompany,
+      promotedContractType: transferData.promotedContractType,
+      promotedCostCentre: transferData.promotedCostCentre,
+      promotedCountry: transferData.promotedCountry,
+      promotedDateOfReturn: transferData.promotedDateOfReturn,
+      promotedDepartment: transferData.promotedDepartment,
+      promotedDesignation: transferData.promotedDesignation,
+      promotedEmployeeId: transferData.promotedEmployeeId,
+      promotedFixedGross: transferData.promotedFixedGross,
+      promotedJoiningDate: transferData.promotedJoiningDate,
+      promotedLocation: newLocation,
+      promotedManagerId: transferData.promotedManagerId,
+      promotedMonthlyBonus: transferData.promotedMonthlyBonus,
+      promotedPosition: transferData.promotedPosition,
+      promotedRelocationBonus: transferData.promotedRelocationBonus,
+      status: 0,
+      transferId: transferData.transferId,
+      transferType: transferData.transferType,
+    };
+    console.log(InfoData);
+    createTransferInitiation(InfoData);
+    setFormValid(true);
+    setLetterSent(true);
     setShowLetterSubmitModal(true);
   };
 
-console.log(transferData,"transferData")
+  console.log(transferData, "transferData");
   return (
     <Fragment>
       {/* <ToastContainer /> */}
@@ -389,163 +387,167 @@ console.log(transferData,"transferData")
                 <div className="OnBoardHeading">
                   <b>TRANSFER ACTION </b>
                 </div>
-                {loader === true ? (
-                  <div
-                    className="loader-box loader"
-                    style={{ width: "100% !important" }}
-                  >
-                    <div className="loader">
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
+                <Container className="ml-4 mt-4">
+                  {loader === true ? (
+                    <div
+                      className="loader-box loader"
+                      style={{ width: "100% !important" }}
+                    >
+                      <div className="loader">
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <Form>
-                    <Row className="mx-5 mt-5">
-                      <Col>
-                        <Row className="mb-4">
-                          <Col md={2}>Transfer Type</Col>
-                          <Col md={8} className="text-primary">
-                            {transferData.transferType}
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
-                          <Col md={2}>Employee Name</Col>
-                          <Col md={8} className="text-primary">
-                            {transferData.employeeName}{" "}
-                            {transferData.currentEmployeeId}
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="font-weight-bold my-2"
-                          >
-                            Current
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="font-weight-bold my-2"
-                          >
-                            New
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
-                          <Col md={2}>Department</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentDepartment}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedDepartment}
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
-                          <Col md={2}>Cost Centre</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentCostCentre}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedCostCentre}
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
-                          <Col md={2}>Manager</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentManagerName}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedManagerName}
-                          </Col>
-                        </Row>
-
-                        <Row className="mb-4">
-                          <Col md={2}>Position</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentPosition}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedPosition}
-                          </Col>
-                        </Row>
-
-                        <Form.Group
-                          as={Row}
-                          className="mb-3"
-                          controlId="transferInitiationLocation"
-                        >
-                          <Form.Label column md={2}>
-                            Location
-                          </Form.Label>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentLocationName}
-                          </Col>
-                          <Col md={{ span: 4, offset: 2 }} className="text-primary">
-                            {newLocation}
-                          </Col>
-                        </Form.Group>
-
-                        <Form.Group as={Row} className="mb-3">
-                          <Form.Label column md={2} className="py-0">
-                            Bonus In Percent
-                          </Form.Label>
-                          <Col md={4} className="text-primary">
-                            {transferData.promotedMonthlyBonus !== null &&
-                            transferData.promotedMonthlyBonus !== undefined &&
-                            transferData.promotedMonthlyBonus !== 0
-                              ? transferData.promotedMonthlyBonus + "%"
-                              : "NA"}
-                          </Col>
-
-                          <Col md={2} className="pt-2" className="py-0">
-                            Relocation Bonus
-                          </Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.promotedRelocationBonus !== null &&
-                            transferData.promotedRelocationBonus !==
-                              undefined &&
-                            transferData.promotedRelocationBonus !== ""
-                              ? transferData.promotedRelocationBonus
-                              : "NA"}
-                          </Col>
-                        </Form.Group>
-                        <Row className="mb-4">
-                          <Col md={2} className="py-0">
-                            Effective Date
-                          </Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.promotedJoiningDate}
-                          </Col>
-                        </Row>
-                        {state.remarks !== "" &&
-                        state.remarks !== null &&
-                        state.remarks !== undefined ? (
+                  ) : (
+                    <Form>
+                      <Row className="mx-5 mt-5">
+                        <Col>
                           <Row className="mb-4">
-                            <Col md={2} className="py-0">
-                              Reason for transfer rejection
-                            </Col>
-                            <Col md={4} className="text-primary">
-                              {state.remarks}
+                            <Col md={2}>Transfer Type</Col>
+                            <Col md={8} className="text-primary">
+                              {transferData.transferType}
                             </Col>
                           </Row>
-                        ) : (
-                          ""
-                        )}
+                          <Row className="mb-4">
+                            <Col md={2}>Employee Name</Col>
+                            <Col md={8} className="text-primary">
+                              {transferData.employeeName}{" "}
+                              {transferData.currentEmployeeId}
+                            </Col>
+                          </Row>
+                          <Row className="mb-4">
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="font-weight-bold my-2"
+                            >
+                              Current
+                            </Col>
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="font-weight-bold my-2"
+                            >
+                              New
+                            </Col>
+                          </Row>
+                          <Row className="mb-4">
+                            <Col md={2}>Department</Col>
+                            <Col md={4} className="text-primary">
+                              {transferData.currentDepartment}
+                            </Col>
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="text-primary"
+                            >
+                              {transferData.promotedDepartment}
+                            </Col>
+                          </Row>
+                          <Row className="mb-4">
+                            <Col md={2}>Cost Centre</Col>
+                            <Col md={4} className="text-primary">
+                              {transferData.currentCostCentre}
+                            </Col>
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="text-primary"
+                            >
+                              {transferData.promotedCostCentre}
+                            </Col>
+                          </Row>
+                          <Row className="mb-4">
+                            <Col md={2}>Manager</Col>
+                            <Col md={4} className="text-primary">
+                              {transferData.currentManagerName}
+                            </Col>
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="text-primary"
+                            >
+                              {transferData.promotedManagerName}
+                            </Col>
+                          </Row>
 
-                        {/* <Row>
+                          <Row className="mb-4">
+                            <Col md={2}>Position</Col>
+                            <Col md={4} className="text-primary">
+                              {transferData.currentPosition}
+                            </Col>
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="text-primary"
+                            >
+                              {transferData.promotedPosition}
+                            </Col>
+                          </Row>
+
+                          <Form.Group
+                            as={Row}
+                            className="mb-3"
+                            controlId="transferInitiationLocation"
+                          >
+                            <Form.Label column md={2}>
+                              Location
+                            </Form.Label>
+                            <Col md={4} className="text-primary">
+                              {transferData.currentLocationName}
+                            </Col>
+                            <Col
+                              md={{ span: 4, offset: 2 }}
+                              className="text-primary"
+                            >
+                              {newLocation}
+                            </Col>
+                          </Form.Group>
+
+                          <Form.Group as={Row} className="mb-3">
+                            <Form.Label column md={2} className="py-0">
+                              Bonus In Percent
+                            </Form.Label>
+                            <Col md={4} className="text-primary">
+                              {transferData.promotedMonthlyBonus !== null &&
+                              transferData.promotedMonthlyBonus !== undefined &&
+                              transferData.promotedMonthlyBonus !== 0
+                                ? transferData.promotedMonthlyBonus + "%"
+                                : "NA"}
+                            </Col>
+
+                            <Col md={2} className="pt-2" className="py-0">
+                              Relocation Bonus
+                            </Col>
+                            <Col md={4} className="text-primary">
+                              {transferData.promotedRelocationBonus !== null &&
+                              transferData.promotedRelocationBonus !==
+                                undefined &&
+                              transferData.promotedRelocationBonus !== ""
+                                ? transferData.promotedRelocationBonus
+                                : "NA"}
+                            </Col>
+                          </Form.Group>
+                          <Row className="mb-4">
+                            <Col md={2} className="py-0">
+                              Effective Date
+                            </Col>
+                            <Col md={4} className="text-primary">
+                              {transferData.promotedJoiningDate}
+                            </Col>
+                          </Row>
+                          {state.remarks !== "" &&
+                          state.remarks !== null &&
+                          state.remarks !== undefined ? (
+                            <Row className="mb-4">
+                              <Col md={2} className="py-0">
+                                Reason for transfer rejection
+                              </Col>
+                              <Col md={4} className="text-primary">
+                                {state.remarks}
+                              </Col>
+                            </Row>
+                          ) : (
+                            ""
+                          )}
+
+                          {/* <Row>
                           <Col
                             style={{
                               marginTop: "2rem",
@@ -622,52 +624,61 @@ console.log(transferData,"transferData")
                               )}
                           </Col>
                         </Row> */}
-                         <Row>
-            <Col
-              style={{
-                marginTop: "2rem",
-                marginBottom: "2rem",
-                textAlign: "center",
-              }}
-            >
-              <button
-                disabled={true}
-                className={"confirmButton"}
-              >
-                Save
-              </button>
-              { (
-                <button
-                  className={"LettersButtons"}
-                  onClick={showTransferLetterModal}
-                >
-                  {previewTransferLetter
-                    ? "Preview Transfer Letter"
-                    : "Generate Transfer Letter"}
-                </button>
-              )}
+                          <Row>
+                            <Col
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              <button
+                                disabled={true}
+                                className={"confirmButton"}
+                              >
+                                Save
+                              </button>
+                              {
+                                <button
+                                  className={"LettersButtons"}
+                                  onClick={showTransferLetterModal}
+                                >
+                                  {previewTransferLetter
+                                    ? "Preview Transfer Letter"
+                                    : "Generate Transfer Letter"}
+                                </button>
+                              }
 
-               {previewTransferLetter && (
-                <div className="preview-section">
-                  <br></br>
-                  <br></br>
-                  <img src={calendarImage} alt="calendar" width="200px" />
-                  <br></br>
-                  <button
-                    disabled={letterSent}
-                    className={letterSent ? "confirmButton" : "stepperButtons"}
-                    onClick={submitHandler}
-                  >
-                    Submit
-                  </button>
-                </div>
-              )}
-            </Col>
-          </Row>
-                      </Col>
-                    </Row>
-                  </Form>
-                )}
+                              {previewTransferLetter && (
+                                <div className="preview-section">
+                                  <br></br>
+                                  <br></br>
+                                  <img
+                                    src={calendarImage}
+                                    alt="calendar"
+                                    width="200px"
+                                  />
+                                  <br></br>
+                                  <button
+                                    disabled={letterSent}
+                                    className={
+                                      letterSent
+                                        ? "confirmButton"
+                                        : "stepperButtons"
+                                    }
+                                    onClick={submitHandler}
+                                  >
+                                    Submit
+                                  </button>
+                                </div>
+                              )}
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </Form>
+                  )}
+                </Container>
               </div>
             </div>
           </div>

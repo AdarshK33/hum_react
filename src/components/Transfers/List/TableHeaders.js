@@ -29,6 +29,7 @@ const TRANSFER_TABLE_HEADERS = {
     status: "Status",
     view: "View",
     action: "Action",
+    alert: "View Signed Document",
   },
   international: {
     sno: "S.No",
@@ -56,6 +57,7 @@ const TRANSFER_TABLE_HEADERS = {
     status: "Status",
     view: "View",
     action: "Action",
+    alert: "View Signed Document",
 
     // curDept: "Current Department",
     // curPos: "Current Position",

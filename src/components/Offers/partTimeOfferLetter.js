@@ -14,7 +14,8 @@ const PartTimeOfferLetter = () => {
     offerLetterData,
     loader,
     finalSubmitOfferLetter,
-    candidateData,number2text
+    candidateData,
+    number2text,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -38,9 +39,9 @@ const PartTimeOfferLetter = () => {
         inputRef: inputRef,
         empId: 0,
         candidateId: candidateData.candidateInformation.candidateId,
-        module: "Offer",
+        module: "Offer and On Boarding",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com",
+        empEmail: "amit.kumar@qsometech.com",
         empPhNo: user.phone,
         history: history,
         path: "../offer-release-list",
@@ -116,7 +117,9 @@ const PartTimeOfferLetter = () => {
                     </li>
                     <li>
                       Your gross salary will not exceed{" "}
-                      <b>{offerLetterData.fixedGross}</b>(INR. {number2text(parseInt(offerLetterData.fixedGross))}) per Hourly
+                      <b>{offerLetterData.fixedGross}</b>(INR.{" "}
+                      {number2text(parseInt(offerLetterData.fixedGross))}) per
+                      Hourly
                     </li>
                     <li>
                       You may also receive a bonus on monthly basis and which
