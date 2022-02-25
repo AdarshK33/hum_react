@@ -206,6 +206,7 @@ const OfferReleaseList = () => {
                         ""
                       )}
                       <th scope="col">View Signed Offer Letter</th>
+                      <th scope="col">View Signed Appointment Letter</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -376,6 +377,24 @@ const OfferReleaseList = () => {
                                   <AlertCircle
                                     onClick={() => {
                                       GoToLetterView(item.refId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
+                              </td>
+                            )}
+
+                            {item.appointRefId !== null &&
+                            item.appointRefId !== undefined &&
+                            item.appointRefId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
+                                    onClick={() => {
+                                      GoToLetterView(item.appointRefId);
                                     }}
                                   />
                                 </Link>
