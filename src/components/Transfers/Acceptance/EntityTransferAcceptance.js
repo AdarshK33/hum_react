@@ -39,6 +39,8 @@ const EntityTransferAcceptance = () => {
     getTransferData,
     transferData,
     getApointmentLetter,
+    setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
@@ -247,6 +249,7 @@ const EntityTransferAcceptance = () => {
     ) {
       getApointmentLetter(transferData.promotedEmployeeId);
       setShowInitiationLetter(true);
+      setLetterViewing(true);
     }
   };
 
@@ -527,6 +530,7 @@ const EntityTransferAcceptance = () => {
         <LoaderIcon />
       ) : transferData !== null &&
         transferData !== undefined &&
+        letterView &&
         Object.keys(transferData).length !== 0 &&
         transferData.currentContractType !== null &&
         transferData.currentContractType !== undefined &&
@@ -535,6 +539,7 @@ const EntityTransferAcceptance = () => {
         <ApointmentLetter />
       ) : transferData !== null &&
         transferData !== undefined &&
+        letterView &&
         Object.keys(transferData).length !== 0 &&
         transferData.currentContractType !== null &&
         transferData.currentContractType !== undefined &&
@@ -543,6 +548,7 @@ const EntityTransferAcceptance = () => {
         <PartTimeAppointmentLetter />
       ) : transferData !== null &&
         transferData !== undefined &&
+        letterView &&
         Object.keys(transferData).length !== 0 &&
         transferData.currentContractType !== null &&
         transferData.currentContractType !== undefined &&

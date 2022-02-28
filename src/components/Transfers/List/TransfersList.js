@@ -151,6 +151,11 @@ const TransferPage = () => {
                     : "",
               },
             },
+            alert: {
+              active: item.refId ? true : false,
+              link: item.refId ? "link" : "",
+              refId: item.refId ? parseInt(item.refId) : null,
+            },
           };
         });
         setTableBody(tableData);
@@ -180,6 +185,11 @@ const TransferPage = () => {
                       //   ? `/entity-transfer/${item.transferId}`
                       "",
               },
+            },
+            alert: {
+              active: item.refId ? true : false,
+              link: item.refId ? "link" : "",
+              refId: item.refId ? parseInt(item.refId) : null,
             },
           };
         });

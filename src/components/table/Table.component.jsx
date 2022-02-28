@@ -69,6 +69,25 @@ const TableComponent = ({
                         )}
                       </td>
                     );
+                  } else if (key === "alert") {
+                    return (
+                      <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
+                        {value.link === "link" && value.refId ? (
+                          <Link>
+                            <TableActionButton
+                              disabled={!value.active}
+                              type={key}
+                              refId={value.refId}
+                            />
+                          </Link>
+                        ) : (
+                          <TableActionButton
+                            disabled={!value.active}
+                            type={key}
+                          />
+                        )}
+                      </td>
+                    );
                   } else if (key === "action") {
                     return (
                       <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>

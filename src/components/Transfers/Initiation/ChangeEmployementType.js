@@ -32,6 +32,8 @@ const ChangeEmployementType = () => {
     initiationTransferId,
     getApointmentLetter,
     transferData,
+    setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEmployement, setNewEmployement] = useState("");
@@ -178,6 +180,7 @@ const ChangeEmployementType = () => {
       transferData.promotedEmployeeId !== ""
     ) {
       getApointmentLetter(transferData.promotedEmployeeId);
+      setLetterViewing(true);
       setShowInitiationLetter(true);
     }
   };
@@ -462,6 +465,7 @@ const ChangeEmployementType = () => {
         <Modal.Body> */}
       {transferData !== null &&
       transferData !== undefined &&
+      letterView &&
       Object.keys(transferData).length !== 0 &&
       transferData.promotedContractType !== null &&
       transferData.promotedContractType !== undefined &&
@@ -471,6 +475,7 @@ const ChangeEmployementType = () => {
         <PartTimeToFullTimeLetter />
       ) : transferData !== null &&
         transferData !== undefined &&
+        letterView &&
         Object.keys(transferData).length !== 0 &&
         transferData.promotedContractType !== null &&
         transferData.promotedContractType !== undefined &&

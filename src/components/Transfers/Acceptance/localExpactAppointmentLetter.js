@@ -7,7 +7,8 @@ import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const LocalExpactAppointmentLetter = (props) => {
-  const { offerLetterData, transferData, loader } = useContext(TransferContext);
+  const { offerLetterData, transferData, loader, setLetterViewing } =
+    useContext(TransferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -50,6 +51,7 @@ const LocalExpactAppointmentLetter = (props) => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,250,185,350");
+      setLetterViewing(false);
       setShow(false);
     }
   };

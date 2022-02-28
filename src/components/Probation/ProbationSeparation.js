@@ -733,66 +733,17 @@ const ProbationSeparation = () => {
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {endLetterData &&
-            endLetterData !== undefined &&
-            endLetterData !== null ? (
-              <EndOfProbationLetter />
-            ) : (
-              ""
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+      ) : null}
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {endLetterData &&
+          endLetterData !== undefined &&
+          endLetterData !== null ? (
+            <EndOfProbationLetter />
+          ) : (
+            ""
+          )}
+        </div>
       ) : (
         ""
       )}
@@ -1344,7 +1295,7 @@ const ProbationSeparation = () => {
                           ) : (
                             ""
                           )}
-                          {saveLetter && previewGeneratedLetter ? (
+                          {/* {saveLetter && previewGeneratedLetter ? (
                             <button
                               className={"LettersButtons"}
                               onClick={previewRelivingLetter}
@@ -1353,9 +1304,9 @@ const ProbationSeparation = () => {
                             </button>
                           ) : (
                             ""
-                          )}
+                          )} */}
 
-                          {saveLetter && previewGeneratedLetter && (
+                          {/* {saveLetter && previewGeneratedLetter && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
@@ -1392,9 +1343,9 @@ const ProbationSeparation = () => {
                                 //   Submit
                                 // </Button>
                                 ""
-                              )}
+                              )} 
                             </div>
-                          )}
+                          )}*/}
                         </Col>
                       </Row>
                     </Col>

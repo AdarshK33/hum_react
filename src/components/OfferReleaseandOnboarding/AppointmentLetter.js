@@ -41,9 +41,9 @@ const AppointmentLetter = (props) => {
         inputRef: inputRef,
         empId: 0,
         candidateId: candidateData.candidateInformation.candidateId,
-        module: "Offer",
+        module: "Appointment",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com",
+        empEmail: "amit.kumar@qsometech.com",
         empPhNo: user.phone,
         history: history,
         path: "../offer-release-list",
@@ -53,7 +53,7 @@ const AppointmentLetter = (props) => {
             candidateData.candidateInformation.firstName +
             " " +
             candidateData.candidateInformation.lastName,
-          email: "rajasekhar@theretailinsights.com",
+          email: "kamala.nagaraj@decathlon.com",
           //  candidateData.candidateInformation.personalEmail,
           phoneNumber: candidateData.candidateInformation.empPhNo,
           // "+91 8074058844,,,",

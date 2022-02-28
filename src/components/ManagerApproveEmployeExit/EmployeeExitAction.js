@@ -40,7 +40,7 @@ const EmployeeExitAction = (props) => {
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
-  const [lastWorkingDate,setlastWorkingDate] = useState(new Date())
+  const [lastWorkingDate, setlastWorkingDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
 
   const [state, setState] = useState({
@@ -132,13 +132,15 @@ const EmployeeExitAction = (props) => {
               ? employeeData.internshipPeriod
               : 0)
         );
-        setlastWorkingDate(new Date(employeeData.joiningDate).setMonth(
-          new Date(employeeData.joiningDate).getMonth() +
-            (employeeData.internshipPeriod !== null &&
-            employeeData.internshipPeriod !== undefined
-              ? employeeData.internshipPeriod
-              : 0)
-        ))
+        setlastWorkingDate(
+          new Date(employeeData.joiningDate).setMonth(
+            new Date(employeeData.joiningDate).getMonth() +
+              (employeeData.internshipPeriod !== null &&
+              employeeData.internshipPeriod !== undefined
+                ? employeeData.internshipPeriod
+                : 0)
+          )
+        );
       } else if (
         state.empContractType === "Fulltime" ||
         state.empContractType === "fulltime" ||
@@ -155,20 +157,22 @@ const EmployeeExitAction = (props) => {
         );
         setLastDateSelection(aboveDateValue);
         state.lastWorkingDate = dateValue;
-        setlastWorkingDate(dateValue)
+        setlastWorkingDate(dateValue);
       } else {
         state.lastWorkingDate = "";
-        setlastWorkingDate("")
+        setlastWorkingDate("");
       }
       state.lastWorkingDate =
         employeeData.lastWorkingDate !== null &&
         employeeData.lastWorkingDate !== undefined
           ? new Date(employeeData.lastWorkingDate)
           : new Date();
-          setlastWorkingDate(employeeData.lastWorkingDate !== null &&
-            employeeData.lastWorkingDate !== undefined
-              ? new Date(employeeData.lastWorkingDate)
-              : new Date())
+      setlastWorkingDate(
+        employeeData.lastWorkingDate !== null &&
+          employeeData.lastWorkingDate !== undefined
+          ? new Date(employeeData.lastWorkingDate)
+          : new Date()
+      );
       state.personalEmailId = employeeData.personalEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
@@ -301,7 +305,7 @@ const EmployeeExitAction = (props) => {
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
     const value = checkValidations();
-    console.log(value,"submit")
+    console.log(value, "submit");
     if (value === true) {
       if (
         (RehireNo === true && state.remarks === "") ||
@@ -345,7 +349,7 @@ const EmployeeExitAction = (props) => {
           withdraw: employeeData.withdraw,
         };
         console.log("save ", InfoData);
-        UpdateEmplyoeeExist(InfoData,employeeData.employeeId);
+        UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
       }
     }
     if (
@@ -465,12 +469,12 @@ const EmployeeExitAction = (props) => {
     setPreview(false);
   };
   const dateOfBirthHandler1 = (e) => {
-    console.log(e,"dateOfBirthHandler1")
+    console.log(e, "dateOfBirthHandler1");
     var AdjusteddateValue = new Date(
       e.getTime() - e.getTimezoneOffset() * 60000
     );
     state.lastWorkingDate = AdjusteddateValue;
-    setlastWorkingDate(AdjusteddateValue)
+    setlastWorkingDate(AdjusteddateValue);
   };
   const submitHandler = (e) => {
     console.log("submit handler");
@@ -519,17 +523,17 @@ const EmployeeExitAction = (props) => {
           status: 8,
           withdraw: employeeData.withdraw,
         };
-        UpdateEmplyoeeExist(InfoData,employeeData.employeeId);
+        UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
         setSuccessModal(true);
         setPreview(true);
         console.log("in else", InfoData);
       }
     }
   };
-  console.log(relivingLetterData,"relivingLetterData",modeOfSeparation);
-  const handleRelivingClose1 = ()=>{
-   props.history.push("/exit-approval") 
-  }
+  console.log(relivingLetterData, "relivingLetterData", modeOfSeparation);
+  const handleRelivingClose1 = () => {
+    props.history.push("/exit-approval");
+  };
   return (
     <Fragment>
       {employeeData !== null &&
@@ -575,7 +579,8 @@ const EmployeeExitAction = (props) => {
                   ? terminationLetterData.lastWorkingDate
                   : relivingLetterData !== null &&
                     relivingLetterData !== undefined &&
-                    (modeOfSeparation == "Employee Resignation" || modeOfSeparation == 1)
+                    (modeOfSeparation == "Employee Resignation" ||
+                      modeOfSeparation == 1)
                   ? relivingLetterData.lastWorkingDate
                   : new Date(),
                 "YYYY-MM-DD"
@@ -588,66 +593,17 @@ const EmployeeExitAction = (props) => {
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {relivingLetterData &&
-            relivingLetterData !== undefined &&
-            relivingLetterData !== null ? (
-              <RelievingLetter />
-            ) : (
-              ""
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    style={{marginLeft:"50px"}}
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+      ) : null}
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {relivingLetterData &&
+          relivingLetterData !== undefined &&
+          relivingLetterData !== null ? (
+            <RelievingLetter />
+          ) : (
+            ""
+          )}
+        </div>
       ) : (
         ""
       )}
@@ -933,18 +889,20 @@ const EmployeeExitAction = (props) => {
                                   : "onBoard-date"
                               }
                             >
-                                <DatePicker
-                          minDate={moment().toDate()}
-                          value={moment(lastWorkingDate).format("YYYY-MM-DD")}
-                          name="lastWorkingDate"
-                          selected={lastWorkingDate}
-                          maxDate={lastDateSelection}
-                          onChange={(e) => dateOfBirthHandler1(e)}
-                          className="form-control onBoard-view"
-                          dateFormat="yyyy-MM-dd"
-                          placeholderText="YYYY-MM-DD"
-                          required
-                        />
+                              <DatePicker
+                                minDate={moment().toDate()}
+                                value={moment(lastWorkingDate).format(
+                                  "YYYY-MM-DD"
+                                )}
+                                name="lastWorkingDate"
+                                selected={lastWorkingDate}
+                                maxDate={lastDateSelection}
+                                onChange={(e) => dateOfBirthHandler1(e)}
+                                className="form-control onBoard-view"
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
+                                required
+                              />
                             </div>
                             {lastWorkingDateError ? (
                               <p style={{ color: "red" }}>
@@ -1049,7 +1007,7 @@ const EmployeeExitAction = (props) => {
                         marginBottom: "3rem",
                       }}
                     >
-                       <Col sm={4}>
+                      <Col sm={4}>
                         <div>
                           <label>
                             <b>Approver:</b>
@@ -1070,7 +1028,6 @@ const EmployeeExitAction = (props) => {
                           </label>
                         </div>
                       </Col> */}
-
                     </Row>
                     <Row
                       style={{
@@ -1288,7 +1245,7 @@ const EmployeeExitAction = (props) => {
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
-                              Generate Reliving Letter
+                          Generate Reliving Letter
                         </button>
                       ) : (
                         ""

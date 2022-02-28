@@ -7,7 +7,13 @@ import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const FullTimeToPartTimeLetter = (props) => {
-  const { offerLetterData, transferData, loader } = useContext(TransferContext);
+  const {
+    offerLetterData,
+    transferData,
+    loader,
+    createTransferInitiation,
+    setLetterViewing,
+  } = useContext(TransferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -24,7 +30,44 @@ const FullTimeToPartTimeLetter = (props) => {
   const HandleSaveLetter = () => {
     // setSaveLetter(true);
     if (transferData && Object.keys(transferData).length) {
-      // finalSubmitAppointmentLetter(transferData.promotedEmployeeId);
+      const InfoData = {
+        currentCompany: transferData.currentCompany,
+        currentContractType: transferData.currentContractType,
+        currentCostCentre: transferData.currentCostCentre,
+        currentCountry: transferData.currentCountry,
+        currentDepartment: transferData.currentDepartment,
+        currentDesignation: transferData.currentDesignation,
+        currentEmployeeId: transferData.currentEmployeeId,
+        currentFixedGross: transferData.currentFixedGross,
+        currentJoiningDate: transferData.currentJoiningDate,
+        currentLocation: transferData.currentLocation,
+        currentManagerId: transferData.currentManagerId,
+        currentMonthlyBonus: transferData.currentMonthlyBonus,
+        currentPosition: transferData.currentPosition,
+        promotedCompany: transferData.currentCompany,
+        promotedContractType: transferData.promotedContractType,
+        salaryType: transferData.salaryType,
+        promotedCostCentre: transferData.promotedCostCentre,
+        promotedCountry: transferData.promotedCountry,
+        // promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
+        promotedDepartment: transferData.promotedDepartment,
+        promotedDesignation: transferData.promotedDesignation,
+        promotedEmployeeId: transferData.currentEmployeeId,
+        promotedFixedGross: transferData.promotedFixedGross,
+        promotedJoiningDate: transferData.promotedJoiningDate,
+        promotedLocation: transferData.currentLocation,
+        promotedManagerId: transferData.currentManagerId,
+        promotedMonthlyBonus: transferData.currentMonthlyBonus,
+        promotedPosition: transferData.currentPosition,
+        promotedRelocationBonus: transferData.currentMonthlyBonus,
+        promotedTermOfProject: transferData.promotedTermOfProject,
+        status: 0,
+        transferId: transferData.transferId,
+        transferType: transferData.transferType,
+      };
+      console.log(InfoData);
+      createTransferInitiation(InfoData);
+
       console.log("HandleSaveLetter");
       const infoData = {
         inputRef: inputRef,
@@ -52,6 +95,7 @@ const FullTimeToPartTimeLetter = (props) => {
       );
       CreatePdfAndUpload(infoData, "35,380,185,480");
       setShow(false);
+      setLetterViewing(false);
     }
   };
 

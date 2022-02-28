@@ -15,8 +15,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
-import InternShipLetter from "./InternShipLetter"
-import TerminationLetter from "./TerminationLetter"
+import InternShipLetter from "./InternShipLetter";
+import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { setDate } from "date-fns";
 const ManagerInitiateExit = () => {
@@ -61,7 +61,7 @@ const ManagerInitiateExit = () => {
   const [termination, setTermination] = useState(false);
 
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
-  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
+  const [lastDateSelection, setLastDateSelection] = useState(new Date());
 
   const [showAddModal, setShowAddModal] = useState(false);
   const history = useHistory();
@@ -78,7 +78,7 @@ const ManagerInitiateExit = () => {
     mngrCostCenterName: "",
     mngrPosition: "",
     modeOfSeparationReasonId: "",
-    modeOfSeparationReasonLabel:"",
+    modeOfSeparationReasonLabel: "",
     noticePeriod: "",
     emailId: "",
     comments: "",
@@ -107,13 +107,18 @@ const ManagerInitiateExit = () => {
     TerminationFromDesciplinary,
     DisciplinaryTermination,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter,searchByEmployee, searchByCostData } =
-    useContext(SeparationContext);
+  const {
+    empResign,
+    withdraw,
+    searchByCostCenter,
+    searchByEmployee,
+    searchByCostData,
+  } = useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
     useContext(OfferContext);
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
-    console.log(employeeData,"state",state,"7795")
+  console.log(employeeData, "state", state, "7795");
 
   useEffect(() => {
     ViewEmployeeProfile();
@@ -136,15 +141,14 @@ const ManagerInitiateExit = () => {
   }, [EmpName]);
   console.log("employeeData", employeeData);
   useEffect(() => {
-    
-     if (
+    if (
       employeeData &&
       employeeData !== null &&
       employeeData !== undefined &&
       Object.keys(employeeData).length
-    ){
+    ) {
       state.empName = employeeData.employeeName;
-      state.exitId  = employeeData.exitId;
+      state.exitId = employeeData.exitId;
 
       state.empId = employeeData.employeeId;
       state.empContractType = employeeData.contractType;
@@ -158,33 +162,56 @@ const ManagerInitiateExit = () => {
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        employeeData.department == "AFS" ||
+        employeeData.department == "IT" ||
+        employeeData.department == "Legal" ||
+        employeeData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
-        state.lastWorkingDate = (new Date(employeeData.joiningDate).setMonth(new Date(employeeData.joiningDate).getMonth() + (((employeeData.internshipPeriod !== null && employeeData.internshipPeriod !== undefined)?employeeData.internshipPeriod:0))))
+        state.lastWorkingDate = new Date(employeeData.joiningDate).setMonth(
+          new Date(employeeData.joiningDate).getMonth() +
+            (employeeData.internshipPeriod !== null &&
+            employeeData.internshipPeriod !== undefined
+              ? employeeData.internshipPeriod
+              : 0)
+        );
       } else if (
-        state.empContractType === "Fulltime" || state.empContractType === "fulltime"
-         || state.empContractType === "parttime" ||
-        state.empContractType === "PartTime" || 
+        state.empContractType === "Fulltime" ||
+        state.empContractType === "fulltime" ||
+        state.empContractType === "parttime" ||
+        state.empContractType === "PartTime" ||
         state.empContractType === "Parttime"
       ) {
-              var dateValue = new Date(new Date().setMonth(new Date().getMonth() + parseInt(state.noticePeriod)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
-        setLastWorkingDate(dateValue)
+        var dateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + parseInt(state.noticePeriod)
+          )
+        );
+        let aboveDateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+          )
+        );
+        setLastWorkingDate(dateValue);
 
-         setLastDateSelection(aboveDateValue)
-        state.lastWorkingDate = dateValue
-
+        setLastDateSelection(aboveDateValue);
+        state.lastWorkingDate = dateValue;
       } else {
-        state.lastWorkingDate = ""
+        state.lastWorkingDate = "";
       }
-      state.lastWorkingDate = (employeeData.lastWorkingDate !==null && employeeData.lastWorkingDate !== undefined)?new Date(employeeData.lastWorkingDate):new Date();
+      state.lastWorkingDate =
+        employeeData.lastWorkingDate !== null &&
+        employeeData.lastWorkingDate !== undefined
+          ? new Date(employeeData.lastWorkingDate)
+          : new Date();
       state.personalEmailId = employeeData.personalEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
@@ -192,10 +219,10 @@ const ManagerInitiateExit = () => {
         employeeData.noticePeriodRecoveryDays !== undefined
           ? employeeData.noticePeriodRecoveryDays
           : "";
-          if(employeeData.status === 8){
-            setSuccessModal(true);
-            setPreview(true);
-          }
+      if (employeeData.status === 8) {
+        setSuccessModal(true);
+        setPreview(true);
+      }
 
       if (
         employeeData.noticePeriodRecovery !== null &&
@@ -273,7 +300,7 @@ const ManagerInitiateExit = () => {
       });
     }
   }, [employeeData, ModeOfSeparationData, employeeId]);
-  console.log(state)
+  console.log(state);
   useEffect(() => {
     console.log("state.empI", state.empId);
     if (
@@ -311,7 +338,7 @@ const ManagerInitiateExit = () => {
         setDateOfResignation(new Date());
         setLastWorkingDate(new Date());
         setPreview(false);
-        ViewEmployeeDataById(state.empId)
+        ViewEmployeeDataById(state.empId);
       }
     }
   }, [employeeData]);
@@ -329,7 +356,7 @@ const ManagerInitiateExit = () => {
         state.empId !== null &&
         state.empId !== undefined &&
         employeeData.employeeId !== null &&
-        employeeData.employeeId !== undefined 
+        employeeData.employeeId !== undefined
       ) {
         if (withdrwaThis === false && submitted === false) {
           if (checkForExist === true || firstTimeUpdate === true) {
@@ -347,7 +374,7 @@ const ManagerInitiateExit = () => {
   }, [EmpName, employeeData, checkForExist]);
 
   useEffect(() => {
-    console.log(searchByCostData,"searchByCostData")
+    console.log(searchByCostData, "searchByCostData");
     if (
       searchByCostData &&
       searchByCostData &&
@@ -375,7 +402,7 @@ const ManagerInitiateExit = () => {
       searchByCostData !== undefined &&
       Object.keys(searchByCostData).length !== 0
     ) {
-    //  state.empName = searchEmpData1.firstName;
+      //  state.empName = searchEmpData1.firstName;
       const temp =
         searchByCostData.lastName !== null &&
         searchByCostData.lastName !== undefined
@@ -386,67 +413,86 @@ const ManagerInitiateExit = () => {
 
       state.empContractType = searchByCostData.contractType;
       state.empCostCenterName = searchByCostData.costCentre;
-      if(searchByCostData.department == "AFS" ||searchByCostData.department == "IT" ||searchByCostData.department == "Legal" ||searchByCostData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        searchByCostData.department == "AFS" ||
+        searchByCostData.department == "IT" ||
+        searchByCostData.department == "Legal" ||
+        searchByCostData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.personalEmail;
-      console.log(searchByCostData)
+      console.log(searchByCostData);
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
-        state.noticePeriod = searchByCostData.internshipPeriod
+        state.noticePeriod = searchByCostData.internshipPeriod;
         // setDateOfResignation(new Date(searchByCostData.joiningDate))
         setIntern(true);
-         var data = new Date(searchByCostData.joiningDate).setMonth(new Date(searchByCostData.joiningDate).getMonth() + (((searchByCostData.internshipPeriod !== null && searchByCostData.internshipPeriod !== undefined)?searchByCostData.internshipPeriod:0)))
-           setLastWorkingDate(new Date(data))
-      } else if(
+        var data = new Date(searchByCostData.joiningDate).setMonth(
+          new Date(searchByCostData.joiningDate).getMonth() +
+            (searchByCostData.internshipPeriod !== null &&
+            searchByCostData.internshipPeriod !== undefined
+              ? searchByCostData.internshipPeriod
+              : 0)
+        );
+        setLastWorkingDate(new Date(data));
+      } else if (
         state.empContractType === "Fulltime" ||
-        state.empContractType === "fulltime" || state.empContractType === "parttime" ||
+        state.empContractType === "fulltime" ||
+        state.empContractType === "parttime" ||
         state.empContractType === "Parttime"
-      ){
-              var dateValue = new Date(new Date().setMonth(new Date().getMonth()+parseInt(state.noticePeriod)))
-              setLastWorkingDate(dateValue)
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth()+(parseInt(state.noticePeriod) + 1)))
+      ) {
+        var dateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + parseInt(state.noticePeriod)
+          )
+        );
+        setLastWorkingDate(dateValue);
+        let aboveDateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+          )
+        );
         setIntern(false);
-        setLastDateSelection(aboveDateValue)
+        setLastDateSelection(aboveDateValue);
 
-//         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 
-//           && searchByCostData.noticePeriod == 0){
-//           setLastDateSelection(dateValue.setDate("20"))
-//           setLastWorkingDate(dateValue)
-//         }else {
-//           var aboveDateValue =  new Date(new Date().setMonth(new Date().getMonth() + (parseInt(searchByCostData.noticePeriod) + 1)))
-//           setLastDateSelection(aboveDateValue.setDate(20))
-//           setLastWorkingDate(aboveDateValue.setDate(dateValue.getDate()-20))
-//         }
-// console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
-
-      }else{
+        //         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20
+        //           && searchByCostData.noticePeriod == 0){
+        //           setLastDateSelection(dateValue.setDate("20"))
+        //           setLastWorkingDate(dateValue)
+        //         }else {
+        //           var aboveDateValue =  new Date(new Date().setMonth(new Date().getMonth() + (parseInt(searchByCostData.noticePeriod) + 1)))
+        //           setLastDateSelection(aboveDateValue.setDate(20))
+        //           setLastWorkingDate(aboveDateValue.setDate(dateValue.getDate()-20))
+        //         }
+        // console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
+      } else {
         setIntern(false);
-        setLastWorkingDate(new Date())
+        setLastWorkingDate(new Date());
       }
-    }else{
-      state.empName = ""
-      state.exitId  = ""
-      state.emailId = ""
-      state.empContractType = ""
-      state.empCostCenterName = ""
-      state.empLocation = ""
-      state.empPosition = ""
-      state.mngrName = ""
-      state.mngrId =  ""
-      state.mngrCostCenterName = ""
-      state.mngrPosition = ""
-      state.dateOfResignation = ""
+    } else {
+      state.empName = "";
+      state.exitId = "";
+      state.emailId = "";
+      state.empContractType = "";
+      state.empCostCenterName = "";
+      state.empLocation = "";
+      state.empPosition = "";
+      state.mngrName = "";
+      state.mngrId = "";
+      state.mngrCostCenterName = "";
+      state.mngrPosition = "";
+      state.dateOfResignation = "";
       // setDateOfResignation("")
       // setLastWorkingDate("")
-      setEmpName("")
+      setEmpName("");
     }
   }, [searchByCostData]);
 
@@ -468,10 +514,9 @@ const ManagerInitiateExit = () => {
       state.mngrPosition = employeeProfileData.position;
     }
   }, [employeeProfileData]);
-  
 
   console.log("searchByCostData", searchByCostData);
-  console.log(employeeProfileData,"employeeProfileData")
+  console.log(employeeProfileData, "employeeProfileData");
   const searchDataHandler = () => {
     if (EmpName !== null) {
       searchByEmployee(EmpName);
@@ -488,7 +533,7 @@ const ManagerInitiateExit = () => {
       //   setFirstClick(true);
     }
   };
- 
+
   useEffect(() => {
     if (
       ModeOfSeparationData &&
@@ -518,7 +563,11 @@ const ManagerInitiateExit = () => {
       setModeOfSeparationList(tempArr);
     }
   }, [ModeOfSeparationData]);
-  console.log(ModeOfSeparationData,"modeOfSeparationList", modeOfSeparationList);
+  console.log(
+    ModeOfSeparationData,
+    "modeOfSeparationList",
+    modeOfSeparationList
+  );
 
   useEffect(() => {
     if (
@@ -529,8 +578,11 @@ const ManagerInitiateExit = () => {
     ) {
       let tempArray = [];
       ModeOfSeparationData.map((item, i) => {
-        console.log(ModeOfSeparationData[i].modeOfSeparation.separationId,
-          changeInSeparation,"separation")
+        console.log(
+          ModeOfSeparationData[i].modeOfSeparation.separationId,
+          changeInSeparation,
+          "separation"
+        );
         if (
           ModeOfSeparationData[i].modeOfSeparation.separationId ===
           changeInSeparation
@@ -617,13 +669,12 @@ const ManagerInitiateExit = () => {
   const digitalSignature = () => {
     setShowSignature(true);
   };
-  const handleTermination = () =>{
-    setTermination(false)
-  }
+  const handleTermination = () => {
+    setTermination(false);
+  };
   const handleShowAddModalClose = () => setShowAddModal(false);
 
   const submitfinalRelivingLetter = (e) => {
-
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
@@ -661,7 +712,10 @@ const ManagerInitiateExit = () => {
             exitId: state.exitId,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
+            location:
+              searchByCostData.locationId !== null
+                ? searchByCostData.locationId
+                : null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
@@ -677,19 +731,18 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status:9
+            status: 9,
             // status:employeeData.status === 3 ? 3 :
             // (modeOfSeparation == 1 || modeOfSeparation == "Resignation")?2:4,
           };
 
           console.log("createExitData", data2);
           // setSubmitted(true);
-          
-          UpdateEmplyoeeExist(data2,state.empId);
+
+          UpdateEmplyoeeExist(data2, state.empId);
           setSubmitLetter(true);
           setLetterSent(true);
           setShow(true);
-       
         } else if (intern === true) {
           var reasonId = 0;
           reasonOfSeparationList.map((item, i) => {
@@ -715,30 +768,32 @@ const ManagerInitiateExit = () => {
             exitId: state.exitId,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
+            location:
+              searchByCostData.locationId !== null
+                ? searchByCostData.locationId
+                : null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
             modeOfSeparationId: 6,
-            modeOfSeparationReasonId:reasonId,
+            modeOfSeparationReasonId: reasonId,
             noticePeriod: state.noticePeriod,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
             position: state.empLocation,
-            reHire:RehireYes ? 1 : RehireNo ? 2 : 0,
+            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
             status: 6,
           };
           console.log("createExitData", data1);
-          UpdateEmplyoeeExist(data1,state.empId);
+          UpdateEmplyoeeExist(data1, state.empId);
           setSubmitLetter(true);
           setLetterSent(true);
           setShow(true);
-       
         }
       }
     }
@@ -750,8 +805,8 @@ const ManagerInitiateExit = () => {
     //   setLetterSent(true);
     //   setShow(true);
 
-      //// finalSubmitOfferLetter(employeeData.employeeId);
-   // }
+    //// finalSubmitOfferLetter(employeeData.employeeId);
+    // }
   };
 
   const previewRelivingLetter = (e) => {
@@ -763,26 +818,25 @@ const ManagerInitiateExit = () => {
       setShow(true);
     }
   };
-  const handleDisciplinary =()=>{
+  const handleDisciplinary = () => {
     history.push("../issue-show-cause-notice");
-
-  }
+  };
   const relivingLetterClick = (e) => {
-    console.log(e.target.value,"999")
+    console.log(e.target.value, "999");
     e.preventDefault();
-    if(e.target.value == '1' || e.target.value == 'Resignation'){
+    if (e.target.value == "1" || e.target.value == "Resignation") {
       fetchRelievingLetterData(employeeData.employeeId);
       handleShow();
-      console.log("resignation")
-    }else if(e.target.value == '2' || e.target.value == 'Termination'){
-        fetchTerminationLetterData(employeeData.employeeId)
-        handleShow();
-        console.log("termination")
-    }else if(intern == true){
+      console.log("resignation");
+    } else if (e.target.value == "2" || e.target.value == "Termination") {
+      fetchTerminationLetterData(employeeData.employeeId);
+      handleShow();
+      console.log("termination");
+    } else if (intern == true) {
       fetchRelievingLetterData(employeeData.employeeId);
-      handleShow();  
+      handleShow();
     }
- 
+
     // setPreviewGeneratedLetter(true);
   };
   const handleShow = () => {
@@ -802,8 +856,8 @@ const ManagerInitiateExit = () => {
     state.empPosition = "";
     state.empLocation = "";
     state.empCostCenterName = "";
-    state.emailId = ""
-    state.noticePeriod = ""
+    state.emailId = "";
+    state.noticePeriod = "";
     setLastWorkingDate(new Date());
     makeEmployeeDataNull();
     makeSearchEmp1DataNull();
@@ -820,18 +874,18 @@ const ManagerInitiateExit = () => {
       setRemarkError(true);
     }
   };
-  const changeHandler1 =(e)=>{
-    var data = e.target.value
-    console.log(e.target.name,data,"changeHandler1")
-      setState({
-        ...state,
-        [e.target.name]: e.target.value,
-      });
-  }
+  const changeHandler1 = (e) => {
+    var data = e.target.value;
+    console.log(e.target.name, data, "changeHandler1");
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
-    }else{
+    } else {
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -842,15 +896,19 @@ const ManagerInitiateExit = () => {
   const ModeOfSepchangeHandler = (e) => {
     setModeOfSeparation(e.target.value);
     modeOfSeparationList.map((item, i) => {
-      console.log(item,e.target.value,'item')
-          if(e.target.value == "Termination" && state.empContractType !== "internship"){
-            setTermination(true)
-          }else{
-      if (modeOfSeparationList[i].label === e.target.value){
-        setChangeInSeparation(modeOfSeparationList[i].value);
-        console.log(modeOfSeparationList[i].value);
+      console.log(item, e.target.value, "item");
+      if (
+        e.target.value == "Termination" &&
+        (state.empContractType !== "internship" ||
+          state.empContractType !== "Internship")
+      ) {
+        setTermination(true);
+      } else {
+        if (modeOfSeparationList[i].label === e.target.value) {
+          setChangeInSeparation(modeOfSeparationList[i].value);
+          console.log(modeOfSeparationList[i].value);
+        }
       }
-    }
     });
 
     console.log(e.target.value);
@@ -861,10 +919,13 @@ const ManagerInitiateExit = () => {
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     // console.log("AdjusteddateValue");
-    var AdjusteddateValue1 = new Date(AdjusteddateValue)
-    setLastWorkingDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(state.noticePeriod)))
+    var AdjusteddateValue1 = new Date(AdjusteddateValue);
+    setLastWorkingDate(
+      AdjusteddateValue1.setMonth(
+        AdjusteddateValue1.getMonth() + parseInt(state.noticePeriod)
+      )
+    );
     setDateOfResignation(AdjusteddateValue);
-
   };
 
   const dateOfBirthHandler1 = (date) => {
@@ -949,17 +1010,17 @@ const ManagerInitiateExit = () => {
   };
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
     if (intern === false) {
-    if ((itemYes === true) | (itemNo === true)) {
-      setError(false);
-      console.log(itemYes, itemNo);
-      return true;
+      if ((itemYes === true) | (itemNo === true)) {
+        setError(false);
+        console.log(itemYes, itemNo);
+        return true;
+      } else {
+        setError(true);
+        return false;
+      }
     } else {
-      setError(true);
-      return false;
+      return true;
     }
-  } else {
-    return true;
-  }
   };
   const validateCheckBoxes1 = (itemYes, itemNo, setError) => {
     if (intern === false) {
@@ -977,13 +1038,14 @@ const ManagerInitiateExit = () => {
   };
   const validateRcryDays = () => {
     const Valid = /^[0-9\b]+$/;
-    var noticeDays = state.noticePeriod * 30
-      if (RcryYes === true && intern === false) {
+    var noticeDays = state.noticePeriod * 30;
+    if (RcryYes === true && intern === false) {
       if (
         state.noticePeriodRcryDays !== "" &&
         state.noticePeriodRcryDays !== null &&
         state.noticePeriodRcryDays !== undefined &&
-        Valid.test(state.noticePeriodRcryDays ) && state.noticePeriodRcryDays <= noticeDays
+        Valid.test(state.noticePeriodRcryDays) &&
+        state.noticePeriodRcryDays <= noticeDays
       ) {
         setRcryDaysError(false);
         return true;
@@ -994,7 +1056,6 @@ const ManagerInitiateExit = () => {
     } else {
       return true;
     }
-  
   };
   const checkValidations = () => {
     console.log("on validation");
@@ -1069,7 +1130,10 @@ const ManagerInitiateExit = () => {
             exitId: 0,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
+            location:
+              searchByCostData.locationId !== null
+                ? searchByCostData.locationId
+                : null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
@@ -1095,7 +1159,7 @@ const ManagerInitiateExit = () => {
           //   empResign(data1);
           setSuccessModal(true);
           //  TerminationFromDesciplinary(false);
-        } else if (intern === true){
+        } else if (intern === true) {
           var reasonId = 0;
           reasonOfSeparationList.map((item, i) => {
             if (
@@ -1120,14 +1184,17 @@ const ManagerInitiateExit = () => {
             exitId: 0,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchByCostData.locationId !== null?searchByCostData.locationId:null,
+            location:
+              searchByCostData.locationId !== null
+                ? searchByCostData.locationId
+                : null,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
             modeOfSeparationId: 6,
-            modeOfSeparationReasonId:reasonId,
+            modeOfSeparationReasonId: reasonId,
             noticePeriod: state.noticePeriod,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
@@ -1152,33 +1219,42 @@ const ManagerInitiateExit = () => {
       }
     }
   };
-console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
+  console.log(
+    intern,
+    "modeOfSeparation",
+    state,
+    searchByCostData,
+    employeeData
+  );
   return (
     <Fragment>
-      {termination?<Modal
-          show={termination}
-          onHide={handleTermination}
-          size="md"
-          centered
-        >
+      {termination ? (
+        <Modal show={termination} onHide={handleTermination} size="md" centered>
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
               Disciplinary action has to be taken before termination.
-              <br />            
+              <br />
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleTermination}>Close</Button>
-              <Button onClick={handleDisciplinary} style={{ marginLeft: "1rem" }}>
-              Next
-            </Button>
-
+              <Button
+                onClick={handleDisciplinary}
+                style={{ marginLeft: "1rem" }}
+              >
+                Next
+              </Button>
             </div>
           </Modal.Body>
-        </Modal>:""}
+        </Modal>
+      ) : (
+        ""
+      )}
       {/* reliving letter */}
       {employeeData !== null &&
-        employeeData !== undefined && employeeData.status === 8?<Modal
+      employeeData !== undefined &&
+      employeeData.status === 8 ? (
+        <Modal
           show={showAddModal}
           onHide={handleShowAddModalClose}
           size="md"
@@ -1188,13 +1264,16 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
           <Modal.Body className="mx-auto">
             <label className="text-center">
               Please Add the Digital Signature.
-              <br />            
+              <br />
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleShowAddModalClose}>Close</Button>
             </div>
           </Modal.Body>
-        </Modal>:''}
+        </Modal>
+      ) : (
+        ""
+      )}
       {submitLetter ? (
         <Modal
           show={showRelivingModal}
@@ -1207,82 +1286,51 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
             <label className="text-center">
               The details have been saved successfully <br />
               The relieving letter will be sent to the employee on{" "}
-              {moment(((terminationLetterData !== null && terminationLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
-              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1)?relivingLetterData.lastWorkingDate:
-              modeOfSeparation === "End of Contract"?relivingLetterData.lastWorkingDate:new Date(), "YYYY-MM-DD")
+              {moment(
+                terminationLetterData !== null &&
+                  terminationLetterData !== undefined &&
+                  (modeOfSeparation == "Termination" || modeOfSeparation == 2)
+                  ? terminationLetterData.lastWorkingDate
+                  : relivingLetterData !== null &&
+                    relivingLetterData !== undefined &&
+                    (modeOfSeparation == "Resignation" || modeOfSeparation == 1)
+                  ? relivingLetterData.lastWorkingDate
+                  : modeOfSeparation === "End of Contract"
+                  ? relivingLetterData.lastWorkingDate
+                  : new Date(),
+                "YYYY-MM-DD"
+              )
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
             </label>
             <div className="text-center">
-            <Link to={"/employee-separation-listing"}>
+              <Link to={"/employee-separation-listing"}>
                 <Button onClick={handleRelivingClose}>Close</Button>
               </Link>
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {relivingLetterData &&
-            relivingLetterData !== undefined &&
-            relivingLetterData !== null && intern === false  && (modeOfSeparation == "1" || modeOfSeparation == "Resignation") ? (
-              <RelievingLetter />
-            ) : terminationLetterData &&
+      ) : null}
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {relivingLetterData &&
+          relivingLetterData !== undefined &&
+          relivingLetterData !== null &&
+          intern === false &&
+          (modeOfSeparation == "1" || modeOfSeparation == "Resignation") ? (
+            <RelievingLetter />
+          ) : terminationLetterData &&
             terminationLetterData !== undefined &&
-            terminationLetterData !== null && intern === false  && (modeOfSeparation == "2" || modeOfSeparation == "Termination")? (
-              <TerminationLetter />
-            ) :(
-              <InternShipLetter/>
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img style={{float:"left"}}
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+            terminationLetterData !== null &&
+            intern === false &&
+            (modeOfSeparation == "2" || modeOfSeparation == "Termination") ? (
+            <TerminationLetter />
+          ) : terminationLetterData &&
+            terminationLetterData !== undefined &&
+            terminationLetterData !== null ? (
+            <InternShipLetter />
+          ) : null}
+        </div>
       ) : (
         ""
       )}
@@ -1462,25 +1510,39 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                             </label>
                           </div>
                         </Col>
-                       {state.empContractType !== "internship"? <Col sm={4}>
-                        <div>
-                            <label>
-                            Notice Period:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                        {state.empContractType !== "internship" ? (
+                          <Col sm={4}>
+                            <div>
+                              <label>
+                                Notice Period:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{" "}
+                                  {state.noticePeriod === 1
+                                    ? `${state.noticePeriod} Month`
+                                    : state.noticePeriod > 1
+                                    ? `${state.noticePeriod} Months`
+                                    : state.noticePeriod}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                </Col>: <Col sm={4}>
-                        <div>
-                            <label>
-                            Internship contract end date:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                            </div>
+                          </Col>
+                        ) : (
+                          <Col sm={4}>
+                            <div>
+                              <label>
+                                Internship contract end date:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{" "}
+                                  {state.noticePeriod === 1
+                                    ? `${state.noticePeriod} Month`
+                                    : state.noticePeriod > 1
+                                    ? `${state.noticePeriod} Months`
+                                    : state.noticePeriod}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                </Col>}
+                            </div>
+                          </Col>
+                        )}
                       </Row>
                       <Row
                         style={{
@@ -1548,118 +1610,131 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                             </div>
                           </Col>
                         ) : ( */}
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="lgbt"
-                                    options={modeOfSeparationList}
-                                    value={modeOfSeparation}
-                                    onChange={ModeOfSepchangeHandler}
-                                    //   disabled={disabled}
-                                    style={
-                                      modOfSepError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {modeOfSeparationList.map((item) => {
-                                      console.log(state.empContractType,"state.empContractType")
-                                      if(state.empContractType == "internship" && item.label !== "Termination" && item.label !== "Resignation"){
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {modeOfSeparation}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="lgbt"
+                                  options={modeOfSeparationList}
+                                  value={modeOfSeparation}
+                                  onChange={ModeOfSepchangeHandler}
+                                  //   disabled={disabled}
+                                  style={
+                                    modOfSepError ? { borderColor: "red" } : {}
+                                  }
+                                >
+                                  <option value=""></option>
+                                  {modeOfSeparationList.map((item) => {
+                                    console.log(
+                                      state.empContractType,
+                                      "state.empContractType"
+                                    );
+                                    if (
+                                      (state.empContractType == "internship" ||
+                                        state.empContractType ==
+                                          "Internship") &&
+                                      item.label !== "Termination" &&
+                                      item.label !== "Resignation"
+                                    ) {
                                       return (
                                         <option key={item.value}>
                                           {item.label}
                                         </option>
                                       );
-                                      }else if(state.empContractType == "fulltime" || state.empContractType == "Fulltime" ||  state.empContractType == "Parttime" || state.empContractType == "parttime"){
-                                        return (
-                                          <option key={item.value}>
-                                            {item.label}
-                                          </option>
-                                        ); 
-                                      
-                                    }})}
-                                  </Form.Control>
-                                  {modOfSepError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        
-                         {/* } */}
+                                    } else if (
+                                      state.empContractType == "fulltime" ||
+                                      state.empContractType == "Fulltime" ||
+                                      state.empContractType == "Parttime" ||
+                                      state.empContractType == "parttime"
+                                    ) {
+                                      return (
+                                        <option key={item.value}>
+                                          {item.label}
+                                        </option>
+                                      );
+                                    }
+                                  })}
+                                </Form.Control>
+                                {modOfSepError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+
+                        {/* } */}
                         {/* {intern ? (
                           ""
                         ) : ( */}
-                          <Col sm={2}>
-                            <div>
-                              <label>
-                                Date of{" "}
-                                {changeInSeparation === 2
-                                  ? "Termination:"
-                                  : "Resignation:"}
-                              </label>
-                            </div>
-                          </Col>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              Date of{" "}
+                              {changeInSeparation === 2
+                                ? "Termination:"
+                                : "Resignation:"}
+                            </label>
+                          </div>
+                        </Col>
                         {/* )}
                         {intern ? (
                           ""
                         ) : ( */}
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {dateOfResignation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <div
-                                    className={
-                                      dateOfResignError
-                                        ? "onBoard-date-error"
-                                        : "onBoard-date"
-                                    }
-                                  >
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      value={moment(dateOfResignation).format("YYYY-MM-DD")}
-
-                                      selected={dateOfResignation}
-                                      name="dateOfResignation"
-                                      minDate={moment().toDate()}
-                                      // required
-                                      onChange={(e) => dateOfBirthHandler(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                      // disabled={disabled}
-                                    />
-                                  </div>
-                                  {dateOfResignError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please select valid date
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {dateOfResignation}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <div
+                                  className={
+                                    dateOfResignError
+                                      ? "onBoard-date-error"
+                                      : "onBoard-date"
+                                  }
+                                >
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    value={moment(dateOfResignation).format(
+                                      "YYYY-MM-DD"
+                                    )}
+                                    selected={dateOfResignation}
+                                    name="dateOfResignation"
+                                    minDate={moment().toDate()}
+                                    // required
+                                    onChange={(e) => dateOfBirthHandler(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
+                                    // disabled={disabled}
+                                  />
+                                </div>
+                                {dateOfResignError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please select valid date
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
                         {/* )} */}
 
                         <Col sm={2}>
@@ -1685,17 +1760,23 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                                 >
                                   <DatePicker
                                     className="form-control onBoard-view"
-                                    value={new Date(moment(lastWorkingDate).format("YYYY-MM-DD"))}
+                                    value={
+                                      new Date(
+                                        moment(lastWorkingDate).format(
+                                          "YYYY-MM-DD"
+                                        )
+                                      )
+                                    }
                                     selected={lastWorkingDate}
                                     name="lastWorkingDate"
                                     minDate={new Date()}
-                                     minDate={moment().toDate()}
-                                     //maxDate={intern === true?"":lastDateSelection}
+                                    minDate={moment().toDate()}
+                                    //maxDate={intern === true?"":lastDateSelection}
                                     // required
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    
+
                                     // disabled={disabled}
                                   />
                                 </div>
@@ -1711,7 +1792,7 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                             )}
                           </div>
                         </Col>
-{/* 
+                        {/* 
                         {intern === false ? (
                           <Col sm={2}>
                             <div>
@@ -1789,50 +1870,53 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                           </Col>
                         ) :
                          ( */}
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="modeOfSeparationReasonId"
-                                    options={reasonOfSeparationList}
-                                    value={state.modeOfSeparationReasonId}
-                                    onChange={changeHandler1}
-                                    //   disabled={disabled}
-                                    style={
-                                      modOfSepReasonError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {reasonOfSeparationList.map((item) => {
-                                      console.log(item,"item")
-                                      return (
-                                        <option name={item.value} key={item.value}>
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepReasonError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.modeOfSeparationReasonId}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="modeOfSeparationReasonId"
+                                  options={reasonOfSeparationList}
+                                  value={state.modeOfSeparationReasonId}
+                                  onChange={changeHandler1}
+                                  //   disabled={disabled}
+                                  style={
+                                    modOfSepReasonError
+                                      ? { borderColor: "red" }
+                                      : {}
+                                  }
+                                >
+                                  <option value=""></option>
+                                  {reasonOfSeparationList.map((item) => {
+                                    console.log(item, "item");
+                                    return (
+                                      <option
+                                        name={item.value}
+                                        key={item.value}
+                                      >
+                                        {item.label}
+                                      </option>
+                                    );
+                                  })}
+                                </Form.Control>
+                                {modOfSepReasonError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+
                         {/* } */}
 
                         <Col sm={2}>
@@ -1876,70 +1960,82 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                             )}
                           </div>
                         </Col>
-                       {intern === false?<><Col sm={2}>
-                          <div>
-                            <label>Notice Period Recovery</label>
-                            {RcryError ? (
-                              <p style={{ color: "red" }}>
-                                {" "}
-                                *Please select one of the option
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </div>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                checked={RcryYes}
-                                style={RcryError ? { borderColor: "red" } : {}}
-                                // required={required}
-                                onChange={handleNoticePeriodRcryYes}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                checked={RcryNo}
-                                style={RcryError ? { borderColor: "red" } : {}}
-                                // required={required}
-                                onChange={handleNoticePeriodRcryNo}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col></>:""}
+                        {intern === false ? (
+                          <>
+                            <Col sm={2}>
+                              <div>
+                                <label>Notice Period Recovery</label>
+                                {RcryError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    *Please select one of the option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </div>
+                            </Col>
+                            <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                              <Form.Group>
+                                <div className="boxField_2 input">
+                                  <input
+                                    className="largerCheckbox"
+                                    type="checkbox"
+                                    value="yes"
+                                    checked={RcryYes}
+                                    style={
+                                      RcryError ? { borderColor: "red" } : {}
+                                    }
+                                    // required={required}
+                                    onChange={handleNoticePeriodRcryYes}
+                                  />
+                                  <label className="itemResult">Yes</label>
+                                </div>
+                              </Form.Group>
+                            </Col>
+                            <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                              <Form.Group>
+                                <div className="boxField_2 input">
+                                  <input
+                                    className="largerCheckbox"
+                                    type="checkbox"
+                                    value="no"
+                                    checked={RcryNo}
+                                    style={
+                                      RcryError ? { borderColor: "red" } : {}
+                                    }
+                                    // required={required}
+                                    onChange={handleNoticePeriodRcryNo}
+                                  />
+                                  <label className="itemResult">No</label>
+                                </div>
+                              </Form.Group>
+                            </Col>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
-                          style={{
-                            marginLeft: "2rem",
-                            marginTop: "1rem",
-                            marginBottom: "3rem",
-                          }}
-                        >                  <Col sm={4}>
-                        <div>
-                          <label>
-                            <b>Approver:</b>
-                            <label className="itemResult">
-                              &nbsp;&nbsp; {state.mngrName}
-                              &nbsp; {state.mngrId}
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        {" "}
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              <b>Approver:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.mngrName}
+                                &nbsp; {state.mngrId}
+                              </label>
                             </label>
-                          </label>
-                        </div>
-                      </Col>
-                  </Row>
+                          </div>
+                        </Col>
+                      </Row>
                       {/* <Row
                     style={{
                       marginLeft: "2rem",
@@ -1985,110 +2081,117 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                       </div>
                     </Col>
                   </Row> */}
-                        <Row
-                          style={{
-                            marginTop: "2rem",
-                            marginLeft: "2rem",
-                            marginBottom: "2rem",
-                          }}
-                        >
-                           {intern === false?
-                            <><Col sm={2}>
-                            <div>
-                              <label>Notice Period Recovery Days</label>
-                            </div>
-                          </Col>
+                      <Row
+                        style={{
+                          marginTop: "2rem",
+                          marginLeft: "2rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        {intern === false ? (
+                          <>
+                            <Col sm={2}>
+                              <div>
+                                <label>Notice Period Recovery Days</label>
+                              </div>
+                            </Col>
 
-                          <Col sm={2} style={{ marginTop: "0.5rem" }}>
-                            {false ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriodRcryDays}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
-                                  disabled={!RcryYes}
-                                  name="noticePeriodRcryDays"
-                                  value={state.noticePeriodRcryDays}
-                                  onChange={(e) => changeHandler(e)}
-                                  style={
-                                    rcryDaysError ? { borderColor: "red" } : {}
-                                  }
-                                />
-
-                                {rcryDaysError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please enter valid days
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </Col></>:""}
-
-                          <Col sm={2}>
-                            <div>
-                              <label>
-                                Eligible <br />
-                                For Rehire
-                              </label>
-                              {RehireError ? (
-                                <p style={{ color: "red" }}>
-                                  {" "}
-                                  *Please select one of the option
-                                </p>
+                            <Col sm={2} style={{ marginTop: "0.5rem" }}>
+                              {false ? (
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.noticePeriodRcryDays}
+                                </label>
                               ) : (
-                                <p></p>
+                                <Form.Group>
+                                  <Form.Control
+                                    type="text"
+                                    placeholder=""
+                                    required
+                                    style={{
+                                      borderColor: "#006ebb",
+                                    }}
+                                    disabled={!RcryYes}
+                                    name="noticePeriodRcryDays"
+                                    value={state.noticePeriodRcryDays}
+                                    onChange={(e) => changeHandler(e)}
+                                    style={
+                                      rcryDaysError
+                                        ? { borderColor: "red" }
+                                        : {}
+                                    }
+                                  />
+
+                                  {rcryDaysError ? (
+                                    <p style={{ color: "red" }}>
+                                      {" "}
+                                      &nbsp; *Please enter valid days
+                                    </p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                </Form.Group>
                               )}
+                            </Col>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              Eligible <br />
+                              For Rehire
+                            </label>
+                            {RehireError ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                *Please select one of the option
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </div>
+                        </Col>
+
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                checked={RehireYes}
+                                // required={required}
+                                style={
+                                  RehireError ? { borderColor: "red" } : {}
+                                }
+                                onChange={handleRehireChangeYes}
+                              />
+                              <label className="itemResult">Yes</label>
                             </div>
-                          </Col>
+                          </Form.Group>
+                        </Col>
 
-                          <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="yes"
-                                  checked={RehireYes}
-                                  // required={required}
-                                  style={
-                                    RehireError ? { borderColor: "red" } : {}
-                                  }
-                                  onChange={handleRehireChangeYes}
-                                />
-                                <label className="itemResult">Yes</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-
-                          <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="no"
-                                  checked={RehireNo}
-                                  // required={required}
-                                  style={
-                                    RehireError ? { borderColor: "red" } : {}
-                                  }
-                                  onChange={handleRehireChangeNo}
-                                />
-                                <label className="itemResult">No</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-                        </Row>
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="no"
+                                checked={RehireNo}
+                                // required={required}
+                                style={
+                                  RehireError ? { borderColor: "red" } : {}
+                                }
+                                onChange={handleRehireChangeNo}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                      </Row>
 
                       <Row>
                         <Col
@@ -2107,7 +2210,9 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                           >
                             Save
                           </button>
-                          { (submitted === false || modeOfSeparation == "Termination" || modeOfSeparation == 2)? (
+                          {submitted === false ||
+                          modeOfSeparation == "Termination" ||
+                          modeOfSeparation == 2 ? (
                             ""
                           ) : (
                             <button
@@ -2129,12 +2234,15 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                           employeeData !== null &&
                           employeeData !== undefined &&
                           Object.keys(employeeData).length !== 0 &&
-                          (employeeData.status === 3 || employeeData.status === 2 ||employeeData.status === 8 || employeeData.status === 6) &&
+                          (employeeData.status === 3 ||
+                            employeeData.status === 2 ||
+                            employeeData.status === 8 ||
+                            employeeData.status === 6) &&
                           showPreview === true &&
                           submitted === true ? (
                             <button
                               // disabled={!submitted}
-                               value={modeOfSeparation}
+                              value={modeOfSeparation}
                               className={"LettersButtons"}
                               onClick={relivingLetterClick}
                             >
@@ -2143,7 +2251,7 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                           ) : (
                             ""
                           )}
-                          {saveLetter &&
+                          {/* {saveLetter &&
                           previewGeneratedLetter &&
                           showPreview ? (
                             <button
@@ -2154,10 +2262,10 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                             </button>
                           ) : (
                             ""
-                          )}
-                      {/* {employeeData !== null &&
+                          )} */}
+                          {/* {employeeData !== null &&
         employeeData !== undefined && employeeData.status === 8?<label style={{color:'red'}}>{"Please Add the Digital signature"}</label>:''} */}
-                          {saveLetter && previewGeneratedLetter && showPreview && (
+                          {/* {saveLetter && previewGeneratedLetter && showPreview && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
@@ -2185,7 +2293,7 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
                                 ""
                               )}
                             </div>
-                          )}
+                          )} */}
                         </Col>
                       </Row>
                     </Col>
@@ -2201,4 +2309,3 @@ console.log(intern,"modeOfSeparation",state,searchByCostData,employeeData)
 };
 
 export default ManagerInitiateExit;
-
