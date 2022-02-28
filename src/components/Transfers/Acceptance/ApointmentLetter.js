@@ -29,8 +29,8 @@ const AppointmentLetter = (props) => {
       console.log("HandleSaveLetter");
       const infoData = {
         inputRef: inputRef,
-        empId: 0,
-        candidateId: transferData.candidateInformation.candidateId,
+        empId: transferData.promotedEmployeeId,
+        candidateId: 0,
         module: "Entity Transfer",
         empName: user.firstName + " " + user.lastName,
         empEmail: "rajasekhar@theretailinsights.com",
@@ -39,11 +39,11 @@ const AppointmentLetter = (props) => {
         path: "../offer-release-list",
         recipient2: {
           rectangle: "430,250,580,350",
-          name: transferData.firstName + " " + transferData.lastName,
+          name: transferData.employeeName,
           email: "rajasekhar@theretailinsights.com",
-          //  transferData.candidateInformation.personalEmail,
+          //  transferData.email,
           phoneNumber: transferData.empPhNo,
-          // "+91 8074058844,,,",
+          // transferData.phoneNumber,
         },
       };
       console.log(

@@ -481,13 +481,13 @@ const ManagerWarningAction = (props) => {
           showCauseNotice: state.disciplinaryAction.showCauseNotice,
           // status: 0,
           status:
-          rolePermission == "admin"
-            ? 14
-            : rolePermission == "superCostCenterManager"
-            ? 13
-            : rolePermission == "costCenterManager"
-            ? 12
-            : 11,
+            rolePermission == "admin"
+              ? 14
+              : rolePermission == "superCostCenterManager"
+              ? 13
+              : rolePermission == "costCenterManager"
+              ? 12
+              : 11,
           statusDesc: state.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -499,8 +499,9 @@ const ManagerWarningAction = (props) => {
                 employeeComment: state.disciplinaryWarning.employeeComment,
                 employeeWarningStatus:
                   state.disciplinaryWarning.employeeWarningStatus,
-                improvementPeriod: state.disciplinaryWarning.improvementPeriod ?
-                state.disciplinaryWarning.improvementPeriod : 0,
+                improvementPeriod: state.disciplinaryWarning.improvementPeriod
+                  ? state.disciplinaryWarning.improvementPeriod
+                  : 0,
                 managerComment: state.disciplinaryWarning.managerComment,
                 pipEndDate: state.disciplinaryWarning.pipEndDate,
                 reason: state.disciplinaryWarning.reason,
@@ -529,8 +530,9 @@ const ManagerWarningAction = (props) => {
                 employeeComment: null,
                 employeeWarningStatus: null,
                 improvementPeriod:
-                state.InputImprovementPeriod !== "" ?
-                parseInt(state.InputImprovementPeriod):0,
+                  state.InputImprovementPeriod !== ""
+                    ? parseInt(state.InputImprovementPeriod)
+                    : 0,
                 managerComment: managerComment,
                 // warningManagerReason,
 
@@ -566,7 +568,7 @@ const ManagerWarningAction = (props) => {
       };
       console.log(infoData, "infoData");
       console.log("all okay");
-      console.log(infoData, "infoData submit",state.InputImprovementPeriod);
+      console.log(infoData, "infoData submit", state.InputImprovementPeriod);
       createShowCauseIssue(infoData);
 
       setSubmitted({ value: true });
@@ -576,7 +578,7 @@ const ManagerWarningAction = (props) => {
       console.log("not okay");
     }
   };
-  console.log(disciplinarySearchData,"disciplinarySearchData")
+  console.log(disciplinarySearchData, "disciplinarySearchData");
   const changeHandler = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -718,7 +720,7 @@ const ManagerWarningAction = (props) => {
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
                 reasonId: state.disciplinaryWarning.reasonId,
                 // status: rolePermission == "costCenterManager" ? 2 : 0,
-                  status:0,
+                status: 0,
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 initiatedRole: state.disciplinaryWarning.initiatedRole,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
@@ -732,7 +734,7 @@ const ManagerWarningAction = (props) => {
                 employeeComment: null,
                 employeeWarningStatus: null,
                 improvementPeriod:
-                disciplinarySearchData.disciplinaryWarning.improvementPeriod,
+                  disciplinarySearchData.disciplinaryWarning.improvementPeriod,
                 //  state.InputImprovementPeriod,
                 managerComment:
                   disciplinarySearchData.disciplinaryAction.managerComment,
@@ -934,7 +936,11 @@ const ManagerWarningAction = (props) => {
   console.log(state);
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
 
-  console.log("warning letter",showShowCauseNoticeModal,disciplinarySearchData);
+  console.log(
+    "warning letter",
+    showShowCauseNoticeModal,
+    disciplinarySearchData
+  );
   return (
     <div>
       <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
@@ -1122,19 +1128,20 @@ const ManagerWarningAction = (props) => {
       ) : null}
       {previewLetter || showShowCauseNoticeModal ? (
         <div>
-            {disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryWarning !== null &&
-            disciplinarySearchData.disciplinaryWarning !== undefined &&
-            disciplinarySearchData.disciplinaryWarning !== "" &&
-            parseInt(disciplinarySearchData.disciplinaryWarning.reasonId) === 2 ? (
-              <WarningLetter />
-            ) : (
-              <NonPerformanceWarningLetter/>
-            )}
-           </div>        
+          {disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          parseInt(disciplinarySearchData.disciplinaryWarning.reasonId) ===
+            2 ? (
+            <WarningLetter />
+          ) : (
+            <NonPerformanceWarningLetter />
+          )}
+        </div>
       ) : (
         ""
       )}
@@ -1888,7 +1895,7 @@ const ManagerWarningAction = (props) => {
                                 ""
                               )}
 
-                               {!saveLetter &&
+                              {!saveLetter &&
                               showPreview === true &&
                               submitted.value === true ? (
                                 <button
@@ -1901,7 +1908,7 @@ const ManagerWarningAction = (props) => {
                               ) : (
                                 ""
                               )}
-                             {/* {saveLetter &&
+                              {/* {saveLetter &&
                               previewGeneratedLetter &&
                               showPreview ? (
                                 <button
@@ -1987,7 +1994,8 @@ const ManagerWarningAction = (props) => {
                         ) : (
                           ""
                         )}
-                        {issueWarningStatus === "no" && acceptEmployeeReason == "no" ||
+                        {(issueWarningStatus === "no" &&
+                          acceptEmployeeReason == "no") ||
                         (disciplinarySearchData !== null &&
                           disciplinarySearchData !== undefined &&
                           Object.keys(disciplinarySearchData).length !== 0 &&
@@ -1996,11 +2004,11 @@ const ManagerWarningAction = (props) => {
                             undefined &&
                           disciplinarySearchData.disciplinaryAction
                             .actionDueDays === 0 &&
-                          (disciplinarySearchData.disciplinaryAction
+                          (disciplinarySearchData.disciplinaryWarning
                             .employeeComment === null ||
-                            disciplinarySearchData.disciplinaryAction
+                            disciplinarySearchData.disciplinaryWarning
                               .employeeComment === undefined ||
-                            disciplinarySearchData.disciplinaryAction
+                            disciplinarySearchData.disciplinaryWarning
                               .employeeComment === "") &&
                           submitted.value == false) ? (
                           <Col
