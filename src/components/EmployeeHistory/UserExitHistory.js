@@ -10,7 +10,7 @@ import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
 const UserExitHistory = (props) => {
-    const reportList = props.UserExitHistoryList
+    const reportList =  [] //props.UserExitHistoryList
     const {loader } = useContext(LeaveContext)
    
 console.log("startDate", props.startDate)
@@ -97,8 +97,8 @@ console.log(dates)
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={2} style={{marginTop: "5px" }}>
-                    <b>User Exit History</b>
+                  <Col sm={3} style={{marginTop: "5px" }}>
+                    <b>USER EXIT HISTORY</b>
                   </Col>
                 </Row></div>
 

@@ -10,7 +10,7 @@ import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
 const OtherTaxableIncomeHistory = (props) => {
-    const reportList = props.OtherTaxableIncomeHistoryList
+    const reportList =  [] //props.OtherTaxableIncomeHistoryList
     const {loader } = useContext(LeaveContext)
    
 console.log("startDate", props.startDate)
@@ -71,7 +71,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={4}>
+                  <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -97,8 +97,8 @@ console.log(dates)
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={8} style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>Other Taxable Income History</b>
+                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                    <b>OTHER TAXABLE INCOME HISTORY</b>
                   </Col>
                 </Row></div>
 

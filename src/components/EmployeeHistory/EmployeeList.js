@@ -23,19 +23,11 @@ const EmployeeList = () => {
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
-  const [currentRecords, setCurrentRecords] = useState([{
-    employeeId:"DSI000011",
-    employeeName:"Rakesh",
-    position:"Sport leader",
-    role:"Admin",
-    costcenter:"IN1058",
-    active:"yes",
-    createdBy:"Prashant"
-  }]);
+  const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const { costCenterList, CostCenter } = useContext(AdminContext);
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [fromDate, setFromDate] = useState();
+  const [toDate, setToDate] = useState();
   const [role, setRole] = useState(0);
 
   /*-----------------Pagination------------------*/
@@ -46,6 +38,11 @@ const EmployeeList = () => {
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  useEffect(() => {
+    if (employeeHistoryData !== null && employeeHistoryData !== undefined) {
+      setCurrentRecords(employeeHistoryData);
+    }
+  }, [employeeHistoryData,currentRecords]); 
 
   useEffect(() => {
     if (rolePermission == "superCostCenterManager") {
@@ -57,9 +54,8 @@ const EmployeeList = () => {
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
-    if (searchValue !== "") {
-      ViewEmployeeHistoryData(searchValue, pageNumber - 1,6,role);
-    }
+      ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageNumber-1,role);
+    
   };
 
   /*-----------------Pagination------------------*/
@@ -71,15 +67,14 @@ const EmployeeList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      ViewEmployeeHistoryData(searchValue, pageCount,6,role);
+      ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role);
     } else {
-      ViewEmployeeHistoryData("all", 0,6,role);
+      ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role);
     }
   };
 
   useEffect(() => {
-    ViewEmployeeHistoryData(searchValue, pageCount,6,rolePermission == "superCostCenterManager" ? 1 : 0
-    );
+    ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role);
     console.log("user role------>", user);
   }, []);
 
@@ -87,13 +82,13 @@ const EmployeeList = () => {
   const fromDateHandler = (date) => {
     let value = date;
     console.log("fromDate", value);
-    setStartDate(value);
+    setFromDate(value);
   };
 
   const toDateHandler = (date) => {
     let value1 = date;
     console.log("toDate", value1);
-    setEndDate(value1);
+    setToDate(value1);
   };
 
   return (
@@ -109,7 +104,7 @@ const EmployeeList = () => {
                   <span style={{ color: "red" }}>*</span>
                   <div>
                     <DatePicker
-                      selected={startDate}
+                      selected={fromDate}
                       onChange={(e) => fromDateHandler(e)}
                       className="form-control"
                       dateFormat="yyyy-MM-dd"
@@ -126,11 +121,11 @@ const EmployeeList = () => {
                   <span style={{ color: "red" }}>*</span>
                   <div>
                     <DatePicker
-                      selected={endDate}
+                      selected={toDate}
                      onChange={(e) => toDateHandler(e)}
                       className="form-control"
                       dateFormat="yyyy-MM-dd"
-                      minDate={startDate}
+                      minDate={fromDate}
                       placeholderText="To Date"
                     />
                   </div>
@@ -225,27 +220,29 @@ const EmployeeList = () => {
                   ) : currentRecords !== undefined &&
                     currentRecords !== null &&
                     currentRecords.length > 0 
-                    // && total > 0
+                     && total > 0
                      ? (
                     currentRecords.map((item, i) => {
                       return (
-                        <tbody key={item.promotionId}>
+                        <tbody key={item.employeeId}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.employeeId}</td>
                             <td>{item.employeeName}</td>
                             <td>{item.position}</td>
                             <td>{item.role}</td>
-                            <td>{item.costcenter}</td>
+                            <td>{item.costCentre}</td>
                            <td>{item.createdBy}</td>
-                           <td>{item.active}</td>
+                           <td>{item.isActive == 1?"Yes":"No"}</td>
                             <td>
                             <div style={{  paddingTop: "1px",  fontSize: "24px" }}>
+                            <Link to={"/employee_profile/" + item.employeeId}>
                               <Edit2/>
+                              </Link>
                               </div>
                             </td>
                             <td>
-                              <Link to={"" + item.employeeId}>
+                              <Link to={"/master-history/" + item.employeeId}>
                               <div style={{  paddingTop: "2px",  fontSize: "24px" }}>
                             <i className="fa fa-history"></i>
                           </div>

@@ -6,6 +6,7 @@ import moment from "moment";
 import { AppContext } from "../../context/AppState";
 import "../Leaves/Leaves.css";
 import MultiSelect from "react-multi-select-component";
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,21 +28,23 @@ import InsuranceNominationHistory from "./InsuranceNominationHistory"
 import SportHistory from "./SportHistory"
 import { PermissionContext } from "../../context/PermissionState";
 
-const MasterHistory = () => {
+const MasterHistory = (props) => {
 
-  const [stepCount, setStepNumber] = useState(null);
-  const [currentRecords,setCurrentRecords] = useState()
+  const [stepCount, setStepNumber] = useState(0);
+  const [selectData, setSelectData] = useState(null);
+
+  const [currentRecords,setCurrentRecords] = useState([])
   const [dropDownData,setDropDownData] = useState([{
-    name:"EMPLOYEE_CONTRACT_DETAILS",value:0
-  },{name:"SALARY_HISTORY",value:1},
-  {name:"BONUS_HISTORY",value:2},
-  {name:"COST_CENTER_HISTORY",value:3},
-  {name:"BANK_DETAILS_HISTORY",value:4},
-  {name:"AADHAAR_HISTORY",value:5},
-  {name:"ACCESS_AND_RIGHTS_HISTORY",value:6},
-  {name:"MANAGER_HISTORY",value:7},
-  {name:"USER_DOCUMENTS",value:8},
-  {name:"OTHER_TAXABLE_INCOME_HISTORY",value:9},
+    name:"Employee Contract Details",value:0
+  },{name:"Salary History",value:1},
+  {name:"Bonus History",value:2},
+  {name:"Cost Center History",value:3},
+  {name:"Bank Details History",value:4},
+  {name:"Aadhaar History",value:5},
+  {name:"Access And Rights History",value:6},
+  {name:"Manager History",value:7},
+  {name:"User Documents",value:8},
+  {name:"Other Taxable Income History",value:9},
   {name:"User Exit History",value:10},
   {name:"Payslips History",value:11},
   {name:"ItStatement History",value:12},
@@ -53,15 +56,37 @@ const MasterHistory = () => {
 
   const { user } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
-  
-  useEffect(() => {
-  
-  }, []);
+    const {
+    ViewEmployeeHistoryData,
+    employeeHistoryData,
+    viewEmployeeContractDetailsById,
+    employeeContractDetailsByIdData,
+    viewSalaryDataById,
+    bankData,
+    viewBankDataById,
+    loader,
+    total,
+  } = useContext(EmployeeHistoryContext);
 
- 
-  const setDropDownSelectHandler = (options) => {
-    setStepNumber(options[0].value)
-    console.log("options", options);
+  console.log("stepCount",stepCount);
+  useEffect(() => {
+
+  if(stepCount == 0){
+    viewEmployeeContractDetailsById(props.match.params.employeeid)
+  }else if(stepCount == 1){
+    viewSalaryDataById(props.match.params.employeeid)
+  }else if(stepCount == 4){
+    viewBankDataById(props.match.params.employeeid)
+  }
+  }, [stepCount]);
+
+
+ console.log(props,"masterhistory",props.match.params.employeeid,bankData)
+  const setDropDownSelectHandler = (option) => {
+    // var data = option[0]
+     setStepNumber(option.value)
+     setSelectData(option.label)
+    console.log("option", option);
   };
 
 
@@ -79,17 +104,20 @@ const MasterHistory = () => {
           <Row>
             <Col sm={4}>
               <Form.Group>
-                <Form.Label>Employee Id</Form.Label>{" "}
-                <span style={{ color: "red" }}>*</span>
+                {/* <Form.Label></Form.Label>{" "}
+                <span style={{ color: "red" }}>*</span> */}
                  <Select
                                 name="filters"
-                                placeholder="Select Employee Id"
-                                value={stepCount} 
+                                placeholder="Select "
                                 style={{fontSize:"0.8rem"}}
+                                value = {stepCount==0?{ label: 'Employee Contract Details', value: 0 }:{ label: selectData, value: stepCount }}
                                 options={dropDownData !== null  ?
                                  dropDownData.map(e => ({label: e.name, value: e.value})):[]}
                                 onChange={setDropDownSelectHandler}
-                                isMulti required isSearchable />
+                                required
+                                isSearchable
+                               />
+                         
                 {/* <MultiSelect
                  options={dropDownData.map((e) => ({
                         label: e.name,
@@ -104,7 +132,7 @@ const MasterHistory = () => {
                 /> */}
               </Form.Group>
             </Col>
-            <Col sm={4} style={{paddingTop:"28px",paddingLeft:"50px"}} >
+            <Col sm={2}  >
           <Button type="submit" class="btn btn-primary" >
             Search
           </Button>
@@ -117,86 +145,86 @@ const MasterHistory = () => {
                           switch (stepCount) {
                             case 0:
                               return (
-                                <EmployeeContractDetails EmployeeContractDetailList={currentRecords}
+                                <EmployeeContractDetails EmployeeContractDetailList={props.match.params.employeeid}
                                 />
                               );
                             case 1:
                               return (
-                                <SalaryHistory SalaryHistoryList={currentRecords}
+                                <SalaryHistory SalaryHistoryList={props.match.params.employeeid}
                                 />
                               );
                               case 2:
                                 return (
-                                  <BonusHistory BonusHistoryList={currentRecords}
+                                  <BonusHistory BonusHistoryList={props.match.params.employeeid}
                                   />
                                 );
                                 case 3:
                                   return (
-                                    <CostCenterHistory CostCenterHistoryList={currentRecords}
+                                    <CostCenterHistory CostCenterHistoryList={props.match.params.employeeid}
                                     />
                                   );
                                   case 4:
                                     return (
-                                      <BankDetailsHistory BankDetailsHistoryList={currentRecords}
+                                      <BankDetailsHistory BankDetailsHistoryList={props.match.params.employeeid}
                                       />
                                     );
                                     case 5:
                                       return (
-                                        <AadhaarHistory AadhaarHistoryList={currentRecords}
+                                        <AadhaarHistory AadhaarHistoryList={props.match.params.employeeid}
                                         />
                                       );
                                       case 6:
                                         return (
-                                          <AccessAndRightHistory AccessAndRightHistoryList={currentRecords}
+                                          <AccessAndRightHistory AccessAndRightHistoryList={props.match.params.employeeid}
                                           />
                                         );
                                         case 7:
                                           return (
-                                            <ManagerHistory ManagerHistoryList={currentRecords}
+                                            <ManagerHistory ManagerHistoryList={props.match.params.employeeid}
                                             />
                                           );
                                           case 8:
                                             return (
-                                              <UserDocuments BankDetailsHistoryList={currentRecords}
+                                              <UserDocuments BankDetailsHistoryList={props.match.params.employeeid}
                                               />
                                             );
                                             case 9:
                                               return (
-                                                <OtherTaxableIncomeHistory OtherTaxableIncomeHistoryList={currentRecords}
+                                                <OtherTaxableIncomeHistory OtherTaxableIncomeHistoryList={props.match.params.employeeid}
                                                 />
                                               );
                                               case 10:
                                                 return (
-                                                  <UserExitHistory UserExitHistoryList={currentRecords}
+                                                  <UserExitHistory UserExitHistoryList={props.match.params.employeeid}
                                                   />
                                                 );
                                                 case 11:
                                                   return (
-                                                    <PayslipsHistory PayslipsHistoryList={currentRecords}
+                                                    <PayslipsHistory PayslipsHistoryList={props.match.params.employeeid}
                                                     />
                                                   );
                                                   case 12:
                                                     return (
-                                                      <ItStatementHistory UserExitHistoryList={currentRecords}
+                                                      <ItStatementHistory UserExitHistoryList={props.match.params.employeeid}
                                                       />
                                                     );
                                                     case 13:
                                                       return (
-                                                        <DISP DISPList={currentRecords}
+                                                        <DISP DISPList={props.match.params.employeeid}
                                                         />
                                                       );
                                                       case 14:
                                                       return (
-                                                        <InsuranceNominationHistory InsuranceNominationHistoryList={currentRecords}
+                                                        <InsuranceNominationHistory InsuranceNominationHistoryList={props.match.params.employeeid}
                                                         />
                                                       );
                                                       case 15:
                                                       return (
-                                                        <SportHistory SportHistoryList={currentRecords}
+                                                        <SportHistory SportHistoryList={props.match.params.employeeid}
                                                         />
                                                       );
                               default:return (
-                                <BankDetailsHistory BankDetailsHistoryList={currentRecords}
+                                <EmployeeContractDetails EmployeeContractDetailList={props.match.params.employeeid}
                                 />
                               )
                            

@@ -7,12 +7,20 @@ import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
 import { LeaveContext } from '../../context/LeaveState'
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
+
 import { toast } from "react-toastify";
 
 const EmployeeContractDetails = (props) => {
-    const reportList = props.EmployeeContractDetailList
-    const {loader } = useContext(LeaveContext)
-   
+   // const employeeContractDetailsByIdData = props.EmployeeContractDetailList
+    const {
+        ViewEmployeeHistoryData,
+        employeeHistoryData,
+        viewEmployeeContractDetailsById,
+        employeeContractDetailsByIdData,
+        loader,
+        total,
+      } = useContext(EmployeeHistoryContext);
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -32,16 +40,16 @@ console.log("endDate", props.endDate)
       }
     )
     
-console.log(dates)
+console.log(employeeContractDetailsByIdData,"employeeContractDetailsByIdData")
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
+    const totalRecords = employeeContractDetailsByIdData !== null && employeeContractDetailsByIdData !== undefined && employeeContractDetailsByIdData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = employeeContractDetailsByIdData !== null && employeeContractDetailsByIdData !== undefined ? employeeContractDetailsByIdData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -71,7 +79,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={4}>
+                  <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -97,7 +105,7 @@ console.log(dates)
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={8} style={{  textAlign:"center",marginTop: "5px" }}>
+                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>EMPLOYEE CONTRACT DETAILS</b>
                   </Col>
                 </Row></div>
@@ -127,7 +135,7 @@ console.log(dates)
 
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
+                                    {loader === true && employeeContractDetailsByIdData !== null && employeeContractDetailsByIdData !== undefined ? 
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -142,29 +150,46 @@ console.log(dates)
                                             </td>
                                         </tr>
                                     </tbody>:
-                                    currentRecords !== undefined && currentRecords !== null &&
-                                        currentRecords.length > 0 ?
-                                        currentRecords.map((item, i) => {
+                                    employeeContractDetailsByIdData !== undefined &&
+                                     employeeContractDetailsByIdData !== null &&
+                                     !employeeContractDetailsByIdData.includes(null) &&
+                                        employeeContractDetailsByIdData.length > 0 ?
+                                        employeeContractDetailsByIdData.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.position}</td>
+                                                        <td>{
+                                                        item.joiningDate !== null && 
+                                                        item.joiningDate !== undefined 
+                                                         && item.joiningDate !== ""?
+                                                        moment(new Date(item.joiningDate)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.createdBy}</td>
+                                                        <td>{
+                                                         item.createdOn !== null && 
+                                                         item.createdOn !== undefined 
+                                                          && item.createdOn !== ""?
+                                                         moment(new Date(item.createdOn)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.userRole}</td>
+                                                        <td>{item.isActive}</td>
+                                                        <td>{
+                                                        item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.address}</td>
+                                                        <td>{item.city}</td>
+                                                        <td>{item.state}</td>
+                                                        <td>{item.pinCode}</td>
+                                                        <td>{item.phone}</td>
+                                                        <td>{item.addressType}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{ item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -182,7 +207,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
+            {employeeContractDetailsByIdData !== null && employeeContractDetailsByIdData !== undefined && employeeContractDetailsByIdData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
