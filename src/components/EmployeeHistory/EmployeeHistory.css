@@ -11,14 +11,7 @@
   .container-accordion .accordion__button:hover {
     background-color: #006ebb;
   }
-  .PromotionstepperButtons {
-    width: 200px;
-    height: 30px;
-    background-color: #006ebb;
-    color: #fff;
-    border: 1px solid#006ebb;
-    margin-left: 40px;
-  }
+ 
   .stepperButtonsLetter {
     width: 137px;
     height: 30px;
@@ -137,20 +130,5 @@
   }
   .not-rehire {
     background-color: rgb(223, 28, 28) !important;
-  }
-  .promotion_initiate {
-    width: 65%;
-    margin-top: 6px;
-    /* margin-right: -115px; */
-    float: right;
-    border-radius: 20px !important;
-  }
-  .promotion_status_search {
-    width: 100%;
-    margin-top: 10px;
-    margin-right: 4px;
-    margin-left: -10px;
-    /* float: right; */
-    border-radius: 20px !important;
   }
   

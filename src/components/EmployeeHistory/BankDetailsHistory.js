@@ -9,13 +9,13 @@ import moment from 'moment'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const SalaryHistory = (props) => {
+const BankDetailsHistory = (props) => {
     const {
-        viewSalaryDataById,
-        salaryData,
+        viewBankDataById,
+        bankData,
         loader,
         total,
-      } = useContext(EmployeeHistoryContext);   
+      } = useContext(EmployeeHistoryContext);     
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = salaryData !== null && salaryData !== undefined && salaryData.length;
+    const totalRecords = bankData !== null && bankData !== undefined && bankData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords =salaryData !== null && salaryData !== undefined ? salaryData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = bankData !== null && bankData !== undefined ? bankData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -100,8 +100,8 @@ console.log(dates)
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={3} style={{marginTop: "5px" }}>
-                    <b>SALARY HISTORY</b>
+                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                    <b>BANK DETAILS HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,12 +109,15 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S. No</th>
-                                            <th>Final Gross</th>
-                                            <th>Effective Date</th>
+                                            <th>S .No</th>
+                                            <th>Account Number</th>
+                                            <th>Bank Name</th>
+                                            <th>IFSC</th>
+                                            <th>PAN</th>
                                             <th>Updated By</th>
                                             <th>Updated On</th>
-                                           
+
+
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -132,22 +135,23 @@ console.log(dates)
                                             </td>
                                         </tr>
                                     </tbody>:
-                                    salaryData !== undefined && salaryData !== null && 
-                                    !salaryData.includes(null) &&
-                                        salaryData.length > 0 ?
-                                        salaryData.map((item, i) => {
+                                    bankData !== undefined && bankData !== null && 
+                                    !bankData.includes(null) &&
+                                        bankData.length > 0 ?
+                                        bankData.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.fixedGross}</td>
-                                                        <td>{item.effectiveDate}</td>
+                                                        <td>{item.accountNumber}</td>
+                                                        <td>{item.bankName}</td>
+                                                        <td>{item.ifsc}</td>
+                                                        <td>{item.pan}</td>
                                                         <td>{item.updatedBy}</td>
-                                                        <td>{ item.updatedOn !== null && 
+                                                        <td>{item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 
                                                          && item.updatedOn !== ""?
                                                         moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
-                                                
                                                     </tr>
                                                 </tbody>
                                             )
@@ -165,7 +169,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {salaryData !== null && salaryData !== undefined && salaryData.length > 10 &&
+            {bankData !== null && bankData !== undefined && bankData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -180,4 +184,4 @@ console.log(dates)
     );
 };
 
-export default SalaryHistory;
+export default BankDetailsHistory;
