@@ -148,7 +148,14 @@ const EntityTransferAcceptance = () => {
       newDeptName !== undefined &&
       newDeptName !== null
     ) {
-      getCostCentreDetails(transferData.promotedCompany, newDeptName);
+      getCostCentreDetails(
+        transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
+          ? "PRODIN"
+          : transferData.promotedCompany === "Indeca Sporting Goods Pvt Ltd"
+          ? "INDECA"
+          : transferData.promotedCompany,
+        newDeptName
+      );
     }
   }, [initiationEmpData, newDeptName]);
 
