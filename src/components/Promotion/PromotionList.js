@@ -14,7 +14,7 @@ import moment from "moment";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
-
+import { E_signContext } from "../../context/E_signState";
 const PromotionList = () => {
   const {
     promotionListView,
@@ -26,6 +26,7 @@ const PromotionList = () => {
     ViewPromotionByEmployee,
     promotionByEmployee,
   } = useContext(PromotionContext);
+  const { getReference, notification } = useContext(E_signContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -69,19 +70,19 @@ const PromotionList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageNumber - 1,6,role);
+      promotionListView(searchValue, pageNumber - 1, 6, role);
     } else if (promotionStatus === "Pending") {
-      promotionListView("all", pageNumber - 1, 0,role);
+      promotionListView("all", pageNumber - 1, 0, role);
     } else if (promotionStatus === "In Progress") {
-      promotionListView("all", pageNumber - 1, 1,role);
+      promotionListView("all", pageNumber - 1, 1, role);
     } else if (promotionStatus === "Approved") {
-      promotionListView("all", pageNumber - 1, 3,role);
+      promotionListView("all", pageNumber - 1, 3, role);
     } else if (promotionStatus === "Rejected") {
-      promotionListView("all", pageNumber - 1, 4,role);
+      promotionListView("all", pageNumber - 1, 4, role);
     } else if (promotionStatus === "Approve In Progress") {
-      promotionListView("all", pageNumber - 1, 5,role);
+      promotionListView("all", pageNumber - 1, 5, role);
     } else {
-      promotionListView("all", pageNumber - 1,6,role);
+      promotionListView("all", pageNumber - 1, 6, role);
     }
     setCurrentRecords(promotionList);
   };
@@ -96,19 +97,23 @@ const PromotionList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageCount,6,role);
+      promotionListView(searchValue, pageCount, 6, role);
     } else {
-      promotionListView("all", 0,6,role);
+      promotionListView("all", 0, 6, role);
     }
   };
 
   useEffect(() => {
-    promotionListView(searchValue, pageCount,6,rolePermission == "superCostCenterManager" ? 1 : 0
+    promotionListView(
+      searchValue,
+      pageCount,
+      6,
+      rolePermission == "superCostCenterManager" ? 1 : 0
     );
     console.log("user role------>", user);
   }, []);
 
-  console.log(rolePermission,promotionList, "promotionlist3");
+  console.log(rolePermission, promotionList, "promotionlist3");
 
   const statusHandler = (e) => {
     setPromotionStatus(e.target.value);
@@ -116,18 +121,22 @@ const PromotionList = () => {
     setCurrentPage(1);
     setSearchValue("");
     if (e.target.value === "Pending") {
-      promotionListView("all", 0, 0,role);
+      promotionListView("all", 0, 0, role);
     } else if (e.target.value === "In Progress") {
-      promotionListView("all", 0, 1,role);
+      promotionListView("all", 0, 1, role);
     } else if (e.target.value === "Approved") {
-      promotionListView("all", 0, 3,role);
+      promotionListView("all", 0, 3, role);
     } else if (e.target.value === "Rejected") {
-      promotionListView("all", 0, 4,role);
+      promotionListView("all", 0, 4, role);
     } else if (e.target.value === "Approve In Progress") {
-      promotionListView("all", 0, 5,role);
+      promotionListView("all", 0, 5, role);
     } else {
-      promotionListView("all", 0,6,role);
+      promotionListView("all", 0, 6, role);
     }
+  };
+  const GoToLetterView = (refId) => {
+    console.log(refId);
+    getReference(refId);
   };
 
   return (
@@ -181,7 +190,7 @@ const PromotionList = () => {
                     <div className="promotion_initiate">
                       <Link to="/promotion-initiate">
                         <Button className="apply-button btn btn-light mr-2">
-                         Initiate Promotion
+                          Initiate Promotion
                         </Button>
                       </Link>
                     </div>
@@ -263,6 +272,7 @@ const PromotionList = () => {
                       <th scope="col">View</th>
                       {/* <th scope="col">Manager Action</th> */}
                       <th scope="col">Action</th>
+                      <th scope="col">View Signed Document</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -298,11 +308,15 @@ const PromotionList = () => {
                             <td>{item.empName}</td>
                             <td>{item.oldPosition}</td>
                             <td>{item.promotedPosition}</td>
-                            <td>{item.effectiveDate !== null && 
-                            item.effectiveDate !== undefined 
-                             && item.effectiveDate !== ""?
-                            moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""
-                            }</td>
+                            <td>
+                              {item.effectiveDate !== null &&
+                              item.effectiveDate !== undefined &&
+                              item.effectiveDate !== ""
+                                ? moment(new Date(item.effectiveDate)).format(
+                                    "DD-MM-YYYY"
+                                  )
+                                : ""}
+                            </td>
                             <td>
                               {item.validatedManagerName !== null &&
                               item.validatedManagerName !== undefined &&
@@ -314,7 +328,9 @@ const PromotionList = () => {
                               {item.managerValidatedDate !== null &&
                               item.managerValidatedDate !== undefined &&
                               item.managerValidatedDate !== ""
-                                ? moment(item.managerValidatedDate).format("DD-MM-YYYY")
+                                ? moment(item.managerValidatedDate).format(
+                                    "DD-MM-YYYY"
+                                  )
                                 : "NA"}
                             </td>
                             <td>
@@ -328,7 +344,9 @@ const PromotionList = () => {
                               {item.adminValidatedDate !== null &&
                               item.adminValidatedDate !== undefined &&
                               item.adminValidatedDate !== ""
-                                ? moment(new Date(item.adminValidatedDate)).format("DD-MM-YYYY")
+                                ? moment(
+                                    new Date(item.adminValidatedDate)
+                                  ).format("DD-MM-YYYY")
                                 : "NA"}
                             </td>
                             <td>
@@ -416,29 +434,46 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) :user !== null &&
-                            user !== undefined &&
-                            rolePermission == "superCostCenterManager" ? (
-                            <td>
-                              {item.status === 0 ? (
-                                <Link
-                                  to={
-                                    "/promotion-approval/" + item.employeeId
-                                  }
-                                >
-                                  <Edit2
+                            ) : user !== null &&
+                              user !== undefined &&
+                              rolePermission == "superCostCenterManager" ? (
+                              <td>
+                                {item.status === 0 ? (
+                                  <Link
+                                    to={
+                                      "/promotion-approval/" + item.employeeId
+                                    }
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        ViewPromotionById(item.promotionId);
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : (
+                              <td>
+                                <Edit2 />
+                              </td>
+                            )}
+                            {item.refId !== null &&
+                            item.refId !== undefined &&
+                            item.refId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
                                     onClick={() => {
-                                      ViewPromotionById(item.promotionId);
+                                      GoToLetterView(item.refId);
                                     }}
                                   />
                                 </Link>
-                              ) : (
-                                <Edit2 />
-                              )}
-                            </td>
-                          ): (
+                              </td>
+                            ) : (
                               <td>
-                                <Edit2 />
+                                <AlertCircle />
                               </td>
                             )}
                           </tr>

@@ -39,6 +39,8 @@ const EntityTransferAction = () => {
     getTransferData,
     transferData,
     getApointmentLetter,
+    setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
@@ -237,18 +239,19 @@ const EntityTransferAction = () => {
 
   const showTransferLetterModal = (e) => {
     e.preventDefault();
-    console.log("generate letter",transferData)
+    console.log("generate letter", transferData);
     if (
       transferData !== null &&
       transferData !== undefined &&
-      Object.keys(transferData).length !== 0 
-    //   &&
-    //   transferData.promotedEmployeeId !== null &&
-    //   transferData.promotedEmployeeId !== undefined &&
-    //   transferData.promotedEmployeeId !== ""
+      Object.keys(transferData).length !== 0
+      //   &&
+      //   transferData.promotedEmployeeId !== null &&
+      //   transferData.promotedEmployeeId !== undefined &&
+      //   transferData.promotedEmployeeId !== ""
     ) {
       getApointmentLetter(transferData.promotedEmployeeId);
       setShowInitiationLetter(true);
+      setLetterViewing(true);
     }
   };
 
@@ -386,55 +389,55 @@ const EntityTransferAction = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    
-      const InfoData = {
-        currentCompany: transferData.currentCompany,
-        currentContractType: transferData.currentContractType,
-        currentCostCentre: transferData.currentCostCentre,
-        currentCountry: transferData.currentCountry,
-        currentDepartment: transferData.currentDepartment,
-        currentDesignation: transferData.currentDesignation,
-        currentEmployeeId: transferData.currentEmployeeId,
-        currentFixedGross: transferData.currentFixedGross,
-        currentJoiningDate: transferData.currentJoiningDate,
-        currentLocation:
-          transferData.currentLocation !== null &&
-          transferData.currentLocation !== undefined
-            ? transferData.currentLocation
-            : 0,
-        currentManagerId: transferData.currentManagerId,
-        currentMonthlyBonus: transferData.currentMonthlyBonus,
-        currentPosition: transferData.currentPosition,
-        promotedCompany: transferData.promotedCompany,
-        promotedContractType: transferData.promotedContractType,
-        promotedCostCentre: newCostCentre,
-        promotedCountry: transferData.promotedCountry,
-        promotedDateOfReturn: transferData.promotedDateOfReturn,
-        promotedDepartment: newDeptName,
-        promotedDesignation: transferData.promotedDesignation,
-        promotedEmployeeId: transferData.promotedEmployeeId,
-        promotedFixedGross: parseInt(newGross),
-        promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedLocation: parseInt(newLocation),
-        promotedManagerId: transferData.promotedManagerId,
-        promotedMonthlyBonus:
-          bonus !== "" && bonus !== null && bonus !== undefined
-            ? parseInt(bonus)
-            : 0,
-        promotedPosition: newPositionName,
-        promotedRelocationBonus: parseInt(relocationBonus),
-        promotedTermOfProject: transferData.promotedTermOfProject,
-        remark: null,
-        status: 1,
-        transferId: transferData.transferId,
-        transferLetter: null,
-        transferType: transferData.transferType,
-      };
-      console.log(InfoData);
-      createTransferInitiation(InfoData);
-      setFormValid(true);
-      setLetterSent(true);
-      setShowLetterSubmitModal(true);
+
+    const InfoData = {
+      currentCompany: transferData.currentCompany,
+      currentContractType: transferData.currentContractType,
+      currentCostCentre: transferData.currentCostCentre,
+      currentCountry: transferData.currentCountry,
+      currentDepartment: transferData.currentDepartment,
+      currentDesignation: transferData.currentDesignation,
+      currentEmployeeId: transferData.currentEmployeeId,
+      currentFixedGross: transferData.currentFixedGross,
+      currentJoiningDate: transferData.currentJoiningDate,
+      currentLocation:
+        transferData.currentLocation !== null &&
+        transferData.currentLocation !== undefined
+          ? transferData.currentLocation
+          : 0,
+      currentManagerId: transferData.currentManagerId,
+      currentMonthlyBonus: transferData.currentMonthlyBonus,
+      currentPosition: transferData.currentPosition,
+      promotedCompany: transferData.promotedCompany,
+      promotedContractType: transferData.promotedContractType,
+      promotedCostCentre: newCostCentre,
+      promotedCountry: transferData.promotedCountry,
+      promotedDateOfReturn: transferData.promotedDateOfReturn,
+      promotedDepartment: newDeptName,
+      promotedDesignation: transferData.promotedDesignation,
+      promotedEmployeeId: transferData.promotedEmployeeId,
+      promotedFixedGross: parseInt(newGross),
+      promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
+      promotedLocation: parseInt(newLocation),
+      promotedManagerId: transferData.promotedManagerId,
+      promotedMonthlyBonus:
+        bonus !== "" && bonus !== null && bonus !== undefined
+          ? parseInt(bonus)
+          : 0,
+      promotedPosition: newPositionName,
+      promotedRelocationBonus: parseInt(relocationBonus),
+      promotedTermOfProject: transferData.promotedTermOfProject,
+      remark: null,
+      status: 1,
+      transferId: transferData.transferId,
+      transferLetter: null,
+      transferType: transferData.transferType,
+    };
+    console.log(InfoData);
+    createTransferInitiation(InfoData);
+    setFormValid(true);
+    setLetterSent(true);
+    setShowLetterSubmitModal(true);
   };
 
   return (
@@ -467,43 +470,46 @@ const EntityTransferAction = () => {
         </Container>
       </Modal>
 
-      <Modal
+      {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {loader ? (
-            <LoaderIcon />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Fulltime" ||
-              transferData.currentContractType === "fulltime") ? (
-            <ApointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "parttime" ||
-              transferData.currentContractType === "Parttime") ? (
-            <PartTimeAppointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Local Expat" ||
-              transferData.currentContractType === "local expat") ? (
-            <LocalExpactAppointmentLetter />
-          ) : (
-            ""
-          )}
-          <br></br>
+        <Modal.Body> */}
+      {loader ? (
+        <LoaderIcon />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Fulltime" ||
+          transferData.currentContractType === "fulltime") ? (
+        <ApointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "parttime" ||
+          transferData.currentContractType === "Parttime") ? (
+        <PartTimeAppointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Local Expat" ||
+          transferData.currentContractType === "local expat") ? (
+        <LocalExpactAppointmentLetter />
+      ) : (
+        ""
+      )}
+      {/* <br></br>
 
           <Row>
             {showSignature ? (
@@ -543,7 +549,7 @@ const EntityTransferAction = () => {
             </Row>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showLetterSubmitModal}
@@ -574,401 +580,409 @@ const EntityTransferAction = () => {
                 <div className="OnBoardHeading">
                   <b>TRANSFER ACTION </b>
                 </div>
-                {transferData &&
-                transferData !== null &&
-                transferData !== undefined &&
-                Object.keys(transferData).length !== 0 ? (
+                <Container className="ml-4 mt-4">
+                  {transferData &&
+                  transferData !== null &&
+                  transferData !== undefined &&
+                  Object.keys(transferData).length !== 0 ? (
                     <Form>
-                    <Row className="mb-4">
-                      <Col md={2}>Transfer Type: </Col>
-                      <Col md={8} className="text-primary">
-                        {transferData.transferType}
-                      </Col>
-                    </Row>
-                    <Row className="mb-4">
-                      <Col md={2}>Employee Name: </Col>
-                      <Col md={8} className="text-primary">
-                        {transferData.employeeName} {transferData.currentEmployeeId}
-                      </Col>
-                    </Row>
-          
-                    <Row style={{ marginTop: "2rem" }}></Row>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationDept"
-                    >
-                      <Col md={2}>
-                        <Form.Label>Cost Center:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentCostCentre}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label>Contract Type:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentContractType}
-                      </Col>
-                    </Form.Group>
-                    <Row className="mb-4">
-                      <Col md={2}>Manager Name</Col>
-                      <Col md={10} className="text-primary">
-                        {transferData.currentManagerName +
-                          " " +
-                          transferData.currentManagerId}
-                      </Col>
-                    </Row>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationDept"
-                    >
-                      <Col md={2}>
-                        <Form.Label>Cost Center:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentManagerCostCentre}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label>Contract Type:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentManagerContractType}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationDept"
-                    ></Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationDept"
-                    >
-                      <Col className="font-weight-bold">
-                        <u>Documents</u>
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationDept"
-                    >
-                      <Col md={2}>
-                        <Form.Label>UAN Number:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData !== null &&
-                        transferData !== undefined &&
-                        Object.keys(transferData).length !== 0 &&
-                        transferData.internationalTransfer !== null &&
-                        transferData.internationalTransfer !== undefined
-                          ? transferData.internationalTransfer.uanNumber
-                          : "(No Documents Available)"}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label>Bank Account Number:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData !== null &&
-                        transferData !== undefined &&
-                        Object.keys(transferData).length !== 0 &&
-                        transferData.internationalTransfer !== null &&
-                        transferData.internationalTransfer !== undefined
-                          ? transferData.internationalTransfer.bankAccountNumber
-                          : "(No Documents Available)"}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationDept"
-                    >
-                      <Col md={2}>
-                        <Form.Label>PAN Number:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData !== null &&
-                        transferData !== undefined &&
-                        Object.keys(transferData).length !== 0 &&
-                        transferData.internationalTransfer !== null &&
-                        transferData.internationalTransfer !== undefined
-                          ? transferData.internationalTransfer.panNumber
-                          : ""}
-                        &nbsp;&nbsp;
-                        {transferData !== null &&
-                        transferData !== undefined &&
-                        Object.keys(transferData).length !== 0 &&
-                        transferData.internationalTransfer !== null &&
-                        transferData.internationalTransfer !== undefined &&
-                        transferData.internationalTransfer.panNumberDoc !== null &&
-                        transferData.internationalTransfer.panNumberDoc !== undefined ? (
-                          <a
-                            href={
-                              process.env.REACT_APP_S3_URL +
-                              transferData.internationalTransfer.panNumberDoc
-                            }
-                            target="_blank"
-                          >
-                            {" "}
-                            <u className="text-primary">View</u>
-                          </a>
-                        ) : (
-                          "(No Documents Available)"
-                        )}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label>Aadhaar Number:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData !== null &&
-                        transferData !== undefined &&
-                        Object.keys(transferData).length !== 0 &&
-                        transferData.internationalTransfer !== null &&
-                        transferData.internationalTransfer !== undefined
-                          ? transferData.internationalTransfer.aadhaarNumber
-                          : ""}
-                        &nbsp;&nbsp;
-                        {transferData !== null &&
-                        transferData !== undefined &&
-                        Object.keys(transferData).length !== 0 &&
-                        transferData.internationalTransfer !== null &&
-                        transferData.internationalTransfer !== undefined &&
-                        transferData.internationalTransfer.aadhaarNumberDoc !== null &&
-                        transferData.internationalTransfer.aadhaarNumberDoc !==
-                          undefined ? (
-                          <a
-                            href={
-                              process.env.REACT_APP_S3_URL +
-                              transferData.internationalTransfer.aadhaarNumberDoc
-                            }
-                            target="_blank"
-                          >
-                            {" "}
-                            <u className="text-primary">View</u>
-                          </a>
-                        ) : (
-                          "(No Documents Available)"
-                        )}
-                      </Col>
-                    </Form.Group>
-                    <Row style={{ marginTop: "3rem" }}></Row>
-                    <Row className="mb-4">
-                      <Col md={{ span: 4, offset: 2 }} className="font-weight-bold my-2">
-                        Current
-                      </Col>
-                      <Col md={{ span: 3, offset: 2 }} className="font-weight-bold my-2">
-                        New
-                      </Col>
-                    </Row>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationPosition"
-                    >
-                      <Col md={2}>
-                        <Form.Label> Entity:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentCompany}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label> Entity:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedCompany}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label> Department:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentDepartment}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label> Department:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedDepartment}
-                      </Col>
-                    </Form.Group>
-          
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label> Cost Center:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentCostCentre}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label> Cost Center:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedCostCentre}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label>Manager:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentManagerName}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label> Manager:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedManagerName}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label> Location:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentLocationName}
-                      </Col>
-          
-                      <Col md={2}>
-                        <Form.Label> Location:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedLocationName}
-                      </Col>
-                    </Form.Group>
-          
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label> Position:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentPosition}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label> Position:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedPosition}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label> Fixed Gross:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentFixedGross}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label> Fixed Gross:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedFixedGross}
-                      </Col>
-                    </Form.Group>
-                    <Row style={{ marginTop: "3rem" }}></Row>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label>Bonus:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedMonthlyBonus}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label>Relocation Bonus:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedRelocationBonus}
-                      </Col>
-                    </Form.Group>
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label>Effective Date:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedJoiningDate}
-                      </Col>
-                      <Col md={2}>
-                        <Form.Label>Date Of Joining:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.promotedJoiningDate}
-                      </Col>
-                    </Form.Group>
-          
-                    <Form.Group
-                      as={Row}
-                      className="mb-3"
-                      controlId="transferInitiationCostCentre"
-                    >
-                      <Col md={2}>
-                        <Form.Label>Date Of Joining The Group:</Form.Label>
-                      </Col>
-                      <Col md={4} className="text-primary">
-                        {transferData.currentJoiningDate}
-                      </Col>
-                    </Form.Group>
+                      <Row className="mb-4">
+                        <Col md={2}>Transfer Type: </Col>
+                        <Col md={8} className="text-primary">
+                          {transferData.transferType}
+                        </Col>
+                      </Row>
+                      <Row className="mb-4">
+                        <Col md={2}>Employee Name: </Col>
+                        <Col md={8} className="text-primary">
+                          {transferData.employeeName}{" "}
+                          {transferData.currentEmployeeId}
+                        </Col>
+                      </Row>
 
-                        <Row>
-                          <Col
-                            style={{
-                              marginTop: "2rem",
-                              marginBottom: "2rem",
-                              textAlign: "center",
-                            }}
-                          >
-                            <button
-                              disabled={true}
-                              className={
-                                 "confirmButton"
+                      <Row style={{ marginTop: "2rem" }}></Row>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationDept"
+                      >
+                        <Col md={2}>
+                          <Form.Label>Cost Center:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentCostCentre}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label>Contract Type:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentContractType}
+                        </Col>
+                      </Form.Group>
+                      <Row className="mb-4">
+                        <Col md={2}>Manager Name</Col>
+                        <Col md={10} className="text-primary">
+                          {transferData.currentManagerName +
+                            " " +
+                            transferData.currentManagerId}
+                        </Col>
+                      </Row>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationDept"
+                      >
+                        <Col md={2}>
+                          <Form.Label>Cost Center:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentManagerCostCentre}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label>Contract Type:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentManagerContractType}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationDept"
+                      ></Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationDept"
+                      >
+                        <Col className="font-weight-bold">
+                          <u>Documents</u>
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationDept"
+                      >
+                        <Col md={2}>
+                          <Form.Label>UAN Number:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData !== null &&
+                          transferData !== undefined &&
+                          Object.keys(transferData).length !== 0 &&
+                          transferData.internationalTransfer !== null &&
+                          transferData.internationalTransfer !== undefined
+                            ? transferData.internationalTransfer.uanNumber
+                            : "(No Documents Available)"}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label>Bank Account Number:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData !== null &&
+                          transferData !== undefined &&
+                          Object.keys(transferData).length !== 0 &&
+                          transferData.internationalTransfer !== null &&
+                          transferData.internationalTransfer !== undefined
+                            ? transferData.internationalTransfer
+                                .bankAccountNumber
+                            : "(No Documents Available)"}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationDept"
+                      >
+                        <Col md={2}>
+                          <Form.Label>PAN Number:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData !== null &&
+                          transferData !== undefined &&
+                          Object.keys(transferData).length !== 0 &&
+                          transferData.internationalTransfer !== null &&
+                          transferData.internationalTransfer !== undefined
+                            ? transferData.internationalTransfer.panNumber
+                            : ""}
+                          &nbsp;&nbsp;
+                          {transferData !== null &&
+                          transferData !== undefined &&
+                          Object.keys(transferData).length !== 0 &&
+                          transferData.internationalTransfer !== null &&
+                          transferData.internationalTransfer !== undefined &&
+                          transferData.internationalTransfer.panNumberDoc !==
+                            null &&
+                          transferData.internationalTransfer.panNumberDoc !==
+                            undefined ? (
+                            <a
+                              href={
+                                process.env.REACT_APP_S3_URL +
+                                transferData.internationalTransfer.panNumberDoc
                               }
+                              target="_blank"
                             >
-                              Save
-                            </button>
-                              <button
-                                className={"LettersProbButtons"}
-                                onClick={showTransferLetterModal}
-                              >
-                                {previewTransferLetter
-                                  ? "Preview Appointment Letter"
-                                  : "Generate Appointment Letter"}
-                              </button>
-                            
-                            { previewTransferLetter && (
+                              {" "}
+                              <u className="text-primary">View</u>
+                            </a>
+                          ) : (
+                            "(No Documents Available)"
+                          )}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label>Aadhaar Number:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData !== null &&
+                          transferData !== undefined &&
+                          Object.keys(transferData).length !== 0 &&
+                          transferData.internationalTransfer !== null &&
+                          transferData.internationalTransfer !== undefined
+                            ? transferData.internationalTransfer.aadhaarNumber
+                            : ""}
+                          &nbsp;&nbsp;
+                          {transferData !== null &&
+                          transferData !== undefined &&
+                          Object.keys(transferData).length !== 0 &&
+                          transferData.internationalTransfer !== null &&
+                          transferData.internationalTransfer !== undefined &&
+                          transferData.internationalTransfer
+                            .aadhaarNumberDoc !== null &&
+                          transferData.internationalTransfer
+                            .aadhaarNumberDoc !== undefined ? (
+                            <a
+                              href={
+                                process.env.REACT_APP_S3_URL +
+                                transferData.internationalTransfer
+                                  .aadhaarNumberDoc
+                              }
+                              target="_blank"
+                            >
+                              {" "}
+                              <u className="text-primary">View</u>
+                            </a>
+                          ) : (
+                            "(No Documents Available)"
+                          )}
+                        </Col>
+                      </Form.Group>
+                      <Row style={{ marginTop: "3rem" }}></Row>
+                      <Row className="mb-4">
+                        <Col
+                          md={{ span: 4, offset: 2 }}
+                          className="font-weight-bold my-2"
+                        >
+                          Current
+                        </Col>
+                        <Col
+                          md={{ span: 3, offset: 2 }}
+                          className="font-weight-bold my-2"
+                        >
+                          New
+                        </Col>
+                      </Row>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationPosition"
+                      >
+                        <Col md={2}>
+                          <Form.Label> Entity:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentCompany}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label> Entity:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedCompany}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label> Department:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentDepartment}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label> Department:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedDepartment}
+                        </Col>
+                      </Form.Group>
+
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label> Cost Center:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentCostCentre}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label> Cost Center:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedCostCentre}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label>Manager:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentManagerName}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label> Manager:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedManagerName}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label> Location:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentLocationName}
+                        </Col>
+
+                        <Col md={2}>
+                          <Form.Label> Location:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedLocationName}
+                        </Col>
+                      </Form.Group>
+
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label> Position:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentPosition}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label> Position:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedPosition}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label> Fixed Gross:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentFixedGross}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label> Fixed Gross:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedFixedGross}
+                        </Col>
+                      </Form.Group>
+                      <Row style={{ marginTop: "3rem" }}></Row>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label>Bonus:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedMonthlyBonus}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label>Relocation Bonus:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedRelocationBonus}
+                        </Col>
+                      </Form.Group>
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label>Effective Date:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedJoiningDate}
+                        </Col>
+                        <Col md={2}>
+                          <Form.Label>Date Of Joining:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.promotedJoiningDate}
+                        </Col>
+                      </Form.Group>
+
+                      <Form.Group
+                        as={Row}
+                        className="mb-3"
+                        controlId="transferInitiationCostCentre"
+                      >
+                        <Col md={2}>
+                          <Form.Label>Date Of Joining The Group:</Form.Label>
+                        </Col>
+                        <Col md={4} className="text-primary">
+                          {transferData.currentJoiningDate}
+                        </Col>
+                      </Form.Group>
+
+                      <Row>
+                        <Col
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
+                        >
+                          <button disabled={true} className={"confirmButton"}>
+                            Save
+                          </button>
+                          <button
+                            className={"LettersProbButtons"}
+                            onClick={showTransferLetterModal}
+                          >
+                            {previewTransferLetter
+                              ? "Generate Appointment Letter"
+                              : "Generate Appointment Letter"}
+                          </button>
+
+                          {/* { previewTransferLetter && (
                               <div className="preview-section">
                                 <br></br>
                                 <br></br>
@@ -990,13 +1004,14 @@ const EntityTransferAction = () => {
                                   Submit
                                 </button>
                               </div>
-                            )}
-                          </Col>
-                        </Row>
-                  </Form>
-                ) : (
-                  ""
-                )}
+                            )} */}
+                        </Col>
+                      </Row>
+                    </Form>
+                  ) : (
+                    ""
+                  )}
+                </Container>
               </div>
             </div>
           </div>

@@ -19,6 +19,8 @@ import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
 import EndOfProbationLetter from "../Probation/EndOfProbationLetter";
+import NonPerformanceTerminationLetter from "../../components/Disciplinary/Manager/NonPerformanceTerminationLetter";
+import MisConductTerminationLetter from "../../components/Disciplinary/Manager/MisConductTerminationLetter";
 import { setDate } from "date-fns";
 
 const ManagerInitiateAction = (props) => {
@@ -267,7 +269,7 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
-        state.noticePeriod = employeeData.internshipPeriod
+        state.noticePeriod = employeeData.internshipPeriod;
         setIntern(true);
         setLastDateSelection("");
         setLastWorkingDate(
@@ -330,7 +332,7 @@ const ManagerInitiateAction = (props) => {
       state.reasonForResignation = employeeData.reasonForResignation;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-       setDateOfResignation(new Date(employeeData.dateOfResignation))
+      setDateOfResignation(new Date(employeeData.dateOfResignation));
       if (
         employeeData.department == "AFS" ||
         employeeData.department == "IT" ||
@@ -345,8 +347,8 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
-        state.noticePeriod = employeeData.internshipPeriod
-        setIntern(true)
+        state.noticePeriod = employeeData.internshipPeriod;
+        setIntern(true);
         state.lastWorkingDate = new Date(employeeData.joiningDate).setMonth(
           new Date(employeeData.joiningDate).getMonth() +
             (employeeData.internshipPeriod !== null &&
@@ -385,7 +387,7 @@ const ManagerInitiateAction = (props) => {
         employeeData.noticePeriodRecoveryDays !== undefined
           ? employeeData.noticePeriodRecoveryDays
           : "";
-      if (employeeData.status === 8){
+      if (employeeData.status === 8) {
         setSubmitted(true);
         // setSuccessModal(true);
         setPreview(true);
@@ -411,13 +413,13 @@ const ManagerInitiateAction = (props) => {
         setRcryYes(false);
       }
       if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
-        if (employeeData.reHire === 2){
+        if (employeeData.reHire === 2) {
           setRehireNo(true);
           setRehireYes(false);
-        }else if(employeeData.reHire === 1){
+        } else if (employeeData.reHire === 1) {
           setRehireNo(false);
           setRehireYes(true);
-        }else if(employeeData.reHire === 0){
+        } else if (employeeData.reHire === 0) {
           setRehireNo(false);
           setRehireYes(false);
         }
@@ -539,9 +541,9 @@ const ManagerInitiateAction = (props) => {
 
   //   reliving letter
   const handleRelivingClose = () => {
-    props.history.push("/employee-separation-listing")
-    setShow(false)
-  }
+    props.history.push("/employee-separation-listing");
+    setShow(false);
+  };
   const saveOfferLetter = () => {
     setPreviewGeneratedLetter(true);
     setSaveLetter(true);
@@ -551,12 +553,14 @@ const ManagerInitiateAction = (props) => {
   const digitalSignature = () => {
     setShowSignature(true);
   };
-  const handleShowAddModalClose = () => {setShowAddModal(false);}
+  const handleShowAddModalClose = () => {
+    setShowAddModal(false);
+  };
 
   const submitfinalRelivingLetter = (e) => {
     e.preventDefault();
     const value = checkValidations();
-    console.log("submit",value);
+    console.log("submit", value);
     if (value === true) {
       console.log("INSIDE");
       // if (
@@ -576,7 +580,7 @@ const ManagerInitiateAction = (props) => {
             console.log(reasonOfSeparationList[i].value);
           }
         });
-console.log(reasonOfSeparationList,"reasonOfSeparationList")
+        console.log(reasonOfSeparationList, "reasonOfSeparationList");
         const data2 = {
           company: null,
           contractType: state.empContractType,
@@ -613,7 +617,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
 
         console.log("createExitData", data2);
         // setSubmitted(true);
-        UpdateEmplyoeeExist(data2,state.empId);
+        UpdateEmplyoeeExist(data2, state.empId);
         setSubmitLetter(true);
         setLetterSent(true);
         setShow(true);
@@ -652,7 +656,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
           status: 6,
         };
         console.log("createExitData", data1);
-        UpdateEmplyoeeExist(data1,state.empId);
+        UpdateEmplyoeeExist(data1, state.empId);
         setSubmitLetter(true);
         setLetterSent(true);
         setShow(true);
@@ -695,7 +699,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
       ViewProbationEndLetter(employeeData.employeeId);
       handleShow();
       console.log("end of probation");
-    }else if (e.target.value == "6" || e.target.value == "End Of Internship") {
+    } else if (e.target.value == "6" || e.target.value == "End Of Internship") {
       fetchRelievingLetterData(employeeData.employeeId);
       handleShow();
       console.log("end of probation");
@@ -760,15 +764,23 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
 
     console.log(e.target.value);
   };
-  console.log(reasonOfSeparationList,modeOfSeparationList,"modeOfSeparationList")
+  console.log(
+    reasonOfSeparationList,
+    modeOfSeparationList,
+    "modeOfSeparationList"
+  );
 
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     // console.log("AdjusteddateValue");
-    var AdjusteddateValue1 = new Date(AdjusteddateValue)
-    setLastWorkingDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(state.noticePeriod)))
+    var AdjusteddateValue1 = new Date(AdjusteddateValue);
+    setLastWorkingDate(
+      AdjusteddateValue1.setMonth(
+        AdjusteddateValue1.getMonth() + parseInt(state.noticePeriod)
+      )
+    );
     setDateOfResignation(AdjusteddateValue);
   };
 
@@ -1048,7 +1060,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
       }
     }
   };
-  console.log(intern,"intern",searchByCostData)
+  console.log(intern, "intern", searchByCostData);
   console.log(
     state,
     modeOfSeparation,
@@ -1109,11 +1121,12 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                     (modeOfSeparation == "End Of Probation" ||
                       modeOfSeparation == 5)
                   ? endLetterData.exitDate
-                  :relivingLetterData !== null &&
-                  relivingLetterData !== undefined &&
-                  (modeOfSeparation == "End of Contract" || modeOfSeparation == 6)
-                ? relivingLetterData.lastWorkingDate
-                : new Date(),
+                  : relivingLetterData !== null &&
+                    relivingLetterData !== undefined &&
+                    (modeOfSeparation == "End of Contract" ||
+                      modeOfSeparation == 6)
+                  ? relivingLetterData.lastWorkingDate
+                  : new Date(),
                 "YYYY-MM-DD"
               )
                 .add(1, "days")
@@ -1124,82 +1137,49 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {relivingLetterData &&
-            relivingLetterData !== undefined &&
-            relivingLetterData !== null &&
+      ) : null}
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {relivingLetterData &&
+          relivingLetterData !== undefined &&
+          relivingLetterData !== null &&
+          intern === false &&
+          (modeOfSeparation == "1" || modeOfSeparation == "Resignation") ? (
+            <RelievingLetter />
+          ) : terminationLetterData &&
+            terminationLetterData !== undefined &&
+            terminationLetterData !== null &&
             intern === false &&
-            (modeOfSeparation == "1" || modeOfSeparation == "Resignation") ? (
-              <RelievingLetter />
-            ) : terminationLetterData &&
-              terminationLetterData !== undefined &&
-              terminationLetterData !== null &&
-              intern === false &&
-              (modeOfSeparation == "2" || modeOfSeparation == "Termination") ? (
-              <TerminationLetter />
-            ) : endLetterData &&
-              endLetterData !== undefined &&
-              endLetterData !== null &&
-              intern === false &&
-              (modeOfSeparation == "5" ||
-                modeOfSeparation == "End Of Probation") ? (
-              <EndOfProbationLetter />
-            ) : (
-              <InternShipLetter />
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    style={{marginLeft:"50px"}}
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+            (modeOfSeparation == "2" || modeOfSeparation == "Termination") &&
+            employeeData &&
+            Object.keys(employeeData).length &&
+            employeeData.reasonForResignation !== null &&
+            employeeData.reasonForResignation !== "" &&
+            employeeData.reasonForResignation !== undefined ? (
+            // <TerminationLetter />
+            <MisConductTerminationLetter />
+          ) : terminationLetterData &&
+            terminationLetterData !== undefined &&
+            terminationLetterData !== null &&
+            intern === false &&
+            (modeOfSeparation == "2" || modeOfSeparation == "Termination") &&
+            employeeData &&
+            Object.keys(employeeData).length &&
+            (employeeData.reasonForResignation === null ||
+              employeeData.reasonForResignation === "" ||
+              employeeData.reasonForResignation == undefined) ? (
+            <NonPerformanceTerminationLetter />
+          ) : endLetterData &&
+            endLetterData !== undefined &&
+            endLetterData !== null &&
+            intern === false &&
+            (modeOfSeparation == "5" ||
+              modeOfSeparation == "End Of Probation") ? (
+            <EndOfProbationLetter />
+          ) : (
+            <InternShipLetter />
+          )}
+        </div>
       ) : (
         ""
       )}
@@ -1466,104 +1446,102 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                             <label>Type of Separation:</label>
                           </div>
                         </Col>
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="lgbt"
-                                    options={modeOfSeparationList}
-                                    value={modeOfSeparation}
-                                    onChange={ModeOfSepchangeHandler}
-                                    disabled={true}
-                                    style={
-                                      modOfSepError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {modeOfSeparationList.map((item) => {
-                                      return (
-                                        <option
-                                          selected
-                                          value={item.value}
-                                          key={item.value}
-                                        >
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                          <Col sm={2}>
-                            <div>
-                              <label>
-                                Date of{" "}
-                                {changeInSeparation === 2
-                                  ? "Termination:"
-                                  : changeInSeparation === 5
-                                  ? "End Of Probation"
-                                  : "Resignation:"}
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {modeOfSeparation}
                               </label>
-                            </div>
-                          </Col>
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {dateOfResignation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <div
-                                    className={
-                                      dateOfResignError
-                                        ? "onBoard-date-error"
-                                        : "onBoard-date"
-                                    }
-                                  >
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={dateOfResignation}
-                                      name="dateOfResignation"
-                                      minDate={moment().toDate()}
-                                      // required
-                                      onChange={(e) => dateOfBirthHandler(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                      disabled={state.status == 8?true:false}
-                                      />
-                                  </div>
-                                  {dateOfResignError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please select valid date
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="lgbt"
+                                  options={modeOfSeparationList}
+                                  value={modeOfSeparation}
+                                  onChange={ModeOfSepchangeHandler}
+                                  disabled={true}
+                                  style={
+                                    modOfSepError ? { borderColor: "red" } : {}
+                                  }
+                                >
+                                  <option value=""></option>
+                                  {modeOfSeparationList.map((item) => {
+                                    return (
+                                      <option
+                                        selected
+                                        value={item.value}
+                                        key={item.value}
+                                      >
+                                        {item.label}
+                                      </option>
+                                    );
+                                  })}
+                                </Form.Control>
+                                {modOfSepError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              Date of{" "}
+                              {changeInSeparation === 2
+                                ? "Termination:"
+                                : changeInSeparation === 5
+                                ? "End Of Probation"
+                                : "Resignation:"}
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {dateOfResignation}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <div
+                                  className={
+                                    dateOfResignError
+                                      ? "onBoard-date-error"
+                                      : "onBoard-date"
+                                  }
+                                >
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    selected={dateOfResignation}
+                                    name="dateOfResignation"
+                                    minDate={moment().toDate()}
+                                    // required
+                                    onChange={(e) => dateOfBirthHandler(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
+                                    disabled={state.status == 8 ? true : false}
+                                  />
+                                </div>
+                                {dateOfResignError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please select valid date
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
                         {modeOfSeparation !== 5 ? (
                           <Col sm={2}>
                             <div>
@@ -1600,8 +1578,8 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    disabled={state.status == 8?true:false}
-                                    />
+                                    disabled={state.status == 8 ? true : false}
+                                  />
                                 </div>
                                 {lastWorkingDateError ? (
                                   <p style={{ color: "red" }}>
@@ -1679,55 +1657,53 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                             <label>Reason of Separation:</label>
                           </div>
                         </Col>
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="modeOfSeparationReasonId"
-                                    options={reasonOfSeparationList}
-                                    defaultValue={
-                                      state.modeOfSeparationReasonId
-                                    }
-                                    value={state.modeOfSeparationReasonId}
-                                    onChange={changeHandler}
-                                    disabled={true}
-                                    style={
-                                      modOfSepReasonError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {reasonOfSeparationList.map((item) => {
-                                      return (
-                                        <option
-                                          selected
-                                          value={item.value}
-                                          key={item.value}
-                                        >
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepReasonError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.modeOfSeparationReasonId}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="modeOfSeparationReasonId"
+                                  options={reasonOfSeparationList}
+                                  defaultValue={state.modeOfSeparationReasonId}
+                                  value={state.modeOfSeparationReasonId}
+                                  onChange={changeHandler}
+                                  disabled={true}
+                                  style={
+                                    modOfSepReasonError
+                                      ? { borderColor: "red" }
+                                      : {}
+                                  }
+                                >
+                                  <option value=""></option>
+                                  {reasonOfSeparationList.map((item) => {
+                                    return (
+                                      <option
+                                        selected
+                                        value={item.value}
+                                        key={item.value}
+                                      >
+                                        {item.label}
+                                      </option>
+                                    );
+                                  })}
+                                </Form.Control>
+                                {modOfSepReasonError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
 
                         <Col sm={2}>
                           <div>
@@ -1749,7 +1725,7 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                                   style={{
                                     borderColor: "#006ebb",
                                   }}
-                                  disabled={state.status == 8?true:false}
+                                  disabled={state.status == 8 ? true : false}
                                   name="emailId"
                                   value={state.emailId}
                                   onChange={(e) => changeHandler(e)}
@@ -1871,130 +1847,146 @@ console.log(reasonOfSeparationList,"reasonOfSeparationList")
                       </div>
                     </Col>
                   </Row> */}
-                        <Row
-                          style={{
-                            marginTop: "2rem",
-                            marginLeft: "2rem",
-                            marginBottom: "2rem",
-                          }}
-                        >                  <Col sm={4}>
-                        <div>
-                          <label>
-                            <b>Approver:</b>
-                            <label className="itemResult">
-                              &nbsp;&nbsp; {state.mngrName}
-                              &nbsp; {state.mngrId}
-                            </label>
-                          </label>
-                        </div>
-                      </Col>
-                  </Row>
-                        <Row
-                          style={{
-                            marginTop: "2rem",
-                            marginLeft: "2rem",
-                            marginBottom: "2rem",
-                          }}
-                        >
-                                               {!intern ? <> <Col sm={2}>
-                            <div>
-                              <label>Notice Period Recovery Days</label>
-                            </div>
-                          </Col>
-
-                          <Col sm={2} style={{ marginTop: "0.5rem" }}>
-                            {false ? (
+                      <Row
+                        style={{
+                          marginTop: "2rem",
+                          marginLeft: "2rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        {" "}
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              <b>Approver:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriodRcryDays}
+                                &nbsp;&nbsp; {state.mngrName}
+                                &nbsp; {state.mngrId}
                               </label>
-                            ) : (
-                              <Form.Group>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
-                                  disabled={!RcryYes}
-                                  name="noticePeriodRcryDays"
-                                  value={state.noticePeriodRcryDays}
-                                  onChange={(e) => changeHandler(e)}
-                                  style={
-                                    rcryDaysError ? { borderColor: "red" } : {}
-                                  }
-                                />
-
-                                {rcryDaysError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please enter valid days
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </Col>
-                                  </>:""}
-                          <Col sm={2}>
-                            <div>
-                              <label>
-                                Eligible <br />
-                                For Rehire
-                              </label>
-                              {RehireError ? (
-                                <p style={{ color: "red" }}>
-                                  {" "}
-                                  *Please select one of the option
-                                </p>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row
+                        style={{
+                          marginTop: "2rem",
+                          marginLeft: "2rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        {!intern ? (
+                          <>
+                            {" "}
+                            <Col sm={2}>
+                              <div>
+                                <label>Notice Period Recovery Days</label>
+                              </div>
+                            </Col>
+                            <Col sm={2} style={{ marginTop: "0.5rem" }}>
+                              {false ? (
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.noticePeriodRcryDays}
+                                </label>
                               ) : (
-                                <p></p>
+                                <Form.Group>
+                                  <Form.Control
+                                    type="text"
+                                    placeholder=""
+                                    required
+                                    style={{
+                                      borderColor: "#006ebb",
+                                    }}
+                                    disabled={!RcryYes}
+                                    name="noticePeriodRcryDays"
+                                    value={state.noticePeriodRcryDays}
+                                    onChange={(e) => changeHandler(e)}
+                                    style={
+                                      rcryDaysError
+                                        ? { borderColor: "red" }
+                                        : {}
+                                    }
+                                  />
+
+                                  {rcryDaysError ? (
+                                    <p style={{ color: "red" }}>
+                                      {" "}
+                                      &nbsp; *Please enter valid days
+                                    </p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                </Form.Group>
                               )}
+                            </Col>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              Eligible <br />
+                              For Rehire
+                            </label>
+                            {RehireError ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                *Please select one of the option
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </div>
+                        </Col>
+
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                checked={RehireYes}
+                                // required={required}
+                                disabled={
+                                  modeOfSeparation === 5 || state.status == 8
+                                    ? true
+                                    : false
+                                }
+                                style={
+                                  RehireError ? { borderColor: "red" } : {}
+                                }
+                                onChange={handleRehireChangeYes}
+                              />
+                              <label className="itemResult">Yes</label>
                             </div>
-                          </Col>
+                          </Form.Group>
+                        </Col>
 
-                          <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="yes"
-                                  checked={RehireYes}
-                                  // required={required}
-                                  disabled={modeOfSeparation === 5 || state.status == 8?true:false}
-                                  style={
-                                    RehireError ? { borderColor: "red" } : {}
-                                  }
-                                  onChange={handleRehireChangeYes}
-                                />
-                                <label className="itemResult">Yes</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-
-                          <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="no"
-                                  checked={RehireNo}
-                                  // required={required}
-                                  disabled={modeOfSeparation === 5 || state.status == 8?true:false}
-                                  style={
-                                    RehireError ? { borderColor: "red" } : {}
-                                  }
-                                  onChange={handleRehireChangeNo}
-                                />
-                                <label className="itemResult">No</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-                        </Row>
-                    
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="no"
+                                checked={RehireNo}
+                                // required={required}
+                                disabled={
+                                  modeOfSeparation === 5 || state.status == 8
+                                    ? true
+                                    : false
+                                }
+                                style={
+                                  RehireError ? { borderColor: "red" } : {}
+                                }
+                                onChange={handleRehireChangeNo}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                      </Row>
 
                       <Row>
                         <Col

@@ -160,15 +160,17 @@ const EntityTransfer = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    if(initiationEmpData !== null &&
+    if (
+      initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0){
+      Object.keys(initiationEmpData).length > 0
+    ) {
       setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
       );
-      }else{
-        setSearchInput("")
-      }
+    } else {
+      setSearchInput("");
+    }
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
@@ -334,7 +336,14 @@ const EntityTransfer = () => {
         currentManagerId: initiationEmpData.currentManagerId,
         currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
         currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: newEntity.toLowerCase()==="dsi"? "Decathlon Sports India":newEntity,
+        promotedCompany:
+          newEntity.toLowerCase() === "dsi"
+            ? "Decathlon Sports India"
+            : newEntity.toLowerCase() === "prodin"
+            ? "Prodin Sporting Pvt Ltd"
+            : newEntity.toLowerCase() === "indeca"
+            ? "Indeca Sporting Goods Pvt Ltd"
+            : newEntity,
         promotedContractType: initiationEmpData.promotedContractType,
         promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,

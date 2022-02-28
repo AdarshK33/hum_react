@@ -481,13 +481,13 @@ const ManagerWarningAction = (props) => {
           showCauseNotice: state.disciplinaryAction.showCauseNotice,
           // status: 0,
           status:
-          rolePermission == "admin"
-            ? 14
-            : rolePermission == "superCostCenterManager"
-            ? 13
-            : rolePermission == "costCenterManager"
-            ? 12
-            : 11,
+            rolePermission == "admin"
+              ? 14
+              : rolePermission == "superCostCenterManager"
+              ? 13
+              : rolePermission == "costCenterManager"
+              ? 12
+              : 11,
           statusDesc: state.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -499,7 +499,9 @@ const ManagerWarningAction = (props) => {
                 employeeComment: state.disciplinaryWarning.employeeComment,
                 employeeWarningStatus:
                   state.disciplinaryWarning.employeeWarningStatus,
-                improvementPeriod: state.disciplinaryWarning.improvementPeriod,
+                improvementPeriod: state.disciplinaryWarning.improvementPeriod
+                  ? state.disciplinaryWarning.improvementPeriod
+                  : 0,
                 managerComment: state.disciplinaryWarning.managerComment,
                 pipEndDate: state.disciplinaryWarning.pipEndDate,
                 reason: state.disciplinaryWarning.reason,
@@ -527,8 +529,10 @@ const ManagerWarningAction = (props) => {
                 disciplinaryId: state.disciplinaryAction.disciplinaryId,
                 employeeComment: null,
                 employeeWarningStatus: null,
-                improvementPeriod: improvementPeriod,
-                //  state.InputImprovementPeriod,
+                improvementPeriod:
+                  state.InputImprovementPeriod !== ""
+                    ? parseInt(state.InputImprovementPeriod)
+                    : 0,
                 managerComment: managerComment,
                 // warningManagerReason,
 
@@ -564,7 +568,7 @@ const ManagerWarningAction = (props) => {
       };
       console.log(infoData, "infoData");
       console.log("all okay");
-      console.log(infoData, "infoData submit");
+      console.log(infoData, "infoData submit", state.InputImprovementPeriod);
       createShowCauseIssue(infoData);
 
       setSubmitted({ value: true });
@@ -574,7 +578,7 @@ const ManagerWarningAction = (props) => {
       console.log("not okay");
     }
   };
-  console.log(disciplinarySearchData,"disciplinarySearchData")
+  console.log(disciplinarySearchData, "disciplinarySearchData");
   const changeHandler = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -708,7 +712,7 @@ const ManagerWarningAction = (props) => {
                 employeeComment: state.disciplinaryWarning.employeeComment,
                 employeeWarningStatus:
                   state.disciplinaryWarning.employeeWarningStatus,
-                improvementPeriod: state.InputImprovementPeriod,
+                improvementPeriod: parseInt(state.InputImprovementPeriod),
                 managerComment: warningManagerReason,
                 pipEndDate: state.disciplinaryWarning.pipEndDate,
                 reason: state.disciplinaryWarning.reason,
@@ -716,7 +720,7 @@ const ManagerWarningAction = (props) => {
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
                 reasonId: state.disciplinaryWarning.reasonId,
                 // status: rolePermission == "costCenterManager" ? 2 : 0,
-                  status:0,
+                status: 0,
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 initiatedRole: state.disciplinaryWarning.initiatedRole,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
@@ -730,7 +734,7 @@ const ManagerWarningAction = (props) => {
                 employeeComment: null,
                 employeeWarningStatus: null,
                 improvementPeriod:
-                  disciplinarySearchData.disciplinaryAction.improvementPeriod,
+                  disciplinarySearchData.disciplinaryWarning.improvementPeriod,
                 //  state.InputImprovementPeriod,
                 managerComment:
                   disciplinarySearchData.disciplinaryAction.managerComment,
@@ -931,6 +935,12 @@ const ManagerWarningAction = (props) => {
   };
   console.log(state);
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
+
+  console.log(
+    "warning letter",
+    showShowCauseNoticeModal,
+    disciplinarySearchData
+  );
   return (
     <div>
       <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
@@ -950,7 +960,7 @@ const ManagerWarningAction = (props) => {
           )}
         </Modal.Body>
       </Modal>
-      <Modal
+      {/* <Modal
         show={showShowCauseNoticeModalLink1}
         onHide={handleShowCauseLetterCloseLink}
         size="md"
@@ -971,8 +981,8 @@ const ManagerWarningAction = (props) => {
             <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
-      </Modal>
-      {letterView ? (
+      </Modal> */}
+      {/* {letterView ? (
         <Modal
           show={letterView}
           onHide={handleShowCauseLetterClose}
@@ -1001,7 +1011,7 @@ const ManagerWarningAction = (props) => {
         </Modal>
       ) : (
         ""
-      )}
+      )} */}
       {issueResolved ? (
         <Modal show={handleClose1} onHide={handleClose1} size="md" centered>
           <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -1115,73 +1125,23 @@ const ManagerWarningAction = (props) => {
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showShowCauseNoticeModal ? (
-        <Modal
-          show={showShowCauseNoticeModal}
-          onHide={handleShowCauseLetterClose}
-          size="md"
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {issueShowCauseNoticeData &&
-            issueShowCauseNoticeData !== undefined &&
-            issueShowCauseNoticeData !== null &&
-            disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryWarning !== null &&
-            disciplinarySearchData.disciplinaryWarning !== undefined &&
-            disciplinarySearchData.disciplinaryWarning !== "" &&
-            disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
-              <WarningLetter />
-            ) : (
-              <NonPerformanceWarningLetter/>
-            )}
-            <br></br>
-            <Row>
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+      ) : null}
+      {previewLetter || showShowCauseNoticeModal ? (
+        <div>
+          {disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          parseInt(disciplinarySearchData.disciplinaryWarning.reasonId) ===
+            2 ? (
+            <WarningLetter />
+          ) : (
+            <NonPerformanceWarningLetter />
+          )}
+        </div>
       ) : (
         ""
       )}
@@ -1948,7 +1908,7 @@ const ManagerWarningAction = (props) => {
                               ) : (
                                 ""
                               )}
-                              {saveLetter &&
+                              {/* {saveLetter &&
                               previewGeneratedLetter &&
                               showPreview ? (
                                 <button
@@ -1991,7 +1951,7 @@ const ManagerWarningAction = (props) => {
                                       ""
                                     )}
                                   </div>
-                                )}
+                                )} */}
                             </Col>
                           </Row>
                         </>
@@ -2034,7 +1994,8 @@ const ManagerWarningAction = (props) => {
                         ) : (
                           ""
                         )}
-                        {issueWarningStatus === "no" && acceptEmployeeReason == "no" ||
+                        {(issueWarningStatus === "no" &&
+                          acceptEmployeeReason == "no") ||
                         (disciplinarySearchData !== null &&
                           disciplinarySearchData !== undefined &&
                           Object.keys(disciplinarySearchData).length !== 0 &&
@@ -2043,11 +2004,11 @@ const ManagerWarningAction = (props) => {
                             undefined &&
                           disciplinarySearchData.disciplinaryAction
                             .actionDueDays === 0 &&
-                          (disciplinarySearchData.disciplinaryAction
+                          (disciplinarySearchData.disciplinaryWarning
                             .employeeComment === null ||
-                            disciplinarySearchData.disciplinaryAction
+                            disciplinarySearchData.disciplinaryWarning
                               .employeeComment === undefined ||
-                            disciplinarySearchData.disciplinaryAction
+                            disciplinarySearchData.disciplinaryWarning
                               .employeeComment === "") &&
                           submitted.value == false) ? (
                           <Col

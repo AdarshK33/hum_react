@@ -39,6 +39,8 @@ const EntityTransferAcceptance = () => {
     getTransferData,
     transferData,
     getApointmentLetter,
+    setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
@@ -146,7 +148,14 @@ const EntityTransferAcceptance = () => {
       newDeptName !== undefined &&
       newDeptName !== null
     ) {
-      getCostCentreDetails(transferData.promotedCompany, newDeptName);
+      getCostCentreDetails(
+        transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
+          ? "PRODIN"
+          : transferData.promotedCompany === "Indeca Sporting Goods Pvt Ltd"
+          ? "INDECA"
+          : transferData.promotedCompany,
+        newDeptName
+      );
     }
   }, [initiationEmpData, newDeptName]);
 
@@ -247,6 +256,7 @@ const EntityTransferAcceptance = () => {
     ) {
       getApointmentLetter(transferData.promotedEmployeeId);
       setShowInitiationLetter(true);
+      setLetterViewing(true);
     }
   };
 
@@ -304,7 +314,6 @@ const EntityTransferAcceptance = () => {
       setLetterSent(true);
       setShowLetterSubmitModal(true);
     }
-   
   };
 
   const handleLetterSubmitModalClose = () => {
@@ -517,43 +526,46 @@ const EntityTransferAcceptance = () => {
         </Container>
       </Modal>
 
-      <Modal
+      {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {loader ? (
-            <LoaderIcon />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Fulltime" ||
-              transferData.currentContractType === "fulltime") ? (
-            <ApointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "parttime" ||
-              transferData.currentContractType === "Parttime") ? (
-            <PartTimeAppointmentLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.currentContractType !== null &&
-            transferData.currentContractType !== undefined &&
-            (transferData.currentContractType === "Local Expat" ||
-              transferData.currentContractType === "local expat") ? (
-            <LocalExpactAppointmentLetter />
-          ) : (
-            ""
-          )}
-          <br></br>
+        <Modal.Body> */}
+      {loader ? (
+        <LoaderIcon />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Fulltime" ||
+          transferData.currentContractType === "fulltime") ? (
+        <ApointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "parttime" ||
+          transferData.currentContractType === "Parttime") ? (
+        <PartTimeAppointmentLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.currentContractType !== null &&
+        transferData.currentContractType !== undefined &&
+        (transferData.currentContractType === "Local Expat" ||
+          transferData.currentContractType === "local expat") ? (
+        <LocalExpactAppointmentLetter />
+      ) : (
+        ""
+      )}
+      {/* <br></br>
 
           <Row>
             {showSignature ? (
@@ -593,7 +605,7 @@ const EntityTransferAcceptance = () => {
             </Row>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showLetterSubmitModal}
@@ -1219,11 +1231,11 @@ const EntityTransferAcceptance = () => {
                                 onClick={showTransferLetterModal}
                               >
                                 {previewTransferLetter
-                                  ? "Preview Appointment Letter"
+                                  ? "Generate Appointment Letter"
                                   : "Generate Appointment Letter"}
                               </button>
                             )}
-
+                            {/* 
                             {initiationStatus && previewTransferLetter && (
                               <div className="preview-section">
                                 <br></br>
@@ -1246,7 +1258,7 @@ const EntityTransferAcceptance = () => {
                                   Submit
                                 </button>
                               </div>
-                            )}
+                            )} */}
                           </Col>
                         </Row>
                       </Col>

@@ -32,6 +32,8 @@ const ChangeEmployementType = () => {
     initiationTransferId,
     getApointmentLetter,
     transferData,
+    setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEmployement, setNewEmployement] = useState("");
@@ -116,15 +118,17 @@ const ChangeEmployementType = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    if(initiationEmpData !== null &&
+    if (
+      initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0){     
-         setSearchInput(
+      Object.keys(initiationEmpData).length > 0
+    ) {
+      setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
       );
-      }else{
-        setSearchInput("")
-      }
+    } else {
+      setSearchInput("");
+    }
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
@@ -176,6 +180,7 @@ const ChangeEmployementType = () => {
       transferData.promotedEmployeeId !== ""
     ) {
       getApointmentLetter(transferData.promotedEmployeeId);
+      setLetterViewing(true);
       setShowInitiationLetter(true);
     }
   };
@@ -244,7 +249,6 @@ const ChangeEmployementType = () => {
         // setModalShow(true);
       }
     }
-  
   };
 
   const handleLetterSubmitModalClose = () => {
@@ -452,37 +456,39 @@ const ChangeEmployementType = () => {
         </Container>
       </Modal>
 
-      <Modal
+      {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {transferData !== null &&
-          transferData !== undefined &&
-          Object.keys(transferData).length !== 0 &&
-          transferData.promotedContractType !== null &&
-          transferData.promotedContractType !== undefined &&
-          transferData.promotedContractType !== "" &&
-          (transferData.promotedContractType === "Fulltime" ||
-            transferData.promotedContractType === "fulltime") ? (
-            <PartTimeToFullTimeLetter />
-          ) : transferData !== null &&
-            transferData !== undefined &&
-            Object.keys(transferData).length !== 0 &&
-            transferData.promotedContractType !== null &&
-            transferData.promotedContractType !== undefined &&
-            transferData.promotedContractType !== "" &&
-            (transferData.promotedContractType === "parttime" ||
-              transferData.promotedContractType === "Parttime") ? (
-            <FullTimeToPartTimeLetter />
-          ) : (
-            ""
-          )}
+        <Modal.Body> */}
+      {transferData !== null &&
+      transferData !== undefined &&
+      letterView &&
+      Object.keys(transferData).length !== 0 &&
+      transferData.promotedContractType !== null &&
+      transferData.promotedContractType !== undefined &&
+      transferData.promotedContractType !== "" &&
+      (transferData.promotedContractType === "Fulltime" ||
+        transferData.promotedContractType === "fulltime") ? (
+        <PartTimeToFullTimeLetter />
+      ) : transferData !== null &&
+        transferData !== undefined &&
+        letterView &&
+        Object.keys(transferData).length !== 0 &&
+        transferData.promotedContractType !== null &&
+        transferData.promotedContractType !== undefined &&
+        transferData.promotedContractType !== "" &&
+        (transferData.promotedContractType === "parttime" ||
+          transferData.promotedContractType === "Parttime") ? (
+        <FullTimeToPartTimeLetter />
+      ) : (
+        ""
+      )}
 
-          {/* <TransferInitationLetter transferId={initiationTransferId} /> */}
-          <br></br>
+      {/* <TransferInitationLetter transferId={initiationTransferId} /> */}
+      {/* <br></br>
           <Row>
             {showSignature ? (
               <>
@@ -521,7 +527,7 @@ const ChangeEmployementType = () => {
             </Row>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
 
       <Modal
         show={showLetterSubmitModal}
@@ -639,7 +645,8 @@ const ChangeEmployementType = () => {
                       {initiationEmpData !== null &&
                       initiationEmpData !== undefined &&
                       initiationEmpData !== "" &&
-                      initiationEmpData.currentContractType.toLowerCase() === "fulltime" ? (
+                      initiationEmpData.currentContractType.toLowerCase() ===
+                        "fulltime" ? (
                         <option value="From Full Time to Part Time">
                           From Full Time to Part Time
                         </option>
@@ -794,12 +801,12 @@ const ChangeEmployementType = () => {
                     onClick={showTransferLetterModal}
                   >
                     {previewTransferLetter
-                      ? "Preview Transfer Letter"
+                      ? "Generate Transfer Letter"
                       : "Generate Transfer Letter"}
                   </button>
                 )}
 
-                {initiationStatus && previewTransferLetter && (
+                {/* {initiationStatus && previewTransferLetter && (
                   <div className="preview-section">
                     <br></br>
                     <br></br>
@@ -815,7 +822,7 @@ const ChangeEmployementType = () => {
                       Submit
                     </button>
                   </div>
-                )}
+                )} */}
               </Col>
             </Row>
           </div>

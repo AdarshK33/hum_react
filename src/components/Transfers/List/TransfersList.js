@@ -95,15 +95,17 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                item.status === 3 ?true :
-                  item.promotedManagerId === user.employeeId &&
-                  item.status === 0
+                  item.status === 3
+                    ? true
+                    : item.promotedManagerId === user.employeeId &&
+                      item.status === 0
                     ? true
                     : false,
                 link:
-                item.status === 3 ?`/transferaction/${item.transferId}`:
-                  item.promotedManagerId === user.employeeId &&
-                  item.status === 0
+                  item.status === 3
+                    ? `/transferaction/${item.transferId}`
+                    : item.promotedManagerId === user.employeeId &&
+                      item.status === 0
                     ? `/transfer/${item.transferId}`
                     : "",
                 // item.transferType === "Regular Transfer"
@@ -134,18 +136,25 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                item.status === 3 ? true :
-                  item.promotedManagerId === user.employeeId &&
-                  item.status === 0
+                  item.status === 3
+                    ? true
+                    : item.promotedManagerId === user.employeeId &&
+                      item.status === 0
                     ? true
                     : false,
                 link:
-                item.status === 3 ?`/entity-transferaction/${item.transferId}`:
-                  item.promotedManagerId === user.employeeId &&
-                  item.status === 0
+                  item.status === 3
+                    ? `/entity-transferaction/${item.transferId}`
+                    : item.promotedManagerId === user.employeeId &&
+                      item.status === 0
                     ? `/entity-transfer/${item.transferId}`
                     : "",
               },
+            },
+            alert: {
+              active: item.refId ? true : false,
+              link: item.refId ? "link" : "",
+              refId: item.refId ? parseInt(item.refId) : null,
             },
           };
         });
@@ -167,16 +176,20 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active: item.status === 3
-                ? true
-                : false,
+                active: item.status === 3 ? true : false,
                 link:
-                item.status === 3 ?`/changeinemp-transfer/${item.transferId}`
-                  // item.promotedManagerId === user.employeeId &&
-                  // item.status === 0
-                  //   ? `/entity-transfer/${item.transferId}`
-                    : "",
+                  item.status === 3
+                    ? `/changeinemp-transfer/${item.transferId}`
+                    : // item.promotedManagerId === user.employeeId &&
+                      // item.status === 0
+                      //   ? `/entity-transfer/${item.transferId}`
+                      "",
               },
+            },
+            alert: {
+              active: item.refId ? true : false,
+              link: item.refId ? "link" : "",
+              refId: item.refId ? parseInt(item.refId) : null,
             },
           };
         });
@@ -367,6 +380,7 @@ const TransferPage = () => {
                           <option value="0">Request Sent To Manager</option>
                           <option value="1">Completed</option>
                           <option value="2">Rejected</option>
+                          <option value="3">Action Required</option>
                           <option value="5">All</option>
                         </Form.Control>
                       </Col>
@@ -382,6 +396,7 @@ const TransferPage = () => {
                           <option disabled>Choose Status</option>
                           <option value="0">Request Sent To Manager</option>
                           <option value="1">Completed</option>
+                          <option value="3">Action Required</option>
                           <option value="5">All</option>
                         </Form.Control>
                       </Col>
@@ -411,6 +426,7 @@ const TransferPage = () => {
                         >
                           <option disabled>Choose Status</option>
                           <option value="0">Completed</option>
+                          <option value="3">Action Required</option>
                           <option value="5">All</option>
                         </Form.Control>
                       </Col>

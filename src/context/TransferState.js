@@ -26,6 +26,7 @@ export const TransferContext = createContext();
 export const TransferProvider = (props) => {
   const [state, dispatch] = useReducer(TransferReducer, initialState);
   const [loader, setLoader] = useState(false);
+  const [letterView, setLetterView] = useState(false);
   const chnageTransferType = (val) => {
     console.log("changeInTransferType->", val);
     return dispatch({
@@ -33,7 +34,9 @@ export const TransferProvider = (props) => {
       payload: val,
     });
   };
-
+  const setLetterViewing = (val) => {
+    setLetterView(val);
+  };
   const getTransferList = (apiUrl) => {
     setLoader(true);
     client
@@ -309,6 +312,8 @@ export const TransferProvider = (props) => {
         countryDetails: state.countryDetails,
         getDesignationDetails,
         designationDetails: state.designationDetails,
+        setLetterViewing,
+        letterView: letterView,
       }}
     >
       {props.children}

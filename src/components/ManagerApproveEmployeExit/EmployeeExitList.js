@@ -2,13 +2,14 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search } from "react-feather";
+import { Edit2, Eye, AlertCircle } from "react-feather";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import { SeparationContext } from "../../context/SepearationState";
 import { PermissionContext } from "../../context/PermissionState";
+import { E_signContext } from "../../context/E_signState";
 // import { RoleManagementContext } from "../../context/RoleManagementState";
 // import { AdminContext } from "../../context/AdminState";
 
@@ -26,6 +27,7 @@ const EmployeeExitList = () => {
     makeEmployeeDataNull,
     setEmpDataNull,
   } = useContext(EmployeeSeparationContext);
+  const { getReference, notification } = useContext(E_signContext);
   const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -35,7 +37,7 @@ const EmployeeExitList = () => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [employeeExitStatus, setEmployeeExitStatus] = useState("");
-  const [role,setRole] = useState(0)
+  const [role, setRole] = useState(0);
   useEffect(() => {
     EmployeeSeparationListView("all", pageCount, actionStatus);
   }, []);
@@ -47,8 +49,8 @@ const EmployeeExitList = () => {
     }
   }, [rolePermission]);
   useEffect(() => {
-    setEmpDataNull()
-    MakeCostCenterDataNull()
+    setEmpDataNull();
+    MakeCostCenterDataNull();
   }, []);
   console.log("---->", EmployeeSeparationList);
 
@@ -184,6 +186,10 @@ const EmployeeExitList = () => {
     // viewRole();
     // CostCenter();
   };
+  const GoToLetterView = (refId) => {
+    console.log(refId);
+    getReference(refId);
+  };
   return (
     <Fragment>
       <Breadcrumb
@@ -285,6 +291,7 @@ const EmployeeExitList = () => {
                       <th scope="col">Status</th>
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
+                      <th scope="col">View Signed Document</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -410,6 +417,23 @@ const EmployeeExitList = () => {
                                 </Link>
                               )}
                             </td>
+                            {item.refId !== null &&
+                            item.refId !== undefined &&
+                            item.refId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
+                                    onClick={() => {
+                                      GoToLetterView(item.refId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
+                              </td>
+                            )}
                           </tr>
                         </tbody>
                       );

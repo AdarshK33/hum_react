@@ -206,6 +206,7 @@ const OfferReleaseList = () => {
                         ""
                       )}
                       <th scope="col">View Signed Offer Letter</th>
+                      <th scope="col">View Signed Appointment Letter</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -289,32 +290,35 @@ const OfferReleaseList = () => {
                             rolePermission !== "admin" ? (
                               <td>
                                 {
-                                item.overallStatus === 1 &&
-                                item.status === 2 &&
-                                item.noShow === false 
-                                ? (
-                                  <Link to="/offer-relase-and-onboard">
-                                    <AlertCircle
-                                      onClick={() => {
-                                        fetchCandidateDetails(item.candidateId);
-                                      }}
-                                    />
-                                  </Link>
-                                ) : item.noShow === false &&
-                                  (item.overallStatus === 0 ||
-                                    item.overallStatus === 2 ||
-                                    item.status === 6) ? (
-                                  <AlertCircle />
-                                ) : (
-                                  <AlertCircle />
-                                  // <Link to="/offer-relase-and-onboard">
-                                  //   <AlertCircle
-                                  //     onClick={() => {
-                                  //       fetchCandidateDetails(item.candidateId);
-                                  //     }}
-                                  //   />
-                                  // </Link>
-                                )}
+                                  // item.overallStatus === 1 &&
+                                  // item.status === 2 &&
+                                  // item.noShow === false
+                                  true ? (
+                                    <Link to="/offer-relase-and-onboard">
+                                      <AlertCircle
+                                        onClick={() => {
+                                          fetchCandidateDetails(
+                                            item.candidateId
+                                          );
+                                        }}
+                                      />
+                                    </Link>
+                                  ) : item.noShow === false &&
+                                    (item.overallStatus === 0 ||
+                                      item.overallStatus === 2 ||
+                                      item.status === 6) ? (
+                                    <AlertCircle />
+                                  ) : (
+                                    <AlertCircle />
+                                    // <Link to="/offer-relase-and-onboard">
+                                    //   <AlertCircle
+                                    //     onClick={() => {
+                                    //       fetchCandidateDetails(item.candidateId);
+                                    //     }}
+                                    //   />
+                                    // </Link>
+                                  )
+                                }
                               </td>
                             ) : (
                               ""
@@ -373,6 +377,24 @@ const OfferReleaseList = () => {
                                   <AlertCircle
                                     onClick={() => {
                                       GoToLetterView(item.refId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
+                              </td>
+                            )}
+
+                            {item.appointRefId !== null &&
+                            item.appointRefId !== undefined &&
+                            item.appointRefId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
+                                    onClick={() => {
+                                      GoToLetterView(item.appointRefId);
                                     }}
                                   />
                                 </Link>

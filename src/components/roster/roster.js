@@ -23,7 +23,7 @@ const Roster = () => {
   const handleClose = () => setModal(false);
   const handleShow = (item, weekId, weekName) => {
     if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
-      toast.error("past date");
+      toast.error("Please select future date");
     }else{
     console.log(item, "item onclick");
     setDate(item);

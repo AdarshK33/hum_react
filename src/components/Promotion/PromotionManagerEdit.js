@@ -24,7 +24,7 @@ import { ProbationContext } from "../../context/ProbationState";
 import PromotionLetters from "./PromotionLetter";
 import PromotionSalaryLetters from "./PromotionSalaryLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
-import "./Promotion.css"
+import "./Promotion.css";
 
 const PromotionManagerEdit = (props) => {
   const [EmpName, setEmpName] = useState();
@@ -386,7 +386,7 @@ const PromotionManagerEdit = (props) => {
         PromotionCreate(infoData);
         setSubmitted(true);
         setPreview(true);
-      }else{
+      } else {
         console.log("all okay", infoData);
         PromotionCreate(infoData);
         setSubmitted(true);
@@ -397,7 +397,20 @@ const PromotionManagerEdit = (props) => {
 
   return (
     <Fragment>
-      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {promotionIdData.promotionType === 0 ? (
+            <PromotionLetters />
+          ) : promotionIdData.promotionType === 1 ? (
+            <PromotionSalaryLetters />
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        ""
+      )}
+      {/* <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body className="mx-auto">
@@ -469,7 +482,7 @@ const PromotionManagerEdit = (props) => {
         ) : (
           ""
         )}
-      </Modal>
+      </Modal> */}
 
       <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
         <Container>
@@ -516,8 +529,8 @@ const PromotionManagerEdit = (props) => {
                               <label>
                                 Emp Name/Id:
                                 <label className="itemResult">
-                                  &nbsp;&nbsp;{`${state.empName}  /${state.employeeId}` }
-
+                                  &nbsp;&nbsp;
+                                  {`${state.empName}  /${state.employeeId}`}
                                 </label>
                               </label>
                             </div>
@@ -755,7 +768,8 @@ const PromotionManagerEdit = (props) => {
                                         new Date().getMonth() - 2
                                       )
                                     )
-                                  }                                />
+                                  }
+                                />
                               </Form.Group>
                             </div>
                             {effectiveDateError ? (
@@ -823,93 +837,97 @@ const PromotionManagerEdit = (props) => {
                             </div>
                           </Col>
                         </Row>
-                          {<>
-                          
-                                                    <Row
-                                                    style={{
-                                                      marginLeft: "2rem",
-                                                      marginTop: "1rem",
-                                                      marginBottom: "3rem",
-                                                    }}
-                                                  >
-                                                    <>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label>Validated by Costcenter Leader:</label>
-                                                        </div>
-                                                      </Col>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label className="itemResult">
-                                                            {state.validatedManagerName}
-                                                          </label>
-                                                        </div>
-                                                      </Col>
-                                                    </>
-                                                    <>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label>Date:</label>
-                                                        </div>
-                                                      </Col>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label className="itemResult">
-                                                            {state.managerValidatedDate !== null &&
-                                                            state.managerValidatedDate !== undefined &&
-                                                            state.managerValidatedDate !== ""
-                                                              ? moment(state.managerValidatedDate).format(
-                                                                  "DD-MM-YYYY"
-                                                                )
-                                                              : ""}
-                                                          </label>
-                                                        </div>
-                                                      </Col>
-                                                    </>
-                                                  </Row>
-                                                  <Row
-                                                    style={{
-                                                      marginLeft: "2rem",
-                                                      marginTop: "1rem",
-                                                      marginBottom: "3rem",
-                                                    }}
-                                                  >
-                                                    <>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label>Validated by Admin:</label>
-                                                        </div>
-                                                      </Col>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label className="itemResult">
-                                                            {state.validatedAdminName}
-                                                          </label>
-                                                        </div>
-                                                      </Col>
-                                                    </>
-                                                    <>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label>Date:</label>
-                                                        </div>
-                                                      </Col>
-                                                      <Col sm={2}>
-                                                        <div>
-                                                          <label className="itemResult">
-                                                            {state.adminValidatedDate !== null &&
-                                                            state.adminValidatedDate !== undefined &&
-                                                            state.adminValidatedDate !== ""
-                                                              ? moment(state.adminValidatedDate).format(
-                                                                  "DD-MM-YYYY"
-                                                                )
-                                                              : ""}
-                                                          </label>
-                                                        </div>
-                                                      </Col>
-                                                    </>
-                                                  </Row></>
-                          }
+                        {
+                          <>
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "3rem",
+                              }}
+                            >
+                              <>
+                                <Col sm={2}>
+                                  <div>
+                                    <label>
+                                      Validated by Costcenter Leader:
+                                    </label>
+                                  </div>
+                                </Col>
+                                <Col sm={2}>
+                                  <div>
+                                    <label className="itemResult">
+                                      {state.validatedManagerName}
+                                    </label>
+                                  </div>
+                                </Col>
+                              </>
+                              <>
+                                <Col sm={2}>
+                                  <div>
+                                    <label>Date:</label>
+                                  </div>
+                                </Col>
+                                <Col sm={2}>
+                                  <div>
+                                    <label className="itemResult">
+                                      {state.managerValidatedDate !== null &&
+                                      state.managerValidatedDate !==
+                                        undefined &&
+                                      state.managerValidatedDate !== ""
+                                        ? moment(
+                                            state.managerValidatedDate
+                                          ).format("DD-MM-YYYY")
+                                        : ""}
+                                    </label>
+                                  </div>
+                                </Col>
+                              </>
+                            </Row>
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "3rem",
+                              }}
+                            >
+                              <>
+                                <Col sm={2}>
+                                  <div>
+                                    <label>Validated by Admin:</label>
+                                  </div>
+                                </Col>
+                                <Col sm={2}>
+                                  <div>
+                                    <label className="itemResult">
+                                      {state.validatedAdminName}
+                                    </label>
+                                  </div>
+                                </Col>
+                              </>
+                              <>
+                                <Col sm={2}>
+                                  <div>
+                                    <label>Date:</label>
+                                  </div>
+                                </Col>
+                                <Col sm={2}>
+                                  <div>
+                                    <label className="itemResult">
+                                      {state.adminValidatedDate !== null &&
+                                      state.adminValidatedDate !== undefined &&
+                                      state.adminValidatedDate !== ""
+                                        ? moment(
+                                            state.adminValidatedDate
+                                          ).format("DD-MM-YYYY")
+                                        : ""}
+                                    </label>
+                                  </div>
+                                </Col>
+                              </>
+                            </Row>
+                          </>
+                        }
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -950,7 +968,7 @@ const PromotionManagerEdit = (props) => {
                                       promotionIdData !== undefined &&
                                       Object.keys(promotionIdData).length !==
                                         0 &&
-                                      (promotionIdData.status === 5))
+                                      promotionIdData.status === 5)
                                   }
                                   className={
                                     showPreview ||
@@ -979,9 +997,11 @@ const PromotionManagerEdit = (props) => {
                               showPreview === true ? (
                                 <button
                                   // disabled={!submitted}
-                                  className={saveLetter
-                                    ? "confirmButton"
-                                    : "PromotionstepperButtons"}
+                                  className={
+                                    saveLetter
+                                      ? "confirmButton"
+                                      : "PromotionstepperButtons"
+                                  }
                                   onClick={generateLetterClick}
                                 >
                                   Generate Promotion Letter
@@ -989,7 +1009,7 @@ const PromotionManagerEdit = (props) => {
                               ) : (
                                 ""
                               )}
-                              {saveLetter && previewGeneratedLetter ? (
+                              {/* {saveLetter && previewGeneratedLetter ? (
                                 <button
                                   className={"LettersProbButtons"}
                                   onClick={previewLetterViewing}
@@ -998,8 +1018,8 @@ const PromotionManagerEdit = (props) => {
                                 </button>
                               ) : (
                                 ""
-                              )}
-                              {saveLetter && previewGeneratedLetter === true && (
+                              )} */}
+                              {/* {saveLetter && previewGeneratedLetter === true && (
                                 <div className="preview-section">
                                   <br></br>
                                   <br></br>
@@ -1026,7 +1046,7 @@ const PromotionManagerEdit = (props) => {
                                     ""
                                   )}
                                 </div>
-                              )}
+                              )} */}
                             </div>
                           </Col>
                         </Row>

@@ -10,11 +10,11 @@ import { TransferContext } from "../../../context/TransferState";
 import PartTimeToFullTimeLetter from "../Initiation/partTimeToFullTimeLetter";
 import FullTimeToPartTimeLetter from "../Initiation/fullTimeToPartTimeLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
-import { useHistory,useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "../../Transfers/Transfers.css";
 
 const ChangeEmployementTypeAction = () => {
-    const { transferId } = useParams();
+  const { transferId } = useParams();
   const {
     getTransferInitiationEmpData,
     initiationEmpData,
@@ -34,6 +34,8 @@ const ChangeEmployementTypeAction = () => {
     getApointmentLetter,
     transferData,
     getTransferData,
+    setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEmployement, setNewEmployement] = useState("");
@@ -122,15 +124,17 @@ const ChangeEmployementTypeAction = () => {
   }, [initiationStatus]);
 
   useEffect(() => {
-    if(initiationEmpData !== null &&
+    if (
+      initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length > 0){     
-         setSearchInput(
+      Object.keys(initiationEmpData).length > 0
+    ) {
+      setSearchInput(
         `${initiationEmpData.employeeName} ${initiationEmpData.currentEmployeeId}`
       );
-      }else{
-        setSearchInput("")
-      }
+    } else {
+      setSearchInput("");
+    }
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
@@ -183,6 +187,7 @@ const ChangeEmployementTypeAction = () => {
     ) {
       getApointmentLetter(transferData.promotedEmployeeId);
       setShowInitiationLetter(true);
+      setLetterViewing(true);
     }
   };
 
@@ -289,80 +294,87 @@ const ChangeEmployementTypeAction = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-        const InfoData = {
-          currentCompany: transferData.currentCompany,
-          currentContractType: transferData.currentContractType,
-          currentCostCentre: transferData.currentCostCentre,
-          currentCountry: transferData.currentCountry,
-          currentDepartment: transferData.currentDepartment,
-          currentDesignation: transferData.currentDesignation,
-          currentEmployeeId: transferData.currentEmployeeId,
-          currentFixedGross: transferData.currentFixedGross,
-          currentJoiningDate: transferData.currentJoiningDate,
-          currentLocation: transferData.currentLocation,
-          currentManagerId: transferData.currentManagerId,
-          currentMonthlyBonus: transferData.currentMonthlyBonus,
-          currentPosition: transferData.currentPosition,
-          promotedCompany: transferData.currentCompany,
-          promotedContractType:transferData.promotedContractType,
-          salaryType:transferData.salaryType,
-          promotedCostCentre: transferData.promotedCostCentre,
-          promotedCountry: transferData.promotedCountry,
-          // promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
-          promotedDepartment: transferData.promotedDepartment,
-          promotedDesignation: transferData.promotedDesignation,
-          promotedEmployeeId: transferData.currentEmployeeId,
-          promotedFixedGross: transferData.promotedFixedGross,
-          promotedJoiningDate: transferData.promotedJoiningDate,
-          promotedLocation: transferData.currentLocation,
-          promotedManagerId: transferData.currentManagerId,
-          promotedMonthlyBonus: transferData.currentMonthlyBonus,
-          promotedPosition: transferData.currentPosition,
-          promotedRelocationBonus: transferData.currentMonthlyBonus,
-          promotedTermOfProject: transferData.promotedTermOfProject,
-          status: 0,
-          transferId: transferData.transferId,
-          transferType: transferData.transferType,
-        };
-        console.log(InfoData);
-        createTransferInitiation(InfoData);
-        setFormValid(true);
-        setLetterSent(true);
-        setShowLetterSubmitModal(true);
-        // setModalShow(true);
+    const InfoData = {
+      currentCompany: transferData.currentCompany,
+      currentContractType: transferData.currentContractType,
+      currentCostCentre: transferData.currentCostCentre,
+      currentCountry: transferData.currentCountry,
+      currentDepartment: transferData.currentDepartment,
+      currentDesignation: transferData.currentDesignation,
+      currentEmployeeId: transferData.currentEmployeeId,
+      currentFixedGross: transferData.currentFixedGross,
+      currentJoiningDate: transferData.currentJoiningDate,
+      currentLocation: transferData.currentLocation,
+      currentManagerId: transferData.currentManagerId,
+      currentMonthlyBonus: transferData.currentMonthlyBonus,
+      currentPosition: transferData.currentPosition,
+      promotedCompany: transferData.currentCompany,
+      promotedContractType: transferData.promotedContractType,
+      salaryType: transferData.salaryType,
+      promotedCostCentre: transferData.promotedCostCentre,
+      promotedCountry: transferData.promotedCountry,
+      // promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
+      promotedDepartment: transferData.promotedDepartment,
+      promotedDesignation: transferData.promotedDesignation,
+      promotedEmployeeId: transferData.currentEmployeeId,
+      promotedFixedGross: transferData.promotedFixedGross,
+      promotedJoiningDate: transferData.promotedJoiningDate,
+      promotedLocation: transferData.currentLocation,
+      promotedManagerId: transferData.currentManagerId,
+      promotedMonthlyBonus: transferData.currentMonthlyBonus,
+      promotedPosition: transferData.currentPosition,
+      promotedRelocationBonus: transferData.currentMonthlyBonus,
+      promotedTermOfProject: transferData.promotedTermOfProject,
+      status: 0,
+      transferId: transferData.transferId,
+      transferType: transferData.transferType,
+    };
+    console.log(InfoData);
+    createTransferInitiation(InfoData);
+    setFormValid(true);
+    setLetterSent(true);
+    setShowLetterSubmitModal(true);
+    // setModalShow(true);
   };
-console.log(transferData,"transferData")
+  console.log(transferData, "transferData");
   return (
     <div className="transfer-initiation">
-      <ToastContainer />
-      <Modal
-        show={showLetterSubmitModal}
-        onHide={handleLetterSubmitModalClose}
-        size="md"
-        centered
-      >
-        <Container>
-          <Modal.Header closeButton className="modalHeader"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              Transfer initiation letter details saved successfully
-            </label>
+      <Breadcrumb title="TRANSFER VIEW" parent="TRANSFER VIEW" />
+      <div className="container-fluid">
+        <div className="card" style={{ borderRadius: "1rem" }}>
+          <div className="OnBoardHeading">
+            <b className="align-middle">TRANSFER ACTION </b>
+          </div>
+          <ToastContainer />
+          <Modal
+            show={showLetterSubmitModal}
+            onHide={handleLetterSubmitModalClose}
+            size="md"
+            centered
+          >
+            <Container>
+              <Modal.Header closeButton className="modalHeader"></Modal.Header>
+              <Modal.Body className="mx-auto">
+                <label className="text-center">
+                  Transfer initiation letter details saved successfully
+                </label>
 
-            <div className="text-center mb-2">
-              <Button onClick={handleLetterSubmitModalClose}>Close</Button>
-            </div>
-          </Modal.Body>
-        </Container>
-      </Modal>
-      <Modal
+                <div className="text-center mb-2">
+                  <Button onClick={handleLetterSubmitModalClose}>Close</Button>
+                </div>
+              </Modal.Body>
+            </Container>
+          </Modal>
+          {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
+        <Modal.Body> */}
           {transferData !== null &&
           transferData !== undefined &&
+          letterView &&
           Object.keys(transferData).length !== 0 &&
           transferData.promotedContractType !== null &&
           transferData.promotedContractType !== undefined &&
@@ -372,6 +384,7 @@ console.log(transferData,"transferData")
             <PartTimeToFullTimeLetter />
           ) : transferData !== null &&
             transferData !== undefined &&
+            letterView &&
             Object.keys(transferData).length !== 0 &&
             transferData.promotedContractType !== null &&
             transferData.promotedContractType !== undefined &&
@@ -384,7 +397,7 @@ console.log(transferData,"transferData")
           )}
 
           {/* <TransferInitationLetter transferId={initiationTransferId} /> */}
-          <br></br>
+          {/* <br></br>
           <Row>
             {showSignature ? (
               <>
@@ -423,94 +436,95 @@ console.log(transferData,"transferData")
             </Row>
           )}
         </Modal.Body>
-      </Modal>
-          <Row className="mb-4">
-            <Col md={2}>Transfer Type: </Col>
-            <Col md={8} className="text-primary">
-              {transferData.transferType === "Employment Type Transfer"
-                ? "Change In Employment Type Transfer"
-                : transferData.transferType}
-            </Col>
-          </Row>
-          <Row className="mb-4">
-            <Col md={2}>Employee Name: </Col>
-            <Col md={8} className="text-primary">
-              {transferData.employeeName} {transferData.currentEmployeeId}
-            </Col>
-          </Row>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Col className="font-weight-bold">
-              <u>Work Information</u>
-            </Col>
-          </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Col md={2}>Cost Center:</Col>
-            <Col md={4} className="text-primary">
-              {transferData.currentCostCentre}
-            </Col>
+      </Modal> */}
+          <Container className="ml-4 mt-4">
+            <Row className="mb-4">
+              <Col md={2}>Transfer Type: </Col>
+              <Col md={8} className="text-primary">
+                {transferData.transferType === "Employment Type Transfer"
+                  ? "Change In Employment Type Transfer"
+                  : transferData.transferType}
+              </Col>
+            </Row>
+            <Row className="mb-4">
+              <Col md={2}>Employee Name: </Col>
+              <Col md={8} className="text-primary">
+                {transferData.employeeName} {transferData.currentEmployeeId}
+              </Col>
+            </Row>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="transferInitiationDept"
+            >
+              <Col className="font-weight-bold">
+                <u>Work Information</u>
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="transferInitiationDept"
+            >
+              <Col md={2}>Cost Center:</Col>
+              <Col md={4} className="text-primary">
+                {transferData.currentCostCentre}
+              </Col>
 
-            <Col md={2}>Contract Type:</Col>
-            <Col md={4} className="text-primary">
-              {transferData.currentContractType}
-            </Col>
-          </Form.Group>
+              <Col md={2}>Contract Type:</Col>
+              <Col md={4} className="text-primary">
+                {transferData.currentContractType}
+              </Col>
+            </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Col md={2} className="py-0">
-              Change Employment:
-            </Col>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="transferInitiationDept"
+            >
+              <Col md={2} className="py-0">
+                Change Employment:
+              </Col>
 
-            <Col md={4} className="text-primary">
-              {transferData.promotedContractType}
-            </Col>
-          </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Col className="font-weight-bold">
-              <u>Remuneration Information</u>
-            </Col>
-          </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Col md={2}>Salary Type:</Col>
-            <Col md={4} className="text-primary">
-              {transferData.salaryType}
-            </Col>
+              <Col md={4} className="text-primary">
+                {transferData.promotedContractType}
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="transferInitiationDept"
+            >
+              <Col className="font-weight-bold">
+                <u>Remuneration Information</u>
+              </Col>
+            </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="transferInitiationDept"
+            >
+              <Col md={2}>Salary Type:</Col>
+              <Col md={4} className="text-primary">
+                {transferData.salaryType}
+              </Col>
 
-            <Col md={2}>Fixed Gross:</Col>
-            <Col md={4} className="text-primary">
-              {transferData.promotedFixedGross}
-            </Col>
-          </Form.Group>
+              <Col md={2}>Fixed Gross:</Col>
+              <Col md={4} className="text-primary">
+                {transferData.promotedFixedGross}
+              </Col>
+            </Form.Group>
 
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Col md={2}>Effective Date:</Col>
-            <Col md={4} className="text-primary">
-              {transferData.promotedJoiningDate}
-            </Col>
-          </Form.Group>
+            <Form.Group
+              as={Row}
+              className="mb-3"
+              controlId="transferInitiationDept"
+            >
+              <Col md={2}>Effective Date:</Col>
+              <Col md={4} className="text-primary">
+                {transferData.promotedJoiningDate}
+              </Col>
+            </Form.Group>
 
             <Row>
               <Col
@@ -520,23 +534,20 @@ console.log(transferData,"transferData")
                   textAlign: "center",
                 }}
               >
-                <button
-                  disabled={true}
-                  className={"confirmButton"}
-                >
+                <button disabled={true} className={"confirmButton"}>
                   Save
                 </button>
 
-                  <button
-                    className={"LettersButtons"}
-                    onClick={showTransferLetterModal}
-                  >
-                    {previewTransferLetter
-                      ? "Preview Transfer Letter"
-                      : "Generate Transfer Letter"}
-                  </button>
+                <button
+                  className={"LettersButtons"}
+                  onClick={showTransferLetterModal}
+                >
+                  {previewTransferLetter
+                    ? "Generate Transfer Letter"
+                    : "Generate Transfer Letter"}
+                </button>
 
-                {previewTransferLetter && (
+                {/* {previewTransferLetter && (
                   <div className="preview-section">
                     <br></br>
                     <br></br>
@@ -552,11 +563,14 @@ console.log(transferData,"transferData")
                       Submit
                     </button>
                   </div>
-                )}
+                )} */}
               </Col>
             </Row>
-          </div>
-        )
+          </Container>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ChangeEmployementTypeAction;

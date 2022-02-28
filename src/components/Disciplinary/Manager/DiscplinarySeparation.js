@@ -15,7 +15,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "../../ManagerApproveEmployeExit/RelivingLetter";
 import TerminationLetter from "../../ManagerApproveEmployeExit/TerminationLetter";
 import NonPerformanceTerminationLetter from "./NonPerformanceTerminationLetter";
-import MisConductTerminationLetter from "./MisConductTerminationLetter"
+import MisConductTerminationLetter from "./MisConductTerminationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
@@ -263,10 +263,15 @@ const DisciplinarySeparation = (props) => {
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.email;
-      if(searchByCostData.department == "AFS" ||searchByCostData.department == "IT" ||searchByCostData.department == "Legal" ||searchByCostData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        searchByCostData.department == "AFS" ||
+        searchByCostData.department == "IT" ||
+        searchByCostData.department == "Legal" ||
+        searchByCostData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       if (
         state.empContractType === "internship" ||
@@ -276,18 +281,25 @@ const DisciplinarySeparation = (props) => {
       } else {
         setIntern(false);
       }
-      if(
+      if (
         state.empContractType === "Fulltime" ||
-        state.empContractType === "fulltime" ||state.empContractType === "parttime" ||
+        state.empContractType === "fulltime" ||
+        state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
-              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
+        var dateValue = new Date(
+          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+        );
+        let aboveDateValue = new Date(
+          new Date().setMonth(
+            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+          )
+        );
         setIntern(false);
         // setLastDateSelection(aboveDateValue)
-        setLastWorkingDate(dateValue)
+        setLastWorkingDate(dateValue);
+      }
     }
-  }
   }, [searchByCostData]);
 
   useEffect(() => {
@@ -551,9 +563,9 @@ const DisciplinarySeparation = (props) => {
     setModal(false);
     setSuccessModal(false);
   };
-  const handleCloseMessage = () =>{
-    props.history.push("/disciplinary")
-  }
+  const handleCloseMessage = () => {
+    props.history.push("/disciplinary");
+  };
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -607,7 +619,6 @@ const DisciplinarySeparation = (props) => {
     // console.log("AdjusteddateValue");
     setDateOfResignation(AdjusteddateValue);
     setLastWorkingDate(AdjusteddateValue);
-
   };
 
   const dateOfBirthHandler1 = (date) => {
@@ -861,7 +872,7 @@ const DisciplinarySeparation = (props) => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 4,
+            status: 8, // 4,
           };
 
           console.log("createExitData", data2);
@@ -903,7 +914,7 @@ const DisciplinarySeparation = (props) => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 2,
+            status: 8, //2,
           };
           console.log("createExitData", data1);
           //   empResign(createExitData);
@@ -919,7 +930,7 @@ const DisciplinarySeparation = (props) => {
       }
     }
   };
-console.log(terminationLetterData,"terminate")
+  console.log(terminationLetterData, "terminate");
   return (
     <Fragment>
       {/* reliving letter */}
@@ -945,69 +956,19 @@ console.log(terminationLetterData,"terminate")
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {terminationLetterData &&
-            terminationLetterData !== undefined &&
-            terminationLetterData !== null && employeeData.disciplinaryReasonId == 2? (
-              <MisConductTerminationLetter />
-            ) : (
-              <NonPerformanceTerminationLetter/>
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
-      ) : (
-        ""
-      )}
+      ) : null}
+      {previewLetter || showRelivingModal ? (
+        <div>
+          {terminationLetterData &&
+          terminationLetterData !== undefined &&
+          terminationLetterData !== null &&
+          employeeData.disciplinaryReasonId == 2 ? (
+            <MisConductTerminationLetter />
+          ) : (
+            <NonPerformanceTerminationLetter />
+          )}
+        </div>
+      ) : null}
 
       {/* reliving letter end */}
       <Modal show={showModal} onHide={() => handleClose()} centered>
@@ -1506,7 +1467,7 @@ console.log(terminationLetterData,"terminate")
                           employeeData !== null &&
                           employeeData !== undefined &&
                           Object.keys(employeeData).length !== 0 &&
-                          employeeData.status === 4 &&
+                          employeeData.status === 8 &&
                           showPreview === true &&
                           submitted === true ? (
                             <button
@@ -1519,7 +1480,7 @@ console.log(terminationLetterData,"terminate")
                           ) : (
                             ""
                           )}
-                          {saveLetter &&
+                          {/* {saveLetter &&
                           previewGeneratedLetter &&
                           showPreview ? (
                             <button
@@ -1530,9 +1491,9 @@ console.log(terminationLetterData,"terminate")
                             </button>
                           ) : (
                             ""
-                          )}
+                          )} */}
 
-                          {saveLetter && previewGeneratedLetter && showPreview && (
+                          {/* {saveLetter && previewGeneratedLetter && showPreview && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
@@ -1571,7 +1532,7 @@ console.log(terminationLetterData,"terminate")
                                 ""
                               )}
                             </div>
-                          )}
+                          )} */}
                         </Col>
                       </Row>
                     </Col>
