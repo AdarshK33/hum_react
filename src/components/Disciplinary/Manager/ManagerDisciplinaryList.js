@@ -12,9 +12,11 @@ import { RoleManagementContext } from "../../../context/RoleManagementState";
 import { AdminContext } from "../../../context/AdminState";
 import { AppContext } from "../../../context/AppState";
 import { PermissionContext } from "../../../context/PermissionState";
-
+import { E_signContext } from "../../../context/E_signState";
 import moment from "moment";
 const ManagerDisciplinaryList = () => {
+  const { getReference, notification } = useContext(E_signContext);
+
   const { candidateView, candidateList, viewCandidateId } =
     useContext(OfferContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
@@ -117,7 +119,10 @@ const ManagerDisciplinaryList = () => {
     }
   }
   // console.log(getDifferenceInDays("2021-07-03", "2021-07-04"));
-
+  const GoToLetterView = (refId) => {
+    console.log(refId);
+    getReference(refId);
+  };
   return (
     <Fragment>
       <Breadcrumb
@@ -176,6 +181,8 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
                       <th scope="col">Edit</th>
+                      <th scope="col">View Signed Show Cause</th>
+                      <th scope="col">View Signed Warning Letter</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -463,6 +470,48 @@ const ManagerDisciplinaryList = () => {
                             ) : (
                               <td>
                                 <Edit2 />
+                              </td>
+                            )}
+                            {/* disciplinary action */}
+                              {item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&
+                              item.disciplinaryAction !== ""&&
+                              item.disciplinaryAction.refId !== null &&
+                            item.disciplinaryAction.refId !== undefined &&
+                            item.disciplinaryAction.refId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
+                                    onClick={() => {
+                                      GoToLetterView(item.disciplinaryAction.refId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
+                              </td>
+                            )}
+                             {/* disciplinary warning */}
+                             { item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined &&
+                              item.disciplinaryWarning !== ""&&
+                              item.disciplinaryWarning.refId !== null &&
+                            item.disciplinaryWarning.refId !== undefined &&
+                            item.disciplinaryWarning.refId !== "" ? (
+                              <td>
+                                <Link>
+                                  <AlertCircle
+                                    onClick={() => {
+                                      GoToLetterView(item.disciplinaryWarning.refId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              <td>
+                                <AlertCircle />
                               </td>
                             )}
                           </tr>
