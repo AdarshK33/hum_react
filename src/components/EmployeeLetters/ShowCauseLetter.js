@@ -556,14 +556,9 @@ const EmployeShowCaseLetter = () => {
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showShowCauseNoticeModal ? (
-        <Modal
-          show={showShowCauseNoticeModal}
-          onHide={handleShowCauseLetterClose}
-          size="md"
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
+      ) :null}
+      { previewLetter || showShowCauseNoticeModal ? (
+        <div>
             {disciplinarySearchData &&
             disciplinarySearchData !== null &&
             disciplinarySearchData !== undefined &&
@@ -575,55 +570,8 @@ const EmployeShowCaseLetter = () => {
             ) : (
               ""
             )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
+            </div>
+            
       ) : (
         ""
       )}

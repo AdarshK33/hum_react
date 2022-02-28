@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect, Fragment } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 /* import DatePicker from 'react-datepicker' */
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, } from "react-toastify";
+import { toast, ToastContainer, } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { ClusterContext } from '../../context/ClusterState'
 import moment from 'moment'
 
@@ -156,10 +157,15 @@ const addClick = () => {
     setValues([...val, ''])
     setValues2([...val2, ''])
 }
+
+const toFindDuplicates = arry => arry.filter((item, index) => arry.indexOf(item) !== index)
 //edit api
 const onSubmit = e => {
     e.preventDefault()
-
+    const duplicateElementa = toFindDuplicates(val2);
+    if(Object.keys(duplicateElementa).length){
+    toast.error("Please provide valid date")
+    }{
     const EditSalary = {
         additionalHours: additionalHours,
         contractType: contractType,
@@ -196,6 +202,7 @@ const onSubmit = e => {
     setReason(props.reason)
     setValues([])
     setValues2([])
+}
 }
 const onCloseModal = () => {
      const setModal = props.handleEditClose;

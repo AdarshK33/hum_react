@@ -1,18 +1,165 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect, useRef } from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import moment from "moment";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
+import { E_signContext } from "../../../context/E_signState";
+import { useHistory } from "react-router-dom";
+import { PermissionContext } from "../../../context/PermissionState";
+import { AppContext } from "../../../context/AppState";
 
 const ReasonByEmployee = () => {
-  const { disciplinarySearchData } = useContext(DisciplinaryContext);
+  const {
+    disciplinaryResonsView,
+    disciplinaryEmployeeSearch,
+    disciplinaryResonsData,
+    issueShowCauseNoticeData,
+    createShowCauseIssue,
+    disciplinarySearchData,
+    SubmitDisciplinaryLetter,
+    loader,
+  } = useContext(DisciplinaryContext);
+    const { CreatePdfAndUpload } = useContext(E_signContext);
+  const { rolePermission } = useContext(PermissionContext);
+  const { user } = useContext(AppContext);
+  const history = useHistory();
+  const ref = React.createRef();
+  const inputRef = useRef(null);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [show, setShow] = useState(true);
+
+  const handleClose = () => {
+    setShow(false);
+    // setLetterView(false);
+  };
+
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   console.log(disciplinarySearchData,"disciplinarySearchData")
+
+  const submitfinalShowCauseLetter = (e) => {
+    e.preventDefault();
+    setSaveLetter(true);
+    if (
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
+    ) {
+      var InfoData = {
+        company: disciplinarySearchData.company,
+        contractType: disciplinarySearchData.contractType,
+        department: disciplinarySearchData.department,
+        disciplinaryAction: {
+          actionDueDays: disciplinarySearchData.disciplinaryAction.actionDueDays,
+          actionIssuedDate: disciplinarySearchData.disciplinaryAction.actionIssuedDate,
+          disciplinaryId: disciplinarySearchData.disciplinaryAction.disciplinaryId,
+          employeeActionStatus: disciplinarySearchData.disciplinaryAction.employeeActionStatus,
+          employeeComment: disciplinarySearchData.disciplinaryAction.employeeComment,
+          initiatedRole: disciplinarySearchData.disciplinaryAction.initiatedRole,
+          employeeId: disciplinarySearchData.disciplinaryAction.employeeId,
+          managerComment: disciplinarySearchData.disciplinaryAction.managerComment,
+          employeeReasonAccepted:
+          disciplinarySearchData.acceptEmployeeReason == "yes"
+              ? true
+              : disciplinarySearchData.acceptEmployeeReason == "no"
+              ? false
+              : null,
+          reason: disciplinarySearchData.disciplinaryAction.reason,
+          reasonDetails: disciplinarySearchData.disciplinaryAction.reasonDetails,
+          reasonDetailsId: disciplinarySearchData.disciplinaryAction.reasonDetailsId,
+          reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
+          showCauseLetter: disciplinarySearchData.disciplinaryAction.showCauseLetter,
+          showCauseNotice: disciplinarySearchData.disciplinaryAction.showCauseNotice,
+          status: 2,
+          statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
+          warningIssued: disciplinarySearchData.disciplinaryAction.warningIssued,
+        },
+        disciplinaryWarning:
+        disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== " "
+            ? {
+                //api response data
+                disciplinaryId: disciplinarySearchData.disciplinaryWarning.disciplinaryId,
+                employeeComment: disciplinarySearchData.disciplinaryWarning.employeeComment,
+                employeeWarningStatus:
+                disciplinarySearchData.disciplinaryWarning.employeeWarningStatus,
+                improvementPeriod: disciplinarySearchData.disciplinaryWarning.improvementPeriod ?
+                parseInt(disciplinarySearchData.disciplinaryWarning.improvementPeriod) :0,
+                managerComment: disciplinarySearchData.warningManagerReason,
+                pipEndDate: disciplinarySearchData.disciplinaryWarning.pipEndDate,
+                reason: disciplinarySearchData.disciplinaryWarning.reason,
+                reasonDetails: disciplinarySearchData.disciplinaryWarning.reasonDetails,
+                reasonDetailsId: disciplinarySearchData.disciplinaryWarning.reasonDetailsId,
+                reasonId: disciplinarySearchData.disciplinaryWarning.reasonId,
+                // status: rolePermission == "costCenterManager" ? 2 : 0,
+                  status:disciplinarySearchData.disciplinaryWarning.status,
+                statusDesc: disciplinarySearchData.disciplinaryWarning.statusDesc,
+                initiatedRole: disciplinarySearchData.disciplinaryWarning.initiatedRole,
+                warningDueDays: disciplinarySearchData.disciplinaryWarning.warningDueDays,
+                warningId: disciplinarySearchData.disciplinaryWarning.warningId,
+                warningIssuedDate: disciplinarySearchData.disciplinaryWarning.warningIssuedDate,
+                warningLetter: disciplinarySearchData.disciplinaryWarning.warningLetter,
+              }
+            : null,
+        employeeAddress: disciplinarySearchData.employeeAddress,
+        employeeCostCentre: disciplinarySearchData.employeeCostCentre,
+        employeeId: disciplinarySearchData.employeeId,
+        employeeName: disciplinarySearchData.employeeName,
+        managerCostCentre: disciplinarySearchData.managerCostCentre,
+        managerPosition: disciplinarySearchData.managerPosition,
+        managerId: disciplinarySearchData.managerId,
+        managerName: disciplinarySearchData.managerName,
+        position: disciplinarySearchData.position,
+        storeLocation: disciplinarySearchData.storeLocation,
+      };
+      
+      
+      const infoData = {
+        inputRef: inputRef,
+        empId: disciplinarySearchData.employeeId,
+        candidateId: 0,
+        module: "Disciplinary Action",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "rajasekhar@theretailinsights.com ",
+        empPhNo: user.phone,
+        history: history,
+        path: "../disciplinary",
+      };
+      console.log("createShowCauseData", InfoData);
+      createShowCauseIssue(InfoData, disciplinarySearchData.employeeId);
+      SubmitDisciplinaryLetter(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
+      CreatePdfAndUpload(infoData, "35,270,185,370");
+     setShow(false);
+    }
+  };
   return (
     <Fragment>
-      {typeof disciplinarySearchData !== undefined ? (
-        <Fragment>
-          <p className="">
+    {typeof disciplinarySearchData !== undefined ? (
+        <Modal show={show} onHide={handleClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {loader ? (
+            <div
+              className="loader-box loader"
+              style={{ width: "100% !important" }}
+            >
+              <div className="loader">
+                <div className="line bg-primary"></div>
+                <div className="line bg-primary"></div>
+                <div className="line bg-primary"></div>
+                <div className="line bg-primary"></div>
+              </div>
+            </div>
+          ) : (
+        <div id="disMisconductLetter" ref={inputRef}>
+          <p>
             {" "}
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
           </p>
@@ -48,9 +195,8 @@ const ReasonByEmployee = () => {
             <b>Sub:</b> Reply to the Show Cause Notice issued on{" "}
             {moment().format("DD-MM-YYYY")}
           </p>
-
-          <div className=" ">
-            <p className="mt-5 ">
+<br />
+            <p >
               {" "}
               Dear <b>{disciplinarySearchData.initiatedByName},</b>{" "}
             </p>
@@ -64,18 +210,42 @@ const ReasonByEmployee = () => {
             <p>{disciplinarySearchData.disciplinaryAction.employeeComment}</p>
             <br />
             From,
-            <p className="">
+            <p >
               {" "}
               Employee Name: <b>{disciplinarySearchData.employeeName}</b>
             </p>
-            <p className="">
+            <p >
               {" "}
               Employee ID: <b>{disciplinarySearchData.employeeId}</b>
             </p>
-            <p className=""> Signatory:</p>
-            <div className="float-right "></div>
+            <p > Signatory:</p>
           </div>
-        </Fragment>
+        
+            )}
+            {!saveLetter &&
+            !loader &&
+            disciplinarySearchData &&
+            Object.keys(disciplinarySearchData).length &&
+            disciplinarySearchData.employeeId !== null &&
+            disciplinarySearchData.employeeId !== undefined ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={submitfinalShowCauseLetter}
+                  >
+                    Save Changes
+                  </button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+          </Modal.Body>
+        </Modal>
       ) : (
         ""
       )}

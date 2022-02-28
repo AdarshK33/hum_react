@@ -85,7 +85,7 @@ const AdminRoster = () => {
   const handleShow = (item, name, ctype, weekId, cid) => {
     console.log("contract type", item,ctype);
     if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
-      toast.error("past date");
+      toast.error("Please select future date");
     }else{
     setshiftDate(item.weekId);
     setAdminModal(true);
