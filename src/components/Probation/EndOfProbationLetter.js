@@ -34,65 +34,65 @@ const EndOfProbationLetter = () => {
   };
   const HandleSaveLetter = () => {
     setSaveLetter(true);
-    // if (
-    //   employeeData.employeeId !== null &&
-    //   employeeData.employeeId !== undefined
-    // ) {
-    //   const data2 = {
-    //     company: employeeData.company,
-    //     contractType: employeeData.contractType,
-    //     costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
-    //     costCentreManagerName: employeeData.costCentreManagerName,
-    //     costCentreName: employeeData.costCentreName,
-    //     dateOfResignation: employeeData.dateOfResignation,
-    //     emailId: employeeData.emailId,
-    //     empName: employeeData.empName,
-    //     employeeComment: employeeData.employeeComment,
-    //     employeeId: employeeData.employeeId,
-    //     employeeName: employeeData.employeeName,
-    //     exitId: employeeData.exitId,
-    //     hoursWorked: employeeData.hoursWorked,
-    //     lastWorkingDate: employeeData.lastWorkingDate,
-    //     location: employeeData.location,
-    //     managerCostCentre: employeeData.managerCostCentre,
-    //     managerEmailId: employeeData.managerEmailId,
-    //     managerId: employeeData.managerId,
-    //     managerName: employeeData.managerName,
-    //     managerPosition: employeeData.managerPosition,
-    //     modeOfSeparationId: employeeData.modeOfSeparationId,
-    //     modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
-    //     noticePeriod: employeeData.noticePeriod,
-    //     noticePeriodRecovery: employeeData.noticePeriodRecovery,
-    //     noticePeriodRecoveryDays: employeeData.noticePeriodRecoveryDays,
-    //     position: employeeData.position,
-    //     reHire: employeeData.reHire,
-    //     reason: employeeData.reason,
-    //     reasonForResignation: employeeData.reasonForResignation,
-    //     rehireRemark: employeeData.rehireRemark,
-    //     status: 7,
-    //   };
+    if (
+      employeeData.employeeId !== null &&
+      employeeData.employeeId !== undefined
+    ) {
+      const data2 = {
+        company: employeeData.company,
+        contractType: employeeData.contractType,
+        costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
+        costCentreManagerName: employeeData.costCentreManagerName,
+        costCentreName: employeeData.costCentreName,
+        dateOfResignation: employeeData.dateOfResignation,
+        emailId: employeeData.emailId,
+        empName: employeeData.empName,
+        employeeComment: employeeData.employeeComment,
+        employeeId: employeeData.employeeId,
+        employeeName: employeeData.employeeName,
+        exitId: employeeData.exitId,
+        hoursWorked: employeeData.hoursWorked,
+        lastWorkingDate: employeeData.lastWorkingDate,
+        location: employeeData.location,
+        managerCostCentre: employeeData.managerCostCentre,
+        managerEmailId: employeeData.managerEmailId,
+        managerId: employeeData.managerId,
+        managerName: employeeData.managerName,
+        managerPosition: employeeData.managerPosition,
+        modeOfSeparationId: employeeData.modeOfSeparationId,
+        modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
+        noticePeriod: employeeData.noticePeriod,
+        noticePeriodRecovery: employeeData.noticePeriodRecovery,
+        noticePeriodRecoveryDays: employeeData.noticePeriodRecoveryDays,
+        position: employeeData.position,
+        reHire: employeeData.reHire,
+        reason: employeeData.reason,
+        reasonForResignation: employeeData.reasonForResignation,
+        rehireRemark: employeeData.rehireRemark,
+        status: 7,
+      };
 
-    //   console.log("createExitData", data2);
-    //   UpdateEmplyoeeExist(data2);
-    // }
+      console.log("createExitData", data2);
+      UpdateEmplyoeeExist(data2);
 
-    const infoData = {
-      inputRef: inputRef,
-      empId: endLetterData.empId,
-      candidateId: 0,
-      module: "Probation",
-      empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
-      empPhNo: user.phone,
-      history: history,
-      path: "../probation",
-    };
-    console.log(
-      "getBoundingClientRect",
-      inputRef.current.getBoundingClientRect()
-    );
-    CreatePdfAndUpload(infoData, "35,380,185,480");
-    setShow(false);
+      const infoData = {
+        inputRef: inputRef,
+        empId: endLetterData.empId,
+        candidateId: 0,
+        module: "Separation",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "amit.kumar@qsometech.com",
+        empPhNo: user.phone,
+        history: history,
+        path: "../employee-separation-listing",
+      };
+      console.log(
+        "getBoundingClientRect",
+        inputRef.current.getBoundingClientRect()
+      );
+      CreatePdfAndUpload(infoData, "35,340,185,440");
+      setShow(false);
+    }
   };
 
   return (
