@@ -7,8 +7,13 @@ import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const PartTimeAppointmentLetter = (props) => {
-  const { offerLetterData, transferData, loader, setLetterViewing } =
-    useContext(TransferContext);
+  const {
+    offerLetterData,
+    transferData,
+    loader,
+    setLetterViewing,
+    createTransferInitiation,
+  } = useContext(TransferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -25,7 +30,49 @@ const PartTimeAppointmentLetter = (props) => {
   const HandleSaveLetter = () => {
     // setSaveLetter(true);
     if (transferData && Object.keys(transferData).length) {
-      // finalSubmitAppointmentLetter(transferData.promotedEmployeeId);
+      const InfoData = {
+        currentCompany: transferData.currentCompany,
+        currentContractType: transferData.currentContractType,
+        currentCostCentre: transferData.currentCostCentre,
+        currentCountry: transferData.currentCountry,
+        currentDepartment: transferData.currentDepartment,
+        currentDesignation: transferData.currentDesignation,
+        currentEmployeeId: transferData.currentEmployeeId,
+        currentFixedGross: transferData.currentFixedGross,
+        currentJoiningDate: transferData.currentJoiningDate,
+        currentLocation:
+          transferData.currentLocation !== null &&
+          transferData.currentLocation !== undefined
+            ? transferData.currentLocation
+            : 0,
+        currentManagerId: transferData.currentManagerId,
+        currentMonthlyBonus: transferData.currentMonthlyBonus,
+        currentPosition: transferData.currentPosition,
+        promotedCompany: transferData.promotedCompany,
+        promotedContractType: transferData.promotedContractType,
+        promotedCostCentre: transferData.promotedCostCentre,
+        promotedCountry: transferData.promotedCountry,
+        promotedDateOfReturn: transferData.promotedDateOfReturn,
+        promotedDepartment: transferData.promotedDepartment,
+        promotedDesignation: transferData.promotedDesignation,
+        promotedEmployeeId: transferData.promotedEmployeeId,
+        promotedFixedGross: transferData.promotedFixedGross,
+        promotedJoiningDate: transferData.promotedJoiningDate,
+        promotedLocation: transferData.promotedLocation,
+        promotedManagerId: transferData.promotedManagerId,
+        promotedMonthlyBonus: transferData.promotedMonthlyBonus,
+        promotedPosition: transferData.promotedPosition,
+        promotedRelocationBonus: transferData.promotedRelocationBonus,
+        promotedTermOfProject: transferData.promotedTermOfProject,
+        remark: transferData.remark,
+        status: 1,
+        transferId: transferData.transferId,
+        transferLetter: null,
+        transferType: transferData.transferType,
+      };
+      console.log(InfoData);
+      createTransferInitiation(InfoData);
+
       console.log("HandleSaveLetter");
       const infoData = {
         inputRef: inputRef,
@@ -36,9 +83,9 @@ const PartTimeAppointmentLetter = (props) => {
         empEmail: "rajasekhar@theretailinsights.com",
         empPhNo: user.phone,
         history: history,
-        path: "../offer-release-list",
+        path: "../transfers",
         recipient2: {
-          rectangle: "430,250,580,350",
+          rectangle: "430,580,580,680",
           name: transferData.employeeName,
           email: "rajasekhar@theretailinsights.com",
           //  transferData.email,
@@ -50,7 +97,7 @@ const PartTimeAppointmentLetter = (props) => {
         "getBoundingClientRect",
         inputRef.current.getBoundingClientRect()
       );
-      CreatePdfAndUpload(infoData, "35,250,185,350");
+      CreatePdfAndUpload(infoData, "35,580,185,680");
       setLetterViewing(false);
       setShow(false);
     }
