@@ -16,6 +16,7 @@ const EndOfProbationLetter = () => {
     loader,
     setLetterView,
     empId,
+    ViewProbationEndLetter,
   } = useContext(ProbationContext);
   const { employeeData, UpdateEmplyoeeExist } = useContext(
     EmployeeSeparationContext
@@ -91,6 +92,7 @@ const EndOfProbationLetter = () => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,340,185,440");
+      ViewProbationEndLetter(employeeData.employeeId);
       setShow(false);
     }
   };

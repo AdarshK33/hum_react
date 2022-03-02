@@ -7,9 +7,13 @@ import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const RelivingLetter = () => {
-  const { fetchRelievingLetterData, relivingLetterData, loader } = useContext(
-    EmployeeSeparationContext
-  );
+  const {
+    fetchRelievingLetterData,
+    relivingLetterData,
+    loader,
+    employeeData,
+    UpdateEmplyoeeExist,
+  } = useContext(EmployeeSeparationContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -24,23 +28,62 @@ const RelivingLetter = () => {
   };
   const HandleSaveLetter = () => {
     setSaveLetter(true);
-    const infoData = {
-      inputRef: inputRef,
-      empId: relivingLetterData.employeeId,
-      candidateId: 0,
-      module: "Separation",
-      empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
-      empPhNo: user.phone,
-      history: history,
-      path: "../employee-separation-listing",
-    };
-    console.log(
-      "getBoundingClientRect",
-      inputRef.current.getBoundingClientRect()
-    );
-    CreatePdfAndUpload(infoData, "35,180,185,280");
-    setShow(false);
+    if (employeeData && Object.keys(employeeData).length) {
+      const InfoData = {
+        company: employeeData.company,
+        contractType: employeeData.contractType,
+        costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
+        costCentreManagerName: employeeData.costCentreManagerName,
+        costCentreName: employeeData.costCentreName,
+        dateOfResignation: employeeData.dateOfResignation,
+        personalEmailId: employeeData.personalEmailId,
+        empName: employeeData.empName,
+        employeeComment: employeeData.employeeComment,
+        employeeId: employeeData.employeeId,
+        employeeName: employeeData.employeeName,
+        exitId: employeeData.exitId,
+        hoursWorked: employeeData.hoursWorked,
+        lastWorkingDate: employeeData.lastWorkingDate,
+        location: employeeData.location,
+        managerCostCentre: employeeData.managerCostCentre,
+        managerEmailId: employeeData.managerEmailId,
+        managerId: employeeData.managerId ? employeeData.managerId : "",
+        managerName: employeeData.managerName,
+        managerPosition: employeeData.managerPosition,
+        modeOfSeparationId: employeeData.modeOfSeparationId,
+        modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
+        noticePeriodRecoveryDays: employeeData.noticePeriodRcryDays,
+        noticePeriod: employeeData.noticePeriod,
+        noticePeriodRecovery: employeeData.noticePeriodRecovery,
+        position: employeeData.position,
+        reHire: employeeData.reHire,
+        reason: employeeData.reason,
+        reasonForResignation: employeeData.reasonForResignation,
+        rehireRemark: employeeData.rehireRemark,
+        status: 2,
+        withdraw: employeeData.withdraw,
+      };
+      console.log("save ", InfoData);
+      UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
+
+      const infoData = {
+        inputRef: inputRef,
+        empId: relivingLetterData.employeeId,
+        candidateId: 0,
+        module: "Separation",
+        empName: user.firstName + " " + user.lastName,
+        empEmail: "rajasekhar@theretailinsights.com",
+        empPhNo: user.phone,
+        history: history,
+        path: "../employee-separation-listing",
+      };
+      console.log(
+        "getBoundingClientRect",
+        inputRef.current.getBoundingClientRect()
+      );
+      CreatePdfAndUpload(infoData, "35,180,185,280");
+      setShow(false);
+    }
   };
 
   return (
