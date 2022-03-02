@@ -12,6 +12,7 @@ const initial_state = {
   employeeContractDetailsByIdData:[],
   salaryData:[],
   bankData:[],
+  aadhaarData:[],
   total: {},
   data: [],
 
@@ -114,6 +115,26 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
+    const viewAadhaarDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/aadhaar/" + employeeId)
+        .then((response) => {
+          state.aadhaarData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->aadhaarData", state.aadhaarData);
+          console.log(response);
+  
+          return dispatch({
+            type: "AADHAAR_DATA",
+            payload: state.aadhaarData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   return (
     <EmployeeHistoryContext.Provider
       value={{
@@ -121,7 +142,9 @@ export const EmployeeHistoryProvider = (props) => {
         viewEmployeeContractDetailsById,
         viewSalaryDataById,
         viewBankDataById,
+        viewAadhaarDataById,
         bankData:state.bankData,
+        aadhaarData:state.aadhaarData,
         salaryData:state.salaryData,
         employeeContractDetailsByIdData:state.employeeContractDetailsByIdData,
         loader: loader,
