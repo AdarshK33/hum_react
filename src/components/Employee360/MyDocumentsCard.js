@@ -79,19 +79,17 @@ const MyDocumentsCard = ({ height }) => {
                     }
                   />
 
-                  {/* <div
-                      style={{ display: "none" }}
-                      name={item.documentName}
-                      onChange={showTheLetter}
-                      onClick={(e) => showTheLetter(item.documentName)}
-                    /> */}
-                </Col>
-                <Col>
                   <Download
                     style={{ fontSize: "xx-small", color: "#4f90ff" }}
                     onClick={(e) => downloadTheLetter(item.documentLink)}
                   />
                 </Col>
+                {/* <Col>
+                  <Download
+                    style={{ fontSize: "xx-small", color: "#4f90ff" }}
+                    onClick={(e) => downloadTheLetter(item.documentLink)}
+                  />
+                </Col> */}
               </Row>
             );
           })}
