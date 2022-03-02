@@ -855,7 +855,7 @@ const PersonalInformation = (props) => {
             candidateProfileData.createdDate !== null
               ? candidateProfileData.createdDate
               : null,
-          dateOfBirth: DOB,
+          dateOfBirth: moment(DOB).format("YYYY-MM-DD"),
           disability: state.disability,
           disabilityDoc: null,
           fatherName: state.fatherName,
