@@ -15,6 +15,7 @@ const ExtensionLetter1 = () => {
     loader,
     setLetterView,
     empId,
+    ViewExtensionLetter,
   } = useContext(ProbationContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -71,6 +72,7 @@ const ExtensionLetter1 = () => {
       inputRef.current.getBoundingClientRect()
     );
     CreatePdfAndUpload(infoData, "35,260,185,360");
+    ViewExtensionLetter(probationData.empId);
     setShow(false);
   };
   return (
@@ -94,11 +96,7 @@ const ExtensionLetter1 = () => {
               </div>
             ) : (
               <div id="extLetter" ref={inputRef}>
-                <h5 style={{ textAlign: "center" }}>
-                  {" "}
-                  <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>
-                </h5>
-                <p className=""> Date: {moment().format("DD-MM-YYYY")}</p>
+                <p> Date: {moment().format("DD-MM-YYYY")}</p>
                 <br></br>
                 <p>
                   <b>To,</b>
@@ -115,6 +113,11 @@ const ExtensionLetter1 = () => {
                   {" "}
                   Dear &nbsp;<b>{extensionLetterData.empName},</b>{" "}
                 </p>
+                <br />
+                <h5 style={{ textAlign: "center" }}>
+                  {" "}
+                  <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>
+                </h5>
 
                 <div className=" ">
                   <p>

@@ -15,6 +15,7 @@ const ConfirmationLetter1 = () => {
     loader,
     setLetterView,
     empId,
+    ViewConfirmationLetter,
   } = useContext(ProbationContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -72,6 +73,7 @@ const ConfirmationLetter1 = () => {
       inputRef.current.getBoundingClientRect()
     );
     CreatePdfAndUpload(infoData, "35,380,185,480");
+    ViewConfirmationLetter(probationData.empId);
     setShow(false);
   };
   return (
