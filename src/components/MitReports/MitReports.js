@@ -80,8 +80,8 @@ const MitReports = () => {
                   >
                     <option value="">Select Company</option>
                     <option value="Decathlon Sports India">DSI</option>
-                    <option value="INDECA">INDECA</option>
-                    <option value="PRODIN">PRODIN</option>
+                    <option value="Indeca Sporting Goods Pvt Ltd">INDECA</option>
+                    <option value="Prodin Sporting Pvt Ltd">PRODIN</option>
                   </Form.Control>
                 </Col>
               </Form.Group>
