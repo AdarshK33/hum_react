@@ -153,7 +153,7 @@ const RelivingLetter = () => {
                 </p>
                 <br />
                 <p>
-                  <b>Authorized Signatory</b>
+                  <b>Authorised Signatory</b>
                 </p>
               </div>
             )}
