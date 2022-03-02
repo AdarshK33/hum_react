@@ -147,7 +147,7 @@ const ShiftModal = (props) => {
       date: WeekDate.map((e, i) => WeekDate[i].value),
       employeeId: user.employeeId,
     };
-
+console.log("roaster weekoff",WeekDate,daysList);
     addWeekOff(newWeekOff);
     console.log("newWeekOff data", newWeekOff);
     setSelectedWeeks(1);
@@ -199,7 +199,7 @@ const ShiftModal = (props) => {
       employeeId: user.employeeId,
       shiftId: value,
     };
-    // console.log(assindata)
+    console.log("roaster shift",props.Date);
     assignShift(assindata);
     props.handleClose();
     setAShiftButton(true);

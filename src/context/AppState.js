@@ -90,7 +90,7 @@ export const AppProvider = ({ children, history }) => {
   const getUserInfo = () => {
     // state.MENUITEMS = [];
     client
-      .get("/api/v1/employee/profile")
+      .post("/api/v1/employee/profile")
       .then((response) => {
         state.user = response.data.data;
         if (response.data.data === {}) {

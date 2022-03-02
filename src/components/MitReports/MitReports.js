@@ -98,7 +98,8 @@ const MitReports = () => {
                     selected={year}
                     className="mitDates"
                     onChange={(date) => setYear(date)}
-                    minDate={new Date("2010")}
+                    minDate={new Date("2012")}
+                    maxDate={new Date("2022")}
                     placeholderText="Select Year"
                     dateFormat="yyyy"
                     showYearPicker
