@@ -128,11 +128,10 @@ useEffect(() => {
    
     console.log("week number",selectedWeeks,weekDayList);
     if(weekDayList!== null &&weekDayList!==undefined){
-
-    
     let selectedWeekDetails = weekDayList.filter(
       (item) => item.weekId == selectedWeeks 
     );
+    
     console.log("selectedWeekDetails-->",selectedWeekDetails);
     if(selectedWeekDetails && selectedWeekDetails !== null &&
       selectedWeekDetails !== undefined && Object.keys(selectedWeekDetails).length){
