@@ -19,6 +19,8 @@ import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
 import EndOfProbationLetter from "../Probation/EndOfProbationLetter";
+import NonPerformanceTerminationLetter from "../../components/Disciplinary/Manager/NonPerformanceTerminationLetter";
+import MisConductTerminationLetter from "../../components/Disciplinary/Manager/MisConductTerminationLetter";
 import { setDate } from "date-fns";
 
 const ManagerInitiateAction = (props) => {
@@ -1148,8 +1150,25 @@ const ManagerInitiateAction = (props) => {
             terminationLetterData !== undefined &&
             terminationLetterData !== null &&
             intern === false &&
-            (modeOfSeparation == "2" || modeOfSeparation == "Termination") ? (
-            <TerminationLetter />
+            (modeOfSeparation == "2" || modeOfSeparation == "Termination") &&
+            employeeData &&
+            Object.keys(employeeData).length &&
+            employeeData.reasonForResignation !== null &&
+            employeeData.reasonForResignation !== "" &&
+            employeeData.reasonForResignation !== undefined ? (
+            // <TerminationLetter />
+            <MisConductTerminationLetter />
+          ) : terminationLetterData &&
+            terminationLetterData !== undefined &&
+            terminationLetterData !== null &&
+            intern === false &&
+            (modeOfSeparation == "2" || modeOfSeparation == "Termination") &&
+            employeeData &&
+            Object.keys(employeeData).length &&
+            (employeeData.reasonForResignation === null ||
+              employeeData.reasonForResignation === "" ||
+              employeeData.reasonForResignation == undefined) ? (
+            <NonPerformanceTerminationLetter />
           ) : endLetterData &&
             endLetterData !== undefined &&
             endLetterData !== null &&

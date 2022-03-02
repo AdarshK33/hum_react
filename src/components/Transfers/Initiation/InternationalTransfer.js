@@ -591,6 +591,37 @@ const InternationalTransfer = () => {
             </Row>
             <Row className="my-3">
               <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationProjectTerm">
+                  <Form.Label column md={5}>
+                    Term of the project:
+                  </Form.Label>
+                  <Col md={7}>
+                    <Form.Control
+                      as="select"
+                      className="text-primary"
+                      value={projectTerm}
+                      placeholder="Select Location"
+                      onChange={changeProjectTermHandler}
+                    >
+                      <option value="0">Select Term Of Project</option>
+                      <option value="30">3 Months</option>
+                      <option value="60">6 Months</option>
+                      <option value="1">1 Year</option>
+                      <option value="2">2 Years</option>
+                      <option value="3">3 Years</option>
+                      <option value="4">4 Years</option>
+                      <option value="5">5 Years</option>
+                    </Form.Control>
+
+                    {projectTermErrMsg !== "" && (
+                      <span className="text-danger">{projectTermErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="my-3">
+              <Col md={6}>
                 <Form.Group
                   as={Row}
                   controlId="transferInitiationEffectiveDate"
@@ -645,37 +676,7 @@ const InternationalTransfer = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="my-3">
-              <Col md={6}>
-                <Form.Group as={Row} controlId="transferInitiationProjectTerm">
-                  <Form.Label column md={5}>
-                    Term of the project:
-                  </Form.Label>
-                  <Col md={7}>
-                    <Form.Control
-                      as="select"
-                      className="text-primary"
-                      value={projectTerm}
-                      placeholder="Select Location"
-                      onChange={changeProjectTermHandler}
-                    >
-                      <option value="0">Select Term Of Project</option>
-                      <option value="30">3 Months</option>
-                      <option value="60">6 Months</option>
-                      <option value="1">1 Year</option>
-                      <option value="2">2 Years</option>
-                      <option value="3">3 Years</option>
-                      <option value="4">4 Years</option>
-                      <option value="5">5 Years</option>
-                    </Form.Control>
-
-                    {projectTermErrMsg !== "" && (
-                      <span className="text-danger">{projectTermErrMsg}</span>
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
-            </Row>
+           
             <Row className="my-3">
               <Col md={6}>
                 <Row>

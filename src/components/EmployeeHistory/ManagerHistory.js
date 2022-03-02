@@ -6,16 +6,13 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
+import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-const SalaryHistory = (props) => {
-    const {
-        viewSalaryDataById,
-        salaryData,
-        loader,
-        total,
-      } = useContext(EmployeeHistoryContext);   
+const ManagerHistory = (props) => {
+    const reportList =  [] //props.BankDetailsHistoryList
+    const {loader } = useContext(LeaveContext)
+   
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -39,12 +36,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = salaryData !== null && salaryData !== undefined && salaryData.length;
+    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords =salaryData !== null && salaryData !== undefined ? salaryData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -100,8 +97,8 @@ console.log(dates)
                       <br></br>
                     </div>
                   </Col>
-                  <Col sm={3} style={{marginTop: "5px" }}>
-                    <b>SALARY HISTORY</b>
+                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                    <b>MANAGER HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,12 +106,14 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S. No</th>
-                                            <th>Final Gross</th>
+                                            <th>S .No</th>
+                                            <th>New Manager</th>
+                                            <th>Old Manager</th>
                                             <th>Effective Date</th>
                                             <th>Updated By</th>
                                             <th>Updated On</th>
-                                           
+
+
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -132,22 +131,18 @@ console.log(dates)
                                             </td>
                                         </tr>
                                     </tbody>:
-                                    salaryData !== undefined && salaryData !== null && 
-                                    !salaryData.includes(null) &&
-                                        salaryData.length > 0 ?
-                                        salaryData.map((item, i) => {
+                                    currentRecords !== undefined && currentRecords !== null &&
+                                        currentRecords.length > 0 ?
+                                        currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.fixedGross}</td>
-                                                        <td>{item.effectiveDate}</td>
-                                                        <td>{item.updatedBy}</td>
-                                                        <td>{ item.updatedOn !== null && 
-                                                        item.updatedOn !== undefined 
-                                                         && item.updatedOn !== ""?
-                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
-                                                
+                                                        <td>{item.leaveReports.employeeId}</td>
+                                                        <td>{item.leaveReports.username}</td>
+                                                        <td>{item.leaveReports.costCentre}</td>
+                                                        <td>{item.leaveReports.workLocation}</td>
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -165,7 +160,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {salaryData !== null && salaryData !== undefined && salaryData.length > 10 &&
+            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -180,4 +175,4 @@ console.log(dates)
     );
 };
 
-export default SalaryHistory;
+export default ManagerHistory;
