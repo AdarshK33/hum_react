@@ -28,7 +28,7 @@ const RelivingLetter = () => {
   };
   const HandleSaveLetter = () => {
     setSaveLetter(true);
-    if (employeeData && Objhect.keys(employeeData).length) {
+    if (employeeData && Object.keys(employeeData).length) {
       const InfoData = {
         company: employeeData.company,
         contractType: employeeData.contractType,
