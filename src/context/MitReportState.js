@@ -17,6 +17,15 @@ export const MitProvider = (props) => {
 
   const getMitReport = (company, month, year) => {
     setLoader(true);
+    console.log("company",company)
+//     var companyName = null
+//     if(company === "PRODIN"){
+// companyName = "Prodin Sporting Pvt Ltd"
+//     }else if(company === "INDECA"){
+//       companyName = "Indeca Sporting Goods Pvt Ltd"
+//     }else{
+//       companyName = company
+//     }
     client
       .get(
         "/api/v1/employee/reports/mit/download?company=" +
