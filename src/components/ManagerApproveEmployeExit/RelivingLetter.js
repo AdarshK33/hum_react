@@ -52,7 +52,7 @@ const RelivingLetter = () => {
         managerPosition: employeeData.managerPosition,
         modeOfSeparationId: employeeData.modeOfSeparationId,
         modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
-        noticePeriodRecoveryDays: employeeData.noticePeriodRcryDays,
+        noticePeriodRecoveryDays: employeeData.noticePeriodRecoveryDays,
         noticePeriod: employeeData.noticePeriod,
         noticePeriodRecovery: employeeData.noticePeriodRecovery,
         position: employeeData.position,
@@ -164,7 +164,7 @@ const RelivingLetter = () => {
                   <br />
                   <br />
                   We hereby confirm that you have been working in{" "}
-                  {relivingLetterData.company} since{" "}
+                  {relivingLetterData.company}{" "} since{" "}
                   <b>
                     {relivingLetterData !== undefined &&
                       relivingLetterData.dateOfJoining}
