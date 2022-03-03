@@ -292,6 +292,7 @@ function ViewShift() {
                     />
                     <ExcelColumn label="LOP" value="lop" />
                     <ExcelColumn label="Contract Type" value="contractType" />
+                    <ExcelColumn label="Reason" value="reason" />
                     <ExcelColumn label="Extra Hours" value="extraHours" />
                     <ExcelColumn label="Total Hours" value="totalHours" />
                     <ExcelColumn label="Status" value="statusDesc" />
