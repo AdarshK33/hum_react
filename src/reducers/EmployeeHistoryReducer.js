@@ -9,6 +9,8 @@ const EmployeeHistoryReducer = (state, action) => {
                     return {...state,salaryData:action.payload}
                     case 'BANK_DATA':
                         return {...state,bankData:action.payload}
+                        case 'AADHAAR_DATA':
+                            return {...state,aadhaarData:action.payload}                    
             default: return state;
     }
 }

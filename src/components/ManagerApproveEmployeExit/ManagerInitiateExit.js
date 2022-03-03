@@ -1894,14 +1894,29 @@ const ManagerInitiateExit = () => {
                                   <option value=""></option>
                                   {reasonOfSeparationList.map((item) => {
                                     console.log(item, "item");
-                                    return (
-                                      <option
-                                        name={item.value}
-                                        key={item.value}
-                                      >
-                                        {item.label}
-                                      </option>
-                                    );
+                                    if(intern == true){
+                                      if(item.label !== "Termination"){
+                                        return (
+                                          <option
+                                            name={item.value}
+                                            key={item.value}
+                                          >
+                                            {item.label}
+                                          </option>
+                                        );
+                                      }
+                                    
+                                    }else{
+                                      return (
+                                        <option
+                                          name={item.value}
+                                          key={item.value}
+                                        >
+                                          {item.label}
+                                        </option>
+                                      );
+                                    }
+                                   
                                   })}
                                 </Form.Control>
                                 {modOfSepReasonError ? (

@@ -148,11 +148,11 @@ const EmployeeExitAction = (props) => {
         state.empContractType === "PartTime"
       ) {
         var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+          new Date(employeeData.dateOfResignation).setMonth(new Date(employeeData.dateOfResignation).getMonth() + state.noticePeriod)
         );
         let aboveDateValue = new Date(
-          new Date().setMonth(
-            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+          new Date(employeeData.dateOfResignation).setMonth(
+            new Date(employeeData.dateOfResignation).getMonth() + (parseInt(state.noticePeriod) + 1)
           )
         );
         setLastDateSelection(aboveDateValue);

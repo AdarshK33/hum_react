@@ -62,8 +62,9 @@ const MasterHistory = (props) => {
     viewEmployeeContractDetailsById,
     employeeContractDetailsByIdData,
     viewSalaryDataById,
-    bankData,
     viewBankDataById,
+    viewAadhaarDataById,
+    aadhaarData,
     loader,
     total,
   } = useContext(EmployeeHistoryContext);
@@ -77,11 +78,13 @@ const MasterHistory = (props) => {
     viewSalaryDataById(props.match.params.employeeid)
   }else if(stepCount == 4){
     viewBankDataById(props.match.params.employeeid)
+  }else if(stepCount == 5){
+    viewAadhaarDataById(props.match.params.employeeid)
   }
   }, [stepCount]);
 
 
- console.log(props,"masterhistory",props.match.params.employeeid,bankData)
+ console.log(props,"masterhistory",props.match.params.employeeid,aadhaarData)
   const setDropDownSelectHandler = (option) => {
     // var data = option[0]
      setStepNumber(option.value)
@@ -132,11 +135,11 @@ const MasterHistory = (props) => {
                 /> */}
               </Form.Group>
             </Col>
-            <Col sm={2}  >
+            {/* <Col sm={2}  >
           <Button type="submit" class="btn btn-primary" >
             Search
           </Button>
-          </Col>
+          </Col> */}
           </Row>
         </Form>
       </div>
