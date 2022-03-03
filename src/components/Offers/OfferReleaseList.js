@@ -290,10 +290,10 @@ const OfferReleaseList = () => {
                             rolePermission !== "admin" ? (
                               <td>
                                 {
-                                  // item.overallStatus === 1 &&
-                                  // item.status === 2 &&
-                                  // item.noShow === false
-                                  true ? (
+                                  item.overallStatus === 1 &&
+                                  item.status === 2 &&
+                                  item.noShow === false
+                                   ? (
                                     <Link to="/offer-relase-and-onboard">
                                       <AlertCircle
                                         onClick={() => {
