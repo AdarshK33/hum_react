@@ -16,6 +16,7 @@ const InternOfferLetter = () => {
     finalSubmitOfferLetter,
     candidateData,
     number2text,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -27,6 +28,7 @@ const InternOfferLetter = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
+    setViewLetter(false);
     // setLetterView(false);
   };
   const HandleSaveLetter = () => {
@@ -50,6 +52,7 @@ const InternOfferLetter = () => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,380,185,480");
+      setViewLetter(false);
       setShow(false);
     }
   };

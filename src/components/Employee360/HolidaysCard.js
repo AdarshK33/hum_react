@@ -68,7 +68,7 @@ const HolidaysCard = () => {
           </table>
         </ScrollArea>
       ) : (
-        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+        <h4 style={{ textAlign: "center", width: "100%", marginTop: "10%" }}>
           No Records Found
         </h4>
       )}

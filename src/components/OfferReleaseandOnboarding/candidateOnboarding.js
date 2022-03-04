@@ -50,6 +50,8 @@ const CandidateOnboarding = () => {
     candidateData,
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
+    lettterview,
+    setViewLetter,
   } = useContext(OfferContext);
   const {
     costCenterSplit,
@@ -127,7 +129,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
-  console.log("RoleList",RoleList);
+  console.log("RoleList", RoleList);
 
   useEffect(() => {
     if (
@@ -375,13 +377,15 @@ const CandidateOnboarding = () => {
       generateOfferLetter(candidateData.candidateInformation.candidateId);
       setSubmitLetter(false);
       setPreviewLetter(true);
+      setViewLetter(true);
       setShowLetter(true);
     }
   };
 
   const handleClose = () => {
     setSubmitModal(false);
-  history.push("/offer-release-list")}
+    history.push("/offer-release-list");
+  };
   const previewAppointmentLetter = () => {
     console.log("candidateData id", candidateData);
     if (
@@ -454,7 +458,7 @@ const CandidateOnboarding = () => {
 
     setCostCentersData(costCenterData);
     if (
-       validateEmail(employeeData.email) &&
+      validateEmail(employeeData.email) &&
       //   alphaNumeric(employeeData.fedId) &&
       employeeData.role !== null &&
       employeeData.role !== "" &&
@@ -480,7 +484,8 @@ const CandidateOnboarding = () => {
           candidateData.workInformation !== undefined &&
           candidateData.workInformation.contractType !== "Internship" &&
           employeeData.email === "") ||
-        employeeData.email === null || !employeeData.email.includes("@decathlon.com")
+        employeeData.email === null ||
+        !employeeData.email.includes("@decathlon.com")
       ) {
         setError(true);
       }
@@ -569,24 +574,27 @@ const CandidateOnboarding = () => {
   return (
     <Fragment>
       <ToastContainer />
-      {showLetter &&
-      !previewLetter &&
-      candidateData !== undefined &&
-      candidateData.workInformation !== undefined ? (
-        candidateData.workInformation.contractType === "Fulltime" ? (
-          <AppointmentLetter />
-        ) : candidateData.workInformation.contractType === "Parttime" ? (
-          <PartTimeAppointmentLetter />
-        ) : candidateData !== undefined &&
-          candidateData.workInformation !== undefined &&
-          candidateData.workInformation.contractType === "Local Expat" ? (
-          <LocalExpatAppointmentLetter />
-        ) : (
-          <InternAppointmentLetter />
-        )
-      ) : (
-        ""
-      )}
+      {lettterview ? (
+        <div>
+          {showLetter &&
+          candidateData !== undefined &&
+          candidateData.workInformation !== undefined ? (
+            candidateData.workInformation.contractType === "Fulltime" ? (
+              <AppointmentLetter />
+            ) : candidateData.workInformation.contractType === "Parttime" ? (
+              <PartTimeAppointmentLetter />
+            ) : candidateData !== undefined &&
+              candidateData.workInformation !== undefined &&
+              candidateData.workInformation.contractType === "Local Expat" ? (
+              <LocalExpatAppointmentLetter />
+            ) : (
+              <InternAppointmentLetter />
+            )
+          ) : (
+            ""
+          )}
+        </div>
+      ) : null}
 
       {previewLetter &&
       candidateData !== undefined &&
@@ -612,7 +620,9 @@ const CandidateOnboarding = () => {
           <Modal.Body>
             <div className="offer-letter-message ">
               {/* <p>Appointment Letter has been Sent to the Candidate</p> */}
-              <p>Onboarding is completed and Employee Record has been created</p>
+              <p>
+                Onboarding is completed and Employee Record has been created
+              </p>
               <br></br>
               <Button type="button" onClick={handleClose}>
                 Close
@@ -724,7 +734,10 @@ const CandidateOnboarding = () => {
                 {RoleList !== null &&
                   RoleList !== undefined &&
                   RoleList.map((item, i) => {
-                    if (item.roleName !== "ADMIN"&&item.roleName!=="IT_ADMIN") {
+                    if (
+                      item.roleName !== "ADMIN" &&
+                      item.roleName !== "IT_ADMIN"
+                    ) {
                       return (
                         <option key={i} value={item.roleId}>
                           {item.roleDesc}
@@ -1252,7 +1265,7 @@ const CandidateOnboarding = () => {
           </Button>
         </Row>
       )}
-      {generateAppoint === true && !previewLetter ? (
+      {generateAppoint === true ? (
         <div className="px-5 mx-auto mt-5">
           <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
           <Row className="text-center mt-4">

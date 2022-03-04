@@ -106,8 +106,14 @@ import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const PromotionLetter = () => {
-  const { promotionLetterData, loader, promotionIdData, PromotionCreate } =
-    useContext(PromotionContext);
+  const {
+    promotionLetterData,
+    loader,
+    promotionIdData,
+    PromotionCreate,
+    lettterview,
+    setViewLetter,
+  } = useContext(PromotionContext);
   console.log(promotionLetterData, "promotionLetterData");
 
   const { user } = useContext(AppContext);
@@ -120,7 +126,7 @@ const PromotionLetter = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
   };
   const HandleSaveLetter = () => {
     if (
@@ -185,6 +191,7 @@ const PromotionLetter = () => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,330,185,430");
+      setViewLetter(false);
       setShow(false);
     }
   };
@@ -193,7 +200,7 @@ const PromotionLetter = () => {
     <Fragment>
       {typeof promotionLetterData !== undefined ? (
         // {true ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

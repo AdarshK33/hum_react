@@ -13,7 +13,7 @@ import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
 
 // view-----
 const EmployeShowCaseLetter = () => {
-  const [showModal, setModal] = useState(false);
+  // const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -93,8 +93,12 @@ const EmployeShowCaseLetter = () => {
     IssueShowCauseNoticeLetter,
     issueShowCauseNoticeData,
     createShowCauseIssue,
+    lettterview,
+    setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
-
+  console.log("lettterview", lettterview);
   useEffect(() => {
     if (
       disciplinarySearchData &&
@@ -214,6 +218,7 @@ const EmployeShowCaseLetter = () => {
   };
   const LetterShow = () => {
     console.log(";;;;;");
+    setModal(true);
     setShowLink(true);
   };
   const handleShowCauseLetterCloseLink = () => setShowLink(false);
@@ -335,6 +340,7 @@ const EmployeShowCaseLetter = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       handleShow();
+      setViewLetter(true);
       setPreviewGeneratedLetter(true);
     }
   };
@@ -344,7 +350,7 @@ const EmployeShowCaseLetter = () => {
   };
   // end
   const handleClose = () => {
-    setModal(false);
+    // setModal(false);
     setSuccessModal(false);
   };
   const validateRemark = () => {
@@ -498,13 +504,8 @@ const EmployeShowCaseLetter = () => {
           )}
         </Modal.Body>
       </Modal>
-      <Modal
-        show={showShowCauseNoticeModalLink}
-        onHide={handleShowCauseLetterCloseLink}
-        size="md"
-      >
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
+      {modalView ? (
+        <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&
           disciplinarySearchData !== null &&
@@ -514,12 +515,12 @@ const EmployeShowCaseLetter = () => {
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" &&
           disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
-            <ShowCauseNotice />
+            <ShowCauseNotice sign={false} />
           ) : (
-            <NonPerformanceLetter />
+            <NonPerformanceLetter sign={false} />
           )}
-        </Modal.Body>
-      </Modal>
+        </div>
+      ) : null}
 
       {submitLetter ? (
         <Modal
@@ -556,22 +557,21 @@ const EmployeShowCaseLetter = () => {
             </div>
           </Modal.Body>
         </Modal>
-      ) :null}
-      { previewLetter || showShowCauseNoticeModal ? (
+      ) : null}
+      {lettterview ? (
         <div>
-            {disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined &&
-            disciplinarySearchData.disciplinaryAction !== "" ? (
-              <ReasonByEmployee />
-            ) : (
-              ""
-            )}
-            </div>
-            
+          {disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ReasonByEmployee />
+          ) : (
+            ""
+          )}
+        </div>
       ) : (
         ""
       )}

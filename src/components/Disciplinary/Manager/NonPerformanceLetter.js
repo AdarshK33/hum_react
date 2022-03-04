@@ -130,12 +130,17 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { AppContext } from "../../../context/AppState";
 
-const NonPerformanceLetter = () => {
+const NonPerformanceLetter = ({ approver = true, sign = true }) => {
+  console.log("approver", approver);
   const {
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
     createShowCauseIssue,
     loader,
+    lettterview,
+    setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -149,7 +154,8 @@ const NonPerformanceLetter = () => {
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
+    setModal(false);
   };
   console.log("disciplinarySearchData", disciplinarySearchData);
   const submitfinalShowCauseLetter = (e) => {
@@ -185,7 +191,7 @@ const NonPerformanceLetter = () => {
             disciplinarySearchData.disciplinaryAction.reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
           //  showCauseNotice: null, //31/1/2022
-          status: 0,
+          status: approver === true ? 0 : 2,
           // rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: null,
           warningIssued: false,
@@ -233,6 +239,8 @@ const NonPerformanceLetter = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       CreatePdfAndUpload(infoData, "35,90,185,190");
+      setViewLetter(false);
+      setModal(false);
       setShow(false);
     }
   };
@@ -240,7 +248,7 @@ const NonPerformanceLetter = () => {
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview || modalView} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -262,7 +270,7 @@ const NonPerformanceLetter = () => {
                   Date: <b>{moment().format("DD-MM-YYYY")}</b>
                 </p>
                 <br></br>
-
+                <br></br>
                 <p>To ,</p>
                 <p>
                   {" "}
@@ -306,43 +314,43 @@ const NonPerformanceLetter = () => {
                   You have been associated with {disciplinarySearchData.company}{" "}
                   Private Limited , as a{" "}
                   <b>{disciplinarySearchData.position}</b>.
-                  <br />
-                  <br />
-                  <p>
-                    It is reported against you that you have not been performing
-                    the assigned tasks. Thus, on verifying your performances as
-                    detailed below, it demonstrates very clearly that your
-                    performance has been much below the performance levels
-                    expected by the Company.
-                  </p>
-                  <p>
-                    {disciplinarySearchData.disciplinaryAction !== null &&
-                    disciplinarySearchData.disciplinaryAction !== undefined &&
-                    disciplinarySearchData.disciplinaryAction !== ""
-                      ? disciplinarySearchData.disciplinaryAction.managerComment
-                      : ""}{" "}
-                  </p>
-                  <p>
-                    We have viewed acts of wilful performance lapses very
-                    seriously and such instances cannot be tolerated by the
-                    company.
-                  </p>
-                  <br />
-                  <p>
-                    Hence, you are hereby called upon to show cause as to why
-                    appropriate disciplinary actions should not be initiated
-                    against you in respect of acts narrated as above.
-                    <br />
-                    Your explanation, if any, must be submitted in writing
-                    within 5 days of receipt of this notice, failing which it
-                    will be presumed that you have no explanation to show cause
-                    and the company will initiate further actions, as deemed
-                    fit, based on the materials available.
-                  </p>
-                  <br />
-                  The receipt of this letter should be acknowledged.
-                  <br />
                 </p>
+                <br />
+                <br />
+                <p>
+                  It is reported against you that you have not been performing
+                  the assigned tasks. Thus, on verifying your performances as
+                  detailed below, it demonstrates very clearly that your
+                  performance has been much below the performance levels
+                  expected by the Company.
+                </p>
+                <p>
+                  {disciplinarySearchData.disciplinaryAction !== null &&
+                  disciplinarySearchData.disciplinaryAction !== undefined &&
+                  disciplinarySearchData.disciplinaryAction !== ""
+                    ? disciplinarySearchData.disciplinaryAction.managerComment
+                    : ""}{" "}
+                </p>
+                <p>
+                  We have viewed acts of wilful performance lapses very
+                  seriously and such instances cannot be tolerated by the
+                  company.
+                </p>
+                <br />
+                <p>
+                  Hence, you are hereby called upon to show cause as to why
+                  appropriate disciplinary actions should not be initiated
+                  against you in respect of acts narrated as above.
+                  <br />
+                  Your explanation, if any, must be submitted in writing within
+                  5 days of receipt of this notice, failing which it will be
+                  presumed that you have no explanation to show cause and the
+                  company will initiate further actions, as deemed fit, based on
+                  the materials available.
+                </p>
+                <br />
+                <p>The receipt of this letter should be acknowledged.</p>
+                <br />
                 <p>
                   <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
                 </p>
@@ -353,6 +361,7 @@ const NonPerformanceLetter = () => {
             )}
             {!saveLetter &&
             !loader &&
+            sign &&
             disciplinarySearchData &&
             Object.keys(disciplinarySearchData).length &&
             disciplinarySearchData.employeeId !== null &&

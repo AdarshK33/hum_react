@@ -124,6 +124,8 @@ const ManagerWarningAction = (props) => {
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
     loader,
+    lettterview,
+    setViewLetter,
   } = useContext(DisciplinaryContext);
   console.log(issueShowCauseNoticeData, "issueShowCauseNoticeData");
   const { searchByCostCenter } = useContext(SeparationContext);
@@ -886,6 +888,7 @@ const ManagerWarningAction = (props) => {
       );
 
       handleShow();
+      setViewLetter(true)
       setPreviewGeneratedLetter(true);
     }
   };
@@ -954,7 +957,7 @@ const ManagerWarningAction = (props) => {
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" ? (
-            <ReasonByEmployee />
+            <ReasonByEmployee sign={false} />
           ) : (
             ""
           )}
@@ -1126,7 +1129,7 @@ const ManagerWarningAction = (props) => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showShowCauseNoticeModal ? (
+      {lettterview ? (
         <div>
           {disciplinarySearchData &&
           disciplinarySearchData !== null &&
