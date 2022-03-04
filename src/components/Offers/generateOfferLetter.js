@@ -34,6 +34,8 @@ const GenerateOfferLetter = () => {
     finalSubmitOfferLetter,
     candidateData,
     workInfoViewData,
+    lettterview,
+    setViewLetter,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
@@ -85,6 +87,7 @@ const GenerateOfferLetter = () => {
     console.log("candidateData id", candidateData);
     generateOfferLetter(candidateData.candidateInformation.candidateId);
     console.log("offer letter response data", offerLetterData);
+    setViewLetter(true);
     handleShow();
   };
   const handleShow = () => {
@@ -152,26 +155,30 @@ const GenerateOfferLetter = () => {
   };
   return (
     <Fragment>
-      {(previewLetter || showModal) &&
-      offerLetterData &&
-      offerLetterData.contractType !== undefined &&
-      offerLetterData.contractType !== null &&
-      offerLetterData.contractType === "Fulltime" ? (
-        <PermanentOfferLetter />
-      ) : (previewLetter || showModal) &&
-        offerLetterData &&
-        offerLetterData.contractType !== undefined &&
-        offerLetterData.contractType !== null &&
-        offerLetterData.contractType === "Parttime" ? (
-        <PartTimeOfferLetter />
-      ) : (previewLetter || showModal) &&
-        offerLetterData &&
-        offerLetterData.contractType !== undefined &&
-        offerLetterData.contractType !== null &&
-        offerLetterData.contractType === "Local Expat" ? (
-        <LocalExpatOfferLetter />
-      ) : previewLetter || showModal ? (
-        <InternOfferLetter />
+      {lettterview ? (
+        <div>
+          {(previewLetter || showModal) &&
+          offerLetterData &&
+          offerLetterData.contractType !== undefined &&
+          offerLetterData.contractType !== null &&
+          offerLetterData.contractType === "Fulltime" ? (
+            <PermanentOfferLetter />
+          ) : (previewLetter || showModal) &&
+            offerLetterData &&
+            offerLetterData.contractType !== undefined &&
+            offerLetterData.contractType !== null &&
+            offerLetterData.contractType === "Parttime" ? (
+            <PartTimeOfferLetter />
+          ) : (previewLetter || showModal) &&
+            offerLetterData &&
+            offerLetterData.contractType !== undefined &&
+            offerLetterData.contractType !== null &&
+            offerLetterData.contractType === "Local Expat" ? (
+            <LocalExpatOfferLetter />
+          ) : previewLetter || showModal ? (
+            <InternOfferLetter />
+          ) : null}
+        </div>
       ) : null}
 
       {offerButtonEnable === true ? (

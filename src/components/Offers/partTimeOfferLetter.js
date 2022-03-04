@@ -16,6 +16,7 @@ const PartTimeOfferLetter = () => {
     finalSubmitOfferLetter,
     candidateData,
     number2text,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -27,6 +28,7 @@ const PartTimeOfferLetter = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
+    setViewLetter(false);
     // setLetterView(false);
   };
 
@@ -51,6 +53,7 @@ const PartTimeOfferLetter = () => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,210,185,310");
+      setViewLetter(false);
       setShow(false);
     }
   };

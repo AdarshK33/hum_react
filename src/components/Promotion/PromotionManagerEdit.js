@@ -108,6 +108,8 @@ const PromotionManagerEdit = (props) => {
     PromotionCreate,
     generatePromotionLetter,
     promotionLetterData,
+    lettterview,
+    setViewLetter,
   } = useContext(PromotionContext);
   const { rolePermission } = useContext(PermissionContext);
 
@@ -275,6 +277,7 @@ const PromotionManagerEdit = (props) => {
     e.preventDefault();
     generatePromotionLetter(promotionIdData.promotionId);
     handleShow();
+    setViewLetter(true);
     setPreviewGeneratedLetter(true);
   };
 
@@ -394,10 +397,10 @@ const PromotionManagerEdit = (props) => {
       }
     }
   };
-
+  console.log("lettterview", lettterview);
   return (
     <Fragment>
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {promotionIdData.promotionType === 0 ? (
             <PromotionLetters />
