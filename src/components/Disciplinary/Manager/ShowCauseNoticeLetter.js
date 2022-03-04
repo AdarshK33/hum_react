@@ -129,7 +129,13 @@
 
 //new template misconduct show cause letter
 
-import React, { Fragment, useState, useContext, useRef,useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+} from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import moment from "moment";
@@ -139,8 +145,18 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { AppContext } from "../../../context/AppState";
 
-const ShowCauseNotice = () => {
-  const { disciplinarySearchData,SubmitDisciplinaryLetter,createShowCauseIssue,loader } = useContext(DisciplinaryContext);
+const ShowCauseNotice = ({ approver = true, sign = true }) => {
+  console.log("approver", approver);
+  const {
+    disciplinarySearchData,
+    SubmitDisciplinaryLetter,
+    createShowCauseIssue,
+    loader,
+    lettterview,
+    setViewLetter,
+    setModal,
+    modalView,
+  } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
@@ -152,11 +168,12 @@ const ShowCauseNotice = () => {
 
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
+    setModal(false);
   };
 
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
-  console.log(disciplinarySearchData,"disciplinarySearchData")
+  console.log(disciplinarySearchData, "disciplinarySearchData");
 
   const submitfinalShowCauseLetter = (e) => {
     e.preventDefault();
@@ -172,7 +189,7 @@ const ShowCauseNotice = () => {
       disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
       console.log("INSIDE nonperformance");
-     
+
       const InfoData = {
         contractType: disciplinarySearchData.contractType,
         disciplinaryAction: {
@@ -190,8 +207,8 @@ const ShowCauseNotice = () => {
           reasonDetailsId:
             disciplinarySearchData.disciplinaryAction.reasonDetailsId,
           showCauseLetter: "ShowCauseLetter.pdf",
-         //  showCauseNotice: null, //31/1/2022
-          status: 0,
+          //  showCauseNotice: null, //31/1/2022
+          status: approver === true ? 0 : 2,
           // rolePermission == "costCenterManager" ? 2 : 0,
           statusDesc: null,
           warningIssued: false,
@@ -239,13 +256,15 @@ const ShowCauseNotice = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       CreatePdfAndUpload(infoData, "35,130,185,230");
-     setShow(false);
+      setViewLetter(false);
+      setModal(false);
+      setShow(false);
     }
   };
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
-          <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview || modalView} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -261,94 +280,100 @@ const ShowCauseNotice = () => {
                 </div>
               </div>
             ) : (
-          <div id="disMisconductLetter" ref={inputRef}>
-            {" "}
-            Date: <b>{moment().format("DD-MM-YYYY")}</b>
-          <br></br>
-
-          <p>To ,</p>
-          <p>
-            {" "}
-            <b>
-              {disciplinarySearchData !== null &&
-              disciplinarySearchData !== undefined &&
-              Object.keys(disciplinarySearchData).legth !== 0 &&
-              disciplinarySearchData.gender !== null &&
-              disciplinarySearchData.gender !== undefined &&
-              disciplinarySearchData.maritalStatus !== null &&
-              disciplinarySearchData.maritalStatus !== undefined
-                ? disciplinarySearchData.gender === "MALE"
-                  ? "Mr."
-                  : disciplinarySearchData.maritalStatus === "Married"
-                  ? "Mrs."
-                  : "Miss"
-                : "Mr./Ms."}
-            </b>{" "}
-            &nbsp; {disciplinarySearchData.employeeName}
-          </p>
-          <p>
-            <b>Employee ID:</b> {disciplinarySearchData.employeeId}
-          </p>
-          <p>
-            <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
-          </p>
-          <p>
-            <b>Sub:</b> Show Cause Notice
-          </p>
-         
-            <p>
-              {" "}
-              Dear ,
-              {/* <b>{disciplinarySearchData.employeeName},</b>{" "} */}
-            </p>
-
-            <p>
-              You have been associated with {disciplinarySearchData.company}{" "}
-              Private Limited,
-               as a {" "}
-              <b>{disciplinarySearchData.position}</b>.
-              <br />
-              <p>
-                It is reported against you that you have indulged in Gross
-                Negligence and Misconduct{" "}<b>{disciplinarySearchData.disciplinaryAction.reasonDetails}</b>
-
-              </p>
-              <br />
-              <b>
-                {disciplinarySearchData !== null &&
-                disciplinarySearchData !== undefined &&
-                disciplinarySearchData.disciplinaryAction !== null &&
-                disciplinarySearchData.disciplinaryAction !== undefined &&
-                Object.keys(disciplinarySearchData).length !== 0
-                  ? disciplinarySearchData.disciplinaryAction.managerComment
-                  : ""}
-              </b>
-              .
-              <br />
-              This acts, as alleged above to have been committed by you  which amounts to
-               Misconduct which, if proved, would warrant serious disciplinary action against you.{" "}
-              Accordingly, you are hereby required to show cause within <b>
-                5
-              </b>{" "}
-              days in receipt of this letter as to why you have indulged in such
-              an act of  Misconduct. Such charges, levelled against you, are of grave 
-              and serious nature, if you fail to submit the explanation as required, 
-              it will be presumed that you admit the charges and have no explanation to 
-              offer and the matter will be disposed of without any further reference to you.
-              <br />
-              The receipt of this letter should be acknowledged.
-              <br />
-            </p>
-            <p className="mt-5 ">
-              <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
-            </p><br/>
-            <p className="mt-5 ">
-            <b>Authorised Signatory</b>
-            </p>
-          </div>
+              <div id="disMisconductLetter" ref={inputRef}>
+                {" "}
+                Date: <b>{moment().format("DD-MM-YYYY")}</b>
+                <br></br>
+                <br></br>
+                <p>To ,</p>
+                <p>
+                  {" "}
+                  <b>
+                    {disciplinarySearchData !== null &&
+                    disciplinarySearchData !== undefined &&
+                    Object.keys(disciplinarySearchData).legth !== 0 &&
+                    disciplinarySearchData.gender !== null &&
+                    disciplinarySearchData.gender !== undefined &&
+                    disciplinarySearchData.maritalStatus !== null &&
+                    disciplinarySearchData.maritalStatus !== undefined
+                      ? disciplinarySearchData.gender === "MALE"
+                        ? "Mr."
+                        : disciplinarySearchData.maritalStatus === "Married"
+                        ? "Mrs."
+                        : "Miss"
+                      : "Mr./Ms."}
+                  </b>{" "}
+                  &nbsp; {disciplinarySearchData.employeeName}
+                </p>
+                <p>
+                  <b>Employee ID:</b> {disciplinarySearchData.employeeId}
+                </p>
+                <p>
+                  <b>Residential Address:</b>{" "}
+                  {disciplinarySearchData.employeeAddress}
+                </p>
+                <p>
+                  <b>Sub:</b> Show Cause Notice
+                </p>
+                <p>
+                  {" "}
+                  Dear ,
+                  {/* <b>{disciplinarySearchData.employeeName},</b>{" "} */}
+                </p>
+                <p>
+                  You have been associated with {disciplinarySearchData.company}{" "}
+                  Private Limited, as a <b>{disciplinarySearchData.position}</b>
+                  .
+                </p>
+                <br />
+                <p>
+                  It is reported against you that you have indulged in Gross
+                  Negligence and Misconduct{" "}
+                  <b>
+                    {disciplinarySearchData.disciplinaryAction.reasonDetails}
+                  </b>
+                </p>
+                <br />
+                <p>
+                  <b>
+                    {disciplinarySearchData !== null &&
+                    disciplinarySearchData !== undefined &&
+                    disciplinarySearchData.disciplinaryAction !== null &&
+                    disciplinarySearchData.disciplinaryAction !== undefined &&
+                    Object.keys(disciplinarySearchData).length !== 0
+                      ? disciplinarySearchData.disciplinaryAction.managerComment
+                      : ""}
+                  </b>
+                  .
+                </p>
+                <p>
+                  <br />
+                  This acts, as alleged above to have been committed by you
+                  which amounts to Misconduct which, if proved, would warrant
+                  serious disciplinary action against you. Accordingly, you are
+                  hereby required to show cause within<b> 5 </b>days in receipt
+                  of this letter as to why you have indulged in such an act of
+                  Misconduct. Such charges, levelled against you, are of grave
+                  and serious nature, if you fail to submit the explanation as
+                  required, it will be presumed that you admit the charges and
+                  have no explanation to offer and the matter will be disposed
+                  of without any further reference to you.
+                  <br />
+                  The receipt of this letter should be acknowledged.
+                  <br />
+                </p>
+                <p>
+                  <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
+                </p>
+                <br />
+                <p>
+                  <b>Authorised Signatory</b>
+                </p>
+              </div>
             )}
             {!saveLetter &&
             !loader &&
+            sign &&
             disciplinarySearchData &&
             Object.keys(disciplinarySearchData).length &&
             disciplinarySearchData.employeeId !== null &&
@@ -379,4 +404,3 @@ const ShowCauseNotice = () => {
 };
 
 export default ShowCauseNotice;
-

@@ -15,6 +15,7 @@ const InternAppointmentLetter = (props) => {
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
     loader,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -26,7 +27,7 @@ const InternAppointmentLetter = (props) => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
   };
   console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
@@ -63,6 +64,7 @@ const InternAppointmentLetter = (props) => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,190,185,290");
+      setViewLetter(false);
       setShow(false);
     }
   };

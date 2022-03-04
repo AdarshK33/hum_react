@@ -73,6 +73,8 @@ const IssueShowCauseNotice = () => {
     EmployeeSearchWithKey,
     disciplinaryEmpSearchData,
     loader,
+    lettterview,
+    setViewLetter,
   } = useContext(DisciplinaryContext);
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
@@ -364,6 +366,7 @@ const IssueShowCauseNotice = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       handleShow();
+      setViewLetter(true);
       setPreviewGeneratedLetter(true);
     }
   };
@@ -649,7 +652,7 @@ const IssueShowCauseNotice = () => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showShowCauseNoticeModal ? (
+      {lettterview ? (
         <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&

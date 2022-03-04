@@ -92,6 +92,8 @@ const ActionPage = () => {
     issueShowCauseNoticeData,
     createShowCauseIssue,
     loader,
+    lettterview,
+    setViewLetter,
   } = useContext(DisciplinaryContext);
 
   useEffect(() => {
@@ -287,6 +289,7 @@ const ActionPage = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       handleShow();
+      setViewLetter(true);
       setPreviewGeneratedLetter(true);
     }
   };
@@ -532,7 +535,7 @@ const ActionPage = () => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showShowCauseNoticeModal ? (
+      {lettterview ? (
         <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&

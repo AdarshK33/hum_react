@@ -109,6 +109,8 @@ const PromotionInitiate = () => {
     promotionIdData,
     generatePromotionLetter,
     createdPromotion,
+    lettterview,
+    setViewLetter,
   } = useContext(PromotionContext);
   useEffect(() => {
     if (createdPromotion) {
@@ -728,6 +730,7 @@ const PromotionInitiate = () => {
     ) {
       generatePromotionLetter(promotionIdData.promotionId);
       handleShow();
+      setViewLetter(true);
       setPreviewGeneratedLetter(true);
     } else {
       console.log("promotionIdData->", promotionIdData);
@@ -749,7 +752,7 @@ const PromotionInitiate = () => {
   return (
     <Fragment>
       <ToastContainer />
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {promotionIdData.promotionType === 0 ? (
             <PromotionLetters />
