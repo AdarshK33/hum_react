@@ -43,7 +43,7 @@ export const EmploeeSeparationProvider = ({children}) => {
   const ViewEmployeeProfile = () => {
     setLoader(true);
     client
-      .get("/api/v1/employee/profile")
+      .post("/api/v1/employee/profile")
       .then((response) => {
         state.employeeProfileData = response.data.data;
 

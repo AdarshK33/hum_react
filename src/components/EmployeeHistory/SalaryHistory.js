@@ -141,7 +141,10 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.fixedGross}</td>
-                                                        <td>{item.effectiveDate}</td>
+                                                        <td>{item.effectiveDate !== null && 
+                                                        item.effectiveDate !== undefined 
+                                                         && item.effectiveDate !== ""?
+                                                        moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.updatedBy}</td>
                                                         <td>{ item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 

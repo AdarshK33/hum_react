@@ -94,8 +94,8 @@ const PersonalInformation = (props) => {
   const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [saveClick, setSaveClick] = useState(false);
   const [disabilityStatus, setDisabilityStatus] = useState(false);
-  const [dateOfIssue, setDateOfIssue] = useState("");
-  const [dateOfValidity, setDateOfValidity] = useState("");
+  const [dateOfIssue, setDateOfIssue] = useState(null);
+  const [dateOfValidity, setDateOfValidity] = useState(null);
   const [dateOfIssueError, setDateOfIssueError] = useState(false);
   const [dateOfValidityError, setDateOfValidityError] = useState(false);
   const [state, setState] = useState({
