@@ -13,7 +13,7 @@ import { E_signContext } from "../../../context/E_signState";
 import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { AppContext } from "../../../context/AppState";
-const WarningLetter = ({ approver = true }) => {
+const WarningLetter = ({ approver = true, sign = true }) => {
   const {
     disciplinaryResonsView,
     disciplinaryEmployeeSearch,
@@ -25,6 +25,8 @@ const WarningLetter = ({ approver = true }) => {
     loader,
     lettterview,
     setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
   console.log("warning", disciplinarySearchData);
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -38,6 +40,7 @@ const WarningLetter = ({ approver = true }) => {
 
   const handleShowCauseLetterClose = () => {
     setViewLetter(false);
+    setModal(false);
     setShow(false);
   };
 
@@ -141,21 +144,27 @@ const WarningLetter = ({ approver = true }) => {
                 employeeComment: null,
                 employeeWarningStatus: null,
                 improvementPeriod:
-                  disciplinarySearchData.disciplinaryWarning.improvementPeriod,
+                  disciplinarySearchData.disciplinaryAction.improvementPeriod,
                 //  state.InputImprovementPeriod,
                 managerComment:
                   disciplinarySearchData.disciplinaryAction.managerComment,
                 // warningManagerReason,
-                initiatedRole: rolePermission !== null ? rolePermission : null,
-                reason: null,
-                reasonDetails: null,
-                reasonDetailsId: 0,
+                initiatedRole:
+                  disciplinarySearchData.disciplinaryAction.initiatedRole,
+                reason: disciplinarySearchData.disciplinaryAction.reason,
+                reasonDetails:
+                  disciplinarySearchData.disciplinaryAction.reasonDetails,
+                reasonDetailsId:
+                  disciplinarySearchData.disciplinaryAction.reasonDetailsId,
                 reasonId: disciplinarySearchData.inputReasonId,
                 status: approver === true ? 0 : 2,
-                statusDesc: null,
-                warningDueDays: 0,
-                warningId: 0,
-                warningIssuedDate: null,
+                statusDesc:
+                  disciplinarySearchData.disciplinaryAction.statusDesc,
+                warningDueDays:
+                  disciplinarySearchData.disciplinaryAction.warningDueDays,
+                warningId: disciplinarySearchData.disciplinaryAction.warningId,
+                warningIssuedDate:
+                  disciplinarySearchData.disciplinaryAction.warningIssuedDate,
                 warningLetter: "WarningLetter.pdf",
               },
         employeeAddress: disciplinarySearchData.employeeAddress,
@@ -190,6 +199,7 @@ const WarningLetter = ({ approver = true }) => {
       );
       CreatePdfAndUpload(infoData, "35,230,185,330");
       setViewLetter(false);
+      setModal(false);
       setShow(false);
 
       // finalSubmitOfferLetter(employeeData.employeeId);
@@ -198,7 +208,11 @@ const WarningLetter = ({ approver = true }) => {
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
-        <Modal show={lettterview} onHide={handleShowCauseLetterClose} size="md">
+        <Modal
+          show={lettterview || modalView}
+          onHide={handleShowCauseLetterClose}
+          size="md"
+        >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -304,6 +318,7 @@ const WarningLetter = ({ approver = true }) => {
             )}
             {!saveLetter &&
             !loader &&
+            sign &&
             disciplinarySearchData &&
             Object.keys(disciplinarySearchData).length &&
             disciplinarySearchData.employeeId !== null &&

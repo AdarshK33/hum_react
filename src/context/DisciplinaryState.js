@@ -21,6 +21,7 @@ export const DisciplinaryProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [lettterview, setLetterView] = useState(false);
   const [modalView, setModalView] = useState(false);
+  const [modalViewLetter, setModalViewletter] = useState(false);
 
   const setViewLetter = (val) => {
     setLetterView(val);
@@ -28,6 +29,9 @@ export const DisciplinaryProvider = (props) => {
 
   const setModal = (val) => {
     setModalView(val);
+  };
+  const setModalLetter = (val) => {
+    setModalViewletter(val);
   };
   const disciplinaryListView = (key, pageNumber, role) => {
     setLoader(true);
@@ -213,6 +217,8 @@ export const DisciplinaryProvider = (props) => {
         setViewLetter,
         setModal,
         modalView: modalView,
+        setModalLetter,
+        modalViewLetter: modalViewLetter,
       }}
     >
       {props.children}
