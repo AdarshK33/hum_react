@@ -16,8 +16,15 @@ import { AppContext } from "../../../context/AppState";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
 
 const NonPerformanceTerminationLetter = () => {
-  const { terminationLetterData, loader, employeeData, UpdateEmplyoeeExist } =
-    useContext(EmployeeSeparationContext);
+  const {
+    terminationLetterData,
+    loader,
+    employeeData,
+    UpdateEmplyoeeExist,
+    lettterview,
+    setViewLetter,
+  } = useContext(EmployeeSeparationContext);
+
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -28,6 +35,7 @@ const NonPerformanceTerminationLetter = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
+    setViewLetter(false);
     // setLetterView(false);
   };
 
@@ -102,13 +110,14 @@ const NonPerformanceTerminationLetter = () => {
       inputRef.current.getBoundingClientRect()
     );
     CreatePdfAndUpload(infoData, "35,20,185,120");
+    setViewLetter(false);
     setShow(false);
     // }
   };
   return (
     <Fragment>
       {typeof terminationLetterData !== undefined ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

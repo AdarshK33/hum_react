@@ -15,7 +15,7 @@ import { useHistory, useParams } from "react-router-dom";
 // view-----
 const CostCenterManagerAction = () => {
   const { employeeid } = useParams();
-  const [showModal, setModal] = useState(false);
+  // const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -94,6 +94,8 @@ const CostCenterManagerAction = () => {
     createShowCauseIssue,
     lettterview,
     setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
   useEffect(() => {
     disciplinaryEmployeeSearch(employeeid);
@@ -222,7 +224,8 @@ const CostCenterManagerAction = () => {
   };
   const LetterShow1 = () => {
     console.log(";;;;;");
-    setShowLink1(true);
+    setModal(true);
+    // setShowLink1(true);
   };
   const handleShowCauseLetterCloseLink = () => {
     setShow(false);
@@ -299,7 +302,7 @@ const CostCenterManagerAction = () => {
   };
   // end
   const handleClose = () => {
-    setModal(false);
+    // setModal(false);
     setSuccessModal(false);
   };
 
@@ -401,7 +404,7 @@ const CostCenterManagerAction = () => {
         </div>
       ) : null}
 
-      {showShowCauseNoticeModalLink1 ? (
+      {modalView ? (
         <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&
@@ -410,12 +413,20 @@ const CostCenterManagerAction = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" &&
-          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
-            <WarningLetter />
-          ) : (
-            <NonPerformanceWarningLetter />
-          )}
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter sign={false} />
+          ) : disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 1 &&
+            disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <NonPerformanceWarningLetter sign={false} />
+          ) : null}
         </div>
       ) : null}
 

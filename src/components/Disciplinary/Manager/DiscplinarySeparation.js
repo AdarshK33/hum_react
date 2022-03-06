@@ -95,6 +95,8 @@ const DisciplinarySeparation = (props) => {
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
+    lettterview,
+    setViewLetter,
   } = useContext(EmployeeSeparationContext);
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
   const { empResign, withdraw, searchByCostCenter, searchByCostData } =
@@ -551,6 +553,7 @@ const DisciplinarySeparation = (props) => {
   const relivingLetterClick = (e) => {
     e.preventDefault();
     fetchTerminationLetterData(employeeData.employeeId);
+    setViewLetter(true);
     handleShow();
     setPreviewGeneratedLetter(true);
   };
@@ -957,7 +960,7 @@ const DisciplinarySeparation = (props) => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {terminationLetterData &&
           terminationLetterData !== undefined &&

@@ -422,9 +422,9 @@ const ActionPage = () => {
           disciplinarySearchData.disciplinaryWarning !== undefined &&
           disciplinarySearchData.disciplinaryWarning !== "" &&
           disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
-            <WarningLetter />
+            <WarningLetter sign={false} />
           ) : (
-            <NonPerformanceWarningLetter />
+            <NonPerformanceWarningLetter sign={false} />
           )}
         </Modal.Body>
       </Modal>
