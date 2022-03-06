@@ -95,6 +95,8 @@ const ProbationSeparation = () => {
     TerminationFromDesciplinary,
     DisciplinaryTermination,
     UpdateEmplyoeeExist,
+    lettterview,
+    setViewLetter,
   } = useContext(EmployeeSeparationContext);
   const { probationData, ViewProbationEndLetter, endLetterData } =
     useContext(ProbationContext);
@@ -372,6 +374,7 @@ const ProbationSeparation = () => {
       Object.keys(probationData).length !== 0
     ) {
       ViewProbationEndLetter(probationData.empId);
+      setViewLetter(true);
       handleShow();
       setPreviewGeneratedLetter(true);
     }
@@ -734,7 +737,7 @@ const ProbationSeparation = () => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {endLetterData &&
           endLetterData !== undefined &&

@@ -231,11 +231,9 @@ const WarningLetter = ({ approver = true, sign = true }) => {
               <div id="warningLetter" ref={inputRef}>
                 <h5 style={{ textAlign: "center" }}> WARNING LETTER </h5>
                 <p>
-                  {" "}
-                  Date: <b>{moment().format("DD-MM-YYYY")}</b>
+                  Date: <b>{moment().format("DD-MM-YYYY")}</b>{" "}
                 </p>
                 <br></br>
-
                 <p>To ,</p>
                 <p>
                   {" "}

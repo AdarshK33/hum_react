@@ -173,7 +173,7 @@ const ReasonByEmployee = ({ sign = true }) => {
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
-      CreatePdfAndUpload(infoData, "35,270,185,370");
+      CreatePdfAndUpload(infoData, "35,260,185,360");
       setViewLetter(false);
       setModal(false);
       setShow(false);
@@ -203,7 +203,6 @@ const ReasonByEmployee = ({ sign = true }) => {
                   {" "}
                   Date: <b>{moment().format("DD-MM-YYYY")}</b>
                 </p>
-                <br></br>
                 <br></br>
                 <p>To ,</p>
                 {/* <p>

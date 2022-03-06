@@ -189,6 +189,7 @@ export const EmploeeSeparationProvider = ({ children }) => {
         toast.info(response.data.message);
         // ViewEmployeeDataById(employeeId)
         fetchRelievingLetterData(employeeId);
+        ViewEmployeeDataById(employeeId);
         setLoader(false);
         console.log("updated response", state.updateResponse);
         return dispatch({
