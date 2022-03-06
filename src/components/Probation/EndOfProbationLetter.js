@@ -18,9 +18,8 @@ const EndOfProbationLetter = () => {
     empId,
     ViewProbationEndLetter,
   } = useContext(ProbationContext);
-  const { employeeData, UpdateEmplyoeeExist } = useContext(
-    EmployeeSeparationContext
-  );
+  const { employeeData, UpdateEmplyoeeExist, lettterview, setViewLetter } =
+    useContext(EmployeeSeparationContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -32,6 +31,7 @@ const EndOfProbationLetter = () => {
   const handleClose = () => {
     setShow(false);
     setLetterView(false);
+    setViewLetter(false);
   };
   const HandleSaveLetter = () => {
     setSaveLetter(true);
@@ -93,6 +93,7 @@ const EndOfProbationLetter = () => {
       );
       CreatePdfAndUpload(infoData, "35,340,185,440");
       ViewProbationEndLetter(employeeData.employeeId);
+      setViewLetter(false);
       setShow(false);
     }
   };
@@ -101,7 +102,7 @@ const EndOfProbationLetter = () => {
     <Fragment>
       {typeof endLetterData !== undefined ? (
         // {true ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

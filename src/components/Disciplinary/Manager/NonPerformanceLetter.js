@@ -247,7 +247,7 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
-      CreatePdfAndUpload(infoData, "35,90,185,190");
+      CreatePdfAndUpload(infoData, "35,60,185,160");
       setViewLetter(false);
       setModalLetter(false);
       setModal(false);
@@ -283,7 +283,6 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
                   {" "}
                   Date: <b>{moment().format("DD-MM-YYYY")}</b>
                 </p>
-                <br></br>
                 <br></br>
                 <p>To ,</p>
                 <p>
@@ -329,7 +328,6 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
                   Private Limited , as a{" "}
                   <b>{disciplinarySearchData.position}</b>.
                 </p>
-                <br />
                 <br />
                 <p>
                   It is reported against you that you have not been performing

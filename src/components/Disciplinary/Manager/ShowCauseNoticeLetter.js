@@ -294,13 +294,12 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
               </div>
             ) : (
               <div id="disMisconductLetter" ref={inputRef}>
-                {" "}
-                Date: <b>{moment().format("DD-MM-YYYY")}</b>
-                <br></br>
+                <p>
+                  Date: <b>{moment().format("DD-MM-YYYY")}</b>{" "}
+                </p>
                 <br></br>
                 <p>To ,</p>
                 <p>
-                  {" "}
                   <b>
                     {disciplinarySearchData !== null &&
                     disciplinarySearchData !== undefined &&

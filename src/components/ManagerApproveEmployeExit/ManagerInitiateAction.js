@@ -107,6 +107,8 @@ const ManagerInitiateAction = (props) => {
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
+    lettterview,
+    setViewLetter,
   } = useContext(EmployeeSeparationContext);
   const { empResign, withdraw, searchByCostCenter, searchByCostData } =
     useContext(SeparationContext);
@@ -709,6 +711,7 @@ const ManagerInitiateAction = (props) => {
   };
   const handleShow = () => {
     console.log("inside show moodal");
+    setViewLetter(true);
     setShow(true);
   };
   // reliving letter end
@@ -1138,7 +1141,7 @@ const ManagerInitiateAction = (props) => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {relivingLetterData &&
           relivingLetterData !== undefined &&
