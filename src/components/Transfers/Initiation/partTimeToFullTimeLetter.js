@@ -13,6 +13,7 @@ const PartTimeToFullTimeLetter = (props) => {
     loader,
     createTransferInitiation,
     setLetterViewing,
+    letterView,
   } = useContext(TransferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -24,7 +25,7 @@ const PartTimeToFullTimeLetter = (props) => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setLetterViewing(false);
   };
   // console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
@@ -101,7 +102,7 @@ const PartTimeToFullTimeLetter = (props) => {
   return (
     <Fragment>
       {offerLetterData && offerLetterData.permanentCandidateOffer ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={letterView} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

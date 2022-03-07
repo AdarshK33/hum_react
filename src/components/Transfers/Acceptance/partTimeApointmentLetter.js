@@ -12,6 +12,7 @@ const PartTimeAppointmentLetter = (props) => {
     transferData,
     loader,
     setLetterViewing,
+    letterView,
     createTransferInitiation,
   } = useContext(TransferContext);
   const { user } = useContext(AppContext);
@@ -24,7 +25,7 @@ const PartTimeAppointmentLetter = (props) => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setLetterViewing(false);
   };
   console.log("candidateDatacandidateData", transferData);
   const HandleSaveLetter = () => {
@@ -106,7 +107,7 @@ const PartTimeAppointmentLetter = (props) => {
   return (
     <Fragment>
       {offerLetterData && offerLetterData.partTimeCandidateOffer ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={letterView} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
