@@ -89,6 +89,7 @@
     outline-color: #006EBB !important;
     display: flex;
     /* white-space: nowrap; */
+    font-size: 12px !important;
     white-space: normal; 
   }
   p.offerSubHeader {
