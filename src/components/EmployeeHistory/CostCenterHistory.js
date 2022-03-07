@@ -140,10 +140,10 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.costCentre}</td>
-                                                        <td>{item.effectDate !== null && 
-                                                        item.effectDate !== undefined 
-                                                         && item.effectDate !== ""?
-                                                        moment(new Date(item.effectDate)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.effectiveDate !== null && 
+                                                        item.effectiveDate !== undefined 
+                                                         && item.effectiveDate !== ""?
+                                                        moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.updatedBy}</td>
                                                         <td>{item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 
