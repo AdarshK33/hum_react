@@ -163,7 +163,7 @@ const ReasonByEmployee = ({ sign = true }) => {
         empEmail: "rajasekhar@theretailinsights.com ",
         empPhNo: user.phone,
         history: history,
-        path: "../disciplinary",
+        path: "../my_disciplinary",
       };
       console.log("createShowCauseData", InfoData);
       createShowCauseIssue(InfoData, disciplinarySearchData.employeeId);
