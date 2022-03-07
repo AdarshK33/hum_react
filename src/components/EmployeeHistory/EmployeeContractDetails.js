@@ -79,7 +79,7 @@ console.log(employeeContractDetailsByIdData,"employeeContractDetailsByIdData")
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -104,8 +104,8 @@ console.log(employeeContractDetailsByIdData,"employeeContractDetailsByIdData")
                       />
                       <br></br>
                     </div>
-                  </Col>
-                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                  </Col> */}
+                  <Col  style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>EMPLOYEE CONTRACT DETAILS</b>
                   </Col>
                 </Row></div>

@@ -6,12 +6,16 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { LeaveContext } from '../../context/LeaveState'
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
 const AccessAndRightHistory = (props) => {
-    const reportList =  [] //props.AccessAndRightHistoryList
-    const {loader } = useContext(LeaveContext)
+    const {
+        viewAccessDataById,
+        accessData,
+        loader,
+        total,
+      } = useContext(EmployeeHistoryContext);  
    
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
@@ -36,12 +40,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
+    const totalRecords = accessData !== null && accessData !== undefined && accessData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = accessData !== null && accessData !== undefined ? accessData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -71,7 +75,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -96,8 +100,8 @@ console.log(dates)
                       />
                       <br></br>
                     </div>
-                  </Col>
-                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                  </Col> */}
+                  <Col  style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>ACCESS AND RIGHT HISTORY</b>
                   </Col>
                 </Row></div>
@@ -131,17 +135,20 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
+                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                    </tr>
+                                                        <td>{item.roleName}</td>
+                                                        <td>{item.status}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>                                                    </tr>
                                                 </tbody>
                                             )
                                         }) :
@@ -158,7 +165,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
+            {accessData !== null && accessData !== undefined && accessData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

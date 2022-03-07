@@ -74,7 +74,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -99,8 +99,8 @@ console.log(dates)
                       />
                       <br></br>
                     </div>
-                  </Col>
-                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                  </Col> */}
+                  <Col  style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>AADHAAR HISTORY LIST</b>
                   </Col>
                 </Row></div>
@@ -133,6 +133,7 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
+                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (

@@ -74,7 +74,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -99,8 +99,8 @@ console.log(dates)
                       />
                       <br></br>
                     </div>
-                  </Col>
-                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                  </Col> */}
+                  <Col  style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>BANK DETAILS HISTORY</b>
                   </Col>
                 </Row></div>
