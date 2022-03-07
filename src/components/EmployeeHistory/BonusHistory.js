@@ -6,13 +6,16 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { LeaveContext } from '../../context/LeaveState'
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
 const BonusHistory = (props) => {
-    const reportList = [] //props.BonusHistoryList
-    const {loader } = useContext(LeaveContext)
-   
+    const {
+        viewBonusDataById,
+        bonusData,
+         loader,
+         total,
+       } = useContext(EmployeeHistoryContext);         
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -36,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
+    const totalRecords = bonusData !== null && bonusData !== undefined && bonusData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = bonusData !== null && bonusData !== undefined ? bonusData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -71,7 +74,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -96,8 +99,8 @@ console.log(dates)
                       />
                       <br></br>
                     </div>
-                  </Col>
-                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                  </Col> */}
+                  <Col  style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>BONUS HISTORY</b>
                   </Col>
                 </Row></div>
@@ -116,7 +119,9 @@ console.log(dates)
 
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
+                                    {loader === true && currentRecords !== null && 
+                                    !currentRecords.includes(null) &&
+                                    currentRecords !== undefined ? 
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -132,17 +137,17 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
+                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -160,7 +165,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
+            {bonusData !== null && bonusData !== undefined && bonusData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
