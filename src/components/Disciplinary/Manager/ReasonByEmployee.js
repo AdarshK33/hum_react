@@ -26,6 +26,8 @@ const ReasonByEmployee = ({ sign = true }) => {
     loader,
     lettterview,
     setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -39,6 +41,7 @@ const ReasonByEmployee = ({ sign = true }) => {
   const handleClose = () => {
     setShow(false);
     setViewLetter(false);
+    setModal(false);
   };
 
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
@@ -170,15 +173,16 @@ const ReasonByEmployee = ({ sign = true }) => {
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
-      CreatePdfAndUpload(infoData, "35,270,185,370");
+      CreatePdfAndUpload(infoData, "35,260,185,360");
       setViewLetter(false);
+      setModal(false);
       setShow(false);
     }
   };
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
-        <Modal show={lettterview} onHide={handleClose} size="md">
+        <Modal show={lettterview || modalView} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -199,7 +203,6 @@ const ReasonByEmployee = ({ sign = true }) => {
                   {" "}
                   Date: <b>{moment().format("DD-MM-YYYY")}</b>
                 </p>
-                <br></br>
                 <br></br>
                 <p>To ,</p>
                 {/* <p>

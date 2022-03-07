@@ -84,6 +84,8 @@ const EmployeeExitAction = (props) => {
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
+    lettterview,
+    setViewLetter,
   } = useContext(EmployeeSeparationContext);
   useEffect(() => {
     ViewEmployeeDataById(paramsemployeeId);
@@ -148,11 +150,15 @@ const EmployeeExitAction = (props) => {
         state.empContractType === "PartTime"
       ) {
         var dateValue = new Date(
-          new Date(employeeData.dateOfResignation).setMonth(new Date(employeeData.dateOfResignation).getMonth() + state.noticePeriod)
+          new Date(employeeData.dateOfResignation).setMonth(
+            new Date(employeeData.dateOfResignation).getMonth() +
+              state.noticePeriod
+          )
         );
         let aboveDateValue = new Date(
           new Date(employeeData.dateOfResignation).setMonth(
-            new Date(employeeData.dateOfResignation).getMonth() + (parseInt(state.noticePeriod) + 1)
+            new Date(employeeData.dateOfResignation).getMonth() +
+              (parseInt(state.noticePeriod) + 1)
           )
         );
         setLastDateSelection(aboveDateValue);
@@ -394,6 +400,7 @@ const EmployeeExitAction = (props) => {
 
   const handleShow = () => {
     console.log("inside show moodal");
+    setViewLetter(true);
     setShow(true);
   };
   const handleSaveRemarks = () => {
@@ -594,7 +601,7 @@ const EmployeeExitAction = (props) => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {relivingLetterData &&
           relivingLetterData !== undefined &&

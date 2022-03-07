@@ -156,6 +156,8 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
     setViewLetter,
     setModal,
     modalView,
+    setModalLetter,
+    modalViewLetter,
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -170,6 +172,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
     setShow(false);
     setViewLetter(false);
     setModal(false);
+    setModalLetter(false);
   };
 
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
@@ -193,14 +196,19 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
       const InfoData = {
         contractType: disciplinarySearchData.contractType,
         disciplinaryAction: {
-          actionDueDays: 0,
-          actionIssuedDate: null,
+          actionDueDays:
+            disciplinarySearchData.disciplinaryAction.actionDueDays,
+          actionIssuedDate:
+            disciplinarySearchData.disciplinaryAction.actionIssuedDate,
           disciplinaryId:
             disciplinarySearchData.disciplinaryAction.disciplinaryId,
-          employeeActionStatus: null,
-          employeeComment: null,
+          employeeActionStatus:
+            disciplinarySearchData.disciplinaryAction.employeeActionStatus,
+          employeeComment:
+            disciplinarySearchData.disciplinaryAction.employeeComment,
           employeeId: disciplinarySearchData.employeeId,
-          initiatedRole: rolePermission !== null ? rolePermission : null,
+          initiatedRole:
+            disciplinarySearchData.disciplinaryAction.initiatedRole,
           managerComment:
             disciplinarySearchData.disciplinaryAction.managerComment,
           reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
@@ -210,7 +218,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
           //  showCauseNotice: null, //31/1/2022
           status: approver === true ? 0 : 2,
           // rolePermission == "costCenterManager" ? 2 : 0,
-          statusDesc: null,
+          statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
           warningIssued: false,
         },
         disciplinaryWarning: null,
@@ -219,10 +227,10 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
         employeeCostCentre: disciplinarySearchData.employeeCostCentre,
         employeeId: disciplinarySearchData.employeeId,
         employeeName: disciplinarySearchData.employeeName,
-        managerCostCentre: null,
-        managerDesignation: null,
-        managerId: null,
-        managerName: null,
+        managerCostCentre: disciplinarySearchData.managerCostCentre,
+        managerDesignation: disciplinarySearchData.managerDesignation,
+        managerId: disciplinarySearchData.managerId,
+        managerName: disciplinarySearchData.managerName,
         // {
         //   "disciplinaryId": 0,
         //   "employeeComment": "string",
@@ -257,6 +265,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
       );
       CreatePdfAndUpload(infoData, "35,130,185,230");
       setViewLetter(false);
+      setModalLetter(false);
       setModal(false);
       setShow(false);
     }
@@ -264,7 +273,11 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
-        <Modal show={lettterview || modalView} onHide={handleClose} size="md">
+        <Modal
+          show={lettterview || modalView || modalViewLetter}
+          onHide={handleClose}
+          size="md"
+        >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -281,13 +294,12 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
               </div>
             ) : (
               <div id="disMisconductLetter" ref={inputRef}>
-                {" "}
-                Date: <b>{moment().format("DD-MM-YYYY")}</b>
-                <br></br>
+                <p>
+                  Date: <b>{moment().format("DD-MM-YYYY")}</b>{" "}
+                </p>
                 <br></br>
                 <p>To ,</p>
                 <p>
-                  {" "}
                   <b>
                     {disciplinarySearchData !== null &&
                     disciplinarySearchData !== undefined &&

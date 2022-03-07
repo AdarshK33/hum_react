@@ -14,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { AppContext } from "../../../context/AppState";
 //new template
-const NonPerformanceWarningLetter = ({ approver = true }) => {
+const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
   const {
     disciplinaryResonsView,
     disciplinaryEmployeeSearch,
@@ -26,6 +26,8 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
     loader,
     lettterview,
     setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
   console.log(disciplinarySearchData);
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -39,6 +41,7 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
   const handleShowCauseLetterClose = () => {
     setViewLetter(false);
     setShow(false);
+    setModal(false);
   };
 
   const submitfinalShowCauseLetter = () => {
@@ -89,7 +92,7 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
             disciplinarySearchData.disciplinaryAction.showCauseLetter,
           showCauseNotice:
             disciplinarySearchData.disciplinaryAction.showCauseNotice,
-          status: 0,
+          status: disciplinarySearchData.disciplinaryAction.status,
           statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -121,7 +124,7 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
                   disciplinarySearchData.disciplinaryWarning.reasonDetailsId,
                 reasonId: disciplinarySearchData.disciplinaryWarning.reasonId,
                 // status: rolePermission == "costCenterManager" ? 2 : 0,
-                status: 0,
+                status: approver === true ? 0 : 2,
                 statusDesc:
                   disciplinarySearchData.disciplinaryWarning.statusDesc,
                 initiatedRole:
@@ -146,16 +149,22 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
                 managerComment:
                   disciplinarySearchData.disciplinaryAction.managerComment,
                 // warningManagerReason,
-                initiatedRole: rolePermission !== null ? rolePermission : null,
-                reason: null,
-                reasonDetails: null,
-                reasonDetailsId: 0,
+                initiatedRole:
+                  disciplinarySearchData.disciplinaryAction.initiatedRole,
+                reason: disciplinarySearchData.disciplinaryAction.reason,
+                reasonDetails:
+                  disciplinarySearchData.disciplinaryAction.reasonDetails,
+                reasonDetailsId:
+                  disciplinarySearchData.disciplinaryAction.reasonDetailsId,
                 reasonId: disciplinarySearchData.inputReasonId,
-                status: rolePermission == "costCenterManager" ? 2 : 0,
-                statusDesc: null,
-                warningDueDays: 0,
-                warningId: 0,
-                warningIssuedDate: null,
+                status: approver === true ? 0 : 2,
+                statusDesc:
+                  disciplinarySearchData.disciplinaryAction.statusDesc,
+                warningDueDays:
+                  disciplinarySearchData.disciplinaryAction.warningDueDays,
+                warningId: disciplinarySearchData.disciplinaryAction.warningId,
+                warningIssuedDate:
+                  disciplinarySearchData.disciplinaryAction.warningIssuedDate,
                 warningLetter: "WarningLetter.pdf",
               },
         employeeAddress: disciplinarySearchData.employeeAddress,
@@ -169,13 +178,7 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
         position: disciplinarySearchData.position,
         storeLocation: disciplinarySearchData.storeLocation,
       };
-      console.log(InfoData, "infoData");
-      console.log("all okay");
-      console.log(InfoData, "infoData submit");
-      createShowCauseIssue(InfoData);
-      SubmitDisciplinaryLetter(
-        disciplinarySearchData.disciplinaryAction.disciplinaryId
-      );
+
       const infoData = {
         inputRef: inputRef,
         empId: 0, //disciplinarySearchData.employeeId,
@@ -196,6 +199,7 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
       );
       CreatePdfAndUpload(infoData, "35,250,185,350");
       setViewLetter(false);
+      setModal(false);
       setShow(false);
 
       // finalSubmitOfferLetter(employeeData.employeeId);
@@ -205,7 +209,11 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
-        <Modal show={lettterview} onHide={handleShowCauseLetterClose} size="md">
+        <Modal
+          show={lettterview || modalView}
+          onHide={handleShowCauseLetterClose}
+          size="md"
+        >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -224,11 +232,9 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
               <div id="warningLetter" ref={inputRef}>
                 <h5 style={{ textAlign: "center" }}> WARNING LETTER </h5>
                 <p>
-                  {" "}
-                  Date: <b>{moment().format("DD-MM-YYYY")}</b>
+                  Date: <b>{moment().format("DD-MM-YYYY")}</b>{" "}
                 </p>
                 <br></br>
-
                 <p>To ,</p>
                 <p>
                   {" "}
@@ -317,6 +323,7 @@ const NonPerformanceWarningLetter = ({ approver = true }) => {
             )}
             {!saveLetter &&
             !loader &&
+            sign &&
             disciplinarySearchData &&
             Object.keys(disciplinarySearchData).length &&
             disciplinarySearchData.employeeId !== null &&
