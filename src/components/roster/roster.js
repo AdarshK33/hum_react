@@ -23,15 +23,12 @@ const Roster = () => {
   const handleClose = () => setModal(false);
   const handleShow = (item, weekId, weekName) => {
     console.log(item, "item onclick");
-    if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
-      toast.error("Please select future date");
-    }else{
+
     setDate(item);
     setweekName(weekName);
     setshiftDate(weekId);
     setModal(true);
     availableShifts();
-    }
   };
 
   useEffect(() => {
