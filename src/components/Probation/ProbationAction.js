@@ -1361,7 +1361,7 @@ const ProbationAction = () => {
                                     probationData.status === 2)
                                 ? "Generate Extension Letter"
                                 : ""}
-                              {/* Generate Reliving Letter */}
+                              {/* Generate Relieving Letter */}
                             </button>
                           ) : (
                             ""

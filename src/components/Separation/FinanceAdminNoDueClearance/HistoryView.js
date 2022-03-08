@@ -66,7 +66,6 @@ const HistoryView = () => {
   } = useContext(EmployeeSeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
-
     ViewEmployeeDataById(employeeId);
   }, [employeeId]);
   console.log("employeeData", employeeData);
@@ -90,10 +89,15 @@ const HistoryView = () => {
       state.mngrPosition = employeeData.managerPosition;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
-      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        employeeData.department == "AFS" ||
+        employeeData.department == "IT" ||
+        employeeData.department == "Legal" ||
+        employeeData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       state.dateOfResignation = employeeData.dateOfResignation;
       // state.noticePeriod = employeeData.noticePeriod;
@@ -669,7 +673,12 @@ const HistoryView = () => {
                           <label>
                             <b>Notice Period:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.noticePeriod == 1?`${state.noticePeriod} Month`:state.noticePeriod == 2?`${state.noticePeriod} Months`:""}
+                              &nbsp;&nbsp;{" "}
+                              {state.noticePeriod == 1
+                                ? `${state.noticePeriod} Month`
+                                : state.noticePeriod == 2
+                                ? `${state.noticePeriod} Months`
+                                : ""}
                             </label>
                           </label>
                         </div>
@@ -695,7 +704,7 @@ const HistoryView = () => {
                         </div>
                       </Col>
                     </Row>
-                
+
                     <Row
                       style={{
                         marginLeft: "2rem",
@@ -743,7 +752,7 @@ const HistoryView = () => {
                               className="largerCheckbox"
                               type="checkbox"
                               value="yes"
-                              disabled="true"  
+                              disabled="true"
                               checked={RcryYes}
                               style={RcryError ? { borderColor: "red" } : {}}
                               // required={required}
@@ -759,7 +768,7 @@ const HistoryView = () => {
                             <input
                               className="largerCheckbox"
                               type="checkbox"
-                              disabled="true"  
+                              disabled="true"
                               value="no"
                               checked={RcryNo}
                               style={RcryError ? { borderColor: "red" } : {}}
@@ -786,7 +795,7 @@ const HistoryView = () => {
                       <Col sm={2} style={{ marginTop: "0.5rem" }}>
                         <Form.Group>
                           <Form.Control
-                          disabled="true"
+                            disabled="true"
                             type="text"
                             placeholder=""
                             required
@@ -834,7 +843,7 @@ const HistoryView = () => {
                             <input
                               className="largerCheckbox"
                               type="checkbox"
-                              disabled="true"  
+                              disabled="true"
                               value="yes"
                               checked={RehireYes}
                               // required={required}
@@ -851,7 +860,7 @@ const HistoryView = () => {
                             <input
                               className="largerCheckbox"
                               type="checkbox"
-                              disabled="true"  
+                              disabled="true"
                               value="no"
                               checked={RehireNo}
                               // required={required}
@@ -930,7 +939,7 @@ const HistoryView = () => {
                           }}
                         >
                           {/* <Button disabled="true"    type="button" onClick={relivingLetterClick}>
-                            Generate Reliving Letter
+                            Generate Relieving Letter
                           </Button> */}
                         </Col>
                       </Row>
