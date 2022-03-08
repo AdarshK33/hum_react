@@ -1654,10 +1654,11 @@ const ManagerInitiateExit = () => {
                                         </option>
                                       );
                                     } else if (
-                                      state.empContractType == "fulltime" ||
+                                     ( state.empContractType == "fulltime" ||
                                       state.empContractType == "Fulltime" ||
                                       state.empContractType == "Parttime" ||
-                                      state.empContractType == "parttime"
+                                      state.empContractType == "parttime") &&
+                                      item.label !== "End of Contract" 
                                     ) {
                                       return (
                                         <option key={item.value}>
