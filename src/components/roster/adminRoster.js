@@ -82,16 +82,13 @@ const AdminRoster = () => {
   const handleClose = () => setAdminModal(false);
   const handleShow = (item, name, ctype, weekId, cid) => {
     console.log("contract type", ctype);
-    if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
-      toast.error("Please select future date");
-    }else{
+
     setshiftDate(item.weekId);
     setAdminModal(true);
     setDate(item);
     setFirstName(name);
     adminRosterAvailableShift(ctype, costCenter1);
     setContractType(ctype);
-    }
 
     // getallWeeks()
   };
