@@ -271,7 +271,7 @@ export const EmployeeHistoryProvider = (props) => {
       client
         .get("api/v1/employee_history/insurance/" + employeeId)
         .then((response) => {
-          state.insuranceData = new Array(response.data.data)
+          state.insuranceData = response.data.data
   
           setLoader(false);
           console.log("--->insuranceData", state.insuranceData);
@@ -289,7 +289,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewSportDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/insurance/" + employeeId)
+        .get("api/v1/employee_history/sport/" + employeeId)
         .then((response) => {
           state.sportData = new Array(response.data.data)
   

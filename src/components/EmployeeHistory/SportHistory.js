@@ -17,7 +17,7 @@ const SportHistory = (props) => {
         total,
       } = useContext(EmployeeHistoryContext);    
 console.log("startDate", props.startDate)
-console.log("endDate", props.endDate)
+console.log("sportData", sportData)
     const d1 = props.startDate,
     d2 = props.endDate,
     diff = (d2-d1)/864e5,
@@ -137,18 +137,23 @@ console.log(dates)
                                     !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
-                                            return (
-                                                <tbody key={i + 1}>
-                                                    <tr>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                    </tr>
-                                                </tbody>
-                                            )
+                                            // item.sportName.map((valueData,j)=>{
+                                                console.log(item.sportName,"item")
+                                                return (
+                                                    <tbody key={i + 1}>
+                                                        <tr>
+                                                            <td>{i + 1 + indexOfFirstRecord}</td>
+                                                            <td>{item.sportName}</td>
+                                                            <td>{item.createdBy}</td>
+                                                            <td>{ item.createdOn !== null && 
+                                                        item.createdOn !== undefined 
+                                                         && item.createdOn !== ""?
+                                                        moment(new Date(item.createdOn)).format("DD-MM-YYYY"):""}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            // })
+                                            
                                         }) :
                                         <tbody>
                                             <tr>

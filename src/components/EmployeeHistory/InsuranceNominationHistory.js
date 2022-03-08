@@ -66,6 +66,7 @@ console.log(dates)
     const disabledText = () => {
         toast.error("No Records to be Export")
       }
+      console.log(insuranceData,"insuranceData")
     return (
         <Fragment>
             <div className="container-fluid">
@@ -146,10 +147,18 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.name}</td>
+                                                        <td>{item.relationship}</td>
+                                                        <td>{item.nominationType}</td>
+                                                        <td>{item.dateOfBirth}</td>
+
+                                                        <td>{item.age}</td>
+                                                        <td>{item.gender}</td>
+                                                        <td>{item.bloodGroup}</td>
+                                                        <td>{item.topUpStatus}</td>
+                                                        <td>{item.topUpLimit}</td>
+                                                        <td>{item.premiumAmount}</td>
+
                                                     </tr>
                                                 </tbody>
                                             )
