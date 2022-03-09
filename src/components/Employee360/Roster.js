@@ -152,7 +152,9 @@ const Roster = () => {
               handleShift("minus");
             }}
           >
-            {rosterMnth !== 0 ? <p className="slidderLeft">&#60;</p> : ""}
+            {/* {rosterMnth !== 0 ? */}
+            <p className="slidderLeftRoster">&#60;</p>
+            {/* : ""} */}
           </div>
           <div style={{ textAlign: "center" }}>
             <Select
@@ -177,7 +179,11 @@ const Roster = () => {
               handleShift("plus");
             }}
           >
-            {rosterMnth !== 11 ? <p className="slidderLeft">&#62;</p> : ""}
+            {rosterMnth !== 11 ? (
+              <p className="slidderRightRoster">&#62;</p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {WeeksInfoList !== null &&

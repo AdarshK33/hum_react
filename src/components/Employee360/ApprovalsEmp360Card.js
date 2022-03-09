@@ -25,7 +25,9 @@ const ApprovalsEmp360Card = () => {
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
           onClick={(e) => setTabIndex(0)}
         >
-          <label>Promotions & Salary</label>
+          <label>
+            <marquee>Promotions & Salary </marquee>
+          </label>
         </div>
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
