@@ -9,13 +9,13 @@ import moment from 'moment'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const InsuranceNominationHistory = (props) => {
+const PromotionHistory = (props) => {
     const {
-        viewInsuranceDataById,
-        insuranceData,
-         loader,
-         total,
-       } = useContext(EmployeeHistoryContext);          
+        viewSportDataById,
+        sportData,
+        loader,
+        total,
+      } = useContext(EmployeeHistoryContext);    
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = insuranceData !== null && insuranceData !== undefined && insuranceData.length;
+    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = insuranceData !== null && insuranceData !== undefined ? insuranceData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -66,7 +66,6 @@ console.log(dates)
     const disabledText = () => {
         toast.error("No Records to be Export")
       }
-      console.log(insuranceData,"insuranceData")
     return (
         <Fragment>
             <div className="container-fluid">
@@ -102,29 +101,24 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>ENROLL DEPENDENT DETAILS</b>
+                    <b>PROMOTION</b>
                   </Col>
                 </Row></div>
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S .No</th>
-                                            <th>Name</th>
-                                            <th>Relationship</th>
-                                            <th>Nomination Type</th>
-                                            <th>Date of Birth</th>
-                                            <th>Age</th>
-                                            <th>Gender</th>
-                                            <th>Blood Group</th>
-                                            <th>Top Up Status</th>
-                                            <th>Top Up Limit(In Lakhs)</th>
-                                            <th>Permium Amount</th>
+                                            <th>sport Name</th>
+                                        
+                                            <th>Created By</th>
+                                            <th>Created On</th>
+
+
                                         </tr>
                                     </thead>
-                                    {loader === true && 
-                                    currentRecords !== null && currentRecords !== undefined ? 
+                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -147,18 +141,11 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.relationship}</td>
-                                                        <td>{item.nominationType}</td>
-                                                        <td>{item.dateOfBirth}</td>
-
-                                                        <td>{item.age}</td>
-                                                        <td>{item.gender}</td>
-                                                        <td>{item.bloodGroup}</td>
-                                                        <td>{item.topUpStatus}</td>
-                                                        <td>{item.topUpLimit}</td>
-                                                        <td>{item.premiumAmount}</td>
-
+                                                        <td>{item.leaveReports.employeeId}</td>
+                                                        <td>{item.leaveReports.username}</td>
+                                                        <td>{item.leaveReports.costCentre}</td>
+                                                        <td>{item.leaveReports.workLocation}</td>
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -168,7 +155,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        }
+                                        } */}
 
                                 </Table>
                             </div>
@@ -176,7 +163,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {insuranceData !== null && insuranceData !== undefined && insuranceData.length > 10 &&
+            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -191,4 +178,4 @@ console.log(dates)
     );
 };
 
-export default InsuranceNominationHistory;
+export default PromotionHistory;
