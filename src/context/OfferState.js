@@ -580,6 +580,15 @@ export const OfferProvider = (props) => {
       });
   };
 
+  const positionByDepartmentNull = () => {
+    state.positionByDepartmentData=null;
+        return dispatch({
+          type: "POSITION_BY_DEPARTMENT",
+          payload: state.positionByDepartmentData,
+        });
+  };
+
+
   // All Cost Center List
   const AllCostCenter = (superMangerFlag) => {
     client
@@ -727,6 +736,7 @@ export const OfferProvider = (props) => {
         number2text,
         positionByDepartment,
         setNoticePeriodNull,
+        positionByDepartmentNull,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,

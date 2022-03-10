@@ -84,7 +84,7 @@ const PartTimeAppointmentLetter = (props) => {
           <br></br>
           <p>
             Your gross fixed compensation would be INR.{" "}
-            <b>{candidateLetterData.partTimeCandidateOffer.grossSalary}</b> per
+            <b>{candidateLetterData.partTimeCandidateOffer.grossSalary}</b>{" "} per
             hour. You are entitled to all the social security benefits like PF,
             ESIC (as per applicability), & bonus as specified in the respective
             statutory acts. Further, sufficient holidays keep one motivated in a

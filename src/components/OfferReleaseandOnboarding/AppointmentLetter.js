@@ -139,7 +139,7 @@ const AppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your gross fixed compensation would be INR.{" "}
-                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
+                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>{" "}
                   You are also entitled for a monthly statutory/non-statutory
                   bonus which will be at a maximum{" "}
                   <b>{offerLetterData.bonus}</b> % of your gross monthly fixed
