@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
-import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter"
+import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory, useParams } from "react-router-dom";
@@ -15,7 +15,7 @@ import { useHistory, useParams } from "react-router-dom";
 // view-----
 const CostCenterManagerAction = () => {
   const { employeeid } = useParams();
-  const [showModal, setModal] = useState(false);
+  // const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -92,6 +92,10 @@ const CostCenterManagerAction = () => {
     IssueShowCauseNoticeLetter,
     issueShowCauseNoticeData,
     createShowCauseIssue,
+    lettterview,
+    setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
   useEffect(() => {
     disciplinaryEmployeeSearch(employeeid);
@@ -220,7 +224,8 @@ const CostCenterManagerAction = () => {
   };
   const LetterShow1 = () => {
     console.log(";;;;;");
-    setShowLink1(true);
+    setModal(true);
+    // setShowLink1(true);
   };
   const handleShowCauseLetterCloseLink = () => {
     setShow(false);
@@ -287,6 +292,7 @@ const CostCenterManagerAction = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       handleShow();
+      setViewLetter(true);
       setPreviewGeneratedLetter(true);
     }
   };
@@ -296,7 +302,7 @@ const CostCenterManagerAction = () => {
   };
   // end
   const handleClose = () => {
-    setModal(false);
+    // setModal(false);
     setSuccessModal(false);
   };
 
@@ -380,14 +386,8 @@ const CostCenterManagerAction = () => {
 
   return (
     <Fragment>
-      {/* letter */}
-      <Modal
-        show={showShowCauseNoticeModalLink}
-        onHide={handleShowCauseLetterCloseLink}
-        size="md"
-      >
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
+      {showShowCauseNoticeModalLink ? (
+        <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&
           disciplinarySearchData !== null &&
@@ -397,19 +397,15 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" &&
           disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
-            <ShowCauseNotice />
+            <ShowCauseNotice approver={false} />
           ) : (
-            <NonPerformanceLetter />
+            <NonPerformanceLetter approver={false} />
           )}
-        </Modal.Body>
-      </Modal>
-      <Modal
-        show={showShowCauseNoticeModalLink1}
-        onHide={handleShowCauseLetterCloseLink}
-        size="md"
-      >
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
+        </div>
+      ) : null}
+
+      {modalView ? (
+        <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&
           disciplinarySearchData !== null &&
@@ -417,14 +413,22 @@ const CostCenterManagerAction = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" && 
-          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
-            <WarningLetter />
-          ) : (
-            <NonPerformanceWarningLetter/>
-          )}
-        </Modal.Body>
-      </Modal>
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter sign={false} />
+          ) : disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 1 &&
+            disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <NonPerformanceWarningLetter sign={false} />
+          ) : null}
+        </div>
+      ) : null}
 
       {submitLetter ? (
         <Modal
@@ -452,25 +456,20 @@ const CostCenterManagerAction = () => {
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showShowCauseNoticeModal ? (
-        <Modal
-          show={showShowCauseNoticeModal}
-          onHide={handleShowCauseLetterClose}
-          size="md"
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body>
-            {disciplinarySearchData &&
-            disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryWarning !== null &&
-            disciplinarySearchData.disciplinaryWarning !== undefined &&
-            disciplinarySearchData.disciplinaryWarning.reasonId == 2 &&
-            disciplinarySearchData.disciplinaryWarning !== "" ? (
-              <WarningLetter />
-            ) :disciplinarySearchData &&
+      ) : null}
+      {lettterview ? (
+        <div>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter approver={false} />
+          ) : disciplinarySearchData &&
             disciplinarySearchData &&
             disciplinarySearchData !== null &&
             disciplinarySearchData !== undefined &&
@@ -478,73 +477,23 @@ const CostCenterManagerAction = () => {
             disciplinarySearchData.disciplinaryWarning !== null &&
             disciplinarySearchData.disciplinaryWarning !== undefined &&
             disciplinarySearchData.disciplinaryWarning.reasonId == 1 &&
-            disciplinarySearchData.disciplinaryWarning !== "" ?
-            (<NonPerformanceWarningLetter/>)
-            : disciplinarySearchData &&
-              disciplinarySearchData &&
-              disciplinarySearchData !== null &&
-              disciplinarySearchData !== undefined &&
-              Object.keys(disciplinarySearchData).length !== 0 &&
-              disciplinarySearchData.disciplinaryAction !== null &&
-              disciplinarySearchData.disciplinaryAction !== undefined &&
-              disciplinarySearchData.disciplinaryAction !== "" &&
-              disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
-              <ShowCauseNotice />
-            ) : (
-              <NonPerformanceLetter />
-            )}
-            <br></br>
-            <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
-              {showSignature ? (
-                <Fragment>
-                  <br></br>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </Fragment>
-              ) : (
-                <>
-                  <br></br>
-
-                  <button
-                    className={"stepperButtons"}
-                    onClick={digitalSignature}
-                  >
-                    Add digital signature
-                  </button>
-                </>
-              )}
-            </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
-                    Save Changes
-                  </button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Modal.Body>
-        </Modal>
-      ) : (
-        ""
-      )}
+            disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <NonPerformanceWarningLetter approver={false} />
+          ) : disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            disciplinarySearchData.disciplinaryAction !== "" &&
+            disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
+            <ShowCauseNotice approver={false} />
+          ) : (
+            <NonPerformanceLetter approver={false} />
+          )}
+        </div>
+      ) : null}
 
       <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
         <Container>

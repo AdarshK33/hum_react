@@ -71,7 +71,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" > <Row>
-                  <Col sm={6}>
+                  {/* <Col sm={6}>
                     <div
                       style={{
                         width: "65%",
@@ -96,15 +96,15 @@ console.log(dates)
                       />
                       <br></br>
                     </div>
-                  </Col>
-                  <Col sm={3} style={{  textAlign:"center",marginTop: "5px" }}>
+                  </Col> */}
+                  <Col  style={{  textAlign:"center",marginTop: "5px" }}>
                     <b>DISP</b>
                   </Col>
                 </Row></div>
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S .No</th>
                                             <th>sport Name</th>
@@ -151,7 +151,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        }
+                                        } */}
 
                                 </Table>
                             </div>

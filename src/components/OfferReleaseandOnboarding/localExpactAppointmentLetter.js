@@ -15,6 +15,7 @@ const LocalExpactAppointmentLetter = (props) => {
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
     loader,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -26,7 +27,7 @@ const LocalExpactAppointmentLetter = (props) => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
   };
   console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
@@ -63,6 +64,7 @@ const LocalExpactAppointmentLetter = (props) => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,160,185,260");
+      setViewLetter(false);
       setShow(false);
     }
   };

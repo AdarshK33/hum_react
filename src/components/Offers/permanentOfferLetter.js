@@ -16,6 +16,7 @@ const PermanentOfferLetter = () => {
     finalSubmitOfferLetter,
     candidateData,
     number2text,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -27,6 +28,7 @@ const PermanentOfferLetter = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
+    setViewLetter(false);
     // setLetterView(false);
   };
 
@@ -51,6 +53,7 @@ const PermanentOfferLetter = () => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,220,185,320", true);
+      setViewLetter(false);
       setShow(false);
     }
   };

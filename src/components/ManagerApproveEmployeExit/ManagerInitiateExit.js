@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { SeparationContext } from "../../context/SepearationState";
+import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
 import InternShipLetter from "./InternShipLetter";
@@ -106,7 +107,10 @@ const ManagerInitiateExit = () => {
     resignationConfirmation,
     TerminationFromDesciplinary,
     DisciplinaryTermination,
+    lettterview,
+    setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  const { EmployeeSearchWithKey } = useContext(DisciplinaryContext);
   const {
     empResign,
     withdraw,
@@ -819,6 +823,7 @@ const ManagerInitiateExit = () => {
     }
   };
   const handleDisciplinary = () => {
+    EmployeeSearchWithKey(state.empId);
     history.push("../issue-show-cause-notice");
   };
   const relivingLetterClick = (e) => {
@@ -841,6 +846,7 @@ const ManagerInitiateExit = () => {
   };
   const handleShow = () => {
     console.log("inside show moodal");
+    setViewLetter(true);
     setShow(true);
   };
   // reliving letter end
@@ -1311,14 +1317,14 @@ const ManagerInitiateExit = () => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showRelivingModal ? (
+      {lettterview ? (
         <div>
           {relivingLetterData &&
           relivingLetterData !== undefined &&
           relivingLetterData !== null &&
           intern === false &&
           (modeOfSeparation == "1" || modeOfSeparation == "Resignation") ? (
-            <RelievingLetter />
+            <RelievingLetter anotherPath={true} />
           ) : terminationLetterData &&
             terminationLetterData !== undefined &&
             terminationLetterData !== null &&
@@ -1328,7 +1334,7 @@ const ManagerInitiateExit = () => {
           ) : terminationLetterData &&
             terminationLetterData !== undefined &&
             terminationLetterData !== null ? (
-            <InternShipLetter />
+            <InternShipLetter anotherPath={true} />
           ) : null}
         </div>
       ) : (
@@ -1894,8 +1900,8 @@ const ManagerInitiateExit = () => {
                                   <option value=""></option>
                                   {reasonOfSeparationList.map((item) => {
                                     console.log(item, "item");
-                                    if(intern == true){
-                                      if(item.label !== "Termination"){
+                                    if (intern == true) {
+                                      if (item.label !== "Termination") {
                                         return (
                                           <option
                                             name={item.value}
@@ -1905,8 +1911,7 @@ const ManagerInitiateExit = () => {
                                           </option>
                                         );
                                       }
-                                    
-                                    }else{
+                                    } else {
                                       return (
                                         <option
                                           name={item.value}
@@ -1916,7 +1921,6 @@ const ManagerInitiateExit = () => {
                                         </option>
                                       );
                                     }
-                                   
                                   })}
                                 </Form.Control>
                                 {modOfSepReasonError ? (

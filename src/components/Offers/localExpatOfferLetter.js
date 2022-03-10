@@ -16,6 +16,7 @@ const LocalExpatOfferLetter = () => {
     finalSubmitOfferLetter,
     candidateData,
     number2text,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -27,6 +28,7 @@ const LocalExpatOfferLetter = () => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
+    setViewLetter(false);
     // setLetterView(false);
   };
 
@@ -52,6 +54,7 @@ const LocalExpatOfferLetter = () => {
       );
       CreatePdfAndUpload(infoData, "35,220,185,320", true);
       setShow(false);
+      setViewLetter(false);
     }
   };
 

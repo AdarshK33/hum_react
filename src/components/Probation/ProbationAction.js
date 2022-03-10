@@ -1331,15 +1331,14 @@ const ProbationAction = () => {
                             ""
                           )}
 
-                          {!previewGeneratedLetter &&
-                          ((probationData &&
+                          {(probationData &&
                             probationData &&
                             probationData !== null &&
                             probationData !== undefined &&
                             Object.keys(probationData).length !== 0 &&
                             probationData.status === 5) ||
-                            probationData.status === 6 ||
-                            showPreview === true) ? (
+                          probationData.status === 6 ||
+                          showPreview === true ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersProbButtons"}
@@ -1362,7 +1361,7 @@ const ProbationAction = () => {
                                     probationData.status === 2)
                                 ? "Generate Extension Letter"
                                 : ""}
-                              {/* Generate Reliving Letter */}
+                              {/* Generate Relieving Letter */}
                             </button>
                           ) : (
                             ""

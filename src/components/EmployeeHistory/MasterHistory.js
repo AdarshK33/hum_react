@@ -4,7 +4,8 @@ import Breadcrumb from "../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { AppContext } from "../../context/AppState";
-import "../Leaves/Leaves.css";
+// import "../Leaves/Leaves.css";
+import "./EmployeeHistory.css"
 import MultiSelect from "react-multi-select-component";
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import Select from "react-select";
@@ -26,6 +27,13 @@ import ItStatementHistory from "./ItStatementHistory"
 import DISP from "./DISP"
 import InsuranceNominationHistory from "./InsuranceNominationHistory"
 import SportHistory from "./SportHistory"
+import PromotionHistory from "./PromotionHistory";
+import ProbationHistory from "./ProbationHistory";
+import TransferHistory from "./TransferHistory";
+import DisciplinaryHistory from "./DisciplinaryHistory";
+import PerformanceHistory from "./PerformanceHistory";
+import CostSplitHistory from "./CostSplitHistory";
+import PerquisiteHistory from "./PerquisiteHistory"
 import { PermissionContext } from "../../context/PermissionState";
 
 const MasterHistory = (props) => {
@@ -60,11 +68,23 @@ const MasterHistory = (props) => {
     ViewEmployeeHistoryData,
     employeeHistoryData,
     viewEmployeeContractDetailsById,
-    employeeContractDetailsByIdData,
+    viewBonusDataById,
     viewSalaryDataById,
     viewBankDataById,
     viewAadhaarDataById,
-    aadhaarData,
+    viewCostCenterDataById,
+    viewManagerDataById,
+    viewAccessDataById,
+    viewTaxDataById,
+    viewExitDataById,
+    viewInsuranceDataById,
+    viewSportDataById,
+    employeeContractDetailsByIdData,
+    managerData,
+    costCenterData,
+    insuranceData,
+    bonusData,
+    accessData,
     loader,
     total,
   } = useContext(EmployeeHistoryContext);
@@ -76,15 +96,32 @@ const MasterHistory = (props) => {
     viewEmployeeContractDetailsById(props.match.params.employeeid)
   }else if(stepCount == 1){
     viewSalaryDataById(props.match.params.employeeid)
+  }else if(stepCount == 2){
+    viewBonusDataById(props.match.params.employeeid)
+  }else if(stepCount == 3){
+    viewCostCenterDataById(props.match.params.employeeid)
   }else if(stepCount == 4){
     viewBankDataById(props.match.params.employeeid)
   }else if(stepCount == 5){
     viewAadhaarDataById(props.match.params.employeeid)
+  }else if(stepCount == 6){
+    viewAccessDataById(props.match.params.employeeid)
+  }else if(stepCount == 7){
+    viewManagerDataById(props.match.params.employeeid)
+  }else if(stepCount == 9){
+    viewTaxDataById(props.match.params.employeeid)
+  }else if(stepCount == 10){
+    viewExitDataById(props.match.params.employeeid)
+  }else if(stepCount == 14){
+    viewInsuranceDataById(props.match.params.employeeid)
+  }else if(stepCount == 15){
+    viewSportDataById(props.match.params.employeeid)
   }
   }, [stepCount]);
 
 
- console.log(props,"masterhistory",props.match.params.employeeid,aadhaarData)
+ console.log(props,"masterhistory",props.match.params.employeeid,costCenterData)
+ console.log("ManagerHistory",managerData)
   const setDropDownSelectHandler = (option) => {
     // var data = option[0]
      setStepNumber(option.value)
@@ -94,53 +131,238 @@ const MasterHistory = (props) => {
 
 
 
-  const submitData = (e) => {
-    // e.preventDefault();
-
+  const handleSumit =(e)=>{
+    e.preventDefault();
+    console.log(e.target.value,"handlesubmit")
+    setStepNumber(e.target.value)
   };
-  console.log(dropDownData,"dropDownData")
+  console.log(stepCount,"dropDownData")
   return (
     <Fragment>
       <Breadcrumb title="Master History" parent="Master History" />
       <div className="container-fluid">
-        <Form onSubmit={submitData}>
+        <Form >
           <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={0} variant= {stepCount === 0?"primary":"outline-primary"} 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Employee Contract Details
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={1} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               Salary 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={2} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Bonus 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={3} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Cost Center 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={4} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Bank Details 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={5} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               Aadhaar 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={6} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Access And Rights 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={7} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Manager 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={8} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          User Documents
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={9} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               Other Taxable Income 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={10} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            User Exit 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={11} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Payslips 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={12} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          ItStatement 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={13} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               DISP
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={14} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Insurance Nomination 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={15} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Sport 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={16} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Promotion 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={17} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               Probation 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={18} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Transfer 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={19} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Disciplinary 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={20} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Performance 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={21} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+              Cost Split 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={22} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Perquisite Income
+          </Button>
+          </Col>
+          </Row>
+          {/* <Row>
             <Col sm={4}>
               <Form.Group>
-                {/* <Form.Label></Form.Label>{" "}
-                <span style={{ color: "red" }}>*</span> */}
                  <Select
-                                name="filters"
+                       name="filters"
                                 placeholder="Select "
                                 style={{fontSize:"0.8rem"}}
-                                value = {stepCount==0?{ label: 'Employee Contract Details', value: 0 }:{ label: selectData, value: stepCount }}
+                               value = {stepCount==0?
+                                { label: 'Employee Contract Details', value: 0 }
+                                :{ label: selectData, value: stepCount }}
                                 options={dropDownData !== null  ?
                                  dropDownData.map(e => ({label: e.name, value: e.value})):[]}
                                 onChange={setDropDownSelectHandler}
                                 required
                                 isSearchable
                                />
-                         
-                {/* <MultiSelect
-                 options={dropDownData.map((e) => ({
-                        label: e.name,
-                        value: e.value,
-                      }))
-                }
-                  value={stepCount}
-                  onChange={setDropDownSelectHandler}
-                  labelledBy={"Select Employee Id"}
-                  hasSelectAll={true}
-                  disableSearch={false}
-                /> */}
+                      
               </Form.Group>
             </Col>
-            {/* <Col sm={2}  >
-          <Button type="submit" class="btn btn-primary" >
-            Search
-          </Button>
-          </Col> */}
-          </Row>
+          </Row> */}
         </Form>
       </div>
 
@@ -226,6 +448,41 @@ const MasterHistory = (props) => {
                                                         <SportHistory SportHistoryList={props.match.params.employeeid}
                                                         />
                                                       );
+                                                      case 16:
+                                                        return (
+                                                          <PromotionHistory PromotionHistoryList={props.match.params.employeeid}
+                                                          />
+                                                        );
+                                                        case 17:
+                                                          return (
+                                                            <ProbationHistory ProbationHistoryList={props.match.params.employeeid}
+                                                            />
+                                                          );
+                                                          case 18:
+                                                        return (
+                                                          <TransferHistory TransferHistoryList={props.match.params.employeeid}
+                                                          />
+                                                        );
+                                                        case 19:
+                                                          return (
+                                                            <DisciplinaryHistory DisciplinaryHistoryList={props.match.params.employeeid}
+                                                            />
+                                                          );
+                                                          case 20:
+                                                            return (
+                                                              <PerformanceHistory PerformanceHistoryList={props.match.params.employeeid}
+                                                              />
+                                                            );
+                                                            case 21:
+                                                          return (
+                                                            <CostSplitHistory CostSplitHistoryList={props.match.params.employeeid}
+                                                            />
+                                                          );
+                                                          case 22:
+                                                            return (
+                                                              <PerquisiteHistory PerquisiteHistoryList={props.match.params.employeeid}
+                                                              />
+                                                            );
                               default:return (
                                 <EmployeeContractDetails EmployeeContractDetailList={props.match.params.employeeid}
                                 />

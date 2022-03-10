@@ -476,7 +476,7 @@ const ManagerDashboard = () => {
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
-                            {" Holiday Calendar (2021)"}
+                            {` Holiday Calendar (${new Date().getFullYear()})`}
                           </label>
                         </div>
                         <HolidaysCard />

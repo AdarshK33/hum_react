@@ -390,10 +390,8 @@ const ManagerDisciplinaryList = () => {
                                 rolePermission &&
                               item.disciplinaryWarning.statusDesc !==
                                 "Exit Initiated" &&
-                              (item.disciplinaryWarning.statusDesc ===
-                                "Warning Letter Issued" ||
-                                item.disciplinaryWarning.statusDesc ===
-                                  "Warning Letter Approved") &&
+                              item.disciplinaryWarning.statusDesc ===
+                                "Warning Letter Approved" &&
                               item.disciplinaryWarning.pipDueDays === 0) ? (
                               <td>
                                 <Link
@@ -420,8 +418,11 @@ const ManagerDisciplinaryList = () => {
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.initiatedRole ===
                                   "manager" &&
-                                (item.disciplinaryAction.statusDesc ===
-                                  "Warning Letter Issued" ||
+                                ((item.disciplinaryWarning &&
+                                  Object.keys(item.disciplinaryWarning)
+                                    .length &&
+                                  item.disciplinaryWarning.statusDesc ===
+                                    "Warning Letter Issued") ||
                                   item.disciplinaryAction.statusDesc ===
                                     "Show Cause Notice Issued")) ||
                               (user !== null &&
@@ -433,8 +434,11 @@ const ManagerDisciplinaryList = () => {
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.initiatedRole ===
                                   "costCenterManager" &&
-                                (item.disciplinaryAction.statusDesc ===
-                                  "Warning Letter Issued" ||
+                                ((item.disciplinaryWarning &&
+                                  Object.keys(item.disciplinaryWarning)
+                                    .length &&
+                                  item.disciplinaryWarning.statusDesc ===
+                                    "Warning Letter Issued") ||
                                   item.disciplinaryAction.statusDesc ===
                                     "Show Cause Notice Issued")) ||
                               (user !== null &&
@@ -446,8 +450,11 @@ const ManagerDisciplinaryList = () => {
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.initiatedRole ===
                                   "superCostCenterManager" &&
-                                (item.disciplinaryAction.statusDesc ===
-                                  "Warning Letter Issued" ||
+                                ((item.disciplinaryWarning &&
+                                  Object.keys(item.disciplinaryWarning)
+                                    .length &&
+                                  item.disciplinaryWarning.statusDesc ===
+                                    "Warning Letter Issued") ||
                                   item.disciplinaryAction.statusDesc ===
                                     "Show Cause Notice Issued")) ? (
                               <td>
@@ -473,17 +480,19 @@ const ManagerDisciplinaryList = () => {
                               </td>
                             )}
                             {/* disciplinary action */}
-                              {item.disciplinaryAction !== null &&
-                              item.disciplinaryAction !== undefined &&
-                              item.disciplinaryAction !== ""&&
-                              item.disciplinaryAction.refId !== null &&
+                            {item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined &&
+                            item.disciplinaryAction !== "" &&
+                            item.disciplinaryAction.refId !== null &&
                             item.disciplinaryAction.refId !== undefined &&
                             item.disciplinaryAction.refId !== "" ? (
                               <td>
                                 <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      GoToLetterView(item.disciplinaryAction.refId);
+                                      GoToLetterView(
+                                        item.disciplinaryAction.refId
+                                      );
                                     }}
                                   />
                                 </Link>
@@ -493,18 +502,20 @@ const ManagerDisciplinaryList = () => {
                                 <AlertCircle />
                               </td>
                             )}
-                             {/* disciplinary warning */}
-                             { item.disciplinaryWarning !== null &&
-                              item.disciplinaryWarning !== undefined &&
-                              item.disciplinaryWarning !== ""&&
-                              item.disciplinaryWarning.refId !== null &&
+                            {/* disciplinary warning */}
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined &&
+                            item.disciplinaryWarning !== "" &&
+                            item.disciplinaryWarning.refId !== null &&
                             item.disciplinaryWarning.refId !== undefined &&
                             item.disciplinaryWarning.refId !== "" ? (
                               <td>
                                 <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      GoToLetterView(item.disciplinaryWarning.refId);
+                                      GoToLetterView(
+                                        item.disciplinaryWarning.refId
+                                      );
                                     }}
                                   />
                                 </Link>

@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useContext, useEffect, useRef } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import moment from "moment";
@@ -8,7 +14,7 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { AppContext } from "../../../context/AppState";
 
-const ReasonByEmployee = () => {
+const ReasonByEmployee = ({ sign = true }) => {
   const {
     disciplinaryResonsView,
     disciplinaryEmployeeSearch,
@@ -18,8 +24,12 @@ const ReasonByEmployee = () => {
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
     loader,
+    lettterview,
+    setViewLetter,
+    setModal,
+    modalView,
   } = useContext(DisciplinaryContext);
-    const { CreatePdfAndUpload } = useContext(E_signContext);
+  const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -30,11 +40,12 @@ const ReasonByEmployee = () => {
 
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
+    setModal(false);
   };
 
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
-  console.log(disciplinarySearchData,"disciplinarySearchData")
+  console.log(disciplinarySearchData, "disciplinarySearchData");
 
   const submitfinalShowCauseLetter = (e) => {
     e.preventDefault();
@@ -54,56 +65,84 @@ const ReasonByEmployee = () => {
         contractType: disciplinarySearchData.contractType,
         department: disciplinarySearchData.department,
         disciplinaryAction: {
-          actionDueDays: disciplinarySearchData.disciplinaryAction.actionDueDays,
-          actionIssuedDate: disciplinarySearchData.disciplinaryAction.actionIssuedDate,
-          disciplinaryId: disciplinarySearchData.disciplinaryAction.disciplinaryId,
-          employeeActionStatus: disciplinarySearchData.disciplinaryAction.employeeActionStatus,
-          employeeComment: disciplinarySearchData.disciplinaryAction.employeeComment,
-          initiatedRole: disciplinarySearchData.disciplinaryAction.initiatedRole,
+          actionDueDays:
+            disciplinarySearchData.disciplinaryAction.actionDueDays,
+          actionIssuedDate:
+            disciplinarySearchData.disciplinaryAction.actionIssuedDate,
+          disciplinaryId:
+            disciplinarySearchData.disciplinaryAction.disciplinaryId,
+          employeeActionStatus:
+            disciplinarySearchData.disciplinaryAction.employeeActionStatus,
+          employeeComment:
+            disciplinarySearchData.disciplinaryAction.employeeComment,
+          initiatedRole:
+            disciplinarySearchData.disciplinaryAction.initiatedRole,
           employeeId: disciplinarySearchData.disciplinaryAction.employeeId,
-          managerComment: disciplinarySearchData.disciplinaryAction.managerComment,
+          managerComment:
+            disciplinarySearchData.disciplinaryAction.managerComment,
           employeeReasonAccepted:
-          disciplinarySearchData.acceptEmployeeReason == "yes"
+            disciplinarySearchData.acceptEmployeeReason == "yes"
               ? true
               : disciplinarySearchData.acceptEmployeeReason == "no"
               ? false
               : null,
           reason: disciplinarySearchData.disciplinaryAction.reason,
-          reasonDetails: disciplinarySearchData.disciplinaryAction.reasonDetails,
-          reasonDetailsId: disciplinarySearchData.disciplinaryAction.reasonDetailsId,
+          reasonDetails:
+            disciplinarySearchData.disciplinaryAction.reasonDetails,
+          reasonDetailsId:
+            disciplinarySearchData.disciplinaryAction.reasonDetailsId,
           reasonId: disciplinarySearchData.disciplinaryAction.reasonId,
-          showCauseLetter: disciplinarySearchData.disciplinaryAction.showCauseLetter,
-          showCauseNotice: disciplinarySearchData.disciplinaryAction.showCauseNotice,
+          showCauseLetter:
+            disciplinarySearchData.disciplinaryAction.showCauseLetter,
+          showCauseNotice:
+            disciplinarySearchData.disciplinaryAction.showCauseNotice,
           status: 2,
           statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
-          warningIssued: disciplinarySearchData.disciplinaryAction.warningIssued,
+          warningIssued:
+            disciplinarySearchData.disciplinaryAction.warningIssued,
         },
         disciplinaryWarning:
-        disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
           disciplinarySearchData.disciplinaryWarning !== undefined &&
           disciplinarySearchData.disciplinaryWarning !== " "
             ? {
                 //api response data
-                disciplinaryId: disciplinarySearchData.disciplinaryWarning.disciplinaryId,
-                employeeComment: disciplinarySearchData.disciplinaryWarning.employeeComment,
+                disciplinaryId:
+                  disciplinarySearchData.disciplinaryWarning.disciplinaryId,
+                employeeComment:
+                  disciplinarySearchData.disciplinaryWarning.employeeComment,
                 employeeWarningStatus:
-                disciplinarySearchData.disciplinaryWarning.employeeWarningStatus,
-                improvementPeriod: disciplinarySearchData.disciplinaryWarning.improvementPeriod ?
-                parseInt(disciplinarySearchData.disciplinaryWarning.improvementPeriod) :0,
+                  disciplinarySearchData.disciplinaryWarning
+                    .employeeWarningStatus,
+                improvementPeriod: disciplinarySearchData.disciplinaryWarning
+                  .improvementPeriod
+                  ? parseInt(
+                      disciplinarySearchData.disciplinaryWarning
+                        .improvementPeriod
+                    )
+                  : 0,
                 managerComment: disciplinarySearchData.warningManagerReason,
-                pipEndDate: disciplinarySearchData.disciplinaryWarning.pipEndDate,
+                pipEndDate:
+                  disciplinarySearchData.disciplinaryWarning.pipEndDate,
                 reason: disciplinarySearchData.disciplinaryWarning.reason,
-                reasonDetails: disciplinarySearchData.disciplinaryWarning.reasonDetails,
-                reasonDetailsId: disciplinarySearchData.disciplinaryWarning.reasonDetailsId,
+                reasonDetails:
+                  disciplinarySearchData.disciplinaryWarning.reasonDetails,
+                reasonDetailsId:
+                  disciplinarySearchData.disciplinaryWarning.reasonDetailsId,
                 reasonId: disciplinarySearchData.disciplinaryWarning.reasonId,
                 // status: rolePermission == "costCenterManager" ? 2 : 0,
-                  status:disciplinarySearchData.disciplinaryWarning.status,
-                statusDesc: disciplinarySearchData.disciplinaryWarning.statusDesc,
-                initiatedRole: disciplinarySearchData.disciplinaryWarning.initiatedRole,
-                warningDueDays: disciplinarySearchData.disciplinaryWarning.warningDueDays,
+                status: disciplinarySearchData.disciplinaryWarning.status,
+                statusDesc:
+                  disciplinarySearchData.disciplinaryWarning.statusDesc,
+                initiatedRole:
+                  disciplinarySearchData.disciplinaryWarning.initiatedRole,
+                warningDueDays:
+                  disciplinarySearchData.disciplinaryWarning.warningDueDays,
                 warningId: disciplinarySearchData.disciplinaryWarning.warningId,
-                warningIssuedDate: disciplinarySearchData.disciplinaryWarning.warningIssuedDate,
-                warningLetter: disciplinarySearchData.disciplinaryWarning.warningLetter,
+                warningIssuedDate:
+                  disciplinarySearchData.disciplinaryWarning.warningIssuedDate,
+                warningLetter:
+                  disciplinarySearchData.disciplinaryWarning.warningLetter,
               }
             : null,
         employeeAddress: disciplinarySearchData.employeeAddress,
@@ -117,8 +156,7 @@ const ReasonByEmployee = () => {
         position: disciplinarySearchData.position,
         storeLocation: disciplinarySearchData.storeLocation,
       };
-      
-      
+
       const infoData = {
         inputRef: inputRef,
         empId: disciplinarySearchData.employeeId,
@@ -128,102 +166,107 @@ const ReasonByEmployee = () => {
         empEmail: "rajasekhar@theretailinsights.com ",
         empPhNo: user.phone,
         history: history,
-        path: "../disciplinary",
+        path: "../my_disciplinary",
       };
       console.log("createShowCauseData", InfoData);
       createShowCauseIssue(InfoData, disciplinarySearchData.employeeId);
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
-      CreatePdfAndUpload(infoData, "35,270,185,370");
-     setShow(false);
+      CreatePdfAndUpload(infoData, "35,260,185,360");
+      setViewLetter(false);
+      setModal(false);
+      setShow(false);
     }
   };
   return (
     <Fragment>
-    {typeof disciplinarySearchData !== undefined ? (
-        <Modal show={show} onHide={handleClose} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
-          {loader ? (
-            <div
-              className="loader-box loader"
-              style={{ width: "100% !important" }}
-            >
-              <div className="loader">
-                <div className="line bg-primary"></div>
-                <div className="line bg-primary"></div>
-                <div className="line bg-primary"></div>
-                <div className="line bg-primary"></div>
+      {typeof disciplinarySearchData !== undefined ? (
+        <Modal show={lettterview || modalView} onHide={handleClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {loader ? (
+              <div
+                className="loader-box loader"
+                style={{ width: "100% !important" }}
+              >
+                <div className="loader">
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                  <div className="line bg-primary"></div>
+                </div>
               </div>
-            </div>
-          ) : (
-        <div id="disMisconductLetter" ref={inputRef}>
-          <p>
-            {" "}
-            Date: <b>{moment().format("DD-MM-YYYY")}</b>
-          </p>
-          <br></br>
-
-          <p>To ,</p>
-          {/* <p>
+            ) : (
+              <div id="disMisconductLetter" ref={inputRef}>
+                <p>
+                  {" "}
+                  Date: <b>{moment().format("DD-MM-YYYY")}</b>
+                </p>
+                <br></br>
+                <p>To ,</p>
+                {/* <p>
             {" "}
             <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.managerName}
           </p> */}
-          <p>
-            {" "}
-            <b>
-              {disciplinarySearchData !== null &&
-              disciplinarySearchData !== undefined &&
-              Object.keys(disciplinarySearchData).legth !== 0 &&
-              disciplinarySearchData.initiatedByGender !== null &&
-              disciplinarySearchData.initiatedByGender !== undefined &&
-              disciplinarySearchData.initiatedByMarital !== null &&
-              disciplinarySearchData.initiatedByMarital !== undefined
-                ? disciplinarySearchData.initiatedByGender === "MALE"
-                  ? "Mr."
-                  : disciplinarySearchData.initiatedByMarital === "Married"
-                  ? "Mrs."
-                  : "Miss"
-                : "Mr./Ms."}
-            </b>{" "}
-            &nbsp; {disciplinarySearchData.initiatedByName}
-          </p>
-          <p> {disciplinarySearchData.company}</p>
-          <br />
-          <p>
-            <b>Sub:</b> Reply to the Show Cause Notice issued on{" "}
-            {moment().format("DD-MM-YYYY")}
-          </p>
-<br />
-            <p >
-              {" "}
-              Dear <b>{disciplinarySearchData.initiatedByName},</b>{" "}
-            </p>
-            <br></br>
-            <p>
-            I would to explain my response towards the show cause issued on{" "}
-              {disciplinarySearchData.disciplinaryAction.actionIssuedDate} and
-              here is my explanation to the same.
-            </p>
-            <br />
-            <p>{disciplinarySearchData.disciplinaryAction.employeeComment}</p>
-            <br />
-            From,
-            <p >
-              {" "}
-              Employee Name: <b>{disciplinarySearchData.employeeName}</b>
-            </p>
-            <p >
-              {" "}
-              Employee ID: <b>{disciplinarySearchData.employeeId}</b>
-            </p>
-            <p > Signatory:</p>
-          </div>
-        
+                <p>
+                  {" "}
+                  <b>
+                    {disciplinarySearchData !== null &&
+                    disciplinarySearchData !== undefined &&
+                    Object.keys(disciplinarySearchData).legth !== 0 &&
+                    disciplinarySearchData.initiatedByGender !== null &&
+                    disciplinarySearchData.initiatedByGender !== undefined &&
+                    disciplinarySearchData.initiatedByMarital !== null &&
+                    disciplinarySearchData.initiatedByMarital !== undefined
+                      ? disciplinarySearchData.initiatedByGender === "MALE"
+                        ? "Mr."
+                        : disciplinarySearchData.initiatedByMarital ===
+                          "Married"
+                        ? "Mrs."
+                        : "Miss"
+                      : "Mr./Ms."}
+                  </b>{" "}
+                  &nbsp; {disciplinarySearchData.initiatedByName}
+                </p>
+                <p> {disciplinarySearchData.company}</p>
+                <br />
+                <p>
+                  <b>Sub:</b> Reply to the Show Cause Notice issued on{" "}
+                  {moment().format("DD-MM-YYYY")}
+                </p>
+                <br />
+                <p>
+                  {" "}
+                  Dear <b>{disciplinarySearchData.initiatedByName},</b>{" "}
+                </p>
+                <br></br>
+                <p>
+                  I would to explain my response towards the show cause issued
+                  on{" "}
+                  {disciplinarySearchData.disciplinaryAction.actionIssuedDate}{" "}
+                  and here is my explanation to the same.
+                </p>
+                <br />
+                <p>
+                  {disciplinarySearchData.disciplinaryAction.employeeComment}
+                </p>
+                <br />
+                <p>From,</p>
+                <p>
+                  {" "}
+                  Employee Name: <b>{disciplinarySearchData.employeeName}</b>
+                </p>
+                <p>
+                  {" "}
+                  Employee ID: <b>{disciplinarySearchData.employeeId}</b>
+                </p>
+                <p> Signatory:</p>
+              </div>
             )}
             {!saveLetter &&
             !loader &&
+            sign &&
             disciplinarySearchData &&
             Object.keys(disciplinarySearchData).length &&
             disciplinarySearchData.employeeId !== null &&

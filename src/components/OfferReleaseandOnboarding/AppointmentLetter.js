@@ -16,6 +16,7 @@ const AppointmentLetter = (props) => {
     submitAppointmentLetter,
     loader,
     number2text,
+    setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -27,7 +28,7 @@ const AppointmentLetter = (props) => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
   };
   console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
@@ -64,6 +65,7 @@ const AppointmentLetter = (props) => {
         inputRef.current.getBoundingClientRect()
       );
       CreatePdfAndUpload(infoData, "35,250,185,350");
+      setViewLetter(false);
       setShow(false);
     }
   };

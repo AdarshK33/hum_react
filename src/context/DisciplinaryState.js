@@ -19,7 +19,20 @@ export const DisciplinaryContext = createContext();
 export const DisciplinaryProvider = (props) => {
   const [state, dispatch] = useReducer(DisciplinaryReducer, initial_state);
   const [loader, setLoader] = useState(false);
+  const [lettterview, setLetterView] = useState(false);
+  const [modalView, setModalView] = useState(false);
+  const [modalViewLetter, setModalViewletter] = useState(false);
 
+  const setViewLetter = (val) => {
+    setLetterView(val);
+  };
+
+  const setModal = (val) => {
+    setModalView(val);
+  };
+  const setModalLetter = (val) => {
+    setModalViewletter(val);
+  };
   const disciplinaryListView = (key, pageNumber, role) => {
     setLoader(true);
     client
@@ -28,10 +41,9 @@ export const DisciplinaryProvider = (props) => {
           key +
           "&page=" +
           pageNumber +
-          "&size=10&superManager=" 
-          +
+          "&size=10&superManager=" +
           role
-          // +"$super"
+        // +"$super"
       )
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;
@@ -201,6 +213,12 @@ export const DisciplinaryProvider = (props) => {
         total: state.total,
         disciplinaryListData: state.disciplinaryListData,
         loader: loader,
+        lettterview: lettterview,
+        setViewLetter,
+        setModal,
+        modalView: modalView,
+        setModalLetter,
+        modalViewLetter: modalViewLetter,
       }}
     >
       {props.children}

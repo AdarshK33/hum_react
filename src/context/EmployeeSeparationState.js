@@ -1,11 +1,11 @@
-import React, { createContext, useReducer,useContext,useState } from "react";
+import React, { createContext, useReducer, useContext, useState } from "react";
 import EmployeeSeparationReducer from "../reducers/EmployeeSeparationReducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
 // import { SeparationContext } from "./SepearationState";
 const initial_state = {
   EmployeeSeparationList: [],
-  EmployeeSeparationExitList:[],
+  EmployeeSeparationExitList: [],
   total: {},
   employeeData: {},
   ModeOfSeparationData: {},
@@ -13,15 +13,14 @@ const initial_state = {
   employeeId: "",
   employeeProfileData: {},
   relivingLetterData: [],
-  terminationLetterData:[],
+  terminationLetterData: [],
   terminationConfirmationStatus: "",
   resignationConfirmationStatus: "",
 };
 
 export const EmployeeSeparationContext = createContext();
 
-
-export const EmploeeSeparationProvider = ({children}) => {
+export const EmploeeSeparationProvider = ({ children }) => {
   const [loader, setLoader] = useState(false);
   const [DisciplinaryTermination, setDisciplinarytermination] = useState(false);
   const [state, dispatch] = useReducer(
@@ -29,7 +28,11 @@ export const EmploeeSeparationProvider = ({children}) => {
     initial_state
   );
   // const {MakeCostCenterDataNull} = useContext(SeparationContext)
+  const [lettterview, setLetterView] = useState(false);
 
+  const setViewLetter = (val) => {
+    setLetterView(val);
+  };
   const changeEmployeeId = (employeeId) => {
     setLoader(true);
     state.employeeId = employeeId;
@@ -81,13 +84,13 @@ export const EmploeeSeparationProvider = ({children}) => {
         console.log(error);
       });
   };
-  const setEmpDataNull=()=>{
-    state.employeeData = null
+  const setEmpDataNull = () => {
+    state.employeeData = null;
     return dispatch({
       type: "EMPLOYEE_DATA_BY_ID",
       payload: state.employeeData,
     });
-  }
+  };
   const makeEmployeeDataNull = () => {
     state.employeeData = {};
     return dispatch({
@@ -95,8 +98,8 @@ export const EmploeeSeparationProvider = ({children}) => {
       payload: state.employeeData,
     });
   };
-  
-  const EmployeeSeparationListView = (key, pageNumber,status) => {
+
+  const EmployeeSeparationListView = (key, pageNumber, status) => {
     setLoader(true);
     client
       .get(
@@ -105,7 +108,8 @@ export const EmploeeSeparationProvider = ({children}) => {
           "&page=" +
           pageNumber +
           "&size=10" +
-          "&status=" + status
+          "&status=" +
+          status
       )
       .then((response) => {
         state.EmployeeSeparationList = response.data.data.data;
@@ -126,7 +130,7 @@ export const EmploeeSeparationProvider = ({children}) => {
       });
   };
 
-  const EmployeeSeparationListExitView = (key, pageNumber,status) => {
+  const EmployeeSeparationListExitView = (key, pageNumber, status) => {
     setLoader(true);
     client
       .get(
@@ -135,7 +139,8 @@ export const EmploeeSeparationProvider = ({children}) => {
           "&page=" +
           pageNumber +
           "&size=10" +
-          "&status=" + status
+          "&status=" +
+          status
       )
       .then((response) => {
         state.EmployeeSeparationExitList = response.data.data.data;
@@ -144,7 +149,7 @@ export const EmploeeSeparationProvider = ({children}) => {
         console.log(state.total);
         console.log(response);
         ModeOfSeparationView();
-        makeEmployeeDataNull()
+        makeEmployeeDataNull();
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING_EXIT",
           payload: state.EmployeeSeparationExitList,
@@ -175,7 +180,7 @@ export const EmploeeSeparationProvider = ({children}) => {
       });
   };
 
-  const UpdateEmplyoeeExist = (updateInfo,employeeId) => {
+  const UpdateEmplyoeeExist = (updateInfo, employeeId) => {
     // setLoader(true);
     client
       .post("/api/v1/separation/employee-exit/update", updateInfo)
@@ -183,7 +188,8 @@ export const EmploeeSeparationProvider = ({children}) => {
         state.updateResponse = response.data.data;
         toast.info(response.data.message);
         // ViewEmployeeDataById(employeeId)
-        fetchRelievingLetterData(employeeId)
+        fetchRelievingLetterData(employeeId);
+        ViewEmployeeDataById(employeeId);
         setLoader(false);
         console.log("updated response", state.updateResponse);
         return dispatch({
@@ -208,7 +214,8 @@ export const EmploeeSeparationProvider = ({children}) => {
           type: "FETCH_RELIEVING_LETTER_DATA",
           payload: state.relivingLetterData,
         });
-      }) .catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -225,7 +232,8 @@ export const EmploeeSeparationProvider = ({children}) => {
           type: "FETCH_TERMINATION_LETTER_DATA",
           payload: state.terminationLetterData,
         });
-      }) .catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -325,15 +333,17 @@ export const EmploeeSeparationProvider = ({children}) => {
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
-        EmployeeSeparationExitList:state.EmployeeSeparationExitList,
+        EmployeeSeparationExitList: state.EmployeeSeparationExitList,
         EmployeeSeparationList: state.EmployeeSeparationList,
         terminationConfirmationStatus: state.terminationConfirmationStatus,
         employeeData: state.employeeData,
         relivingLetterData: state.relivingLetterData,
-        terminationLetterData:state.terminationLetterData,
+        terminationLetterData: state.terminationLetterData,
         loader: loader,
         DisciplinaryTermination: DisciplinaryTermination,
         total: state.total,
+        lettterview: lettterview,
+        setViewLetter,
       }}
     >
       {children}

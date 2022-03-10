@@ -7,7 +7,7 @@ import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import ReasonByEmployee from "../Manager/ReasonByEmployee";
 import WarningLetter from "../WarningManager/WarningLetter";
-import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter"
+import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter";
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
@@ -38,8 +38,14 @@ const DisciplinaryView = () => {
     pipEndDate: "",
     warningIssuedDateDW: "",
   });
-  const { disciplinaryEmployeeSearch, disciplinarySearchData } =
-    useContext(DisciplinaryContext);
+  const {
+    disciplinaryEmployeeSearch,
+    disciplinarySearchData,
+    lettterview,
+    setViewLetter,
+    setModal,
+    modalView,
+  } = useContext(DisciplinaryContext);
 
   useEffect(() => {
     if (
@@ -100,12 +106,14 @@ const DisciplinaryView = () => {
   console.log("disciplinarySearchData", disciplinarySearchData);
   const LetterShow = () => {
     console.log(";;;;;");
+    setViewLetter(true);
     setShow(true);
   };
 
   const handleShowCauseLetterClose = () => setShow(false);
   const LetterShow1 = () => {
     console.log(";;;;;");
+    setViewLetter(true);
     setShowLink1(true);
   };
   const handleShowCauseLetterCloseLink = () => {
@@ -115,6 +123,7 @@ const DisciplinaryView = () => {
 
   const employeeReason = () => {
     console.log(";;;;;");
+    setModal(true);
     setEmployeeReasonShow(true);
   };
 
@@ -122,24 +131,60 @@ const DisciplinaryView = () => {
 
   return (
     <Fragment>
-      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body>
+      {modalView &&
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction !== "" ? (
+        <ReasonByEmployee sign={false} />
+      ) : (
+        ""
+      )}
+
+      {lettterview ? (
+        <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&
           disciplinarySearchData !== null &&
           disciplinarySearchData !== undefined &&
           Object.keys(disciplinarySearchData).length !== 0 &&
-          disciplinarySearchData.disciplinaryAction !== null &&
-          disciplinarySearchData.disciplinaryAction !== undefined &&
-          disciplinarySearchData.disciplinaryAction !== "" ? (
-            <ReasonByEmployee />
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" &&
+          disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
+            <WarningLetter sign={false} />
+          ) : disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryWarning !== null &&
+            disciplinarySearchData.disciplinaryWarning !== undefined &&
+            disciplinarySearchData.disciplinaryWarning !== "" &&
+            disciplinarySearchData.disciplinaryWarning.reasonId == 1 ? (
+            <NonPerformanceWarningLetter sign={false} />
+          ) : disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            disciplinarySearchData.disciplinaryAction !== "" &&
+            disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
+            <ShowCauseNotice sign={false} />
           ) : (
-            ""
+            <NonPerformanceLetter sign={false} />
           )}
-        </Modal.Body>
-      </Modal>
-      <Modal
+        </div>
+      ) : (
+        ""
+      )}
+
+      {/* <Modal
         show={showShowCauseNoticeModal}
         onHide={handleShowCauseLetterCloseLink}
         size="md"
@@ -185,7 +230,7 @@ const DisciplinaryView = () => {
           <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
       <Breadcrumb
         title="DISCIPLINARY ACTION VIEW"
         parent="DISCIPLINARY ACTION VIEW"

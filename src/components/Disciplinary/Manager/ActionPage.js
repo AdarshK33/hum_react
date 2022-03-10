@@ -92,6 +92,8 @@ const ActionPage = () => {
     issueShowCauseNoticeData,
     createShowCauseIssue,
     loader,
+    lettterview,
+    setViewLetter,
   } = useContext(DisciplinaryContext);
 
   useEffect(() => {
@@ -287,6 +289,7 @@ const ActionPage = () => {
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
       handleShow();
+      setViewLetter(true);
       setPreviewGeneratedLetter(true);
     }
   };
@@ -419,9 +422,9 @@ const ActionPage = () => {
           disciplinarySearchData.disciplinaryWarning !== undefined &&
           disciplinarySearchData.disciplinaryWarning !== "" &&
           disciplinarySearchData.disciplinaryWarning.reasonId == 2 ? (
-            <WarningLetter />
+            <WarningLetter sign={false} />
           ) : (
-            <NonPerformanceWarningLetter />
+            <NonPerformanceWarningLetter sign={false} />
           )}
         </Modal.Body>
       </Modal>
@@ -532,7 +535,7 @@ const ActionPage = () => {
           </Modal.Body>
         </Modal>
       ) : null}
-      {previewLetter || showShowCauseNoticeModal ? (
+      {lettterview ? (
         <div>
           {disciplinarySearchData &&
           disciplinarySearchData &&

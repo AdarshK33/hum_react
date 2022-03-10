@@ -28,9 +28,9 @@ const initial_state = {
   aadhaarNotificationData: {},
   submitAppointmentLetter: {},
   noticePeriodViewData: {},
-  costcenterByDepartmentData:[],
-  allCostCenterList:[],
-  positionByDepartmentData:[]
+  costcenterByDepartmentData: [],
+  allCostCenterList: [],
+  positionByDepartmentData: [],
 };
 
 export const OfferContext = createContext();
@@ -38,8 +38,12 @@ export const OfferContext = createContext();
 export const OfferProvider = (props) => {
   const [state, dispatch] = useReducer(OfferReducer, initial_state);
   const [loader, setLoader] = useState(false);
+  const [lettterview, setLetterView] = useState(false);
 
   // Offer List api
+  const setViewLetter = (val) => {
+    setLetterView(val);
+  };
   const candidateView = (key, page, status = 5) => {
     setLoader(true);
     client
@@ -268,7 +272,7 @@ export const OfferProvider = (props) => {
   };
   // location api for work information
   const locationView = async (costCenter) => {
-    console.log("locationView",costCenter);
+    console.log("locationView", costCenter);
     const result1 = await client.get("/api/v1/location/view/" + costCenter);
     const result2 = await client.get(
       `api/v1/employee/view/${costCenter}/managers`
@@ -279,12 +283,17 @@ export const OfferProvider = (props) => {
     state.locationName = result1.data.data;
     state.managerList = result2.data.data;
     state.allManagerList = result3.data.data;
-    console.log("locationName response", state.locationName,state.managerList,state.allManagerList);
+    console.log(
+      "locationName response",
+      state.locationName,
+      state.managerList,
+      state.allManagerList
+    );
     return dispatch({
       type: "LOCATION",
-      payload: state.locationName ,
-      managerList:state.managerList,
-      allManagerList:state.allManagerList
+      payload: state.locationName,
+      managerList: state.managerList,
+      allManagerList: state.allManagerList,
     });
 
     /* .get("/api/v1/location/view/" + costCenter)
@@ -504,13 +513,13 @@ export const OfferProvider = (props) => {
       });
   };
 
-  const setNoticePeriodNull=()=>{
-    state.noticePeriodViewData=null
+  const setNoticePeriodNull = () => {
+    state.noticePeriodViewData = null;
     return dispatch({
       type: "NOTICE_PERIOD_VIEW",
       payload: state.noticePeriodViewData,
     });
-  }
+  };
 
   const noShowCandidate = (candidateId, searchValue, pageCount) => {
     setLoader(true);
@@ -526,14 +535,21 @@ export const OfferProvider = (props) => {
       });
   };
 
-  const costcenterByDepartment = (department,superMangerFlag) => {
-    console.log("department,superMangerFlag",  department,superMangerFlag);
+  const costcenterByDepartment = (department, superMangerFlag) => {
+    console.log("department,superMangerFlag", department, superMangerFlag);
     return client
-      .get("/api/v1/cost_centre/view/department?department="+department+"&superManager="+superMangerFlag
+      .get(
+        "/api/v1/cost_centre/view/department?department=" +
+          department +
+          "&superManager=" +
+          superMangerFlag
       )
       .then((response) => {
         state.costcenterByDepartmentData = response.data.data;
-        console.log("costcenterByDepartmentData.message", state.costcenterByDepartmentData);
+        console.log(
+          "costcenterByDepartmentData.message",
+          state.costcenterByDepartmentData
+        );
         return dispatch({
           type: "COSTCENTER_BY_DEPARTMENT",
           payload: state.costcenterByDepartmentData,
@@ -545,13 +561,15 @@ export const OfferProvider = (props) => {
   };
 
   const positionByDepartment = (department) => {
-    console.log("department,superMangerFlag",  department);
+    console.log("department,superMangerFlag", department);
     return client
-      .get("/api/v1/position/view/deptId?deptId="+department
-      )
+      .get("/api/v1/position/view/deptId?deptId=" + department)
       .then((response) => {
         state.positionByDepartmentData = response.data.data;
-        console.log("positionByDepartmentData.message", state.positionByDepartmentData);
+        console.log(
+          "positionByDepartmentData.message",
+          state.positionByDepartmentData
+        );
         return dispatch({
           type: "POSITION_BY_DEPARTMENT",
           payload: state.positionByDepartmentData,
@@ -570,102 +588,121 @@ export const OfferProvider = (props) => {
         });
   };
 
-    // All Cost Center List
-    const AllCostCenter = (superMangerFlag) => {
-      client
-        .get("/api/v1/cost_centre/view-all-costcentre?superManager="+superMangerFlag)
-        .then((response) => {
-          state.allCostCenterList = response.data.data;
-          console.log("cost center data", state.allCostCenterList);
-          return dispatch({
-            type: "ALL_COST_CENTER_DATA",
-            payload: state.allCostCenterList,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
 
-    const number2text=(value)=> {
-      var fraction = Math.round(frac(value)*100);
-      var f_text  = "";
-      if(fraction > 0) {
-          f_text = "AND "+convert_number(fraction)+" PAISE";
+  // All Cost Center List
+  const AllCostCenter = (superMangerFlag) => {
+    client
+      .get(
+        "/api/v1/cost_centre/view-all-costcentre?superManager=" +
+          superMangerFlag
+      )
+      .then((response) => {
+        state.allCostCenterList = response.data.data;
+        console.log("cost center data", state.allCostCenterList);
+        return dispatch({
+          type: "ALL_COST_CENTER_DATA",
+          payload: state.allCostCenterList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const number2text = (value) => {
+    var fraction = Math.round(frac(value) * 100);
+    var f_text = "";
+    if (fraction > 0) {
+      f_text = "AND " + convert_number(fraction) + " PAISE";
+    }
+    return convert_number(value) + " RUPEE " + f_text + " ONLY";
+  };
+  const frac = (f) => {
+    return f % 1;
+  };
+  const convert_number = (number) => {
+    if (number < 0 || number > 999999999) {
+      return "NUMBER OUT OF RANGE!";
+    }
+    var Gn = Math.floor(number / 10000000); /* Crore */
+    number -= Gn * 10000000;
+    var kn = Math.floor(number / 100000); /* lakhs */
+    number -= kn * 100000;
+    var Hn = Math.floor(number / 1000); /* thousand */
+    number -= Hn * 1000;
+    var Dn = Math.floor(number / 100); /* Tens (deca) */
+    number = number % 100; /* Ones */
+    var tn = Math.floor(number / 10);
+    var one = Math.floor(number % 10);
+    var res = "";
+    if (Gn > 0) {
+      res += convert_number(Gn) + " CRORE";
+    }
+    if (kn > 0) {
+      res += (res == "" ? "" : " ") + convert_number(kn) + " LAKH";
+    }
+    if (Hn > 0) {
+      res += (res == "" ? "" : " ") + convert_number(Hn) + " THOUSAND";
+    }
+
+    if (Dn) {
+      res += (res == "" ? "" : " ") + convert_number(Dn) + " HUNDRED";
+    }
+    var ones = Array(
+      "",
+      "ONE",
+      "TWO",
+      "THREE",
+      "FOUR",
+      "FIVE",
+      "SIX",
+      "SEVEN",
+      "EIGHT",
+      "NINE",
+      "TEN",
+      "ELEVEN",
+      "TWELVE",
+      "THIRTEEN",
+      "FOURTEEN",
+      "FIFTEEN",
+      "SIXTEEN",
+      "SEVENTEEN",
+      "EIGHTEEN",
+      "NINETEEN"
+    );
+    var tens = Array(
+      "",
+      "",
+      "TWENTY",
+      "THIRTY",
+      "FOURTY",
+      "FIFTY",
+      "SIXTY",
+      "SEVENTY",
+      "EIGHTY",
+      "NINETY"
+    );
+
+    if (tn > 0 || one > 0) {
+      if (!(res == "")) {
+        res += " AND ";
       }
-      return convert_number(value)+" RUPEE "+f_text+" ONLY";
-  }
-  const frac=(f)=> {
-      return f % 1;
-  }
-  const convert_number=(number)=>
-  {
-      if ((number < 0) || (number > 999999999))
-      {
-          return "NUMBER OUT OF RANGE!";
+      if (tn < 2) {
+        res += ones[tn * 10 + one];
+      } else {
+        res += tens[tn];
+        if (one > 0) {
+          res += "-" + ones[one];
+        }
       }
-      var Gn = Math.floor(number / 10000000);  /* Crore */
-      number -= Gn * 10000000;
-      var kn = Math.floor(number / 100000);     /* lakhs */
-      number -= kn * 100000;
-      var Hn = Math.floor(number / 1000);      /* thousand */
-      number -= Hn * 1000;
-      var Dn = Math.floor(number / 100);       /* Tens (deca) */
-      number = number % 100;               /* Ones */
-      var tn= Math.floor(number / 10);
-      var one=Math.floor(number % 10);
-      var res = "";
-      if (Gn>0)
-      {
-          res += (convert_number(Gn) + " CRORE");
-      }
-      if (kn>0)
-      {
-              res += (((res=="") ? "" : " ") +
-              convert_number(kn) + " LAKH");
-      }
-      if (Hn>0)
-      {
-          res += (((res=="") ? "" : " ") +
-              convert_number(Hn) + " THOUSAND");
-      }
-  
-      if (Dn)
-      {
-          res += (((res=="") ? "" : " ") +
-              convert_number(Dn) + " HUNDRED");
-      }
-      var ones = Array("", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX","SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN","FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN","NINETEEN");
-  var tens = Array("", "", "TWENTY", "THIRTY", "FOURTY", "FIFTY", "SIXTY","SEVENTY", "EIGHTY", "NINETY");
-  
-      if (tn>0 || one>0)
-      {
-          if (!(res==""))
-          {
-              res += " AND ";
-          }
-          if (tn < 2)
-          {
-              res += ones[tn * 10 + one];
-          }
-          else
-          {
-  
-              res += tens[tn];
-              if (one>0)
-              {
-                  res += ("-" + ones[one]);
-              }
-          }
-      }
-  
-      if (res=="")
-      {
-          res = "zero";
-      }
-      return res;
-  }
-  
+    }
+
+    if (res == "") {
+      res = "zero";
+    }
+    return res;
+  };
+
   return (
     <OfferContext.Provider
       value={{
@@ -719,14 +756,16 @@ export const OfferProvider = (props) => {
         stateList: state.stateList,
         cityList: state.cityList,
         managerList: state.managerList,
-        allManagerList:state.allManagerList,
+        allManagerList: state.allManagerList,
         workInformationData: state.workInformationData,
         aadhaarNotificationData: state.aadhaarNotificationData,
         submitAppointmentLetter: state.submitAppointmentLetter,
         noticePeriodViewData: state.noticePeriodViewData,
-        costcenterByDepartmentData:state.costcenterByDepartmentData,
-        allCostCenterList:state.allCostCenterList,
-        positionByDepartmentData:state.positionByDepartmentData
+        costcenterByDepartmentData: state.costcenterByDepartmentData,
+        allCostCenterList: state.allCostCenterList,
+        positionByDepartmentData: state.positionByDepartmentData,
+        lettterview: lettterview,
+        setViewLetter,
       }}
     >
       {props.children}

@@ -23,8 +23,13 @@ export const PromotionProvider = (props) => {
   const [state, dispatch] = useReducer(PromotionReducer, initial_state);
   const [loader, setLoader] = useState(false);
   const [createdPromotion, setCreatedPromotion] = useState(false);
+  const [lettterview, setLetterView] = useState(false);
 
-  const promotionListView = (key, page, status = 6,role) => {
+  const setViewLetter = (val) => {
+    setLetterView(val);
+  };
+
+  const promotionListView = (key, page, status = 6, role) => {
     console.log(key, page, client.defaults.headers, "promotion ");
     console.log(key, page, "promotion ");
     setLoader(true);
@@ -89,13 +94,15 @@ export const PromotionProvider = (props) => {
       });
   };
 
-  const PositionNew = (depId,oldPosition) => {
+  const PositionNew = (depId, oldPosition) => {
     setLoader(true);
-    console.log(oldPosition)
+    console.log(oldPosition);
     client
       .get("/api/v1/position/view/deptId?deptId=" + depId)
       .then((response) => {
-        state.positionNew = response.data.data.filter(item =>item.position !== oldPosition)
+        state.positionNew = response.data.data.filter(
+          (item) => item.position !== oldPosition
+        );
         setLoader(false);
         console.log("--->", state.positionNew);
         console.log(response);
@@ -138,7 +145,7 @@ export const PromotionProvider = (props) => {
         console.log("response--->", state.promotionCreate);
         console.log(response);
         toast.info(response.data.message);
-        ViewPromotionById(response.data.data.promotionId)
+        ViewPromotionById(response.data.data.promotionId);
         if (
           Approve === 1 &&
           response.data !== null &&
@@ -255,6 +262,8 @@ export const PromotionProvider = (props) => {
         promotionByEmployee: state.promotionByEmployee,
         approvePromotionData: state.approvePromotionData,
         rejectPromotionData: state.rejectPromotionData,
+        lettterview: lettterview,
+        setViewLetter,
       }}
     >
       {props.children}
