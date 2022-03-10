@@ -326,7 +326,7 @@ const PermanentOfferLetter = () => {
                         <b>
                           {Math.round(
                             offerLetterData.permanentCandidateOffer
-                              .grossSalary + +offerLetterData.bonusAmt
+                              .grossSalary  +offerLetterData.bonusAmt
                           )}
                         </b>
                       </td>
@@ -432,15 +432,17 @@ const PermanentOfferLetter = () => {
                       <td>
                         <b>
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.ctc
-                          )}
+                            offerLetterData.permanentCandidateOffer.ctc+
+                            offerLetterData.bonusAmt) 
+                          }
                         </b>
                       </td>
                       <td>
                         <b>
                           {Math.round(
                             offerLetterData.permanentCandidateOffer.ctc
-                          ) * 12}
+                            +
+                            offerLetterData.bonusAmt) * 12}
                         </b>
                       </td>
                     </tr>

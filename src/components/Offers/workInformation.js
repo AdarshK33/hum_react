@@ -71,7 +71,8 @@ const WorkInformation = (props) => {
     costcenterByDepartment,
     costcenterByDepartmentData,
     positionByDepartment,
-    positionByDepartmentData
+    positionByDepartmentData,
+    positionByDepartmentNull
   } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -183,14 +184,15 @@ const WorkInformation = (props) => {
       noticePeriodView(state.employmentType, state.department);
     }
   }, [state.employmentType, state.department]);
-
+ 
   useEffect(() => {
     let superMangerFlag;
     let departmentId;
     if (
       state.department !== null &&
       state.department !== undefined &&
-      state.department !== ""
+      state.department !== ""&&
+      state.department !=="Select Department"
     ) {
       console.log("state.department", state.department);
       if (rolePermission == "superCostCenterManager") {
@@ -210,6 +212,8 @@ const WorkInformation = (props) => {
         costcenterByDepartment(state.department, superMangerFlag);
         positionByDepartment(departmentId[0].deptId)
       }
+    }else{
+      positionByDepartmentNull()
     }
   }, [state.department]);
 
@@ -562,7 +566,7 @@ const WorkInformation = (props) => {
                   required
                 >
                   {}
-                  <option value="">Select Department</option>
+                  <option value="Select Department">Select Department</option>
                   {departmentName !== null &&
                     departmentName !== undefined &&
                     departmentName.length > 0 &&
