@@ -68,7 +68,8 @@ const EditWorkInformation = () => {
     costcenterByDepartment,
     costcenterByDepartmentData,
     positionByDepartment,
-    positionByDepartmentData
+    positionByDepartmentData,
+    positionByDepartmentNull
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -203,6 +204,8 @@ const EditWorkInformation = () => {
         costcenterByDepartment(state.department, superMangerFlag);
         positionByDepartment(departmentId[0].deptId)
       }
+    }else{
+      positionByDepartmentNull()
     }
   }, [state.department]);
   useEffect(() => {
