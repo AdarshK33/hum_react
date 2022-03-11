@@ -167,7 +167,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
                   <br />
                   <br />
                   We hereby confirm that you have been working in{" "}
-                  {relivingLetterData.company} since{" "}
+                  {relivingLetterData.company} &nbsp;since{" "}
                   <b>
                     {relivingLetterData !== undefined &&
                       relivingLetterData.dateOfJoining}

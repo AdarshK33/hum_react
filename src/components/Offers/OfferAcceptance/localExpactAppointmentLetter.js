@@ -100,7 +100,7 @@ const LocalExpactAppointmentLetter = (props) => {
             </p>
             <p>
               Your gross fixed compensation would be INR.{" "}
-              <b>{candidateLetterData.permanentCandidateOffer.grossSalary}</b>.
+              <b>{candidateLetterData.permanentCandidateOffer.grossSalary}</b>.{" "}
               You are also entitled for a monthly statutory/non-statutory bonus
               which will be at a maximum <b>{candidateLetterData.bonus}</b> % of
               your gross monthly fixed compensation. You are entitled to all the

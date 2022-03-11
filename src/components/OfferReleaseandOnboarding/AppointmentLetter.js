@@ -16,6 +16,7 @@ const AppointmentLetter = (props) => {
     submitAppointmentLetter,
     loader,
     number2text,
+    lettterview,
     setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
@@ -73,7 +74,7 @@ const AppointmentLetter = (props) => {
   return (
     <Fragment>
       {offerLetterData && offerLetterData.permanentCandidateOffer ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

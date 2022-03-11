@@ -11,7 +11,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 
 const EmployeeExitView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
-  const [modeOfSeparationReasonId,SetModeOfSeparationReasonId] = useState("")
+  const [modeOfSeparationReasonId, SetModeOfSeparationReasonId] = useState("");
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
   const [RehireYes, setRehireYes] = useState(false);
@@ -88,13 +88,18 @@ const EmployeeExitView = () => {
       state.mngrId = employeeData.managerId ? employeeData.managerId : "";
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
-       state.modeOfSeparationId = employeeData.modeOfSeparationId;
-       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
+      state.modeOfSeparationId = employeeData.modeOfSeparationId;
+      state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
+      if (
+        employeeData.department == "AFS" ||
+        employeeData.department == "IT" ||
+        employeeData.department == "Legal" ||
+        employeeData.department == "Finance"
+      ) {
+        state.noticePeriod = 2;
+      } else {
+        state.noticePeriod = 1;
       }
       // state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
@@ -105,7 +110,7 @@ const EmployeeExitView = () => {
         employeeData.noticePeriodRecoveryDays !== undefined
           ? employeeData.noticePeriodRecoveryDays
           : "";
-
+      state.remarks = employeeData.rehireRemark;
       if (
         employeeData.noticePeriodRecovery !== null &&
         employeeData.noticePeriodRecovery !== undefined
@@ -153,27 +158,30 @@ const EmployeeExitView = () => {
       Object.keys(ModeOfSeparationData).length !== 0
     ) {
       if (employeeData.modeOfSeparationId === 1) {
-        console.log(ModeOfSeparationData[0].modeOfSeparation,ModeOfSeparationData);
+        console.log(
+          ModeOfSeparationData[0].modeOfSeparation,
+          ModeOfSeparationData
+        );
         console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
       }
       ModeOfSeparationData.map((item, i) => {
         if (
-          employeeData.modeOfSeparationId ===
-          item.modeOfSeparation.separationId
+          employeeData.modeOfSeparationId === item.modeOfSeparation.separationId
         ) {
-          setModeOfSeparation(
-            item.modeOfSeparation.modeOfSeparation
-          );
+          setModeOfSeparation(item.modeOfSeparation.modeOfSeparation);
 
           item.modeOfSeparationReasonList.map((item1, j) => {
-            console.log(item1,employeeData,"item1")
+            console.log(item1, employeeData, "item1");
             if (
-              employeeData.modeOfSeparationReasonId == item1.separationReasonId){
-              console.log(item1.modeOfSeparationReason,"item1.modeOfSeparationReason")
-              state.modeOfSeparationReasonId =
-              item1.modeOfSeparationReason;
-                SetModeOfSeparationReasonId(item1.modeOfSeparationReason)
+              employeeData.modeOfSeparationReasonId == item1.separationReasonId
+            ) {
+              console.log(
+                item1.modeOfSeparationReason,
+                "item1.modeOfSeparationReason"
+              );
+              state.modeOfSeparationReasonId = item1.modeOfSeparationReason;
+              SetModeOfSeparationReasonId(item1.modeOfSeparationReason);
             }
           });
         }
@@ -365,7 +373,7 @@ const EmployeeExitView = () => {
       }
     }
   };
-console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
+  console.log(modeOfSeparationReasonId, "modeOfSeparationReasonId");
   return (
     <Fragment>
       {submitLetter ? (
@@ -673,25 +681,39 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                         marginBottom: "3rem",
                       }}
                     >
-                     { state.empContractType !== "internship" ?<Col sm={4}>
-                        <div>
-                          <label>
-                            <b>Notice Period:</b>
-                            <label className="itemResult">
-                              &nbsp;&nbsp; {state.noticePeriod == 1?`${state.noticePeriod} Month`:state.noticePeriod >1?`${state.noticePeriod} Months`:''}
+                      {state.empContractType !== "internship" ? (
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              <b>Notice Period:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{" "}
+                                {state.noticePeriod == 1
+                                  ? `${state.noticePeriod} Month`
+                                  : state.noticePeriod > 1
+                                  ? `${state.noticePeriod} Months`
+                                  : ""}
+                              </label>
                             </label>
-                          </label>
-                        </div>
-                      </Col>:(<Col sm={4}>
-                                    <div>
-                                    <label>
-                                <b>Internship contract end date:</b>
-                                 <label className="itemResult">
-                          &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
-                                    </label>
-                                   </label>
-                              </div>
-                               </Col> )}
+                          </div>
+                        </Col>
+                      ) : (
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              <b>Internship contract end date:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{" "}
+                                {state.noticePeriod === 1
+                                  ? `${state.noticePeriod} Month`
+                                  : state.noticePeriod > 1
+                                  ? `${state.noticePeriod} Months`
+                                  : state.noticePeriod}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      )}
                       <Col sm={4}>
                         <div>
                           <label>
@@ -713,7 +735,7 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                         </div>
                       </Col>
                     </Row>
-{/*                     
+                    {/*                     
                      {state.modeOfSeparationId == 4?<> <Row
                       style={{
                         marginLeft: "2rem",
@@ -760,12 +782,14 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                     </Row></>:""}
                       */}
                     <Row
-                          style={{
-                            marginTop: "2rem",
-                            marginLeft: "2rem",
-                            marginBottom: "2rem",
-                          }}
-                        >                  <Col sm={4}>
+                      style={{
+                        marginTop: "2rem",
+                        marginLeft: "2rem",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      {" "}
+                      <Col sm={4}>
                         <div>
                           <label>
                             <b>Approver:</b>
@@ -773,163 +797,172 @@ console.log(modeOfSeparationReasonId,"modeOfSeparationReasonId")
                               &nbsp;&nbsp; {state.mngrName}
                               &nbsp; {state.mngrId}
                             </label>
-                            
                           </label>
                         </div>
                       </Col>
-                  </Row>
-                   {state.empContractType !== "" &&
-                   state.empContractType !== null &&
-                   state.empContractType !== undefined &&
-                   state.empContractType !== "internship" ? <Row
-                      style={{
-                        marginTop: "2rem",
-                        marginLeft: "2rem",
-                        marginBottom: "2rem",
-                      }}
-                    >
-                      <Col sm={2}>
-                        <div>
-                          <label>
-                            <b>Notice Period Recovery</b>
-                          </label>
-                          {RcryError ? (
-                            <p style={{ color: "red" }}>
-                              {" "}
-                              *Please select one of the option
-                            </p>
-                          ) : (
-                            <p></p>
-                          )}
-                        </div>
-                      </Col>
-                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                        <Form.Group>
-                          <div className="boxField_2 input">
-                            <input
-                              className="largerCheckbox"
-                              type="checkbox"
-                              value="yes"
-                              checked={RcryYes}
-                              style={RcryError ? { borderColor: "red" } : {}}
-                              // required={required}
-                              disabled={true}
-                              onChange={handleNoticePeriodRcryYes}
-                            />
-                            <label className="itemResult">Yes</label>
+                    </Row>
+                    {state.empContractType !== "" &&
+                    state.empContractType !== null &&
+                    state.empContractType !== undefined &&
+                    state.empContractType !== "internship" ? (
+                      <Row
+                        style={{
+                          marginTop: "2rem",
+                          marginLeft: "2rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              <b>Notice Period Recovery</b>
+                            </label>
+                            {RcryError ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                *Please select one of the option
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
                           </div>
-                        </Form.Group>
-                      </Col>
-                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                        <Form.Group>
-                          <div className="boxField_2 input">
-                            <input
-                              className="largerCheckbox"
-                              type="checkbox"
-                              value="no"
-                              checked={RcryNo}
-                              style={RcryError ? { borderColor: "red" } : {}}
-                              // required={required}
-                              onChange={handleNoticePeriodRcryNo}
-                              disabled={true}
-                            />
-                            <label className="itemResult">No</label>
-                          </div>
-                        </Form.Group>
-                      </Col>
+                        </Col>
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                checked={RcryYes}
+                                style={RcryError ? { borderColor: "red" } : {}}
+                                // required={required}
+                                disabled={true}
+                                onChange={handleNoticePeriodRcryYes}
+                              />
+                              <label className="itemResult">Yes</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="no"
+                                checked={RcryNo}
+                                style={RcryError ? { borderColor: "red" } : {}}
+                                // required={required}
+                                onChange={handleNoticePeriodRcryNo}
+                                disabled={true}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
 
-                      <Col sm={2}>
-                        <div>
-                          <label>
-                            <b>Notice Period Recovery Days</b>
-                          </label>
-                          {/* {uanNumberError ? (
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              <b>Notice Period Recovery Days</b>
+                            </label>
+                            {/* {uanNumberError ? (
                 <p style={{ color: "red" }}> *Please enter your UAN number</p>
               ) : (
                 <p></p>
               )} */}
-                        </div>
-                      </Col>
-                      <Col sm={2} style={{ marginTop: "0.5rem" }}>
-                        <Form.Group>
-                          <Form.Control
-                            type="text"
-                            placeholder=""
-                            required
-                            style={{
-                              borderColor: "#006ebb",
-                            }}
-                            // disabled={!RcryYes}
-                            disabled={true}
-                            name="noticePeriodRcryDays"
-                            value={state.noticePeriodRcryDays}
-                            onChange={(e) => changeHandler(e)}
-                            style={rcryDaysError ? { borderColor: "red" } : {}}
-                          />
+                          </div>
+                        </Col>
+                        <Col sm={2} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <Form.Control
+                              type="text"
+                              placeholder=""
+                              required
+                              style={{
+                                borderColor: "#006ebb",
+                              }}
+                              // disabled={!RcryYes}
+                              disabled={true}
+                              name="noticePeriodRcryDays"
+                              value={state.noticePeriodRcryDays}
+                              onChange={(e) => changeHandler(e)}
+                              style={
+                                rcryDaysError ? { borderColor: "red" } : {}
+                              }
+                            />
 
-                          {rcryDaysError ? (
-                            <p style={{ color: "red" }}>
-                              {" "}
-                              &nbsp; *Please enter valid days
-                            </p>
-                          ) : (
-                            <p></p>
-                          )}
-                        </Form.Group>
-                      </Col>
-                      <Col sm={2}>
-                        <div>
-                          <label>
-                            <b>
-                              Eligible <br />
-                              For Rehire
-                            </b>
-                          </label>
-                          {RehireError ? (
-                            <p style={{ color: "red" }}>
-                              {" "}
-                              *Please select one of the option
-                            </p>
-                          ) : (
-                            <p></p>
-                          )}
-                        </div>
-                      </Col>
-                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                        <Form.Group>
-                          <div className="boxField_2 input">
-                            <input
-                              className="largerCheckbox"
-                              type="checkbox"
-                              value="yes"
-                              checked={RehireYes}
-                              // required={required}
-                              style={RehireError ? { borderColor: "red" } : {}}
-                              onChange={handleRehireChangeYes}
-                              disabled={true}
-                            />
-                            <label className="itemResult">Yes</label>
+                            {rcryDaysError ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid days
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              <b>
+                                Eligible <br />
+                                For Rehire
+                              </b>
+                            </label>
+                            {RehireError ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                *Please select one of the option
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
                           </div>
-                        </Form.Group>
-                      </Col>
-                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                        <Form.Group>
-                          <div className="boxField_2 input">
-                            <input
-                              className="largerCheckbox"
-                              type="checkbox"
-                              value="no"
-                              checked={RehireNo}
-                              // required={required}
-                              style={RehireError ? { borderColor: "red" } : {}}
-                              onChange={handleRehireChangeNo}
-                              disabled={true}
-                            />
-                            <label className="itemResult">No</label>
-                          </div>
-                        </Form.Group>
-                      </Col>
-                    </Row>:''}
+                        </Col>
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                checked={RehireYes}
+                                // required={required}
+                                style={
+                                  RehireError ? { borderColor: "red" } : {}
+                                }
+                                onChange={handleRehireChangeYes}
+                                disabled={true}
+                              />
+                              <label className="itemResult">Yes</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="no"
+                                checked={RehireNo}
+                                // required={required}
+                                style={
+                                  RehireError ? { borderColor: "red" } : {}
+                                }
+                                onChange={handleRehireChangeNo}
+                                disabled={true}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                    ) : (
+                      ""
+                    )}
                     {state.remarks !== "" &&
                     state.remarks !== null &&
                     state.remarks !== undefined ? (

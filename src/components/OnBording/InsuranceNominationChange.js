@@ -42,6 +42,7 @@ const InsuranceNomination = (props) => {
     insuranceTopUpData,
     premiumView,
     premiumViewData,
+    bankView,
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
   const [showShowCauseNoticeModal, setShow] = useState(false);
@@ -156,6 +157,7 @@ const InsuranceNomination = (props) => {
   const [NAcheck, setNAcheck] = useState(false);
   const [NAcheck2, setNAcheck2] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [disabled, setDisableState] = useState(false);
   const [addFirst, setAddFirst] = useState(false);
   const [addSecond, setAddSecond] = useState(false);
   const [addThird, setAddThird] = useState(false);
@@ -308,7 +310,18 @@ const InsuranceNomination = (props) => {
     }
   }, [candidateProfileData]);
   console.log("personal information candidateViewInfo-->", candidateViewInfo);
-
+  useEffect(() => {
+    bankView(candidateProfileData.candidateId);
+  }, []);
+  useEffect(() => {
+    if (candidateProfileData && Object.keys(candidateProfileData).length) {
+      if (candidateProfileData.documentReUploadCount !== 0) {
+        setDisableState(true);
+      } else {
+        setDisableState(false);
+      }
+    }
+  }, [candidateProfileData]);
   // console.log("contract type-->", candidateViewInfo.contractType);
   useEffect(() => {
     console.log("current year", moment().format("YYYY"));
@@ -332,8 +345,7 @@ const InsuranceNomination = (props) => {
     }
   }, [sumInsuredId]);
   console.log("premiumViewData", premiumViewData);
-  console.log("candidateProfileData", candidateProfileData,sumInsuredId);
-
+  console.log("candidateProfileData", candidateProfileData, sumInsuredId);
 
   useEffect(() => {
     if (
@@ -3333,6 +3345,7 @@ const InsuranceNomination = (props) => {
                   type="checkbox"
                   //   style={genderError ? { borderColor: "red" } : {}}
                   value="Other1"
+                  disabled={disabled}
                   //   required={required}
                   checked={NAcheck2}
                   onChange={handleNACheckboxChange2}
@@ -3362,7 +3375,7 @@ const InsuranceNomination = (props) => {
                         name="nominiName"
                         value={state.nominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         required
                         style={nomineNameError_1 ? { borderColor: "red" } : {}}
                         placeholder="Dependent Name"
@@ -3386,7 +3399,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="relationship"
                         value={state.relationship}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         defaultValue={"Spouse"}
                         //   onChange={}
                         onChange={changeHandler}
@@ -3429,7 +3442,7 @@ const InsuranceNomination = (props) => {
                         name="gender"
                         value={state.gender}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={genderError_1 ? { borderColor: "red" } : {}}
                       >
                         <option value="">Gender</option>
@@ -3488,7 +3501,7 @@ const InsuranceNomination = (props) => {
                         <DatePicker
                           className="form-control onBoard-view"
                           selected={Nominee1DOB}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           required
                           onChange={(e) => dateOfBirthHandler(e, "1")}
                           maxDate={new Date()}
@@ -3517,7 +3530,7 @@ const InsuranceNomination = (props) => {
                         placeholder="Age"
                         required="required"
                         name="age"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         value={state.age}
                         onChange={changeHandler}
                         style={ageError_1 ? { borderColor: "red" } : {}}
@@ -3540,7 +3553,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="bloodGroup"
                         value={state.bloodGroup}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={bloodGroupError_1 ? { borderColor: "red" } : {}}
                       >
@@ -3595,7 +3608,7 @@ const InsuranceNomination = (props) => {
                         name="extra1nominiName"
                         value={state.extra1nominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         required
                         style={
                           extra1nomineNameError_1 ? { borderColor: "red" } : {}
@@ -3622,7 +3635,7 @@ const InsuranceNomination = (props) => {
                         name="extra1relationship"
                         value={state.extra1relationship}
                         //   onChange={}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           extra1relationshipError_1 |
@@ -3663,7 +3676,7 @@ const InsuranceNomination = (props) => {
                         name="extra1gender"
                         value={state.extra1gender}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           extra1genderError_1 ? { borderColor: "red" } : {}
                         }
@@ -3694,7 +3707,7 @@ const InsuranceNomination = (props) => {
                           DeleteFirst();
                         }}
                         type="cancel"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
                         <i
@@ -3732,7 +3745,7 @@ const InsuranceNomination = (props) => {
                           dateFormat="yyyy-MM-dd"
                           maxDate={new Date()}
                           placeholderText="YYYY-MM-DD"
-                          disabled={disable}
+                          disabled={disable || disabled}
                           style={extra1DOBError_1 ? { borderColor: "red" } : {}}
                         />
                       </div>
@@ -3757,7 +3770,7 @@ const InsuranceNomination = (props) => {
                         required="required"
                         name="extra1age"
                         value={state.extra1age}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={extra1ageError_1 ? { borderColor: "red" } : {}}
                       />
@@ -3780,7 +3793,7 @@ const InsuranceNomination = (props) => {
                         name="extra1bloodGroup"
                         value={state.extra1bloodGroup}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           extra1bloodGroupError_1 ? { borderColor: "red" } : {}
                         }
@@ -3834,7 +3847,7 @@ const InsuranceNomination = (props) => {
                         name="nominee2NominiName"
                         value={state.nominee2NominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
                         style={nomineNameError_2 ? { borderColor: "red" } : {}}
@@ -3859,7 +3872,7 @@ const InsuranceNomination = (props) => {
                         name="nominee2Relationship"
                         value={state.nominee2Relationship}
                         options={relativesList}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           relationshipError_2 ? { borderColor: "red" } : {}
@@ -3887,7 +3900,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="nominee2Gender"
                         value={state.nominee2Gender}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={genderError_2 ? { borderColor: "red" } : {}}
                       >
@@ -3918,6 +3931,7 @@ const InsuranceNomination = (props) => {
                         onClick={() => {
                           DeleteSecond();
                         }}
+                        disabled={disabled}
                         type="cancel"
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
@@ -3952,7 +3966,7 @@ const InsuranceNomination = (props) => {
                           required
                           onChange={(e) => dateOfBirthHandler(e, "2")}
                           maxDate={new Date()}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
                           style={DOBError_2 ? { borderColor: "red" } : {}}
@@ -3978,7 +3992,7 @@ const InsuranceNomination = (props) => {
                         name="nominee2Age"
                         value={state.nominee2Age}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Age"
                         required="required"
                         style={ageError_2 ? { borderColor: "red" } : {}}
@@ -4001,7 +4015,7 @@ const InsuranceNomination = (props) => {
                       <Form.Control
                         as="select"
                         name="nominee2BloodGroup"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         value={state.nominee2BloodGroup}
                         onChange={changeHandler}
                         style={bloodGroupError_2 ? { borderColor: "red" } : {}}
@@ -4056,7 +4070,7 @@ const InsuranceNomination = (props) => {
                         name="extra2nominiName"
                         value={state.extra2nominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         required
                         style={
                           extra2nomineNameError_1 ? { borderColor: "red" } : {}
@@ -4085,7 +4099,7 @@ const InsuranceNomination = (props) => {
                         defaultValue={"Spouse"}
                         //   onChange={}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           extra2relationshipError_1
                             ? { borderColor: "red" }
@@ -4114,7 +4128,7 @@ const InsuranceNomination = (props) => {
                         name="extra2gender"
                         value={state.extra2gender}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           extra2genderError_1 ? { borderColor: "red" } : {}
                         }
@@ -4145,7 +4159,7 @@ const InsuranceNomination = (props) => {
                           DeleteExtra2();
                         }}
                         type="cancel"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
                         <i
@@ -4183,7 +4197,7 @@ const InsuranceNomination = (props) => {
                           maxDate={new Date()}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
-                          disabled={disable}
+                          disabled={disable || disabled}
                           style={extra2DOBError_1 ? { borderColor: "red" } : {}}
                         />
                       </div>
@@ -4207,7 +4221,7 @@ const InsuranceNomination = (props) => {
                         placeholder="Age"
                         required="required"
                         name="extra2age"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         value={state.extra2age}
                         onChange={changeHandler}
                         style={extra2ageError_1 ? { borderColor: "red" } : {}}
@@ -4230,7 +4244,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="extra2bloodGroup"
                         value={state.extra2bloodGroup}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           extra2bloodGroupError_1 ? { borderColor: "red" } : {}
@@ -4285,7 +4299,7 @@ const InsuranceNomination = (props) => {
                         name="nominee5NominiName"
                         value={state.nominee5NominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
                         style={nomineNameError_5 ? { borderColor: "red" } : {}}
@@ -4311,7 +4325,7 @@ const InsuranceNomination = (props) => {
                         value={state.nominee5Relationship}
                         options={relativesList}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           relationshipError_5 ? { borderColor: "red" } : {}
                         }
@@ -4341,7 +4355,7 @@ const InsuranceNomination = (props) => {
                         name="nominee5Gender"
                         value={state.nominee5Gender}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={genderError_5 ? { borderColor: "red" } : {}}
                       >
                         <option value="">Gender</option>
@@ -4371,6 +4385,7 @@ const InsuranceNomination = (props) => {
                           DeleteThird();
                         }}
                         type="cancel"
+                        disabled={disabled}
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
                         <i
@@ -4401,7 +4416,7 @@ const InsuranceNomination = (props) => {
                         <DatePicker
                           className="form-control onBoard-view"
                           selected={Nominee5DOB}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           required
                           onChange={(e) => dateOfBirthHandler(e, "5")}
                           maxDate={new Date()}
@@ -4430,7 +4445,7 @@ const InsuranceNomination = (props) => {
                         name="nominee5Age"
                         value={state.nominee5Age}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Age"
                         required="required"
                         style={ageError_5 ? { borderColor: "red" } : {}}
@@ -4455,7 +4470,7 @@ const InsuranceNomination = (props) => {
                         name="nominee5BloodGroup"
                         value={state.nominee5BloodGroup}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={bloodGroupError_5 ? { borderColor: "red" } : {}}
                       >
                         <option value="">Blood Group</option>
@@ -4509,7 +4524,7 @@ const InsuranceNomination = (props) => {
                         onChange={changeHandler}
                         placeholder="Dependent Name"
                         required="required"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={nomineNameError_51 ? { borderColor: "red" } : {}}
                       />
                       {nomineNameError_51 ? (
@@ -4533,7 +4548,7 @@ const InsuranceNomination = (props) => {
                         value={state.nominee5Relationship1}
                         options={relativesList}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           relationshipError_51 ? { borderColor: "red" } : {}
                         }
@@ -4564,7 +4579,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="nominee5Gender1"
                         value={state.nominee5Gender1}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={genderError_51 ? { borderColor: "red" } : {}}
                       >
@@ -4595,7 +4610,7 @@ const InsuranceNomination = (props) => {
                           DeleteExtra3();
                         }}
                         type="cancel"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
                         <i
@@ -4626,7 +4641,7 @@ const InsuranceNomination = (props) => {
                         <DatePicker
                           className="form-control onBoard-view"
                           selected={Nominee5DOB1}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           required
                           onChange={(e) => dateOfBirthHandler(e, "51")}
                           maxDate={new Date()}
@@ -4655,7 +4670,7 @@ const InsuranceNomination = (props) => {
                         name="nominee5Age1"
                         value={state.nominee5Age1}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Age"
                         required="required"
                         style={ageError_51 ? { borderColor: "red" } : {}}
@@ -4679,7 +4694,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="nominee5BloodGroup1"
                         value={state.nominee5BloodGroup1}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={bloodGroupError_51 ? { borderColor: "red" } : {}}
                       >
@@ -4765,7 +4780,7 @@ const InsuranceNomination = (props) => {
                     onClick={() => {
                       addOneMoreExtra();
                     }}
-                    disabled={disable}
+                    disabled={disable || disabled}
                     style={{ width: "175px" }}
                   >
                     <b> Add New Dependent + </b>
@@ -4788,7 +4803,7 @@ const InsuranceNomination = (props) => {
                     onClick={() => {
                       AddOneMore();
                     }}
-                    disabled={disable}
+                    disabled={disable || disabled}
                     style={{ width: "175px" }}
                   >
                     <b> Add New Dependent + </b>
@@ -4814,7 +4829,7 @@ const InsuranceNomination = (props) => {
                     //   style={genderError ? { borderColor: "red" } : {}}
                     value="Male"
                     checked={parentsCheck}
-                    disabled={disable}
+                    disabled={disable || disabled}
                     //required={required}
                     onChange={handleParentCheckboxChange}
                   />
@@ -4830,7 +4845,7 @@ const InsuranceNomination = (props) => {
                     type="checkbox"
                     //   style={genderError ? { borderColor: "red" } : {}}
                     value="Female"
-                    disabled={disable}
+                    disabled={disable || disabled}
                     //   required={required}
                     checked={InlawCheck}
                     onChange={handleInLawCheckboxChange}
@@ -4847,7 +4862,7 @@ const InsuranceNomination = (props) => {
                     type="checkbox"
                     //   style={genderError ? { borderColor: "red" } : {}}
                     value="Other"
-                    disabled={disable}
+                    disabled={disable || disabled}
                     //   required={required}
                     checked={NAcheck}
                     onChange={handleNACheckboxChange}
@@ -4881,7 +4896,7 @@ const InsuranceNomination = (props) => {
                         name="nominee3NominiName"
                         value={state.nominee3NominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
                         style={nomineNameError_3 ? { borderColor: "red" } : {}}
@@ -4907,7 +4922,7 @@ const InsuranceNomination = (props) => {
                         value={state.nominee3Relationship}
                         options={relativesList}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={
                           relationshipError_3 | relationshipError_31
                             ? { borderColor: "red" }
@@ -4942,7 +4957,7 @@ const InsuranceNomination = (props) => {
                         name="nominee3Gender"
                         value={state.nominee3Gender}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={genderError_3 ? { borderColor: "red" } : {}}
                       >
                         {/* <option value="">Gender</option> */}
@@ -5006,7 +5021,7 @@ const InsuranceNomination = (props) => {
                           required
                           onChange={(e) => dateOfBirthHandler(e, "3")}
                           maxDate={new Date()}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
                           style={DOBError_3 ? { borderColor: "red" } : {}}
@@ -5032,7 +5047,7 @@ const InsuranceNomination = (props) => {
                         name="nominee3Age"
                         value={state.nominee3Age}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Age"
                         required="required"
                         style={ageError_3 ? { borderColor: "red" } : {}}
@@ -5057,7 +5072,7 @@ const InsuranceNomination = (props) => {
                         name="nominee3BloodGroup"
                         value={state.nominee3BloodGroup}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={bloodGroupError_3 ? { borderColor: "red" } : {}}
                       >
                         <option value="">Blood Group</option>
@@ -5108,7 +5123,7 @@ const InsuranceNomination = (props) => {
                         name="nominee4NominiName"
                         value={state.nominee4NominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
                         style={nomineNameError_4 ? { borderColor: "red" } : {}}
@@ -5133,7 +5148,7 @@ const InsuranceNomination = (props) => {
                         name="nominee4Relationship"
                         value={state.nominee4Relationship}
                         options={relativesList}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           relationshipError_4 ? { borderColor: "red" } : {}
@@ -5162,7 +5177,7 @@ const InsuranceNomination = (props) => {
                         name="nominee4Gender"
                         value={state.nominee4Gender}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={genderError_4 ? { borderColor: "red" } : {}}
                       >
                         {/* <option value="">Gender</option>
@@ -5192,6 +5207,7 @@ const InsuranceNomination = (props) => {
                         onClick={() => {
                           DeleteParent2();
                         }}
+                        disabled={disabled}
                         type="cancel"
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
@@ -5225,7 +5241,7 @@ const InsuranceNomination = (props) => {
                           className="form-control onBoard-view"
                           selected={Nominee4DOB}
                           required
-                          disabled={disable}
+                          disabled={disable || disabled}
                           onChange={(e) => dateOfBirthHandler(e, "4")}
                           maxDate={new Date()}
                           dateFormat="yyyy-MM-dd"
@@ -5253,7 +5269,7 @@ const InsuranceNomination = (props) => {
                         name="nominee4Age"
                         value={state.nominee4Age}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Age"
                         required="required"
                         style={ageError_4 ? { borderColor: "red" } : {}}
@@ -5278,7 +5294,7 @@ const InsuranceNomination = (props) => {
                         name="nominee4BloodGroup"
                         value={state.nominee4BloodGroup}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         style={bloodGroupError_4 ? { borderColor: "red" } : {}}
                       >
                         <option value="">Blood Group</option>
@@ -5323,7 +5339,7 @@ const InsuranceNomination = (props) => {
                     onClick={() => {
                       addingParent2();
                     }}
-                    disabled={disable}
+                    disabled={disable || disabled}
                     style={{ width: "175px" }}
                   >
                     <b> Add New Dependent + </b>
@@ -5360,7 +5376,7 @@ const InsuranceNomination = (props) => {
                         name="In_law_nominee1NominiName"
                         value={state.In_law_nominee1NominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
                         style={
@@ -5387,7 +5403,7 @@ const InsuranceNomination = (props) => {
                         name="In_law_nominee1Relationship"
                         value={state.In_law_nominee1Relationship}
                         options={relativesList}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           In_law_relationshipError_1 |
@@ -5422,7 +5438,7 @@ const InsuranceNomination = (props) => {
                       <Form.Control
                         as="select"
                         name="In_law_nominee1Gender"
-                        disabled={disable}
+                        disabled={disable || disabled}
                         value={state.In_law_nominee1Gender}
                         onChange={changeHandler}
                         style={
@@ -5457,6 +5473,7 @@ const InsuranceNomination = (props) => {
                           DeleteOne();
                         }}
                         type="cancel"
+                        disabled={disabled}
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
                         <i
@@ -5492,7 +5509,7 @@ const InsuranceNomination = (props) => {
                           required
                           onChange={(e) => dateOfBirthHandler(e, "6")}
                           maxDate={new Date()}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
                           style={
@@ -5519,7 +5536,7 @@ const InsuranceNomination = (props) => {
                         type="text"
                         name="In_law_nominee1Age"
                         value={state.In_law_nominee1Age}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         placeholder="Age"
                         required="required"
@@ -5544,7 +5561,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="In_law_nominee1BloodGroup"
                         value={state.In_law_nominee1BloodGroup}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           In_law_bloodGroupError_1 ? { borderColor: "red" } : {}
@@ -5600,7 +5617,7 @@ const InsuranceNomination = (props) => {
                         name="In_law_nominee2NominiName"
                         value={state.In_law_nominee2NominiName}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
                         style={
@@ -5626,7 +5643,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="In_law_nominee2Relationship"
                         value={state.In_law_nominee2Relationship}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         options={relativesList}
                         onChange={changeHandler}
                         style={
@@ -5657,7 +5674,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="In_law_nominee2Gender"
                         value={state.In_law_nominee2Gender}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           In_law_genderError_2 ? { borderColor: "red" } : {}
@@ -5690,6 +5707,7 @@ const InsuranceNomination = (props) => {
                         onClick={() => {
                           DeleteInLaw2();
                         }}
+                        disabled={disabled}
                         type="cancel"
                         style={{ color: "white", border: " 2px solid#4466f2" }}
                       >
@@ -5724,7 +5742,7 @@ const InsuranceNomination = (props) => {
                         <DatePicker
                           className="form-control onBoard-view"
                           selected={In_law_Nominee2DOB}
-                          disabled={disable}
+                          disabled={disable || disabled}
                           required
                           onChange={(e) => dateOfBirthHandler(e, "7")}
                           maxDate={new Date()}
@@ -5755,7 +5773,7 @@ const InsuranceNomination = (props) => {
                         name="In_law_nominee2Age"
                         value={state.In_law_nominee2Age}
                         onChange={changeHandler}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         placeholder="Age"
                         required="required"
                         style={In_law_ageError_2 ? { borderColor: "red" } : {}}
@@ -5779,7 +5797,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="In_law_nominee2BloodGroup"
                         value={state.In_law_nominee2BloodGroup}
-                        disabled={disable}
+                        disabled={disable || disabled}
                         onChange={changeHandler}
                         style={
                           In_law_bloodGroupError_2 ? { borderColor: "red" } : {}
@@ -5826,7 +5844,7 @@ const InsuranceNomination = (props) => {
                     onClick={() => {
                       addingInLaw2();
                     }}
-                    disabled={disable}
+                    disabled={disable || disabled}
                     style={{ width: "175px" }}
                   >
                     <b> Add New Dependent + </b>
@@ -5909,6 +5927,7 @@ const InsuranceNomination = (props) => {
                         value={nominee.nomineeName}
                         onChange={nomineeHandler}
                         required
+                        disabled={disabled}
                         style={nomineeNameError ? { borderColor: "red" } : {}}
                         placeholder="Nominee Name"
                       />
@@ -5933,6 +5952,7 @@ const InsuranceNomination = (props) => {
                         name="nomineeRelationship"
                         value={nominee.nomineeRelationship}
                         onChange={nomineeHandler}
+                        disabled={disabled}
                         style={
                           nomineeRelationshipError ? { borderColor: "red" } : {}
                         }
@@ -5940,16 +5960,23 @@ const InsuranceNomination = (props) => {
                         <option value="">--Select--</option>
                         <option value="Father">Father</option>
                         <option value="Mother">Mother</option>
-                       {candidatePersonalInfoData &&
-          candidatePersonalInfoData.maritalStatus !== null &&
-          candidatePersonalInfoData.maritalStatus !== undefined &&
-          (candidatePersonalInfoData.maritalStatus === "married") |
-            (candidatePersonalInfoData.maritalStatus === "Married")?
-            <><option value="Father-inlaw">Father-In-Law</option>
-                        <option value="Mother-Inlaw">Mother-In-Law</option>
-                        <option value="Spouse">Spouse</option>
-                        <option value="Child1">Child 1</option>
-                        <option value="Child2">Child 2</option></>:<></>}
+                        {candidatePersonalInfoData &&
+                        candidatePersonalInfoData.maritalStatus !== null &&
+                        candidatePersonalInfoData.maritalStatus !== undefined &&
+                        (candidatePersonalInfoData.maritalStatus ===
+                          "married") |
+                          (candidatePersonalInfoData.maritalStatus ===
+                            "Married") ? (
+                          <>
+                            <option value="Father-inlaw">Father-In-Law</option>
+                            <option value="Mother-Inlaw">Mother-In-Law</option>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Child1">Child 1</option>
+                            <option value="Child2">Child 2</option>
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </Form.Control>
                       {nomineeRelationshipError ? (
                         <p style={{ color: "red" }}>
@@ -5980,6 +6007,7 @@ const InsuranceNomination = (props) => {
                           required
                           onChange={(e) => nomineeDateOfBirthHandler(e, "1")}
                           maxDate={new Date()}
+                          disabled={disabled}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
                           style={nomineeDOBError ? { borderColor: "red" } : {}}
@@ -6018,6 +6046,7 @@ const InsuranceNomination = (props) => {
                           name="nomineeAddress"
                           value={nominee.nomineeAddress}
                           onChange={nomineeHandler}
+                          disabled={disabled}
                           required
                           style={
                             nomineeAddressError ? { borderColor: "red" } : {}
@@ -6054,7 +6083,8 @@ const InsuranceNomination = (props) => {
                 <a onClick={handleIsuranceForm}>
                   {" "}
                   <u className="itemResult">
-                  Please download the form, attest the signature and re-upload the form
+                    Please download the form, attest the signature and re-upload
+                    the form
                   </u>
                 </a>
                 <br />
@@ -6175,6 +6205,7 @@ const InsuranceNomination = (props) => {
                   type="checkbox"
                   value="yes"
                   checked={topupYes}
+                  disabled={disabled}
                   onChange={TopupYesChange}
                 />
                 <label>Yes</label>
@@ -6189,6 +6220,7 @@ const InsuranceNomination = (props) => {
                   type="checkbox"
                   value="no"
                   checked={topupNo}
+                  disabled={disabled}
                   onChange={TopupNoChange}
                 />
                 <label>No </label>
@@ -6213,6 +6245,7 @@ const InsuranceNomination = (props) => {
                   name="insuredAmount"
                   value={sumInsured}
                   onChange={sumInsuredChange}
+                  disabled={disabled}
                   required
                   style={sumValueError ? { borderColor: "red" } : {}}
                 >

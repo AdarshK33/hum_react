@@ -15,6 +15,7 @@ const LocalExpactAppointmentLetter = (props) => {
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
     loader,
+    lettterview,
     setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
@@ -72,7 +73,7 @@ const LocalExpactAppointmentLetter = (props) => {
   return (
     <Fragment>
       {offerLetterData && offerLetterData.permanentCandidateOffer ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (
@@ -139,7 +140,7 @@ const LocalExpactAppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your gross fixed compensation would be INR.{" "}
-                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>.
+                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>.{" "}
                   You are also entitled for a monthly statutory/non-statutory
                   bonus which will be at a maximum{" "}
                   <b>{offerLetterData.bonus}</b> % of your gross monthly fixed

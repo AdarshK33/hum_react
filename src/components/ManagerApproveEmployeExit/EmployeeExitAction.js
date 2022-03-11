@@ -1252,7 +1252,7 @@ const EmployeeExitAction = (props) => {
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
-                          Generate Reliving Letter
+                          Generate Relieving Letter
                         </button>
                       ) : (
                         ""

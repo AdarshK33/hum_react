@@ -29,40 +29,48 @@ const HolidaysCard = () => {
           <table style={{ width: "96%" }}>
             <tbody>
               {HolidaysList.map((item) => {
-                return (
-                  <tr>
-                    <td
-                      style={{
-                        backgroundColor: "#f2f2f2",
-                        width: "50px",
-                        border: "1px solid white",
-                      }}
-                    >
-                      <div className="rosterColumn1">
-                        <label
-                          className={
-                            item.date.length === 1 ? "dateNumAdj" : "dateNum"
-                          }
-                        >
-                          {item.date.length === 1 ? "0" + item.date : item.date}{" "}
-                        </label>{" "}
-                        <label
-                          style={{
-                            marginLeft: "0.5rem",
-                          }}
-                        >
-                          {item.monthName}
-                        </label>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="holidayColumn2">
-                        <label>{item.day}</label>
-                        <div className="rosterContent">{item.holidayName}</div>
-                      </div>
-                    </td>
-                  </tr>
-                );
+                if (
+                  parseInt(item.year) === parseInt(new Date().getFullYear())
+                ) {
+                  return (
+                    <tr>
+                      <td
+                        style={{
+                          backgroundColor: "#f2f2f2",
+                          width: "50px",
+                          border: "1px solid white",
+                        }}
+                      >
+                        <div className="rosterColumn1">
+                          <label
+                            className={
+                              item.date.length === 1 ? "dateNumAdj" : "dateNum"
+                            }
+                          >
+                            {item.date.length === 1
+                              ? "0" + item.date
+                              : item.date}{" "}
+                          </label>{" "}
+                          <label
+                            style={{
+                              marginLeft: "0.5rem",
+                            }}
+                          >
+                            {item.monthName}
+                          </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="holidayColumn2">
+                          <label>{item.day}</label>
+                          <div className="rosterContent">
+                            <marquee>{item.holidayName}</marquee>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                }
               })}
             </tbody>
           </table>
