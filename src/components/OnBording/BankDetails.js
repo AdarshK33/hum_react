@@ -23,6 +23,7 @@ const BankDetails = (props) => {
     bankView,
     bankViewData,
     bankUpdate,
+    EmergencyContactView,
     bankUpdateData,
   } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
@@ -30,7 +31,18 @@ const BankDetails = (props) => {
   const [bankNameError, setBankNameError] = useState(false);
   const [ifscCodeError, setIfscCodeError] = useState(false);
   const [bankIdValue, setBankIdVlue] = useState(0);
-
+  useEffect(() => {
+    if (candidateProfileData && Object.keys(candidateProfileData).length) {
+      if (candidateProfileData.documentReUploadCount !== 0) {
+        setDisableState(true);
+      } else {
+        setDisableState(false);
+      }
+    }
+  }, [candidateProfileData]);
+  useEffect(() => {
+    EmergencyContactView(candidateProfileData.candidateId);
+  }, []);
   useEffect(() => {
     CandidateProfile();
     bankView(candidateProfileData.candidateId);
@@ -211,7 +223,7 @@ const BankDetails = (props) => {
                 onChange={changeBankHandler}
                 required
                 placeholder="Bank Name"
-                disabled={disabled}
+                isDisabled={disabled}
                 style={bankNameError ? { borderColor: "red" } : {}}
               />
               {bankNameError ? (

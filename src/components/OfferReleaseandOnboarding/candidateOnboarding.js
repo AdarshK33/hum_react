@@ -595,7 +595,7 @@ const CandidateOnboarding = () => {
           )}
         </div>
       ) : null}
-
+      {/* 
       {previewLetter &&
       candidateData !== undefined &&
       candidateData.workInformation !== undefined ? (
@@ -612,7 +612,7 @@ const CandidateOnboarding = () => {
         )
       ) : (
         ""
-      )}
+      )} */}
 
       <Modal show={showSubmitModal} onHide={handleClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>

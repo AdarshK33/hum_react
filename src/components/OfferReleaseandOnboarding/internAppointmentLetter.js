@@ -15,6 +15,7 @@ const InternAppointmentLetter = (props) => {
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
     loader,
+    lettterview,
     setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
@@ -75,7 +76,7 @@ const InternAppointmentLetter = (props) => {
       offerLetterData.internshipCandidateOffer !== undefined &&
       offerLetterData.internshipCandidateOffer !== null &&
       Object.keys(offerLetterData.internshipCandidateOffer).length !== 0 ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

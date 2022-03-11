@@ -24,7 +24,23 @@ import { OfferContext } from "../../context/OfferState";
 import man from "../../assets/images/dashboard/userImage.png";
 
 const OnBoardingStepper = (props) => {
-  const { CandidateProfile, candidateProfileData, documentView, documentViewData } = useContext(OnBoardContext);
+  const {
+    CandidateProfile,
+    candidateProfileData,
+    documentView,
+    documentViewData,
+    addressView,
+    addressViewData,
+    EmergencyContactView,
+    emergencyContactView,
+    bankView,
+    bankViewData,
+    InsuranceNominationView,
+    candidateInsuranceNominationData,
+    PFDeclarationView,
+    pfDeclarationView,
+  } = useContext(OnBoardContext);
+  const [enableDocIcon, setEnableDocIcon] = useState(false);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
@@ -117,9 +133,28 @@ const OnBoardingStepper = (props) => {
 
   useEffect(() => {
     documentView(candidateProfileData.candidateId);
-  }, [candidateProfileData]);
-  console.log("documentViewData", documentViewData);
+    addressView(candidateProfileData.candidateId);
+    EmergencyContactView(candidateProfileData.candidateId);
+    bankView(candidateProfileData.candidateId);
+    InsuranceNominationView(candidateProfileData.candidateId);
+    PFDeclarationView(candidateProfileData.candidateId);
 
+    documentView(candidateProfileData.candidateId);
+  }, [candidateProfileData, stepCount]);
+  console.log("documentViewData", documentViewData);
+  useEffect(() => {
+    if (documentViewData && Object.keys(documentViewData)) {
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 0 && item.documentName) {
+          console.log("photodoc", item.documentName, item.documentType);
+          setEnableDocIcon(true);
+        }
+      });
+    } else {
+      setEnableDocIcon(false);
+    }
+  }, [documentViewData]);
   const handleIconChange = (num) => {
     if (num >= 0 && num <= 6) {
       let tempArray = [...stepArray];
@@ -305,8 +340,15 @@ const OnBoardingStepper = (props) => {
 
                         <div
                           type="button"
-                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
-                             handleIconChange(stepArray[1].idValue);}:null
+                          onClick={
+                            (addressViewData &&
+                              Object.keys(addressViewData).length) ||
+                            (candidateProfileData.documentUploaded !== 0 &&
+                              candidateProfileData.overallStatus !== 0)
+                              ? () => {
+                                  handleIconChange(stepArray[1].idValue);
+                                }
+                              : null
                           }
                           className={stepArray[1].step}
                         >
@@ -329,8 +371,15 @@ const OnBoardingStepper = (props) => {
 
                         <div
                           type="button"
-                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
-                            handleIconChange(stepArray[2].idValue);}:null
+                          onClick={
+                            (emergencyContactView &&
+                              Object.keys(emergencyContactView).length) ||
+                            (candidateProfileData.documentUploaded !== 0 &&
+                              candidateProfileData.overallStatus !== 0)
+                              ? () => {
+                                  handleIconChange(stepArray[2].idValue);
+                                }
+                              : null
                           }
                           className={stepArray[2].step}
                         >
@@ -350,8 +399,15 @@ const OnBoardingStepper = (props) => {
 
                         <div
                           type="button"
-                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
-                            handleIconChange(stepArray[3].idValue);}:null
+                          onClick={
+                            (bankViewData &&
+                              Object.keys(bankViewData).length) ||
+                            (candidateProfileData.documentUploaded !== 0 &&
+                              candidateProfileData.overallStatus !== 0)
+                              ? () => {
+                                  handleIconChange(stepArray[3].idValue);
+                                }
+                              : null
                           }
                           className={stepArray[3].step}
                         >
@@ -374,8 +430,16 @@ const OnBoardingStepper = (props) => {
                           <React.Fragment>
                             <div
                               type="button"
-                              onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
-                                handleIconChange(stepArray[4].idValue);}:null
+                              onClick={
+                                (candidateInsuranceNominationData &&
+                                  Object.keys(candidateInsuranceNominationData)
+                                    .length) ||
+                                (candidateProfileData.documentUploaded !== 0 &&
+                                  candidateProfileData.overallStatus !== 0)
+                                  ? () => {
+                                      handleIconChange(stepArray[4].idValue);
+                                    }
+                                  : null
                               }
                               className={stepArray[4].step}
                             >
@@ -405,8 +469,15 @@ const OnBoardingStepper = (props) => {
                           <React.Fragment>
                             <div
                               type="button"
-                              onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
-                                handleIconChange(stepArray[5].idValue);}:null
+                              onClick={
+                                (pfDeclarationView &&
+                                  Object.keys(pfDeclarationView).length) ||
+                                (candidateProfileData.documentUploaded !== 0 &&
+                                  candidateProfileData.overallStatus !== 0)
+                                  ? () => {
+                                      handleIconChange(stepArray[5].idValue);
+                                    }
+                                  : null
                               }
                               className={stepArray[5].step}
                             >
@@ -432,8 +503,16 @@ const OnBoardingStepper = (props) => {
                         )}
                         <div
                           type="button"
-                          onClick={candidateProfileData.documentUploaded!==0&&candidateProfileData.overallStatus !==0?() => {
-                            handleIconChange(stepArray[6].idValue);}:null
+                          onClick={
+                            (documentViewData &&
+                              Object.keys(documentViewData).length &&
+                              enableDocIcon) ||
+                            (candidateProfileData.documentUploaded !== 0 &&
+                              candidateProfileData.overallStatus !== 0)
+                              ? () => {
+                                  handleIconChange(stepArray[6].idValue);
+                                }
+                              : null
                           }
                           className={stepArray[6].step}
                         >

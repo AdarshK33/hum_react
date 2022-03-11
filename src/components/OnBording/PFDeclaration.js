@@ -29,6 +29,7 @@ const PFDeclaration = (props) => {
     uploadFile,
     documentView,
     documentViewData,
+    InsuranceNominationView,
   } = useContext(OnBoardContext);
   const [dataExist, setDataExist] = useState({
     exist: false,
@@ -92,12 +93,24 @@ const PFDeclaration = (props) => {
   const [nomineeValue, setNomineeValue] = useState(0);
 
   const [uanNumberError, setUanNumberError] = useState(false);
-
+  const [disabled, setDisableState] = useState(false);
   useEffect(() => {
     documentView(candidateProfileData.candidateId);
   }, [candidateProfileData]);
   console.log("documentViewData", documentViewData);
+  useEffect(() => {
+    if (candidateProfileData && Object.keys(candidateProfileData).length) {
+      if (candidateProfileData.documentReUploadCount !== 0) {
+        setDisableState(true);
+      } else {
+        setDisableState(false);
+      }
+    }
+  }, [candidateProfileData]);
 
+  useEffect(() => {
+    InsuranceNominationView(candidateProfileData.candidateId);
+  }, []);
   useEffect(() => {
     if (
       documentViewData &&
@@ -818,6 +831,7 @@ const PFDeclaration = (props) => {
                   value="yes"
                   checked={firstJobYes}
                   required={required}
+                  disabled={disabled}
                   onChange={handleFirstJobYesChange}
                 />
                 <label>Yes</label>
@@ -832,6 +846,7 @@ const PFDeclaration = (props) => {
                   type="checkbox"
                   value="no"
                   checked={firstJobNo}
+                  disabled={disabled}
                   required={required}
                   onChange={handleFirstJobNoChange}
                 />
@@ -864,7 +879,7 @@ const PFDeclaration = (props) => {
                   value="yes"
                   checked={contributingPrevOrgYes}
                   required={required}
-                  disabled={firstJobYes == true}
+                  disabled={firstJobYes == true || disabled}
                   onChange={handleContributingPrevOrgYesChange}
                 />
                 <label>Yes</label>
@@ -879,7 +894,7 @@ const PFDeclaration = (props) => {
                   value="no"
                   checked={contributingPrevOrgNo}
                   required={required}
-                  disabled={firstJobYes}
+                  disabled={firstJobYes || disabled}
                   onChange={handleContributingPrevOrgNoChange}
                 />
                 <label>No </label>
@@ -907,7 +922,7 @@ const PFDeclaration = (props) => {
                 type="text"
                 placeholder="UAN number"
                 required
-                disabled={contributingPrevOrgNo}
+                disabled={contributingPrevOrgNo || disabled}
                 name="uanNumber"
                 value={uanNumber}
                 onChange={(e) => uanHandler(e)}
@@ -960,6 +975,8 @@ const PFDeclaration = (props) => {
                       ? true
                       : contributingPrevOrgNo == true
                       ? true
+                      : disabled
+                      ? true
                       : false
                   }
                   onChange={handleMemberOfPensionSchemeYesChange}
@@ -982,6 +999,8 @@ const PFDeclaration = (props) => {
                     firstJobYes == true
                       ? true
                       : contributingPrevOrgNo == true
+                      ? true
+                      : disabled
                       ? true
                       : false
                   }

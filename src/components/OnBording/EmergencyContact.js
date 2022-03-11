@@ -17,7 +17,7 @@ const EmergencyContact = (props) => {
     candidateProfileData,
     emergencyContactData,
     candidatePersonalInfoData,
-    CandidatePersonalInfo
+    CandidatePersonalInfo,
   } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
   // acessing candidateId from params
@@ -54,6 +54,18 @@ const EmergencyContact = (props) => {
     EmergencyContactView(candidateProfileData.candidateId);
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
+  useEffect(() => {
+    addressView(candidateProfileData.candidateId);
+  }, []);
+  useEffect(() => {
+    if (candidateProfileData && Object.keys(candidateProfileData).length) {
+      if (candidateProfileData.documentReUploadCount !== 0) {
+        setDisableState(true);
+      } else {
+        setDisableState(false);
+      }
+    }
+  }, [candidateProfileData]);
   useEffect(() => {
     // console.log("personal information view candidate", candidateProfileData);
     if (candidateProfileData) {
@@ -276,14 +288,18 @@ const EmergencyContact = (props) => {
                 <option value="Father">Father</option>
                 <option value="Brother">Brother</option>
                 <option value="Sister">Sister</option>
-                
-      {candidatePersonalInfoData &&
-       candidatePersonalInfoData.maritalStatus !== null &&
-         candidatePersonalInfoData.maritalStatus !== undefined &&
-         (candidatePersonalInfoData.maritalStatus === "married") |
-          (candidatePersonalInfoData.maritalStatus === "Married")
-       ?
-                <><option value="Spouse">Spouse</option></>:<></>}
+
+                {candidatePersonalInfoData &&
+                candidatePersonalInfoData.maritalStatus !== null &&
+                candidatePersonalInfoData.maritalStatus !== undefined &&
+                (candidatePersonalInfoData.maritalStatus === "married") |
+                  (candidatePersonalInfoData.maritalStatus === "Married") ? (
+                  <>
+                    <option value="Spouse">Spouse</option>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <option value="Others">Others</option>
               </Form.Control>
               <p style={{ color: "red" }}>{stateError.relationshipError} </p>
