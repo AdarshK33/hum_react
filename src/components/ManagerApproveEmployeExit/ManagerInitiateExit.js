@@ -564,6 +564,10 @@ const ManagerInitiateExit = () => {
         label: "End of Contract",
         value: 6,
       });
+      tempArr.push({
+        label:"Employee Demise",
+        value:7
+      })
       setModeOfSeparationList(tempArr);
     }
   }, [ModeOfSeparationData]);

@@ -139,7 +139,7 @@ const AppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your gross fixed compensation would be INR.{" "}
-                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
+                  <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>{" "}
                   You are also entitled for a monthly statutory/non-statutory
                   bonus which will be at a maximum{" "}
                   <b>{offerLetterData.bonus}</b> % of your gross monthly fixed
@@ -227,7 +227,7 @@ const AppointmentLetter = (props) => {
                   <li>
                     We hold transparency in high regard. You cannot involve
                     yourself in taking or giving bribe, gambling, theft,
-                    fraudulent practices or any such act that might affect
+                    fraudulent practices or any such act that might affect{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"
@@ -286,7 +286,7 @@ const AppointmentLetter = (props) => {
                     your employment is confirmed
                   </li>
                   <li>
-                    Service rules under the Certified Standing Orders of
+                    Service rules under the Certified Standing Orders of{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"
