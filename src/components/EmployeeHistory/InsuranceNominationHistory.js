@@ -150,8 +150,11 @@ console.log(dates)
                                                         <td>{item.name}</td>
                                                         <td>{item.relationship}</td>
                                                         <td>{item.nominationType}</td>
-                                                        <td>{item.dateOfBirth}</td>
-
+                                                        <td>{item.dateOfBirth !== null && 
+                                                        item.dateOfBirth !== undefined 
+                                                         && item.dateOfBirth !== ""?
+                                                        moment(new Date(item.dateOfBirth)).format("DD-MM-YYYY"):""}
+                                                        </td>  
                                                         <td>{item.age}</td>
                                                         <td>{item.gender}</td>
                                                         <td>{item.bloodGroup}</td>

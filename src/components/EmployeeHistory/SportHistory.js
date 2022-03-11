@@ -136,14 +136,14 @@ console.log(dates)
                                     currentRecords !== undefined && currentRecords !== null &&
                                     !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
-                                        currentRecords.map((item, i) => {
-                                            // item.sportName.map((valueData,j)=>{
+                                        currentRecords.map((item, i) => 
+                                             item.sportName.map((valueData,j)=>{
                                                 console.log(item.sportName,"item")
                                                 return (
-                                                    <tbody key={i + 1}>
+                                                    <tbody key={j + 1}>
                                                         <tr>
-                                                            <td>{i + 1 + indexOfFirstRecord}</td>
-                                                            <td>{item.sportName}</td>
+                                                            <td>{j + 1 + indexOfFirstRecord}</td>
+                                                            <td>{valueData}</td>
                                                             <td>{item.createdBy}</td>
                                                             <td>{ item.createdOn !== null && 
                                                         item.createdOn !== undefined 
@@ -152,9 +152,9 @@ console.log(dates)
                                                         </tr>
                                                     </tbody>
                                                 )
-                                            // })
+                                             })
                                             
-                                        }) :
+                                        ) :
                                         <tbody>
                                             <tr>
                                                 <td colspan='12'>No Record Found</td>

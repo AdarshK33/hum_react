@@ -116,7 +116,7 @@ const EditWorkInformation = () => {
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.workInformation;
-
+    console.log(workData,"workData")
     if (workData !== null && workData !== undefined) {
       setState({
         employmentType: workData.contractType,
@@ -139,6 +139,11 @@ const EditWorkInformation = () => {
       setDateOFLeaving(new Date(workData.dateOfLeaving));
       // setDateOfIssue(new Date(workData.passportIssuedDate));
       // setDateOfValidity(new Date(workData.passportExpiryDate));
+
+      setStateValue(workData.stateId);
+      setCity(workData.locationId);
+      cityData(workData.stateId);
+          setCityId(workData.cityId);
 
       locationView(workData.costCentre);
       setCostCenter(workData.costCentre);
@@ -278,20 +283,20 @@ const EditWorkInformation = () => {
   //   }
   // }, [candidateData]);
 
-  useEffect(() => {
-    if (locationName !== undefined && locationName !== null) {
-      setStateValue(locationName.stateId);
-      setCity(locationName.locationId);
-      cityData(locationName.stateId);
-      setCityId(locationName.cityId);
-    }
+  // useEffect(() => {
+  //   if (locationName !== undefined && locationName !== null) {
+  //     setStateValue(locationName.stateId);
+  //     setCity(locationName.locationId);
+  //     cityData(locationName.stateId);
+  //     setCityId(locationName.cityId);
+  //   }
 
-    console.log(
-      "candidateData.candidateInformation",
-      candidateData.candidateInformation
-    );
-    console.log("state in useEffect", locationName);
-  }, [locationName]);
+  //   console.log(
+  //     "candidateData.candidateInformation",
+  //     candidateData.candidateInformation
+  //   );
+  //   console.log("state in useEffect", locationName);
+  // }, [locationName]);
 
   const changeHandler = (e) => {
     setState({
@@ -307,7 +312,14 @@ const EditWorkInformation = () => {
   };
 
   const cityHandler = (e) => {
-    setCity(e.target.value);
+    return cityList.map((item)=>{
+      if(item.locationId == e.target.value){
+        console.log(item,"itemCIty")
+        setCity(e.target.value);
+        setCityId(item.cityId)
+      }
+    })
+
     console.log("city", e.target.value);
   };
   const costCenterChangeHandler = (e) => {
