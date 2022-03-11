@@ -29,8 +29,11 @@ const AdminRoster = () => {
   const [adminRosterButton, setadminRosterButton] = useState(true);
   const [storecostCenterName, setstorecostCenterName] = useState("");
   const [date, setDate] = useState();
+  const [employeId, setEmployeId] = useState("");
+  const [lastName, setlastName] = useState("");
   const { user } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
+  const [weekDAY,setWeekDAY]= useState("")
 
   const {
     adminWeekOffDataEmp,
@@ -44,6 +47,7 @@ const AdminRoster = () => {
     adminRosterAvailableShift,
     costCenter,
     rosterExport,
+    availableShifts,
   } = useContext(RosterContext);
   const { viewClusterCostCenter, clusterCostCenterList } =
     useContext(ClusterContext);
@@ -82,18 +86,39 @@ const AdminRoster = () => {
   }, [user.costCenter, user.loginType]);
 
   const handleClose = () => setAdminModal(false);
-  const handleShow = (item, name, ctype, weekId, cid) => {
-    console.log("contract type", item,ctype);
-    if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
-      toast.error("Please select future date");
-    }else{
+  const handleShow = (item, employeId,lastName,name, ctype, weekId,index) => {
+    console.log("contract type", item,ctype,index);
+    // if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
+    //   toast.error("Please select future date");
+    // }else{
+      {adminWeekOffDataListHeader !== null &&
+        adminWeekOffDataListHeader.map((e, i) => {
+         if(parseInt(i)===parseInt(index)){
+           setWeekDAY(e.day)
+         }
+        })}
+
     setshiftDate(item.weekId);
     setAdminModal(true);
     setDate(item);
     setFirstName(name);
-    adminRosterAvailableShift(ctype, costCenter1);
+    setEmployeId(employeId)
+    setlastName(lastName)
+
     setContractType(ctype);
-    }
+    if(adminCalculateWeekResult!== null &&adminCalculateWeekResult!==undefined){
+      let selectedWeekDetails = adminCalculateWeekResult.filter(
+        (item) => item.weekId == item.weekId 
+      );
+  
+      console.log("selectedWeekDetails-->",selectedWeekDetails);
+      if(selectedWeekDetails && selectedWeekDetails !== null &&
+        selectedWeekDetails !== undefined && Object.keys(selectedWeekDetails).length){
+          adminRosterAvailableShift(ctype, costCenter1,selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);
+      availableShifts(selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);  
+    }}
+    
+    // }
     // getallWeeks()
   };
 
@@ -143,12 +168,12 @@ const AdminRoster = () => {
     );
   };
 
-  const checkCondition = (item, name, ctype, costCentreName, weekId) => {
+  const checkCondition = (item, employeId,lastName, name, ctype, costCentreName, weekId,index) => {
     if (item.roster == null) {
       return (
         <button
           className="btn btn-square bg-secondary btn-sm pl-5 pr-5"
-          onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}
+          onClick={() => handleShow(item,employeId,lastName,name, ctype, costCentreName, weekId,index)}
         >
           +
         </button>
@@ -157,7 +182,7 @@ const AdminRoster = () => {
       return (
         <button
           className="btn btn-square btn-danger btn-sm"
-          onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}
+          onClick={() => handleShow(item, employeId,lastName,name, ctype, costCentreName, weekId,index)}
           type="button"
         >
           Leave
@@ -167,7 +192,7 @@ const AdminRoster = () => {
       return (
         <button
           className="btn btn-square btn-warning btn-sm"
-          onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}
+          onClick={() => handleShow(item, employeId,lastName,name, ctype, costCentreName, weekId,index)}
         >
           {item.roster.holiday}
         </button>
@@ -176,7 +201,7 @@ const AdminRoster = () => {
       return (
         <button
           className="btn btn-square btn-info btn-sm"
-          onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}
+          onClick={() => handleShow(item,employeId,lastName, name, ctype, costCentreName, weekId,index)}
           type="button"
         >
           Week Off
@@ -186,7 +211,7 @@ const AdminRoster = () => {
       return (
         <button
           className="btn btn-square btn-success  btn-sm"
-          onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}
+          onClick={() => handleShow(item, employeId,lastName,name, ctype, costCentreName, weekId,index)}
           type="button"
         >
           {item.roster.shiftName}
@@ -196,7 +221,7 @@ const AdminRoster = () => {
       return (
         <button
           className="btn btn-square bg-secondary btn-sm pl-5 pr-5"
-          onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}
+          onClick={() => handleShow(item,employeId,lastName, name, ctype, costCentreName, weekId,index)}
         >
           +
         </button>
@@ -480,7 +505,7 @@ const AdminRoster = () => {
                                 </div>
                               </td>
                               {item.employeeRosters.map(
-                                (data, index, empArr) => {
+                                (data, index) => {
                                   // let newData = new Date(data.date)
 
                                   //  console.log(newData.getDay(), "day")
@@ -493,9 +518,12 @@ const AdminRoster = () => {
                                       <br />{" "}
                                       {checkCondition(
                                         data,
+                                        item.employeeId,
+                                        item.lastName,
                                         item.firstName,
                                         item.contractType,
-                                        item.costCentreName
+                                        item.costCentreName,
+                                        index
                                       )}
                                     </td>
                                   );
@@ -535,6 +563,8 @@ const AdminRoster = () => {
             handleClose={handleClose}
             contractType={contractType}
             firstName={firstName}
+            lastName={lastName}
+            employeId={employeId}
             modal={adminModal}
             shiftDate={shiftDate}
             mystoreId={storecostCenterName}
@@ -543,6 +573,7 @@ const AdminRoster = () => {
             cid={clusterId}
             endDate={endDate}
             startDate={startDate}
+            weekDAY={weekDAY}
           />
         )}
       </div>

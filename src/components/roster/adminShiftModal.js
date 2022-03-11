@@ -11,8 +11,10 @@ const AdminShiftModal = (props) => {
   const [date, setdate] = useState();
   // let date = "";
   const [key, setKey] = useState("shift");
-  const shiftDateWeek = props.shiftDate;
-  console.log("=====" + shiftDateWeek);
+
+  // const shiftDateWeek = props.shiftDate;
+  const [shiftDateWeek, setShiftDateWeek] = useState(props.shiftDate);
+  console.log("=====" + props.employeId,shiftDateWeek);
   const [selectedWeeks, setSelectedWeeks] = useState();
   const [weekDay, setWeekDay] = useState();
   const [value, setValue] = useState();
@@ -20,9 +22,10 @@ const AdminShiftModal = (props) => {
   const [showDay, setShowDay] = useState(false);
   const [weekDayList, setWeekDayList] = useState([]);
   const [dayList, setDayList] = useState([]);
-  const [employee, setEmployee] = useState([]);
-  const [days, setDays] = useState([]);
-  const [daysList, setDaysList] = useState([]);
+  const [employee, setEmployee] = useState([{label:props.firstName+" "+props.lastName+"-"+props.employeId,value:props.employeId}]);
+  
+  const [days, setDays] = useState([{label: props.weekDAY,value: props.Date}]);
+  const [daysList, setDaysList] = useState([{label: props.weekDAY,value: props.Date}]);
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
   const [contractType, setContractType] = useState([]);
@@ -30,6 +33,8 @@ const AdminShiftModal = (props) => {
   const [msg1, setMsg1] = useState(false);
   const [empData, setEmpData] = useState();
   const [weekNameData, setWeekNameData] = useState();
+  
+  console.log("weekDAY",props.weekDAY);
   const {
     weekDays,
     weekOffDays,
@@ -48,8 +53,14 @@ const AdminShiftModal = (props) => {
     adminCalculateWeekResult,
   } = useContext(RosterContext);
 useEffect(() => {
-  setSelectedWeeks("")
-}, [])
+  if(employee && shiftDateWeek && daysList && Object.keys(daysList).length){
+    setAssignWeekOffButton(false)
+  }else{
+    setAssignWeekOffButton(true)
+  }
+  
+}, [employee ,shiftDateWeek ,daysList])
+
   let Days = [
     "Sunday",
     "Monday",
@@ -68,15 +79,22 @@ useEffect(() => {
   }, [props.firstName]);
 
   useEffect(() => {
+    console.log("adminWeekOffDataListHeader",adminWeekOffDataListHeader);
+    let selectedWeekName;
+    if(selectedWeeks!==null && selectedWeeks!==undefined){
+      selectedWeekName=selectedWeeks;
+    }else{
+      selectedWeekName=props.shiftDate;
+    }
     for (let i = 0; i < adminWeekOffDataListHeader.length; i++) {
-      if (props.shiftDate === adminWeekOffDataListHeader[i].weekId) {
+      if (selectedWeekName === adminWeekOffDataListHeader[i].weekId) {
         let weekNumber = adminWeekOffDataListHeader[i].weekName;
         //  date = weekNumber.split(' ')[0].trim();
         setdate(weekNumber.split("Week")[1].trim());
         // date = weekNumber.split('Week')[1].trim();
       }
     }
-  }, [props.shiftDate]);
+  }, [props.shiftDate,selectedWeeks]);
   useEffect(() => {
     setContractType(props.contractType);
     console.log("props.contractType", props.contractType);
@@ -88,7 +106,15 @@ useEffect(() => {
       props.mystoreId,
       props.cid
     );
-    availableShifts();
+    if(weekDayList!== null &&weekDayList!==undefined){
+      let selectedWeekDetails = weekDayList.filter(
+        (item) => item.weekId == selectedWeeks 
+      );
+  
+      if(selectedWeekDetails && selectedWeekDetails !== null &&
+        selectedWeekDetails !== undefined && Object.keys(selectedWeekDetails).length){
+      availableShifts(selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);  
+    }}
     if (props.Date !== undefined) {
       getallWeeks(props.Date);
     }
@@ -154,17 +180,20 @@ useEffect(() => {
         };
       });
     }
-    const days = weekDays.map((arr) => {
-      console.log({ arr }, Date);
-      return {
-        ...arr,
-        selected: arr.date === Date,
-      };
-    });
-    setWeekDayList(weeks);
-    setDayList(days);
+    if(weekDays && Object.keys(weekDays)){
+      const days = weekDays.map((arr) => {
+        console.log({ arr }, Date);
+        return {
+          ...arr,
+          selected: arr.date === Date,
+        };
+      });
+      setWeekDayList(weeks);
+      setDayList(days);
+    }
+
     // setWeekDay(Date);
-    setDaysList(Date);
+    // setDaysList(Date);
     // console.log(weeks, 'Shift year');
     //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays, adminCalculateWeekResult]);
@@ -235,12 +264,15 @@ useEffect(() => {
     }
     console.log("newValue", newValue);
     setSelectedWeeks(newValue);
+    setShiftDateWeek(newValue);
     setShowDay(true);
+    setDaysList([])
   };
 
   const handleEmployeeList = (options) => {
     setEmployee(options);
-    if (options !== null && days !== null && days !== undefined) {
+    if ((options !== null && days !== null && days !== undefined )|| 
+      (!employee) ) {
       if (days.length !== 0) {
         setMsg(true);
         setAShiftButton(false);
