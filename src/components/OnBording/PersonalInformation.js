@@ -94,6 +94,7 @@ const PersonalInformation = (props) => {
   const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [saveClick, setSaveClick] = useState(false);
   const [disabilityStatus, setDisabilityStatus] = useState(false);
+  // const [disableAll, setDisabileAll]= useState(false);
   const [dateOfIssue, setDateOfIssue] = useState(null);
   const [dateOfValidity, setDateOfValidity] = useState(null);
   const [dateOfIssueError, setDateOfIssueError] = useState(false);
@@ -139,6 +140,15 @@ const PersonalInformation = (props) => {
   useEffect(() => {
     candidateCountryList();
   }, []);
+  useEffect(() => {
+    if (candidateProfileData && Object.keys(candidateProfileData).length) {
+      if (candidateProfileData.documentReUploadCount !== 0) {
+        setDisableState(true);
+      } else {
+        setDisableState(false);
+      }
+    }
+  }, [candidateProfileData]);
 
   useEffect(() => {
     console.log(
@@ -551,14 +561,13 @@ const PersonalInformation = (props) => {
   };
 
   const DateOfIssueValidations = () => {
-
     if (
       candidateViewInfo !== null &&
       candidateViewInfo !== undefined &&
       Object.keys(candidateViewInfo).length !== 0 &&
       candidateViewInfo.contractType === "Local Expat"
     ) {
-      console.log("dateOfIssue",dateOfIssue);
+      console.log("dateOfIssue", dateOfIssue);
       // if (state.passport !== "" && passPortValid.test(state.passport)) {
       if (dateOfIssue) {
         setDateOfIssueError(false);
@@ -581,7 +590,7 @@ const PersonalInformation = (props) => {
       Object.keys(candidateViewInfo).length !== 0 &&
       candidateViewInfo.contractType === "Local Expat"
     ) {
-      console.log("dateOfValidity",dateOfValidity);
+      console.log("dateOfValidity", dateOfValidity);
       // if (state.passport !== "" && passPortValid.test(state.passport)) {
       if (dateOfValidity) {
         setDateOfValidityError(false);
@@ -903,7 +912,10 @@ const PersonalInformation = (props) => {
           candidateProfileData.maritalStatus !== undefined &&
           candidateProfileData.maritalStatus !== ""
         ) {
-          if (candidateProfileData.maritalStatus.toLocaleLowerCase() !== maritalStatus.toLowerCase()) {
+          if (
+            candidateProfileData.maritalStatus.toLocaleLowerCase() !==
+            maritalStatus.toLowerCase()
+          ) {
             DeleteAllInsuranceNominations(candidateProfileData.candidateId);
             UpdateNomineeStatus(candidateProfileData.candidateId, false);
             const doInsuranceNomineeFalse = props.MakeFalse;
@@ -1443,9 +1455,7 @@ const PersonalInformation = (props) => {
                   style={dateOfIssueError ? { borderColor: "red" } : {}}
                 />
                 {dateOfIssueError ? (
-                  <p style={{ color: "red" }}>
-                    Please enter valid Date
-                  </p>
+                  <p style={{ color: "red" }}>Please enter valid Date</p>
                 ) : (
                   <p></p>
                 )}
@@ -1454,14 +1464,16 @@ const PersonalInformation = (props) => {
               ""
             )}
           </div>
-        
+
           <div className="col-sm-4">
             {candidateViewInfo !== null &&
             candidateViewInfo !== undefined &&
             Object.keys(candidateViewInfo).length !== 0 &&
             candidateViewInfo.contractType === "Local Expat" ? (
               <Form.Group className="reactDate">
-                <Form.Label>Date Of Validity<span style={{ color: "red" }}>*</span></Form.Label>
+                <Form.Label>
+                  Date Of Validity<span style={{ color: "red" }}>*</span>
+                </Form.Label>
                 <DatePicker
                   className="form-control form-input"
                   selected={dateOfValidity}
@@ -1472,14 +1484,12 @@ const PersonalInformation = (props) => {
                   placeholderText="Date of Validity"
                   disabled={disabled}
                   style={dateOfValidityError ? { borderColor: "red" } : {}}
-                  />
-                  {dateOfValidityError ? (
-                    <p style={{ color: "red" }}>
-                      Please enter valid Date
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
+                />
+                {dateOfValidityError ? (
+                  <p style={{ color: "red" }}>Please enter valid Date</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             ) : (
               ""
@@ -1513,6 +1523,7 @@ const PersonalInformation = (props) => {
                     value="Male"
                     checked={genderCheckM}
                     required={required}
+                    disabled={disabled}
                     onChange={handleMaleGenderCheckboxChange}
                   />
                   <label style={genderError ? { color: "red" } : {}}>
@@ -1531,6 +1542,7 @@ const PersonalInformation = (props) => {
                     value="Female"
                     required={required}
                     checked={genderCheckF}
+                    disabled={disabled}
                     onChange={handleFemaleGenderCheckboxChange}
                   />
                   <label style={genderError ? { color: "red" } : {}}>
@@ -1549,6 +1561,7 @@ const PersonalInformation = (props) => {
                     value="Other"
                     required={required}
                     checked={genderCheckOther}
+                    disabled={disabled}
                     onChange={handleOtherGenderCheckboxChange}
                   />
                   <label style={genderError ? { color: "red" } : {}}>
@@ -1578,6 +1591,7 @@ const PersonalInformation = (props) => {
                     style={maritalStatusError ? { borderColor: "red" } : {}}
                     value="Married"
                     required={statusRequired}
+                    disabled={disabled}
                     checked={married}
                     onChange={handleMarriedCheckboxChange}
                   />
@@ -1602,6 +1616,7 @@ const PersonalInformation = (props) => {
                     style={maritalStatusError ? { borderColor: "red" } : {}}
                     value="Unmarried"
                     required={statusRequired}
+                    disabled={disabled}
                     checked={unMarried}
                     onChange={handleUnMarriedCheckboxChange}
                   />

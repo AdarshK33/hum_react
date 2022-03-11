@@ -289,36 +289,31 @@ const OfferReleaseList = () => {
                             user !== undefined &&
                             rolePermission !== "admin" ? (
                               <td>
-                                {
-                                  item.overallStatus === 1 &&
-                                  item.status === 2 &&
-                                  item.noShow === false
-                                   ? (
-                                    <Link to="/offer-relase-and-onboard">
-                                      <AlertCircle
-                                        onClick={() => {
-                                          fetchCandidateDetails(
-                                            item.candidateId
-                                          );
-                                        }}
-                                      />
-                                    </Link>
-                                  ) : item.noShow === false &&
-                                    (item.overallStatus === 0 ||
-                                      item.overallStatus === 2 ||
-                                      item.status === 6) ? (
-                                    <AlertCircle />
-                                  ) : (
-                                    <AlertCircle />
-                                    // <Link to="/offer-relase-and-onboard">
-                                    //   <AlertCircle
-                                    //     onClick={() => {
-                                    //       fetchCandidateDetails(item.candidateId);
-                                    //     }}
-                                    //   />
-                                    // </Link>
-                                  )
-                                }
+                                {item.overallStatus === 1 &&
+                                item.status === 2 &&
+                                item.noShow === false ? (
+                                  <Link to="/offer-relase-and-onboard">
+                                    <AlertCircle
+                                      onClick={() => {
+                                        fetchCandidateDetails(item.candidateId);
+                                      }}
+                                    />
+                                  </Link>
+                                ) : item.noShow === false &&
+                                  (item.overallStatus === 0 ||
+                                    item.overallStatus === 2 ||
+                                    item.status === 6) ? (
+                                  <AlertCircle />
+                                ) : (
+                                  <AlertCircle />
+                                  // <Link to="/offer-relase-and-onboard">
+                                  //   <AlertCircle
+                                  //     onClick={() => {
+                                  //       fetchCandidateDetails(item.candidateId);
+                                  //     }}
+                                  //   />
+                                  // </Link>
+                                )}
                               </td>
                             ) : (
                               ""

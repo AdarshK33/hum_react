@@ -14,6 +14,8 @@ const PartTimeAppointmentLetter = (props) => {
     candidateData,
     finalSubmitAppointmentLetter,
     submitAppointmentLetter,
+    lettterview,
+    setViewLetter,
     loader,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
@@ -26,7 +28,7 @@ const PartTimeAppointmentLetter = (props) => {
   const inputRef = useRef(null);
   const handleClose = () => {
     setShow(false);
-    // setLetterView(false);
+    setViewLetter(false);
   };
   console.log("candidateDatacandidateData", candidateData);
   const HandleSaveLetter = () => {
@@ -64,13 +66,14 @@ const PartTimeAppointmentLetter = (props) => {
       );
       CreatePdfAndUpload(infoData, "35,580,185,680");
       setShow(false);
+      setViewLetter(false);
     }
   };
 
   return (
     <Fragment>
       {offerLetterData && offerLetterData.partTimeCandidateOffer ? (
-        <Modal show={show} onHide={handleClose} size="md">
+        <Modal show={lettterview} onHide={handleClose} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {loader ? (

@@ -42,12 +42,10 @@ const Address = (props) => {
   const [pinCodeError, setPinCodeError] = useState(false);
   const [phoneNoError, setPhoneNoError] = useState(false);
 
-  const [PermanentFlatNumberError, setPermanentFlatNumberError] = useState(
-    false
-  );
-  const [PermanentAddressLineError, setPermanentAddressLineError] = useState(
-    false
-  );
+  const [PermanentFlatNumberError, setPermanentFlatNumberError] =
+    useState(false);
+  const [PermanentAddressLineError, setPermanentAddressLineError] =
+    useState(false);
   const [PermanentCountryError, setPermanentCountryError] = useState(false);
   const [PermanentStateError, setPermanentStateError] = useState(false);
   const [PermanentCityError, setPermanentCityError] = useState(false);
@@ -140,6 +138,15 @@ const Address = (props) => {
       }
     }
   }, [candidateStateData, addressViewData]);
+  useEffect(() => {
+    if (candidateProfileData && Object.keys(candidateProfileData).length) {
+      if (candidateProfileData.documentReUploadCount !== 0) {
+        setDisableState(true);
+      } else {
+        setDisableState(false);
+      }
+    }
+  }, [candidateProfileData]);
   useEffect(() => {
     let cityValue;
     if (addressViewData !== undefined && addressViewData !== null) {
@@ -786,6 +793,7 @@ const Address = (props) => {
                   as="select"
                   name="stateId"
                   value={stateName}
+                  disabled={disabled}
                   style={stateError ? { borderColor: "red" } : {}}
                   onChange={(e) => stateHandler(e)}
                 >
@@ -814,6 +822,7 @@ const Address = (props) => {
                 <Form.Control
                   as="select"
                   name="cityId"
+                  disabled={disabled}
                   value={cityName}
                   style={cityError ? { borderColor: "red" } : {}}
                   onChange={cityHandler}
@@ -904,6 +913,7 @@ const Address = (props) => {
                     type="checkbox"
                     value="No"
                     checked={!isChecked}
+                    disabled={disabled}
                     onChange={handleNoCheckboxChange}
                   />
                   <label>No </label>
@@ -919,6 +929,7 @@ const Address = (props) => {
                     type="checkbox"
                     value="Yes"
                     checked={isChecked}
+                    disabled={disabled}
                     onChange={handleCheckboxChange}
                   />
                   <label>Yes</label>
@@ -1070,6 +1081,7 @@ const Address = (props) => {
                       value={permanentStateName}
                       style={PermanentStateError ? { borderColor: "red" } : {}}
                       onChange={permanentStateHandler}
+                      disabled={disabled}
                     >
                       <option value="">Select State</option>
                       {candidateStateData !== null &&
@@ -1099,6 +1111,7 @@ const Address = (props) => {
                       value={permanentCityName}
                       style={PermanentCityError ? { borderColor: "red" } : {}}
                       onChange={permanentCityHandler}
+                      disabled={disabled}
                     >
                       <option value="">Select City</option>
                       {candidatePermanentCityData !== null &&

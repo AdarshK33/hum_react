@@ -66,7 +66,9 @@ const Documents = (props) => {
     console.log("candidateProfileData", candidateProfileData);
     console.log("candidateData", candidateData);
   }, [candidateProfileData]);
-
+  useEffect(() => {
+    PFDeclarationView(candidateProfileData.candidateId);
+  }, []);
   useEffect(() => {
     console.log("personal information view candidate", candidateProfileData);
     if (candidateProfileData) {
