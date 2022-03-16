@@ -609,6 +609,12 @@ export const OfferProvider = (props) => {
       });
   };
 
+  const dollarText = (value) =>{
+    let data = value
+    let dataChange = data.split(" ")
+    dataChange.splice(dataChange.indexOf("RUPEE"),1,"DOLLAR")
+   return  dataChange.join(" ")
+  }
   const number2text = (value) => {
     var fraction = Math.round(frac(value) * 100);
     var f_text = "";
@@ -734,6 +740,7 @@ export const OfferProvider = (props) => {
         costcenterByDepartment,
         AllCostCenter,
         number2text,
+        dollarText,
         positionByDepartment,
         setNoticePeriodNull,
         positionByDepartmentNull,

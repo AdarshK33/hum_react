@@ -16,6 +16,7 @@ const LocalExpatOfferLetter = () => {
     finalSubmitOfferLetter,
     candidateData,
     number2text,
+    dollarText,
     setViewLetter,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
@@ -132,12 +133,12 @@ const LocalExpatOfferLetter = () => {
                   <li>
                     Your monthly gross salary will not exceed $.{" "}
                     <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
-                    (INR.{" "}
-                    {number2text(
+                    ({" "}
+                    {dollarText(number2text(
                       parseInt(
                         offerLetterData.permanentCandidateOffer.grossSalary
                       )
-                    )}
+                    ))}
                     ) . Refer to the salary annexure mentioned below
                   </li>
                   <li>

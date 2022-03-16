@@ -103,14 +103,18 @@ const EditWorkInformation = () => {
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
+     
+          setStateValue(workData.stateId);
+          setCity(workData.locationId);
+          cityData(workData.stateId);
     }
   }, [candidateData]);
 
-  useEffect(() => {
-    setStateValue(locationName.stateId);
-    setCity(locationName.locationId);
-    cityData(locationName.stateId);
-  }, [locationName]);
+  // useEffect(() => {
+  //   setStateValue(locationName.stateId);
+  //   setCity(locationName.locationId);
+  //   cityData(locationName.stateId);
+  // }, [locationName]);
 
   const changeHandler = (e) => {
     setState({

@@ -113,15 +113,20 @@ const ViewWorkInformation = () => {
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
+
+      setStateValue(workData.stateId);
+          setCity(workData.locationId);
+          cityData(workData.stateId);
+          // setCityId(workData.cityId);
     }
   }, [candidateData]);
   console.log("workData",candidateData.workInformation,"state",state,"allmanagerlist",allManagerList,locationName,"managerlist",managerList)
-  useEffect(() => {
-    setStateValue(locationName.stateId);
-    setCity(locationName.locationId);
-    cityData(locationName.stateId);
-    console.log("state in useEffect", locationName);
-  }, [locationName]);
+  // useEffect(() => {
+  //   setStateValue(locationName.stateId);
+  //   setCity(locationName.locationId);
+  //   cityData(locationName.stateId);
+  //   console.log("state in useEffect", locationName);
+  // }, [locationName]);
   useEffect(() => {
     let superMangerFlag;
     let departmentId;
