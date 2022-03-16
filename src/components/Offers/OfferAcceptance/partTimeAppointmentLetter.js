@@ -145,7 +145,7 @@ const PartTimeAppointmentLetter = (props) => {
             <li>
               We hold transparency in high regard. You cannot involve yourself
               in taking or giving bribe, gambling, theft, fraudulent practices
-              or any such act that might affect  {candidateLetterData.companyName} 
+              or any such act that might affect {" "} {candidateLetterData.companyName} 
               reputation or damage to property
             </li>
             <li>
@@ -176,7 +176,7 @@ const PartTimeAppointmentLetter = (props) => {
               your employment is confirmed
             </li>
             <li>
-            Service rules under the Certified Standing Orders of 
+            Service rules under the Certified Standing Orders of{" "} 
             {candidateLetterData.companyName}will be applicable to you from 
             the date of certification of such orders.The information on the 
             certification of such standing orders will be communicated to 

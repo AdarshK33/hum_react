@@ -245,7 +245,7 @@ const PartTimeAppointmentLetter = (props) => {
                   <li>
                     We hold transparency in high regard. You cannot involve
                     yourself in taking or giving bribe, gambling, theft,
-                    fraudulent practices or any such act that might affect
+                    fraudulent practices or any such act that might affect{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"

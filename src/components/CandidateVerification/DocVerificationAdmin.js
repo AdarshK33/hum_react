@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import { OfferContext } from "../../context/OfferState";
 import { PermissionContext } from "../../context/PermissionState";
-
+import { useHistory } from "react-router-dom";
 // import { handleInputChange } from "react-select/src/utils";
 
 const DocVerification = () => {
@@ -67,6 +67,8 @@ const DocVerification = () => {
   } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
+  let history = useHistory();
+
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
@@ -183,7 +185,13 @@ const DocVerification = () => {
         uanNumber === undefined
       ) {
         setUanValueError(true);
-      } else {
+      } else if(
+        uanNumber !== "" &&
+        uanNumber !== null &&
+        uanNumber !== undefined &&uanNumber.length<12
+      ){
+        setUanValueError(true);
+      }else {
         updateUANNumber(personalInfoData.candidateId, uanNumber);
         setUanError(false);
         setUanValueError(false);
@@ -213,14 +221,22 @@ const DocVerification = () => {
         uanNumber === undefined
       ) {
         setUanValueError(true);
-      } else {
+      }  else if(
+        uanNumber !== "" &&
+        uanNumber !== null &&
+        uanNumber !== undefined &&uanNumber.length<12
+      ){
+        setUanValueError(true);
+      }else {
         updateUANNumber(personalInfoData.candidateId, uanNumber);
         setUanError(false);
         setUanValueError(false);
         adminRejectComplete(candidateId);
+        history.push("/candidate-verification");
       }
     } else {
       adminRejectComplete(candidateId);
+      history.push("/candidate-verification");
     }
     // setOnboardPopup(true);
   };
@@ -633,20 +649,20 @@ const DocVerification = () => {
                         )}
                       </td>
                     )}
-                    {item.documentType === 1 ||
-                      ((item.documentType === 5 || item.documentType === 4) && (
+                    {(item.documentType === 1 ||
+                      item.documentType === 5 || item.documentType === 4) && (
                         <td className="buttonMargin1">
                           {item.remark !== null ? item.remark : ""}
                         </td>
-                      ))}
-                    {item.documentType === 1 ||
-                      ((item.documentType === 5 || item.documentType === 4) && (
+                      )}
+                    {(item.documentType === 1 ||
+                      item.documentType === 5 || item.documentType === 4) && (
                         <td className="buttonMargin1">
                           {item.verifiedDate !== null
                             ? item.verifiedDate
                             : "N/A"}
                         </td>
-                      ))}
+                      )}
                   </tr>
                 </tbody>
               );
@@ -1206,7 +1222,7 @@ const DocVerification = () => {
                 </div>
               </Form.Group>
               {uanValueError && (
-                <p style={{ color: "red" }}>Please Enter UAN Number</p>
+                <p style={{ color: "red" }}>Please Enter 12 digit UAN Number</p>
               )}
             </Col>
           </Row>

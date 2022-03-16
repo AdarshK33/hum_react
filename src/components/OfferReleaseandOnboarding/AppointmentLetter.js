@@ -227,7 +227,7 @@ const AppointmentLetter = (props) => {
                   <li>
                     We hold transparency in high regard. You cannot involve
                     yourself in taking or giving bribe, gambling, theft,
-                    fraudulent practices or any such act that might affect
+                    fraudulent practices or any such act that might affect{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"
@@ -286,7 +286,7 @@ const AppointmentLetter = (props) => {
                     your employment is confirmed
                   </li>
                   <li>
-                    Service rules under the Certified Standing Orders of
+                    Service rules under the Certified Standing Orders of{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"
@@ -540,14 +540,16 @@ const AppointmentLetter = (props) => {
                       <td>
                         <b>
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.ctc
+                            offerLetterData.permanentCandidateOffer.ctc+
+                            offerLetterData.bonusAmt
                           )}
                         </b>
                       </td>
                       <td>
                         <b>
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.ctc
+                            offerLetterData.permanentCandidateOffer.ctc+
+                            offerLetterData.bonusAmt
                           ) * 12}
                         </b>
                       </td>

@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import { OfferContext } from "../../context/OfferState";
 import { PermissionContext } from "../../context/PermissionState";
-
+import { useHistory } from "react-router-dom";
 // import { handleInputChange } from "react-select/src/utils";
 
 const DocVerification = () => {
@@ -69,7 +69,7 @@ const DocVerification = () => {
   //   personalInfo(candidateId);
   //   // setState(personalInfoData);
   // }, []);
-
+  let history = useHistory();
   useEffect(() => {
     console.log("userinfo");
     getUserInfo();
@@ -133,6 +133,7 @@ const DocVerification = () => {
   };
   const handleReupload = () => {
     // adhaarVerificationNotification(candidateId);
+    history.push("/candidate-verification");
     documentRejectComplete(candidateId);
     // setOnboardPopup(true);
   };

@@ -227,7 +227,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <li>
                     We hold transparency in high regard. You cannot involve
                     yourself in taking or giving bribe, gambling, theft,
-                    fraudulent practices or any such act that might affect
+                    fraudulent practices or any such act that might affect{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"
@@ -279,7 +279,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     or 1 month in advance if your employment is confirmed
                   </li>
                   <li>
-                    Service rules under the Certified Standing Orders of
+                    Service rules under the Certified Standing Orders of{" "}
                     <b>
                       {offerLetterData.companyName === "Decathlon Sports India"
                         ? "Decathlon"

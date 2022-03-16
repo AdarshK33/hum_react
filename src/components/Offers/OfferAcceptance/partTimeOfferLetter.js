@@ -46,7 +46,7 @@ const PartTimeOfferLetter = () => {
             <li>
               Your monthly gross salary will not exceed{" "}
               Rs. <span className="boldText">{candidateLetterData.fixedGross}</span>{" "}
-              (INR. {number2text(parseInt(candidateLetterData.fixedGross))}) per Hourly
+              (INR.{" "} {number2text(parseInt(candidateLetterData.fixedGross))}) per Hourly
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
