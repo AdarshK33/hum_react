@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 
 const PromotionHistory = (props) => {
     const {
-        viewSportDataById,
-        sportData,
+        viewPromotionDataById,
+        promotionData,
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
+    const totalRecords = promotionData !== null && promotionData !== undefined && promotionData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = promotionData !== null && promotionData !== undefined ? promotionData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -107,18 +107,24 @@ console.log(dates)
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>sport Name</th>
-                                        
-                                            <th>Created By</th>
-                                            <th>Created On</th>
-
-
+                                            <th>S .NO</th>
+                                            <th>EMPLOYEE ID</th>
+                                            <th>EMPLOYEE NAME</th>
+                                             <th>POSITION</th> 
+                                             <th>POSITION PROMOTED TO</th>
+                                             <th>PROMOTION DATE</th>
+                                             <th>VALIDATED BY COSTCENTERMANAGER</th>
+                                             <th>DATE</th>
+                                             <th>VALIDATED BY HR/ADMIN</th>
+                                            <th>DATE</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
+                                    {loader === true && currentRecords !== null
+                                     && !currentRecords.includes(null) &&
+                                      currentRecords !== undefined ? 
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -155,7 +161,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        } */}
+                                        }
 
                                 </Table>
                             </div>
@@ -163,7 +169,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
+            {promotionData !== null && promotionData !== undefined && promotionData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

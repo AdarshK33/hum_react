@@ -137,7 +137,7 @@ const TerminationLetter = (props) => {
             Thanking you,
             </p>		<br/>
             <p className="mt-5 mb-5">
-                <b>For {terminationLetterData.company} Pvt Ltd,</b>
+                <b>For {terminationLetterData.company} ,</b>
               </p>
                 <Row>
              <Col sm="8"></Col>
@@ -301,7 +301,7 @@ const TerminationLetter = (props) => {
                     during the next payroll cycle.
                   </p>
                   <p className="mt-5 mb-5">
-                    <b>For {terminationLetterData.company} Pvt Ltd,</b>
+                    <b>For {terminationLetterData.company} ,</b>
                   </p>
                 </div>
                 <div style={{ textAlign: "end" }}>

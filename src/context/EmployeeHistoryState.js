@@ -21,6 +21,7 @@ const initial_state = {
   exitData:[],
   insuranceData:[],
   sportData:[],
+  promotionData:[],
   total: {},
   data: [],
 
@@ -306,7 +307,26 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
-    
+    const viewPromotionDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/PromotionHistory/" + employeeId)
+        .then((response) => {
+          state.promotionData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->promotionData", state.promotionData);
+          console.log(response);
+  
+          return dispatch({
+            type: "PROMOTION_DATA",
+            payload: state.promotionData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   return (
     <EmployeeHistoryContext.Provider
       value={{
@@ -322,7 +342,8 @@ export const EmployeeHistoryProvider = (props) => {
         viewTaxDataById,
         viewExitDataById,
         viewInsuranceDataById,  
-        viewSportDataById,      
+        viewSportDataById,
+        viewPromotionDataById,
         loader: loader,
         total: state.total,
         employeeHistoryData:state.employeeHistoryData,
@@ -337,8 +358,8 @@ export const EmployeeHistoryProvider = (props) => {
         taxData:state.taxData,
         exitData:state.exitData,
         insuranceData:state.insuranceData,
-        sportData:state.sportData
-
+        sportData:state.sportData,
+        promotionData:state.promotionData
       }}
     >
       {props.children}

@@ -132,8 +132,8 @@ const InternShipLetter = () => {
                       relivingLetterData.maritalStatus === "Single"
                     ? `Miss. ${relivingLetterData.employeeName}`
                     : `Mrs.${relivingLetterData.employeeName}`}{" "}
-                  has completed internship at {relivingLetterData.company} Pvt
-                  Ltd, from <b>{relivingLetterData.dateOfJoining}</b> to{" "}
+                  has completed internship at {relivingLetterData.company} 
+                  , from <b>{relivingLetterData.dateOfJoining}</b> to{" "}
                   <b>{relivingLetterData.lastWorkingDate}</b> on under the
                   guidance of {relivingLetterData.managerName}.<br />
                   <br />
@@ -165,7 +165,7 @@ const InternShipLetter = () => {
                 </p>
                 <br />
                 <p>
-                  <b>For {relivingLetterData.company} Pvt Ltd,</b>
+                  <b>For {relivingLetterData.company} ,</b>
                 </p>
                 <p>
                   <b>Authorised Signatory</b>

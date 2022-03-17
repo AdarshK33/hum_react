@@ -27,7 +27,8 @@ const EmployeeHistoryReducer = (state, action) => {
                     return {...state,insuranceData:action.payload}  
                 case 'SPORT_DATA':
                     return {...state,sportData:action.payload}      
-                                                 
+                    case 'PROMOTION_DATA':
+                        return {...state,promotionData:action.payload}                                     
             default: return state;
     }
 }

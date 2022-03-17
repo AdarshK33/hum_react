@@ -68,7 +68,7 @@
 //               <b> {promotionLetterData.reportingManagerName}</b> and your bonus
 //               rate is upto
 //               <b> {promotionLetterData.bonusInPercentage}</b> % per month. All
-//               the other terms and conditions of your appointment letter dated{" "}
+//               the other terms and conditions of your appointment letter {" "}
 //               <b>{
 //                 promotionLetterData.appointmentLetterDate !== null &&
 //                 promotionLetterData.appointmentLetterDate !== undefined
@@ -81,7 +81,7 @@
 //             <p>Please sign the copy of this letter as receipt of acceptance.</p>
 //             <p className="mt-5 ">
 //               <p>Yours Sincerely,</p>
-//               <b>For {promotionLetterData.company} Pvt Ltd,</b>
+//               <b>For {promotionLetterData.company},</b>
 //             </p>
 //             <div className="float-right "></div>
 //           </div>
@@ -289,7 +289,7 @@ const PromotionLetter = () => {
                 </p>
                 <p>
                   <p>Yours Sincerely,</p>
-                  <b>For {promotionLetterData.company} Pvt Ltd,</b>
+                  <b>For {promotionLetterData.company},</b>
                 </p>
                 <br />
                 <p>

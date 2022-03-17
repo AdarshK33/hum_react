@@ -107,7 +107,7 @@ console.log(dates)
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S .No</th>
                                             <th>sport Name</th>
@@ -155,7 +155,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        } */}
+                                        }
 
                                 </Table>
                             </div>

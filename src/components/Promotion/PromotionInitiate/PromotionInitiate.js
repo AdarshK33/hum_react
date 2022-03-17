@@ -184,6 +184,7 @@ const PromotionInitiate = () => {
       state.oldDepartment = searchByCostData.department;
       state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
+      state.relocationBonus = searchByCostData.fixedGross;
       SetCurrentManager(searchByCostData.managerName); //need to verify
     }
   }, [searchByCostData]);
@@ -406,7 +407,7 @@ const PromotionInitiate = () => {
         promotionLetter: null,
         promotionType: state.promotionType,
         reason: state.reason,
-        relocationBonus: state.relocationBonus,
+        relocationBonus: state.oldFixedGross,
         remarks: null,
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,

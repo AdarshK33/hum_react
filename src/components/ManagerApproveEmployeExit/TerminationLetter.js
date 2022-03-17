@@ -139,7 +139,7 @@ const TerminationLetter = () => {
                 <p>Thanking you,</p>
                 <br />
                 <p>
-                  <b>For {terminationLetterData.company} Pvt Ltd,</b>
+                  <b>For {terminationLetterData.company} ,</b>
                 </p>
                 <Row>
                   <Col sm="8"></Col>
@@ -274,7 +274,7 @@ export default TerminationLetter;
             Thanking you,
             </p>		<br/>
             <p className="mt-5 mb-5">
-                <b>For {terminationLetterData.company} Pvt Ltd,</b>
+                <b>For {terminationLetterData.company} ,</b>
               </p>
                 <Row>
              <Col sm="8"></Col>

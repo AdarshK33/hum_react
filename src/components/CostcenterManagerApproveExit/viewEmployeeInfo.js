@@ -41,6 +41,7 @@ const EmployeeExitAction = (props) => {
 
   const [submit, setSubmit] = useState(false);
   const [message, setMessage] = useState(false);
+  const [messageDemise, setMessageDemise] = useState(false);
 
   const params = useParams();
 
@@ -408,6 +409,9 @@ const EmployeeExitAction = (props) => {
   const handleClosePopup = () => {
     setMessage(false);
   };
+  const handleCloseDemise =()=>{
+    setMessageDemise(false)
+  }
   const handleRelivingClose = () => {
     setShow(false)
   }
@@ -469,9 +473,15 @@ const EmployeeExitAction = (props) => {
           withdraw: employeeData.withdraw,
         };
         console.log("createExitData", InfoData);
-        setSubmitted(true);
         UpdateEmplyoeeExist(InfoData,paramsemployeeId);
-              setModal(true)
+        if(state.modeOfSeparationId === 7){
+          setSubmitted(true);
+          setMessageDemise(true)
+        }else{
+          setSubmitted(true);
+          setModal(true)
+        }
+       
         // setPreview(true);
         // setSuccessModal(true);
       }
@@ -520,6 +530,27 @@ const EmployeeExitAction = (props) => {
             </div>
           </Modal.Body>
         </Modal>
+        <Modal
+          show={messageDemise}
+          size="md"
+          onHide={() => handleCloseDemise()}
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              {" "}
+              The details have been saved successfully.
+            </label>
+            <div className="text-center mb-2">
+              <Link to={"/exit-approval"}>
+                {" "}
+                <Button onClick={() => handleCloseDemise()}>OK</Button>
+              </Link>
+            </div>
+          </Modal.Body>
+        </Modal>
+
         <Modal show={showModal} onHide={() => handleClose1()} centered>
           <Container style={{ textAlign: "center", margin: "1rem 0 1rem 0" }}>
             <Modal.Body style={{ marginBottom: "1rem" }}>
@@ -697,7 +728,7 @@ const EmployeeExitAction = (props) => {
                           </label>
                         </div>
                       </Col>
-                      <Col sm={4}>
+                     {state.modeOfSeparationId === 7?"":<Col sm={4}>
                         <div>
                           <label>
                             <b>Date of Resignation:</b>
@@ -706,7 +737,7 @@ const EmployeeExitAction = (props) => {
                             </label>
                           </label>
                         </div>
-                      </Col>
+                      </Col>}
                     </Row>
                     <Row
                       style={{
@@ -1023,7 +1054,25 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
+                   {state.modeOfSeparationId === 7?<>
                     <div
+                      style={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      <button
+                        disabled={submitted}
+                        className={
+                          submitted ? "confirmButton" : "stepperButtons"
+                        }
+                        onClick={submitHandler}
+                      >
+                        confirm 
+                      </button>
+                      </div>
+                   </>:<> <div
                       style={{
                         marginTop: "2rem",
                         marginBottom: "2rem",
@@ -1076,7 +1125,7 @@ const EmployeeExitAction = (props) => {
                           Submit
                         </button>
                       </div>
-                    )}
+                    )}</>}
                   </div>
                 </div>
               </div>

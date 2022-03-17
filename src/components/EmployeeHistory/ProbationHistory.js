@@ -107,15 +107,17 @@ console.log(dates)
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>sport Name</th>
-                                        
-                                            <th>Created By</th>
-                                            <th>Created On</th>
-
-
+                                            <th>S .NO</th>
+                                            <th>EMPLOYEE ID</th>
+                                            <th>COST CENTER</th>
+                                            <th>EMPLOYEE NAME</th>
+                                            <th>DATE OF JOINING</th>
+                                            <th>DATE OF CONFIRMATION</th>
+                                            <th>DUE DAYS</th>
+                                            <th>REMINDER DATE</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -155,7 +157,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        } */}
+                                        }
 
                                 </Table>
                             </div>
