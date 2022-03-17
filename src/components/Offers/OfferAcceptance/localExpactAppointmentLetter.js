@@ -158,7 +158,7 @@ const LocalExpactAppointmentLetter = (props) => {
               <li>
                 We hold transparency in high regard. You cannot involve yourself
                 in taking or giving bribe, gambling, theft, fraudulent practices
-                or any such act that might affect {candidateLetterData.companyName} reputation or damage
+                or any such act that might affect{" "} {candidateLetterData.companyName} reputation or damage
                 to property
               </li>
               <li>

@@ -541,14 +541,16 @@ const AppointmentLetter = (props) => {
                       <td>
                         <b>
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.ctc
+                            offerLetterData.permanentCandidateOffer.ctc+
+                            offerLetterData.bonusAmt
                           )}
                         </b>
                       </td>
                       <td>
                         <b>
                           {Math.round(
-                            offerLetterData.permanentCandidateOffer.ctc
+                            offerLetterData.permanentCandidateOffer.ctc+
+                            offerLetterData.bonusAmt
                           ) * 12}
                         </b>
                       </td>
