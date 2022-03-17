@@ -114,7 +114,7 @@ const ExtensionLetter = () => {
               <br />
               <br />
               All the other terms and conditions of your appointment letter
-              dated{" "}
+              {" "}
               {/* <b>
                 {" "}
                 {extensionLetterData.appointmentLetterDate !== null &&
