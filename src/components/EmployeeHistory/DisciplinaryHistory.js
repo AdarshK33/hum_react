@@ -122,7 +122,8 @@ console.log(dates)
                                             <th>STATUS</th>
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
+                                    {loader === true && currentRecords !== null && 
+                                    currentRecords !== undefined ?
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -145,11 +146,10 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
                                                     </tr>
                                                 </tbody>
                                             )

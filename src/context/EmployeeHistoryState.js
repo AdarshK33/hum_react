@@ -22,6 +22,7 @@ const initial_state = {
   insuranceData:[],
   sportData:[],
   promotionData:[],
+  probationData:[],
   total: {},
   data: [],
 
@@ -327,6 +328,26 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
+    const viewProbationDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/probation/" + employeeId)
+        .then((response) => {
+          state.probationData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->probationData", state.probationData);
+          console.log(response);
+  
+          return dispatch({
+            type: "PROBATION_DATA",
+            payload: state.probationData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   return (
     <EmployeeHistoryContext.Provider
       value={{
@@ -344,6 +365,7 @@ export const EmployeeHistoryProvider = (props) => {
         viewInsuranceDataById,  
         viewSportDataById,
         viewPromotionDataById,
+        viewProbationDataById,
         loader: loader,
         total: state.total,
         employeeHistoryData:state.employeeHistoryData,
@@ -359,7 +381,8 @@ export const EmployeeHistoryProvider = (props) => {
         exitData:state.exitData,
         insuranceData:state.insuranceData,
         sportData:state.sportData,
-        promotionData:state.promotionData
+        promotionData:state.promotionData,
+        probationData:state.probationData
       }}
     >
       {props.children}

@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 
 const ProbationHistory = (props) => {
     const {
-        viewSportDataById,
-        sportData,
+        viewProbationDataById,
+        probationData,
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
+    const totalRecords = probationData !== null && probationData !== undefined && probationData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = probationData !== null && probationData !== undefined ? probationData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -143,11 +143,58 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.dateOfJoining}</td>
+                                                        <td>
+                              {
+                                item.status === 2 &&
+                                item.probationExtensionEndDate !== null &&
+                                item.probationExtensionEndDate !== "" &&
+                                item.probationExtensionEndDate !== undefined
+                                  ? item.probationExtensionEndDate
+                                  : item.probationConfirmationDate !== null &&
+                                    item.probationConfirmationDate !== "" &&
+                                    item.probationConfirmationDate !== undefined
+                                  ? item.probationConfirmationDate
+                                  : item.dateOfJoining !== null &&
+                                    item.dateOfJoining !== undefined &&
+                                    item.dateOfJoining !== "" &&
+                                    item.probationPeriod !== null &&
+                                    item.probationPeriod !== undefined &&
+                                    item.probationPeriod !== ""
+                                  ? moment(
+                                      new Date(
+                                        new Date(item.dateOfJoining).setMonth(
+                                          new Date(
+                                            item.dateOfJoining
+                                          ).getMonth() + item.probationPeriod
+                                        )
+                                      )
+                                    ).format("yyyy-MM-DD")
+                                  : "NA"
+
+                                // ).toLocaleDateString("en-IN")
+                              }
+                            </td>
+                            <td>{item.dueDays}</td>
+                            <td>{item.reminderSent}</td>
+                            <td>
+                              {item.status === 0
+                                ? "Due for confirmation"
+                                : item.status === 1
+                                ? "Confirmed"
+                                : item.status === 2
+                                ? "Extended"
+                                : item.status === 3
+                                ? "Rejected"
+                                : item.status === 4
+                                ? "Probation In Progress"
+                                : item.status === 5 || item.status === 6
+                                ? "Action Required"
+                                : ""}
+                            </td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -165,7 +212,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
+            {probationData !== null && probationData !== undefined && probationData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
