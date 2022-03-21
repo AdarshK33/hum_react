@@ -617,7 +617,7 @@ const RemunerationInformation = (props) => {
                       </p>
                     ) : localExpatGrossLimit ? (
                       <p style={{ color: "red" }}>
-                        Value should be greater than $ 25000{" "}
+                        Value should not be less than  $ 25000{" "}
                       </p>
                     ) : (
                       ""

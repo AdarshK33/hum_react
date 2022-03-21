@@ -667,7 +667,7 @@ const EmployeeForm = (props) => {
               </Col>
               <PlusCircle
                 style={{ color: "#376ebb" }}
-                onClick={showOneMoreRefer}
+                onClick={disabled?null:showOneMoreRefer}
                 style={{ marginTop: "2rem", color: "#006EBB" }}
               />
             </Row>
@@ -730,7 +730,7 @@ const EmployeeForm = (props) => {
             </Col>
             <MinusCircle
               style={{ color: "#376ebb" }}
-              onClick={hideOneMoreRefer}
+              onClick={disabled?null:hideOneMoreRefer}
               style={{ marginTop: "2rem", color: "#006EBB" }}
             />
           </Row>

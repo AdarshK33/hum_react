@@ -287,7 +287,26 @@ const CandidateList = () => {
                               }}
                             />
                           </Link>
-                        ) : (
+                        ) :user !== null &&
+                        user !== undefined &&
+                        rolePermission === "admin" &&
+                        item.contractType !== "Internship" &&
+                        (item.adminVerificationStatus === 0 ||
+                          item.adminVerificationStatus === 3) ? (
+                          <Link to={"/verification/" + item.candidateId}>
+                            <AlertCircle
+                              onClick={() => {
+                                FetchCandidateData(item.candidateId);
+                              }}
+                            />
+                          </Link>): (
+                          //   <Link to={"/verification/" + item.candidateId}>
+                          //   <AlertCircle
+                          //     onClick={() => {
+                          //       FetchCandidateData(item.candidateId);
+                          //     }}
+                          //   />
+                          // </Link>
                           <AlertCircle />
                         )}
                       </td>
