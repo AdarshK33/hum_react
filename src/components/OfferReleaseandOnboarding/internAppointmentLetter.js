@@ -111,7 +111,7 @@ const InternAppointmentLetter = (props) => {
                 </p>
                 <p>
                   We thank you for your interest in choosing{" "}
-                  {offerLetterData.companyName === "Decathlon Sports India"
+                  {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                     ? "DSIPL"
                     : offerLetterData.companyName}{" "}
                   . We are in receipt of your application authorised by your
@@ -120,7 +120,7 @@ const InternAppointmentLetter = (props) => {
                   <b>{offerLetterData.internshipCandidateOffer.department}</b>.
                   As we believe your passion for sport and your values match
                   those of our Company, we, at{" "}
-                  {offerLetterData.companyName === "Decathlon Sports India"
+                  {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                     ? "DSIPL"
                     : offerLetterData.companyName}{" "}
                   , encourage academic aspirants to learn practical aspects of
@@ -148,7 +148,7 @@ const InternAppointmentLetter = (props) => {
                   travel, record maintenance, project submission and any other
                   unforeseen project related expenses. Further it is to be noted
                   that{" "}
-                  {offerLetterData.companyName === "Decathlon Sports India"
+                  {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                     ? "DSIPL"
                     : offerLetterData.companyName}{" "}
                   will not be in receipt of any professional service from you
@@ -192,7 +192,7 @@ const InternAppointmentLetter = (props) => {
                   </li>
                   <li>
                     We at{" "}
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "DSIPL"
                       : offerLetterData.companyName}{" "}
                     strongly believe in your ability to manage yourself in the
@@ -201,7 +201,7 @@ const InternAppointmentLetter = (props) => {
                   </li>
                   <li>
                     We trust you will enjoy the stay with{" "}
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "DSIPL"
                       : offerLetterData.companyName}{" "}
                     and take the utmost autonomy to complete your Project and
@@ -220,7 +220,7 @@ const InternAppointmentLetter = (props) => {
                       <li>
                         When you are happy being a part of the{" "}
                         {offerLetterData.companyName ===
-                        "Decathlon Sports India"
+                        "Decathlon Sports India Pvt Ltd"
                           ? "DSIPL"
                           : offerLetterData.companyName}{" "}
                         family, we expect you will be open to relocate to any
@@ -241,7 +241,7 @@ const InternAppointmentLetter = (props) => {
                       <li>
                         We at{" "}
                         {offerLetterData.companyName ===
-                        "Decathlon Sports India"
+                        "Decathlon Sports India Pvt Ltd"
                           ? "DSIPL"
                           : offerLetterData.companyName}
                         , have a strict policy against sexual harassment. We
@@ -249,7 +249,7 @@ const InternAppointmentLetter = (props) => {
                         harassment towards any of the Company employees and the
                         Company's customers.{" "}
                         {offerLetterData.companyName ===
-                        "Decathlon Sports India"
+                        "Decathlon Sports India Pvt Ltd"
                           ? "DSIPL"
                           : offerLetterData.companyName}{" "}
                         also ensures a safe environment to all its employees and
@@ -270,13 +270,13 @@ const InternAppointmentLetter = (props) => {
                         other regulations explained to you by your manager or if
                         you do not share the values of{" "}
                         {offerLetterData.companyName ===
-                        "Decathlon Sports India"
+                        "Decathlon Sports India Pvt Ltd"
                           ? "DSIPL"
                           : offerLetterData.companyName}
                         , we shall communicate the dis-continuance of this
                         engagement with{" "}
                         {offerLetterData.companyName ===
-                        "Decathlon Sports India"
+                        "Decathlon Sports India Pvt Ltd"
                           ? "DSIPL"
                           : offerLetterData.companyName}{" "}
                         to you at least 7 days in advance{" "}
@@ -352,7 +352,7 @@ const InternAppointmentLetter = (props) => {
                 <p>
                   <b>
                     We welcome you to the{" "}
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "Decathlon"
                       : offerLetterData.companyName}{" "}
                     Family!

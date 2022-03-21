@@ -1027,7 +1027,7 @@ const DisciplinarySeparation = (props) => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="itemResult">
-              Resignation for this employee {EmpName} has already been initated
+              Resignation for this employee {EmpName} has already been initiated
             </label>
 
             <div className="text-center mb-2">

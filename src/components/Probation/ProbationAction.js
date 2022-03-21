@@ -714,7 +714,7 @@ const ProbationAction = () => {
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label>
-            Exit has been initated against the employee. Please go to separation
+            Exit has been initiated against the employee. Please go to separation
             module for next steps of action
           </label>
           <div className="text-center mb-2">

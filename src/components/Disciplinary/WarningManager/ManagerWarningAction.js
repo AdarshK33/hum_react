@@ -1029,7 +1029,7 @@ const ManagerWarningAction = (props) => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Exit has been initated against the employee. Please go to
+              Exit has been initiated against the employee. Please go to
               separation module for next steps of action
             </label>
             <div className="text-center">

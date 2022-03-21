@@ -517,6 +517,7 @@ const EditEmployeeForm = () => {
               type="checkbox"
               name="refrence"
               checked={yesChecked}
+              disabled={disabled}
               onChange={checkedYesHandler}
             />
             &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
@@ -524,6 +525,7 @@ const EditEmployeeForm = () => {
               type="checkbox"
               name="refrence"
               checked={noChecked}
+              disabled={disabled}
               onChange={checkedNoHandler}
             />
           </Col>
