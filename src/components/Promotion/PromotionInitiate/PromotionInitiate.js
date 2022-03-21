@@ -407,7 +407,7 @@ const PromotionInitiate = () => {
         promotionLetter: null,
         promotionType: state.promotionType,
         reason: state.reason,
-        relocationBonus: state.oldFixedGross,
+        relocationBonus: state.relocationBonus,
         remarks: null,
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
