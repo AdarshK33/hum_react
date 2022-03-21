@@ -1205,8 +1205,8 @@ const InsuranceNomination = (props) => {
           item.candidateInsuranceDeathNomination !== undefined &&
           Object.keys(item.candidateInsuranceDeathNomination) !== 0
         ) {
-          setInsuranceHoldDeathYes(item.insuranceNominationHoldDeath);
-          setInsuranceHoldDeathNo(false);
+          // setInsuranceHoldDeathYes(item.insuranceNominationHoldDeath);
+          // setInsuranceHoldDeathNo(false);
           setNomineeValue(item.candidateInsuranceDeathNomination.nomineeId);
           setNomineeDOB(
             new Date(item.candidateInsuranceDeathNomination.dateOfBirth)
@@ -1264,15 +1264,24 @@ const InsuranceNomination = (props) => {
   };
 
   const nomineeDobValidation = () => {
+    let now = new Date();
+    let dob = new Date(nomineeDOB);
+    console.log(now - dob);
     if (insuranceHoldDeathYes === true) {
       if (
         nomineeDOB !== null &&
         nomineeDOB !== undefined &&
         nomineeDOB !== ""
-      ) {
-        console.log("uan number");
-        setNomineeDOBError(false);
+      ) { 
+    if (now - dob > 568024668000) {
+      console.log("DOBSuccess");
+      setNomineeDOBError(false);
         return true;
+    } else {
+      setNomineeDOBError(true);
+      console.log("DOBerror");
+      return false;
+    }
       } else {
         setNomineeDOBError(true);
         return false;
@@ -2139,14 +2148,14 @@ const InsuranceNomination = (props) => {
         (nomineeRelationValidation() === true) &
         (insuranceUploadValidation() === true)
       ) {
-        if (
-          candidateInsuranceNominationData &&
-          candidateInsuranceNominationData !== null &&
-          candidateInsuranceNominationData !== undefined &&
-          Object.keys(candidateInsuranceNominationData).length !== 0
-        ) {
-          DeleteAllInsuranceNominations(candidateProfileData.candidateId);
-        }
+        // if (
+        //   candidateInsuranceNominationData &&
+        //   candidateInsuranceNominationData !== null &&
+        //   candidateInsuranceNominationData !== undefined &&
+        //   Object.keys(candidateInsuranceNominationData).length !== 0
+        // ) {
+        //   DeleteAllInsuranceNominations(candidateProfileData.candidateId);
+        // }
         UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
         // updating the one object if na checked
         const NAInfo = {
@@ -6016,7 +6025,7 @@ const InsuranceNomination = (props) => {
                       {nomineeDOBError ? (
                         <p style={{ color: "red" }}>
                           {" "}
-                          &nbsp; *Please select valid date
+                          &nbsp; *Age should be above 18
                         </p>
                       ) : (
                         <p></p>

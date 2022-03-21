@@ -143,8 +143,9 @@ const ExtensionLetter1 = () => {
                     non-confirmation.
                     <br />
                     All the other terms and conditions of your appointment
-                    letter dated{" "}
-                    <b>{extensionLetterData.appointmentLetterDate}</b>, shall
+                    letter {" "}
+                    {/* <b>{extensionLetterData.appointmentLetterDate}</b> */}
+                    , shall
                     remain the same.
                     <br />
                     <br />

@@ -79,7 +79,7 @@ const MitReports = () => {
                     onChange={(e) => setCompany(e.target.value)}
                   >
                     <option value="">Select Company</option>
-                    <option value="Decathlon Sports India">DSI</option>
+                    <option value="Decathlon Sports India Pvt Ltd">DSI</option>
                     <option value="Indeca Sporting Goods Pvt Ltd">INDECA</option>
                     <option value="Prodin Sporting Pvt Ltd">PRODIN</option>
                   </Form.Control>

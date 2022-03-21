@@ -453,9 +453,9 @@ const EditWorkInformation = () => {
                     required
                   >
                     <option value="">Select Company</option>
-                    <option value="Decathlon Sports India">DSI</option>
-                    <option value="Indeca">Indeca</option>
-                    <option value="Prodin">Prodin</option>
+                    <option value="Decathlon Sports India Pvt Ltd">DSI</option>
+                    <option value="Indeca Sporting Goods Pvt Ltd">Indeca</option>
+                    <option value="Prodin Sporting Pvt Ltd">Prodin</option>
                   </Form.Control>
                 ) : (
                   <Form.Control
