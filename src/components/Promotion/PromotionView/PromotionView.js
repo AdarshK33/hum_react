@@ -530,7 +530,7 @@ const PromotionView = (props) => {
                                 <>
                                   <Col sm={2}>
                                     <div>
-                                      <label>Validated By:</label>
+                                      <label>Validated By CostCenter Leader:</label>
                                     </div>
                                   </Col>
                                   <Col sm={2}>
@@ -544,7 +544,7 @@ const PromotionView = (props) => {
                                 <>
                                   <Col sm={2}>
                                     <div>
-                                      <label>Rejected By:</label>
+                                      <label>Rejected By Admin:</label>
                                     </div>
                                   </Col>
                                   <Col sm={2}>
@@ -592,7 +592,7 @@ const PromotionView = (props) => {
                                 <>
                                   <Col sm={2}>
                                     <div>
-                                      <label>Rejected By:</label>
+                                      <label>Rejected By CostCenter Leader:</label>
                                     </div>
                                   </Col>
                                   <Col sm={2}>

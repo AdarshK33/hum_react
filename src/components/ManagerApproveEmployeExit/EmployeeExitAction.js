@@ -539,7 +539,7 @@ const EmployeeExitAction = (props) => {
   };
   console.log(relivingLetterData, "relivingLetterData", modeOfSeparation);
   const handleRelivingClose1 = () => {
-    props.history.push("/exit-approval");
+    props.history.push("/employee-separation-listing");
   };
   return (
     <Fragment>

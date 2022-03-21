@@ -109,13 +109,13 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>Amount</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>in Process Stopped</th>
-                                            <th>Updated By</th>
-                                            <th>Updated On</th>
+                                            <th>S .NO</th>
+                                            <th>AMOUNT</th>
+                                            <th>START DATE</th>
+                                            <th>END DATE</th>
+                                            <th>IN PROCESS STOPPED</th>
+                                            <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
 
 
                                         </tr>

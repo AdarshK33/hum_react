@@ -109,11 +109,11 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>sport Name</th>
+                                            <th>S .NO</th>
+                                            <th>SPORT NAME</th>
                                         
-                                            <th>Created By</th>
-                                            <th>Created On</th>
+                                            <th>CREATED BY</th>
+                                            <th>CREATED ON</th>
 
 
                                         </tr>
@@ -137,6 +137,9 @@ console.log(dates)
                                     !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => 
+                                        item.sportName !== undefined && item.sportName !== null &&
+                                    !item.sportName.includes(null) &&
+                                        item.sportName.length > 0 ?
                                              item.sportName.map((valueData,j)=>{
                                                 console.log(item.sportName,"item")
                                                 return (
@@ -153,7 +156,7 @@ console.log(dates)
                                                     </tbody>
                                                 )
                                              })
-                                            
+                                            :[]
                                         ) :
                                         <tbody>
                                             <tr>

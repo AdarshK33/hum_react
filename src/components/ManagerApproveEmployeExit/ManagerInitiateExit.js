@@ -33,6 +33,8 @@ const ManagerInitiateExit = () => {
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
+  const [showSuccessModalDemise, setShowSuccessModalDemise] = useState(false);
+
 
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [checkForExist, setCheckForExist] = useState(false);
@@ -858,6 +860,9 @@ const ManagerInitiateExit = () => {
     setModal(false);
     setSuccessModal(false);
   };
+  const handleCloseDemise = () =>{
+    setShowSuccessModalDemise(false)
+  }
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -904,6 +909,7 @@ const ManagerInitiateExit = () => {
     console.log(state);
   };
   const ModeOfSepchangeHandler = (e) => {
+    console.log("",e.target.value)
     setModeOfSeparation(e.target.value);
     modeOfSeparationList.map((item, i) => {
       console.log(item, e.target.value, "item");
@@ -917,6 +923,7 @@ const ManagerInitiateExit = () => {
         if (modeOfSeparationList[i].label === e.target.value) {
           setChangeInSeparation(modeOfSeparationList[i].value);
           console.log(modeOfSeparationList[i].value);
+
         }
       }
     });
@@ -1131,7 +1138,7 @@ const ManagerInitiateExit = () => {
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
-            dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+            dateOfResignation:changeInSeparation === 7?null:moment(dateOfResignation).format("YYYY-MM-DD"),
             personalEmailId: state.emailId,
             empName: EmpName,
             employeeComment: null,
@@ -1159,15 +1166,21 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 8,
+            status: changeInSeparation === 7?10:8,
           };
 
           console.log("createExitData", data2);
-          setSubmitted(true);
           CreateEmplyoeeExist(data2, state.empId);
-          setPreview(true);
+          if(changeInSeparation === 7){
+            setSubmitted(true);
+            setShowSuccessModalDemise(true);
+          }else{
+            setSubmitted(true);
+            setPreview(true);
+            setSuccessModal(true);
+          }
+         
           //   empResign(data1);
-          setSuccessModal(true);
           //  TerminationFromDesciplinary(false);
         } else if (intern === true) {
           var reasonId = 0;
@@ -1218,10 +1231,7 @@ const ManagerInitiateExit = () => {
           console.log("createExitData", data1);
           //   empResign(createExitData);
           CreateEmplyoeeExist(data1, state.empId);
-          // setPreview(true);
-          // setSuccessModal(true);
           setSubmitted(true);
-          // CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           setSuccessModal(true);
           // TerminationFromDesciplinary(false);
@@ -1387,6 +1397,25 @@ const ManagerInitiateExit = () => {
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
+
+      <Modal show={showSuccessModalDemise} onHide={() => handleClose()} centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader">
+            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
+          </Modal.Header>{" "}
+          <Modal.Body className="mx-auto">
+            <label>
+              Exit details saved successfully the employee has been notified
+            </label>
+
+            <div className="text-center mb-2">
+            <Link to={"/employee-separation-listing"}>
+              <Button onClick={() => handleCloseDemise()}>Close</Button>
+              </Link>
             </div>
           </Modal.Body>
         </Container>
@@ -1650,7 +1679,7 @@ const ManagerInitiateExit = () => {
                                         state.empContractType ==
                                           "Internship") &&
                                       item.label !== "Termination" &&
-                                      item.label !== "Resignation"
+                                      item.label !== "Resignation" && item.label !== "Employee Demise"
                                     ) {
                                       return (
                                         <option key={item.value}>
@@ -1689,7 +1718,7 @@ const ManagerInitiateExit = () => {
                         {/* {intern ? (
                           ""
                         ) : ( */}
-                        <Col sm={2}>
+                       {changeInSeparation === 7?<></>:<> <Col sm={2}>
                           <div>
                             <label>
                               Date of{" "}
@@ -1745,7 +1774,7 @@ const ManagerInitiateExit = () => {
                               </Form.Group>
                             )}
                           </div>
-                        </Col>
+                        </Col></>}
                         {/* )} */}
 
                         <Col sm={2}>
@@ -2217,7 +2246,28 @@ const ManagerInitiateExit = () => {
                         </Col>
                       </Row>
 
+                     {changeInSeparation === 7?<>
                       <Row>
+                        <Col
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
+                        >
+                          <button
+                            disabled={submitted}
+                            className={
+                              submitted ? "confirmButton" : "stepperButtons"
+                            }
+                            onClick={submitHandler}
+                          >
+                            Save
+                          </button>
+                          </Col>
+                          </Row>
+                     </>
+                      :<Row>
                         <Col
                           style={{
                             marginTop: "2rem",
@@ -2319,7 +2369,7 @@ const ManagerInitiateExit = () => {
                             </div>
                           )} */}
                         </Col>
-                      </Row>
+                      </Row>}
                     </Col>
                   </Row>
                 </Form>

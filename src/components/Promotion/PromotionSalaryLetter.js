@@ -91,6 +91,7 @@ import React, { Fragment, useState, useContext, useRef } from "react";
 import { Modal, Row, Col } from "react-bootstrap";
 import moment from "moment";
 import { PromotionContext } from "../../context/PromotionState";
+import {OfferContext} from "../../context/OfferState"
 import { E_signContext } from "../../context/E_signState";
 import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
@@ -104,6 +105,9 @@ const PromotionSalaryLetter = () => {
     setViewLetter,
     lettterview,
   } = useContext(PromotionContext);
+  const {
+    number2text,
+  } = useContext(OfferContext);
   console.log(promotionLetterData, "promotionLetterData");
 
   const { user } = useContext(AppContext);
@@ -248,7 +252,7 @@ const PromotionSalaryLetter = () => {
                   We are pleased to promote you as{" "}
                   <b>{promotionLetterData.promotedPosition}</b> and your new
                   gross salary will be INR.{" "}
-                  <b>{promotionLetterData.newFixedGross}</b>/- with effect from{" "}
+                  <b>{promotionLetterData.newFixedGross}</b>/-{" "}({number2text(promotionLetterData.newFixedGross)}) with effect from{" "}
                   <b>
                     {promotionLetterData.effectiveDate !== null &&
                     promotionLetterData.effectiveDate !== undefined &&
@@ -270,7 +274,7 @@ const PromotionSalaryLetter = () => {
                     {promotionLetterData.reportingManagerName}
                   </b>
                   . All the other terms and conditions of your appointment
-                  letter dated{" "}
+                  letter{" "}
                   <b>
                     {promotionLetterData.appointmentLetterDate !== null &&
                     promotionLetterData.appointmentLetterDate !== undefined &&
@@ -287,7 +291,7 @@ const PromotionSalaryLetter = () => {
                 </p>
                 <p>
                   <p>Yours Sincerely,</p>
-                  <b>For {promotionLetterData.company} Pvt Ltd,</b>
+                  <b>For {promotionLetterData.company} ,</b>
                 </p>
                 <br />
                 <p>

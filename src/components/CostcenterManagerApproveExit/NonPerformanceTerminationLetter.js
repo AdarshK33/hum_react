@@ -120,7 +120,7 @@ const NonPerformanceTerminationLetter = () => {
                 <Row>
              <Col sm="8">
              <p className="mt-5 ">
-                <b>For {terminationLetterData.company} Pvt Ltd,</b>
+                <b>For {terminationLetterData.company},</b>
               </p>
              </Col>
               <Col sm="4">

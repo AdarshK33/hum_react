@@ -107,18 +107,23 @@ console.log(dates)
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>sport Name</th>
-                                        
-                                            <th>Created By</th>
-                                            <th>Created On</th>
-
-
+                                            <th>S .NO</th>
+                                            <th>EMP ID</th>
+                                            <th>EMP NAME</th>
+                                            <th>COST CENTER NAME</th>
+                                            <th>SHOW CAUSE DATE</th>
+                                            <th>ISSUED FOR</th>
+                                            <th>DUE DAYS</th>
+                                            <th>EMPLOYEE ACTION</th>
+                                            <th>WARNING ISSUE DATE</th>
+                                            <th>PIP</th>
+                                            <th>STATUS</th>
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
+                                    {loader === true && currentRecords !== null && 
+                                    currentRecords !== undefined ?
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -141,11 +146,10 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -155,7 +159,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        } */}
+                                        }
 
                                 </Table>
                             </div>

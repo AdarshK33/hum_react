@@ -184,6 +184,7 @@ const PromotionInitiate = () => {
       state.oldDepartment = searchByCostData.department;
       state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
+      state.relocationBonus = searchByCostData.fixedGross;
       SetCurrentManager(searchByCostData.managerName); //need to verify
     }
   }, [searchByCostData]);

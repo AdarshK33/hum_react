@@ -249,10 +249,12 @@ const EmployeeList = () => {
                               </Link>
                             </td>
                             <td>
+                            <Link to={"/manager-initiate-exit"}>
                               <div style={{fontSize: "24px" }}>
                             {/* <i className="fas fa-sign-in-alt"></i> */}
                             <LogOut/>
                           </div>
+                          </Link>
                             </td>
                           </tr>
                         </tbody>
