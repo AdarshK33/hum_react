@@ -293,7 +293,10 @@ const ExitListing = () => {
                                 ? "End of Probation"
                                 : item.status === 8
                                 ? "Not Confirmed"
-                                : ""}
+                                :item.status === 10
+                                ? "Employee Demise Confirmed":
+                                item.status === 11 
+                                ? "Employee Demise Approved": ""}
                             </td>
                               <td>
                                 {/* {(item !== null &&
@@ -343,6 +346,7 @@ const ExitListing = () => {
                                   )}         */}
 
                                 {item.status === 3 ||
+                                item.status === 11 ||
                                 item.status === 5 ||
                                 item.status === 6 ? (
                                   <Edit2 />
@@ -369,7 +373,7 @@ const ExitListing = () => {
                                 ) 
                                 &&
                                 item.isManager == true &&
-                                item.status == 2)
+                                (item.status == 2 || item.status == 10))
                                  ||
                                  ((
                                   (user.loginType == 1 || user.loginType == 7 || user.loginType ==  3 ||user.loginType ==  9)
@@ -377,8 +381,8 @@ const ExitListing = () => {
                                  (user.additionalRole == 1 || user.additionalRole == 7 ||user.additionalRole == 3 ||user.additionalRole == 9)
                                 ) 
                                  && 
-                                item.status == 2)
-                              //   ||
+                                 (item.status == 2 || item.status == 10))
+                                 //   ||
 
                               // ((
                               //   (user.loginType == 0 ||user.loginType == 2 ||user.loginType == 3)

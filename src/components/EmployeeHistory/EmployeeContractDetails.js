@@ -114,23 +114,23 @@ console.log(employeeContractDetailsByIdData,"employeeContractDetailsByIdData")
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>Emp Id</th>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Joining Date</th>
-                                            <th>Created By</th>
-                                            <th>Created On</th>
-                                            <th>User Role</th>
-                                            <th>Is Active</th>
-                                            <th>Last Updated On</th>
-                                            <th>Address</th>
-                                            <th>City</th>
-                                            <th>State</th>
-                                            <th>Pin Code</th>
-                                            <th>Phone</th>
-                                            <th>Address Type</th>
-                                            <th>Updated By</th>
-                                            <th>Updated On</th>
+                                            <th>EMP ID</th>
+                                            <th>NAME</th>
+                                            <th>POSITION</th>
+                                            <th>JOINING DATE</th>
+                                            <th>CREATED BY</th>
+                                            <th>CREATED ON</th>
+                                            <th>USER ROLE</th>
+                                            <th>IS ACTIVE</th>
+                                            <th>LAST UPDATED ON</th>
+                                            <th>ADDRESS</th>
+                                            <th>CITY</th>
+                                            <th>STATE</th>
+                                            <th>PIN CODE</th>
+                                            <th>PHONE</th>
+                                            <th>ADDRESS TYPE</th>
+                                            <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
 
 
                                         </tr>

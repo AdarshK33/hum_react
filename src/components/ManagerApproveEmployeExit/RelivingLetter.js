@@ -195,7 +195,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
                 </p>
                 <br />
                 <p>
-                  <b>For {relivingLetterData.company} Pvt Ltd,</b>
+                  <b>For {relivingLetterData.company} ,</b>
                 </p>
                 <br />
                 <p>

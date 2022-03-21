@@ -79,6 +79,7 @@ const MasterHistory = (props) => {
     viewExitDataById,
     viewInsuranceDataById,
     viewSportDataById,
+    viewProbationDataById,
     employeeContractDetailsByIdData,
     managerData,
     costCenterData,
@@ -116,6 +117,8 @@ const MasterHistory = (props) => {
     viewInsuranceDataById(props.match.params.employeeid)
   }else if(stepCount == 15){
     viewSportDataById(props.match.params.employeeid)
+  }else if(stepCount == 17){
+    viewProbationDataById(props.match.params.employeeid)
   }
   }, [stepCount]);
 
@@ -213,23 +216,23 @@ const MasterHistory = (props) => {
           </Row>
 
           <Row>
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          {/* <Col sm={3} style={{paddingBottom:"7px"}}  >
           <Button name="Employee Contract Details" 
           value={8} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
           User Documents
           </Button>
-          </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          </Col> */}
+          {/* <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={9} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
                Other Taxable Income 
           </Button>
-          </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          </Col> */}
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
           <Button name="Employee Contract Details" 
           value={10} variant="outline-primary" 
           className="componentButton" 
@@ -243,17 +246,6 @@ const MasterHistory = (props) => {
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
           Payslips 
-          </Button>
-          </Col>
-          </Row>
-
-          <Row>
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
-          <Button name="Employee Contract Details" 
-          value={12} variant="outline-primary" 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          ItStatement 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -272,7 +264,19 @@ const MasterHistory = (props) => {
             Insurance Nomination 
           </Button>
           </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          </Row>
+
+          <Row>
+          {/* <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={12} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          ItStatement 
+          </Button>
+          </Col> */}
+          
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
           <Button name="Employee Contract Details" 
           value={15} variant="outline-primary" 
           className="componentButton" 
@@ -280,10 +284,7 @@ const MasterHistory = (props) => {
           Sport 
           </Button>
           </Col>
-          </Row>
-
-          <Row>
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={16} variant="outline-primary" 
           className="componentButton" 
@@ -307,7 +308,10 @@ const MasterHistory = (props) => {
             Transfer 
           </Button>
           </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          </Row>
+
+          <Row>
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
           <Button name="Employee Contract Details" 
           value={19} variant="outline-primary" 
           className="componentButton" 
@@ -315,10 +319,7 @@ const MasterHistory = (props) => {
           Disciplinary 
           </Button>
           </Col>
-          </Row>
-
-          <Row>
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={20} variant="outline-primary" 
           className="componentButton" 
@@ -334,14 +335,14 @@ const MasterHistory = (props) => {
               Cost Split 
           </Button>
           </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          {/* <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={22} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
             Perquisite Income
           </Button>
-          </Col>
+          </Col> */}
           </Row>
           {/* <Row>
             <Col sm={4}>

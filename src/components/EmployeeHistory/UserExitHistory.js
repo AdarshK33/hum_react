@@ -110,20 +110,20 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>Leaving Date</th>
-                                            <th>Resign Date</th>
-                                            <th>Notice Payable Days</th>
-                                            <th>Notice Recovery Days</th>
-                                            <th>Leaves Encashment</th>
-                                            <th>Monthly Bonus Payment</th>
-                                            <th>Holiday Working Bonus</th>
-                                            <th>Bonus Remarks</th>
-                                            <th>Gratuity</th>
+                                            <th>LEAVING DATE</th>
+                                            <th>RESIGN DATE</th>
+                                            <th>NOTICE PAYABLE DAYS</th>
+                                            <th>NOTICE RECOVERY DAYS</th>
+                                            <th>LEAVES ENCASHMENT</th>
+                                            <th>MONTHLY BONUS PAYMWNT</th>
+                                            <th>HOLIDAY WORKING BONUS</th>
+                                            <th>BONUS REMARKS</th>
+                                            <th>GRATUITY</th>
                                             <th>LOP</th>
-                                            <th>Other Recovery Amount</th>
-                                            <th>Other Recovery Remarks</th>
-                                            <th>Exit Initiated By</th>
-                                            <th>Exit Initiated On</th>
+                                            <th>OTHER RECOVERY AMOUNT</th>
+                                            <th>OTHER RECOVERY REMARKS</th>
+                                            <th>EXIT INITIATED BY</th>
+                                            <th>EXIT INITIATED ON</th>
 
                                         </tr>
                                     </thead>
@@ -149,12 +149,31 @@ console.log(dates)
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                
+                                                        {/* <td>{i + 1 + indexOfFirstRecord}</td> */}
+                                                        <td>{ item.leavingDate !== null && 
+                                                        item.leavingDate !== undefined 
+                                                         && item.leavingDate !== ""?
+                                                        moment(new Date(item.leavingDate)).format("DD-MM-YYYY"):""}</td>
+                                                          <td>{ item.resignDate !== null && 
+                                                        item.resignDate !== undefined 
+                                                         && item.resignDate !== ""?
+                                                        moment(new Date(item.resignDate)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.noticePayableDays}</td>
+                                                        <td>{item.noticeRecoveryDays}</td>
+
+                                                        <td>{item.leaveEncashment}</td>
+                                                        <td>{item.monthlyBonusPayment}</td>
+                                                        <td>{item.holidayWorkingBonus}</td>
+                                                        <td>{item.bonusRemarks}</td>
+                                                        <td>{item.gratuity}</td>
+                                                        <td>{item.lop}</td>
+                                                        <td>{item.otherRecoveryAmount}</td>
+                                                        <td>{item.otherRecoveryRemarks}</td>
+                                                        <td>{item.exitInitiatedBy}</td>
+                                                        <td>{ item.exitInitiatedOn !== null && 
+                                                        item.exitInitiatedOn !== undefined 
+                                                         && item.exitInitiatedOn !== ""?
+                                                        moment(new Date(item.exitInitiatedOn)).format("DD-MM-YYYY"):""}</td>
                                                     </tr>
                                                 </tbody>
                                             )

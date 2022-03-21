@@ -75,7 +75,7 @@ const RelivingLetter = () => {
               endeavours.
             </p>
             <p className="mt-5 ">
-              <b>For {relivingLetterData.company} Pvt Ltd,</b>
+              <b>For {relivingLetterData.company} ,</b>
             </p><br/>
             <p className="mt-5 ">
               <b>Authorized Signatory</b>

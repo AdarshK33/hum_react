@@ -109,11 +109,11 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>Cost Center</th>
-                                            <th>Effective Date</th>
-                                            <th>Updated By</th>
-                                            <th>Updated On</th>
+                                            <th>S .NO</th>
+                                            <th>COST CENTER</th>
+                                            <th>EFFECTIVE DATE</th>
+                                            <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 

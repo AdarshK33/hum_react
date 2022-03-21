@@ -110,17 +110,17 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>Name</th>
-                                            <th>Relationship</th>
-                                            <th>Nomination Type</th>
-                                            <th>Date of Birth</th>
-                                            <th>Age</th>
-                                            <th>Gender</th>
-                                            <th>Blood Group</th>
-                                            <th>Top Up Status</th>
-                                            <th>Top Up Limit(In Lakhs)</th>
-                                            <th>Permium Amount</th>
+                                            <th>S .NO</th>
+                                            <th>NAME</th>
+                                            <th>RELATIONSHIP</th>
+                                            <th>NOMINATION TYPE</th>
+                                            <th>DATE OF BIRTH</th>
+                                            <th>AGE</th>
+                                            <th>GENDER</th>
+                                            <th>BLOOD GROUP</th>
+                                            <th>TOP UP STATUS</th>
+                                            <th>TOP UP LIMIT(IN LAKHS)</th>
+                                            <th>PERMIUM AMOUNT</th>
                                         </tr>
                                     </thead>
                                     {loader === true && 

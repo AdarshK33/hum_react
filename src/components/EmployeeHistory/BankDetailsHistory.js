@@ -109,13 +109,13 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>Account Number</th>
-                                            <th>Bank Name</th>
+                                            <th>S .NO</th>
+                                            <th>ACCOUNT NUMBER</th>
+                                            <th>BANK NAME</th>
                                             <th>IFSC</th>
                                             <th>PAN</th>
-                                            <th>Updated By</th>
-                                            <th>Updated On</th>
+                                            <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
 
 
                                         </tr>

@@ -375,7 +375,10 @@ const EmployeeExitList = () => {
                                 ? "End of Probation"
                                 : item.status === 8
                                 ? "Not Confirmed"
-                                : ""}
+                                :item.status === 10
+                                ? "Employee Demise Confirmed":
+                                item.status === 11 
+                                ? "Employee Demise Approved": ""}
                             </td>
                             <td>
                               <Link to={"/exit-view/" + item.employeeId}>
@@ -393,7 +396,9 @@ const EmployeeExitList = () => {
                               item.status == 4 ||
                               item.status == 5 ||
                               item.status == 6 ||
-                              item.status == 7 ? (
+                              item.status == 7 ||
+                              item.status == 10 ||
+                              item.status == 11 ? (
                                 <Edit2 />
                               ) : item.status == 8 ? (
                                 <Link
