@@ -39,7 +39,7 @@ const ConfirmationLetter = () => {
           </p>
           <br></br>
           <p>
-            <b>To Ms./Mr. &nbsp;{cnfLetterData.empName}</b>
+            <b>To &nbsp;{cnfLetterData.empName}</b>
           </p>
           <p>Address :</p>
           <p>
@@ -83,7 +83,7 @@ const ConfirmationLetter = () => {
               Thanking You,
             </p>
             <p className="mt-2 ">
-              <b>For {cnfLetterData.company} Pvt Ltd,</b>
+              <b>For {cnfLetterData.company},</b>
             </p>
             <p>Authorised Signatory</p>
             <div className="float-right "></div>

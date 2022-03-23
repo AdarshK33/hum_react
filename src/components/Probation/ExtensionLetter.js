@@ -133,7 +133,7 @@ const ExtensionLetter = () => {
               Yours Sincerely,
             </p>
             <p className="mt-2 ">
-              <b>For {extensionLetterData.company} Pvt Ltd,</b>
+              <b>For {extensionLetterData.company},</b>
             </p>
             <p>Authorised Signatory</p>
             <div className="float-right "></div>

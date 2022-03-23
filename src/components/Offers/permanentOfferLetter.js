@@ -99,7 +99,7 @@ const PermanentOfferLetter = () => {
                 <p>
                   We have the pleasure to offer you the position of{" "}
                   <b>{offerLetterData.position}</b> on Full-Time Basis, at{" "}
-                  {offerLetterData.companyName} Pvt. Ltd.{" "}
+                  {offerLetterData.companyName}.{" "}
                 </p>
                 <br></br>
                 <p style={{ fontWeight: "700", fontSize: "15px" }}>

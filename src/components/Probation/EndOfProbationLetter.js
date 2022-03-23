@@ -167,7 +167,7 @@ const EndOfProbationLetter = () => {
                   Yours Sincerely,
                 </p>
                 <p>
-                  <b>For {endLetterData.company} Pvt Ltd,</b>
+                  <b>For {endLetterData.company},</b>
                 </p>
                 <p>Authorised Signatory</p>
               </div>

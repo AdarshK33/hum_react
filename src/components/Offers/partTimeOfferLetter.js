@@ -103,7 +103,7 @@ const PartTimeOfferLetter = () => {
                 <p>
                   We have the pleasure to offer you the position of{" "}
                   <b>{offerLetterData.position}</b> on Part-Time Basis at{" "}
-                  {offerLetterData.companyName} Pvt. Ltd.{" "}
+                  {offerLetterData.companyName}.{" "}
                 </p>
 
                 <p style={{ fontSize: "15px", fontWeight: "700" }}>
@@ -156,7 +156,7 @@ const PartTimeOfferLetter = () => {
                   acceptance and forward the same to us.
                 </p>
                 <br></br>
-                <p>For {offerLetterData.companyName} Pvt. Ltd</p>
+                <p>For {offerLetterData.companyName}</p>
                 <br></br>
                 <p>Thanking you</p>
                 <p>Manager Name :{offerLetterData.managerName}</p>

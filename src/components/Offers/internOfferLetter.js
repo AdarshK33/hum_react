@@ -123,7 +123,7 @@ const InternOfferLetter = () => {
                   {moment(
                     offerLetterData.internshipCandidateOffer.toDate
                   ).format("DD-MM-YYYY")}{" "}
-                  at {offerLetterData.companyName} Pvt. Ltd. You will be
+                  at {offerLetterData.companyName} . You will be
                   provided stipend{" "}
                   {offerLetterData.internshipCandidateOffer.stipend} per month.
                 </p>
@@ -134,7 +134,7 @@ const InternOfferLetter = () => {
                   all times.
                 </p>
                 <br></br>
-                <p>For {offerLetterData.companyName} Pvt. Ltd</p>
+                <p>For {offerLetterData.companyName}</p>
                 <br></br>
                 <p>Thanking you</p>
                 <p>Manager Name :{offerLetterData.managerName}</p>
