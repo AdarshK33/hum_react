@@ -157,7 +157,7 @@ const ExtensionLetter1 = () => {
                     <br />
                   </p>
                   <p className="mt-5 ">
-                    <b>For {extensionLetterData.company} Pvt Ltd,</b>
+                    <b>For {extensionLetterData.company},</b>
                   </p>
                   <div className="float-right "></div>
                 </div>

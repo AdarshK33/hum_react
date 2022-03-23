@@ -67,7 +67,7 @@ const PartTimeAppointmentLetter = (props) => {
             Dear <b>{candidateLetterData.candidateName}</b>,
           </p>
           <p>
-            Thank for your interest in choosing {candidateLetterData.companyName} Pvt Ltd
+            Thank for your interest in choosing {candidateLetterData.companyName}
             . As we believe your passion for sport and your values match
             those of our Company, we, at {candidateLetterData.companyName}, are pleased to appoint you as a
              {candidateLetterData.companyName} Permanent Employee on a part time basis, and your
@@ -261,7 +261,7 @@ const PartTimeAppointmentLetter = (props) => {
 
             <Row>
              <Col sm="8">
-             <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+             <p>For {candidateLetterData.companyName}</p>
              </Col>
               <Col sm="4">
               <p> Accepted By Me</p>

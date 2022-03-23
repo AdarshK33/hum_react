@@ -364,7 +364,7 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
                 <p>The receipt of this letter should be acknowledged.</p>
                 <br />
                 <p>
-                  <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
+                  <b>For {disciplinarySearchData.company},</b>
                 </p>
                 <p>
                   <b>Authorised Signatory</b>

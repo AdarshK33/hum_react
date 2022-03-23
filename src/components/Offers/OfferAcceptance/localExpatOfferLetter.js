@@ -30,7 +30,7 @@ const LocalExpatOfferLetter = () => {
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{candidateLetterData.position}</span> on
-            FullTime Basis, at {candidateLetterData.companyName} Pvt. Ltd.{" "}
+            FullTime Basis, at {candidateLetterData.companyName}.{" "}
           </p>
           <br></br>
           <p className="offerSubHeader">1. Terms & Conditions</p>
