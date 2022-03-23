@@ -198,7 +198,7 @@ const ProbationAction = () => {
       // setDateOfExtension("");
       // setDateDisable(false);
     }
-  }, [probationMonths]);
+  }, [probationData,probationMonths]);
 
   const handleClose = () => {
     setSuccessModal(false);
@@ -215,9 +215,11 @@ const ProbationAction = () => {
   };
   const handleRelivingClose = () => {
     setShow(false);
+    history.push("../probation");
   };
   const handleRejectionClose = () => {
     setShowRej(false);
+    history.push("../probation");
   };
 
   const saveOfferLetter = () => {
