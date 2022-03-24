@@ -105,7 +105,7 @@ const InternAppointmentLetter = (props) => {
             months from{" "}
             <b>{candidateLetterData.internshipCandidateOffer.fromDate}</b> to{" "}
             <b>{candidateLetterData.internshipCandidateOffer.toDate}</b> at{" "}
-            <b>{candidateLetterData.companyName}</b> Pvt. Ltd. You will be provided
+            <b>{candidateLetterData.companyName}</b> . You will be provided
             stipend <b>{candidateLetterData.internshipCandidateOffer.stipend}</b> per
             month.
           </p>
@@ -257,7 +257,7 @@ const InternAppointmentLetter = (props) => {
             
              <Row>
              <Col sm="8">
-             <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+             <p>For {candidateLetterData.companyName} </p>
              </Col>
               <Col sm="4">
               <p> Accepted By Me</p>

@@ -236,7 +236,7 @@ const NonPerformanceTerminationLetter = () => {
                 <div style={{ marginLeft: "2rem" }}>
                   {/* stylings are not accepting by html to pdf */}
                   <p>
-                    For {terminationLetterData.company} Pvt Ltd,
+                    For {terminationLetterData.company},
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

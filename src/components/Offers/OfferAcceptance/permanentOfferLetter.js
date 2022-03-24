@@ -30,7 +30,7 @@ const PermanentOfferLetter = () => {
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{candidateLetterData.position}</span> on
-            FullTime Basis, at {candidateLetterData.companyName} Pvt. Ltd.{" "}
+            FullTime Basis, at {candidateLetterData.companyName}.{" "}
           </p>
           <br></br>
           <p className="offerSubHeader">1. Terms & Conditions</p>
@@ -77,7 +77,7 @@ const PermanentOfferLetter = () => {
               appointment shall be confirmed and communicated to you in writing
             </li>
           </ol>
-          <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+          <p>For {candidateLetterData.companyName}</p>
           <br></br>
           <p>Thanking you</p>
           <p>Manager Name :{candidateLetterData.managerName}</p>

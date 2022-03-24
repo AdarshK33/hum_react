@@ -122,7 +122,12 @@ const ConfirmationLetter1 = () => {
                       We are glad to inform you that the management is pleased
                       to confirm you in service with effect from{" "}
                       <b>{cnfLetterData.confirmationDate}</b>. All the other
-                      terms and conditions of your appointment letter dated{" "}
+                      terms and conditions of your appointment letter dated{" "}{cnfLetterData.appointmentLetterDate !== null &&
+                cnfLetterData.appointmentLetterDate !== undefined
+                  ? moment(new Date(cnfLetterData.appointmentLetterDate)).format(
+                      "DD-MM-YYYY"
+                    )
+                  : ""}
                       shall remain same.
                       <br />
                       Please sign the copy of this letter as receipt of

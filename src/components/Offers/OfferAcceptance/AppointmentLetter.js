@@ -281,7 +281,7 @@ const AppointmentLetter = (props) => {
             </Row> */}
             <Row>
              <Col sm="8">
-             <p>For {candidateLetterData.companyName} Pvt Ltd</p>
+             <p>For {candidateLetterData.companyName}</p>
              </Col>
               <Col sm="4">
               <p> Accepted By Me</p>

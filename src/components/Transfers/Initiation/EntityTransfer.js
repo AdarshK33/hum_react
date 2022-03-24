@@ -338,7 +338,7 @@ const EntityTransfer = () => {
         currentPosition: initiationEmpData.currentPosition,
         promotedCompany:
           newEntity.toLowerCase() === "dsi"
-            ? "Decathlon Sports India"
+            ? "Decathlon Sports India Pvt Ltd"
             : newEntity.toLowerCase() === "prodin"
             ? "Prodin Sporting Pvt Ltd"
             : newEntity.toLowerCase() === "indeca"

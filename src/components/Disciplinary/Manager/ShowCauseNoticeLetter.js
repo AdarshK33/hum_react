@@ -375,7 +375,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
                   <br />
                 </p>
                 <p>
-                  <b>For {disciplinarySearchData.company} Pvt Ltd,</b>
+                  <b>For {disciplinarySearchData.company},</b>
                 </p>
                 <br />
                 <p>

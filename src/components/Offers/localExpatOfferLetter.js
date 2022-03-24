@@ -111,7 +111,7 @@ const LocalExpatOfferLetter = () => {
                 <p>
                   We have the pleasure to offer you the position of{" "}
                   <b>{offerLetterData.position}</b> on Full-Time Basis, at{" "}
-                  {offerLetterData.companyName} Pvt. Ltd.{" "}
+                  {offerLetterData.companyName} .{" "}
                 </p>
                 <br></br>
                 <p
@@ -167,7 +167,7 @@ const LocalExpatOfferLetter = () => {
                     in writing
                   </li>
                 </ol>
-                <p>For {offerLetterData.companyName} Pvt Ltd</p>
+                <p>For {offerLetterData.companyName} </p>
                 <br></br>
                 <p>Thanking you</p>
                 <p>Manager Name :{offerLetterData.managerName}</p>

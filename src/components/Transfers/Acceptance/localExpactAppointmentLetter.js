@@ -147,13 +147,13 @@ const LocalExpactAppointmentLetter = (props) => {
                   {offerLetterData.companyName}. As we believe your passion for
                   sport and your values match those of our Company, we, at{" "}
                   <b>
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "Decathlon"
                       : offerLetterData.companyName}
                   </b>
                   , are pleased to appoint you as a{" "}
                   <b>
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "Decathlon"
                       : offerLetterData.companyName}
                   </b>{" "}
@@ -197,7 +197,7 @@ const LocalExpactAppointmentLetter = (props) => {
                 <p>
                   We at{" "}
                   <b>
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "Decathlon"
                       : offerLetterData.companyName}
                   </b>{" "}
@@ -208,7 +208,7 @@ const LocalExpactAppointmentLetter = (props) => {
                 <p>
                   We trust you will enjoy working with{" "}
                   <b>
-                    {offerLetterData.companyName === "Decathlon Sports India"
+                    {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                       ? "Decathlon"
                       : offerLetterData.companyName}
                   </b>{" "}
@@ -229,7 +229,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <li>
                     When you are happy being a part of the{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -244,7 +244,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <li>
                     Working for{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -252,7 +252,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     responsibility, we insist you dedicate your working hours
                     solely to{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -264,7 +264,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     yourself in taking or giving bribe, gambling, theft,
                     fraudulent practices or any such act that might affect{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -273,7 +273,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <li>
                     We at{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -282,7 +282,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     towards any of the Company employees and the Company's
                     customers.{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "DSIPL"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -305,7 +305,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     regulations explained to you by your manager or if you do
                     not share the values of{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -316,7 +316,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <li>
                     Service rules under the Certified Standing Orders of{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
@@ -368,19 +368,19 @@ const LocalExpactAppointmentLetter = (props) => {
                   <li>
                     Any image taken of you during a{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
                     event or during a photo-shoot shall be the property of{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>{" "}
                     and you consent to{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>
@@ -391,7 +391,7 @@ const LocalExpactAppointmentLetter = (props) => {
                     under the certified standing orders of Decathlon will be
                     applicable to you from the date of your joining{" "}
                     <b>
-                      {offerLetterData.companyName === "Decathlon Sports India"
+                      {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
                         ? "Decathlon"
                         : offerLetterData.companyName}
                     </b>

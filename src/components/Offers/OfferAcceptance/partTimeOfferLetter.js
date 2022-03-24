@@ -28,7 +28,7 @@ const PartTimeOfferLetter = () => {
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{candidateLetterData.position}</span> on
-            Part-Time Basis at {candidateLetterData.companyName} Pvt. Ltd.{" "}
+            Part-Time Basis at {candidateLetterData.companyName}{" "}
           </p>
 
           <p className="offerSubHeader">1. Terms & Conditions</p>
@@ -82,7 +82,7 @@ const PartTimeOfferLetter = () => {
             forward the same to us.
           </p> */}
           <br></br>
-          <p>For {candidateLetterData.companyName} Pvt. Ltd</p>
+          <p>For {candidateLetterData.companyName}</p>
           <br></br>
           <p>Thanking you</p>
           <p>Manager Name :{candidateLetterData.managerName}</p>
