@@ -2,12 +2,12 @@ import React, { useState, useContext, useEffect, Fragment } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 /* import DatePicker from 'react-datepicker' */
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, } from "react-toastify";
+import { toast, ToastContainer, } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { ClusterContext } from '../../context/ClusterState'
 import moment from 'moment'
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 const EditSalary = (props) => {
     const [employeeId, setEmployeeId] = useState()

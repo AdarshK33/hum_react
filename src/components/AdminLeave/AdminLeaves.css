@@ -1,43 +1,60 @@
 .heading-row.row {
-    display: flex;
-    justify-content: center;
-    padding-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
 }
-.table th, .table td{
-    text-align: center;
+.table th,
+.table td {
+  text-align: center;
 }
 button.btn.btn-sm.disable-button:disabled {
-    background-color: lightgrey !important;
-    border-color: lightgrey !important;
-    color: black
+  background-color: lightgrey !important;
+  border-color: lightgrey !important;
+  color: black;
 }
 .table .thead-light th {
-    vertical-align: top;
+  vertical-align: top;
 }
-ul.pagination{
-    justify-content: center;
-    margin: 30px 0;
+ul.pagination {
+  justify-content: center;
+  margin: 30px 0;
 }
 .page-item.active .page-link {
-    background-color: #006EBB;
-    border-color: #006EBB;
+  background-color: #006ebb;
+  border-color: #006ebb;
 }
-.page-link{
-    color: #006EBB;
+.page-link {
+  color: #006ebb;
 }
 button.submitButton.btn.btn-primary {
-    background: #006EBB !important;
-    border-color: #006EBB !important;
+  background: #006ebb !important;
+  border-color: #006ebb !important;
 }
 
-.salary-date .react-datepicker-wrapper{
-    width: 80% !important;
+.salary-date .react-datepicker-wrapper {
+  width: 80% !important;
 }
 .salary-date input.form-control.salary-view {
-    height: 34px;
+  height: 34px;
 }
 button.disabled-export-button.btn.btn-primary {
-    background-color: white !important;
-    color: black;
-    border-color: white;
+  background-color: white !important;
+  color: black;
+  border-color: white;
+}
+
+.Btn-Blue-BG.active {
+  background-color: #006ebb !important;
+  color: white !important;
+  z-index: 0 !important;
+}
+
+.Btn-Blue-BG {
+  background-color: rgb(255, 255, 255) !important;
+  color: #006ebb !important;
+}
+
+.Btn-Blue-BG:hover {
+  background-color: #006ebb !important;
+  color: white !important;
 }

@@ -1,0 +1,65 @@
+.headingWrapper {
+  background-color: #006ebb;
+  color: white;
+  height: 50px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  font-size: 25px;
+}
+
+.approveButton {
+  background-color: #006ebb;
+  color: white;
+  border: none;
+  width: auto;
+  height: auto;
+  border-radius: 10px !important;
+}
+.tableText {
+  color: #006ebb;
+}
+.docFontSize {
+  font-size: 20px;
+}
+.tableWrapper tr {
+  border: none !important;
+}
+.tableWrapper thead {
+  border: none !important;
+  border-color: #fff !important;
+  background-color: #006ebb !important;
+  color: white !important;
+  /* text-decoration: underline !important; */
+}
+.modalHeader {
+  border-bottom: none !important;
+  text-align: center;
+}
+.remarkText {
+  width: 100%;
+  height: 10vh;
+  border-color: #006ebb;
+}
+.onboardButton {
+  background-color: #006ebb;
+  color: white;
+  width: 200px;
+  height: 30px;
+  /* border-top-left-radius: 10px; */
+  /* border-top-right-radius: 10px; */
+  border: 1px solid #006ebb;
+  margin-left: 40px;
+}
+.buttonMargin {
+  margin-top: 35px !important;
+}
+.buttonMargin1 {
+  margin-top: 45px !important;
+  padding-top: 55px !important;
+}
+
+.downloadButton {
+  background-color: #006ebb;
+  color: white;
+  margin-left: 30px;
+}

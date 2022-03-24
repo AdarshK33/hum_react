@@ -4,6 +4,7 @@ import Select from "react-select";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import "./roster.css";
+import moment from "moment";
 
 const ShiftModal = (props) => {
   const [key, setKey] = useState("shift");
@@ -11,7 +12,8 @@ const ShiftModal = (props) => {
   const date = parseInt(props.weekName.split("Week")[1].trim());
   // const [date, setdate] = useState()
 
-  const shiftDateWeek = props.shiftDate;
+  // const shiftDateWeek = props.shiftDate;
+  const [shiftDateWeek, setShiftDateWeek] = useState(props.shiftDate);
   const [selectedWeeks, setSelectedWeeks] = useState();
   const [weekDay, setWeekDay] = useState();
   const [value, setValue] = useState();
@@ -21,7 +23,7 @@ const ShiftModal = (props) => {
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [empData, setEmpData] = useState();
   const [weekNameData, setWeekNameData] = useState();
-  const [daysList, setDaysList] = useState([]);
+
   const {
     weekDays,
     weekOffDays,
@@ -46,8 +48,19 @@ const ShiftModal = (props) => {
   ];
   //console.log(availableShiftData, "data")
   //console.log(weeksInYear, "weeks")
+  let dt = moment(props.Date, "YYYY-MM-DD HH:mm:ss")
+  const [daysList, setDaysList] = useState([{label: dt.format('dddd'),value: props.Date}]);
+  console.log("setDaysList",dt.format('dddd'),daysList);
   useEffect(() => {
-
+    if(weekDayList!== null &&weekDayList!==undefined){
+      let selectedWeekDetails = weekDayList.filter(
+        (item) => item.weekId == selectedWeeks 
+      );
+      console.log("selectedWeekDetails-->",selectedWeekDetails);
+      if(selectedWeekDetails && selectedWeekDetails !== null &&
+        selectedWeekDetails !== undefined && Object.keys(selectedWeekDetails).length){
+          availableShifts(selectedWeekDetails[0].weekName,selectedWeekDetails[0].year);
+      }}
     getallWeeks(props.Date);
     if (props.empData !== "") {
       setEmpData(props.empData);
@@ -64,7 +77,7 @@ const ShiftModal = (props) => {
       );
     }
     setWeekDay(props.Date);
-    setDaysList(props.Date)
+    // setDaysList(props.Date)
   }, [props.empData, props.Date, props.endDate, props.startDate]);
   useEffect(() => {
     console.log("shiftDateWeek", shiftDateWeek);
@@ -82,9 +95,9 @@ const ShiftModal = (props) => {
     }}
     weekOffDays(shiftDateWeek);
   }, [selectedWeeks]);
-  useEffect(() => {
-    setSelectedWeeks("")
-  }, [])
+  // useEffect(() => {
+  //   setSelectedWeeks("")
+  // }, [])
   // useEffect(() => {
   //   setdate(props.weekName.split('Week')[1].trim())
   //   // setSelectedWeeks(props.weekName)
@@ -147,7 +160,7 @@ const ShiftModal = (props) => {
       date: WeekDate.map((e, i) => WeekDate[i].value),
       employeeId: user.employeeId,
     };
-
+console.log("roaster weekoff",WeekDate,daysList);
     addWeekOff(newWeekOff);
     console.log("newWeekOff data", newWeekOff);
     setSelectedWeeks(1);
@@ -190,6 +203,7 @@ const ShiftModal = (props) => {
     console.log("newValue", newValue);
 
     setSelectedWeeks(newValue);
+    setShiftDateWeek(newValue);
     setShowDay(true);
   };
   const submitAssignShift = (event) => {
@@ -199,7 +213,7 @@ const ShiftModal = (props) => {
       employeeId: user.employeeId,
       shiftId: value,
     };
-    // console.log(assindata)
+    console.log("roaster shift",props.Date);
     assignShift(assindata);
     props.handleClose();
     setAShiftButton(true);

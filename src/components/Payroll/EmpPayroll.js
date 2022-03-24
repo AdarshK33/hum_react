@@ -1,0 +1,18 @@
+import React, { useContext, useEffect } from "react";
+import { PayrollContext } from "../../context/PayrollState";
+import MyPayroll from "./MyPayroll";
+import { AppContext } from "../../context/AppState";
+
+const EmpPayroll = (props) => {
+  const { setManagerFlag, setEmployeeId } = useContext(PayrollContext);
+  const { user } = useContext(AppContext);
+  useEffect(() => {
+    if (user && Object.keys(user).length) {
+      setEmployeeId(user.employeeId);
+      setManagerFlag(false);
+    }
+  }, []);
+
+  return <MyPayroll />;
+};
+export default EmpPayroll;

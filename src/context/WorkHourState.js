@@ -20,7 +20,7 @@ export const WorkHourProvider = (props) => {
   const workHourCreate = (data) => {
     setLoader(true);
     client
-      .post("/working_hours/create", data)
+      .post("/api/v1/working_hours/create", data)
       .then((response) => {
         state.workHourData = response.data.data;
         toast.info(response.data.message);
@@ -41,7 +41,7 @@ export const WorkHourProvider = (props) => {
     setLoader(true);
     client
       .get(
-        "/working_hours/view?contractType=" +
+        "/api/v1/working_hours/view?contractType=" +
           contractType +
           "&page=" +
           page +
@@ -72,7 +72,7 @@ export const WorkHourProvider = (props) => {
     console.log("weekHourViewid", id);
     client
       .get(
-        "/working_hours/view/id?id="+id
+        "/api/v1/working_hours/view/id?id="+id
       )
       .then((response) => {
         console.log("response", response.data.data);
@@ -90,7 +90,7 @@ export const WorkHourProvider = (props) => {
   const workHourEdit = (data) => {
     setLoader(true);
     client
-      .post("/working_hours/update", data)
+      .post("/api/v1/working_hours/update", data)
       .then((response) => {
         state.workHourEditData = response.data.data;
         toast.info(response.data.message);

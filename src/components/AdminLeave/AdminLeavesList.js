@@ -229,7 +229,7 @@ const AdminLeavesList = (props) => {
                             <td>{item.fromDate}</td>
                             <td>{item.toDate}</td>
                             <td>
-                              {item.leaveTypeId === 3||moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD")) ? (
+                              {item.leaveTypeId === 3 ||moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD")) ? (
                                 <Edit2
                                   disabled
                                   style={{ color: "lightgray" }}
@@ -292,7 +292,7 @@ const AdminLeavesList = (props) => {
                             <td>{item.fromDate}</td>
                             <td>{item.toDate}</td>
                             <td>
-                              {item.leaveTypeId === 3 ||moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD"))? (
+                              {item.leaveTypeId === 3|| moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD")) ? (
                                 <Edit2
                                   disabled
                                   style={{ color: "lightgray" }}

@@ -90,7 +90,7 @@ export const AppProvider = ({ children, history }) => {
   const getUserInfo = () => {
     // state.MENUITEMS = [];
     client
-      .post("/employee/profile")
+      .post("/api/v1/employee/profile")
       .then((response) => {
         state.user = response.data.data;
         if (response.data.data === {}) {
@@ -132,6 +132,8 @@ export const AppProvider = ({ children, history }) => {
     localStorage.removeItem("flag");
     window.location.href = logOutUrl;
     localStorage.removeItem("URL");
+    localStorage.removeItem("candidate_access_token");
+    localStorage.removeItem("loginRole");
     // window.open(
     //   loginUrl,
     //   '_blank' // <- This is what makes it open in a new window.

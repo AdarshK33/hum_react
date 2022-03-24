@@ -20,7 +20,7 @@ export const WeekOffProvider = (props) => {
   const weekOffCreate = (data) => {
     setLoader(true);
     client
-      .post("/week_off/create", data)
+      .post("/api/v1/week_off/create", data)
       .then((response) => {
         state.weekoffData = response.data.data;
         toast.info(response.data.message);
@@ -41,7 +41,7 @@ export const WeekOffProvider = (props) => {
     setLoader(true);
     client
       .get(
-        "/week_off/view?contractType=" +
+        "/api/v1/week_off/view?contractType=" +
           contractType +
           "&page=" +
           page +
@@ -71,7 +71,7 @@ export const WeekOffProvider = (props) => {
     console.log("weekOffViewid", id);
     client
       .get(
-        "/week_off/view/id?id="+id
+        "/api/v1/week_off/view/id?id="+id
       )
       .then((response) => {
         console.log("response", response.data.data);
@@ -89,7 +89,7 @@ export const WeekOffProvider = (props) => {
   const weekOffEdit = (data) => {
     setLoader(true);
     client
-      .post("/week_off/update", data)
+      .post("/api/v1/week_off/update", data)
       .then((response) => {
         state.weekoffEditData = response.data.data;
         toast.info(response.data.message);

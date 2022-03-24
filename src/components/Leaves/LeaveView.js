@@ -12,7 +12,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
 import { AppContext } from "../../context/AppState";
-import moment from 'moment'
+import moment from "moment";
 
 const LeaveView = () => {
 
@@ -90,7 +90,7 @@ const LeaveView = () => {
         console.log("currentYear",currentYear,year);
         viewLeaveData(user.employeeId,year)  
     }
-
+    
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />

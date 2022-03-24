@@ -28,7 +28,9 @@ const Roster = () => {
     setweekName(weekName);
     setshiftDate(weekId);
     setModal(true);
-    availableShifts();
+    availableShifts(weekName,moment(item.date).format("YYYY"));
+    
+    // }
   };
 
   useEffect(() => {
