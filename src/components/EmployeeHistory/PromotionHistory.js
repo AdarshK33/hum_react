@@ -115,15 +115,14 @@ console.log(dates)
                                              <th>POSITION</th> 
                                              <th>POSITION PROMOTED TO</th>
                                              <th>PROMOTION DATE</th>
-                                             <th>VALIDATED BY COSTCENTERMANAGER</th>
+                                             {/* <th>VALIDATED BY COSTCENTERMANAGER</th>
                                              <th>DATE</th>
                                              <th>VALIDATED BY HR/ADMIN</th>
                                             <th>DATE</th>
-                                            <th>STATUS</th>
+                                            <th>STATUS</th> */}
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null
-                                     && !currentRecords.includes(null) &&
+                                    {loader === true && currentRecords !== null &&
                                       currentRecords !== undefined ? 
                                         <tbody>
                                         <tr>
@@ -147,11 +146,15 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.position}</td>
+                                                        <td>{item.promotedPosition}</td>
+                                                        <td>{ item.promotedDate !== null && 
+                                                        item.promotedDate !== undefined 
+                                                         && item.promotedDate !== ""?
+                                                        moment(new Date(item.promotedDate)).format("DD-MM-YYYY"):""}</td>
+
                                                     </tr>
                                                 </tbody>
                                             )

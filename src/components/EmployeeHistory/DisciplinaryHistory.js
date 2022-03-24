@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 
 const DisciplinaryHistory = (props) => {
     const {
-        viewSportDataById,
-        sportData,
+        viewDisciplinaryDataById,
+        disciplinaryData,
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
+    const totalRecords = disciplinaryData !== null && disciplinaryData !== undefined && disciplinaryData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = disciplinaryData !== null && disciplinaryData !== undefined ? disciplinaryData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -167,7 +167,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
+            {disciplinaryData !== null && disciplinaryData !== undefined && disciplinaryData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

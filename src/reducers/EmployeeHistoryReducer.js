@@ -30,7 +30,11 @@ const EmployeeHistoryReducer = (state, action) => {
                     case 'PROMOTION_DATA':
                         return {...state,promotionData:action.payload}    
                 case 'PROBATION_DATA':
-                return {...state,probationData:action.payload}                                  
+                return {...state,probationData:action.payload} 
+                case 'DSICIPLINARY_DATA':
+                return {...state,disciplinaryData:action.payload}                                  
+                case 'TRANSFER_DATA':
+                return {...state,transferData:action.payload}                                                                   
             default: return state;
     }
 }

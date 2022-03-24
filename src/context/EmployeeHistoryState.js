@@ -23,6 +23,8 @@ const initial_state = {
   sportData:[],
   promotionData:[],
   probationData:[],
+  disciplinaryData:[],
+  transferData:[],
   total: {},
   data: [],
 
@@ -348,6 +350,46 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
+    const viewDisciplinaryDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/probation/" + employeeId)
+        .then((response) => {
+          state.disciplinaryData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->disciplinaryData", state.disciplinaryData);
+          console.log(response);
+  
+          return dispatch({
+            type: "DSICIPLINARY_DATA",
+            payload: state.disciplinaryData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewTransferDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/probation/" + employeeId)
+        .then((response) => {
+          state.transferData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->transferData", state.transferData);
+          console.log(response);
+  
+          return dispatch({
+            type: "TRANSFER_DATA",
+            payload: state.transferData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   return (
     <EmployeeHistoryContext.Provider
       value={{
@@ -366,6 +408,8 @@ export const EmployeeHistoryProvider = (props) => {
         viewSportDataById,
         viewPromotionDataById,
         viewProbationDataById,
+        viewDisciplinaryDataById,
+        viewTransferDataById,
         loader: loader,
         total: state.total,
         employeeHistoryData:state.employeeHistoryData,
@@ -382,7 +426,9 @@ export const EmployeeHistoryProvider = (props) => {
         insuranceData:state.insuranceData,
         sportData:state.sportData,
         promotionData:state.promotionData,
-        probationData:state.probationData
+        probationData:state.probationData,
+        disciplinaryData:state.disciplinaryData,
+        transferData:state.transferData
       }}
     >
       {props.children}

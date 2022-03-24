@@ -80,6 +80,9 @@ const MasterHistory = (props) => {
     viewInsuranceDataById,
     viewSportDataById,
     viewProbationDataById,
+    viewPromotionDataById,
+    viewDisciplinaryDataById,
+        viewTransferDataById,
     employeeContractDetailsByIdData,
     managerData,
     costCenterData,
@@ -117,8 +120,14 @@ const MasterHistory = (props) => {
     viewInsuranceDataById(props.match.params.employeeid)
   }else if(stepCount == 15){
     viewSportDataById(props.match.params.employeeid)
+  }else if(stepCount == 16){
+    viewPromotionDataById(props.match.params.employeeid)
   }else if(stepCount == 17){
     viewProbationDataById(props.match.params.employeeid)
+  }else if(stepCount == 18){
+    viewTransferDataById(props.match.params.employeeid)
+  }else if(stepCount == 19){
+    viewDisciplinaryDataById(props.match.params.employeeid)
   }
   }, [stepCount]);
 

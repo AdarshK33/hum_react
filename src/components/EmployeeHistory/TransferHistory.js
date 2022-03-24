@@ -221,8 +221,8 @@ const TransferPage = () => {
     }&size=${recordsPerPage}&status=${status}&transferType=${transferType}`
   );
   const {
-            viewSportDataById,
-            sportData,
+    viewTransferDataById,
+         transferData,
             loader,
             total,
           } = useContext(EmployeeHistoryContext);    
