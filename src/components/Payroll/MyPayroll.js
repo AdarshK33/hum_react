@@ -45,11 +45,13 @@ const MyPayroll = (props) => {
                       </div>
                       <div
                         className={tabIndex === 1 ? "activeTab" : "disabledTab"}
-                        onClick={(e) => setTabIndex(1)}
+                        onClick={(e) => setTabIndex(0)}
                       >
+                        <a href="https://idpdecathlon.oxylane.com/idp/startSSO.ping?PartnerSpId=ADPIND" target="_blank">
                         <label style={{ paddingTop: "5px" }}>
                           Payroll After September
                         </label>
+                        </a>
                       </div>
                     </div>
 
