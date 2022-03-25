@@ -166,9 +166,10 @@ const Roster = () => {
                   </div>
                 </form>
               </div>
-              <div className="table-responsive">
+              <div className="table-responsive table-header-sticky">
                 <table className="table" id="table-to-xls">
-                  <thead style={{ background: "#006EBB", color: "white" }}>
+                  <thead style={{ background: "#006EBB", color: "white",position: "sticky",
+    top:"0" }}>
                     <tr>
                       <th scope="col">
                         <br /> Sunday
