@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ClusterContext } from '../../context/ClusterState'
 import moment from 'moment'
 
+
 const EditSalary = (props) => {
     const [employeeId, setEmployeeId] = useState()
     const [firstName, setFirstName] = useState()
@@ -165,7 +166,7 @@ const onSubmit = e => {
     const duplicateElementa = toFindDuplicates(val2);
     if(Object.keys(duplicateElementa).length){
     toast.error("Please provide valid date")
-    }{
+    }else{
     const EditSalary = {
         additionalHours: additionalHours,
         contractType: contractType,
@@ -211,6 +212,7 @@ const onCloseModal = () => {
     setReason(props.reason)
     setValues([])
     setValues2([])
+
 }
 
 return (

@@ -331,7 +331,6 @@ const LeaveView = () => {
                                                 <td>{item.numberOfDays}</td>
                                                 <td>{item.fromDate}</td>
                                                 <td>{item.toDate}</td>
-
                                                 <td>{moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD"))?<Edit2 disabled
                                   style={{ color: "lightgray" }}/>:<Edit2 onClick={() => {
                                                     setEditModal(true); setLeaveTypeId(item.leaveTypeId);

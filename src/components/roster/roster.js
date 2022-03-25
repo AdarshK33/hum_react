@@ -22,9 +22,7 @@ const Roster = () => {
   const { user } = useContext(AppContext);
   const handleClose = () => setModal(false);
   const handleShow = (item, weekId, weekName) => {
-    // if(moment(item.date).format("YYYY-MM-DD")<moment().format("YYYY-MM-DD")){
-    //   toast.error("Please select future date");
-    // }else{
+    console.log(item, "item onclick");
 
     setDate(item);
     setweekName(weekName);
@@ -146,6 +144,7 @@ const Roster = () => {
                         <DatePicker
                           className="form-control"
                           selected={endDate.toDate()}
+                          minDate={new Date(startDate)}
                           dateFormat="yyyy-MM-dd"
                           required
                           onChange={(date) =>
