@@ -101,7 +101,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>AADHAAR HISTORY LIST</b>
+                    <b>AADHAAR HISTORY</b>
                   </Col>
                 </Row></div>
 

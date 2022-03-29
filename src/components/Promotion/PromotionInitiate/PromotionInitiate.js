@@ -184,7 +184,7 @@ const PromotionInitiate = () => {
       state.oldDepartment = searchByCostData.department;
       state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
-      state.relocationBonus = searchByCostData.fixedGross;
+      state.relocationBonus = searchByCostData.relocationBonus;
       SetCurrentManager(searchByCostData.managerName); //need to verify
     }
   }, [searchByCostData]);
@@ -266,6 +266,10 @@ const PromotionInitiate = () => {
         }
       } else if (contractType === "Local Expat") {
         if (state.newFixedGross < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        }else if(state.newFixedGross == state.oldFixedGross){
           setNewFixedGrossError(
             "Fixed gross should be greater than old fixed gross"
           );
@@ -602,13 +606,30 @@ const PromotionInitiate = () => {
       });
       console.log(e.target.value, state, "value666");
     } else if (e.target.name === "newFixedGross") {
+      console.log(typeof(e.target.value,"numnbe"))
+      if(typeof(parseInt(e.target.value)) == "number" && !isNaN(e.target.value) && !(e.target.value).includes(".")){
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
+    }else if(isNaN(e.target.value)){
+      setNewFixedGrossError("Please enter numbers only"); 
+    }
       if (contractType === "Parttime" || contractType === "parttime") {
         if (e.target.value < 90 || e.target.value > 400) {
           setNewFixedGrossError("Value should be between 90 - 400");
+        } else {
+          setNewFixedGrossError("");
+        }
+      }else if (contractType === "Local Expat") {
+        if (e.target.value < state.oldFixedGross) {
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
+        }else if(e.target.value == state.oldFixedGross){
+          setNewFixedGrossError(
+            "Fixed gross should be greater than old fixed gross"
+          );
         } else {
           setNewFixedGrossError("");
         }

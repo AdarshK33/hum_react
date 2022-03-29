@@ -101,7 +101,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>COST CENTER HISTORY</b>
+                    <b>POSITION,LOCATION AND COST CENTER HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,11 +109,24 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .NO</th>
+                                            {/* <th>S .NO</th>
                                             <th>COST CENTER</th>
                                             <th>EFFECTIVE DATE</th>
                                             <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th> */}
+                                             <th>SL .NO</th>
+                                            <th>OLD POSITION</th>
+                                            <th>NEW POSITION</th>
+                                            <th>EFFECTIVE DATE</th>
+                                            <th>WORK LOCATION OLD</th>
+                                            <th>WORK LOCATION NEW</th>
+                                            <th>OLD COST CENTER </th>
+                                            <th>NEW COST CENTER</th>
+                                            <th>EFFECTIVE DATE</th>
+                                            <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
+                                            <th>APPROVED BY</th>
+                                            <th>APPROVED ON</th>
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 

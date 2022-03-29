@@ -102,7 +102,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>USER EXIT HISTORY</b>
+                    <b> EXIT HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -115,7 +115,7 @@ console.log(dates)
                                             <th>NOTICE PAYABLE DAYS</th>
                                             <th>NOTICE RECOVERY DAYS</th>
                                             <th>LEAVES ENCASHMENT</th>
-                                            <th>MONTHLY BONUS PAYMWNT</th>
+                                            <th>MONTHLY BONUS PAYMENT</th>
                                             <th>HOLIDAY WORKING BONUS</th>
                                             <th>BONUS REMARKS</th>
                                             <th>GRATUITY</th>

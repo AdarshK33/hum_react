@@ -6,16 +6,13 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
+import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-const CostSplitHistory = (props) => {
-    const {
-        viewSportDataById,
-        sportData,
-        loader,
-        total,
-      } = useContext(EmployeeHistoryContext);    
+const PFAndUANHistory = (props) => {
+    const reportList =  [] //props.SalaryHistoryList
+    const {loader } = useContext(LeaveContext)
+   
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -39,12 +36,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
+    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -101,21 +98,21 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>COST SPLIT</b>
+                    <b>PF AND UAN HISTORY</b>
                   </Col>
                 </Row></div>
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>sport Name</th>
-                                        
-                                            <th>Created By</th>
-                                            <th>Created On</th>
-
-
+                                            <th>SL. No</th>
+                                            <th>PF NUMBER</th>
+                                            <th>UAN NUMBER</th>
+                                            <th>ESIC NUMBER</th>
+                                            <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
+                                           
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -134,18 +131,17 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
-                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
+                                                
                                                     </tr>
                                                 </tbody>
                                             )
@@ -155,7 +151,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        } */}
+                                        }
 
                                 </Table>
                             </div>
@@ -163,7 +159,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
+            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -178,4 +174,4 @@ console.log(dates)
     );
 };
 
-export default CostSplitHistory;
+export default PFAndUANHistory;

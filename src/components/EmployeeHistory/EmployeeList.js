@@ -29,6 +29,7 @@ const EmployeeList = () => {
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
   const [role, setRole] = useState(0);
+  const [activeStatus, setActiveStatus] = useState(true);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -90,7 +91,14 @@ const EmployeeList = () => {
     console.log("toDate", value1);
     setToDate(value1);
   };
-
+const handleActiveStatus =(e)=>{
+  console.log(e.target.name,"buttton")
+if(e.target.name === "active"){
+  setActiveStatus(true)
+}else{
+  setActiveStatus(false)
+}
+}
   return (
     <Fragment>
       <Breadcrumb title="EMPLOYEE LIST" parent="EMPLOYEE LIST" />
@@ -98,7 +106,7 @@ const EmployeeList = () => {
         <Row>
           <Col sm={12}>
           <Row>
-              <Col sm={4}>
+              {/* <Col sm={4}>
                 <Form.Group>
                   <Form.Label>From Date</Form.Label>{" "}
                   <span style={{ color: "red" }}>*</span>
@@ -108,7 +116,6 @@ const EmployeeList = () => {
                       onChange={(e) => fromDateHandler(e)}
                       className="form-control"
                       dateFormat="yyyy-MM-dd"
-                      /*  minDate={currentYear} */
                       placeholderText="From Date"
                       required
                     />
@@ -130,11 +137,20 @@ const EmployeeList = () => {
                     />
                   </div>
                 </Form.Group>
+              </Col> */}
+              <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
+              </Col>
+              <Col sm={2} style={{paddingTop:"29px",paddingLeft:"50px"}} >
+              <Button name="active" onClick={handleActiveStatus} className="submitButton">
+            Active Employees
+          </Button>
               </Col>
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button type="submit" className="submitButton">
-            Export as master
+              <Button name="inactive" onClick={handleActiveStatus} className="submitButton">
+              Inactive Employees
           </Button>
+              </Col>
+              <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
               </Col>
             </Row>
             <div className="card" style={{ overflowX: "auto" }}>
@@ -190,10 +206,11 @@ const EmployeeList = () => {
                       <th scope="col">Cost Center</th>
                       <th scope="col">Created By</th>
                       <th scope="col">is Active?</th>
-                      <th scope="col">Edit</th>
                       <th scope="col">History</th>
+                      {activeStatus == true?<>
+                      <th scope="col">Edit</th>
                       <th scope="col">Exit User</th>
-                  
+                  </>:<></>}
                     </tr>
                   </thead>
                   {
@@ -235,19 +252,21 @@ const EmployeeList = () => {
                            <td>{item.createdBy}</td>
                            <td>{item.isActive == 1?"Yes":"No"}</td>
                             <td>
-                            <div style={{  paddingTop: "1px",  fontSize: "24px" }}>
-                            <Link to={"/employee_profile/" + item.employeeId}>
-                              <Edit2/>
-                              </Link>
-                              </div>
-                            </td>
-                            <td>
                               <Link to={"/master-history/" + item.employeeId}>
                               <div style={{  paddingTop: "2px",  fontSize: "24px" }}>
                             <i className="fa fa-history"></i>
                           </div>
                               </Link>
                             </td>
+                            {activeStatus == true?<>
+                            <td>
+                            <div style={{  paddingTop: "1px",  fontSize: "24px" }}>
+                            <Link to={"/employee_profile/" + item.employeeId}>
+                              <Edit2/>
+                              </Link>
+                              </div>
+                            </td>
+                           
                             <td>
                             <Link to={"/manager-initiate-exit"}>
                               <div style={{fontSize: "24px" }}>
@@ -256,6 +275,7 @@ const EmployeeList = () => {
                           </div>
                           </Link>
                             </td>
+                            </>:<></>}
                           </tr>
                         </tbody>
                       );

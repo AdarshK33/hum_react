@@ -9,7 +9,7 @@ import moment from 'moment'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const PerformanceHistory = (props) => {
+const InternationalTransferHistory = (props) => {
     const {
         viewSportDataById,
         sportData,
@@ -101,19 +101,24 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>PERFORMANCE</b>
+                    <b>INTERNATIONAL TRANSFER HISTORY</b>
                   </Col>
                 </Row></div>
 
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
-                                    {/* <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .No</th>
-                                            <th>sport Name</th>
-                                        
-                                            <th>Created By</th>
-                                            <th>Created On</th>
+                                            <th>SL .NO</th>
+                                            <th>EMPLOYEE NAME</th>
+                                            <th>COUNTRY MOVING TO</th>
+                                            <th>DESIGNATION IN OTHER COUNTRY</th>
+                                            <th>GROSS PAY IN THE NEW COUNTRY</th>
+                                            <th>CURRENCY</th>
+                                            <th>BONUS IN THE NEW COUNTRY</th>
+                                            <th>EFFECTIVE DATE</th>
+                                            <th>IS COVERED UNDER INSURANCE IN THE NEW COUNTRY?YES/NO</th>
+                                            <th>DATE OF RETURN TO INDIA(TENTATIVE)</th>
 
 
                                         </tr>
@@ -141,11 +146,10 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -155,7 +159,7 @@ console.log(dates)
                                                 <td colspan='12'>No Record Found</td>
                                             </tr>
                                         </tbody>
-                                        } */}
+                                        }
 
                                 </Table>
                             </div>
@@ -178,4 +182,4 @@ console.log(dates)
     );
 };
 
-export default PerformanceHistory;
+export default InternationalTransferHistory;

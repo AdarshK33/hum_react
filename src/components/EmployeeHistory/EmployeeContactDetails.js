@@ -6,16 +6,21 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
+import { LeaveContext } from '../../context/LeaveState'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
+
 import { toast } from "react-toastify";
 
-const PromotionHistory = (props) => {
+const EmployeeContactDetails = (props) => {
+   // const employeeContactDetailsByIdData = props.EmployeeContactDetailList
     const {
-        viewPromotionDataById,
-        promotionData,
+        ViewEmployeeHistoryData,
+        employeeHistoryData,
+        viewEmployeeContactDetailsById,
+        employeeContactDetailsByIdData,
         loader,
         total,
-      } = useContext(EmployeeHistoryContext);    
+      } = useContext(EmployeeHistoryContext);
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -35,16 +40,16 @@ console.log("endDate", props.endDate)
       }
     )
     
-console.log(dates)
+console.log(employeeContactDetailsByIdData,"employeeContactDetailsByIdData")
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = promotionData !== null && promotionData !== undefined && promotionData.length;
+    const totalRecords = employeeContactDetailsByIdData !== null && employeeContactDetailsByIdData !== undefined && employeeContactDetailsByIdData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = promotionData !== null && promotionData !== undefined ? promotionData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = employeeContactDetailsByIdData !== null && employeeContactDetailsByIdData !== undefined ? employeeContactDetailsByIdData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -101,7 +106,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>PROMOTION HISTORY</b>
+                    <b>EMPLOYEE CONTACT DETAILS HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,21 +114,20 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .NO</th>
-                                            <th>EMPLOYEE ID</th>
+                                            <th>SL.NO</th>
                                             <th>EMPLOYEE NAME</th>
-                                             <th>POSITION</th> 
-                                             <th>POSITION PROMOTED TO</th>
-                                             <th>PROMOTION DATE</th>
-                                             {/* <th>VALIDATED BY COSTCENTERMANAGER</th>
-                                             <th>DATE</th>
-                                             <th>VALIDATED BY HR/ADMIN</th>
-                                            <th>DATE</th>
-                                            <th>STATUS</th> */}
+                                            <th>CONTACT NUMBER</th>
+                                            <th>EMAIL ID</th>
+                                            <th>EMERGENCY CONTACT NUMBER</th>
+                                            <th>PRESENT ADDRESS</th>
+                                            <th>PERMANENT ADDRESS</th>
+                                            <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
+
+
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null &&
-                                      currentRecords !== undefined ? 
+                                    {loader === true && employeeContactDetailsByIdData !== null && employeeContactDetailsByIdData !== undefined ? 
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -138,23 +142,26 @@ console.log(dates)
                                             </td>
                                         </tr>
                                     </tbody>:
-                                    currentRecords !== undefined && currentRecords !== null &&
-                                    !currentRecords.includes(null) &&
+                                    currentRecords !== undefined &&
+                                     currentRecords !== null &&
+                                     !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
+                                                    <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeName}</td>
-                                                        <td>{item.position}</td>
-                                                        <td>{item.promotedPosition}</td>
-                                                        <td>{ item.promotedDate !== null && 
-                                                        item.promotedDate !== undefined 
-                                                         && item.promotedDate !== ""?
-                                                        moment(new Date(item.promotedDate)).format("DD-MM-YYYY"):""}</td>
-
+                                                        <td>{item.phone}</td>
+                                                        <td>{""}</td>
+                                                        <td>{""}</td>
+                                                        <td>{item.address}</td>
+                                                        <td>{""}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{ item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -172,7 +179,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {promotionData !== null && promotionData !== undefined && promotionData.length > 10 &&
+            {employeeContactDetailsByIdData !== null && employeeContactDetailsByIdData !== undefined && employeeContactDetailsByIdData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -187,4 +194,4 @@ console.log(dates)
     );
 };
 
-export default PromotionHistory;
+export default EmployeeContactDetails;
