@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Container, Row, Col, Button, Form, Modal } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ClusterContext } from "../../context/ClusterState";
-import moment from "moment";
+import { ClusterContext } from '../../context/ClusterState'
+import moment from 'moment'
+
 import { useHistory } from "react-router-dom";
 
 const AdminSalaryEdit = (props) => {

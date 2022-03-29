@@ -123,7 +123,7 @@ function ViewShift() {
           shiftList[i].breakStartTime + "-" + shiftList[i].breakEndTime,
         contractType: shiftList[i].contractType,
         shiftType: shiftList[i].shiftType,
-        status: shiftList[i].status,
+        status: parseInt(shiftList[i].status) === 0 ? "Active" : "Inactive",
       });
     }
   }

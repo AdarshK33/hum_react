@@ -9,8 +9,7 @@ import "../../assets/css/search.css";
 import Pagination from "react-js-pagination";
 import { Edit2, Trash2, Search } from "react-feather";
 import AdminLeaveAdd from "./AdminLeaveAdd";
-import moment from "moment";
-
+import moment from 'moment'
 const AdminLeavesList = (props) => {
   const [modal, setModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
