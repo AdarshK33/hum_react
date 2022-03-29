@@ -114,7 +114,7 @@ console.log(dates)
                                             <th>EFFECTIVE DATE</th>
                                             <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
-                                           
+                                            <th>VIEW</th>
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 

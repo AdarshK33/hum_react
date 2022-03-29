@@ -70,7 +70,7 @@ const RelivingLetter = () => {
               found him to be good at work & thank you for your service and
               commitment to the {relivingLetterData.company}.
                <br/><br/>
-              He left the services of the {relivingLetterData.company}
+              He left the services of the {relivingLetterData.company}{" "}
               on his own accord. We wish him all the best in his future
               endeavours.
             </p>

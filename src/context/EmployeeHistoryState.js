@@ -9,20 +9,39 @@ var fileDownload = require("js-file-download");
 
 const initial_state = {
   employeeHistoryData: {},
-  employeeContractDetailsByIdData:[],
-  salaryData:[],
-  bonusData:[],
-  costCenterData:[],
   bankData:[],
-  aadhaarData:[],
-  accessData:[],
-  managerData:[],
-  taxData:[],
-  exitData:[],
-  insuranceData:[],
+  panData:[],
+  PFAndUANData:[],
+  salaryData:[],
+
+  bonusData:[],
   sportData:[],
+  managerData:[],
+  costCenterData:[],
+
+  insuranceData:[],
+  DISP:[],
+  confirmationData:[],
+  disciplinaryData:[],
+
+  leavesData:[],
   promotionData:[],
   probationData:[],
+  contractFreezeData:[],
+
+  contractTypeChangeData:[],
+  internationalTransferData:[],
+  entityTransferData:[],
+  exitData:[],
+
+  payrollData:[],
+  exitedEmployeeData:[],
+  currentMonthExitedData:[],
+  employeeContactDetailsByIdData:[],
+
+  aadhaarData:[],
+  accessData:[],
+
   total: {},
   data: [],
 
@@ -64,26 +83,67 @@ export const EmployeeHistoryProvider = (props) => {
       });
   };
 
-    const viewEmployeeContractDetailsById=(employeeId)=>{
-      setLoader(true);
-      client
-        .get("/api/v1/employee_history/employment_contract/" + employeeId)
-        .then((response) => {
-          state.employeeContractDetailsByIdData = new Array(response.data.data)
-  
-          setLoader(false);
-          console.log("--->employeeContractDetailsByIdData", state.employeeContractDetailsByIdData);
-          console.log(response);
-  
-          return dispatch({
-            type: "EMPLOYEE_CONTRACT_DETAILS_ID",
-            payload: state.employeeContractDetailsByIdData,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
+  const viewBankDataById=(employeeId)=>{
+    setLoader(true);
+    client
+      .get("api/v1/employee_history/bank/" + employeeId)
+      .then((response) => {
+        state.bankData = new Array(response.data.data)
+
+        setLoader(false);
+        console.log("--->bankData", state.bankData);
+        console.log(response);
+
+        return dispatch({
+          type: "BANK_DATA",
+          payload: state.bankData,
         });
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const viewPanDataById=(employeeId)=>{
+    setLoader(true);
+    client
+      .get("api/v1/employee_history/pan/" + employeeId)
+      .then((response) => {
+        state.panData = new Array(response.data.data)
+
+        setLoader(false);
+        console.log("--->panData", state.panData);
+        console.log(response);
+
+        return dispatch({
+          type: "PAN_DATA",
+          payload: state.panData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  const viewPFAndUANDataById=(employeeId)=>{
+    setLoader(true);
+    client
+      .get("api/v1/employee_history/pfanduan/" + employeeId)
+      .then((response) => {
+        state.PFAndUANData = new Array(response.data.data)
+
+        setLoader(false);
+        console.log("--->PFAndUANData", state.PFAndUANData);
+        console.log(response);
+
+        return dispatch({
+          type: "PF_AND_UAN_DATA",
+          payload: state.PFAndUANData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+ 
     const viewSalaryDataById=(employeeId)=>{
       setLoader(true);
       client
@@ -124,87 +184,27 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
-    const viewCostCenterDataById=(employeeId)=>{
+    const viewSportDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/cost_centre/" + employeeId)
+        .get("api/v1/employee_history/sport/" + employeeId)
         .then((response) => {
-          state.costCenterData = new Array(response.data.data)
+          state.sportData = new Array(response.data.data)
   
           setLoader(false);
-          console.log("--->costCenterData", state.costCenterData);
+          console.log("--->sportData", state.sportData);
           console.log(response);
   
           return dispatch({
-            type: "COSTCENTER_DATA",
-            payload: state.costCenterData,
+            type: "SPORT_DATA",
+            payload: state.sportData,
           });
         })
         .catch((error) => {
           console.log(error);
         });
     }
-    const viewBankDataById=(employeeId)=>{
-      setLoader(true);
-      client
-        .get("api/v1/employee_history/bank/" + employeeId)
-        .then((response) => {
-          state.bankData = new Array(response.data.data)
-  
-          setLoader(false);
-          console.log("--->bankData", state.bankData);
-          console.log(response);
-  
-          return dispatch({
-            type: "BANK_DATA",
-            payload: state.bankData,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    const viewAadhaarDataById=(employeeId)=>{
-      setLoader(true);
-      client
-        .get("api/v1/employee_history/aadhaar/" + employeeId)
-        .then((response) => {
-          state.aadhaarData = new Array(response.data.data)
-  
-          setLoader(false);
-          console.log("--->aadhaarData", state.aadhaarData);
-          console.log(response);
-  
-          return dispatch({
-            type: "AADHAAR_DATA",
-            payload: state.aadhaarData,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    const viewAccessDataById=(employeeId)=>{
-      setLoader(true);
-      client
-        .get("api/v1/employee_history/access/" + employeeId)
-        .then((response) => {
-          state.accessData = new Array(response.data.data)
-  
-          setLoader(false);
-          console.log("--->accessData", state.accessData);
-          console.log(response);
-  
-          return dispatch({
-            type: "ACCESS_DATA",
-            payload: state.accessData,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
+    
     const viewManagerDataById=(employeeId)=>{
       setLoader(true);
       client
@@ -225,49 +225,27 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
+    const viewCostCenterDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/cost_centre/" + employeeId)
+        .then((response) => {
+          state.costCenterData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->costCenterData", state.costCenterData);
+          console.log(response);
+  
+          return dispatch({
+            type: "COSTCENTER_DATA",
+            payload: state.costCenterData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
    
-    const viewTaxDataById=(employeeId)=>{
-      setLoader(true);
-      client
-        .get("api/v1/employee_history/tax/" + employeeId)
-        .then((response) => {
-          state.taxData = new Array(response.data.data)
-  
-          setLoader(false);
-          console.log("--->taxData", state.taxData);
-          console.log(response);
-  
-          return dispatch({
-            type: "TAX_DATA",
-            payload: state.taxData,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    
-    const viewExitDataById=(employeeId)=>{
-      setLoader(true);
-      client
-        .get("api/v1/employee_history/exit/" + employeeId)
-        .then((response) => {
-          state.exitData = new Array(response.data.data)
-  
-          setLoader(false);
-          console.log("--->exitData", state.exitData);
-          console.log(response);
-  
-          return dispatch({
-            type: "EXIT_DATA",
-            payload: state.exitData,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    
     const viewInsuranceDataById=(employeeId)=>{
       setLoader(true);
       client
@@ -287,21 +265,62 @@ export const EmployeeHistoryProvider = (props) => {
         .catch((error) => {
           console.log(error);
         });
-    }
-    const viewSportDataById=(employeeId)=>{
+    } 
+    const viewConfirmationDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/sport/" + employeeId)
+        .get("api/v1/employee_history/confirmation/" + employeeId)
         .then((response) => {
-          state.sportData = new Array(response.data.data)
+          state.confirmationData = response.data.data
   
           setLoader(false);
-          console.log("--->sportData", state.sportData);
+          console.log("--->confirmationData", state.confirmationData);
           console.log(response);
   
           return dispatch({
-            type: "SPORT_DATA",
-            payload: state.sportData,
+            type: "CONFIRMATION_DATA",
+            payload: state.confirmationData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } 
+    const viewDisciplinaryDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/probation/" + employeeId)
+        .then((response) => {
+          state.disciplinaryData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->disciplinaryData", state.disciplinaryData);
+          console.log(response);
+  
+          return dispatch({
+            type: "DSICIPLINARY_DATA",
+            payload: state.disciplinaryData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    const viewLeavesDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/PromotionHistory/" + employeeId)
+        .then((response) => {
+          state.leavesData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->leavesData", state.leavesData);
+          console.log(response);
+  
+          return dispatch({
+            type: "LEAVES_DATA",
+            payload: state.leavesData,
           });
         })
         .catch((error) => {
@@ -348,41 +367,262 @@ export const EmployeeHistoryProvider = (props) => {
           console.log(error);
         });
     }
+
+    const viewcontractFreezeDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/probation/" + employeeId)
+        .then((response) => {
+          state.contractFreezeData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->contractFreezeData", state.contractFreezeData);
+          console.log(response);
+  
+          return dispatch({
+            type: "CONTRACT_FREEZE_DATA",
+            payload: state.contractFreezeData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewContractTypeChangeDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/tax/" + employeeId)
+        .then((response) => {
+          state.contractTypeChangeData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->contractTypeChangeData", state.contractTypeChangeData);
+          console.log(response);
+  
+          return dispatch({
+            type: "CONTRACT_TYPE_CHANGE_DATA",
+            payload: state.contractTypeChangeData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewInternationalTransferDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/tax/" + employeeId)
+        .then((response) => {
+          state.internationalTransferData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->internationalTransferData", state.internationalTransferData);
+          console.log(response);
+  
+          return dispatch({
+            type: "INTERNATIONAL_TRANSFER_DATA",
+            payload: state.internationalTransferData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewEntityTransferDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/tax/" + employeeId)
+        .then((response) => {
+          state.entityTransferData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->entityTransferData", state.entityTransferData);
+          console.log(response);
+  
+          return dispatch({
+            type: "ENTITIY_TRANSFER_DATA",
+            payload: state.entityTransferData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewExitDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/exit/" + employeeId)
+        .then((response) => {
+          state.exitData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->exitData", state.exitData);
+          console.log(response);
+  
+          return dispatch({
+            type: "EXIT_DATA",
+            payload: state.exitData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewExitEmployeeDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/exit/" + employeeId)
+        .then((response) => {
+          state.exitedEmployeeData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->exitedEmployeeData", state.exitedEmployeeData);
+          console.log(response);
+  
+          return dispatch({
+            type: "EXITED_EMPLOYEE_DATA",
+            payload: state.exitedEmployeeData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewCurrentMonthExitDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/exit/" + employeeId)
+        .then((response) => {
+          state.currentMonthExitedData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->currentMonthExitedData", state.currentMonthExitedData);
+          console.log(response);
+  
+          return dispatch({
+            type: "CURRENT_MONTH_EXITED_DATA",
+            payload: state.currentMonthExitedData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewEmployeeContactDetailsById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("/api/v1/employee_history/employment_contract/" + employeeId)
+        .then((response) => {
+          state.employeeContactDetailsByIdData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->employeeContactDetailsByIdData", state.employeeContactDetailsByIdData);
+          console.log(response);
+  
+          return dispatch({
+            type: "EMPLOYEE_CONTRACT_DETAILS_ID",
+            payload: state.employeeContactDetailsByIdData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewAadhaarDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/aadhaar/" + employeeId)
+        .then((response) => {
+          state.aadhaarData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->aadhaarData", state.aadhaarData);
+          console.log(response);
+  
+          return dispatch({
+            type: "AADHAAR_DATA",
+            payload: state.aadhaarData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    const viewAccessDataById=(employeeId)=>{
+      setLoader(true);
+      client
+        .get("api/v1/employee_history/access/" + employeeId)
+        .then((response) => {
+          state.accessData = new Array(response.data.data)
+  
+          setLoader(false);
+          console.log("--->accessData", state.accessData);
+          console.log(response);
+  
+          return dispatch({
+            type: "ACCESS_DATA",
+            payload: state.accessData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  
   return (
     <EmployeeHistoryContext.Provider
       value={{
         ViewEmployeeHistoryData,
-        viewEmployeeContractDetailsById,
-        viewSalaryDataById,
-        viewBonusDataById,
-        viewCostCenterDataById,
         viewBankDataById,
-        viewAadhaarDataById,
-        viewAccessDataById,
-        viewManagerDataById,
-        viewTaxDataById,
-        viewExitDataById,
-        viewInsuranceDataById,  
+        viewPanDataById,
+        viewPFAndUANDataById,
+        viewSalaryDataById,
+
+        viewBonusDataById,
         viewSportDataById,
+        viewManagerDataById,
+        viewCostCenterDataById,
+
+        viewInsuranceDataById,  
+        viewConfirmationDataById,
+        viewDisciplinaryDataById,
+        
+        viewLeavesDataById,
         viewPromotionDataById,
         viewProbationDataById,
+        viewcontractFreezeDataById,
+
+        viewContractTypeChangeDataById,
+        viewInternationalTransferDataById,
+        viewEntityTransferDataById,
+        viewExitDataById,
+        viewExitEmployeeDataById,
+        viewCurrentMonthExitDataById,
+        viewEmployeeContactDetailsById,
+        viewAadhaarDataById,
+        viewAccessDataById,
         loader: loader,
         total: state.total,
         employeeHistoryData:state.employeeHistoryData,
-        employeeContractDetailsByIdData:state.employeeContractDetailsByIdData,
+        bankData:state.bankData,
+        panData:state.panData,
+        PFAndUANData:state.PFAndUANData,
+        employeeContactDetailsByIdData:state.employeeContactDetailsByIdData,
         salaryData:state.salaryData,
+        confirmationData:state.confirmationData,
         bonusData:state.bonusData,
         costCenterData:state.costCenterData,
-        bankData:state.bankData,
         aadhaarData:state.aadhaarData,
         accessData:state.accessData,
         managerData:state.managerData,
-        taxData:state.taxData,
+        contractTypeChangeData:state.contractTypeChangeData,
         exitData:state.exitData,
         insuranceData:state.insuranceData,
         sportData:state.sportData,
         promotionData:state.promotionData,
-        probationData:state.probationData
+        probationData:state.probationData,
+        disciplinaryData:state.disciplinaryData,
+        transferData:state.transferData
       }}
     >
       {props.children}

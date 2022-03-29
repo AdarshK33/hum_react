@@ -9,10 +9,10 @@ import moment from 'moment'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const PromotionHistory = (props) => {
+const CostSplitHistory = (props) => {
     const {
-        viewPromotionDataById,
-        promotionData,
+        viewSportDataById,
+        sportData,
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = promotionData !== null && promotionData !== undefined && promotionData.length;
+    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = promotionData !== null && promotionData !== undefined ? promotionData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -101,7 +101,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>PROMOTION HISTORY</b>
+                    <b>ENTITY HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,21 +109,23 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .NO</th>
-                                            <th>EMPLOYEE ID</th>
+                                        <th>SL .NO</th>
                                             <th>EMPLOYEE NAME</th>
-                                             <th>POSITION</th> 
-                                             <th>POSITION PROMOTED TO</th>
-                                             <th>PROMOTION DATE</th>
-                                             {/* <th>VALIDATED BY COSTCENTERMANAGER</th>
-                                             <th>DATE</th>
-                                             <th>VALIDATED BY HR/ADMIN</th>
-                                            <th>DATE</th>
-                                            <th>STATUS</th> */}
+                                            <th>CHANGE FROM ENTITY</th>
+                                            <th>CHANGE TO ENITITY</th>
+                                            <th>DOL IN OLD ENTITY</th>
+
+                                            <th>SALARY FROM</th>
+                                            <th>SALARY TO</th>
+                                            <th>UPDATED ON</th>
+                                            <th>UPDATED BY</th>
+                                            <th>APPROVED BY</th>
+                                            <th>APPROVED ON</th>
+
+
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null &&
-                                      currentRecords !== undefined ? 
+                                    {loader === true && currentRecords !== null && currentRecords !== undefined ? 
                                         <tbody>
                                         <tr>
                                             <td colSpan='12'>
@@ -147,14 +149,9 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeId}</td>
-                                                        <td>{item.employeeName}</td>
-                                                        <td>{item.position}</td>
-                                                        <td>{item.promotedPosition}</td>
-                                                        <td>{ item.promotedDate !== null && 
-                                                        item.promotedDate !== undefined 
-                                                         && item.promotedDate !== ""?
-                                                        moment(new Date(item.promotedDate)).format("DD-MM-YYYY"):""}</td>
-
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -172,7 +169,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {promotionData !== null && promotionData !== undefined && promotionData.length > 10 &&
+            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -187,4 +184,4 @@ console.log(dates)
     );
 };
 
-export default PromotionHistory;
+export default CostSplitHistory;

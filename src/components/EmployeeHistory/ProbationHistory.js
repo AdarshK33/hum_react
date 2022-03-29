@@ -101,7 +101,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>PROBATION</b>
+                    <b>PROBATION HISTORY</b>
                   </Col>
                 </Row></div>
 

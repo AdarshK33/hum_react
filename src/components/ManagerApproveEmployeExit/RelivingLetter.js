@@ -189,7 +189,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
                   {relivingLetterData.company}.
                   <br />
                   <br />
-                  He left the services of the {relivingLetterData.company} on
+                  He left the services of the {relivingLetterData.company}{" "}on
                   his own accord. We wish him all the best in his future
                   endeavours.
                 </p>

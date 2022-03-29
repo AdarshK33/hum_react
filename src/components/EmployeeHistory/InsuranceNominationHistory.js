@@ -102,7 +102,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>ENROLL DEPENDENT DETAILS</b>
+                    <b>INSURANCE NOMINATION HISTORY</b>
                   </Col>
                 </Row></div>
 
