@@ -113,7 +113,6 @@ console.log(dates)
                                             <th>ACCOUNT NUMBER</th>
                                             <th>BANK NAME</th>
                                             <th>IFSC</th>
-                                            <th>PAN</th>
                                             <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
 
@@ -146,7 +145,6 @@ console.log(dates)
                                                         <td>{item.accountNumber}</td>
                                                         <td>{item.bankName}</td>
                                                         <td>{item.ifsc}</td>
-                                                        <td>{item.pan}</td>
                                                         <td>{item.updatedBy}</td>
                                                         <td>{item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 

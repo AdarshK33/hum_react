@@ -6,16 +6,13 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
+import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-const OtherTaxableIncomeHistory = (props) => {
-    const {
-        viewTaxDataById,
-        taxData,
-         loader,
-         total,
-       } = useContext(EmployeeHistoryContext);   
+const ItStatementHistory = (props) => {
+    const reportList =  [] //props.SportHistoryList
+    const {loader } = useContext(LeaveContext)
+   
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -39,12 +36,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = taxData !== null && taxData !== undefined && taxData.length;
+    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = taxData !== null && taxData !== undefined ? taxData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -101,7 +98,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>OTHER TAXABLE INCOME HISTORY</b>
+                    <b>CONTRACT TYPE CHANGE TRANSFER HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,13 +106,14 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .NO</th>
-                                            <th>AMOUNT</th>
-                                            <th>START DATE</th>
-                                            <th>END DATE</th>
-                                            <th>IN PROCESS STOPPED</th>
-                                            <th>UPDATED BY</th>
+                                            <th>SL .NO</th>
+                                            <th>EMPLOYEE NAME</th>
+                                            <th>TYPE OF CHANGE FROM</th>
+                                            <th>TYPE OF CHANGE TO</th>
+
+                                            <th>EFFECTIVE DATE FROM</th>
                                             <th>UPDATED ON</th>
+                                            <th>UPDATED BY</th>
 
 
                                         </tr>
@@ -136,18 +134,16 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
-                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.leaveReports.employeeId}</td>
-                                                        <td>{item.leaveReports.username}</td>
-                                                        <td>{item.leaveReports.costCentre}</td>
-                                                        <td>{item.leaveReports.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.username}</td>
+                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.workLocation}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -165,7 +161,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {taxData !== null && taxData !== undefined && taxData.length > 10 &&
+            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -180,4 +176,4 @@ console.log(dates)
     );
 };
 
-export default OtherTaxableIncomeHistory;
+export default ItStatementHistory;

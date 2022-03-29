@@ -101,7 +101,7 @@ console.log(dates)
                     </div>
                   </Col> */}
                   <Col  style={{  textAlign:"center",marginTop: "5px" }}>
-                    <b>DISCIPLINARY</b>
+                    <b>DISCIPLINARY ACTION HISTORY</b>
                   </Col>
                 </Row></div>
 
@@ -109,17 +109,14 @@ console.log(dates)
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S .NO</th>
-                                            <th>EMP ID</th>
-                                            <th>EMP NAME</th>
-                                            <th>COST CENTER NAME</th>
-                                            <th>SHOW CAUSE DATE</th>
-                                            <th>ISSUED FOR</th>
-                                            <th>DUE DAYS</th>
-                                            <th>EMPLOYEE ACTION</th>
-                                            <th>WARNING ISSUE DATE</th>
-                                            <th>PIP</th>
-                                            <th>STATUS</th>
+                                            <th>SL .NO</th>
+                                            <th>EMPLOYEE NAME</th>
+                                            <th>REASON FOR SHOW CAUSE </th>
+                                            <th>SHOW CAUSE LETTER ISSUED DATE</th>
+                                            <th>WARNING LETTER ISSUED DATE</th>
+                                            <th>TERMINATION DATE</th>
+                                            <th>ISSUED BY</th>
+                                            <th>ISSUED ON</th>
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && 

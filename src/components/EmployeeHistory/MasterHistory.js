@@ -11,29 +11,33 @@ import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EmployeeContractDetails from "./EmployeeContractDetails";
+import EmployeeContactDetails from "./EmployeeContactDetails";
+import AadhaarHistory from "./AadhaarHistory"
+import BankDetailsHistory from "./BankDetailsHistory"
+import PanHistory from "./PanHistory";
+import PFAndUANHistory from "./PFAndUANHistory"
 import SalaryHistory from "./SalaryHistory";
 import BonusHistory from "./BonusHistory"
-import CostCenterHistory from "./CostCenterHistory";
-import BankDetailsHistory from "./BankDetailsHistory"
-import AadhaarHistory from "./AadhaarHistory"
-import AccessAndRightHistory from "./AccessAndRightHistory"
-import ManagerHistory from "./ManagerHistory"
-import UserDocuments from "./UserDocuments"
-import OtherTaxableIncomeHistory from "./OtherTaxableIncomeHistory"
-import UserExitHistory from "./UserExitHistory"
-import PayslipsHistory from "./PayslipsHistory"
-import ItStatementHistory from "./ItStatementHistory"
-import DISP from "./DISP"
-import InsuranceNominationHistory from "./InsuranceNominationHistory"
 import SportHistory from "./SportHistory"
+import ManagerHistory from "./ManagerHistory"
+import AccessAndRightHistory from "./AccessAndRightHistory"
+import CostCenterHistory from "./CostCenterHistory";
+import InsuranceNominationHistory from "./InsuranceNominationHistory"
+import DISP from "./DISP"
+import ConfirmationHistory from "./ConfirmationHistory"
+import DisciplinaryHistory from "./DisciplinaryHistory";
+import LeavesHistory from "./LeavesHistory"
 import PromotionHistory from "./PromotionHistory";
 import ProbationHistory from "./ProbationHistory";
-import TransferHistory from "./TransferHistory";
-import DisciplinaryHistory from "./DisciplinaryHistory";
-import PerformanceHistory from "./PerformanceHistory";
-import CostSplitHistory from "./CostSplitHistory";
-import PerquisiteHistory from "./PerquisiteHistory"
+import ContractFreezeSabbaticalHistory from "./ContractFreezeSabbaticalHistory"; //-----
+import ContractTypeChangeHistory from "./ContractTypeChangeHistory"
+import InternationalTransferHistory from "./InternationalTransferHistory";
+import EntityHistory from "./EntityHistory";
+import UserExitHistory from "./UserExitHistory"
+import ExitedEmployeeHistory from "./ExitedEmployeeHistory"
+import PayrollHistory from "./PayrollHistory"
+import CurrentMonthExitedHistory from "./CurrentMonthExitedHistory";
+
 import { PermissionContext } from "../../context/PermissionState";
 
 const MasterHistory = (props) => {
@@ -42,6 +46,7 @@ const MasterHistory = (props) => {
   const [selectData, setSelectData] = useState(null);
 
   const [currentRecords,setCurrentRecords] = useState([])
+  const [managerStatus,setManagerStatus] = useState("")
   const [dropDownData,setDropDownData] = useState([{
     name:"Employee Contract Details",value:0
   },{name:"Salary History",value:1},
@@ -67,7 +72,7 @@ const MasterHistory = (props) => {
     const {
     ViewEmployeeHistoryData,
     employeeHistoryData,
-    viewEmployeeContractDetailsById,
+    viewEmployeeContactDetailsById,
     viewBonusDataById,
     viewSalaryDataById,
     viewBankDataById,
@@ -75,15 +80,14 @@ const MasterHistory = (props) => {
     viewCostCenterDataById,
     viewManagerDataById,
     viewAccessDataById,
-    viewTaxDataById,
     viewExitDataById,
     viewInsuranceDataById,
     viewSportDataById,
     viewProbationDataById,
     viewPromotionDataById,
     viewDisciplinaryDataById,
-        viewTransferDataById,
-    employeeContractDetailsByIdData,
+        viewcontractFreezeDataById,
+    employeeContactDetailsByIdData,
     managerData,
     costCenterData,
     insuranceData,
@@ -95,39 +99,47 @@ const MasterHistory = (props) => {
 
   console.log("stepCount",stepCount);
   useEffect(() => {
+    console.log(user,rolePermission,"role")
+    if (
+      rolePermission == "manager" ||
+      rolePermission == "costCenterManager"
+    ) {
+       setManagerStatus(rolePermission);
+      console.log("disabled costcenter", user.costCentre);
+    }
+  }, [ user.loginType]);
+  useEffect(() => {
 
   if(stepCount == 0){
-    viewEmployeeContractDetailsById(props.match.params.employeeid)
-  }else if(stepCount == 1){
-    viewSalaryDataById(props.match.params.employeeid)
-  }else if(stepCount == 2){
-    viewBonusDataById(props.match.params.employeeid)
-  }else if(stepCount == 3){
-    viewCostCenterDataById(props.match.params.employeeid)
-  }else if(stepCount == 4){
     viewBankDataById(props.match.params.employeeid)
+  }else if(stepCount == 3){
+    viewSalaryDataById(props.match.params.employeeid)
+  }else if(stepCount == 4){
+    viewBonusDataById(props.match.params.employeeid)
   }else if(stepCount == 5){
-    viewAadhaarDataById(props.match.params.employeeid)
-  }else if(stepCount == 6){
-    viewAccessDataById(props.match.params.employeeid)
-  }else if(stepCount == 7){
-    viewManagerDataById(props.match.params.employeeid)
-  }else if(stepCount == 9){
-    viewTaxDataById(props.match.params.employeeid)
-  }else if(stepCount == 10){
-    viewExitDataById(props.match.params.employeeid)
-  }else if(stepCount == 14){
-    viewInsuranceDataById(props.match.params.employeeid)
-  }else if(stepCount == 15){
     viewSportDataById(props.match.params.employeeid)
-  }else if(stepCount == 16){
-    viewPromotionDataById(props.match.params.employeeid)
-  }else if(stepCount == 17){
-    viewProbationDataById(props.match.params.employeeid)
-  }else if(stepCount == 18){
-    viewTransferDataById(props.match.params.employeeid)
-  }else if(stepCount == 19){
+  }else if(stepCount == 6){
+    viewManagerDataById(props.match.params.employeeid)
+  }else if(stepCount == 7){
+    viewCostCenterDataById(props.match.params.employeeid)
+  }else if(stepCount == 8){
+    viewInsuranceDataById(props.match.params.employeeid)
+  }else if(stepCount == 11){
     viewDisciplinaryDataById(props.match.params.employeeid)
+  }else if(stepCount == 13){
+    viewPromotionDataById(props.match.params.employeeid)
+  }else if(stepCount == 14){
+    viewProbationDataById(props.match.params.employeeid)
+  }else if(stepCount == 15){
+    viewcontractFreezeDataById(props.match.params.employeeid)
+  }else if(stepCount == 19){
+    viewExitDataById(props.match.params.employeeid)
+  }else if(stepCount == 23){
+    viewEmployeeContactDetailsById(props.match.params.employeeid)
+  }else if(stepCount ==24){
+    viewAadhaarDataById(props.match.params.employeeid)
+  }else if(stepCount == 25){
+    viewAccessDataById(props.match.params.employeeid)
   }
   }, [stepCount]);
 
@@ -155,44 +167,10 @@ const MasterHistory = (props) => {
       <div className="container-fluid">
         <Form >
           <Row>
+         
           <Col sm={3} style={{paddingBottom:"7px"}}  >
           <Button name="Employee Contract Details" 
-          value={0} variant= {stepCount === 0?"primary":"outline-primary"} 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Employee Contract Details
-          </Button>
-          </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
-          <Button name="Employee Contract Details" 
-          value={1} variant="outline-primary" 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-               Salary 
-          </Button>
-          </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
-          <Button name="Employee Contract Details" 
-          value={2} variant="outline-primary" 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-            Bonus 
-          </Button>
-          </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
-          <Button name="Employee Contract Details" 
-          value={3} variant="outline-primary" 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Cost Center 
-          </Button>
-          </Col>
-          </Row>
-
-          <Row>
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
-          <Button name="Employee Contract Details" 
-          value={4} variant="outline-primary" 
+          value={0} variant={stepCount === 0?"primary":"outline-primary"} 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
           Bank Details 
@@ -200,10 +178,47 @@ const MasterHistory = (props) => {
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
+          value={1} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               PAN 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={2} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            PF and UAN No 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={3} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Salary 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>
+         
+         
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Button name="Employee Contract Details" 
+          value={4} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Bonus 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
           value={5} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-               Aadhaar 
+          Sports 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -211,7 +226,7 @@ const MasterHistory = (props) => {
           value={6} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-            Access And Rights 
+            Manager 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -219,34 +234,36 @@ const MasterHistory = (props) => {
           value={7} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Manager 
+               Position Location and Cost Center Manager
           </Button>
           </Col>
           </Row>
 
           <Row>
-          {/* <Col sm={3} style={{paddingBottom:"7px"}}  >
+        
+          
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
           <Button name="Employee Contract Details" 
           value={8} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          User Documents
+            Insurance Nomination 
           </Button>
-          </Col> */}
-          {/* <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={9} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-               Other Taxable Income 
+          DISP
           </Button>
-          </Col> */}
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={10} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-            User Exit 
+          Confirmation 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -254,7 +271,20 @@ const MasterHistory = (props) => {
           value={11} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Payslips 
+               Disciplinary Action 
+          </Button>
+          </Col>
+          </Row>
+
+          <Row>         
+          
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+        
+          <Button name="Employee Contract Details" 
+          value={12} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Leaves 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -262,7 +292,7 @@ const MasterHistory = (props) => {
           value={13} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-               DISP
+          Promotion 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -270,43 +300,36 @@ const MasterHistory = (props) => {
           value={14} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-            Insurance Nomination 
-          </Button>
-          </Col>
-          </Row>
-
-          <Row>
-          {/* <Col sm={3} style={{paddingBottom:"7px"}}  >
-          <Button name="Employee Contract Details" 
-          value={12} variant="outline-primary" 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          ItStatement 
-          </Button>
-          </Col> */}
-          
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
-          <Button name="Employee Contract Details" 
-          value={15} variant="outline-primary" 
-          className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Sport 
+               Probation 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
+          value={15} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+            Contract Freeze 
+          </Button>
+          </Col>
+          </Row>
+          <Row>
+        
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+         
+          <Button name="Employee Contract Details" 
           value={16} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Promotion 
+               Contract Type Change 
           </Button>
           </Col>
+          
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={17} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-               Probation 
+            International Transfers 
           </Button>
           </Col>
           <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
@@ -314,45 +337,76 @@ const MasterHistory = (props) => {
           value={18} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-            Transfer 
+               Entity Transfer 
           </Button>
           </Col>
-          </Row>
-
-          <Row>
-          <Col sm={3} style={{paddingBottom:"7px"}}  >
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={19} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Disciplinary 
+            Exit 
           </Button>
           </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+        </Row>
+        <Row>
+        
+          <Col sm={3} style={{paddingBottom:"7px"}} >
+        
           <Button name="Employee Contract Details" 
           value={20} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-          Performance 
+          Payroll 
           </Button>
           </Col>
-          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          {
+          (rolePermission == "admin")
+      ?<><Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={21} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-              Cost Split 
+          Exited Employee 
           </Button>
           </Col>
-          {/* <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
           <Button name="Employee Contract Details" 
           value={22} variant="outline-primary" 
           className="componentButton" 
           onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
-            Perquisite Income
+              Current Month Exited
+                   </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contact Details" 
+          value={23} variant= {"outline-primary"} 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Employee Contact Details
           </Button>
-          </Col> */}
-          </Row>
+          </Col></>:<></>}
+            </Row>
+         {(rolePermission == "admin")? <Row>
+         
+          <Col sm={3} style={{paddingBottom:"7px"}}  >
+        
+          <Button name="Employee Contract Details" 
+          value={24} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+               Aadhaar 
+          </Button>
+          </Col>
+          <Col sm={3} style={{paddingBottom:"7px",marginLeft:"-22px"}}  >
+          <Button name="Employee Contract Details" 
+          value={25} variant="outline-primary" 
+          className="componentButton" 
+          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          Access And Rights 
+          </Button>
+          </Col>
+          </Row>:<></>}
           {/* <Row>
             <Col sm={4}>
               <Form.Group>
@@ -378,123 +432,144 @@ const MasterHistory = (props) => {
 
         {(() => {
                           switch (stepCount) {
-                            case 0:
-                              return (
-                                <EmployeeContractDetails EmployeeContractDetailList={props.match.params.employeeid}
-                                />
-                              );
-                            case 1:
+                           
+                              case 0:
+                                return (
+                                  <BankDetailsHistory BankDetailsHistoryList={props.match.params.employeeid}
+                                  />
+                                );
+                                case 1:
+                                return (
+                                  <PanHistory PanHistoryList={props.match.params.employeeid}
+                                  />
+                                );
+                                case 2:
+                                return (
+                                  <PFAndUANHistory PFAndUANHistoryList={props.match.params.employeeid}
+                                  />
+                                );
+                            case 3:
                               return (
                                 <SalaryHistory SalaryHistoryList={props.match.params.employeeid}
                                 />
                               );
-                              case 2:
+                              case 4:
                                 return (
                                   <BonusHistory BonusHistoryList={props.match.params.employeeid}
                                   />
                                 );
-                                case 3:
-                                  return (
-                                    <CostCenterHistory CostCenterHistoryList={props.match.params.employeeid}
-                                    />
-                                  );
-                                  case 4:
+                               
+                                  case 5:
                                     return (
-                                      <BankDetailsHistory BankDetailsHistoryList={props.match.params.employeeid}
+                                      <SportHistory SportHistoryList={props.match.params.employeeid}
                                       />
                                     );
-                                    case 5:
+                                    case 6:
                                       return (
-                                        <AadhaarHistory AadhaarHistoryList={props.match.params.employeeid}
+                                        <ManagerHistory ManagerHistoryList={props.match.params.employeeid}
                                         />
                                       );
-                                      case 6:
-                                        return (
-                                          <AccessAndRightHistory AccessAndRightHistoryList={props.match.params.employeeid}
-                                          />
-                                        );
+                                    
                                         case 7:
                                           return (
-                                            <ManagerHistory ManagerHistoryList={props.match.params.employeeid}
+                                            <CostCenterHistory CostCenterHistoryList={props.match.params.employeeid}
                                             />
                                           );
                                           case 8:
                                             return (
-                                              <UserDocuments BankDetailsHistoryList={props.match.params.employeeid}
+                                              <InsuranceNominationHistory InsuranceNominationHistoryList={props.match.params.employeeid}
                                               />
                                             );
                                             case 9:
                                               return (
-                                                <OtherTaxableIncomeHistory OtherTaxableIncomeHistoryList={props.match.params.employeeid}
+                                                <DISP DISPList={props.match.params.employeeid}
                                                 />
                                               );
-                                              case 10:
-                                                return (
-                                                  <UserExitHistory UserExitHistoryList={props.match.params.employeeid}
-                                                  />
-                                                );
-                                                case 11:
-                                                  return (
-                                                    <PayslipsHistory PayslipsHistoryList={props.match.params.employeeid}
-                                                    />
-                                                  );
-                                                  case 12:
-                                                    return (
-                                                      <ItStatementHistory UserExitHistoryList={props.match.params.employeeid}
-                                                      />
-                                                    );
-                                                    case 13:
-                                                      return (
-                                                        <DISP DISPList={props.match.params.employeeid}
-                                                        />
-                                                      );
-                                                      case 14:
-                                                      return (
-                                                        <InsuranceNominationHistory InsuranceNominationHistoryList={props.match.params.employeeid}
-                                                        />
-                                                      );
-                                                      case 15:
-                                                      return (
-                                                        <SportHistory SportHistoryList={props.match.params.employeeid}
-                                                        />
-                                                      );
-                                                      case 16:
+                                          case 10:
+                                            return (
+                                              <ConfirmationHistory BankDetailsHistoryList={props.match.params.employeeid}
+                                              />
+                                            );
+                                            case 11:
+                                              return (
+                                                <DisciplinaryHistory DisciplinaryHistoryList={props.match.params.employeeid}
+                                                />
+                                              );
+                                            case 12:
+                                              return (
+                                                <LeavesHistory LeavesList={props.match.params.employeeid}
+                                                />
+                                              );
+                                            
+                                                      case 13:
                                                         return (
                                                           <PromotionHistory PromotionHistoryList={props.match.params.employeeid}
                                                           />
                                                         );
-                                                        case 17:
+                                                        case 14:
                                                           return (
                                                             <ProbationHistory ProbationHistoryList={props.match.params.employeeid}
                                                             />
                                                           );
-                                                          case 18:
+                                                          case 15:
                                                         return (
-                                                          <TransferHistory TransferHistoryList={props.match.params.employeeid}
+                                                          <ContractFreezeSabbaticalHistory ContractFreezeSabbaticalHistoryList={props.match.params.employeeid}
                                                           />
                                                         );
+                                                        case 16:
+                                                          return (
+                                                            <ContractTypeChangeHistory ContractTypeChangeHistoryList={props.match.params.employeeid}
+                                                            />
+                                                          );
+                                                        case 17:
+                                                          return (
+                                                            <InternationalTransferHistory InternationalTransferHistoryList={props.match.params.employeeid}
+                                                            />
+                                                          );
+                                                          case 18:
+                                                        return (
+                                                          <EntityHistory EntityHistoryList={props.match.params.employeeid}
+                                                          />
+                                                        );
+                                                       
                                                         case 19:
                                                           return (
-                                                            <DisciplinaryHistory DisciplinaryHistoryList={props.match.params.employeeid}
+                                                            <UserExitHistory UserExitHistoryList={props.match.params.employeeid}
                                                             />
                                                           );
-                                                          case 20:
+                                                     
+                                                        case 20:
+                                                          return (
+                                                            <PayrollHistory PayrollHistoryList={props.match.params.employeeid}
+                                                            />
+                                                          );
+                                                          case 21:
                                                             return (
-                                                              <PerformanceHistory PerformanceHistoryList={props.match.params.employeeid}
+                                                              <ExitedEmployeeHistory ExitedEmployeeHistoryList={props.match.params.employeeid}
                                                               />
                                                             );
-                                                            case 21:
-                                                          return (
-                                                            <CostSplitHistory CostSplitHistoryList={props.match.params.employeeid}
-                                                            />
-                                                          );
                                                           case 22:
                                                             return (
-                                                              <PerquisiteHistory PerquisiteHistoryList={props.match.params.employeeid}
+                                                              <CurrentMonthExitedHistory CurrentMonthExitedHistoryList={props.match.params.employeeid}
                                                               />
                                                             );
+                                                            case 23:
+                                                              return (
+                                                                <EmployeeContactDetails EmployeeContactDetailList={props.match.params.employeeid}
+                                                                />
+                                                              );
+                                                              case 24:
+                                                                return (
+                                                                  <AadhaarHistory AadhaarHistoryList={props.match.params.employeeid}
+                                                                  />
+                                                                );
+                                                                case 25:
+                                                                  return (
+                                                                    <AccessAndRightHistory AccessAndRightHistoryList={props.match.params.employeeid}
+                                                                    />
+                                                                  );
                               default:return (
-                                <EmployeeContractDetails EmployeeContractDetailList={props.match.params.employeeid}
+                                <BankDetailsHistory BankDetailsHistoryList={props.match.params.employeeid}
                                 />
                               )
                            
