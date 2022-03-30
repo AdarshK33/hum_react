@@ -1206,7 +1206,7 @@ const ManagerWarningAction = (props) => {
                           <Col sm={2}>
                             <div>
                               <label className="itemResult">
-                                {state.employeeName}
+                                {state.employeeName +"/"+ state.employeeId}
                               </label>
                             </div>
                           </Col>
@@ -1290,7 +1290,7 @@ const ManagerWarningAction = (props) => {
                           <Col sm={2}>
                             <div>
                               <label className="itemResult">
-                                {state.managerName}
+                                {state.managerName +"/"+ state.managerId}
                               </label>
                             </div>
                           </Col>

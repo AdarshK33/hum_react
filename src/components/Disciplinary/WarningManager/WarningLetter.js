@@ -267,7 +267,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
 
                 <p>
                   You have been associated {disciplinarySearchData.company}{" "}
-                  Private Limited as a <b>{disciplinarySearchData.position}</b>.
+                 as a <b>{disciplinarySearchData.position}</b>.
                   <br />
                   On ,
                   <b>
