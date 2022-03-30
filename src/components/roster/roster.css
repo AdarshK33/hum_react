@@ -62,3 +62,8 @@ button.btn.btn-square.bg-secondary.btn-sm:hover{
     background-color: #5d5d5d!important;
     color:white
 }
+
+.table-header-sticky{
+    height: 100vh;
+    overflow-y: auto;
+}

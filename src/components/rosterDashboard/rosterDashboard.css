@@ -68,7 +68,7 @@
 .left-option {
   position: sticky;
   left: 2px;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 .table-head {
@@ -169,4 +169,15 @@
 
 .main-card {
   height: 400px;
+}
+
+.roaster-header-sticky{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.roaster-table-sticky{
+  overflow-y: auto;
+  height: 100vh;
 }
