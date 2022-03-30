@@ -547,7 +547,7 @@ const EntityTransfer = () => {
                       initiationEmpData.currentCompany.charAt(0) === "i") ? (
                       ""
                     ) : (
-                      <option value="INDECA">INDECA</option>
+                      <option value="Indeca Sporting Goods Pvt Ltd">INDECA</option>
                     )}
                     {initiationEmpData !== null &&
                     initiationEmpData !== undefined &&
@@ -556,7 +556,7 @@ const EntityTransfer = () => {
                       initiationEmpData.currentCompany.charAt(0) === "p") ? (
                       ""
                     ) : (
-                      <option value="PRODIN">PRODIN</option>
+                      <option value="Prodin Sporting Pvt Ltd">PRODIN</option>
                     )}
                   </Form.Control>
                   {newEntityErrMsg !== "" && (

@@ -150,9 +150,9 @@ const EntityTransferAcceptance = () => {
     ) {
       getCostCentreDetails(
         transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
-          ? "PRODIN"
+          ? "Prodin Sporting Pvt Ltd"
           : transferData.promotedCompany === "Indeca Sporting Goods Pvt Ltd"
-          ? "INDECA"
+          ? "Indeca Sporting Goods Pvt Ltd"
           : transferData.promotedCompany,
         newDeptName
       );

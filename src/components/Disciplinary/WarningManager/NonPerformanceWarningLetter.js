@@ -268,7 +268,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
 
                 <p>
                   You have been associated with {disciplinarySearchData.company}{" "}
-                  Private Limited , as a{" "}
+                   , as a{" "}
                   <b>{disciplinarySearchData.position}</b>.
                   <br />
                   On ,
