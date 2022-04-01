@@ -248,7 +248,7 @@ const PartTimeToFullTimeLetter = (props) => {
                   </li>
                   <li>
                     Service rules under the Certified Standing Orders of{" "}
-                    {/* {offerLetterData.companyName} */}
+                    {/* {offerLetterData.companyName} */}{" "}
                     will be applicable to you from the date of certification of
                     such orders. The information on the certification of such
                     standing orders will be communicated to you electronically
@@ -457,8 +457,8 @@ const PartTimeToFullTimeLetter = (props) => {
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.basic * 12
-                        )}
+                          offerLetterData.permanentCandidateOffer.basic 
+                        )* 12}
                       </td>
                     </tr>
                     <tr>
@@ -470,7 +470,7 @@ const PartTimeToFullTimeLetter = (props) => {
                         )}
                       </td>
                       <td>
-                        {offerLetterData.permanentCandidateOffer.hra * 12}
+                        {Math.round(offerLetterData.permanentCandidateOffer.hra) * 12}
                       </td>
                     </tr>
 
@@ -483,8 +483,8 @@ const PartTimeToFullTimeLetter = (props) => {
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.lta * 12
-                        )}
+                          offerLetterData.permanentCandidateOffer.lta) * 12
+                        }
                       </td>
                     </tr>
 
@@ -499,8 +499,8 @@ const PartTimeToFullTimeLetter = (props) => {
                       <td>
                         {Math.round(
                           offerLetterData.permanentCandidateOffer
-                            .specialAllowance * 12
-                        )}
+                            .specialAllowance) * 12
+                        }
                       </td>
                     </tr>
 
@@ -519,8 +519,8 @@ const PartTimeToFullTimeLetter = (props) => {
                         <b>
                           {Math.round(
                             offerLetterData.permanentCandidateOffer
-                              .grossSalary * 12
-                          )}
+                              .grossSalary 
+                          )* 12}
                         </b>
                       </td>
                     </tr>
@@ -533,15 +533,15 @@ const PartTimeToFullTimeLetter = (props) => {
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.employerPF *
-                            12
-                        )}
+                          offerLetterData.permanentCandidateOffer.employerPF 
+                        )*
+                        12}
                       </td>
                     </tr>
                     <tr>
                       <td>Monthly Bonus/ Statutory Bonus*+ </td>
                       <td>{Math.round(offerLetterData.bonusAmt)}</td>
-                      <td>{Math.round(offerLetterData.bonusAmt * 12)}</td>
+                      <td>{Math.round(offerLetterData.bonusAmt) * 12}</td>
                     </tr>
                     <tr>
                       <td>Employer ESIC</td>
@@ -569,8 +569,8 @@ const PartTimeToFullTimeLetter = (props) => {
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.gratuity * 12
-                        )}
+                          offerLetterData.permanentCandidateOffer.gratuity) * 12
+                        }
                       </td>
                     </tr>
 

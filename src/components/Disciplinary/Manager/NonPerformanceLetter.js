@@ -57,7 +57,7 @@
 
 //             <p>
 //               You have been associated with {disciplinarySearchData.company}{" "}
-//               Private Limited (“Decathlon/{disciplinarySearchData.company}),
+//                (“Decathlon/{disciplinarySearchData.company}),
 //               having its registered office at{" "}
 //               {disciplinarySearchData.storeAddressLine}, at its Store located at{" "}
 //               <b>{disciplinarySearchData.storeLocation}</b> (“Decathlon/
@@ -325,7 +325,7 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
 
                 <p>
                   You have been associated with {disciplinarySearchData.company}{" "}
-                  Private Limited , as a{" "}
+                   , as a{" "}
                   <b>{disciplinarySearchData.position}</b>.
                 </p>
                 <br />

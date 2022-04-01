@@ -183,7 +183,7 @@ const FullTimeToPartTimeLetter = (props) => {
                   Your gross fixed compensation would be INR.{" "}
                   <b>{offerLetterData.partTimeCandidateOffer.rate}</b> per
                   hour.You are also entitled for a monthly
-                  statutory/non-statutory bonus which will be at a maximum 0.0%
+                  statutory/non-statutory bonus which will be at a maximum{" "}<b>{offerLetterData.bonus}</b>%
                   of your gross monthly fixed compensation. You are entitled to
                   all the social security benefits like PF, ESIC (as per
                   applicability), & bonus as specified in the respective

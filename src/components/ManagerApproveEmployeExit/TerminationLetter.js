@@ -106,10 +106,8 @@ const TerminationLetter = () => {
                 <br></br>
 
                 <p>
-                  You have been associated Decathlon Sports India Private
-                  Limited You have been associated Decathlon Sports India
-                  Private Limited You have been associated Decathlon Sports
-                  India Private Limited (“entity name/prodin/indeca”) as{" "}
+                   You have been associated Decathlon Sports India
+                  Private Limited  (“entity name/prodin/indeca”) as{" "}
                   {terminationLetterData !== undefined &&
                     terminationLetterData.position}
                   . This is reference to the Show Cause letter dated on{" "}
@@ -244,8 +242,7 @@ export default TerminationLetter;
                 </b>{" "}
               </p>
               <p>
-              You have been associated Decathlon Sports India Private Limited 
-                You have been associated Decathlon Sports India Private Limited
+              
               You have been associated Decathlon Sports India Private Limited 
               (“entity name/prodin/indeca”) as{" "}{terminationLetterData !== 
               undefined && terminationLetterData.position}.
