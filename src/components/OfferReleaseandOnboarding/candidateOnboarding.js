@@ -39,6 +39,8 @@ import {
   Table,
 } from "react-bootstrap";
 import { AdminContext } from "../../context/AdminState";
+import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
 import AppointmentLetter from "./AppointmentLetter";
 import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
 import InternAppointmentLetter from "./internAppointmentLetter";
@@ -68,6 +70,9 @@ const CandidateOnboarding = () => {
 
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
+  const { user } = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
+
   const [count, setCount] = useState(1);
   const [costCenter1, setCostCenter1] = useState(false);
   const [email, setEmail] = useState("");
@@ -129,7 +134,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
-  console.log("RoleList", RoleList);
+  console.log("RoleList", RoleList,user);
 
   useEffect(() => {
     if (
@@ -735,8 +740,33 @@ const CandidateOnboarding = () => {
                   RoleList !== undefined &&
                   RoleList.map((item, i) => {
                     if (
-                      item.roleName !== "ADMIN" &&
-                      item.roleName !== "IT_ADMIN"
+                      // item.roleName !== "ADMIN" &&
+                      // item.roleName !== "IT_ADMIN"
+                      (rolePermission == "manager" && item.roleName == "GENERAL_USER")|| (user.department == "Finance" && 
+                       item.roleName == "FINANCE_PARTNER")
+                    ) {
+                      return (
+                        <option key={i} value={item.roleId}>
+                          {item.roleDesc}
+                        </option>
+                      );
+                    }else if (
+                      (rolePermission == "costCenterManager" &&
+                       item.roleName == "MANAGER" &&
+                       item.roleName == "GENERAL_USER")|| (user.department == "Finance" && 
+                       item.roleName == "FINANCE_PARTNER")
+                    ) {
+                      return (
+                        <option key={i} value={item.roleId}>
+                          {item.roleDesc}
+                        </option>
+                      );
+                    }else if (
+                      (rolePermission == "superCostCenterManager" &&
+                       item.roleName == "MANAGER" &&
+                       item.roleName == "COST_CENTER_MANAGER" &&
+                       item.roleName == "GENERAL_USER")|| (user.department == "Finance" && 
+                       item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
                         <option key={i} value={item.roleId}>

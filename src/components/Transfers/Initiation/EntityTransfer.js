@@ -4,6 +4,7 @@ import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 import { Search } from "react-feather";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import Select from "react-select";
 import { ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { TransferContext } from "../../../context/TransferState";
@@ -229,7 +230,7 @@ const EntityTransfer = () => {
   };
 
   const changeCostCentreHandler = (e) => {
-    setNewCostCentre(e.target.value);
+    setNewCostCentre(e.value);
     setCostCentreErrMsg("");
   };
   const changeManagerHandler = (e) => {
@@ -622,7 +623,7 @@ const EntityTransfer = () => {
                   <Form.Label>Cost Center:</Form.Label>
                 </Col>
                 <Col md={4}>
-                  <Form.Control
+                  {/* <Form.Control
                     as="select"
                     className="text-primary"
                     aria-label="transferInitiationCostCentre"
@@ -644,7 +645,30 @@ const EntityTransfer = () => {
                           </option>
                         );
                       })}
-                  </Form.Control>
+                  </Form.Control> */}
+                  <Select
+                  name="filters"
+                  as="select"
+                  defaultValue={newCostCentre}
+                  className="text-primary"
+                  aria-label="transferInitiationCostCentre"
+                  placeholder="Select Cost Center"
+                  onChange={changeCostCentreHandler}
+                  // isDisabled={
+                  //   costCentreNoChange || newDeptName === "" ? true : false
+                  // }
+                  options={
+                    costCentreData !== null
+                      ? costCentreData.map((item) => ({
+                          key: `cost_centre_${item.costCentreName}`,
+                          label: item.costCentreName,
+                          value: item.costCentreName,
+                        }))
+                      : []
+                  }
+                  required
+                  isSearchable
+                />
                   {costCentreErrMsg !== "" && (
                     <span className="text-danger">{costCentreErrMsg}</span>
                   )}
