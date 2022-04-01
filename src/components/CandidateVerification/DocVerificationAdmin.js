@@ -59,6 +59,7 @@ const DocVerification = () => {
     fetchPfDetails,
     documentRejectComplete,
     adminRejectComplete,
+    candidateVerificationView
   } = useContext(DocsVerifyContext);
   const {
     candidateData,
@@ -228,13 +229,16 @@ const DocVerification = () => {
       ){
         setUanValueError(true);
       }else {
+        console.log("reject else");
         updateUANNumber(personalInfoData.candidateId, uanNumber);
         setUanError(false);
         setUanValueError(false);
         adminRejectComplete(candidateId);
+        candidateVerificationView("all", 0);
         history.push("/candidate-verification");
       }
     } else {
+      console.log("reject complete else");
       adminRejectComplete(candidateId);
       history.push("/candidate-verification");
     }
