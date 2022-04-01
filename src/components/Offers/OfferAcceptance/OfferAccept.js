@@ -506,7 +506,7 @@ const OfferAccept = (props) => {
               <Container className="middle-container">
                 <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
                   <span style={{ marginRight: "1rem" }}>
-                    View Insurance Benefit
+                    View Benefits
                   </span>
                   <Button onClick={showInsuranceClick}>Show</Button>
                 </div>
