@@ -326,7 +326,7 @@ const RemunerationInformation = (props) => {
         setStipened(0);
         setStipenedError(false);
         setLocalExpatGrossLimit(false);
-      } else if (e < 90 || e > 400) {
+      } else if ((e < 90 || e > 400) ) {
         setFixedGross(e);
         setFixedGrossError(false);
         setPartTimeGrossLimit(true);

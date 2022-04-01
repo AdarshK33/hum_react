@@ -9,6 +9,7 @@ import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
+import Select from "react-select";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import { BonusContext } from "../../context/BonusState";
 import { PermissionContext } from "../../context/PermissionState";
@@ -324,15 +325,22 @@ const WorkInformation = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+  useEffect(()=>{
+    if (locationName !== null && locationName !== undefined) {
+      console.log(locationName,cityList,"locationName")
+      setStateValue(locationName.stateId);
+      setCity(locationName.locationId);
+      setCityId(locationName.cityId);
+      cityData(locationName.stateId);
+    }
+  },[costCenter,locationName])
   const costCenterChangeHandler = (e) => {
-    setCostCenter(e.target.value);
-    locationView(e.target.value);
-    setStateValue(locationName.stateId);
-    setCity(locationName.locationId);
-    setCityId(locationName.cityId);
+    setCostCenter(e.value);
+    locationView(e.value);
   };
   const dateOfJoiningHandler = (date) => {
     setDateOFJoining(date);
+    setDateOFLeaving();
   };
   const dateOfIssueHandler = (date) => {
     setDateOfIssue(date);
@@ -659,7 +667,7 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label>
-                <Form.Control
+                {/* <Form.Control
                   as="select"
                   value={costCenter}
                   className="form-input"
@@ -679,7 +687,30 @@ const WorkInformation = (props) => {
                         </option>
                       );
                     })}
-                </Form.Control>
+                </Form.Control> */}
+                 <div className="form-input" >
+                  <Select
+                  name="costCenter"
+                  as="select"
+                  defaultValue={costCenter}
+                  className="form-input"
+                  aria-label="transferInitiationCostCentre"
+                  placeholder="Select Cost Center"
+                  onChange={costCenterChangeHandler}
+                  // styles= {customStyles}
+                  options={
+                    costcenterByDepartmentData !== null
+                      ? costcenterByDepartmentData.map((item) => ({
+                          key: `cost_centre_${item.costCentreName}`,
+                          label: item.costCentreName,
+                          value: item.costCentreName,
+                        }))
+                      : []
+                  }
+                  required
+                  isSearchable
+                />
+                </div>
               </Form.Group>
             </Col>
             <Col sm={3}>

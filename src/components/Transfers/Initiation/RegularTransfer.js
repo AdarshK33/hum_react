@@ -387,15 +387,19 @@ const RegularTransfer = () => {
   };
 
   const noChangeCostCentreHandler = (e) => {
-    if (
-      e.target.checked === true &&
-      initiationEmpData.currentCostCentre !== null &&
-      initiationEmpData.currentCostCentre !== undefined &&
-      initiationEmpData.currentCostCentre !== ""
-    ) {
+    if (e.target.checked === true) {
+    const costCenter = costCentreData.find((item) => {
+      return (
+        item.costCentreName.toLowerCase() ===
+        initiationEmpData.currentCostCentre.toLowerCase()
+      );
+    });
+    console.log("costCenter->", costCenter);
+    if (costCenter !== undefined && Object.keys(costCenter).length > 0) {
       setCostCentreNoChange(true);
-      setNewCostCentre(initiationEmpData.currentCostCentre);
-    } else {
+      setNewCostCentre(costCenter.costCentreName);
+    }
+  }else{
       setCostCentreNoChange(false);
       setNewCostCentre("");
       MakeCostCenterDependienciesNull();
@@ -403,15 +407,19 @@ const RegularTransfer = () => {
   };
 
   const noChangeManagerHandler = (e) => {
-    if (
-      e.target.checked === true &&
-      initiationEmpData.currentManagerId !== null &&
-      initiationEmpData.currentManagerId !== undefined &&
-      initiationEmpData.currentManagerId !== ""
-    ) {
-      setManagerNoChange(true);
-      setNewManager(initiationEmpData.currentManagerId);
-    } else {
+    if (e.target.checked === true) {
+      const managerData = costCentreManagersData.find((manager) => {
+        return (
+          manager.employeeId.toLowerCase() ===
+          initiationEmpData.currentManagerId.toLowerCase()
+        );
+      });
+      console.log("managerData->", managerData);
+      if (managerData !== undefined && Object.keys(managerData).length > 0) {
+        setManagerNoChange(true);
+        setNewManager(managerData.employeeId);
+      }
+    }else {
       MakeManagerDependienciesNull();
       setManagerNoChange(false);
       setNewManager("");
