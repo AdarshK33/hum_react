@@ -275,7 +275,7 @@ const BankDetails = (props) => {
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
-                maxLength="20"
+                // maxLength="20"
                 style={ifscCodeError ? { borderColor: "red" } : {}}
               />
               {ifscCodeError ? (

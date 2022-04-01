@@ -205,6 +205,21 @@ const OnBoardingStepper = (props) => {
       setStep(tempArray);
     }
   };
+  const NextStepOfAdd2 = (value) => {
+    console.log(stepCount, "NEXTSTEP");
+    if (stepCount >= 0 && stepCount < 6) {
+      let tempArray = [...stepArray];
+      tempArray[stepCount].fileSaved = value;
+      tempArray[stepCount].step = checkOk;
+      tempArray[stepCount].label = labelOk;
+      tempArray[stepCount].line = lineOk;
+      tempArray[stepCount + 2].label = currLabel;
+      tempArray[stepCount + 2].step = currStep;
+      setStepNumber(stepCount + 2);
+
+      setStep(tempArray);
+    }
+  };
   const MakeFalse = (value) => {
     console.log(stepCount, "making false");
     if (stepCount >= 0 && stepCount < 6) {
@@ -242,6 +257,29 @@ const OnBoardingStepper = (props) => {
       }
       setStep(tempArray);
       setStepNumber(stepCount - 1);
+    }
+  };
+  const PrevStepOfSub2 = () => {
+    console.log("prevStep");
+    console.log(stepCount);
+    if (stepCount > 0 && stepCount <= 6) {
+      let tempArray = [...stepArray];
+      if (tempArray[stepCount].fileSaved === true) {
+        tempArray[stepCount].step = checkOk;
+        tempArray[stepCount].label = labelOk;
+        tempArray[stepCount].line = lineOk;
+        tempArray[stepCount - 2].line = defaultLine;
+        tempArray[stepCount - 2].step = currStep;
+        tempArray[stepCount - 2].label = currLabel;
+      } else {
+        tempArray[stepCount].step = defaultStep;
+        tempArray[stepCount].label = defaultLabel;
+        tempArray[stepCount - 2].line = defaultLine;
+        tempArray[stepCount - 2].step = currStep;
+        tempArray[stepCount - 2].label = currLabel;
+      }
+      setStep(tempArray);
+      setStepNumber(stepCount - 2);
     }
   };
   // const PrevStep1 = () => {
@@ -396,7 +434,8 @@ const OnBoardingStepper = (props) => {
                         </label>
                         <br></br>
                         <span className={stepArray[2].line}></span>
-
+{candidateProfileData.contractType === "Local Expat" ?(null):(
+  <React.Fragment>
                         <div
                           type="button"
                           onClick={
@@ -424,6 +463,9 @@ const OnBoardingStepper = (props) => {
                         </label>
                         <br></br>
                         <span className={stepArray[3].line}></span>
+                        </React.Fragment>
+                        )}
+
                         {candidateProfileData.contractType === "Internship" ? (
                           ""
                         ) : (
@@ -578,12 +620,94 @@ const OnBoardingStepper = (props) => {
                                   />
                                 );
                               }
+                              case 6:
+                                if (
+                                  window.location.href.includes("verification")
+                                ) {
+                                  return <DocVerification />;
+                                } else {
+                                  return (
+                                    <Documents
+                                      NextStep={NextStep}
+                                      PrevStep={PrevStep}
+                                    />
+                                  );
+                                }
                             // default:
                             //   return <div>OnBoarding</div>;
                           }
                         })()}
                       </Col>
-                    ) : (
+                    ) : candidateProfileData.contractType === "Local Expat" ? (
+                      <Col
+                        sm={10}
+                        style={{ marginTop: "1rem", marginLeft: "2rem" }}
+                      >
+                        {(() => {
+                          switch (stepCount) {
+                            case 0:
+                              return (
+                                <PersonalInformation
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                  MakeFalse={MakeFalse}
+                                />
+                              );
+
+                            case 1:
+                              return (
+                                <Address
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 2:
+                              return (
+                                <EmergencyContact
+                                  NextStep={NextStepOfAdd2}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            // case 3:
+                            //   return (
+                            //     <BankDetails
+                            //       NextStep={NextStep}
+                            //       PrevStep={PrevStep}
+                            //     />
+                            //   );
+                            case 4:
+                              return (
+                                <InsuranceNomination
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStepOfSub2}
+                                />
+                              );
+                            case 5:
+                              return (
+                                <PFDeclaration
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 6:
+                              if (
+                                window.location.href.includes("verification")
+                              ) {
+                                return <DocVerification />;
+                              } else {
+                                return (
+                                  <Documents
+                                    NextStep={NextStep}
+                                    PrevStep={PrevStep}
+                                  />
+                                );
+                              }
+                            default:
+                              return <div>OnBoarding</div>;
+                          }
+                        })()}
+                      </Col>
+                    ): (
                       <Col
                         sm={10}
                         style={{ marginTop: "1rem", marginLeft: "2rem" }}
