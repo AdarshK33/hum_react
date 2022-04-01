@@ -252,7 +252,7 @@ const CandidateList = () => {
                         item.contractType !== "Internship" &&
                         (item.adminVerificationStatus === 0 ||
                           item.adminVerificationStatus === 3 ||
-                          item.adminVerificationStatus === 1) &&
+                          item.adminVerificationStatus === 1||item.adminVerificationStatus === 2) &&
                         item.uanStatus === 0 ? (
                           <Link to={"/verification/" + item.candidateId}>
                             <AlertCircle
