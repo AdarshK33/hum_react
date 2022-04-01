@@ -75,18 +75,33 @@ const InsuranceNominationFormLetter = (props) => {
                 Dear{" "}
                 <b>
                   {props.data !== undefined &&
-                  (props.data.gender == "Male" ||
+                  ((props.data.gender == "Male" ||
                     props.data.gender == "male" ||
-                    props.data.gender == "MALE")
+                    props.data.gender == "MALE")&& ((props.data.maritalStatus == "single" ||
+                    props.data.maritalStatus == "Single" ||
+                    props.data.maritalStatus == "SINGLE")||(props.data.maritalStatus == "married" ||
+                    props.data.maritalStatus == "Married" ||
+                    props.data.maritalStatus == "MARRIED")))
                     ? `Mr.${props.data.employeeName}`
-                    : (props.data.gender == "Female" ||
+                    : ((props.data.gender == "Female" ||
                         props.data.gender == "female" ||
                         props.data.gender == "FEMALE") &&
                       (props.data.maritalStatus == "single" ||
                         props.data.maritalStatus == "Single" ||
-                        props.data.maritalStatus == "SINGLE")
-                    ? `Miss. ${props.data.employeeName}`
-                    : `Mrs.${props.data.employeeName}`}
+                        props.data.maritalStatus == "SINGLE"))
+                    ? `Miss. ${props.data.employeeName}`:
+                    ((props.data.gender == "Female" ||
+                        props.data.gender == "female" ||
+                        props.data.gender == "FEMALE") &&(props.data.maritalStatus == "married" ||
+                    props.data.maritalStatus == "Married" ||
+                    props.data.maritalStatus == "MARRIED"))?
+                    `Mrs.${props.data.employeeName}`
+                    : (props.data.gender == "Other" ||
+                    props.data.gender == "other" ||
+                    props.data.gender == "OTHER") 
+                    ?
+                    props.data.employeeName 
+                    :" "}
                 </b>{" "}
               </p>
               <br></br>
