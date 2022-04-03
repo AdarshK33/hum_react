@@ -326,9 +326,9 @@ const AppointmentLetter = (props) => {
                   <td>
                     <b>
                       {Math.round(
-                        candidateLetterData.fixedGross *
-                          12
-                      )}
+                        candidateLetterData.fixedGross
+                      )*
+                      12}
                     </b>
                   </td>
                 </tr>
@@ -433,7 +433,7 @@ const AppointmentLetter = (props) => {
                   <td className="boldText">
                     {Math.round(
                       candidateLetterData.permanentCandidateOffer.employerESIC
-                    ) * 12}
+                    )* 12}
                   </td>
                 </tr>
                 <tr>

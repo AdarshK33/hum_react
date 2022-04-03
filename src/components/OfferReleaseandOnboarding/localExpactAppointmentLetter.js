@@ -518,8 +518,8 @@ const LocalExpactAppointmentLetter = (props) => {
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.gratuity * 12
-                        )}
+                          offerLetterData.permanentCandidateOffer.gratuity 
+                        )* 12}
                       </td>
                     </tr>
 

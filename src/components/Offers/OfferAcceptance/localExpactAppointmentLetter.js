@@ -426,7 +426,7 @@ const LocalExpactAppointmentLetter = (props) => {
                   <td className="boldText">
                     {Math.round(
                       candidateLetterData.permanentCandidateOffer.employerESIC
-                    ) * 12}
+                    )* 12}
                   </td>
                 </tr>
                 <tr>
