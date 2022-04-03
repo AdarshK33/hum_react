@@ -121,6 +121,8 @@ const CandidateOnboarding = () => {
   const [mandatory, setMandatory] = useState(false);
   const [generateAppoint, setGenerateAppoint] = useState(false);
   const [joiningError, setJoiningError] = useState(false);
+  const [employeeFedId, setEmployeeFedId] = useState("");
+
   let history = useHistory();
   useEffect(() => {
     if (
@@ -175,6 +177,9 @@ const CandidateOnboarding = () => {
       candidateData !== null &&
       Object.keys(candidateData).length !== 0
     ) {
+      let employeeFedId = (empData.fedId !== null && empData.fedId !== undefined && empData.fedId !== " ")?empData.fedId:""
+      var newFedId=   employeeFedId.replace(/"/g, '');
+      setEmployeeFedId(newFedId)
       setEmployeeData({
         ...employeeData,
         ["active"]: empData !== undefined ? empData.active : "",
@@ -229,13 +234,14 @@ const CandidateOnboarding = () => {
         ["position"]: empData.position,
         ["firstName"]: empData.firstName,
         ["email"]: empData.email,
-        ["fedId"]: empData.fedId,
+        ["fedId"]: newFedId,
         ["role"]: empData.role,
         ["address"]: empData.address,
         ["isClusterManager"]: 0,
         ["aadhaarNumber"]: empData.aadhaarNumber,
         ["designation"]: empData.designation,
       });
+     
     }
   }, [empData]);
 
@@ -712,9 +718,10 @@ const CandidateOnboarding = () => {
                 type="text"
                 name="fedId"
                 value={
-                  employeeData !== undefined && employeeData !== null
-                    ? employeeData.fedId
-                    : ""
+                  employeeFedId
+                  // employeeData !== undefined && employeeData !== null
+                  //   ? (employeeData.fedId).replace(/"/g, '')
+                  //   : ""
                 }
                 onChange={(e) => handleChange(e)}
               />
@@ -742,7 +749,7 @@ const CandidateOnboarding = () => {
                     if (
                       // item.roleName !== "ADMIN" &&
                       // item.roleName !== "IT_ADMIN"
-                      (rolePermission == "manager" && item.roleName == "GENERAL_USER")|| (user.department == "Finance" && 
+                      (rolePermission == "manager" && item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
@@ -753,7 +760,7 @@ const CandidateOnboarding = () => {
                     }else if (
                       (rolePermission == "costCenterManager" &&
                        item.roleName == "MANAGER" &&
-                       item.roleName == "GENERAL_USER")|| (user.department == "Finance" && 
+                       item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
@@ -765,7 +772,7 @@ const CandidateOnboarding = () => {
                       (rolePermission == "superCostCenterManager" &&
                        item.roleName == "MANAGER" &&
                        item.roleName == "COST_CENTER_MANAGER" &&
-                       item.roleName == "GENERAL_USER")|| (user.department == "Finance" && 
+                       item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
