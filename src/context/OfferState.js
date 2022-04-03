@@ -621,7 +621,7 @@ export const OfferProvider = (props) => {
     if (fraction > 0) {
       f_text = "AND " + convert_number(fraction) + " PAISE";
     }
-    return convert_number(value) + " RUPEE " + f_text + " ONLY";
+    return convert_number(value) + " RUPEES " + f_text + " ONLY";
   };
   const frac = (f) => {
     return f % 1;

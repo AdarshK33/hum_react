@@ -126,7 +126,8 @@ const BankDetails = (props) => {
       state.ifscCode !== "" &&
       state.ifscCode !== null &&
       state.ifscCode !== undefined &&
-      state.ifscCode.length >= 11 &&
+           state.ifscCode.length < 20 &&
+      // state.ifscCode.length >= 11 &&
       aadharValid.test(state.accountNumber)
     ) {
       setIfscCodeError(false);

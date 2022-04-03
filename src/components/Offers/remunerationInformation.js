@@ -140,7 +140,7 @@ const RemunerationInformation = (props) => {
           Object.keys(workInfoViewData).length !== 0 &&
           workInfoViewData.contractType === "Fulltime")
       ) {
-        if (fixedGross < 18000) {
+        if (fixedGross <= 18000) {
           setFixedGrossError(false);
           setParmanentGrossLimit(true);
         } else {
@@ -292,7 +292,7 @@ const RemunerationInformation = (props) => {
         setStipenedError(false);
         setPartTimeGrossLimit(false);
         setLocalExpatGrossLimit(false);
-      } else if (e < 18000) {
+      } else if (e < 18000 || e == 18000) {
         console.log("inside Fulltime2", e);
         setFixedGross(e);
         setFixedGrossError(false);
@@ -326,7 +326,7 @@ const RemunerationInformation = (props) => {
         setStipened(0);
         setStipenedError(false);
         setLocalExpatGrossLimit(false);
-      } else if (e < 90 || e > 400) {
+      } else if ((e < 90 || e > 400) ) {
         setFixedGross(e);
         setFixedGrossError(false);
         setPartTimeGrossLimit(true);
