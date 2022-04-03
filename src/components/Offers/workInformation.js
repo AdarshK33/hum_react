@@ -667,7 +667,7 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label>
-                {/* <Form.Control
+                {disabled? <Form.Control
                   as="select"
                   value={costCenter}
                   className="form-input"
@@ -687,12 +687,14 @@ const WorkInformation = (props) => {
                         </option>
                       );
                     })}
-                </Form.Control> */}
-                 <div className="form-input" >
+                </Form.Control>
+                : <div className="form-input" >
                   <Select
                   name="costCenter"
                   as="select"
-                  defaultValue={costCenter}
+                  value={{
+                    'label': costCenter,
+                    'value':costCenter}} 
                   className="form-input"
                   aria-label="transferInitiationCostCentre"
                   placeholder="Select Cost Center"
@@ -701,7 +703,6 @@ const WorkInformation = (props) => {
                   options={
                     costcenterByDepartmentData !== null
                       ? costcenterByDepartmentData.map((item) => ({
-                          key: `cost_centre_${item.costCentreName}`,
                           label: item.costCentreName,
                           value: item.costCentreName,
                         }))
@@ -710,7 +711,7 @@ const WorkInformation = (props) => {
                   required
                   isSearchable
                 />
-                </div>
+                </div>}
               </Form.Group>
             </Col>
             <Col sm={3}>
