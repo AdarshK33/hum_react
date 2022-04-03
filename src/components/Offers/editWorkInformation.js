@@ -629,7 +629,7 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label>
-                {/* <Form.Control
+                {disabled?<Form.Control
                   as="select"
                   value={costCenter}
                   className="form-input"
@@ -649,13 +649,16 @@ const EditWorkInformation = () => {
                         </option>
                       );
                     })}
-                </Form.Control> */}
-                <div className="form-input" >
+                </Form.Control>
+                :<div className="form-input" >
+                               
                   <Select
                   name="costCenter"
                   as="select"
-                  defaultValue={costCenter}
-                  className="form-input"
+                  value={{
+                    'label': costCenter,
+                    'value':costCenter}}       
+                   className="form-input"
                   aria-label="transferInitiationCostCentre"
                   placeholder="Select Cost Center"
                   onChange={costCenterChangeHandler}
@@ -663,7 +666,6 @@ const EditWorkInformation = () => {
                   options={
                     costcenterByDepartmentData !== null
                       ? costcenterByDepartmentData.map((item) => ({
-                          key: `cost_centre_${item.costCentreName}`,
                           label: item.costCentreName,
                           value: item.costCentreName,
                         }))
@@ -672,7 +674,7 @@ const EditWorkInformation = () => {
                   required
                   isSearchable
                 />
-                </div>
+                </div>}
               </Form.Group>
 
             </Col>

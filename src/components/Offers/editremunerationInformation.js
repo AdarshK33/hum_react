@@ -232,7 +232,7 @@ const EditRemunerationInformation = (props) => {
         setStipenedError(false);
         setPartTimeGrossLimit(false);
         setLocalExpatGrossLimit(false);
-      } else if (e < 18000) {
+      } else if (e < 18000 || e == 18000) {
         console.log("inside Fulltime2", e);
         setFixedGross(e);
         setFixedGrossError(false);
@@ -588,7 +588,7 @@ const EditRemunerationInformation = (props) => {
                           (workInfoViewData !== null &&
                             workInfoViewData !== undefined &&
                             workInfoViewData.contractType === "Fulltime")) &&
-                          fixedGross < 18000) ? (
+                          fixedGross <= 18000) ? (
                         <p style={{ color: "red" }}>
                           Value should be greater than 18000{" "}
                         </p>
