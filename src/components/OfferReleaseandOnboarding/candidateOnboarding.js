@@ -45,6 +45,7 @@ import AppointmentLetter from "./AppointmentLetter";
 import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
 import InternAppointmentLetter from "./internAppointmentLetter";
 import LocalExpatAppointmentLetter from "./localExpactAppointmentLetter";
+import { Underline } from "react-feather";
 const CandidateOnboarding = () => {
   const {
     generateOfferLetter,
@@ -177,9 +178,9 @@ const CandidateOnboarding = () => {
       candidateData !== null &&
       Object.keys(candidateData).length !== 0
     ) {
-      let employeeFedId = (empData.fedId !== null && empData.fedId !== undefined && empData.fedId !== " ")?empData.fedId:""
-      var newFedId=   employeeFedId.replace(/"/g, '');
-      setEmployeeFedId(newFedId)
+      // let employeeFedId = (empData.fedId !== null && empData.fedId !== undefined && empData.fedId !== " ")?empData.fedId:""
+      // var newFedId=   employeeFedId.replace(/"/g, '');
+      // setEmployeeFedId(newFedId)
       setEmployeeData({
         ...employeeData,
         ["active"]: empData !== undefined ? empData.active : "",
@@ -234,7 +235,8 @@ const CandidateOnboarding = () => {
         ["position"]: empData.position,
         ["firstName"]: empData.firstName,
         ["email"]: empData.email,
-        ["fedId"]: newFedId,
+        ["fedId"]: (empData.fedId !== null && 
+          empData.fedId !== undefined && empData.fedId !== "")?empData.fedId.replace(/"/g, ''):'',
         ["role"]: empData.role,
         ["address"]: empData.address,
         ["isClusterManager"]: 0,
@@ -319,7 +321,7 @@ const CandidateOnboarding = () => {
   };
 
   const handleChange = (e) => {
-    console.log("handleChange names", e);
+    console.log("handleChange names", e.target.value);
     setError(false);
     setFedError(false);
     if (
@@ -718,10 +720,9 @@ const CandidateOnboarding = () => {
                 type="text"
                 name="fedId"
                 value={
-                  employeeFedId
-                  // employeeData !== undefined && employeeData !== null
-                  //   ? (employeeData.fedId).replace(/"/g, '')
-                  //   : ""
+                  employeeData !== undefined && employeeData !== null
+                    ? employeeData.fedId
+                    : ""
                 }
                 onChange={(e) => handleChange(e)}
               />
