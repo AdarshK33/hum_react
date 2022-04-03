@@ -1334,11 +1334,9 @@ const Documents = (props) => {
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
                           ((candidateProfileData.verificationStatus === 2 &&
-                          (stateOfDisable.aadharId === 0 ||
-                            stateOfDisable.aadharId === 2)) ||
+                            stateOfDisable.aadharId === 2) ||
                         (candidateProfileData.adminVerificationStatus === 2 &&
-                          (adminDocApprove.aadharId === 0 ||
-                            adminDocApprove.aadharId === 2)))) ||
+                            adminDocApprove.aadharId === 2))) ||
                         (candidateProfileData.documentUploaded === 0 &&
                           candidateProfileData.verificationStatus === 0 &&
                           candidateProfileData.adminVerificationStatus === 0)
@@ -1357,11 +1355,9 @@ const Documents = (props) => {
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
                         ((candidateProfileData.verificationStatus === 2 &&
-                        (stateOfDisable.aadharId === 0 ||
-                          stateOfDisable.aadharId === 2)) ||
+                          stateOfDisable.aadharId === 2) ||
                       (candidateProfileData.adminVerificationStatus === 2 &&
-                        (adminDocApprove.aadharId === 0 ||
-                          adminDocApprove.aadharId === 2)))) ||
+                          adminDocApprove.aadharId === 2))) ||
                       (candidateProfileData.documentUploaded === 0 &&
                         candidateProfileData.verificationStatus === 0 &&
                         candidateProfileData.adminVerificationStatus === 0)
@@ -1376,11 +1372,9 @@ const Documents = (props) => {
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
                           ((candidateProfileData.verificationStatus === 2 &&
-                          (stateOfDisable.aadharId === 0 ||
-                            stateOfDisable.aadharId === 2)) ||
+                            stateOfDisable.aadharId === 2) ||
                         (candidateProfileData.adminVerificationStatus === 2 &&
-                          (adminDocApprove.aadharId === 0 ||
-                            adminDocApprove.aadharId === 2)))) ||
+                            adminDocApprove.aadharId === 2))) ||
                         (candidateProfileData.documentUploaded === 0 &&
                           candidateProfileData.verificationStatus === 0 &&
                           candidateProfileData.adminVerificationStatus === 0)
@@ -1449,8 +1443,7 @@ const Documents = (props) => {
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
                           candidateProfileData.verificationStatus === 2 &&
-                          (stateOfDisable.panId === 2 ||
-                            stateOfDisable.panId === 0)) ||
+                          stateOfDisable.panId === 2 ) ||
                         (candidateProfileData.verificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
@@ -1464,8 +1457,7 @@ const Documents = (props) => {
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
                         candidateProfileData.verificationStatus === 2 &&
-                        (stateOfDisable.panId === 2 ||
-                          stateOfDisable.panId === 0)) ||
+                        stateOfDisable.panId === 2 ) ||
                       (candidateProfileData.verificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
@@ -1482,8 +1474,7 @@ const Documents = (props) => {
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
                           candidateProfileData.verificationStatus === 2 &&
-                          (stateOfDisable.panId === 2 ||
-                            stateOfDisable.panId === 0)) ||
+                          stateOfDisable.panId === 2 ) ||
                         (candidateProfileData.verificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
@@ -1547,8 +1538,7 @@ const Documents = (props) => {
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
                           candidateProfileData.verificationStatus === 2 &&
-                          (stateOfDisable.addressProof === 2 ||
-                            stateOfDisable.addressProof === 0)) ||
+                          stateOfDisable.addressProof === 2 ) ||
                         (candidateProfileData.verificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
@@ -1561,8 +1551,7 @@ const Documents = (props) => {
                     className={
                       (candidateProfileData.documentUploaded === 1 &&
                         candidateProfileData.verificationStatus === 2 &&
-                        (stateOfDisable.addressProof === 2 ||
-                          stateOfDisable.addressProof === 0)) ||
+                        stateOfDisable.addressProof === 2 ) ||
                       (candidateProfileData.verificationStatus === 0 &&
                         candidateProfileData.documentUploaded === 0)
                         ? "custom-file-upload"
@@ -1579,8 +1568,7 @@ const Documents = (props) => {
                       disabled={
                         (candidateProfileData.documentUploaded === 1 &&
                           candidateProfileData.verificationStatus === 2 &&
-                          (stateOfDisable.addressProof === 2 ||
-                            stateOfDisable.addressProof === 0)) ||
+                          stateOfDisable.addressProof === 2 ) ||
                         (candidateProfileData.verificationStatus === 0 &&
                           candidateProfileData.documentUploaded === 0)
                           ? false
