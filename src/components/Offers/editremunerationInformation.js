@@ -174,7 +174,7 @@ const EditRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Internship" &&
           workInfoViewData.nationality !== "Indian"
         ) {
-          if (stipened < 7500) {
+          if (stipened < 75000) {
             setStipened(e);
             setStipenedError(false);
             setInternshipGrossLimit(true);
@@ -396,7 +396,7 @@ const EditRemunerationInformation = (props) => {
       Object.keys(workInfoViewData).length !== 0 &&
       workInfoViewData.contractType === "Internship"
     ) {
-      if (stipened === undefined || stipened === null || stipened === 0) {
+      if (stipened === undefined || stipened === null || stipened === 0 || stipened < 0) {
         stipendEmpty = true;
         toast.error("Please Enter the valid Stipend");
       } else {
