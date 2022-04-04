@@ -174,7 +174,7 @@ const EditRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Internship" &&
           workInfoViewData.nationality !== "Indian"
         ) {
-          if (stipened < 7500) {
+          if (stipened < 75000) {
             setStipened(e);
             setStipenedError(false);
             setInternshipGrossLimit(true);
