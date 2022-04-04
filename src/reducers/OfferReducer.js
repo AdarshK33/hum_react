@@ -79,6 +79,8 @@ const GroupReducer = (state, action) => {
         return { ...state, positionByDepartmentData: action.payload };
       case "ALL_COST_CENTER_DATA":
         return { ...state, allCostCenterList: action.payload };
+        case "DEPARTMENTCOMPANY":
+      return { ...state, companyDepartment: action.payload };
     default:
       return state;
   }
