@@ -143,7 +143,7 @@ const InternAppointmentLetter = (props) => {
                 </p>
                 <p>
                   Your fixed stipend would be INR.{" "}
-                  <b>{offerLetterData.internshipCandidateOffer.stipend}</b> per
+                  <b>{offerLetterData.internshipCandidateOffer.stipend}</b> per{" "}
                   <b>month</b>. This stipend is paid purely to manage your
                   travel, record maintenance, project submission and any other
                   unforeseen project related expenses. Further it is to be noted
@@ -282,7 +282,7 @@ const InternAppointmentLetter = (props) => {
                         to you at least 7 days in advance{" "}
                       </li>
                       <li>
-                        x. However, your engagement will be subjected to
+                         However, your engagement will be subjected to
                         immediate termination on the following conditions:
                         <ul>
                           <li>

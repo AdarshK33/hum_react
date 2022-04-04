@@ -396,7 +396,7 @@ const EditRemunerationInformation = (props) => {
       Object.keys(workInfoViewData).length !== 0 &&
       workInfoViewData.contractType === "Internship"
     ) {
-      if (stipened === undefined || stipened === null || stipened === 0) {
+      if (stipened === undefined || stipened === null || stipened === 0 || stipened < 0) {
         stipendEmpty = true;
         toast.error("Please Enter the valid Stipend");
       } else {
