@@ -6,13 +6,16 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { LeaveContext } from '../../context/LeaveState'
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const ItStatementHistory = (props) => {
-    const reportList =  [] //props.SportHistoryList
-    const {loader } = useContext(LeaveContext)
-   
+const ContractTypeChangeHistory = (props) => {
+    const {
+        viewContractTypeChangeDataById,
+        contractTypeChangeData,
+         loader,
+         total,
+       } = useContext(EmployeeHistoryContext);         
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -36,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
+    const totalRecords = contractTypeChangeData !== null && contractTypeChangeData !== undefined && contractTypeChangeData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = contractTypeChangeData !== null && contractTypeChangeData !== undefined ? contractTypeChangeData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -134,16 +137,25 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
+                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.typeOfChangeFrom}</td>
+                                                        <td>{item.typeofChangeTo}</td>
+                                                        <td>{item.effectiveDateFrom !== null && 
+                                                        item.effectiveDateFrom !== undefined 
+                                                         && item.effectiveDateFrom !== ""?
+                                                        moment(new Date(item.effectiveDateFrom)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -161,7 +173,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
+            {contractTypeChangeData !== null && contractTypeChangeData !== undefined && contractTypeChangeData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -176,4 +188,4 @@ console.log(dates)
     );
 };
 
-export default ItStatementHistory;
+export default ContractTypeChangeHistory;

@@ -6,13 +6,15 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
-import { LeaveContext } from '../../context/LeaveState'
+import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
-
 const PFAndUANHistory = (props) => {
-    const reportList =  [] //props.SalaryHistoryList
-    const {loader } = useContext(LeaveContext)
-   
+    const {
+        viewPFAndUANDataById,
+        PFAndUANData,
+        loader,
+        total,
+      } = useContext(EmployeeHistoryContext);    
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
     const d1 = props.startDate,
@@ -36,12 +38,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
+    const totalRecords = PFAndUANData !== null && PFAndUANData !== undefined && PFAndUANData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = PFAndUANData !== null && PFAndUANData !== undefined ? PFAndUANData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -131,17 +133,21 @@ console.log(dates)
                                         </tr>
                                     </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
+                                    !currentRecords.includes(null) &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
-                                                
+                                                        <td>{item.pfNumber}</td>
+                                                        <td>{item.uanNumber}</td>
+                                                        <td>{item.esicNumber}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{ item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -159,7 +165,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {reportList !== null && reportList !== undefined && reportList.length > 10 &&
+            {PFAndUANData !== null && PFAndUANData !== undefined && PFAndUANData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

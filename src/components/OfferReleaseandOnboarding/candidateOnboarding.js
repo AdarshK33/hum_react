@@ -45,7 +45,6 @@ import AppointmentLetter from "./AppointmentLetter";
 import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
 import InternAppointmentLetter from "./internAppointmentLetter";
 import LocalExpatAppointmentLetter from "./localExpactAppointmentLetter";
-import { Underline } from "react-feather";
 const CandidateOnboarding = () => {
   const {
     generateOfferLetter,

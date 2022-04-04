@@ -76,17 +76,26 @@ const MasterHistory = (props) => {
     viewBonusDataById,
     viewSalaryDataById,
     viewBankDataById,
+    viewPanDataById,
+    viewPFAndUANDataById,
     viewAadhaarDataById,
     viewCostCenterDataById,
     viewManagerDataById,
     viewAccessDataById,
     viewExitDataById,
+    viewExitEmployeeDataById,
+    viewCurrentMonthExitDataById,
     viewInsuranceDataById,
     viewSportDataById,
     viewProbationDataById,
     viewPromotionDataById,
     viewDisciplinaryDataById,
+    viewLeavesDataById,
         viewcontractFreezeDataById,
+        viewConfirmationDataById,
+        viewContractTypeChangeDataById,
+        viewInternationalTransferDataById,
+        viewEntityTransferDataById,
     employeeContactDetailsByIdData,
     managerData,
     costCenterData,
@@ -112,6 +121,10 @@ const MasterHistory = (props) => {
 
   if(stepCount == 0){
     viewBankDataById(props.match.params.employeeid)
+  }else if(stepCount == 1){
+    viewPanDataById(props.match.params.employeeid)
+  }else if(stepCount == 2){
+    viewPFAndUANDataById(props.match.params.employeeid)
   }else if(stepCount == 3){
     viewSalaryDataById(props.match.params.employeeid)
   }else if(stepCount == 4){
@@ -124,16 +137,30 @@ const MasterHistory = (props) => {
     viewCostCenterDataById(props.match.params.employeeid)
   }else if(stepCount == 8){
     viewInsuranceDataById(props.match.params.employeeid)
+  }else if(stepCount == 10){
+    viewConfirmationDataById(props.match.params.employeeid)
   }else if(stepCount == 11){
     viewDisciplinaryDataById(props.match.params.employeeid)
+  }else if(stepCount == 12){
+    viewLeavesDataById(props.match.params.employeeid)
   }else if(stepCount == 13){
     viewPromotionDataById(props.match.params.employeeid)
   }else if(stepCount == 14){
     viewProbationDataById(props.match.params.employeeid)
   }else if(stepCount == 15){
     viewcontractFreezeDataById(props.match.params.employeeid)
+  }else if(stepCount == 16){
+    viewContractTypeChangeDataById(props.match.params.employeeid)
+  }else if(stepCount == 17){
+    viewInternationalTransferDataById(props.match.params.employeeid)
+  }else if(stepCount == 18){
+    viewEntityTransferDataById(props.match.params.employeeid)
   }else if(stepCount == 19){
     viewExitDataById(props.match.params.employeeid)
+  }else if(stepCount == 21){
+    viewExitEmployeeDataById(props.match.params.employeeid)
+  }else if(stepCount == 22){
+    viewCurrentMonthExitDataById(props.match.params.employeeid)
   }else if(stepCount == 23){
     viewEmployeeContactDetailsById(props.match.params.employeeid)
   }else if(stepCount ==24){

@@ -122,7 +122,7 @@ console.log(dates)
                                             <th>WORK LOCATION NEW</th>
                                             <th>OLD COST CENTER </th>
                                             <th>NEW COST CENTER</th>
-                                            <th>EFFECTIVE DATE</th>
+                                            <th>NEW EFFECTIVE DATE</th>
                                             <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
                                             <th>APPROVED BY</th>
@@ -152,16 +152,30 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.costCentre}</td>
+                                                        <td>{item.oldPosition}</td>
+                                                        <td>{item.newPosition}</td>
                                                         <td>{item.effectiveDate !== null && 
                                                         item.effectiveDate !== undefined 
                                                          && item.effectiveDate !== ""?
                                                         moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.workLocationOld}</td>
+                                                        <td>{item.workLocationNew}</td>
+                                                        <td>{item.oldCostCentre}</td>
+                                                        <td>{item.newCostCentre}</td>
+                                                        <td>{item.newEffectiveDate !== null && 
+                                                        item.newEffectiveDate !== undefined 
+                                                         && item.newEffectiveDate !== ""?
+                                                        moment(new Date(item.newEffectiveDate)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.updatedBy}</td>
                                                         <td>{item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 
                                                          && item.updatedOn !== ""?
                                                         moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
+                                                         <td>{item.approvedBy}</td>
+                                                        <td>{item.approvedOn !== null && 
+                                                        item.approvedOn !== undefined 
+                                                         && item.approvedOn !== ""?
+                                                        moment(new Date(item.approvedOn)).format("DD-MM-YYYY"):""}</td>
                                                                                                             </tr>
                                                 </tbody>
                                             )
