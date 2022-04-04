@@ -273,6 +273,7 @@ const RemunerationInformation = (props) => {
           setParmanentGrossLimit(false);
           setPartTimeGrossLimit(false);
           setLocalExpatGrossLimit(false);
+          setInternshipGrossLimit(false);
         }
       }
     }
