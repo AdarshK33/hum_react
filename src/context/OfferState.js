@@ -31,6 +31,7 @@ const initial_state = {
   costcenterByDepartmentData: [],
   allCostCenterList: [],
   positionByDepartmentData: [],
+  companyDepartment:[]
 };
 
 export const OfferContext = createContext();
@@ -253,6 +254,20 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+    // Department by company api for work information
+    const departmentViewByCompany = (company) => {
+      client
+        .get("/api/v1/department/view/company?company="+company)
+        .then((response) => {
+          state.companyDepartment = response.data.data;
+          console.log("Company DEPARTMENT response", state.companyDepartment);
+          return dispatch({ type: "DEPARTMENTCOMPANY", payload: state.companyDepartment });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
 
   // Designation api for work information
   const designationView = () => {
@@ -744,6 +759,7 @@ export const OfferProvider = (props) => {
         positionByDepartment,
         setNoticePeriodNull,
         positionByDepartmentNull,
+        departmentViewByCompany,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -772,6 +788,7 @@ export const OfferProvider = (props) => {
         allCostCenterList: state.allCostCenterList,
         positionByDepartmentData: state.positionByDepartmentData,
         lettterview: lettterview,
+        companyDepartment:state.companyDepartment,
         setViewLetter,
       }}
     >

@@ -1128,14 +1128,14 @@ const DocVerification = () => {
                     )}
                     {(item.documentType === 10 ||
                       item.documentType === 11 ||
-                      item.documentType === 12) && (
+                      item.documentType === 12||item.documentType === 15||item.documentType === 16) && (
                       <td className="buttonMargin1">
                         {item.remark !== null ? item.remark : ""}
                       </td>
                     )}
                     {(item.documentType === 10 ||
                       item.documentType === 11 ||
-                      item.documentType === 12) && (
+                      item.documentType === 12||item.documentType === 15||item.documentType === 16) && (
                       <td className="buttonMargin1">
                         {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
                       </td>

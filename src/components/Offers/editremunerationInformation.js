@@ -201,6 +201,7 @@ const EditRemunerationInformation = (props) => {
           setParmanentGrossLimit(false);
           setPartTimeGrossLimit(false);
           setLocalExpatGrossLimit(false);
+          setInternshipGrossLimit(false);
         }
       }
     }
