@@ -364,7 +364,7 @@ const ManagerDashboard = () => {
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
-                            My Leaves
+                            Team Leaves
                           </label>
                         </div>
                         <MyLeavesCard />
@@ -381,7 +381,7 @@ const ManagerDashboard = () => {
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
-                            My Performances
+                          Team Performances
                           </label>
                         </div>
                         <MyPerformanceCard />

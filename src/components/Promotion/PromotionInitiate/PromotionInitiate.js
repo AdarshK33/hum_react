@@ -73,6 +73,7 @@ const PromotionInitiate = () => {
   const [promotionTypeError, setPromotionTypeError] = useState("");
   const [effectiveDateError, setEffectiveDateError] = useState("");
   const [reportingManagerError, setReportingManagerError] = useState("");
+  const [relocationBonusError, setRelocationBonusError] = useState("");
   const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [directing, setDirecting] = useState(true);
@@ -610,7 +611,7 @@ const PromotionInitiate = () => {
       if(typeof(parseInt(e.target.value)) == "number" && !isNaN(e.target.value) && !(e.target.value).includes(".")){
       setState({
         ...state,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value.trim(),
       });
     }else if(isNaN(e.target.value)){
       setNewFixedGrossError("Please enter numbers only"); 
@@ -652,7 +653,24 @@ const PromotionInitiate = () => {
           setNewFixedGrossError("");
         }
       }
-    } else {
+    }else if(e.target.name === "relocationBonus"){
+          //  setRelocationBonusError("Enter valid relocation bonus")
+          function hasBlankSpaces(str){
+            return str === null || str.match(/^ *$/) !== null;
+          }
+        console.log(e.target.value,hasBlankSpaces(e.target.value),"value")
+          if(typeof(parseInt(e.target.value)) == "number" && !isNaN(e.target.value) && !(e.target.value).includes(".")  
+          
+          ){
+            setRelocationBonusError("")
+            setState({
+              ...state,
+              [e.target.name]: e.target.value.trim(),
+            });
+          }else if(isNaN(e.target.value) ){
+            setRelocationBonusError("Please enter numbers only"); 
+          }
+    }else{
       if (e.target.name === "reason" && e.target.value !== "") {
         if (valid.test(e.target.value) === true) {
           console.log("do nothing");
@@ -1445,6 +1463,13 @@ const PromotionInitiate = () => {
                                 </Form.Group>
                               )}
                             </div>
+                            {relocationBonusError ? (
+                                <p style={{ color: "red" }}>
+                                  {relocationBonusError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
                           </Col>
                         </Row>
 
