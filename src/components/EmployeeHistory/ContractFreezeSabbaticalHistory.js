@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 
 const ContractFreezeSabbaticalHistory = (props) => {
     const {
-        viewSportDataById,
-        sportData,
+        viewcontractFreezeDataById,
+        contractFreezeData,
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
+    const totalRecords = contractFreezeData !== null && contractFreezeData !== undefined && contractFreezeData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = contractFreezeData !== null && contractFreezeData !== undefined ? contractFreezeData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -163,7 +163,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
+            {contractFreezeData !== null && contractFreezeData !== undefined && contractFreezeData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

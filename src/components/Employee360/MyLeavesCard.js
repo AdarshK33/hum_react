@@ -71,7 +71,7 @@ const MyLeavesCard = () => {
     },
   };
   const GoToLeaves = (e) => {
-    history.push("./leaves/viewleave");
+    history.push("./managerleaves");
   };
 
   return (

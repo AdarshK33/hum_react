@@ -9,10 +9,10 @@ import moment from 'moment'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const OtherTaxableIncomeHistory = (props) => {
+const LeavesHistory = (props) => {
     const {
-        viewTaxDataById,
-        taxData,
+        viewLeavesDataById,
+        leavesData,
          loader,
          total,
        } = useContext(EmployeeHistoryContext);   
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = taxData !== null && taxData !== undefined && taxData.length;
+    const totalRecords = leavesData !== null && leavesData !== undefined && leavesData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = taxData !== null && taxData !== undefined ? taxData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = leavesData !== null && leavesData !== undefined ? leavesData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -163,7 +163,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {taxData !== null && taxData !== undefined && taxData.length > 10 &&
+            {leavesData !== null && leavesData !== undefined && leavesData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -178,4 +178,4 @@ console.log(dates)
     );
 };
 
-export default OtherTaxableIncomeHistory;
+export default LeavesHistory;
