@@ -106,7 +106,7 @@ export const EmployeeHistoryProvider = (props) => {
   const viewPanDataById=(employeeId)=>{
     setLoader(true);
     client
-      .get("api/v1/employee_history/pan/" + employeeId)
+      .get("api/v1/employee_history/pan_details/" + employeeId)
       .then((response) => {
         state.panData = new Array(response.data.data)
 
@@ -126,7 +126,7 @@ export const EmployeeHistoryProvider = (props) => {
   const viewPFAndUANDataById=(employeeId)=>{
     setLoader(true);
     client
-      .get("api/v1/employee_history/pfanduan/" + employeeId)
+      .get("api/v1/employee_history/pfAndUanNumber/" + employeeId)
       .then((response) => {
         state.PFAndUANData = new Array(response.data.data)
 
@@ -167,7 +167,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewBonusDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("/api/v1/employee_history/bonus/" + employeeId)
+        .get("api/v1/employee_history/bonus/" + employeeId)
         .then((response) => {
           state.bonusData = new Array(response.data.data)
   
@@ -228,7 +228,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewCostCenterDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/cost_centre/" + employeeId)
+        .get("api/v1/employee_history/positionAndLocationAndCostCentre/" + employeeId)
         .then((response) => {
           state.costCenterData = new Array(response.data.data)
   
@@ -310,7 +310,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewLeavesDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/PromotionHistory/" + employeeId)
+        .get("api/v1/employee_history/leave/" + employeeId)
         .then((response) => {
           state.leavesData = new Array(response.data.data)
   
@@ -371,7 +371,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewcontractFreezeDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/probation/" + employeeId)
+        .get("api/v1/employee_history/contractFreezeSubbatical/" + employeeId)
         .then((response) => {
           state.contractFreezeData = new Array(response.data.data)
   
@@ -391,7 +391,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewContractTypeChangeDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/tax/" + employeeId)
+        .get("api/v1/employee_history/contractTypeChange/" + employeeId)
         .then((response) => {
           state.contractTypeChangeData = new Array(response.data.data)
   
@@ -431,7 +431,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewEntityTransferDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/tax/" + employeeId)
+        .get("api/v1/employee_history/entity_to_entity_transfer/" + employeeId)
         .then((response) => {
           state.entityTransferData = new Array(response.data.data)
   
@@ -491,7 +491,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewCurrentMonthExitDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/exit/" + employeeId)
+        .get("api/v1/employee_history/currentMonthExit/" + employeeId)
         .then((response) => {
           state.currentMonthExitedData = new Array(response.data.data)
   

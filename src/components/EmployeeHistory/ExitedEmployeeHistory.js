@@ -9,10 +9,10 @@ import moment from 'moment'
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import { toast } from "react-toastify";
 
-const PerquisiteHistory = (props) => {
+const ExitedEmployeeHistory = (props) => {
     const {
-        viewSportDataById,
-        sportData,
+        viewExitEmployeeDataById,
+        exitedEmployeeData,
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
@@ -39,12 +39,12 @@ console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = sportData !== null && sportData !== undefined && sportData.length;
+    const totalRecords = exitedEmployeeData !== null && exitedEmployeeData !== undefined && exitedEmployeeData.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = sportData !== null && sportData !== undefined ? sportData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = exitedEmployeeData !== null && exitedEmployeeData !== undefined ? exitedEmployeeData.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -171,7 +171,7 @@ console.log(dates)
                     </div>
                 </Row>
             </div>
-            {sportData !== null && sportData !== undefined && sportData.length > 10 &&
+            {exitedEmployeeData !== null && exitedEmployeeData !== undefined && exitedEmployeeData.length > 10 &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -186,4 +186,4 @@ console.log(dates)
     );
 };
 
-export default PerquisiteHistory;
+export default ExitedEmployeeHistory;

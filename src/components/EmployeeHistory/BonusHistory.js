@@ -145,9 +145,14 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.effectiveDate !== null && 
+                                                        item.effectiveDate !== undefined 
+                                                         && item.effectiveDate !== ""?
+                                                        moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""}</td>                                                                          <td>{item.updatedBy}</td>
+                                                        <td>{item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>                                                    
                                                     </tr>
                                                 </tbody>
                                             )
