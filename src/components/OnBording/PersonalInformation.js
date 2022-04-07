@@ -1450,6 +1450,7 @@ const PersonalInformation = (props) => {
                   required
                   onChange={(e) => dateOfIssueHandler(e)}
                   dateFormat="yyyy-MM-dd"
+                  minDate={dateOfValidity}
                   placeholderText="Date of Issue"
                   disabled={disabled}
                   style={dateOfIssueError ? { borderColor: "red" } : {}}

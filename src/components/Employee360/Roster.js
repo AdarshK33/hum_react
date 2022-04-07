@@ -20,6 +20,7 @@ const Roster = () => {
   const [weekStartDate, setWeekStartDate] = useState("");
   const [weekEndDate, setWeekEndDate] = useState("");
   const [weekNum, setWeekNum] = useState(weekOptions[0]);
+  const [weekNumFromApi,setWeekNumFromApi]= useState(null)
   const data = [];
   const {
     RosterMonthSearch,
@@ -27,11 +28,60 @@ const Roster = () => {
     SearchByWeekName,
     WeeksInfoList,
     rosterLoader,
+    RosterMonthSearchYear,
+        YearsList
   } = useContext(Employee360Context);
 
+  // useEffect(() => {
+  //   shifting(rosterMnth, "Increment");
+  // }, []);
   useEffect(() => {
-    shifting(rosterMnth, "Increment");
-  }, []);
+    RosterMonthSearchYear()
+  },[])
+  useEffect(() => {
+    if (
+      YearsList !== null &&
+      YearsList !== undefined &&
+      Object.keys(YearsList).length !== 0
+    ) {
+      // let tempArr = [];
+      // YearsList.map((item, i) => {
+      //   tempArr.push({
+      //     label: item.weekName,
+      //     value: item.weekName,
+      //   });
+      // });
+      // setWeekOptions(tempArr);
+      // SearchByWeekName(tempArr[0].value);
+      var currentDate = new Date();
+      var startDate = new Date(currentDate.getFullYear(), 0, 1);
+      var days = Math.floor((currentDate - startDate) /
+          (24 * 60 * 60 * 1000));
+          
+            
+      var weekNumber = Math.ceil(
+          (currentDate.getDay() + 1 + days) / 7);
+          console.log("weekNumber",weekNumber)
+          console.log("YearsList",YearsList)
+          YearsList.map((item,i)=>{
+            if(item.weekName){
+              let refWeekNumber = item.weekName.split(' ');
+              console.log("refWeekNumber",refWeekNumber)
+              if(parseInt(refWeekNumber[1]) === parseInt(weekNumber)){
+                console.log("refWeekNumber[1]",refWeekNumber[1])
+                shifting(parseInt(item.monthNo-1), "Increment");
+                setRosterMnth(parseInt(item.monthNo-1))
+                setWeekNumFromApi(parseInt(weekNumber));
+                setWeekNum({
+                  label: item.weekName,
+                  value: item.weekName,
+                })
+              }
+            }
+          })
+     
+    }
+  }, [YearsList]);
   useEffect(() => {
     if (
       WeeksList !== null &&
@@ -46,7 +96,11 @@ const Roster = () => {
         });
       });
       setWeekOptions(tempArr);
-      setWeekNum(tempArr[0]);
+      if(weekNumFromApi){
+      }else{
+        setWeekNum(tempArr[0]);
+      }
+      
       SearchByWeekName(tempArr[0].value);
     }
   }, [WeeksList]);
@@ -107,6 +161,7 @@ const Roster = () => {
   };
 
   const shifting = (rosterMnth, val) => {
+    setWeekNumFromApi(null)
     if (val === "Increment") {
       let todayDate = new Date();
       let StartDate = moment(
