@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useContext, useState } from "react";
 import Employee360Reducer from "../reducers/Employee360Reducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
+import moment from "moment";
 // import { SeparationContext } from "./SepearationState";
 const initial_state = {
   HolidaysList: [],
@@ -16,6 +17,7 @@ const initial_state = {
   myPerformanceData: {},
   Manager360ListData: [],
   ClusterEmpList: [],
+  YearsList:[],
   resignationConfirmationStatus: "",
 };
 
@@ -67,7 +69,31 @@ export const Employee360Provider = ({ children }) => {
   const SetLetterView = (val) => {
     setLetterShow(val);
   };
-
+const RosterMonthSearchYear =()=>{
+  setRosterLoader(true);
+  let start= moment(new Date(new Date().getFullYear(),1,0)).format("YYYY-MM-DD")
+  let end = moment(new Date(new Date().getFullYear(),11,31)).format("YYYY-MM-DD")
+    client
+      .get(
+        "/api/v1/employee/360/view/weeks?endDate=" +
+        end +
+          "&startDate=" +
+          start
+      )
+      .then((response) => {
+        state.YearsList = response.data.data;
+        //toast.info(response.data.message);
+        setRosterLoader(false);
+        return dispatch({
+          type: "YEARS_LIST",
+          payload: state.YearsList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  
+}
   const RosterMonthSearch = (startDate, endDate) => {
     setRosterLoader(true);
     client
@@ -313,6 +339,8 @@ export const Employee360Provider = ({ children }) => {
         ClusterSearchByClusterName,
         ClusterSearchByEmployeeName,
         ClusterDirectTeam,
+        RosterMonthSearchYear,
+        YearsList: state.YearsList,
         clusterDirect: state.clusterDirect,
         ClusterEmpList: state.ClusterEmpList,
         Manager360ListData: state.Manager360ListData,
