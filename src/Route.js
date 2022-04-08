@@ -603,9 +603,9 @@ const RoutePath = () => {
             return (
               <div>
                 {
-                  e.path === "/leaves/viewleave" ? (
+                  e.path === "/my-leaves" ? (
                     <Route
-                      path={`${process.env.PUBLIC_URL}/leaves/viewleave`}
+                      path={`${process.env.PUBLIC_URL}/my-leaves`}
                       component={LeaveView}
                     />
                   ) : e.path === "/managerleaves" ? (
@@ -643,9 +643,9 @@ const RoutePath = () => {
                       path={`${process.env.PUBLIC_URL}/salary/approval`}
                       component={AdminSalaryModule}
                     />
-                  ) : e.path === "/roster/teamroster" ? (
+                  ) : e.path === "/my-roster" ? (
                     <Route
-                      path={`${process.env.PUBLIC_URL}/roster/teamroster`}
+                      path={`${process.env.PUBLIC_URL}/my-roster`}
                       component={Roster}
                     />
                   ) : e.path === "/roster/viewshift" ? (
@@ -663,9 +663,9 @@ const RoutePath = () => {
                       path={`${process.env.PUBLIC_URL}/holiday/holidaylist`}
                       component={HolidayList}
                     />
-                  ) : e.path === "/salary/processsalary" ? (
+                  ) : e.path === "/salary/history_hours" ? (
                     <Route
-                      path={`${process.env.PUBLIC_URL}/salary/processsalary`}
+                      path={`${process.env.PUBLIC_URL}/salary/history_hours`}
                       component={SalaryView}
                     />
                   ) : e.path === "/admin/grantleaveview" ? (
