@@ -163,7 +163,7 @@ const WorkInformation = (props) => {
   //   }
   // }, [createCandidateResponse]);
   useEffect(() => {
-    if (costCenter !== "") {
+    if (costCenter) {
       if (locationName !== null && locationName !== undefined) {
         setStateValue(locationName.stateId);
         setCity(locationName.locationId);
@@ -320,13 +320,27 @@ const WorkInformation = (props) => {
 
   const changeHandler = (e) => {
     console.log(e.target.value);
+    if(e.target.name && e.target.name ==="department" ){
+      setStateValue();
+      setCity("");
+      setCityId("");
+      setCostCenter("");
+    }
+    if(e.target.name ==="department" ){
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+      ["managerId"]:""
+    });
+  }else{
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
+  }
   };
   useEffect(()=>{
-    if (locationName !== null && locationName !== undefined) {
+    if (locationName && Object.keys(locationName).length && costCenter ) {
       console.log(locationName,cityList,"locationName")
       setStateValue(locationName.stateId);
       setCity(locationName.locationId);

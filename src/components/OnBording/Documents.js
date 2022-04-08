@@ -1707,7 +1707,7 @@ const Documents = (props) => {
                       : "FileInputWithOutStar"
                   }
                 >
-                  <label>FRRO</label>
+                  <label>Employment VISA (work permit)</label>
                 </div>
                 <div className="parentInput">
                   <label className="fileInputField">
@@ -1779,7 +1779,7 @@ const Documents = (props) => {
                 {frroError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the FRRO
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Employment VISA
                   </p>
                 ) : (
                   <p></p>

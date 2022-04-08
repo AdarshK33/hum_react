@@ -607,6 +607,7 @@ const PersonalInformation = (props) => {
   };
   const dateOfIssueHandler = (date) => {
     setDateOfIssue(date);
+    setDateOfValidity(null)
   };
   const validityHandler = (date) => {
     setDateOfValidity(date);
@@ -1451,6 +1452,7 @@ const PersonalInformation = (props) => {
                   onChange={(e) => dateOfIssueHandler(e)}
                   dateFormat="yyyy-MM-dd"
                   minDate={dateOfValidity}
+                  maxDate={new Date()}
                   placeholderText="Date of Issue"
                   disabled={disabled}
                   style={dateOfIssueError ? { borderColor: "red" } : {}}
