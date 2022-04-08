@@ -420,7 +420,7 @@ const RoutePath = () => {
             component={AdminDocVerfication}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/disciplinary`}
+            path={`${process.env.PUBLIC_URL}/disciplinary-action`}
             component={ManagerDisciplinaryList}
           />
           <Route
