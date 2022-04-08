@@ -25,6 +25,8 @@ const GroupReducer = (state, action) => {
       return { ...state, Manager360ListData: action.payload };
     case "CLUSTER_DIRECT":
       return { ...state, clusterDirect: action.payload };
+      case "YEARS_LIST":
+        return { ...state, YearsList: action.payload };
 
     default:
       return state;

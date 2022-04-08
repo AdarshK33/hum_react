@@ -51,6 +51,16 @@ const EmployeeForm = (props) => {
   // const handleShow = () => setModal(true);
 
   useEffect(() => {
+if(createCandidateResponse && Object.keys(createCandidateResponse).length){
+  setDisabled(true)
+  setSaveclick(true);
+}else{
+  setDisabled(false)
+  setSaveclick(false);
+}
+  },[createCandidateResponse,saveclick])
+  
+  useEffect(() => {
     setRefEmail1(
       searchEmpData1 !== null
         ? searchEmpData1.email !== undefined && searchEmpData1.email !== null
