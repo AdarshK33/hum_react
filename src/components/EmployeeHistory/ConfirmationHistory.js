@@ -154,8 +154,7 @@ console.log(dates)
                                                         item.confirmedDate !== undefined 
                                                          && item.confirmedDate !== ""?
                                                         moment(new Date(item.confirmedDate)).format("DD-MM-YYYY"):""}</td> 
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                
                                                         <td>{item.updatedBy}</td>
                                                         <td>{item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 

@@ -141,11 +141,11 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.year}</td>
+                                                        <td>{item.empName}</td>
+                                                        <td>{item.eligibleLeave}</td>
+                                                        <td>{item.typrOfLeave}</td>
+                                                        <td>{item.leaveAvailed}</td>
                                                     </tr>
                                                 </tbody>
                                             )

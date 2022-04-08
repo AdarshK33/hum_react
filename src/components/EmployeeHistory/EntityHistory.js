@@ -148,11 +148,24 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
-                                                    </tr>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.changeFromEntity}</td>
+                                                        <td>{item.changeToEntity}</td>
+                                                        <td>{item.dolInOldEntity}</td>
+                                                        <td>{item.salaryFrom}</td>
+                                                        <td>{item.salaryTo}</td>
+                                                        <td>{item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td> 
+                                                         <td>{item.updatedBy}</td>
+                                                        <td>{item.approvedOn !== null && 
+                                                        item.approvedOn !== undefined 
+                                                         && item.approvedOn !== ""?
+                                                        moment(new Date(item.approvedOn)).format("DD-MM-YYYY"):""}</td> 
+                                                       <td>{item.approvedBy}</td>
+                                                
+                                                                                                            </tr>
                                                 </tbody>
                                             )
                                         }) :

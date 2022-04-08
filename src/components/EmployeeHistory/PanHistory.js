@@ -140,10 +140,13 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.panName}</td>
+                                                        <td>{item.panNumber}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td> 
                                                 
                                                     </tr>
                                                 </tbody>
