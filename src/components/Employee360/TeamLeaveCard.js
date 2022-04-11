@@ -6,7 +6,7 @@ import { Employee360Context } from "../../context/Employee360State";
 import LeavesShifting from "./LeavesShifting";
 import { useHistory } from "react-router-dom";
 
-const MyLeavesCard = () => {
+const TeamLeavesCard = () => {
   const [resultData, setResultData] = useState([]);
   const [plannedList, setPlannedList] = useState([]);
   const [plannedCount, setPlannedCount] = useState(1);
@@ -71,7 +71,7 @@ const MyLeavesCard = () => {
     },
   };
   const GoToLeaves = (e) => {
-    history.push("./my-leaves");
+    history.push("./managerleaves");
   };
 
   return (
@@ -128,4 +128,4 @@ const MyLeavesCard = () => {
     </Fragment>
   );
 };
-export default MyLeavesCard;
+export default TeamLeavesCard;

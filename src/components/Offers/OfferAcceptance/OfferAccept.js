@@ -8,7 +8,7 @@ import RejectModal from "./RejectModal";
 //import {  Page } from 'react-pdf'
 import fileName from "../../../assets/file.pdf";
 import insuranceFile1 from "../../../assets/Insurance_Benefit_2021.pdf";
-import insuranceFile from "../../../assets/Insurance_Benefits.pdf";
+import insuranceFile from "../../../assets/Insurance_Benefits_2022.pdf";
 import appointmentFile from "../../../assets/Full_Time_Appointment.pdf";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRight, ChevronLeft } from "react-feather";
