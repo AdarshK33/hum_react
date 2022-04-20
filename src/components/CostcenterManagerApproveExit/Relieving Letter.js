@@ -56,7 +56,7 @@ const RelivingLetter = () => {
               the services of the {relivingLetterData.company} on the closing of
               working hours of <b>{relivingLetterData !== undefined && relivingLetterData.lastWorkingDate}</b>.
               <br/><br/>
-               We hereby confirm that you have been working in {relivingLetterData.company}
+               We hereby confirm that you have been working in {relivingLetterData.company}{" "}
                 since <b>{relivingLetterData !== undefined && relivingLetterData.dateOfJoining}</b>.
                 <br/><br/>
                Please be informed that you shall be bound by the relevant clause of your

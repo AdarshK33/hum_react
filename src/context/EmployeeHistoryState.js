@@ -51,18 +51,21 @@ export const EmployeeHistoryProvider = (props) => {
   const [state, dispatch] = useReducer(EmployeeHistoryReducer, initial_state);
   const [loader, setLoader] = useState(false);
 
-  const ViewEmployeeHistoryData = (fromDate,toDate,key, page) => {
+  const ViewEmployeeHistoryData = (fromDate,toDate,key, page,active) => {
     setLoader(true);
     client
     .get(
-      `/api/v1/employee_history/view/?fromDate=${0}&key=` +
-        key +
+      `/api/v1/employee_history/view/?fromDate=${0}`+
+        "&toDate=" +
+        0 +
+        "&active="+
+        active +
         "&page=" +
         page +
         "&size=" +
         10 +
-        "&toDate=" +
-        0
+        "&key="+
+        key
     )
       .then((response) => {
         console.log("employee profile", response.data.data.data);

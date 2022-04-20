@@ -344,8 +344,33 @@ const ExitListing = () => {
                                   ) : (
                                   <Edit2 />
                                   )}         */}
+                                  {item.status === 3 ||
+                                item.status === 11 ||
+                                item.status === 5 ||
+                                item.status === 6 ?
+                                <Edit2 />: rolePermission === "manager" && (item.status === 0 || item.status === 8 ) ?
+                                <Link to={"/exit-action/" + item.employeeId}>
+                                    <Edit2
+                                      onClick={() => {
+                                        fetchEmployeeDetails(item.employeeId);
+                                      }}
+                                    />
+                                  </Link> :
+                                  ((rolePermission === "costCenterManager" ||
+                                  rolePermission === "superCostCenterManager" ||
+                                  rolePermission === "admin")
+                                   && (item.status === 2 || item.status === 10 )) ?
+                                   <Link to={"/employee-info/" + item.employeeId}>
+                                    <Edit2
+                                      onClick={() => {
+                                        fetchEmployeeDetails(item.employeeId);
+                                      }}
+                                    />
+                                  </Link>:
+                                    <Edit2 />
+                                }
 
-                                {item.status === 3 ||
+                                {/* {item.status === 3 ||
                                 item.status === 11 ||
                                 item.status === 5 ||
                                 item.status === 6 ? (
@@ -403,7 +428,7 @@ const ExitListing = () => {
                                       }}
                                     />
                                   </Link>
-                                ):<Edit2/>}
+                                ):<Edit2/>} */}
                               </td>
                             </tr>
                           </tbody>

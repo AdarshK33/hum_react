@@ -37,11 +37,11 @@ import UserExitHistory from "./UserExitHistory"
 import ExitedEmployeeHistory from "./ExitedEmployeeHistory"
 import PayrollHistory from "./PayrollHistory"
 import CurrentMonthExitedHistory from "./CurrentMonthExitedHistory";
-
+import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../context/PermissionState";
 
 const MasterHistory = (props) => {
-
+  let history = useHistory();
   const [stepCount, setStepNumber] = useState(0);
   const [selectData, setSelectData] = useState(null);
 
@@ -180,7 +180,10 @@ const MasterHistory = (props) => {
     console.log("option", option);
   };
 
-
+const handleClick = (e)=>{
+  history.push('/payroll/documents_download')
+  //setStepNumber(parseInt(e.target.value)
+}
 
   const handleSumit =(e)=>{
     e.preventDefault();
@@ -383,7 +386,7 @@ const MasterHistory = (props) => {
           <Button name="Employee Contract Details" 
           value={20} variant="outline-primary" 
           className="componentButton" 
-          onClick={(e)=>setStepNumber(parseInt(e.target.value))}>
+          onClick={handleClick}>
           Payroll 
           </Button>
           </Col>

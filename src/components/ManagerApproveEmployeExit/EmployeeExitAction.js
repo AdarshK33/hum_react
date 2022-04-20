@@ -110,6 +110,7 @@ const EmployeeExitAction = (props) => {
       state.mngrId = employeeData.managerId ? employeeData.managerId : "";
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
+      state.remarks = employeeData.rehireRemark;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
@@ -351,7 +352,7 @@ const EmployeeExitAction = (props) => {
           reason: employeeData.reason,
           reasonForResignation: employeeData.reasonForResignation,
           rehireRemark: state.remarks !== "" ? state.remarks : null,
-          status: 2,
+          status: 3,
           withdraw: employeeData.withdraw,
         };
         console.log("save ", InfoData);
