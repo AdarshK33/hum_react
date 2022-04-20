@@ -6,6 +6,8 @@ import { Edit2, Eye, Search, AlertCircle,LogOut } from "react-feather";
 import { EmployeeHistoryContext } from "../../context/EmployeeHistoryState";
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
+import ActiveEmployeeHistoryList from "./ActiveEmployeeHistoryList"
+import InActiveEmployeeHistoryList from "./InActiveEmployeeHistoryList"
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "./EmployeeHistory.css";
 import moment from "moment";
@@ -13,7 +15,7 @@ import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
 
-const EmployeeList = () => {
+const EmployeeList = (props) => {
   const {
     ViewEmployeeHistoryData,
     employeeHistoryData,
@@ -23,27 +25,14 @@ const EmployeeList = () => {
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
+  const [stepCount, setStepNumber] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const { costCenterList, CostCenter } = useContext(AdminContext);
-  const [fromDate, setFromDate] = useState();
-  const [toDate, setToDate] = useState();
   const [role, setRole] = useState(0);
   const [activeStatus, setActiveStatus] = useState(true);
 
   /*-----------------Pagination------------------*/
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 10;
-  const totalRecords = total;
-  const pageRange = 10;
 
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  useEffect(() => {
-    if (employeeHistoryData !== null && employeeHistoryData !== undefined) {
-      setCurrentRecords(employeeHistoryData);
-    }
-  }, [employeeHistoryData,currentRecords]); 
 
   useEffect(() => {
     if (rolePermission == "superCostCenterManager") {
@@ -52,53 +41,8 @@ const EmployeeList = () => {
       setRole(0);
     }
   }, [rolePermission]);
-  const handlePageChange = (pageNumber) => {
-    setPageCount(pageNumber - 1);
-    setCurrentPage(pageNumber);
-      ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageNumber-1,role);
-    
-  };
 
-  /*-----------------Pagination------------------*/
-  const searchHandler = (e) => {
-    setSearchValue(e.target.value);
-  };
 
-  const searchDataHandler = () => {
-    setPageCount(0);
-    setCurrentPage(1);
-    if (searchValue !== "") {
-      ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role);
-    } else {
-      ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role);
-    }
-  };
-
-  useEffect(() => {
-    ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role);
-    console.log("user role------>", user);
-  }, []);
-
-  console.log(rolePermission,employeeHistoryData, "employeeHistoryData");
-  const fromDateHandler = (date) => {
-    let value = date;
-    console.log("fromDate", value);
-    setFromDate(value);
-  };
-
-  const toDateHandler = (date) => {
-    let value1 = date;
-    console.log("toDate", value1);
-    setToDate(value1);
-  };
-const handleActiveStatus =(e)=>{
-  console.log(e.target.name,"buttton")
-if(e.target.name === "active"){
-  setActiveStatus(true)
-}else{
-  setActiveStatus(false)
-}
-}
   return (
     <Fragment>
       <Breadcrumb title="EMPLOYEE LIST" parent="EMPLOYEE LIST" />
@@ -106,206 +50,41 @@ if(e.target.name === "active"){
         <Row>
           <Col sm={12}>
           <Row>
-              {/* <Col sm={4}>
-                <Form.Group>
-                  <Form.Label>From Date</Form.Label>{" "}
-                  <span style={{ color: "red" }}>*</span>
-                  <div>
-                    <DatePicker
-                      selected={fromDate}
-                      onChange={(e) => fromDateHandler(e)}
-                      className="form-control"
-                      dateFormat="yyyy-MM-dd"
-                      placeholderText="From Date"
-                      required
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <Form.Label>To Date</Form.Label>{" "}
-                  <span style={{ color: "red" }}>*</span>
-                  <div>
-                    <DatePicker
-                      selected={toDate}
-                     onChange={(e) => toDateHandler(e)}
-                      className="form-control"
-                      dateFormat="yyyy-MM-dd"
-                      minDate={fromDate}
-                      placeholderText="To Date"
-                    />
-                  </div>
-                </Form.Group>
-              </Col> */}
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
               </Col>
               <Col sm={2} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button name="active" onClick={handleActiveStatus} className="submitButton">
+              <Button name="active" value={0} onClick={(e)=>setStepNumber(parseInt(0))} className="submitButton">
             Active Employees
           </Button>
               </Col>
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button name="inactive" onClick={handleActiveStatus} className="submitButton">
+              <Button name="inactive" value={1} onClick={(e)=>setStepNumber(parseInt(1))} className="submitButton">
               Inactive Employees
           </Button>
               </Col>
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
               </Col>
             </Row>
-            <div className="card" style={{ overflowX: "auto" }}>
-              <div
-                className="title_bar"
-                style={{ textAlign: "center", fontSize: "larger" }}
-              >
-                <Row>
-                  <Col sm={6}>
-                    <div
-                      style={{
-                        width: "65%",
-                        float: "left",
-
-                        marginTop: "10px",
-                        marginLeft: "8px",
-                      }}
-                      className="faq-form mr-2"
-                    >
-                      <input
-                        className="form-control searchButton"
-                        type="text"
-                        value={searchValue}
-                        placeholder="Search.."
-                        onChange={(e) => searchHandler(e)}
-                      />
-                      <Search
-                        className="search-icon"
-                        style={{ color: "#313131" }}
-                        onClick={searchDataHandler}
-                      />
-                      <br></br>
-                    </div>
-                  </Col>
-                  <Col sm={2} style={{ marginTop: "5px",textAlign:"center" }}>
-                    <b>EMPLOYEE LIST</b>
-                  </Col>
-                </Row>
-              </div>
-           
-              <div className="table-responsive">
-                <Table id="table-to-xls" className="table table-hover">
-                  <thead
-                    className="thead-light"
-                    style={{ backgroundColor: "#2f3c4e" }}
-                  >
-                    <tr>
-                      <th scope="col">S. No</th>
-                      <th scope="col">Employee Id </th>
-                      <th scope="col">Employee Name</th>
-                      <th scope="col">Position</th>
-                      <th scope="col">Role</th>
-                      <th scope="col">Cost Center</th>
-                      <th scope="col">Created By</th>
-                      <th scope="col">is Active?</th>
-                      <th scope="col">History</th>
-                      {activeStatus == true?<>
-                      <th scope="col">Edit</th>
-                      <th scope="col">Exit User</th>
-                  </>:<></>}
-                    </tr>
-                  </thead>
-                  {
-                   loader === true &&
-                  currentRecords !== null &&
-                  currentRecords !== undefined ? (
-                    <tbody>
-                      <tr>
-                        <td colSpan="12">
-                          <div
-                            className="loader-box loader"
-                            style={{ width: "100% !important" }}
-                          >
-                            <div className="loader">
-                              <div className="line bg-primary"></div>
-                              <div className="line bg-primary"></div>
-                              <div className="line bg-primary"></div>
-                              <div className="line bg-primary"></div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  ) : currentRecords !== undefined &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 
-                     && total > 0
-                     ? (
-                    currentRecords.map((item, i) => {
-                      return (
-                        <tbody key={item.employeeId}>
-                          <tr>
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-                            <td>{item.employeeId}</td>
-                            <td>{item.employeeName}</td>
-                            <td>{item.position}</td>
-                            <td>{item.role}</td>
-                            <td>{item.costCentre}</td>
-                           <td>{item.createdBy}</td>
-                           <td>{item.isActive == 1?"Yes":"No"}</td>
-                            <td>
-                              <Link to={"/master-history/" + item.employeeId}>
-                              <div style={{  paddingTop: "2px",  fontSize: "24px" }}>
-                            <i className="fa fa-history"></i>
-                          </div>
-                              </Link>
-                            </td>
-                            {activeStatus == true?<>
-                            <td>
-                            <div style={{  paddingTop: "1px",  fontSize: "24px" }}>
-                            <Link to={"/employee_profile/" + item.employeeId}>
-                              <Edit2/>
-                              </Link>
-                              </div>
-                            </td>
-                           
-                            <td>
-                            <Link to={"/manager-initiate-exit"}>
-                              <div style={{fontSize: "24px" }}>
-                            {/* <i className="fas fa-sign-in-alt"></i> */}
-                            <LogOut/>
-                          </div>
-                          </Link>
-                            </td>
-                            </>:<></>}
-                          </tr>
-                        </tbody>
-                      );
-                    })
-                  ) : (
-                    <tbody>
-                      <tr>
-                        <td colSpan="12">No Record Found</td>
-                      </tr>
-                    </tbody>
-                  )}
-                </Table>
-              </div>
-            </div>
-          </Col>
+                        </Col>
         </Row>
       </Container>
-      {currentRecords !== null && currentRecords !== undefined && (
-        <Pagination
-          itemClass="page-item"
-          linkClass="page-link"
-          activePage={currentPage}
-          itemsCountPerPage={recordPerPage}
-          totalItemsCount={totalRecords}
-          pageRangeDisplayed={pageRange}
-          onChange={handlePageChange}
-          firstPageText="First"
-          lastPageText="Last"
-        />
-      )}
+      {(() => {
+                          switch (parseInt(stepCount)) {
+                              case 0:
+                                return (
+                                  <ActiveEmployeeHistoryList />
+                                );
+                                case 1:
+                                return (
+                                  <InActiveEmployeeHistoryList />
+                                );
+                                default:
+                                  return (
+                                  <ActiveEmployeeHistoryList />
+                                )
+                          }
+                        })()}
+
     </Fragment>
   );
 };
