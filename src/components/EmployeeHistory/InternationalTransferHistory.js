@@ -146,10 +146,22 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.countryMovingTo}</td>
+                                                        <td>{item.designationInOtherCountry}</td>
+                                                        <td>{item.grossPayInTheNewCountry}</td>
+                                                        <td>{item.currency}</td>
+                                                        <td>{item.bonusInNewCountry}</td>
+                                                        <td>{item.effectiveDate !== null && 
+                                                        item.effectiveDate !== undefined 
+                                                         && item.effectiveDate !== ""?
+                                                        moment(new Date(item.effectiveDate)).format("DD-MM-YYYY"):""}</td> 
+                                                        <td>{item.isCoveredInsuranceInTheNewCountry}</td>
+                                                        <td>{item.dateOfReturnToIndia !== null && 
+                                                        item.dateOfReturnToIndia !== undefined 
+                                                         && item.dateOfReturnToIndia !== ""?
+                                                        moment(new Date(item.dateOfReturnToIndia)).format("DD-MM-YYYY"):""}</td> 
+
                                                     </tr>
                                                 </tbody>
                                             )

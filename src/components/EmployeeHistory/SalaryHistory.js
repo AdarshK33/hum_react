@@ -150,7 +150,7 @@ console.log(dates)
                                                         item.updatedOn !== undefined 
                                                          && item.updatedOn !== ""?
                                                         moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
-                                                
+                                                        <td>{item.previewOfCtcStructure}</td>
                                                     </tr>
                                                 </tbody>
                                             )

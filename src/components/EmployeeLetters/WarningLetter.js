@@ -9,8 +9,8 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 import WarningLetter from "../Disciplinary/WarningManager/WarningLetter";
-import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
-
+ import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
+import NonPerformanceWarningLetter from "../Disciplinary/WarningManager/NonPerformanceWarningLetter";
 // view-----
 const EmployeWarningLetter = () => {
   const [showModal, setModal] = useState(false);
@@ -435,7 +435,7 @@ const EmployeWarningLetter = () => {
           disciplinarySearchData.disciplinaryWarning !== "" ? (
             <WarningLetter />
           ) : (
-            ""
+            <NonPerformanceWarningLetter/>
           )}
         </Modal.Body>
       </Modal>
@@ -474,7 +474,7 @@ const EmployeWarningLetter = () => {
             disciplinarySearchData.disciplinaryAction !== "" ? (
               <WarningLetter />
             ) : (
-              ""
+             < NonPerformanceWarningLetter/>
             )}
             <br></br>
             <Row>

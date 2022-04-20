@@ -143,7 +143,7 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.newManager}</td>
-                                                        <td>{item.newManager}</td>
+                                                        <td>{item.oldManager}</td>
                                                         <td>{item.effectiveDate}</td>
                                                         <td>{item.updatedBy}</td>
                                                         <td>{item.updatedOn !== null && 

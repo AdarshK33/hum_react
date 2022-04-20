@@ -9,6 +9,7 @@ import TableComponentManager360 from "../table/Manager360Table";
 import { AppContext } from "../../context/AppState";
 import { BonusContext } from "../../context/BonusState";
 import { PermissionContext } from "../../context/PermissionState";
+import { PromotionContext } from "../../context/PromotionState";
 import { Employee360Context } from "../../context/Employee360State";
 import LoaderIcon from "../Loader/LoaderIcon";
 import moment from "moment";
@@ -21,6 +22,7 @@ const ApprovalsManager360List = ({ ListType }) => {
   const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
   const { user } = useContext(AppContext);
+  const {  ViewPromotionById} = useContext(PromotionContext);
   const [transferType, setTransferType] = useState(ListType);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
@@ -106,7 +108,8 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? {
                     edit: {
                       active: true,
-                      link: `/promotion-approval/${item.promotionId}`,
+                      onClick:ViewPromotionById(item.promotionId),
+                      link: `/promotion-approval/${item.employeeId}`,
                     },
                   }
                 : {

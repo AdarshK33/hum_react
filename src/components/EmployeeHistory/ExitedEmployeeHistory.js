@@ -150,10 +150,17 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.name}</td>
+                                                        <td>{item.email}</td>
+                                                        <td>{item.joiningDate}</td>
+                                                        <td>{item.resignOrTerminationDate}</td>
+                                                        <td>{item.lwd}</td>
+                                                        <td>{item.typeOfExit}</td>
+                                                        <td>{item.comments}</td>
+                                                        <td>{item.isActive}</td>
+                                                        <td>{item.history}</td>
+                                                        <td>{item.runFAndF}</td>
+
                                                     </tr>
                                                 </tbody>
                                             )
