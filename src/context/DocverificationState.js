@@ -745,6 +745,7 @@ export const DocsVerificationProvider = (props) => {
           verificationPermanentCityList: state.verificationPermanentCityList,
           rejectUpdate: state.rejectUpdate,
           adminRejectUpdate: state.adminRejectUpdate,
+          total:state.total,
           candidateVerificationList:state.candidateVerificationList
         }}
       >

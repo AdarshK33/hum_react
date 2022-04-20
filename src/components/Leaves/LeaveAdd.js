@@ -269,7 +269,7 @@ const LeaveAdd = (props) => {
       console.log("newLeave general---------", newLeave);
       addEmpLeave(newLeave, props.pageNumber);
     }
-    history.push("/leaves/viewleave");
+    history.push("/my-leaves");
     setEditMsg(false);
   };
   const onCloseModal = () => {

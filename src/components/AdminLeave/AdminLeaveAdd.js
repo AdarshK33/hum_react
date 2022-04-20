@@ -269,7 +269,7 @@ const AdminLeaveAdd = (props) => {
       addLeave(newLeave, props.pageNumber);
     }
 
-    history.push("/adminleave");
+    history.push("/adminleaves");
     setEditMsg(false);
   };
   const onCloseModal = () => {
