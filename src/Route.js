@@ -613,9 +613,9 @@ const RoutePath = () => {
                       path={`${process.env.PUBLIC_URL}/managerleaves`}
                       component={ManagerLeaveList}
                     />
-                  ) : e.path === "/adminleave" ? (
+                  ) : e.path === "/adminleaves" ? (
                     <Route
-                      path={`${process.env.PUBLIC_URL}/adminleave`}
+                      path={`${process.env.PUBLIC_URL}/adminleaves`}
                       component={AdminLeavesList}
                     />
                   ) : //   :e.path === "/adminleaves/adminleaveview" ?
@@ -633,9 +633,9 @@ const RoutePath = () => {
                       path={`${process.env.PUBLIC_URL}/adminleaves/adminmasterleave`}
                       component={AdminMasterLeave}
                     />
-                  ) : e.path === "/adminleaves/adminleaveapproval" ? (
+                  ) : e.path === "/leaveapproval" ? (
                     <Route
-                      path={`${process.env.PUBLIC_URL}/adminleaves/adminleaveapproval`}
+                      path={`${process.env.PUBLIC_URL}/leaveapproval`}
                       component={AdminLeaveApproval}
                     />
                   ) : e.path === "/salary/approval" ? (
@@ -668,9 +668,9 @@ const RoutePath = () => {
                       path={`${process.env.PUBLIC_URL}/salary/history_hours`}
                       component={SalaryView}
                     />
-                  ) : e.path === "/admin/grantleaveview" ? (
+                  ) : e.path === "/grantleaves" ? (
                     <Route
-                      path={`${process.env.PUBLIC_URL}/admin/grantleaveview`}
+                      path={`${process.env.PUBLIC_URL}/grantleaves`}
                       component={GrantLeaveView}
                     />
                   ) : e.path === "/roster/adminroster" ? (

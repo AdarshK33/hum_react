@@ -353,7 +353,7 @@ const ManagerDashboard = () => {
                         <Roster />
                       </Card>
                     </Col> */}
-                    <Col sm={3}>
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -370,7 +370,7 @@ const ManagerDashboard = () => {
                         <TeamLeavesCard />
                       </Card>
                     </Col>
-                    <Col sm={3} px={0}>
+                    <Col sm={4} px={0}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -387,7 +387,7 @@ const ManagerDashboard = () => {
                         <TeamPerformanceCard />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                    {/* <Col sm={3}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -402,8 +402,8 @@ const ManagerDashboard = () => {
                           </label>
                         </div>
                       </Card>
-                    </Col>
-                    <Col sm={3}>
+                    </Col> */}
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",

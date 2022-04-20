@@ -58,7 +58,7 @@ const AdminLeaveApproval = () => {
         }
         console.log("approval data=====", approvalData)
         approvedUpdate(approvalData)
-        history.push("/AdminLeaves/AdminLeaveApproval");
+        history.push("/leaveapproval");
 
     }
 

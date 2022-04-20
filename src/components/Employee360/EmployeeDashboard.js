@@ -392,7 +392,7 @@ const EmployeeDashboard = () => {
                       marginLeft: "1rem",
                     }}
                   >
-                    <Col sm={4}>
+                    {/* <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -407,7 +407,7 @@ const EmployeeDashboard = () => {
                           </label>
                         </div>
                       </Card>
-                    </Col>
+                    </Col> */}
                   
                   
                     {/* <Col sm={6}>
