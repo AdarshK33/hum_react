@@ -300,10 +300,24 @@ const EditWorkInformation = () => {
   // }, [locationName]);
 
   const changeHandler = (e) => {
+    if(e.target.name && e.target.name ==="department" ){
+      setStateValue();
+      setCity("");
+      setCityId("");
+      setCostCenter("");
+    }
+    if(e.target.name ==="department" ){
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+        ["managerId"]:""
+      });
+    }else{
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
+  }
   };
 
   const stateHandler = (e) => {
@@ -324,7 +338,7 @@ const EditWorkInformation = () => {
     console.log("city", e.target.value);
   };
   useEffect(()=>{
-    if (locationName !== null && locationName !== undefined) {
+    if (locationName !== null && locationName !== undefined && costCenter) {
       setStateValue(locationName.stateId);
       setCity(locationName.locationId);
       setCityId(locationName.cityId);

@@ -255,6 +255,7 @@ const fixedGrossValidation = () =>{
         fromDate: state.fromDate,
         hoursWorked:state.hoursWorked,
         toDate: state.toDate,
+        inputId:0
       };
       CreateSalaryInput(infoData);
       setSuccessMessage(true)
