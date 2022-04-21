@@ -643,13 +643,13 @@ const ManagerWarningAction = (props) => {
     // setModal(false);
     setSuccessModal(false);
     setIssueResolved(false);
-    history.push("../disciplinary");
+    history.push("../disciplinary-action");
     //setSubmitted({value:true});
   };
 
   const handleClose1 = (e) => {
     setIssueResolved(false);
-    history.push("../disciplinary");
+    history.push("../disciplinary-action");
   };
 
   const handleShowCauseLetterClose = () => {
@@ -658,7 +658,7 @@ const ManagerWarningAction = (props) => {
   };
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("../disciplinary");
+    history.push("../disciplinary-action");
   };
 
   const saveOfferLetter = () => {
