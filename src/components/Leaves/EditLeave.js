@@ -253,7 +253,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             editEmpList(editLeave1, props.pageNumber)
         }
 
-        history.push("/leaves/viewleave");
+        history.push("/my-leaves");
         setEditMsg(false)
 
 
