@@ -305,7 +305,7 @@ const ViewRemunerationInformation = (props) => {
                 <Col sm={6}>
                   <Form.Group as={Row} controlId="formHorizontalEmail">
                     {/* <Col sm={2}></Col> */}
-                    <Form.Label>Fixed Gross</Form.Label>
+                    <Form.Label>Monthly Fixed Gross</Form.Label>
                     <Col sm={6}>
                       <Form.Label className="headingColor">
                         {candidateData.remuneration !== null
@@ -344,7 +344,7 @@ const ViewRemunerationInformation = (props) => {
                   <Form.Group as={Row} controlId="formHorizontalEmail">
                     <Col sm={2}></Col>
                     <Form.Label column sm={3}>
-                      Stipend
+                    Monthly Stipend
                     </Form.Label>
                     <Col sm={6}>
                       {stipened}
