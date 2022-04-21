@@ -445,7 +445,7 @@ const RoutePath = () => {
             component={DisciplinaryView}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/disciplinary-action/:employeeid`}
+            path={`${process.env.PUBLIC_URL}/disciplinary-action-page/:employeeid`}
             component={CostCenterManagerAction}
           />
 

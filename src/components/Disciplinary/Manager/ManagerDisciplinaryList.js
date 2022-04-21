@@ -461,7 +461,7 @@ const ManagerDisciplinaryList = () => {
                                 {" "}
                                 <Link
                                   to={
-                                    "/disciplinary-action/" +
+                                    "/disciplinary-action-page/" +
                                     item.disciplinaryAction.disciplinaryId
                                   }
                                 >
