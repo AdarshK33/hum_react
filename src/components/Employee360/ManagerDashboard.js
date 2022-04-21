@@ -12,8 +12,8 @@ import ScrollArea from "react-scrollbar";
 import "./Employee360.css";
 import { PermissionContext } from "../../context/PermissionState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
-import MyPerformanceCard from "./MyPerformanceCard";
-import MyLeavesCard from "./MyLeavesCard";
+import TeamPerformanceCard from "./TeamPerformanceCard";
+import TeamLeavesCard from "./TeamLeaveCard";
 import Roster from "./Roster";
 import HolidaysCard from "./HolidaysCard";
 import MyDocumentsCard from "./MyDocumentsCard";
@@ -338,7 +338,7 @@ const ManagerDashboard = () => {
                       height: "150%",
                     }}
                   >
-                    <Col sm={3}>
+                    {/* <Col sm={3}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -352,8 +352,8 @@ const ManagerDashboard = () => {
                         </div>
                         <Roster />
                       </Card>
-                    </Col>
-                    <Col sm={3}>
+                    </Col> */}
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -367,10 +367,10 @@ const ManagerDashboard = () => {
                             Team Leaves
                           </label>
                         </div>
-                        <MyLeavesCard />
+                        <TeamLeavesCard />
                       </Card>
                     </Col>
-                    <Col sm={3} px={0}>
+                    <Col sm={4} px={0}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -384,10 +384,10 @@ const ManagerDashboard = () => {
                           Team Performances
                           </label>
                         </div>
-                        <MyPerformanceCard />
+                        <TeamPerformanceCard />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                    {/* <Col sm={3}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -398,9 +398,26 @@ const ManagerDashboard = () => {
                       >
                         <div className="CardHeading">
                           <label style={{ marginLeft: "1rem" }}>
-                            Notifications
+                          Team Notifications
                           </label>
                         </div>
+                      </Card>
+                    </Col> */}
+                    <Col sm={4}>
+                      <Card
+                        style={{
+                          borderRadius: "3%",
+                          height: "100%",
+                          boxShadow: "0px 0px 2px 0 black",
+                        }}
+                        className="small-card p-10 main-card"
+                      >
+                        <div className="CardHeading">
+                          <label style={{ marginLeft: "1rem" }}>
+                            {` Holiday Calendar (${new Date().getFullYear()})`}
+                          </label>
+                        </div>
+                        <HolidaysCard />
                       </Card>
                     </Col>
                   </Row>
@@ -457,31 +474,15 @@ const ManagerDashboard = () => {
                       </Card>
                     </Col>
                   </Row>
-                  <Row
+                  {/* <Row
                     style={{
                       marginTop: "1rem",
                       marginBottom: "1rem",
                       marginRight: "1rem",
                       marginLeft: "1rem",
                     }}
-                  >
-                    <Col sm={6}>
-                      <Card
-                        style={{
-                          borderRadius: "3%",
-                          height: "260px",
-                          boxShadow: "0px 0px 2px 0 black",
-                        }}
-                        className="small-card p-10 main-card"
-                      >
-                        <div className="CardHeading">
-                          <label style={{ marginLeft: "1rem" }}>
-                            {` Holiday Calendar (${new Date().getFullYear()})`}
-                          </label>
-                        </div>
-                        <HolidaysCard />
-                      </Card>
-                    </Col>
+                  > */}
+                    
                     {/* <Col sm={4}>
                       <Card
                         style={{
@@ -504,7 +505,7 @@ const ManagerDashboard = () => {
                         </div>
                       </Card>
                     </Col> */}
-                    <Col sm={6}>
+                    {/* <Col sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -517,8 +518,8 @@ const ManagerDashboard = () => {
                           My Digital Signature
                         </label>
                       </Card>
-                    </Col>
-                  </Row>
+                    </Col> */}
+                  {/* </Row> */}
                 </Form>
               </div>
             </div>

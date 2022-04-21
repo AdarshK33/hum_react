@@ -334,7 +334,7 @@ const EmployeeDashboard = () => {
                       height: "150%",
                     }}
                   >
-                    <Col sm={3}>
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -349,7 +349,7 @@ const EmployeeDashboard = () => {
                         <Roster />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -366,7 +366,7 @@ const EmployeeDashboard = () => {
                         <MyLeavesCard />
                       </Card>
                     </Col>
-                    <Col sm={3} px={0}>
+                    <Col sm={4} px={0}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -383,7 +383,16 @@ const EmployeeDashboard = () => {
                         <MyPerformanceCard />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                    </Row>
+                    <Row
+                    style={{
+                      marginTop: "2rem",
+                      marginBottom: "1rem",
+                      marginRight: "1rem",
+                      marginLeft: "1rem",
+                    }}
+                  >
+                    {/* <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -398,17 +407,10 @@ const EmployeeDashboard = () => {
                           </label>
                         </div>
                       </Card>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginTop: "2rem",
-                      marginBottom: "1rem",
-                      marginRight: "1rem",
-                      marginLeft: "1rem",
-                    }}
-                  >
-                    <Col sm={6}>
+                    </Col> */}
+                  
+                  
+                    {/* <Col sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -423,11 +425,12 @@ const EmployeeDashboard = () => {
                         </div>
                         <ApprovalsEmp360Card />
                       </Card>
-                    </Col>
-                    <Col sm={3}>
+                    </Col> */}
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
+                          height: "100%",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
                         className="big-card p-10 main-card"
@@ -440,11 +443,11 @@ const EmployeeDashboard = () => {
                         <HolidaysCard />
                       </Card>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
-                          height: "55%",
+                          height: "100%",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
                         className="big-card p-10 main-card"
@@ -461,7 +464,7 @@ const EmployeeDashboard = () => {
                         </div>
                       </Card>
 
-                      <Card
+                      {/* <Card
                         style={{
                           borderRadius: "3%",
                           height: "30%",
@@ -472,7 +475,7 @@ const EmployeeDashboard = () => {
                         <label className="smallCardHeading">
                           My Digital Signature
                         </label>
-                      </Card>
+                      </Card> */}
                     </Col>
                   </Row>
                   {/* <Row

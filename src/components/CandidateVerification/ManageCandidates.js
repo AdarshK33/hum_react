@@ -15,8 +15,7 @@ const CandidateList = () => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [docStatus, setDocStatus] = useState("");
-  const { candidateView, candidateList, loader, total, viewCandidateId } =
-    useContext(OfferContext);
+  // const { candidateView, candidateList, loader, total, viewCandidateId } =useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
 
@@ -31,13 +30,15 @@ const CandidateList = () => {
     verificationDocsView,
     downloadDocument,
     candidateVerificationView,
-    candidateVerificationList
+    candidateVerificationList,
+    loader,
+    total
   } = useContext(DocsVerifyContext);
   useEffect(() => {
     candidateVerificationView("all", pageCount);
   }, []);
   useEffect(() => {
-    if (candidateVerificationList !== null && candidateVerificationList !== undefined) {
+    if (candidateVerificationList&&Object.keys(candidateVerificationList).length !== 0 &&candidateVerificationList !== null && candidateVerificationList !== undefined) {
       setCurrentRecords(candidateVerificationList);
     }
   }, [candidateVerificationList, currentRecords]);
@@ -192,30 +193,31 @@ const CandidateList = () => {
               </tr>
             </thead>
             {loader === true &&
-            candidateVerificationList !== null &&
-            candidateVerificationList !== undefined ? (
-              <tbody>
-                <tr>
-                  <td colSpan="12">
-                    <div
-                      className="loader-box loader"
-                      style={{ width: "100% !important" }}
-                    >
-                      <div className="loader">
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            ) : candidateVerificationList !== undefined &&
-            candidateVerificationList !== null &&
-            candidateVerificationList.length > 0 ? (
-              candidateVerificationList.map((item, i) => {
-                return (
+                  currentRecords !== null &&
+                  currentRecords !== undefined ? (
+                    <tbody>
+                      <tr>
+                        <td colSpan="12">
+                          <div
+                            className="loader-box loader"
+                            style={{ width: "100% !important" }}
+                          >
+                            <div className="loader">
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ) : currentRecords !== undefined &&
+            currentRecords !== null &&
+            currentRecords.length > 0 &&
+            total > 0 ? (
+            currentRecords.map((item, i) => {
+              return (
                   <tbody key={item.candidateId}>
                     <tr>
                       <td>{i + 1 + indexOfFirstRecord}</td>
@@ -324,7 +326,7 @@ const CandidateList = () => {
           </Table>
         </div>
       </div>
-      {candidateVerificationList !== null && candidateVerificationList !== undefined && (
+      {currentRecords !== null && currentRecords !== undefined && total > 0 && (
         <Pagination
           itemClass="page-item"
           linkClass="page-link"

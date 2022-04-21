@@ -245,7 +245,7 @@ const AdminLeaveEdit = (props) => {
             console.log("edit leave data for general----", editLeave)
               editList(editLeave, props.pageNumber)
           }
-            history.push("/adminleave");
+            history.push("/adminleaves");
             setEditMsg(false)
 
 

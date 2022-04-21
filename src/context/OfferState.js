@@ -65,6 +65,7 @@ export const OfferProvider = (props) => {
         state.data = response.data.data;
         state.total = state.data.total;
         setLoader(false);
+        createResopnseNull();
         console.log("candidateList response", state.candidateList);
         return dispatch({
           type: "CANDIDATE_LIST",
@@ -79,6 +80,13 @@ export const OfferProvider = (props) => {
       });
   };
 
+  const createResopnseNull=()=>{
+    state.createCandidateResponse=null;
+    return dispatch({
+      type: "CREATE_CANDIDATE",
+      payload: state.createCandidateResponse
+    });
+}
   //candidate create api
   const createCandidate = (createData) => {
     return client
@@ -760,6 +768,7 @@ export const OfferProvider = (props) => {
         setNoticePeriodNull,
         positionByDepartmentNull,
         departmentViewByCompany,
+        createResopnseNull,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,

@@ -374,7 +374,7 @@ const BankDetails = (props) => {
               )}
             </Form.Group>
           </div>
-          <div className="col-sm-3">
+          {/* <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
                 <b>PAN No</b>
@@ -396,7 +396,7 @@ const BankDetails = (props) => {
                 <p></p>
               )}
             </Form.Group>
-          </div>
+          </div> */}
         </Row>
         {/* <Row style={{ marginBottom: "1rem" }}>
           <Col sm={8}>
