@@ -137,7 +137,7 @@ function ViewShift() {
 
     /*  console.log("month, costCenter, year",month, year, user.costCentre)
      viewSalary(month, year, user.costCentre) */
-    history.push("/salary/processsalary");
+    history.push("/salary/history_hours");
   };
 
   const cancelLeave = () => {
@@ -163,7 +163,7 @@ function ViewShift() {
 
     /* console.log("month, costCenter, year",month, year, user.costCentre)
     viewSalary(month, year, user.costCentre) */
-    history.push("/salary/processsalary");
+    history.push("/salary/history_hours");
   };
 
   const checkboxHandler = (salaryId) => {
