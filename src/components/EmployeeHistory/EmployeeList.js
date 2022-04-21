@@ -25,7 +25,7 @@ const EmployeeList = (props) => {
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
-  const [stepCount, setStepNumber] = useState(0);
+  const [stepCount, setStepNumber] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [role, setRole] = useState(0);
@@ -53,12 +53,12 @@ const EmployeeList = (props) => {
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
               </Col>
               <Col sm={2} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button name="active" value={0} onClick={(e)=>setStepNumber(parseInt(0))} className="submitButton">
+              <Button name="active" value={1} onClick={(e)=>setStepNumber(parseInt(1))} className="submitButton">
             Active Employees
           </Button>
               </Col>
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button name="inactive" value={1} onClick={(e)=>setStepNumber(parseInt(1))} className="submitButton">
+              <Button name="inactive" value={0} onClick={(e)=>setStepNumber(parseInt(0))} className="submitButton">
               Inactive Employees
           </Button>
               </Col>
@@ -70,11 +70,11 @@ const EmployeeList = (props) => {
       </Container>
       {(() => {
                           switch (parseInt(stepCount)) {
-                              case 0:
+                              case 1:
                                 return (
                                   <ActiveEmployeeHistoryList />
                                 );
-                                case 1:
+                                case 0:
                                 return (
                                   <InActiveEmployeeHistoryList />
                                 );

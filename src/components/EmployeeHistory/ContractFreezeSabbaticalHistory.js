@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useState,useEffect, useContext } from 'react';
 import { Table, Row,Col, Button } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Edit2, Eye, Search } from "react-feather";
@@ -16,8 +16,12 @@ const ContractFreezeSabbaticalHistory = (props) => {
         loader,
         total,
       } = useContext(EmployeeHistoryContext);    
-console.log("startDate", props.startDate)
+
+console.log("startDate", props)
 console.log("endDate", props.endDate)
+useEffect(()=>{
+    viewcontractFreezeDataById(props.ContractFreezeSabbaticalHistoryList)
+},[props.ContractFreezeSabbaticalHistoryList])
     const d1 = props.startDate,
     d2 = props.endDate,
     diff = (d2-d1)/864e5,
@@ -35,7 +39,6 @@ console.log("endDate", props.endDate)
       }
     )
     
-console.log(dates)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
@@ -49,6 +52,8 @@ console.log(dates)
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
     }
+
+    console.log(contractFreezeData,currentRecords,"contractFreezeData")
 
     const getTdData =(data,item)=>{
         console.log("getTdData item",item);
@@ -142,10 +147,16 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.frozen_from}</td>
+                                                        <td>{item.frozen_to}</td>
+                                                        <td>{item.reason}</td>
+                                                        <td>{item.requestedBy}</td>
+                                                        <td>{item.updatedBy}</td>
+                                                        <td>{item.updatedOn !== null && 
+                                                        item.updatedOn !== undefined 
+                                                         && item.updatedOn !== ""?
+                                                        moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
                                                     </tr>
                                                 </tbody>
                                             )

@@ -143,10 +143,16 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.reasonForTheShowCause}</td>
+                                                        <td>{item.showCauseLetterIssue}</td>
+                                                        <td>{item.warningLetterIssue}</td>
+                                                        <td>{item.terminationDate !== null && 
+                                                        item.terminationDate !== undefined 
+                                                         && item.terminationDate !== ""?
+                                                        moment(new Date(item.terminationDate)).format("DD-MM-YYYY"):""}</td> 
+                                                        <td>{item.issuedBy}</td>
+                                                        <td>{item.issuedOn}</td>
                                                     </tr>
                                                 </tbody>
                                             )

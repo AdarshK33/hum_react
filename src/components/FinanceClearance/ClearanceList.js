@@ -137,6 +137,7 @@ const FinanceClearanceList = () => {
     } 
   }
   const renderStatusOptions = (value) => {
+    console.log('Inside some function', value.data.financeClearanceStatus)
     return (
       <div>
         <select
@@ -312,7 +313,6 @@ const FinanceClearanceList = () => {
          
 
         <div className="ag-theme-alpine" style={{ align:"center", height: 490, width:'100%'}}>
-          
                     <AgGridReact
                       rowData={separationList}
                       rowSelection="single"
@@ -382,7 +382,7 @@ const FinanceClearanceList = () => {
                         colId="status"
                         cellRendererFramework={renderStatusOptions}
                         cellEditorParams={{
-                          values: ["0", "1", "2"],
+                          values: ["0", "1", "2","4"],
                           cellRenderer: { statusRender },
                         }}
                       ></AgGridColumn>
