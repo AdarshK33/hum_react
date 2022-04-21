@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const LeavesHistory = (props) => {
     const {
-        viewLeavesDataById,
+        viewleavesDataById,
         leavesData,
          loader,
          total,
@@ -66,6 +66,7 @@ console.log(dates)
     const disabledText = () => {
         toast.error("No Records to be Export")
       }
+      console.log(leavesData,currentRecords,"leavesData")
     return (
         <Fragment>
             <div className="container-fluid">

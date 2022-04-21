@@ -149,9 +149,24 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
+                                                        <td>{item.employeeName}</td>
+                                                        <td>{item.email}</td>
+                                                        <td>{item.joiningDate !== null && 
+                                                        item.joiningDate !== undefined 
+                                                         && item.joiningDate !== ""?
+                                                        moment(new Date(item.joiningDate)).format("DD-MM-YYYY"):""}</td> 
+                                                         <td>{item.resignDate !== null && 
+                                                        item.resignDate !== undefined 
+                                                         && item.resignDate !== ""?
+                                                        moment(new Date(item.resignDate)).format("DD-MM-YYYY"):""}</td> 
+                                                           <td>{item.lwd !== null && 
+                                                        item.lwd !== undefined 
+                                                         && item.lwd !== ""?
+                                                        moment(new Date(item.lwd)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{item.typeOfExit}</td>
+                                                        <td>{item.comments}</td>
+                                                        <td>{item.makeInActive}</td>
+                                                        <td>{item.runFandF}</td>
                                                 
                                                     </tr>
                                                 </tbody>
