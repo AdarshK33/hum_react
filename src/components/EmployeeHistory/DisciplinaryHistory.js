@@ -152,7 +152,10 @@ console.log(dates)
                                                          && item.terminationDate !== ""?
                                                         moment(new Date(item.terminationDate)).format("DD-MM-YYYY"):""}</td> 
                                                         <td>{item.issuedBy}</td>
-                                                        <td>{item.issuedOn}</td>
+                                                        <td>{item.issuedOn !== null && 
+                                                        item.issuedOn !== undefined 
+                                                         && item.issuedOn !== ""?
+                                                        moment(new Date(item.issuedOn)).format("DD-MM-YYYY"):""}</td> 
                                                     </tr>
                                                 </tbody>
                                             )
