@@ -113,7 +113,7 @@ const CreateGroup = (props) => {
                                         <Form.Label>Employee Id</Form.Label>
                                         <Multiselect
                                             placeholder="Select Employee"
-                                            options={empList}
+                                            options={empList ? empList :[] }
                                             value={employee}
                                             displayValue="employeeName"
                                             onSelect={handleMultiChange}

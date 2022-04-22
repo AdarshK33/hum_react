@@ -127,7 +127,7 @@ const UpdateGroup = (props) => {
                                         <Form.Label>Employee Id</Form.Label>
                                         <Multiselect
                                             placeholder="Select Employee"
-                                            options={empList}
+                                            options={empList ? empList :[] }
                                             value={employee}
                                             //  defaultValue={props.empIds}
                                             selectedValues={props.emps}
@@ -148,7 +148,9 @@ const UpdateGroup = (props) => {
                                         <Form.Control as='select' value={groupType} required
                                             onChange={(e) => setGroupType(e.target.value)}>
                                             <option value=''>Select Group Type</option>
-                                            {groupTypeList.map((item, id) => {
+                                            {groupTypeList &&
+                                            Object.keys(groupTypeList).length &&
+                                            groupTypeList.map((item, id) => {
                                                 return (
                                                     <option key={id} value={item.value}>{item.type}</option>
                                                 )
@@ -163,7 +165,8 @@ const UpdateGroup = (props) => {
                                         <Form.Label>Status</Form.Label>
                                         <Form.Control as='select' value={status} required
                                             onChange={(e) => setStatus(e.target.value)}>
-                                            {statusList.map((item, id) => {
+                                            {statusList && Object.keys(statusList).length &&
+                                            statusList.map((item, id) => {
                                                 return (
                                                     <option key={id} value={item.value}>{item.status}</option>
                                                 )
