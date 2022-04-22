@@ -72,7 +72,7 @@ const ViewGroup = () => {
                                             </tr>
                                         </tbody> :
                                         serviceGroupList !== null && serviceGroupList !== undefined &&
-                                            serviceGroupList.length > 0 ?
+                                            Object.keys(serviceGroupList.length) ?
                                             serviceGroupList.map((item, i) => {
                                                 return (
                                                     <tbody key={i}>
