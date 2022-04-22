@@ -158,6 +158,8 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
     modalView,
     setModalLetter,
     modalViewLetter,
+    setShowValue,
+    lettterviewShow
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -173,6 +175,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
     setViewLetter(false);
     setModal(false);
     setModalLetter(false);
+    setShowValue(false)
   };
 
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
@@ -256,7 +259,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
         empEmail: "rajasekhar@theretailinsights.com ",
         empPhNo: user.phone,
         history: history,
-        path: "../disciplinary",
+        path: "../disciplinary-action",
       };
       console.log("createShowCauseData", InfoData);
       createShowCauseIssue(InfoData, disciplinarySearchData.employeeId);
@@ -268,13 +271,14 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
       setModalLetter(false);
       setModal(false);
       setShow(false);
+      setShowValue(false)
     }
   };
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
         <Modal
-          show={lettterview || modalView || modalViewLetter}
+          show={lettterview || modalView || modalViewLetter ||lettterviewShow}
           onHide={handleClose}
           size="md"
         >

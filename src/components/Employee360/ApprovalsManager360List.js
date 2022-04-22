@@ -56,7 +56,7 @@ const ApprovalsManager360List = ({ ListType }) => {
     } else if (ListType === "transfer") {
       history.push("./transfers");
     } else if (ListType === "disciplinary") {
-      history.push("./disciplinary");
+      history.push("./disciplinary-action");
     } else if (ListType === "probation") {
       history.push("./probation");
     } else if (ListType === "separation") {

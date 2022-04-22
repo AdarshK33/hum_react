@@ -45,6 +45,8 @@ const DisciplinaryView = () => {
     setViewLetter,
     setModal,
     modalView,
+    setShowValue,
+    lettterviewShow
   } = useContext(DisciplinaryContext);
 
   useEffect(() => {
@@ -106,8 +108,8 @@ const DisciplinaryView = () => {
   console.log("disciplinarySearchData", disciplinarySearchData);
   const LetterShow = () => {
     console.log(";;;;;");
-    setViewLetter(true);
-    setShow(true);
+    setShowValue(true);
+    setShow(true)
   };
 
   const handleShowCauseLetterClose = () => setShow(false);
@@ -144,7 +146,21 @@ const DisciplinaryView = () => {
       ) : (
         ""
       )}
-
+        {lettterviewShow?(<div>
+          {disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            disciplinarySearchData.disciplinaryAction !== "" &&
+            disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
+            <ShowCauseNotice sign={false} />
+          ) : (
+            <NonPerformanceLetter sign={false} />
+          )}
+        </div>):("")}
       {lettterview ? (
         <div>
           {disciplinarySearchData &&
@@ -166,19 +182,7 @@ const DisciplinaryView = () => {
             disciplinarySearchData.disciplinaryWarning !== "" &&
             disciplinarySearchData.disciplinaryWarning.reasonId == 1 ? (
             <NonPerformanceWarningLetter sign={false} />
-          ) : disciplinarySearchData &&
-            disciplinarySearchData &&
-            disciplinarySearchData !== null &&
-            disciplinarySearchData !== undefined &&
-            Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined &&
-            disciplinarySearchData.disciplinaryAction !== "" &&
-            disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
-            <ShowCauseNotice sign={false} />
-          ) : (
-            <NonPerformanceLetter sign={false} />
-          )}
+          ) :<></>}
         </div>
       ) : (
         ""

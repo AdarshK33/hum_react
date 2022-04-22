@@ -190,7 +190,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
         empEmail: "rajasekhar@theretailinsights.com ",
         empPhNo: user.phone,
         history: history,
-        path: "../disciplinary",
+        path: "../disciplinary-action",
       };
       console.log("createShowCauseData", InfoData);
       createShowCauseIssue(InfoData, disciplinarySearchData.employeeId);

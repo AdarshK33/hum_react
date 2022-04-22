@@ -20,13 +20,17 @@ export const DisciplinaryProvider = (props) => {
   const [state, dispatch] = useReducer(DisciplinaryReducer, initial_state);
   const [loader, setLoader] = useState(false);
   const [lettterview, setLetterView] = useState(false);
+  const [lettterviewShow, setLetterViewShow] = useState(false);
+
   const [modalView, setModalView] = useState(false);
   const [modalViewLetter, setModalViewletter] = useState(false);
 
   const setViewLetter = (val) => {
     setLetterView(val);
   };
-
+  const setShowValue = (val)=>{
+    setLetterViewShow(val)
+  }
   const setModal = (val) => {
     setModalView(val);
   };
@@ -214,8 +218,10 @@ export const DisciplinaryProvider = (props) => {
         disciplinaryListData: state.disciplinaryListData,
         loader: loader,
         lettterview: lettterview,
+        lettterviewShow:lettterviewShow,
         setViewLetter,
         setModal,
+        setShowValue,
         modalView: modalView,
         setModalLetter,
         modalViewLetter: modalViewLetter,

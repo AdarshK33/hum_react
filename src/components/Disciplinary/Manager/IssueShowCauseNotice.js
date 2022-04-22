@@ -237,7 +237,7 @@ const IssueShowCauseNotice = () => {
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("./disciplinary");
+    history.push("./disciplinary-action");
   };
 
   const saveOfferLetter = () => {
