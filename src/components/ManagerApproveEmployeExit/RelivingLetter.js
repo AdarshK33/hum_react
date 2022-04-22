@@ -62,7 +62,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
         reason: employeeData.reason,
         reasonForResignation: employeeData.reasonForResignation,
         rehireRemark: employeeData.rehireRemark,
-        status: 2,
+        status: 9,
         withdraw: employeeData.withdraw,
       };
       console.log("save ", InfoData);
