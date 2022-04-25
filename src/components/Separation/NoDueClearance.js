@@ -155,13 +155,15 @@ const NoDueClearance = () => {
     }
   };
   const renderStatusOptions = (value) => {
-      const data = value.data.itClearanceStatus
-    console.log(value,"renderstatusoption")
+      let data = value.data.itClearanceStatus 
+      var id = value.data.exitId
+    console.log(value,data,"renderstatusoption")
     return (
       <div>
         <select
           className="selectpicker"
           name="itClearanceStatus"
+          key={id}
           defaultValue={data}
           value={enableValue}
           onChange={(e) => statusRender(e, value)}
@@ -232,7 +234,10 @@ const NoDueClearance = () => {
           costCenter
         );
       } else if (
-        formData.itClearanceStatus == 2
+        formData.itClearanceStatus == 2 &&
+        formData.itRemarks !== null &&
+        formData.itRemarks !== undefined &&
+        formData.itRemarks !== ""
       ) {
         formData['disabled'] = false
 
@@ -251,6 +256,7 @@ const NoDueClearance = () => {
     } else {
       toast.error("please enter IT status and remarks");
     }
+    SetEnableValue(null)
   };
   useEffect(() => {
     console.log(pageCount, "cost search action page");
@@ -303,6 +309,8 @@ const itStatusValue = [
   { value: '1', label: 'No Due' },
   { value: '2', label: 'On Hold' },
 ];
+const getRowId = params => params.data.exitId;
+
   return (
     <div>
       <Fragment>
@@ -401,7 +409,7 @@ const itStatusValue = [
                       rowSelection="single"
                       onGridReady={onGridReady}
                       suppressRowClickSelection={true}
-
+                      getRowId={getRowId}
                       defaultColDef={{
                         width: 200,
                         editable: true,
@@ -465,6 +473,7 @@ const itStatusValue = [
                         headerName="IT Clearance"
                          editable= {false}
                         colId="status"
+                        getColId="exitId"
                         singleClickEdit="true"
                         cellRendererFramework={renderStatusOptions}
                         cellRendererParams={{

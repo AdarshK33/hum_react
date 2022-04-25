@@ -184,7 +184,10 @@ const FinanceClearanceList = () => {
       setCleranceData(formData);
      saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
-    }else if(formData.financeClearanceStatus == 2){
+    }else if(formData.financeClearanceStatus == 2  &&
+      formData.financeRemarks !== null &&
+      formData.financeRemarks !== undefined &&
+      formData.financeRemarks !== ""){
       formData['disabled'] = false
       console.log(formData,"2")
       setCleranceData(formData);
@@ -197,6 +200,7 @@ const FinanceClearanceList = () => {
     }else{
       toast.error("please enter finance status and remarks")
     }
+    SetEnableValue(null)
   };
   useEffect(() => {
     console.log(pageCount, "pageCount");
