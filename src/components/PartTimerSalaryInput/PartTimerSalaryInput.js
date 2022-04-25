@@ -276,7 +276,7 @@ const fixedGrossValidation = () =>{
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
-          Parttime Employee Details Created successfully
+          Parttime Employee <b>{state.hoursWorked} hours</b> Details Created successfully
           </label>
           <div className="text-center mb-2">
               <Button onClick={handleCloseValue}>Close</Button>
