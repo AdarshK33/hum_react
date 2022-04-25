@@ -114,7 +114,7 @@ console.log(dates)
                                             <th>EFFECTIVE DATE</th>
                                             <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
-                                            <th>VIEW</th>
+                                            {/* <th>VIEW</th> */}
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined ? 
@@ -150,7 +150,7 @@ console.log(dates)
                                                         item.updatedOn !== undefined 
                                                          && item.updatedOn !== ""?
                                                         moment(new Date(item.updatedOn)).format("DD-MM-YYYY"):""}</td>
-                                                        <td>{item.previewOfCtcStructure}</td>
+                                                        {/* <td>{item.previewOfCtcStructure}</td> */}
                                                     </tr>
                                                 </tbody>
                                             )

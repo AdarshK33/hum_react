@@ -148,7 +148,7 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.empId}</td>
                                                         <td>{item.employeeName}</td>
                                                         <td>{item.email}</td>
                                                         <td>{item.joiningDate !== null && 

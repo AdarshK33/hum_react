@@ -76,11 +76,10 @@ export const TransferProvider = (props) => {
         });
       });
   };
-
-  const getDepartmentDetails = () => {
+  const getDepartmentDetails = (companyName) => {
     setLoader(true);
     client
-      .get("/api/v1/department/view")
+      .get("/api/v1/department/view/company?company="+companyName)
       .then((response) => {
         setLoader(false);
         return dispatch({

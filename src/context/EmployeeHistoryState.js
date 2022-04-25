@@ -152,7 +152,7 @@ export const EmployeeHistoryProvider = (props) => {
       client
         .get("api/v1/employee_history/salary/" + employeeId)
         .then((response) => {
-          state.salaryData = new Array(response.data.data)
+          state.salaryData = response.data.data
   
           setLoader(false);
           console.log("--->salaryData", state.salaryData);
@@ -396,7 +396,7 @@ export const EmployeeHistoryProvider = (props) => {
       client
         .get("api/v1/employee_history/contractTypeChange/" + employeeId)
         .then((response) => {
-          state.contractTypeChangeData = new Array(response.data.data)
+          state.contractTypeChangeData = response.data.data
   
           setLoader(false);
           console.log("--->contractTypeChangeData", state.contractTypeChangeData);
@@ -416,7 +416,7 @@ export const EmployeeHistoryProvider = (props) => {
       client
         .get("api/v1/employee_history/empInternationalTransfer/" + employeeId)
         .then((response) => {
-          state.internationalTransferData = new Array(response.data.data)
+          state.internationalTransferData = response.data.data
   
           setLoader(false);
           console.log("--->internationalTransferData", state.internationalTransferData);
@@ -436,7 +436,7 @@ export const EmployeeHistoryProvider = (props) => {
       client
         .get("api/v1/employee_history/entity_to_entity_transfer/" + employeeId)
         .then((response) => {
-          state.entityTransferData = new Array(response.data.data)
+          state.entityTransferData = response.data.data
   
           setLoader(false);
           console.log("--->entityTransferData", state.entityTransferData);
@@ -514,9 +514,9 @@ export const EmployeeHistoryProvider = (props) => {
     const viewEmployeeContactDetailsById=(employeeId)=>{
       setLoader(true);
       client
-        .get("/api/v1/employee_history/employment_contract/" + employeeId)
+        .get("/api/v1/employee_history/employee_contact/" + employeeId)
         .then((response) => {
-          state.employeeContactDetailsByIdData = response.data.data
+          state.employeeContactDetailsByIdData = new Array(response.data.data)
   
           setLoader(false);
           console.log("--->employeeContactDetailsByIdData", state.employeeContactDetailsByIdData);
@@ -630,6 +630,8 @@ export const EmployeeHistoryProvider = (props) => {
         leavesData:state.leavesData,
         currentMonthExitedData:state.currentMonthExitedData,
         exitedEmployeeData:state.exitedEmployeeData,
+        internationalTransferData:state.internationalTransferData,
+        entityTransferData:state.entityTransferData
       }}
     >
       {props.children}

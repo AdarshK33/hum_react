@@ -152,11 +152,11 @@ console.log(employeeContactDetailsByIdData,"employeeContactDetailsByIdData")
                                                     <tr>
                                                     <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeName}</td>
-                                                        <td>{item.phone}</td>
-                                                        <td>{""}</td>
-                                                        <td>{""}</td>
-                                                        <td>{item.address}</td>
-                                                        <td>{""}</td>
+                                                        <td>{item.contactNumber}</td>
+                                                        <td>{item.emailId}</td>
+                                                        <td>{item.emergencyContactNumber}</td>
+                                                        <td>{item.presentAddress}</td>
+                                                        <td>{item.permanentAddress}</td>
                                                         <td>{item.updatedBy}</td>
                                                         <td>{ item.updatedOn !== null && 
                                                         item.updatedOn !== undefined 
