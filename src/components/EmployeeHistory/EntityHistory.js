@@ -119,8 +119,8 @@ console.log(dates)
                                             <th>SALARY TO</th>
                                             <th>UPDATED ON</th>
                                             <th>UPDATED BY</th>
-                                            <th>APPROVED BY</th>
                                             <th>APPROVED ON</th>
+                                            <th>APPROVED BY</th>
 
 
                                         </tr>
