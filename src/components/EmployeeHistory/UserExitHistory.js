@@ -166,7 +166,7 @@ console.log(dates)
                                                         <td>{item.holidayWorkingBonus}</td>
                                                         <td>{item.bonusRemarks}</td>
                                                         <td>{item.gratuity}</td>
-                                                        <td>{item.lop}</td>
+                                                        <td>{item.lop?"24-04-2022":""}</td>
                                                         <td>{item.otherRecoveryAmount}</td>
                                                         <td>{item.otherRecoveryRemarks}</td>
                                                         <td>{item.exitInitiatedBy}</td>

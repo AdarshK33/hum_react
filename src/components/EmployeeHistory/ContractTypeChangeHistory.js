@@ -115,8 +115,8 @@ console.log(dates)
                                             <th>TYPE OF CHANGE TO</th>
 
                                             <th>EFFECTIVE DATE FROM</th>
-                                            <th>UPDATED ON</th>
                                             <th>UPDATED BY</th>
+                                            <th>UPDATED ON</th>
 
 
                                         </tr>

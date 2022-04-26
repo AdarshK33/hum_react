@@ -130,8 +130,13 @@ const EntityTransferAcceptance = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    getDepartmentDetails();
-  }, []);
+    if (
+      transferData !== null &&
+      transferData !== undefined &&
+      Object.keys(transferData).length !== 0 ){
+    getDepartmentDetails(transferData.promotedCompany);
+      }
+  }, [transferData]);
 
   useEffect(() => {
     if (newDept !== "") {

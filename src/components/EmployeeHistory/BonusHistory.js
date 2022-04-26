@@ -104,14 +104,14 @@ console.log(dates)
                     <b>BONUS HISTORY</b>
                   </Col>
                 </Row></div>
-
+                {/* AMOUNT/PERCENTAGE/DAYS */}
                             <div className="table-responsive">
                                 <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>EMP ID</th>
                                             <th>BONUS NAME</th>
-                                            <th>AMOUNT/PERCENTAGE/DAYS</th>
+                                            <th>AMOUNT </th> 
                                             <th>EFFECTIVE DATE</th>
                                             <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
@@ -145,7 +145,7 @@ console.log(dates)
                                                     <tr>
                                                         <td>{item.employeeId}</td>
                                                         <td>{item.bonusName}</td>
-                                                        <td>{item.amount}</td>
+                                                        <td>{parseInt(item.amount)}</td>
                                                         <td>{item.effectiveDate !== null && 
                                                         item.effectiveDate !== undefined 
                                                          && item.effectiveDate !== ""?
