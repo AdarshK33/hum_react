@@ -148,7 +148,7 @@ console.log(dates)
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeId}</td>
                                                         <td>{item.employeeName}</td>
-                                                        <td>{item.position}</td>
+                                                        <td>{item.oldPosition}</td>
                                                         <td>{item.promotedPosition}</td>
                                                         <td>{ item.promotedDate !== null && 
                                                         item.promotedDate !== undefined 

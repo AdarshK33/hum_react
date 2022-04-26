@@ -166,7 +166,7 @@ console.log(dates)
                                                         moment(new Date(item.lwd)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.typeOfExit}</td>
                                                         <td>{item.comments}</td>
-                                                        <td>{item.isActive}</td>
+                                                        <td>{item.isActive == 1?"Active":"InActive"}</td>
                                                         <td>{item.history}</td>
                                                         <td>{item.runFAndF}</td>
 
