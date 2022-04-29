@@ -1240,10 +1240,9 @@ const ManagerInitiateExit = () => {
     }
   };
   console.log(
-    intern,
-    "modeOfSeparation",
-    state,
-    searchByCostData,
+    "employeeData","-->",
+    employeeProfileData,"-->",
+    searchByCostData,"-->",
     employeeData
   );
   return (

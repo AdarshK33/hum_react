@@ -92,7 +92,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
             disciplinarySearchData.disciplinaryAction.showCauseLetter,
           showCauseNotice:
             disciplinarySearchData.disciplinaryAction.showCauseNotice,
-          status: disciplinarySearchData.disciplinaryAction.status,
+          status: approver === true ? 0 : 2,//disciplinarySearchData.disciplinaryAction.status,
           statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
           warningIssued: true,
         },

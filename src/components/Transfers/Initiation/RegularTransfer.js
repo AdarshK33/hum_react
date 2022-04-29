@@ -107,8 +107,13 @@ const RegularTransfer = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    getDepartmentDetails();
-  }, []);
+    if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 ){
+    getDepartmentDetails(initiationEmpData.currentCompany);
+      }
+  }, [initiationEmpData]);
 
   useEffect(() => {
     if (newDept !== "") {
@@ -707,6 +712,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-dept-change"
+                disabled={formValid?true:false}
                   checked={depNoChange}
                   onChange={noChangeDeptHandler}
                 />
@@ -756,7 +762,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-costcentre-change"
-                  disabled={newDeptName === "" ? true : false}
+                  disabled={(newDeptName === "" || formValid)? true : false}
                   checked={costCentreNoChange}
                   onChange={noChangeCostCentreHandler}
                 />
@@ -837,7 +843,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-manager-change"
-                  disabled={newCostCentre === "" ? true : false}
+                  disabled={(newCostCentre === "" || formValid) ? true : false}
                   checked={managerNoChange}
                   onChange={noChangeManagerHandler}
                 />
@@ -892,7 +898,7 @@ const RegularTransfer = () => {
                   type="checkbox"
                   id="no-position-change"
                   checked={positionNoChange}
-                  disabled={newManager === "" ? true : false}
+                  disabled={(newManager === "" || formValid) ? true : false}
                   onChange={noChangePositionHandler}
                 />
               </div>
@@ -946,7 +952,7 @@ const RegularTransfer = () => {
                   type="checkbox"
                   id="no-location-change"
                   checked={locationNoChange}
-                  disabled={newPositionName === "" ? true : false}
+                  disabled={(newPositionName === "" || formValid) ? true : false}
                   onChange={noChangeLocationHandler}
                 />
               </div>

@@ -70,8 +70,13 @@ const EntityTransfer = () => {
   }, [searchValue]);
 
   useEffect(() => {
+    if (
+      newEntity !== null &&
+      newEntity !== "" &&
+      newEntity !== undefined){
     getDepartmentDetails();
-  }, []);
+      }
+  }, [newEntity]);
 
   useEffect(() => {
     if (newDept !== "") {
