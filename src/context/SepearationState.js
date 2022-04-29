@@ -74,14 +74,7 @@ export const SeparationProvider = (props) => {
     setLoader(true);
     client
       .post(
-        "/api/v1/separation/full-and-final/view?key=" +
-          key +
-          "&page=" +
-          page +
-          "&size=" +
-          10 +
-          "&storeId=" +
-          costCenter
+        `/api/v1/separation/full-and-final/view?page=${page}&size=10&storeId=${costCenter}&key=${key}`
       )
       .then((response) => {
         state.financeAdminNoDueClearanceList = response.data.data.data;
@@ -229,17 +222,11 @@ export const SeparationProvider = (props) => {
     console.log(
       formData,
       "FinanceClearanceUploadSettlement separation context"
-    );
+    ); 
     return client
       .post(
-        "/api/v1/separation/full-and-final/view?key=" +
-          key +
-          "&page=" +
-          page +
-          "&size=" +
-          10 +
-          "&storeId=" +
-          costCenter,
+       `/api/v1/separation/full-and-final/view?page=${page}&size=10&storeId=${costCenter}&key=${key}`
+            ,
         formData
       )
       .then((response) => {
@@ -537,6 +524,13 @@ const searchByEmployee =(key)=>{
     console.log(error);
   });
 }
+const searchByEmployeeNull =()=>{
+  state.searchByCostData = null
+    return dispatch({
+      type: "SEARCH_BY_COST_DATA",
+      payload: state.searchByCostData,
+    });
+}
   //Search by reference emp name1 or emp id
   const searchByCostCenter = (key) => {
     client
@@ -589,6 +583,7 @@ const searchByEmployee =(key)=>{
         FinanceClearanceExport,
         searchByCostCenter,
         promotionManagerData,
+        searchByEmployeeNull,
         promotioManagerList:state.promotioManagerList,
         financeClearanceExport: state.financeClearanceExport,
 
