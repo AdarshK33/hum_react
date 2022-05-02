@@ -6,10 +6,10 @@ import { Fragment } from "react";
 import { Employee360Context } from "../../context/Employee360State";
 
 const TeamPerformanceCard = () => {
-  const { MyPerformanceView, myPerformanceData } =
+  const { TeamPerformanceView, teamPerformanceData } =
     useContext(Employee360Context);
   useEffect(() => {
-    MyPerformanceView();
+    TeamPerformanceView();
   }, []);
   const PerformanceOption = {
     slices: [
@@ -35,10 +35,10 @@ const TeamPerformanceCard = () => {
   };
   return (
     <Fragment>
-      {myPerformanceData !== null &&
-      myPerformanceData !== undefined &&
-      Object.keys(myPerformanceData).length !== 0 &&
-      myPerformanceData.totalWorkingHours !== 0 ? (
+      {teamPerformanceData !== null &&
+      teamPerformanceData !== undefined &&
+      Object.keys(teamPerformanceData).length !== 0 &&
+      teamPerformanceData.totalWorkingHours !== 0 ? (
         <div>
           <div style={{ marginTop: "1rem" }}>
             <Chart
@@ -49,12 +49,12 @@ const TeamPerformanceCard = () => {
                 ["Hours Type", "Hours"],
                 [
                   "Remaining Hours",
-                  parseInt(myPerformanceData.totalWorkingHours) -
-                    (parseInt(myPerformanceData.workedHours) +
-                      parseInt(myPerformanceData.additionalHours)),
+                  parseInt(teamPerformanceData.totalWorkingHours) -
+                    (parseInt(teamPerformanceData.workedHours) +
+                      parseInt(teamPerformanceData.additionalHours)),
                 ],
-                ["Working Hours", myPerformanceData.workedHours],
-                ["Additional Hours", myPerformanceData.additionalHours],
+                ["Working Hours", teamPerformanceData.workedHours],
+                ["Additional Hours", teamPerformanceData.additionalHours],
               ]}
               options={PerformanceOption}
             />
@@ -64,16 +64,16 @@ const TeamPerformanceCard = () => {
             <Col sm={12}>
               <label className="workingHours">
                 <b>
-                  {myPerformanceData.workedHours}/
-                  {myPerformanceData.totalWorkingHours}
+                  {teamPerformanceData.workedHours}/
+                  {teamPerformanceData.totalWorkingHours}
                 </b>
               </label>
 
               <label className="AdditionalHours">
                 <b>
                   {" "}
-                  {myPerformanceData.additionalHours}/
-                  {myPerformanceData.totalWorkingHours}
+                  {teamPerformanceData.additionalHours}/
+                  {teamPerformanceData.totalWorkingHours}
                 </b>
               </label>
             </Col>
@@ -98,9 +98,9 @@ const TeamPerformanceCard = () => {
             <label>{"Total Working Hours" + "  "} </label>
             <label className="totalHours">
               {" "}
-              {parseInt(myPerformanceData.workedHours) +
-                parseInt(myPerformanceData.additionalHours)}
-              /{myPerformanceData.totalWorkingHours}
+              {parseInt(teamPerformanceData.workedHours) +
+                parseInt(teamPerformanceData.additionalHours)}
+              /{teamPerformanceData.totalWorkingHours}
             </label>
           </Row>
         </div>

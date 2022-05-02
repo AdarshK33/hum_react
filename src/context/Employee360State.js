@@ -19,6 +19,9 @@ const initial_state = {
   ClusterEmpList: [],
   YearsList:[],
   resignationConfirmationStatus: "",
+  teamPlannedLeaves: [],
+  teamUnPlannedLeaves: [],
+  teamPerformanceData: {},
 };
 
 export const Employee360Context = createContext();
@@ -322,6 +325,63 @@ const RosterMonthSearchYear =()=>{
         console.log(error);
       });
   };
+  
+  const TeamLeavesViewPlanned = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/leave/manager?key=Planned")
+      .then((response) => {
+        state.teamPlannedLeaves = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "TEAM_PLANNED_LEAVES",
+          payload: state.teamPlannedLeaves,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const TeamLeavesViewUnplanned = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/leave/manager?key=Unplanned")
+      .then((response) => {
+        state.teamUnPlannedLeaves = response.data.data;
+        //toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "TEAM_UN_PLANNED_LEAVES",
+          payload: state.teamUnPlannedLeaves,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const TeamPerformanceView = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/360/view/team/performance?page=0&size=10&key=all")
+      .then((response) => {
+        state.teamPerformanceData = response.data.data.data[0];
+        //toast.info(response.data.message);
+        console.log("TeamPerformanceView",response.data.data.data[0]);
+        setLoader(false);
+        return dispatch({
+          type: "TEAM_PERFORMANCE",
+          payload: state.teamPerformanceData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
   return (
     <Employee360Context.Provider
       value={{
@@ -340,6 +400,9 @@ const RosterMonthSearchYear =()=>{
         ClusterSearchByEmployeeName,
         ClusterDirectTeam,
         RosterMonthSearchYear,
+        TeamLeavesViewPlanned,
+        TeamLeavesViewUnplanned,
+        TeamPerformanceView,
         YearsList: state.YearsList,
         clusterDirect: state.clusterDirect,
         ClusterEmpList: state.ClusterEmpList,
@@ -358,6 +421,9 @@ const RosterMonthSearchYear =()=>{
         approvalsLoader: approvalsLoader,
         rosterLoader: rosterLoader,
         clusterLoader: clusterLoader,
+        teamPerformanceData: state.teamPerformanceData,
+        teamUnPlannedLeaves: state.teamUnPlannedLeaves,
+        teamPlannedLeaves: state.teamPlannedLeaves,
       }}
     >
       {children}
