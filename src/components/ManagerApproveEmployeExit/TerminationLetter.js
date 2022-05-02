@@ -144,9 +144,11 @@ const TerminationLetter = () => {
                   <Col sm="4">
                     <p>
                       {" "}
-                      Accepted By Mr.
-                      {terminationLetterData !== undefined &&
-                        terminationLetterData.costCentreManagerName}
+                      Accepted By 
+                      {/* {terminationLetterData !== undefined &&
+                        terminationLetterData.costCentreManagerName} */}
+                        {terminationLetterData !== undefined &&
+                        terminationLetterData.employeeName}
                     </p>
                   </Col>
                 </Row>

@@ -86,6 +86,7 @@ const ManagerInitiateAction = (props) => {
     noticePeriodRcryDays: "",
     remarks: "",
     status: 0,
+    iamStatus:"",
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
@@ -170,6 +171,7 @@ const ManagerInitiateAction = (props) => {
         state.noticePeriodRcryDays = "";
         state.remarks = "";
         state.exitId = "";
+        state.iamStatus="";
         setModeOfSeparation("");
         setRehireYes(false);
         setRehireNo(false);
@@ -266,6 +268,7 @@ const ManagerInitiateAction = (props) => {
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.personalEmailId;
+      state.iamStatus = searchByCostData.iamStatus
       console.log(searchByCostData);
       if (
         state.empContractType === "internship" ||
@@ -334,6 +337,8 @@ const ManagerInitiateAction = (props) => {
       state.reasonForResignation = employeeData.reasonForResignation;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
+      state.iamStatus = employeeData.iamStatus
+
       setDateOfResignation(new Date(employeeData.dateOfResignation));
       if (
         employeeData.department == "AFS" ||
@@ -615,6 +620,7 @@ const ManagerInitiateAction = (props) => {
           reasonForResignation: null,
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: modeOfSeparation == 1 ? 2 : modeOfSeparation == 5 ? 7 : 4,
+         iamStatus: state.iamStatus
         };
 
         console.log("createExitData", data2);
@@ -656,6 +662,7 @@ const ManagerInitiateAction = (props) => {
           reasonForResignation: null,
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 6,
+          iamStatus: state.iamStatus
         };
         console.log("createExitData", data1);
         UpdateEmplyoeeExist(data1, state.empId);
@@ -2014,7 +2021,56 @@ const ManagerInitiateAction = (props) => {
                           </Form.Group>
                         </Col>
                       </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Active Profile:</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  value={state.iamStatus}
+                                  onChange={changeHandler}
+                                  // style={
+                                  //   iamStatusError
+                                  //     ? { borderColor: "red" }
+                                  //     : {}
+                                  // }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
 
+                                </Form.Control>
+                                {/* {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )} */}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                       <Row>
                         <Col
                           style={{

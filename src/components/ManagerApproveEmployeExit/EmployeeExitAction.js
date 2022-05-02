@@ -11,6 +11,7 @@ import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const EmployeeExitAction = (props) => {
   const params = useParams();
@@ -42,7 +43,7 @@ const EmployeeExitAction = (props) => {
   const [withdrwaThis, setWithdrawThis] = useState(false);
   const [lastWorkingDate, setlastWorkingDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
-
+  let history = useHistory()
   const [state, setState] = useState({
     empName: "",
     empId: "",
@@ -63,6 +64,7 @@ const EmployeeExitAction = (props) => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
+    iamStatus:""
   });
   const {
     loader,
@@ -87,11 +89,12 @@ const EmployeeExitAction = (props) => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  
   useEffect(() => {
     ViewEmployeeDataById(paramsemployeeId);
     ModeOfSeparationView();
   }, [paramsemployeeId]);
-  console.log("employeeData", paramsemployeeId);
+  console.log("employeeData",employeeData, paramsemployeeId);
   useEffect(() => {
     if (
       employeeData &&
@@ -111,6 +114,7 @@ const EmployeeExitAction = (props) => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       state.remarks = employeeData.rehireRemark;
+      state.iamStatus = employeeData.iamStatus;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
@@ -354,6 +358,8 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 3,
           withdraw: employeeData.withdraw,
+          iamStatus :state.iamStatus
+
         };
         console.log("save ", InfoData);
         UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
@@ -530,6 +536,8 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 8,
           withdraw: employeeData.withdraw,
+          iamStatus: state.iamStatus
+
         };
         UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
         setSuccessModal(true);
@@ -540,8 +548,9 @@ const EmployeeExitAction = (props) => {
   };
   console.log(relivingLetterData, "relivingLetterData", modeOfSeparation);
   const handleRelivingClose1 = () => {
-    props.history.push("/employee-separation-listing");
+    history.push("/employee-separation-listing");
   };
+  console.log("exit",modeOfSeparation,employeeData,)
   return (
     <Fragment>
       {employeeData !== null &&
@@ -1205,6 +1214,56 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
+                     <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Active Profile:</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  value={state.iamStatus}
+                                  onChange={changeHandler}
+                                  // style={
+                                  //   iamStatusError
+                                  //     ? { borderColor: "red" }
+                                  //     : {}
+                                  // }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
+
+                                </Form.Control>
+                                {/* {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )} */}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                     <div
                       style={{
                         marginTop: "2rem",
@@ -1245,7 +1304,8 @@ const EmployeeExitAction = (props) => {
                           Withdraw
                         </button>
                       )}
-                      {!saveLetter &&
+                      {!saveLetter && employeeData !== null &&
+                          employeeData !== undefined &&
                       (employeeData.status === 2 || showPreview === true) ? (
                         <button
                           // disabled={!submitted}

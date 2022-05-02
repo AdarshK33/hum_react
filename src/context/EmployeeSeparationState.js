@@ -86,7 +86,7 @@ export const EmploeeSeparationProvider = ({ children }) => {
   };
   const makeEmployeeDataNull = () => {
     state.employeeData = null;
-    state.employeeProfileData = null ;
+    // state.employeeProfileData = null ;
     return dispatch({
       type: "EMPLOYEE_DATA_BY_ID",
       payload: state.employeeData,

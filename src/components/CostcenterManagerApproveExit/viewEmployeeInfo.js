@@ -471,6 +471,7 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 9,
           withdraw: employeeData.withdraw,
+          // iamStatus: "Delete"
         };
         console.log("createExitData", InfoData);
         UpdateEmplyoeeExist(InfoData,paramsemployeeId);

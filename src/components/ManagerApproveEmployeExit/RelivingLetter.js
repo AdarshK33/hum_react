@@ -4,6 +4,7 @@ import moment from "moment";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import { E_signContext } from "../../context/E_signState";
 import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
 import { useHistory } from "react-router-dom";
 
 const RelivingLetter = ({ anotherPath = false }) => {
@@ -17,6 +18,8 @@ const RelivingLetter = ({ anotherPath = false }) => {
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
   const { user } = useContext(AppContext);
+  const { rolePermission } = useContext(PermissionContext);
+
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const [show, setShow] = useState(true);
@@ -64,6 +67,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
         rehireRemark: employeeData.rehireRemark,
         status: 9,
         withdraw: employeeData.withdraw,
+        // iamStatus:(rolePermission == ("admin"||"superCostCenterManager" ||"costCenterManager" ))?"Delete":"inProgress"
       };
       console.log("save ", InfoData);
       UpdateEmplyoeeExist(InfoData, employeeData.employeeId);

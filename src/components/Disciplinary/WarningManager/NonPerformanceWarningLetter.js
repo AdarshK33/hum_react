@@ -43,7 +43,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
     setShow(false);
     setModal(false);
   };
-
+  console.log(disciplinarySearchData,"nonwarningLetter")
   const submitfinalShowCauseLetter = () => {
     setSaveLetter(true);
     if (
@@ -307,8 +307,8 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
                 </p>
                 <p>
                   {" "}
-                  <b>Accpeted By:</b>{" "}
-                  <b>{disciplinarySearchData.managerName}</b>
+                  <b>Accepted  By:</b>{" "}
+                  <b>{disciplinarySearchData.initiatedByName}</b>
                 </p>
                 <p>
                   {" "}
