@@ -43,7 +43,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
     setShow(false);
     setModal(false);
   };
-
+  console.log(disciplinarySearchData,"nonwarningLetter")
   const submitfinalShowCauseLetter = () => {
     setSaveLetter(true);
     if (
@@ -92,7 +92,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
             disciplinarySearchData.disciplinaryAction.showCauseLetter,
           showCauseNotice:
             disciplinarySearchData.disciplinaryAction.showCauseNotice,
-          status: disciplinarySearchData.disciplinaryAction.status,
+          status: approver === true ? 0 : 2,//disciplinarySearchData.disciplinaryAction.status,
           statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -307,8 +307,8 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
                 </p>
                 <p>
                   {" "}
-                  <b>Accpeted By:</b>{" "}
-                  <b>{disciplinarySearchData.managerName}</b>
+                  <b>Accepted  By:</b>{" "}
+                  <b>{disciplinarySearchData.initiatedByName}</b>
                 </p>
                 <p>
                   {" "}

@@ -87,6 +87,7 @@ const ManagerInitiateExit = () => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
+    iamStatus:"",
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
@@ -1167,6 +1168,7 @@ const ManagerInitiateExit = () => {
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
             status: changeInSeparation === 7?10:8,
+            // iamStatus:state.iamStatus
           };
 
           console.log("createExitData", data2);
@@ -1227,6 +1229,7 @@ const ManagerInitiateExit = () => {
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
             status: 8,
+            iamStatus:state.iamStatus
           };
           console.log("createExitData", data1);
           //   empResign(createExitData);
@@ -1240,10 +1243,9 @@ const ManagerInitiateExit = () => {
     }
   };
   console.log(
-    intern,
-    "modeOfSeparation",
-    state,
-    searchByCostData,
+    "employeeData","-->",
+    employeeProfileData,"-->",
+    searchByCostData,"-->",
     employeeData
   );
   return (
@@ -2269,6 +2271,56 @@ const ManagerInitiateExit = () => {
                     ) : (
                       ""
                     )}
+                     <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Active Profile:</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  value={state.iamStatus}
+                                  onChange={changeHandler1}
+                                  // style={
+                                  //   iamStatusError
+                                  //     ? { borderColor: "red" }
+                                  //     : {}
+                                  // }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
+
+                                </Form.Control>
+                                {/* {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )} */}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                      {changeInSeparation === 7?<>
                       <Row>
                         <Col

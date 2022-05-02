@@ -146,6 +146,7 @@ const ExitListing = () => {
   };
 
   const fetchEmployeeDetails = (employeeId) => {
+    console.log(employeeId,"fetchEmployeeDetails")
     changeEmployeeId(employeeId);
     ViewEmployeeDataById(employeeId);
     ModeOfSeparationView();
@@ -252,7 +253,7 @@ const ExitListing = () => {
                       ModeOfSeparationData !== undefined ? (
                       EmployeeSeparationExitList.map((item, i) => {
                         return (
-                          <tbody key={item.candidateId}>
+                          <tbody key={item.employeeId}>
                             <tr>
                               <td>{i + 1 + indexOfFirstRecord}</td>
                               <td>{item.employeeId}</td>

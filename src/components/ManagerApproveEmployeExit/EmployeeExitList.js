@@ -19,16 +19,16 @@ const EmployeeExitList = () => {
     EmployeeSeparationList,
     ViewEmployeeDataById,
     employeeData,
+    employeeProfileData,
     ModeOfSeparationView,
     ModeOfSeparationData,
     loader,
     total,
     changeEmployeeId,
     makeEmployeeDataNull,
-    setEmpDataNull,
   } = useContext(EmployeeSeparationContext);
   const { getReference, notification } = useContext(E_signContext);
-  const { MakeCostCenterDataNull } = useContext(SeparationContext);
+  const { MakeCostCenterDataNull,searchByEmployeeNull,sear } = useContext(SeparationContext);
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
 
@@ -49,10 +49,10 @@ const EmployeeExitList = () => {
     }
   }, [rolePermission]);
   useEffect(() => {
-    setEmpDataNull();
+    makeEmployeeDataNull()
     MakeCostCenterDataNull();
-  }, []);
-  console.log("---->", EmployeeSeparationList);
+    searchByEmployeeNull()
+  }, [employeeData]);
 
   // useEffect(() => {
   //   if (

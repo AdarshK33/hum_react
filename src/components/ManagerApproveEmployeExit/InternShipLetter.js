@@ -64,6 +64,7 @@ const InternShipLetter = () => {
         rehireRemark: employeeData.rehireRemark,
         status: 6,
         withdraw: employeeData.withdraw,
+        iamStatus: "Delete"
       };
       console.log("save ", InfoData);
       UpdateEmplyoeeExist(InfoData, employeeData.employeeId);

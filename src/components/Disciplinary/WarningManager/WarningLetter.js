@@ -43,7 +43,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
     setModal(false);
     setShow(false);
   };
-
+  console.log(disciplinarySearchData,"warningLetter")
   const submitfinalShowCauseLetter = () => {
     setSaveLetter(true);
     if (
@@ -300,8 +300,8 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                 </p>
                 <p>
                   {" "}
-                  <b>Accpeted By:</b>{" "}
-                  <b>{disciplinarySearchData.managerName}</b>
+                  <b>Accepted By:</b>{" "}
+                  <b>{disciplinarySearchData.initiatedByName}</b>
                 </p>
                 <p>
                   {" "}

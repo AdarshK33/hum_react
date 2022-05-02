@@ -152,12 +152,21 @@ console.log(dates)
                                                         <td>{item.employeeId}</td>
                                                         <td>{item.name}</td>
                                                         <td>{item.email}</td>
-                                                        <td>{item.joiningDate}</td>
-                                                        <td>{item.resignOrTerminationDate}</td>
-                                                        <td>{item.lwd}</td>
+                                                        <td>{ item.joiningDate !== null && 
+                                                        item.joiningDate !== undefined 
+                                                         && item.joiningDate !== ""?
+                                                        moment(new Date(item.joiningDate)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{ item.resignOrTerminationDate !== null && 
+                                                        item.resignOrTerminationDate !== undefined 
+                                                         && item.resignOrTerminationDate !== ""?
+                                                        moment(new Date(item.resignOrTerminationDate)).format("DD-MM-YYYY"):""}</td>
+                                                        <td>{ item.lwd !== null && 
+                                                        item.lwd !== undefined 
+                                                         && item.lwd !== ""?
+                                                        moment(new Date(item.lwd)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.typeOfExit}</td>
                                                         <td>{item.comments}</td>
-                                                        <td>{item.isActive}</td>
+                                                        <td>{item.isActive == 1?"Active":"InActive"}</td>
                                                         <td>{item.history}</td>
                                                         <td>{item.runFAndF}</td>
 

@@ -148,7 +148,7 @@ console.log(dates)
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.employeeId}</td>
+                                                        <td>{item.empId}</td>
                                                         <td>{item.employeeName}</td>
                                                         <td>{item.email}</td>
                                                         <td>{item.joiningDate !== null && 
@@ -165,7 +165,7 @@ console.log(dates)
                                                         moment(new Date(item.lwd)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.typeOfExit}</td>
                                                         <td>{item.comments}</td>
-                                                        <td>{item.makeInActive}</td>
+                                                        <td>{item.makeInActive == 1?"Active":"InActive"}</td>
                                                         <td>{item.runFandF}</td>
                                                 
                                                     </tr>

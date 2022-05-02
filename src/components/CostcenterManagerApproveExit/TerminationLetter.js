@@ -144,7 +144,7 @@ const TerminationLetter = (props) => {
               <Col sm="4">
               <p> Accepted By:&nbsp;&nbsp;
           {terminationLetterData !== undefined &&
-          terminationLetterData.costCentreManagerName}.
+          terminationLetterData.employeeName}.
           </p>
               </Col>
               </Row>

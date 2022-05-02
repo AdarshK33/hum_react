@@ -114,7 +114,7 @@ console.log(dates)
                                             <th>RESIGN DATE</th>
                                             <th>NOTICE PAYABLE DAYS</th>
                                             <th>NOTICE RECOVERY DAYS</th>
-                                            <th>LEAVES ENCASHMENT</th>
+                                            {/* <th>LEAVES ENCASHMENT</th> */}
                                             <th>MONTHLY BONUS PAYMENT</th>
                                             <th>HOLIDAY WORKING BONUS</th>
                                             <th>BONUS REMARKS</th>
@@ -161,12 +161,12 @@ console.log(dates)
                                                         <td>{item.noticePayableDays}</td>
                                                         <td>{item.noticeRecoveryDays}</td>
 
-                                                        <td>{item.leaveEncashment}</td>
+                                                        {/* <td>{item.leaveEncashment}</td> */}
                                                         <td>{item.monthlyBonusPayment}</td>
                                                         <td>{item.holidayWorkingBonus}</td>
                                                         <td>{item.bonusRemarks}</td>
                                                         <td>{item.gratuity}</td>
-                                                        <td>{item.lop}</td>
+                                                        <td>{item.lop?"24-04-2022":""}</td>
                                                         <td>{item.otherRecoveryAmount}</td>
                                                         <td>{item.otherRecoveryRemarks}</td>
                                                         <td>{item.exitInitiatedBy}</td>

@@ -245,7 +245,7 @@ const NonPerformanceTerminationLetter = () => {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
-                    &nbsp; Accepted By Me
+                    &nbsp; Accepted By 
                   </p>
                 </div>
                 <div style={{ marginLeft: "2rem" }}>
@@ -277,7 +277,7 @@ const NonPerformanceTerminationLetter = () => {
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */}
                     {terminationLetterData !== undefined &&
-                      terminationLetterData.costCentreManagerName}
+                      terminationLetterData.employeeName}
                   </p>
                 </div>
               </div>

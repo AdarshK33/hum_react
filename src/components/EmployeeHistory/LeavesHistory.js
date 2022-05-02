@@ -145,8 +145,8 @@ console.log(dates)
                                                         <td>{item.year}</td>
                                                         <td>{item.empName}</td>
                                                         <td>{item.eligibleLeave}</td>
-                                                        <td>{item.typrOfLeave}</td>
-                                                        <td>{item.leaveAvailed}</td>
+                                                        <td>{item.typeOfLeave}</td>
+                                                        <td>{item.leaveApplied}</td>
                                                     </tr>
                                                 </tbody>
                                             )

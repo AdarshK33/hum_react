@@ -145,7 +145,10 @@ console.log(dates)
                                                     <tr>
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeName}</td>
-                                                        <td>{item.dueOfConfirmation}</td>
+                                                        <td>{item.dueOfConfirmation !== null && 
+                                                        item.dueOfConfirmation !== undefined 
+                                                         && item.dueOfConfirmation !== ""?
+                                                        moment(new Date(item.dueOfConfirmation)).format("DD-MM-YYYY"):""}</td>
                                                         <td>{item.extendedDate !== null && 
                                                         item.extendedDate !== undefined 
                                                          && item.extendedDate !== ""?

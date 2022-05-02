@@ -119,8 +119,8 @@ console.log(dates)
                                             <th>SALARY TO</th>
                                             <th>UPDATED ON</th>
                                             <th>UPDATED BY</th>
-                                            <th>APPROVED BY</th>
                                             <th>APPROVED ON</th>
+                                            <th>APPROVED BY</th>
 
 
                                         </tr>
@@ -151,7 +151,10 @@ console.log(dates)
                                                         <td>{item.employeeName}</td>
                                                         <td>{item.changeFromEntity}</td>
                                                         <td>{item.changeToEntity}</td>
-                                                        <td>{item.dolInOldEntity}</td>
+                                                        <td>{item.dolInOldEntity !== null && 
+                                                        item.dolInOldEntity !== undefined 
+                                                         && item.dolInOldEntity !== ""?
+                                                        moment(new Date(item.dolInOldEntity)).format("DD-MM-YYYY"):""}</td> 
                                                         <td>{item.salaryFrom}</td>
                                                         <td>{item.salaryTo}</td>
                                                         <td>{item.updatedOn !== null && 
