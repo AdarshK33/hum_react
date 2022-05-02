@@ -122,7 +122,7 @@ const MisConductTerminationLetter = () => {
               <Col sm="4">
               <p> Accepted By
           {terminationLetterData !== undefined &&
-          terminationLetterData.costCentreManagerName}
+          terminationLetterData.employeeName}
           </p>
               </Col>
               </Row>

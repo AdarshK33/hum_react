@@ -488,12 +488,12 @@ const ManagerWarningAction = (props) => {
           // status: 0,
           status:
             rolePermission == "admin"
-              ? 14
-              : rolePermission == "superCostCenterManager"
               ? 13
-              : rolePermission == "costCenterManager"
+              : rolePermission == "superCostCenterManager"
               ? 12
-              : 11,
+              : rolePermission == "costCenterManager"
+              ? 11
+              : 10,
           statusDesc: state.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -517,12 +517,12 @@ const ManagerWarningAction = (props) => {
                 initiatedRole: state.disciplinaryAction.initiatedRole,
                 status:
                   rolePermission == "admin"
-                    ? 14
-                    : rolePermission == "superCostCenterManager"
-                    ? 13
-                    : rolePermission == "costCenterManager"
-                    ? 12
-                    : 11,
+                  ? 13
+                  : rolePermission == "superCostCenterManager"
+                  ? 12
+                  : rolePermission == "costCenterManager"
+                  ? 11
+                  : 10,
 
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
@@ -549,12 +549,12 @@ const ManagerWarningAction = (props) => {
                 initiatedRole: rolePermission !== null ? rolePermission : null,
                 status:
                   rolePermission == "admin"
-                    ? 14
-                    : rolePermission == "superCostCenterManager"
-                    ? 13
-                    : rolePermission == "costCenterManager"
-                    ? 12
-                    : 11,
+                  ? 13
+              : rolePermission == "superCostCenterManager"
+              ? 12
+              : rolePermission == "costCenterManager"
+              ? 11
+              : 10,
                 statusDesc: null,
                 warningDueDays: 0,
                 warningId: 0,

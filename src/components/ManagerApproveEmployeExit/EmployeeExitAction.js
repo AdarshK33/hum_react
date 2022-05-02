@@ -11,6 +11,7 @@ import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const EmployeeExitAction = (props) => {
   const params = useParams();
@@ -42,7 +43,7 @@ const EmployeeExitAction = (props) => {
   const [withdrwaThis, setWithdrawThis] = useState(false);
   const [lastWorkingDate, setlastWorkingDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
-
+  let history = useHistory()
   const [state, setState] = useState({
     empName: "",
     empId: "",
@@ -87,11 +88,12 @@ const EmployeeExitAction = (props) => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  
   useEffect(() => {
     ViewEmployeeDataById(paramsemployeeId);
     ModeOfSeparationView();
   }, [paramsemployeeId]);
-  console.log("employeeData", paramsemployeeId);
+  console.log("employeeData",employeeData, paramsemployeeId);
   useEffect(() => {
     if (
       employeeData &&
@@ -540,8 +542,9 @@ const EmployeeExitAction = (props) => {
   };
   console.log(relivingLetterData, "relivingLetterData", modeOfSeparation);
   const handleRelivingClose1 = () => {
-    props.history.push("/employee-separation-listing");
+    history.push("/employee-separation-listing");
   };
+  console.log("exit",modeOfSeparation,employeeData,)
   return (
     <Fragment>
       {employeeData !== null &&
@@ -1245,7 +1248,8 @@ const EmployeeExitAction = (props) => {
                           Withdraw
                         </button>
                       )}
-                      {!saveLetter &&
+                      {!saveLetter && employeeData !== null &&
+                          employeeData !== undefined &&
                       (employeeData.status === 2 || showPreview === true) ? (
                         <button
                           // disabled={!submitted}
