@@ -64,6 +64,7 @@ const EmployeeExitAction = (props) => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
+    iamStatus:""
   });
   const {
     loader,
@@ -113,6 +114,7 @@ const EmployeeExitAction = (props) => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       state.remarks = employeeData.rehireRemark;
+      state.iamStatus = employeeData.iamStatus;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
@@ -356,6 +358,8 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 3,
           withdraw: employeeData.withdraw,
+          iamStatus :state.iamStatus
+
         };
         console.log("save ", InfoData);
         UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
@@ -532,6 +536,8 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 8,
           withdraw: employeeData.withdraw,
+          iamStatus: state.iamStatus
+
         };
         UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
         setSuccessModal(true);
@@ -1208,6 +1214,56 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
+                     <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Active Profile:</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  value={state.iamStatus}
+                                  onChange={changeHandler}
+                                  // style={
+                                  //   iamStatusError
+                                  //     ? { borderColor: "red" }
+                                  //     : {}
+                                  // }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
+
+                                </Form.Control>
+                                {/* {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )} */}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                     <div
                       style={{
                         marginTop: "2rem",
