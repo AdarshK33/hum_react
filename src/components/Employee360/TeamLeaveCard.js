@@ -14,32 +14,32 @@ const TeamLeavesCard = () => {
   const history = useHistory();
   const [state, setState] = useState({ Pending: 0, Applied: 0, UnPlanned: 0 });
   const {
-    MyLeavesViewPlanned,
-    MyLeavesViewUnplanned,
-    unPlannedLeaves,
-    plannedLeaves,
+    TeamLeavesViewPlanned,
+    TeamLeavesViewUnplanned,
+    teamUnPlannedLeaves,
+    teamPlannedLeaves,
   } = useContext(Employee360Context);
 
   useEffect(() => {
-    MyLeavesViewPlanned();
+    TeamLeavesViewPlanned();
   }, []);
   useEffect(() => {
-    MyLeavesViewUnplanned();
+    TeamLeavesViewUnplanned();
   }, []);
-  console.log("unPlannedLeaves", unPlannedLeaves);
-  console.log("plannedLeaves", plannedLeaves);
+  console.log("teamUnPlannedLeaves", teamUnPlannedLeaves);
+  console.log("teamPlannedLeaves", teamPlannedLeaves);
   useEffect(() => {
     if (
-      plannedLeaves !== null &&
-      plannedLeaves !== undefined &&
-      Object.keys(plannedLeaves).length !== 0
+      teamPlannedLeaves !== null &&
+      teamPlannedLeaves !== undefined &&
+      Object.keys(teamPlannedLeaves).length !== 0
     ) {
       let tempArr = [];
-      plannedLeaves.map((item, i) => {});
+      teamPlannedLeaves.map((item, i) => {});
       setTotalPlannedCount(tempArr.length);
       setPlannedList(tempArr);
     }
-  }, [plannedLeaves]);
+  }, [teamPlannedLeaves]);
   console.log("plannedList", plannedList, totalPlannedCount);
 
   const LeavesOption = {
@@ -76,9 +76,9 @@ const TeamLeavesCard = () => {
 
   return (
     <Fragment>
-      {plannedLeaves !== null &&
-      plannedLeaves !== undefined &&
-      Object.keys(plannedLeaves).length !== 0 ? (
+      {teamPlannedLeaves !== null &&
+      teamPlannedLeaves !== undefined &&
+      Object.keys(teamPlannedLeaves).length !== 0 ? (
         <div>
           <div style={{ marginTop: "1rem" }}>
             <Chart
@@ -87,9 +87,9 @@ const TeamLeavesCard = () => {
               chartType="PieChart"
               data={[
                 ["Leave Type", "Days"],
-                ["UnPlanned", plannedLeaves[0].unplanned],
-                ["Applied", plannedLeaves[0].applied],
-                ["Pending", plannedLeaves[0].planned],
+                ["UnPlanned", teamPlannedLeaves[0].unplanned],
+                ["Applied", teamPlannedLeaves[0].applied],
+                ["Pending", teamPlannedLeaves[0].planned],
               ]}
               legend_toggle
               options={LeavesOption}
@@ -106,7 +106,7 @@ const TeamLeavesCard = () => {
               View All
             </label>
           </div>
-          <LeavesShifting Data={plannedLeaves} />
+          <LeavesShifting Data={teamPlannedLeaves} />
 
           <div style={{ marginTop: "2rem" }}>
             <label>Unplanned Leaves</label>
@@ -118,7 +118,7 @@ const TeamLeavesCard = () => {
               View All
             </label>
           </div>
-          <LeavesShifting Data={unPlannedLeaves} />
+          <LeavesShifting Data={teamUnPlannedLeaves} />
         </div>
       ) : (
         <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
