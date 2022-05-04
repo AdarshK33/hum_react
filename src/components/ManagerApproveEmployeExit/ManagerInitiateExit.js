@@ -123,7 +123,7 @@ const ManagerInitiateExit = () => {
   } = useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
     useContext(OfferContext);
-  const { locationDetails, locationDetailsList } =
+  const { locationDetails, locationDetailsList ,rolePermission} =
     useContext(PermissionContext);
   console.log(employeeData, "state", state, "7795");
 
@@ -2271,7 +2271,7 @@ const ManagerInitiateExit = () => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {(rolePermission !== "manager")?<Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -2320,7 +2320,7 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row>:''}
                      {changeInSeparation === 7?<>
                       <Row>
                         <Col

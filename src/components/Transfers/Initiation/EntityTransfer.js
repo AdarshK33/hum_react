@@ -74,7 +74,7 @@ const EntityTransfer = () => {
       newEntity !== null &&
       newEntity !== "" &&
       newEntity !== undefined){
-    getDepartmentDetails();
+    getDepartmentDetails(newEntity);
       }
   }, [newEntity]);
 
