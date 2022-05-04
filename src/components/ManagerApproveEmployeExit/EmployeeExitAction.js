@@ -64,7 +64,7 @@ const EmployeeExitAction = (props) => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
-    iamStatus:""
+    iamStatus:"Delete"
   });
   const {
     loader,
@@ -114,7 +114,6 @@ const EmployeeExitAction = (props) => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       state.remarks = employeeData.rehireRemark;
-      state.iamStatus = employeeData.iamStatus;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
@@ -536,7 +535,7 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 8,
           withdraw: employeeData.withdraw,
-          iamStatus: state.iamStatus
+          // iamStatus: state.iamStatus
 
         };
         UpdateEmplyoeeExist(InfoData, employeeData.employeeId);

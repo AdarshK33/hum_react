@@ -81,6 +81,7 @@ const EmployeeExitAction = (props) => {
     remarks: "",
     status: "",
     withdraw: "",
+    iamStatus:"",
   });
   const {
     EmployeeSeparationListView,
@@ -471,7 +472,7 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 9,
           withdraw: employeeData.withdraw,
-          // iamStatus: "Delete"
+           iamStatus: state.iamStatus
         };
         console.log("createExitData", InfoData);
         UpdateEmplyoeeExist(InfoData,paramsemployeeId);
@@ -1055,6 +1056,56 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
+                     <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Active Profile:</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  value={state.iamStatus}
+                                  onChange={changeHandler}
+                                  // style={
+                                  //   iamStatusError
+                                  //     ? { borderColor: "red" }
+                                  //     : {}
+                                  // }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
+
+                                </Form.Control>
+                                {/* {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )} */}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                    {state.modeOfSeparationId === 7?<>
                     <div
                       style={{

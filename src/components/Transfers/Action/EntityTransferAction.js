@@ -130,8 +130,8 @@ const EntityTransferAction = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    getDepartmentDetails();
-  }, []);
+    getDepartmentDetails(newEntity);
+  }, [newEntity]);
 
   useEffect(() => {
     if (newDept !== "") {

@@ -334,8 +334,10 @@ const InternationalTransfer = () => {
       validForm = false;
       setManagerErrMsg("Please select manager");
     }
-
-    if (newMangerMailId === "" || !newMangerMailId.includes("@")) {
+    const emailValid =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (newMangerMailId === "" || !emailValid.test(newMangerMailId)
+    ) {
       validForm = false;
       setManagerMailIdErrMsg("Please enter manager email");
     }
