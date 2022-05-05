@@ -535,7 +535,7 @@ const EmployeeExitAction = (props) => {
           rehireRemark: state.remarks !== "" ? state.remarks : null,
           status: 8,
           withdraw: employeeData.withdraw,
-          // iamStatus: state.iamStatus
+          iamStatus: state.iamStatus
 
         };
         UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
