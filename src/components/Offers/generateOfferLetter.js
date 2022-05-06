@@ -83,7 +83,7 @@ const GenerateOfferLetter = () => {
   }, [candidateData]);
 
   const offerLetterClick = () => {
-    console.log("offer candidate id", createCandidateResponse.candidateId);
+    // console.log("offer candidate id", createCandidateResponse.candidateId);
     console.log("candidateData id", candidateData);
     generateOfferLetter(candidateData.candidateInformation.candidateId);
     console.log("offer letter response data", offerLetterData);
