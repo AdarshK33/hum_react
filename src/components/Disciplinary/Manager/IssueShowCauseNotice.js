@@ -27,7 +27,7 @@ const IssueShowCauseNotice = () => {
 
   const [intern, setIntern] = useState(false);
   const [EmpName, setEmpName] = useState();
-  const history = useHistory();
+  let history = useHistory();
 
   const [showCauseReasonError, setShowCauseReasonError] = useState(false);
   const [reasonForCauseError, setReasonForCauseError] = useState(false);
@@ -563,7 +563,7 @@ const IssueShowCauseNotice = () => {
       console.log("createShowCauseData", InfoData, rolePermission);
       setSubmitted(true);
       state.clickOnsubmit = true;
-      createShowCauseIssue(InfoData, state.empId);
+      createShowCauseIssue(InfoData, state.empId,history);
       setPreview(true);
       setSuccessModal(true);
     }
