@@ -10,6 +10,7 @@ const initial_state = {
   disciplinarySearchData: {},
   disciplinaryResonsData: {},
   showCauseIssueCreateResponse: {},
+  showCauseIssueCreateResponseMessage: {},
   issueShowCauseNoticeData: {},
   disciplinaryEmpSearchData: {},
 };
@@ -144,10 +145,15 @@ export const DisciplinaryProvider = (props) => {
       .post("/api/v1/disciplinary/create", updatedInfo)
       .then((response) => {
         state.showCauseIssueCreateResponse = response.data.data;
+        state.showCauseIssueCreateResponseMessage = response.data
         console.log(response.data, "createDisciplinary");
-
+        if(response.data.message == "DisciplinaryAction is already in the system."){
+          toast.error(response.data.message);
+        }else{
+          toast.info(response.data.message);
+        }
         disciplinaryEmployeeSearch(response.data.data.disciplinaryId);
-        toast.info(response.data.message);
+        
         // disciplinaryEmployeeSearch(empId);
 
         setLoader(false);
@@ -156,14 +162,20 @@ export const DisciplinaryProvider = (props) => {
 
         return dispatch({
           type: "CREATE_SHOW_CAUSE_NOTICE",
-          payload: state.showCauseIssueCreateResponse,
+          payload: {createData:state.showCauseIssueCreateResponse,messageData:state.showCauseIssueCreateResponseMessage},
         });
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
+  const showCauseIssueCreateResponseMessageNull = ()=>{
+    state.showCauseIssueCreateResponseMessage = null
+    return dispatch({
+      type: "CREATE_SHOW_CAUSE_NOTICE",
+      payload: [state.showCauseIssueCreateResponse,state.showCauseIssueCreateResponseMessage],
+    });  
+  }
   const IssueShowCauseNoticeLetter = (empId) => {
     setLoader(true);
     client
@@ -209,9 +221,11 @@ export const DisciplinaryProvider = (props) => {
         MakedisciplinaryEmployeeSearchNull,
         EmployeeSearchWithKey,
         SubmitDisciplinaryLetter,
+        showCauseIssueCreateResponseMessageNull,
         disciplinaryEmpSearchData: state.disciplinaryEmpSearchData,
         issueShowCauseNoticeData: state.issueShowCauseNoticeData,
         showCauseIssueCreateResponse: state.showCauseIssueCreateResponse,
+        showCauseIssueCreateResponseMessage:state.showCauseIssueCreateResponseMessage,
         disciplinaryResonsData: state.disciplinaryResonsData,
         disciplinarySearchData: state.disciplinarySearchData,
         total: state.total,

@@ -3,7 +3,7 @@ import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
-import { toast } from "react-toastify";
+import { toast ,ToastContainer} from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "./ShowCauseNoticeLetter";
 import NonPerformanceLetter from "./NonPerformanceLetter";
@@ -68,6 +68,7 @@ const IssueShowCauseNotice = () => {
     disciplinaryResonsData,
     createShowCauseIssue,
     showCauseIssueCreateResponse,
+    showCauseIssueCreateResponseMessage,
     SubmitDisciplinaryLetter,
     issueShowCauseNoticeData,
     EmployeeSearchWithKey,
@@ -376,6 +377,7 @@ const IssueShowCauseNotice = () => {
   };
   // end
   const handleClose = () => {
+    console.log("22222")
     setModal(false);
     setSuccessModal(false);
   };
@@ -571,7 +573,9 @@ const IssueShowCauseNotice = () => {
     <Fragment>
       {/* letter */}
 
-      {submitLetter ? (
+      {(submitLetter && showCauseIssueCreateResponseMessage &&
+    Object.keys(showCauseIssueCreateResponseMessage).length !== 0 &&
+     showCauseIssueCreateResponseMessage.status !== "FAIL") ? (
         <Modal
           show={showShowCauseNoticeModal}
           onHide={handleShowCauseLetterClose}
@@ -602,7 +606,7 @@ const IssueShowCauseNotice = () => {
               disciplinarySearchData.disciplinaryAction.reportingType !==
                 null &&
               disciplinarySearchData.disciplinaryAction.reportingType !==
-                undefined ? (
+                undefined && showCauseIssueCreateResponseMessage.status !== "FAIL" ? (
               disciplinarySearchData.disciplinaryAction.reportingType === 1 ? (
                 <label className="text-center">
                   Show cause notice details saved successfully, Employee has
@@ -672,7 +676,10 @@ const IssueShowCauseNotice = () => {
         ""
       )}
 
-      <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
+      {(showCauseIssueCreateResponseMessage &&
+    Object.keys(showCauseIssueCreateResponseMessage).length !== 0 &&
+     showCauseIssueCreateResponseMessage.status !== "FAIL")?<>
+     <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
@@ -687,7 +694,7 @@ const IssueShowCauseNotice = () => {
             </div>
           </Modal.Body>
         </Container>
-      </Modal>
+      </Modal></>:null}
 
       <Modal show={showInfoModal} onHide={() => handleInfoClose()} centered>
         <Container>
@@ -706,7 +713,7 @@ const IssueShowCauseNotice = () => {
           </Modal.Body>
         </Container>
       </Modal>
-
+      <ToastContainer />
       <Breadcrumb title="DISCIPLINARY ACTION" parent="DISCIPLINARY ACTION" />
       <div className="container-fluid">
         <div className="row">
