@@ -509,6 +509,7 @@ const ViewWorkInformation = () => {
                   disabled="true"
                 >
                   <option value="">Select Notice Period</option>
+                  <option value="0">0 Month</option>
                   <option value="1">1 Month</option>
                   <option value="2">2 Month</option>
                   <option value="3">3 Month</option>
