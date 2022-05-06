@@ -29,6 +29,7 @@ const ManagerDisciplinaryList = () => {
     disciplinaryEmployeeSearch,
     disciplinarySearchData,
     MakedisciplinaryEmployeeSearchNull,
+    showCauseIssueCreateResponseMessageNull,
   } = useContext(DisciplinaryContext);
   const { rolePermission } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
@@ -50,6 +51,9 @@ const ManagerDisciplinaryList = () => {
   // useEffect(() => {
   //   MakedisciplinaryEmployeeSearchNull();
   // }, []);
+  useEffect(()=>{
+    showCauseIssueCreateResponseMessageNull()
+  },[])
   useEffect(() => {
     if (rolePermission == "superCostCenterManager") {
       setRole(1);

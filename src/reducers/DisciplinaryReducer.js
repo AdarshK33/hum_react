@@ -1,4 +1,5 @@
 const DisciplinaryReducer = (state, action) => {
+  console.log(action,"action")
   switch (action.type) {
     case "DISCIPLINARY_LISTING":
       return { ...state, disciplinaryListData: action.payload };
@@ -11,7 +12,8 @@ const DisciplinaryReducer = (state, action) => {
     case "CREATE_SHOW_CAUSE_NOTICE":
       return {
         ...state,
-        showCauseIssueCreateResponse: action.payload,
+        showCauseIssueCreateResponse: action.payload.createData,
+        showCauseIssueCreateResponseMessage:action.payload.messageData
       };
 
     case "ISSUE_SHOW_CAUSE_LETTER":
