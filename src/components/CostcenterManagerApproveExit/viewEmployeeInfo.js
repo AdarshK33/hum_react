@@ -1111,7 +1111,6 @@ const EmployeeExitAction = (props) => {
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
-                                  <option value="Suspend">Suspend</option>
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>

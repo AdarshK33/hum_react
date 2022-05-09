@@ -375,7 +375,7 @@ const EntityTransfer = () => {
         transferType: transferType,
       };
       console.log(InfoData);
-      createTransferInitiation(InfoData);
+      createTransferInitiation(InfoData,history);
       setFormValid(true);
       // setModalShow(true);
     }

@@ -127,7 +127,7 @@ const InternationalTransfer = () => {
               : parseInt(projectTerm) / 10 + " Months"
             : null,
       };
-      createTransferInitiation(initiationData);
+      createTransferInitiation(initiationData,history);
     }
   }, [formValid]);
 

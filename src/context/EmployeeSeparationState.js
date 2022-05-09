@@ -232,14 +232,19 @@ export const EmploeeSeparationProvider = ({ children }) => {
       });
   };
 
-  const CreateEmplyoeeExist = (createInfo, id) => {
+  const CreateEmplyoeeExist = (createInfo, id,history) => {
     setLoader(true);
     console.log("INSIDE API CALL ");
     client
       .post("/api/v1/separation/employee-exit/create", createInfo)
       .then((response) => {
         state.updateResponse = response.data.data;
-        toast.info(response.data.message);
+        if(response.data.message == "Employee already exist"){
+          toast.error(response.data.message);
+          history.push('/employee-separation-listing')
+        }else{
+          toast.info(response.data.message);
+        }
         ViewEmployeeDataById(id);
         setLoader(false);
         console.log("updated response", state.updateResponse);

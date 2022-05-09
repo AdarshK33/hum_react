@@ -17,6 +17,7 @@ import { AppContext } from "../../../context/AppState";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import PromotionLetters from "../PromotionLetter";
 import PromotionSalaryLetters from "../PromotionSalaryLetter";
+import { useHistory } from "react-router-dom";
 import "../Promotion.css";
 const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
@@ -86,6 +87,7 @@ const PromotionInitiate = () => {
   const [submitLetter, setSubmitLetter] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [showRelivingModal, setShow] = useState(false);
+  const history = useHistory();
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -429,16 +431,16 @@ const PromotionInitiate = () => {
           user !== undefined &&
           (user.loginType == 7 || user.additionalRole == "7")
         ) {
-          PromotionCreate(infoData, 2);
+          PromotionCreate(infoData, 2,history);
         } else if (
           user !== null &&
           user !== undefined &&
           (user.additionalRole === "1" || user.loginType == "1")
         ) {
-          PromotionCreate(infoData, 1);
+          PromotionCreate(infoData, 1,history);
           setPreview(true);
         } else {
-          PromotionCreate(infoData);
+          PromotionCreate(infoData,'',history);
         }
         // PromotionCreate(infoData);
         console.log("all okay1", infoData);
@@ -455,16 +457,16 @@ const PromotionInitiate = () => {
           user !== undefined &&
           (user.loginType == 7 || user.additionalRole == "7")
         ) {
-          PromotionCreate(infoData, 2);
+          PromotionCreate(infoData, 2,history);
         } else if (
           user !== null &&
           user !== undefined &&
           (user.additionalRole === "1" || user.loginType == "1")
         ) {
-          PromotionCreate(infoData, 1);
+          PromotionCreate(infoData, 1,history);
           setPreview(true);
         } else {
-          PromotionCreate(infoData);
+          PromotionCreate(infoData,'',history);
         }
         // PromotionCreate(infoData);
         console.log("all okay2", infoData);
@@ -481,16 +483,16 @@ const PromotionInitiate = () => {
           user !== undefined &&
           (user.loginType == 7 || user.additionalRole == "7")
         ) {
-          PromotionCreate(infoData, 2);
+          PromotionCreate(infoData, 2,history);
         } else if (
           user !== null &&
           user !== undefined &&
           (user.additionalRole == "1" || user.loginType == "1")
         ) {
-          PromotionCreate(infoData, 1);
+          PromotionCreate(infoData, 1,history);
           setPreview(true);
         } else {
-          PromotionCreate(infoData);
+          PromotionCreate(infoData,'',history);
         }
         console.log("all okay3", infoData);
       } else {
@@ -742,7 +744,7 @@ const PromotionInitiate = () => {
         remarks: promotionIdData["remarks"],
         status: 3,
       };
-      PromotionCreate(infoData);
+      PromotionCreate(infoData,'',history);
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);

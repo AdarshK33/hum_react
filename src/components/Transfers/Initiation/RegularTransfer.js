@@ -163,7 +163,7 @@ const RegularTransfer = () => {
         transferId: 0,
         transferType: transferType,
       };
-      createTransferInitiation(initiationData);
+      createTransferInitiation(initiationData,history);
     }
   }, [formValid]);
 
@@ -341,7 +341,7 @@ const RegularTransfer = () => {
         transferId: initiationTransferId,
         transferType: transferType,
       };
-      createTransferInitiation(initiationData);
+      createTransferInitiation(initiationData,history);
       setLetterSent(true);
       setShowLetterSubmitModal(true);
     }
