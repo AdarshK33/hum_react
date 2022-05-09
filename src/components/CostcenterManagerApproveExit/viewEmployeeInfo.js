@@ -10,6 +10,7 @@ import TerminationLetter from "./TerminationLetter";
 import NonPerformanceTerminationLetter from "./NonPerformanceTerminationLetter"
 import MisConductTerminationLetter from "./MisConductTerminationLetter"
 import { setGlobalCssModule } from "reactstrap/es/utils";
+import { PermissionContext } from "../../context/PermissionState";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import moment from "moment";
@@ -38,6 +39,7 @@ const EmployeeExitAction = (props) => {
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
   const [submitted, setSubmitted] = useState(false);
   const [intern, setIntern] = useState(false);
+  const [iamStatusError,SetIamStatusError] = useState(false)
 
   const [submit, setSubmit] = useState(false);
   const [message, setMessage] = useState(false);
@@ -101,6 +103,8 @@ const EmployeeExitAction = (props) => {
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
+  const {rolePermission} =
+  useContext(PermissionContext);
   const {
     empResign,
     withdraw,
@@ -368,12 +372,31 @@ const EmployeeExitAction = (props) => {
       return true;
     }
   };
+  const iamStatusValidate = () => {
+    let statusData = state.iamStatus
+    if (
+      (statusData !== "" &&
+      statusData !== null &&
+      statusData !== undefined) &&
+      (rolePermission == "admin"||
+      rolePermission == "superCostCenterManager"||
+       rolePermission == "costCenterManager"
+      )
+    ) {
+      SetIamStatusError(false);
+      return true;
+    } else {
+      SetIamStatusError(true);
+      return false;
+    }
+  };
   const checkValidations = () => {
     console.log("on validation");
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
       (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true)
+      (validateRcryDays() === true) &
+      (iamStatusValidate() === true)
     ) {
       console.log("on true");
       return true;
@@ -1081,11 +1104,10 @@ const EmployeeExitAction = (props) => {
                                   name="iamStatus"
                                   value={state.iamStatus}
                                   onChange={changeHandler}
-                                  // style={
-                                  //   iamStatusError
-                                  //     ? { borderColor: "red" }
-                                  //     : {}
-                                  // }
+                                  style={
+                                    iamStatusError? { borderColor: "red" }
+                                      : {}
+                                  }
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
@@ -1093,14 +1115,14 @@ const EmployeeExitAction = (props) => {
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>
-                                {/* {iamStatusError ? (
+                                {iamStatusError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
                                     &nbsp; *Please choose valid option
                                   </p>
                                 ) : (
                                   <p></p>
-                                )} */}
+                                )}
                               </Form.Group>
                             )}
                           </div>

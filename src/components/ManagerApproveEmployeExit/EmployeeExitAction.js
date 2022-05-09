@@ -8,6 +8,7 @@ import "./EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
 import TerminationLetter from "./TerminationLetter";
+import { PermissionContext } from "../../context/PermissionState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
@@ -43,6 +44,8 @@ const EmployeeExitAction = (props) => {
   const [withdrwaThis, setWithdrawThis] = useState(false);
   const [lastWorkingDate, setlastWorkingDate] = useState(new Date());
   const [showAddModal, setShowAddModal] = useState(false);
+  const [iamStatusError,SetIamStatusError] = useState(false)
+
   let history = useHistory()
   const [state, setState] = useState({
     empName: "",
@@ -64,7 +67,7 @@ const EmployeeExitAction = (props) => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
-    iamStatus:"Delete"
+    iamStatus:""
   });
   const {
     loader,
@@ -89,7 +92,8 @@ const EmployeeExitAction = (props) => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
-  
+  const {rolePermission} =
+    useContext(PermissionContext);
   useEffect(() => {
     ViewEmployeeDataById(paramsemployeeId);
     ModeOfSeparationView();
@@ -459,12 +463,30 @@ const EmployeeExitAction = (props) => {
       return true;
     }
   };
+  const iamStatusValidate = () => {
+    var status = state.iamStatus
+    if (
+      status !== "" &&
+      status !== null &&
+      status !== undefined || 
+      (rolePermission == "admin"||
+      rolePermission == "superCostCenterManager"||
+       rolePermission == "costCenterManager")
+    ) {
+      SetIamStatusError(false);
+      return true;
+    } else {
+      SetIamStatusError(true);
+      return false;
+    }
+  };
   const checkValidations = () => {
     console.log("on validation");
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
       (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true)
+      (validateRcryDays() === true) &
+      (iamStatusValidate() === true)
     ) {
       console.log("on true");
       return true;
@@ -1238,11 +1260,11 @@ const EmployeeExitAction = (props) => {
                                   name="iamStatus"
                                   value={state.iamStatus}
                                   onChange={changeHandler}
-                                  // style={
-                                  //   iamStatusError
-                                  //     ? { borderColor: "red" }
-                                  //     : {}
-                                  // }
+                                  style={
+                                    iamStatusError
+                                      ? { borderColor: "red" }
+                                      : {}
+                                  }
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
@@ -1250,14 +1272,14 @@ const EmployeeExitAction = (props) => {
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>
-                                {/* {iamStatusError ? (
+                                {iamStatusError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
                                     &nbsp; *Please choose valid option
                                   </p>
                                 ) : (
                                   <p></p>
-                                )} */}
+                                )}
                               </Form.Group>
                             )}
                           </div>
