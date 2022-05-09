@@ -377,7 +377,7 @@ if(rolePermission == "manager"){
               setShowInfoModal(true);
               setCheckForExist(false);
               setFirstTimeUpdate(false);
-              toast.info("Employe is in separation list");
+              toast.info("Employee is in separation list");
             }
           }
         }
@@ -1196,7 +1196,7 @@ if(rolePermission == "manager"){
           };
 
           console.log("createExitData", data2);
-          CreateEmplyoeeExist(data2, state.empId);
+          CreateEmplyoeeExist(data2, state.empId,history);
           if(changeInSeparation === 7){
             setSubmitted(true);
             setShowSuccessModalDemise(true);
@@ -2328,7 +2328,6 @@ if(rolePermission == "manager"){
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
-                                  <option value="Suspend">Suspend</option>
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>

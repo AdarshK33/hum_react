@@ -179,13 +179,18 @@ export const TransferProvider = (props) => {
       });
   };
 
-  const createTransferInitiation = (initiationData) => {
+  const createTransferInitiation = (initiationData,history) => {
     setLoader(true);
     client
       .post("/api/v1/transfer/create", initiationData)
       .then((response) => {
         setLoader(false);
-        toast.info(response.data.message);
+        if(response.data.message == "Employee transfer already exist"){
+          toast.error(response.data.message);
+          history.push('/transfers')
+        }else{
+          toast.info(response.data.message);
+        }
         if (
           response.data.data.transferId !== null &&
           response.data.data.transferId !== 0 &&

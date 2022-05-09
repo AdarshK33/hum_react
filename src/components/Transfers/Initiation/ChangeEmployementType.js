@@ -242,7 +242,7 @@ const ChangeEmployementType = () => {
           transferType: transferData.transferType,
         };
         console.log(InfoData);
-        createTransferInitiation(InfoData);
+        createTransferInitiation(InfoData,history);
         setFormValid(true);
         setLetterSent(true);
         setShowLetterSubmitModal(true);
@@ -405,7 +405,7 @@ const ChangeEmployementType = () => {
           transferType: "Employment Type Transfer",
         };
         console.log(InfoData);
-        createTransferInitiation(InfoData);
+        createTransferInitiation(InfoData,history);
         setFormValid(true);
         // setModalShow(true);
       }
