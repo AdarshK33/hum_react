@@ -51,6 +51,7 @@ const ManagerInitiateExit = () => {
   const [modOfSepReasonError, setModOfSepReasonError] = useState(false);
   const [dateOfResignError, setDateOfResignError] = useState(false);
   const [lastWorkingDateError, setLastWorkingDateError] = useState(false);
+  const [iamStatusError,SetIamStatusError] = useState(false)
   const [emailError, setEmailError] = useState(false);
 
   const [showRelivingModal, setShow] = useState(false);
@@ -130,7 +131,11 @@ const ManagerInitiateExit = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-
+  useEffect(()=>{
+if(rolePermission == "manager"){
+  state.iamStatus = "inProgress"
+}
+  },[rolePermission])
   useEffect(() => {
     locationDetails();
   }, []);
@@ -995,11 +1000,30 @@ const ManagerInitiateExit = () => {
       return false;
     }
   };
+  console.log(rolePermission,"rolePermission")
+  const iamStatusValidate = () => {
+    var status = state.iamStatus
+    if (
+      (status !== "" &&
+      status !== null &&
+      status !== undefined) && 
+      (rolePermission == "admin"||
+      rolePermission == "superCostCenterManager"||
+       rolePermission == "costCenterManager"||
+       rolePermission == "manager")
+    ) {
+      SetIamStatusError(false);
+      return true;
+    } else {
+      SetIamStatusError(true);
+      return false;
+    }
+  };
   const lastWarkingDateValidate = () => {
     if (
       lastWorkingDate !== "" &&
       lastWorkingDate !== null &&
-      lastWorkingDate !== undefined
+      lastWorkingDate !== undefined 
     ) {
       setLastWorkingDateError(false);
       return true;
@@ -1008,7 +1032,6 @@ const ManagerInitiateExit = () => {
       return false;
     }
   };
-
   const dateOfresignationValidate = () => {
     if (intern === false) {
       if (
@@ -1089,6 +1112,7 @@ const ManagerInitiateExit = () => {
       ) ===
         true) &
       (lastWarkingDateValidate() === true) &
+      (iamStatusValidate() === true) &
       (dateOfresignationValidate() === true) &
       (emailValidation() === true)
     ) {
@@ -2296,11 +2320,11 @@ const ManagerInitiateExit = () => {
                                   name="iamStatus"
                                   value={state.iamStatus}
                                   onChange={changeHandler1}
-                                  // style={
-                                  //   iamStatusError
-                                  //     ? { borderColor: "red" }
-                                  //     : {}
-                                  // }
+                                  style={
+                                    iamStatusError
+                                      ? { borderColor: "red" }
+                                      : {}
+                                  }
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
@@ -2308,14 +2332,14 @@ const ManagerInitiateExit = () => {
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>
-                                {/* {iamStatusError ? (
+                                {iamStatusError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
                                     &nbsp; *Please choose valid option
                                   </p>
                                 ) : (
                                   <p></p>
-                                )} */}
+                                )}
                               </Form.Group>
                             )}
                           </div>

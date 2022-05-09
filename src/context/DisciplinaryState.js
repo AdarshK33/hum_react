@@ -3,6 +3,7 @@ import { client } from "../utils/axios";
 import DisciplinaryReducer from "../reducers/DisciplinaryReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
+import { useHistory } from "react-router-dom";
 
 const initial_state = {
   total: {},
@@ -17,7 +18,9 @@ const initial_state = {
 
 export const DisciplinaryContext = createContext();
 
-export const DisciplinaryProvider = (props) => {
+export const DisciplinaryProvider = (props,context) => {
+  let history = useHistory();
+
   const [state, dispatch] = useReducer(DisciplinaryReducer, initial_state);
   const [loader, setLoader] = useState(false);
   const [lettterview, setLetterView] = useState(false);
@@ -138,9 +141,9 @@ export const DisciplinaryProvider = (props) => {
       });
   };
 
-  const createShowCauseIssue = (updatedInfo, empId) => {
+  const createShowCauseIssue = (updatedInfo, empId,history) => {
     setLoader(true);
-    console.log("updatedInfo", updatedInfo);
+    console.log("updatedInfo", updatedInfo,context);
     client
       .post("/api/v1/disciplinary/create", updatedInfo)
       .then((response) => {
@@ -149,6 +152,7 @@ export const DisciplinaryProvider = (props) => {
         console.log(response.data, "createDisciplinary");
         if(response.data.message == "DisciplinaryAction is already in the system."){
           toast.error(response.data.message);
+          history.push("/disciplinary-action")
         }else{
           toast.info(response.data.message);
         }
