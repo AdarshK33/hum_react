@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { Employee360Context } from "../../context/Employee360State";
 import LeavesShifting from "./LeavesShifting";
 import { useHistory } from "react-router-dom";
+import { PermissionContext } from "../../context/PermissionState";
 
 const TeamLeavesCard = () => {
   const [resultData, setResultData] = useState([]);
@@ -19,7 +20,7 @@ const TeamLeavesCard = () => {
     teamUnPlannedLeaves,
     teamPlannedLeaves,
   } = useContext(Employee360Context);
-
+  const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     TeamLeavesViewPlanned();
   }, []);
@@ -71,7 +72,11 @@ const TeamLeavesCard = () => {
     },
   };
   const GoToLeaves = (e) => {
+    if (rolePermission !== "admin") {
     history.push("./managerleaves");
+    }else{
+      history.push("./adminleaves"); 
+    }
   };
 
   return (
