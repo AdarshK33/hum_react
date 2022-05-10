@@ -249,7 +249,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                         ? "Mr."
                         : disciplinarySearchData.maritalStatus === "Married"
                         ? "Mrs."
-                        : "Miss"
+                        : "Miss."
                       : "Mr./Ms."}
                   </b>{" "}
                   &nbsp; {disciplinarySearchData.employeeName}

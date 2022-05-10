@@ -224,7 +224,7 @@ const ReasonByEmployee = ({ sign = true }) => {
                         : disciplinarySearchData.initiatedByMarital ===
                           "Married"
                         ? "Mrs."
-                        : "Miss"
+                        : "Miss."
                       : "Mr./Ms."}
                   </b>{" "}
                   &nbsp; {disciplinarySearchData.initiatedByName}

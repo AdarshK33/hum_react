@@ -39,7 +39,7 @@ const MisConductTerminationLetter = () => {
        `Mr.${terminationLetterData.employeeName}`
         :(terminationLetterData.gender == "FEMALE" 
         && terminationLetterData.maritalStatus == "Single")?
-        `Miss ${terminationLetterData.employeeName}`:
+        `Miss. ${terminationLetterData.employeeName}`:
         `Mrs.${terminationLetterData.employeeName}`}
          </p>
            <p>
