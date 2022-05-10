@@ -80,17 +80,15 @@ const AppointmentLetter = (props) => {
         candidateId: 0,
         module: "Entity Transfer",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../transfers",
         recipient2: {
           rectangle: "430,250,580,350",
           name: transferData.employeeName,
-          email: "rajasekhar@theretailinsights.com",
-          //  transferData.email,
-          phoneNumber: transferData.empPhNo,
-          // transferData.phoneNumber,
+          email:  transferData.email,
+          phoneNumber: transferData.phoneNumber,
         },
       };
       console.log(

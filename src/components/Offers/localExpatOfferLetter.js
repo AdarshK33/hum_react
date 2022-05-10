@@ -44,7 +44,7 @@ const LocalExpatOfferLetter = () => {
         candidateId: candidateData.candidateInformation.candidateId,
         module: "Offer and On Boarding",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "amit.kumar@qsometech.com",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../offer-release-list",

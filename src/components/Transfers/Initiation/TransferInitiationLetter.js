@@ -57,11 +57,11 @@ const TransferInitationLetter = ({ transferId }) => {
             <p className="mt-5 ">
               <b> {transferData.currentCompany},</b>
             </p>
-            <Row>
+            {/* <Row>
               <Col sm="8">
                 <p>Authorised Signatory</p>
               </Col>
-            </Row>
+            </Row> */}
             <div className="float-right "></div>
           </div>
         </Fragment>

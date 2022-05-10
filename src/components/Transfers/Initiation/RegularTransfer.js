@@ -597,7 +597,7 @@ const RegularTransfer = () => {
         <Modal.Body>
           <TransferInitationLetter transferId={initiationTransferId} />
           <br></br>
-          <Row>
+          {/* <Row>
             {showSignature ? (
               <>
                 <br></br>
@@ -619,21 +619,19 @@ const RegularTransfer = () => {
                 </button>
               </>
             )}
-          </Row>
-          {showSignature && !previewTransferLetter && (
-            <Row>
-              <Col sm={{ span: 5, offset: 4 }}>
-                <br></br>
-                <br></br>
-                <Button
-                  variant="primary"
-                  onClick={handleTransferLetterModalClose}
-                >
-                  Save Changes
-                </Button>
-              </Col>
-            </Row>
-          )}
+          </Row> */}
+          { !previewTransferLetter && (
+              <Row style={{textAlign:"center"}}>
+                <Col sm={{ span: 5, offset: 4 }}>
+                  <Button
+                    variant="primary"
+                    onClick={handleTransferLetterModalClose}
+                  >
+                    Save 
+                  </Button>
+                </Col>
+              </Row>
+            )}
         </Modal.Body>
       </Modal>
 
@@ -1108,11 +1106,6 @@ const RegularTransfer = () => {
               )}
 
               {searchValue !== "" && initiationStatus && previewTransferLetter && (
-                <div className="preview-section">
-                  <br></br>
-                  <br></br>
-                  <img src={calendarImage} alt="calendar" width="200px" />
-                  <br></br>
                   <button
                     disabled={letterSent}
                     className={letterSent ? "confirmButton" : "stepperButtons"}
@@ -1120,7 +1113,6 @@ const RegularTransfer = () => {
                   >
                     Submit
                   </button>
-                </div>
               )}
             </Col>
           </Row>

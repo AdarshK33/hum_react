@@ -62,7 +62,7 @@ const ExtensionLetter1 = () => {
       candidateId: 0,
       module: "Probation",
       empName: user.firstName + " " + user.lastName,
-      empEmail: "amit.kumar@qsometech.com",
+      empEmail: user.email,
       empPhNo: user.phone,
       history: history,
       path: "../probation",

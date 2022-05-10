@@ -316,7 +316,7 @@ const RegularTransferAction = () => {
           <Modal.Body className="mx-auto">
             <TransferInitationLetter transferId={initiationTransferId} />
             <br></br>
-            <Row>
+            {/* <Row>
               {showSignature ? (
                 <>
                   <br></br>
@@ -338,17 +338,15 @@ const RegularTransferAction = () => {
                   </button>
                 </>
               )}
-            </Row>
-            {showSignature && !previewTransferLetter && (
-              <Row>
+            </Row> */}
+            { !previewTransferLetter && (
+              <Row style={{textAlign:"center"}}>
                 <Col sm={{ span: 5, offset: 4 }}>
-                  <br></br>
-                  <br></br>
                   <Button
                     variant="primary"
                     onClick={handleTransferLetterModalClose}
                   >
-                    Save Changes
+                    Save 
                   </Button>
                 </Col>
               </Row>
@@ -512,7 +510,7 @@ const RegularTransferAction = () => {
                                 : "NA"}
                             </Col>
 
-                            <Col md={2} className="pt-2" className="py-0">
+                            <Col md={2} className=" py-0">
                               Relocation Bonus
                             </Col>
                             <Col md={4} className="text-primary">
@@ -650,15 +648,7 @@ const RegularTransferAction = () => {
                               }
 
                               {previewTransferLetter && (
-                                <div className="preview-section">
-                                  <br></br>
-                                  <br></br>
-                                  <img
-                                    src={calendarImage}
-                                    alt="calendar"
-                                    width="200px"
-                                  />
-                                  <br></br>
+                                
                                   <button
                                     disabled={letterSent}
                                     className={
@@ -670,7 +660,6 @@ const RegularTransferAction = () => {
                                   >
                                     Submit
                                   </button>
-                                </div>
                               )}
                             </Col>
                           </Row>

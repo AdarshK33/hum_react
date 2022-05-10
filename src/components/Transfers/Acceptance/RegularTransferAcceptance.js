@@ -595,7 +595,7 @@ const RegularTransferAcceptance = () => {
                               : "NA"}
                           </Col>
 
-                          <Col md={2} className="pt-2" className="py-0">
+                          <Col md={2} className="py-0">
                             Relocation Bonus
                           </Col>
                           <Col md={4} className="text-primary">
