@@ -99,10 +99,8 @@ export const E_signProvider = ({ children }) => {
             location: location,
             rectangle: rectangle,
             name: infoData.empName,
-            email: infoData.empEmail,
-            //  ,
+            email: "deepika@theretailinsights.com", //infoData.empEmail,
             phoneNumber: infoData.empPhNo,
-            // "+91 8074058844,,,",
             signature_type: "Aadhaar",
           },
           recipient2: {
@@ -120,8 +118,7 @@ export const E_signProvider = ({ children }) => {
             rectangle: infoData.recipient2.rectangle,
             name: infoData.recipient2.name,
             email: infoData.recipient2.email,
-            phoneNumber: "+91 8074058844", // infoData.recipient2.phoneNumber,
-            // "+91 8074058844,,,",
+            phoneNumber:  infoData.recipient2.phoneNumber ?infoData.recipient2.phoneNumber :"+91 1234567890",
             signature_type: "Aadhaar",
           },
         };
@@ -134,10 +131,8 @@ export const E_signProvider = ({ children }) => {
             location: location,
             rectangle: rectangle,
             name: infoData.empName,
-            email: infoData.empEmail,
-            //  infoData.empEmail,
+            email: "deepika@theretailinsights.com", //infoData.empEmail,
             phoneNumber: infoData.empPhNo,
-            // "+91 8074058844,,,",
             signature_type: "Aadhaar",
           },
         };

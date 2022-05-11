@@ -76,7 +76,7 @@ const FullTimeToPartTimeLetter = (props) => {
         candidateId: 0,
         module: "Transfer",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../transfers",
@@ -84,10 +84,8 @@ const FullTimeToPartTimeLetter = (props) => {
           rectangle: "430,380,580,480",
           name: transferData.employeeName,
           //  transferData.firstName + " " + transferData.lastName,
-          email: "rajasekhar@theretailinsights.com",
-          //  transferData.email,
-          phoneNumber: "+91 8074058844",
-          //  transferData.phoneNumber,
+          email:transferData.email,
+          phoneNumber:transferData.phoneNumber,
         },
       };
       console.log(
