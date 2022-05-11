@@ -1267,7 +1267,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b>Flat/Plot No</b>
+                      <b>Flat/Plot No</b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -1324,7 +1324,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b>Address Line 1</b>
+                      <b>Address Line 1</b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       type="text"
@@ -1354,7 +1354,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b>Country </b>
+                      <b>Country </b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -1389,7 +1389,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b> State</b>
+                      <b> State</b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -1418,7 +1418,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b>City</b>
+                      <b>City</b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       as="select"
@@ -1448,7 +1448,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b>PinCode</b>
+                      <b>PinCode</b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       type="number"
@@ -1478,7 +1478,7 @@ const Address = (props) => {
                 <div className="col-sm-3">
                   <Form.Group>
                     <Form.Label>
-                      <b>Phone No</b>
+                      <b>Phone No</b><span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
                       type="number"

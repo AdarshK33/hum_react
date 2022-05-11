@@ -295,7 +295,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>Bank Name</b>
+                <b>Bank Name</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Select
                 options={bankNameOptions}
@@ -324,7 +324,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>Bank Account No</b>
+                <b>Bank Account No</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -350,7 +350,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>IFSC Code</b>
+                <b>IFSC Code</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -376,7 +376,7 @@ const BankDetails = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>PAN No</b>
+                <b>PAN No</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
