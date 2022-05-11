@@ -29,7 +29,7 @@ const TerminationLetter = () => {
       candidateId: 0,
       module: "Separation",
       empName: user.firstName + " " + user.lastName,
-      empEmail: "rajasekhar@theretailinsights.com",
+      empEmail: user.email,
       empPhNo: user.phone,
       history: history,
       path: "../employee-separation-listing",
@@ -76,7 +76,7 @@ const TerminationLetter = () => {
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
-                      ? `Miss ${terminationLetterData.employeeName}`
+                      ? `Miss. ${terminationLetterData.employeeName}`
                       : `Mrs.${terminationLetterData.employeeName}`}
                   </p>
                   <p>

@@ -192,7 +192,7 @@ const ProbationSeparation = () => {
               setShowInfoModal(true);
               setCheckForExist(false);
               setFirstTimeUpdate(false);
-              toast.info("Employe is in separation list");
+              toast.info("Employee is in separation list");
             }
           }
         }

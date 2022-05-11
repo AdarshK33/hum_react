@@ -10,6 +10,7 @@ const initial_state = {
   permissionList: [],
   groupList: [],
   rolePermission: "",
+  grantManagerAccessData:{}
 };
 
 export const PermissionContext = createContext();
@@ -17,6 +18,24 @@ export const PermissionContext = createContext();
 export const PermissionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PermissionReducer, initial_state);
   const [loader, setLoader] = useState(false);
+
+  const GrantManagerAccess =(employeeId,grantValue) => {
+    
+    return client
+      .post(`/api/v1/employee/profile/update/roles/${employeeId}?isManager=${grantValue}`)
+      .then((response) => {
+        console.log(response.data,"grantValue")
+        state.grantManagerAccessData = response.data
+        toast.info(response.data.message);
+        return dispatch({
+          type: "GRANT_MANAGER_ACCESS",
+          payload: state.grantManagerAccessData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const debounce = (func) => {
     let timer;
@@ -229,6 +248,8 @@ export const PermissionProvider = ({ children }) => {
         createServiceGroup,
         permissionRoleAccess,
         DebounceSearching,
+        GrantManagerAccess,
+        grantManagerAccessData:state.grantManagerAccessData,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,

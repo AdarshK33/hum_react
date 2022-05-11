@@ -16,9 +16,12 @@ const WorkDetails = () => {
     EmployeeProfileContext
   );
   const { user } = useContext(AppContext);
-  const { rolePermission, locationDetails, locationDetailsList } =
+  const { rolePermission, locationDetails, locationDetailsList,GrantManagerAccess } =
     useContext(PermissionContext);
   const [locationName, setLocationName] = useState("");
+  const [grantValue,setGrantValue] = useState(false)
+  const [grantValueError,setGrantValueError] = useState(false)
+
   useEffect(() => {
     locationDetails();
     EmpProfileView(currentEmpId);
@@ -41,6 +44,17 @@ const WorkDetails = () => {
       });
     }
   }, [locationDetailsList, EmpProfile]);
+  const handleGrantManagerAccess =(e)=>{
+    e.preventDefault()
+    console.log(grantValue,"grantValue")
+    return grantValue == false?setGrantValue(true):grantValue == true?setGrantValue(false):""
+  }
+  console.log(grantValue,EmpProfile,"grantValue11")
+
+  const handleSubmitAccess=(e)=>{
+    e.preventDefault()
+    GrantManagerAccess(EmpProfile.employeeId,grantValue)
+  }
   return (
     <Fragment>
       <Form>
@@ -207,6 +221,40 @@ const WorkDetails = () => {
             <label className="itemResult">{EmpProfile.ngoName}</label>
           </Col>
         </Row>
+        {EmpProfile.role == "GENERAL_USER"?<Row  style={{
+            marginBottom: "2rem",
+          }}>
+        <Col sm={3}>
+            <label>
+              <b>Grant Manager Access</b>
+            </label></Col>
+            <Col sm={1}>
+            <div className="boxField_2 input">
+                                  <input
+                                    className="largerCheckbox"
+                                    type="checkbox"
+                                    value={grantValue}
+                                     checked={grantValue}
+                                    style={
+                                      grantValueError ? { borderColor: "red" } : {}
+                                    }
+                                    // required={required}
+                                     onChange={handleGrantManagerAccess}
+                                  />
+                                </div>
+                                </Col>
+                                <Col sm={3}>
+                                <button
+                                  // disabled={}
+                                  className={
+                                    "stepperButtons"
+                                  }
+                                  onClick={handleSubmitAccess}
+                                >
+                                  Submit
+                                </button>
+          </Col>
+        </Row>:""}
       </Form>
     </Fragment>
   );

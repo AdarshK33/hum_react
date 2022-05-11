@@ -187,7 +187,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
         ),
         module: "Disciplinary Warning",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com ",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../disciplinary-action",
@@ -249,7 +249,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                         ? "Mr."
                         : disciplinarySearchData.maritalStatus === "Married"
                         ? "Mrs."
-                        : "Miss"
+                        : "Miss."
                       : "Mr./Ms."}
                   </b>{" "}
                   &nbsp; {disciplinarySearchData.employeeName}

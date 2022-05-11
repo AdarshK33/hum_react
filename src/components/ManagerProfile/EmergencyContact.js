@@ -49,8 +49,8 @@ const EmergencyContact = (props) => {
   }, []);
   useEffect(() => {
     if (
-      emergencyContactView !== null &&
-      Object.keys(emergencyContactView).length !== 0
+      emergencyContactView &&
+      Object.keys(emergencyContactView).length
     ) {
       console.log(emergencyContactView, "emergencyContactView3");
       setState({

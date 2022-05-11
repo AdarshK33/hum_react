@@ -187,7 +187,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
         ),
         module: "Disciplinary Warning",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com ",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../disciplinary-action",

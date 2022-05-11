@@ -101,7 +101,7 @@ export const PromotionProvider = (props) => {
       .get("/api/v1/position/view/deptId?deptId=" + depId)
       .then((response) => {
         state.positionNew = response.data.data.filter(
-          (item) => item.position !== oldPosition
+          (item) => item.position.toLowerCase() !== oldPosition.toLowerCase()
         );
         setLoader(false);
         console.log("--->", state.positionNew);
@@ -133,7 +133,7 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
-  const PromotionCreate = (create, Approve = 0) => {
+  const PromotionCreate = (create, Approve = 0,history) => {
     setLoader(true);
 
     console.log(create, "promotionCreate");
@@ -144,7 +144,12 @@ export const PromotionProvider = (props) => {
 
         console.log("response--->", state.promotionCreate);
         console.log(response);
-        toast.info(response.data.message);
+        if(response.data.message == "Separation already exist" || response.data.message == "Disciplinary already exist"){
+          toast.error(response.data.message);
+          history.push('/promotion-list')
+        }else{
+          toast.info(response.data.message);
+        }
         ViewPromotionById(response.data.data.promotionId);
         if (
           Approve === 1 &&

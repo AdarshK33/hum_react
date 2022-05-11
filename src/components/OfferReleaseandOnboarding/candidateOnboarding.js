@@ -763,20 +763,19 @@ const CandidateOnboarding = () => {
                         </option>
                       );
                     }else if (
-                      (rolePermission == "costCenterManager" &&
-                       item.roleName == "MANAGER" &&
+                      rolePermission == "costCenterManager" &&(
+                       item.roleName == "MANAGER" ||
                        item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
-                       item.roleName == "FINANCE_PARTNER")
-                    ) {
+                       item.roleName == "FINANCE_PARTNER")){
                       return (
                         <option key={i} value={item.roleId}>
                           {item.roleDesc}
                         </option>
                       );
                     }else if (
-                      (rolePermission == "superCostCenterManager" &&
-                       item.roleName == "MANAGER" &&
-                       item.roleName == "COST_CENTER_MANAGER" &&
+                      rolePermission == "superCostCenterManager" &&(
+                       item.roleName == "MANAGER" ||
+                       item.roleName == "COST_CENTER_MANAGER" ||
                        item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")
                     ) {

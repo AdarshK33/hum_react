@@ -89,19 +89,15 @@ const MisConductTerminationLetter = () => {
       candidateId: 0,
       module: "Separation",
       empName: employeeData.managerName,
-      empEmail: "rajasekhar@theretailinsights.com ",
-      //employeeData.managerEmailId,
-      empPhNo: user.phone,
-      //managerPhNo,
+      empEmail: employeeData.managerEmailId,
+      empPhNo: employeeData.managerPhNo,
       history: history,
       path: "../employee-separation-listing",
       recipient2: {
         rectangle: "430,120,580,220",
         name: employeeData.managerCostCentre,
-        email: "deepika@theretailinsights.com",
-        //employeeData.costCentreManagerEmailId
+        email: employeeData.costCentreManagerEmailId,
         phoneNumber: employeeData.costCentreManagerPhNo,
-        // "+91 8074058844",
       },
     };
     console.log(
@@ -150,7 +146,7 @@ const MisConductTerminationLetter = () => {
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
-                      ? `Miss ${terminationLetterData.employeeName}`
+                      ? `Miss. ${terminationLetterData.employeeName}`
                       : `Mrs.${terminationLetterData.employeeName}`}
                   </p>
                   <p>
