@@ -30,6 +30,7 @@ const EmployeeExitView = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [iamStatusError,SetIamStatusError] = useState(false)
 
   const [state, setState] = useState({
     empName: "",
@@ -963,6 +964,57 @@ const EmployeeExitView = () => {
                     ) : (
                       ""
                     )}
+                     <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                          <label>Identity Profile Active :</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  disabled={true}
+                                  value={state.iamStatus}
+                                  onChange={changeHandler}
+                                  style={
+                                    iamStatusError
+                                      ? { borderColor: "red" }
+                                      : {}
+                                  }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
+
+                                </Form.Control>
+                                {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                     {state.remarks !== "" &&
                     state.remarks !== null &&
                     state.remarks !== undefined ? (

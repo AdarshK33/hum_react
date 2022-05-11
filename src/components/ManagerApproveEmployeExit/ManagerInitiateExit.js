@@ -131,11 +131,11 @@ const ManagerInitiateExit = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
-  useEffect(()=>{
-if(rolePermission == "manager"){
-  state.iamStatus = "inProgress"
-}
-  },[rolePermission])
+//   useEffect(()=>{
+// if(rolePermission == "manager"){
+//   state.iamStatus = "inProgress"
+// }
+//   },[rolePermission])
   useEffect(() => {
     locationDetails();
   }, []);
@@ -2295,7 +2295,7 @@ if(rolePermission == "manager"){
                     ) : (
                       ""
                     )}
-                     {(rolePermission !== "manager")?<Row
+                     <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -2304,7 +2304,7 @@ if(rolePermission == "manager"){
                       >
                         <Col sm={2}>
                           <div>
-                            <label>Active Profile:</label>
+                            <label>Identity Profile Active :</label>
                           </div>
                         </Col>
                         <Col sm={2}>
@@ -2328,6 +2328,7 @@ if(rolePermission == "manager"){
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>
@@ -2343,7 +2344,7 @@ if(rolePermission == "manager"){
                             )}
                           </div>
                         </Col>
-                        </Row>:''}
+                        </Row>
                      {changeInSeparation === 7?<>
                       <Row>
                         <Col

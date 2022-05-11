@@ -101,7 +101,7 @@ export const PromotionProvider = (props) => {
       .get("/api/v1/position/view/deptId?deptId=" + depId)
       .then((response) => {
         state.positionNew = response.data.data.filter(
-          (item) => item.position !== oldPosition
+          (item) => item.position.toLowerCase() !== oldPosition.toLowerCase()
         );
         setLoader(false);
         console.log("--->", state.positionNew);
@@ -144,7 +144,7 @@ export const PromotionProvider = (props) => {
 
         console.log("response--->", state.promotionCreate);
         console.log(response);
-        if(response.data.message == "Separation already exist"){
+        if(response.data.message == "Separation already exist" || response.data.message == "Disciplinary already exist"){
           toast.error(response.data.message);
           history.push('/promotion-list')
         }else{
