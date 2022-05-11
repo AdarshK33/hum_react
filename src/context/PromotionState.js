@@ -144,7 +144,7 @@ export const PromotionProvider = (props) => {
 
         console.log("response--->", state.promotionCreate);
         console.log(response);
-        if(response.data.message == "Separation already exist" || response.data.message == "Disciplinary already exist"){
+        if(response.data.message == "Promotion already exist"||response.data.message == "Separation already exist" || response.data.message == "Disciplinary already exist"){
           toast.error(response.data.message);
           history.push('/promotion-list')
         }else{
