@@ -226,7 +226,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>Name</b>
+                <b>Name</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -246,7 +246,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>Relationship</b>
+                <b>Relationship</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 as="select"
@@ -274,7 +274,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b> Contact No</b>
+                <b> Contact No</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -333,7 +333,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>City</b>
+                <b>City</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -351,7 +351,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                <b>Country</b>
+                <b>Country</b><span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"

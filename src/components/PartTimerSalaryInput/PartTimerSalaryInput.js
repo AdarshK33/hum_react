@@ -258,7 +258,7 @@ const fixedGrossValidation = () =>{
         inputId:0
       };
       CreateSalaryInput(infoData);
-      setSuccessMessage(true)
+      // setSuccessMessage(true)
   }
   }
   const handleCloseValue = () => {
