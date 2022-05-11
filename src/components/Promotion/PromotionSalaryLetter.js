@@ -174,7 +174,7 @@ const PromotionSalaryLetter = () => {
         candidateId: 0,
         module: "Promotion",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../promotion-list",

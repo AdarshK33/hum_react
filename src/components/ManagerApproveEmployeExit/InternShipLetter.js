@@ -75,7 +75,7 @@ const InternShipLetter = () => {
         candidateId: 0,
         module: "Separation",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com",
+        empEmail:user.email,
         empPhNo: user.phone,
         history: history,
         path: "../employee-separation-listing",

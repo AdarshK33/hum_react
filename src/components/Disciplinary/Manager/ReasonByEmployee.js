@@ -163,7 +163,7 @@ const ReasonByEmployee = ({ sign = true }) => {
         candidateId: 0,
         module: "Disciplinary Action",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "rajasekhar@theretailinsights.com ",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../my_disciplinary",

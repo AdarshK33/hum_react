@@ -44,7 +44,7 @@ const PartTimeAppointmentLetter = (props) => {
         candidateId: candidateData.candidateInformation.candidateId,
         module: "Appointment",
         empName: user.firstName + " " + user.lastName,
-        empEmail: "amit.kumar@qsometech.com",
+        empEmail: user.email,
         empPhNo: user.phone,
         history: history,
         path: "../offer-release-list",
@@ -54,10 +54,8 @@ const PartTimeAppointmentLetter = (props) => {
             candidateData.candidateInformation.firstName +
             " " +
             candidateData.candidateInformation.lastName,
-          email: "kamala.nagaraj@decathlon.com",
-          //  candidateData.candidateInformation.personalEmail,
+          email: candidateData.candidateInformation.personalEmail,
           phoneNumber: candidateData.candidateInformation.empPhNo,
-          // "+91 8074058844,,,",
         },
       };
       console.log(
