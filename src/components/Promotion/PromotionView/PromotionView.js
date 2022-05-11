@@ -488,7 +488,7 @@ const PromotionView = (props) => {
                           <Col sm={2}>
                             <div>
                               <label className="itemResult">
-                                {state.relocationBonus}
+                                {state.relocationBonus?state.relocationBonus:0}
                               </label>
                             </div>
                           </Col>

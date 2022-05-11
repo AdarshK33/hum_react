@@ -68,7 +68,8 @@ const RelivingLetter = ({ anotherPath = false }) => {
         rehireRemark: employeeData.rehireRemark,
         status: 9,
         withdraw: employeeData.withdraw,
-        iamStatus:((employeeData.status == 2 || employeeData.status == 8) && (rolePermission == "admin"||rolePermission == "superCostCenterManager" ||rolePermission == "costCenterManager" ))?"Delete":"inProgress"
+        iamStatus:employeeData.iamStatus
+        //((employeeData.status == 2 || employeeData.status == 8) && (rolePermission == "admin"||rolePermission == "superCostCenterManager" ||rolePermission == "costCenterManager" ))?"Delete":"inProgress"
       };
       console.log("save ", InfoData);
       UpdateEmplyoeeExist(InfoData, employeeData.employeeId);
