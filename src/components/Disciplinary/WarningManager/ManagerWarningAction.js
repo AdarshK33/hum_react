@@ -916,7 +916,7 @@ const ManagerWarningAction = (props) => {
     state.empLocation = "";
     state.empCostCenterName = "";
   };
-  console.log(issueWarningStatus, "warningstatus");
+  console.log(issueWarningStatus,acceptEmployeeReason, "warningstatus");
   const GoToSeperation = () => {
     if (
       disciplinarySearchData &&
@@ -1991,6 +1991,17 @@ const ManagerWarningAction = (props) => {
                         )}
                         {(issueWarningStatus === "no" &&
                           acceptEmployeeReason == "no") ||
+
+                          (disciplinarySearchData !== null &&
+                          disciplinarySearchData !== undefined &&
+                          Object.keys(disciplinarySearchData).length !== 0 &&
+                          disciplinarySearchData.disciplinaryWarning !== null &&
+                          disciplinarySearchData.disciplinaryWarning !==
+                            undefined &&
+                          disciplinarySearchData.disciplinaryWarning.pipDueDays === 0 &&
+                           submitted.value === false)
+
+                           ||
                         (disciplinarySearchData !== null &&
                           disciplinarySearchData !== undefined &&
                           Object.keys(disciplinarySearchData).length !== 0 &&
