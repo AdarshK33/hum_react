@@ -508,7 +508,7 @@ const ManagerWarningAction = (props) => {
                 improvementPeriod: state.disciplinaryWarning.improvementPeriod
                   ? state.disciplinaryWarning.improvementPeriod
                   : 0,
-                managerComment: state.disciplinaryWarning.managerComment,
+                managerComment: warningManagerReason,
                 pipEndDate: state.disciplinaryWarning.pipEndDate,
                 reason: state.disciplinaryWarning.reason,
                 reasonDetails: state.disciplinaryWarning.reasonDetails,
