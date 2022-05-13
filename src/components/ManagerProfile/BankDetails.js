@@ -15,6 +15,7 @@ import BANK_NAMES from "./BankNamesList";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
+import { PermissionContext } from "../../context/PermissionState";
 const BankDetails = (props) => {
   const { user } = useContext(AppContext);
   const { bankView, bankViewData, BankUpdate, uploadFile, currentEmpId } =
@@ -27,6 +28,7 @@ const BankDetails = (props) => {
     bankUpdate,
     bankUpdateData,
   } = useContext(OnBoardContext);
+  const { rolePermission } = useContext(PermissionContext);
   const [disabled, setDisableState] = useState(false);
   const [accountNumberError, setAccountNumberError] = useState(false);
   const [bankNameError, setBankNameError] = useState(false);
@@ -142,8 +144,8 @@ const BankDetails = (props) => {
   };
   const PanNumberValidation = () => {
     const panValid = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
-
-    if ((state.panNo !== "") & panValid.test(state.panNo)) {
+if(rolePermission === "admin"){
+if ((state.panNo !== "") & panValid.test(state.panNo)) {
       var tempVar = state.panNo.split("");
       console.log(tempVar[3]);
       if (tempVar[3].toLocaleLowerCase() === "p") {
@@ -160,6 +162,9 @@ const BankDetails = (props) => {
       console.log("panerror");
       return false;
     }
+  }else{
+    return true
+  }
   };
   const checkValidations = () => {
     if (
@@ -373,6 +378,7 @@ const BankDetails = (props) => {
               )}
             </Form.Group>
           </div>
+          {rolePermission == "admin"?
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
@@ -384,7 +390,7 @@ const BankDetails = (props) => {
                 value={state.panNo}
                 onChange={changeHandler}
                 required
-                placeholder="IFSC Code"
+                placeholder="PAN NO"
                 disabled={disabled}
                 maxLength="20"
                 style={panNumberEror ? { borderColor: "red" } : {}}
@@ -395,7 +401,7 @@ const BankDetails = (props) => {
                 <p></p>
               )}
             </Form.Group>
-          </div>
+          </div>:""}
         </Row>
         {/* <Row style={{ marginBottom: "1rem" }}>
           <Col sm={8}>

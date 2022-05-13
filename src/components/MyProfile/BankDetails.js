@@ -166,8 +166,8 @@ const BankDetails = (props) => {
     if (
       (BankNameErrorValidation() == true) &
       (AccountNumberErrorValidation() == true) &
-      (IfscCodeErrorValidation() == true) &
-      (PanNumberValidation() == true)
+      (IfscCodeErrorValidation() == true) 
+      // &(PanNumberValidation() == true)
     ) {
       return true;
     } else {
