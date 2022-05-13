@@ -232,6 +232,8 @@ const fixedGrossValidation = () =>{
     }
   const checkValidations = () => {
     console.log("checkValidations");
+    if(employeeData && Object.keys(employeeData).length)
+    {
     if(
       (hoursWorkedValidation() === true) &
       (employeeNameValidation() === true) &
@@ -243,6 +245,10 @@ const fixedGrossValidation = () =>{
     } else {
       return false;
     }
+  }else{
+    toast.error("please search valid employee")
+    return false
+  }
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -266,7 +272,7 @@ const fixedGrossValidation = () =>{
   };
   return (
     <Fragment>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <Modal
         show={successMessage}
         onHide={handleCloseValue}
