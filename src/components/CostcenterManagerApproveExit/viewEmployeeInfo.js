@@ -156,6 +156,8 @@ const EmployeeExitAction = (props) => {
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.personalEmailId = employeeData.personalEmailId;
+      state.iamStatus = employeeData.iamStatus
+
       if (
         employeeData.department == "AFS" ||
         employeeData.department == "IT" ||
@@ -380,7 +382,8 @@ const EmployeeExitAction = (props) => {
       statusData !== undefined) &&
       (rolePermission == "admin"||
       rolePermission == "superCostCenterManager"||
-       rolePermission == "costCenterManager"
+       rolePermission == "costCenterManager"||
+       rolePermission == "manager"
       )
     ) {
       SetIamStatusError(false);
@@ -1088,7 +1091,7 @@ const EmployeeExitAction = (props) => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label>Active Profile:</label>
+                          <label>Identity Profile Active :</label>
                           </div>
                         </Col>
                         <Col sm={2}>
@@ -1111,6 +1114,7 @@ const EmployeeExitAction = (props) => {
                                 >
                                   <option value="">Select</option>
                                   <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
                                   <option value="Keep the account active">Keep the account active</option>
 
                                 </Form.Control>

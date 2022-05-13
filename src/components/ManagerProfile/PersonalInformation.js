@@ -185,7 +185,7 @@ const PersonalInformation = (props) => {
             </Col>
             <Col sm={3}>
               <label>
-                <b>Blood Group</b>
+                <b>Blood Group</b><span style={{ color: "red" }}>*</span>
               </label>
               <br />
               <Form.Group>
@@ -243,7 +243,7 @@ const PersonalInformation = (props) => {
             </Col>
             <Col sm={3}>
               <label>
-                <b>Marital Status</b>
+                <b>Marital Status</b><span style={{ color: "red" }}>*</span>
               </label>
               <br />
               <Form.Group>
@@ -312,7 +312,7 @@ const PersonalInformation = (props) => {
           >
             <Col sm={3}>
               <label>
-                <b>Personal Email Id</b>
+                <b>Personal Email Id</b><span style={{ color: "red" }}>*</span>
               </label>
               <br />
               <Form.Group>

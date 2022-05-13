@@ -64,6 +64,7 @@ const ManagerInitiateAction = (props) => {
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
+  const [iamStatusError,SetIamStatusError] = useState(false)
 
   const [showAddModal, setShowAddModal] = useState(false);
 
@@ -86,7 +87,7 @@ const ManagerInitiateAction = (props) => {
     noticePeriodRcryDays: "",
     remarks: "",
     status: 0,
-    iamStatus:"Delete",
+    iamStatus:"",
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
@@ -117,7 +118,7 @@ const ManagerInitiateAction = (props) => {
     useContext(ProbationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
     useContext(OfferContext);
-  const { locationDetails, locationDetailsList } =
+  const { locationDetails, locationDetailsList,rolePermission } =
     useContext(PermissionContext);
 
   useEffect(() => {
@@ -336,7 +337,7 @@ const ManagerInitiateAction = (props) => {
       state.reasonForResignation = employeeData.reasonForResignation;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-
+      state.iamStatus = employeeData.iamStatus
       setDateOfResignation(new Date(employeeData.dateOfResignation));
       if (
         employeeData.department == "AFS" ||
@@ -750,6 +751,14 @@ const ManagerInitiateAction = (props) => {
       setRemarkError(true);
     }
   };
+  const changeHandler1 = (e) => {
+    var data = e.target.value;
+    console.log(e.target.name, data, "changeHandler1");
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
@@ -921,6 +930,24 @@ const ManagerInitiateAction = (props) => {
       return true;
     }
   };
+  const iamStatusValidate = () => {
+    var status = state.iamStatus
+    if (
+      (status !== "" &&
+      status !== null &&
+      status !== undefined) && 
+      (rolePermission == "admin"||
+      rolePermission == "superCostCenterManager"||
+       rolePermission == "costCenterManager"||
+       rolePermission == "manager")
+    ) {
+      SetIamStatusError(false);
+      return true;
+    } else {
+      SetIamStatusError(true);
+      return false;
+    }
+  };
   const checkValidations = () => {
     console.log("on validation");
     if (
@@ -935,6 +962,7 @@ const ManagerInitiateAction = (props) => {
       ) ===
         true) &
       (lastWarkingDateValidate() === true) &
+      (iamStatusValidate() === true) &
       (dateOfresignationValidate() === true) &
       (emailValidation() === true)
     ) {
@@ -2019,6 +2047,56 @@ const ManagerInitiateAction = (props) => {
                           </Form.Group>
                         </Col>
                       </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Identity Profile Active :</label>
+                          </div>
+                        </Col>
+                        <Col sm={2}>
+                          <div>
+                            {false ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.iamStatus}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  as="select"
+                                  name="iamStatus"
+                                  value={state.iamStatus}
+                                  onChange={changeHandler1}
+                                  style={
+                                    iamStatusError
+                                      ? { borderColor: "red" }
+                                      : {}
+                                  }
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Delete">Delete</option>
+                                  <option value="Suspend">Suspend</option>
+                                  <option value="Keep the account active">Keep the account active</option>
+
+                                </Form.Control>
+                                {iamStatusError ? (
+                                  <p style={{ color: "red" }}>
+                                    {" "}
+                                    &nbsp; *Please choose valid option
+                                  </p>
+                                ) : (
+                                  <p></p>
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
+                        </Col>
+                        </Row>
                       <Row>
                         <Col
                           style={{

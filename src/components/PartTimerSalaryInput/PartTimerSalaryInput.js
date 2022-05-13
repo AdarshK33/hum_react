@@ -29,7 +29,8 @@ const PartTimerSalaryInput = () => {
   const [toDateError, setToDateError] = useState(null);
   const [fromDateError, setFromDateError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(false);
-
+  const [fromDate,setFromDate] = useState(null)
+  const [toDate,setToDate] = useState(null)
   const {
     ViewEmployeeData,employeeData,CreateSalaryInput,createdData
   } = useContext(PartTimeSalaryInputContext);
@@ -55,13 +56,17 @@ console.log(employeeData,"employeeData",state)
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
-    setState({ ...state, fromDate: AdjusteddateValue });
+    setState({ ...state, fromDate: AdjusteddateValue,toDate:null });
+    setFromDate(AdjusteddateValue)
+    setToDate(null)
   };
   const toDateHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     setState({ ...state, toDate: AdjusteddateValue });
+    setToDate(AdjusteddateValue)
+
   };
 
   const searchDataHandler = () => {
@@ -164,8 +169,18 @@ console.log(employeeData,"employeeData",state)
   };
   const hoursWorkedValidation = () => {
     if(Number.isInteger(parseInt(state.hoursWorked)) === true){
-      if (state.hoursWorked > 130 || state.hoursWorked <= 0 || state.hoursWorked == null 
-         ){
+      let date1 = new Date(toDate);
+      let date2 = new Date(fromDate);
+      let timeInMilisec = (date1.getTime() - date2.getTime())
+      let daysBetweenDates = Math.round(Math.abs(timeInMilisec / (1000 * 60 * 60 * 24))) == 0?1:Math.round(Math.abs(timeInMilisec / (1000 * 60 * 60 * 24)))+1
+      console.log(daysBetweenDates,Math.round(Math.abs(timeInMilisec / (1000 * 60 * 60 * 24))),"hours")
+    if(state.hoursWorked > 130){
+      setHoursWorkedError("work hours should be  0 to 130 hrs");
+      return false;
+    } else if((state.hoursWorked > daysBetweenDates*8 && state.hoursWorked <= 130 )){
+          setHoursWorkedError(`work hours can not be greater then ${daysBetweenDates*8} hrs`);
+          return false;
+        } else if (state.hoursWorked <= 0 || state.hoursWorked == null ){
         setHoursWorkedError("work hours should be  0 to 130 hrs");
         return false;
       } else {
@@ -258,7 +273,7 @@ const fixedGrossValidation = () =>{
         inputId:0
       };
       CreateSalaryInput(infoData);
-      setSuccessMessage(true)
+      // setSuccessMessage(true)
   }
   }
   const handleCloseValue = () => {
@@ -267,7 +282,7 @@ const fixedGrossValidation = () =>{
   return (
     <Fragment>
       {/* <ToastContainer /> */}
-      <Modal
+      {/* <Modal
         show={successMessage}
         onHide={handleCloseValue}
         size="md"
@@ -282,7 +297,7 @@ const fixedGrossValidation = () =>{
               <Button onClick={handleCloseValue}>Close</Button>
           </div>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
       <Breadcrumb title="PARTTIMER SALARY INPUT" parent="PARTTIMER SALARY INPUT" />
       <div className="container-fluid">
         <div className="row">
@@ -473,7 +488,7 @@ const fixedGrossValidation = () =>{
                                   <DatePicker
                                     className="form-control part-view"
                                   
-                                    selected={state.fromDate}
+                                    selected={fromDate}
                                     name="fromDate"
                                     // minDate={moment().toDate()}
                                     required
@@ -520,10 +535,10 @@ const fixedGrossValidation = () =>{
                                   <div className={toDateError ? "part-date-error" : "part-date"}>
                                       <DatePicker
                                         className="form-control part-view"
-                                        selected={state.toDate}
+                                        selected={toDate}
                               
                                         name="toDate"
-                                         minDate={new Date(state.fromDate)}
+                                         minDate={new Date(fromDate)}
                                         required
                                         onChange={(e) => toDateHandler(e)}
                                         dateFormat="dd-MM-yyyy"
