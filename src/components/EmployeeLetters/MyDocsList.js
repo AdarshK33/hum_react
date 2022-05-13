@@ -148,6 +148,7 @@ const EmployeeDocementsList = () => {
                       <th scope="col">PIP End Date</th>
                       <th scope="col">PIP Status</th>
                       <th scope="col">View</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -266,7 +267,7 @@ const EmployeeDocementsList = () => {
                             ) : (
                               <td>NA</td>
                             )}
-
+                             
                             <td>
                               <Link
                                 to={
@@ -283,6 +284,12 @@ const EmployeeDocementsList = () => {
                                   }}
                                 />
                               </Link>
+                            </td>
+                            <td>
+                              {item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined
+                                ? item.disciplinaryWarning.statusDesc
+                                : item.disciplinaryAction.statusDesc}
                             </td>
                             <td>
                               {item.disciplinaryAction !== null &&

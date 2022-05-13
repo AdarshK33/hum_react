@@ -114,7 +114,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                         .improvementPeriod
                     )
                   : 0,
-                managerComment: disciplinarySearchData.warningManagerReason,
+                managerComment: disciplinarySearchData.disciplinaryWarning.managerComment,
                 pipEndDate:
                   disciplinarySearchData.disciplinaryWarning.pipEndDate,
                 reason: disciplinarySearchData.disciplinaryWarning.reason,
@@ -266,7 +266,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
             <br></br> */}
 
                 <p>
-                  You have been associated {disciplinarySearchData.company}{" "}
+                  You have been associated with {disciplinarySearchData.company}{" "}
                  as a <b>{disciplinarySearchData.position}</b>.
                   <br />
                   On ,
@@ -277,7 +277,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                   notice, asking you for a clear written explanation regarding
                   the following accusations-
                   <b>
-                    {disciplinarySearchData.disciplinaryAction.managerComment}{" "}
+                    {disciplinarySearchData.disciplinaryWarning.managerComment}{" "}
                   </b>
                   <br />
                   In furtherance to your reply to show cause notice is not
