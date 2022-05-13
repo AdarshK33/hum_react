@@ -190,6 +190,9 @@ const EntityTransfer = () => {
 
   const changeEntityHandler = (e) => {
     setNewEntity(e.target.value);
+    setNewDept("")
+    setNewCostCentre("")
+    setNewManager("")
     setNewEntityErrMsg("");
   };
 
@@ -231,10 +234,13 @@ const EntityTransfer = () => {
   const departmentChangeHandler = (e) => {
     setNewDept(e.target.value);
     setNewDeptName(e.target.options[e.target.selectedIndex].text);
+    setNewCostCentre("")
+    setNewManager("")
     setDeptErrMsg("");
   };
 
   const changeCostCentreHandler = (e) => {
+    console.log("e.value",e.value)
     setNewCostCentre(e.value);
     setCostCentreErrMsg("");
   };

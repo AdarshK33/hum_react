@@ -134,9 +134,9 @@ const PromotionList = () => {
       promotionListView("all", 0, 6, role);
     }
   };
-  const GoToLetterView = (refId) => {
-    console.log(refId);
-    getReference(refId);
+  const GoToLetterView = (refId,signedLetter) => {
+    console.log(refId,signedLetter);
+    getReference(refId,signedLetter);
   };
 
   return (
@@ -466,7 +466,7 @@ const PromotionList = () => {
                                 <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      GoToLetterView(item.refId);
+                                      GoToLetterView(item.refId,item.signedLetter);
                                     }}
                                   />
                                 </Link>

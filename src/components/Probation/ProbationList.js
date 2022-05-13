@@ -251,9 +251,9 @@ const ProbationList = () => {
     changeEmpId(employeeId);
     ViewProbationDataById(employeeId);
   };
-  const GoToLetterView = (refId) => {
-    console.log(refId);
-    getReference(refId);
+  const GoToLetterView = (refId,signedLetter) => {
+    console.log(refId,signedLetter);
+    getReference(refId,signedLetter);
   };
   return (
     <Fragment>
@@ -614,7 +614,7 @@ const ProbationList = () => {
                                 <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      GoToLetterView(item.refId);
+                                      GoToLetterView(item.refId, item.signedLetter);
                                     }}
                                   />
                                 </Link>
