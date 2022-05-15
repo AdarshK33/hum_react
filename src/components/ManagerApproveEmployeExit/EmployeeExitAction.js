@@ -117,7 +117,7 @@ const EmployeeExitAction = (props) => {
       state.mngrId = employeeData.managerId ? employeeData.managerId : "";
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
-      state.remarks = employeeData.rehireRemark;
+      state.remarks = (employeeData.rehireRemark == null|| employeeData.rehireRemark == undefined)?"":employeeData.rehireRemark
       state.iamStatus = employeeData.iamStatus
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
@@ -302,7 +302,6 @@ const EmployeeExitAction = (props) => {
     setModal(false);
     state.remarks = "";
   };
-
   const handleShowAddModalClose = () => setShowAddModal(false);
 
   const handleRelivingClose = () => setShow(false);
@@ -519,10 +518,11 @@ const EmployeeExitAction = (props) => {
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
+      console.log(RehireNo,"no",RehireYes,"yes",state.remarks)
       if (
         (RehireNo === true && state.remarks === "") ||
-        state.remarks === null ||
-        state.remarks === undefined
+        (state.remarks === null ||
+        state.remarks === undefined)
       ) {
         setModal(true);
       } else {
