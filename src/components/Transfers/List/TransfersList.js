@@ -155,6 +155,7 @@ const TransferPage = () => {
               active: item.refId ? true : false,
               link: item.refId ? "link" : "",
               refId: item.refId ? parseInt(item.refId) : null,
+              signedLetter: item.signedLetter
             },
           };
         });
@@ -190,6 +191,7 @@ const TransferPage = () => {
               active: item.refId ? true : false,
               link: item.refId ? "link" : "",
               refId: item.refId ? parseInt(item.refId) : null,
+              signedLetter: item.signedLetter
             },
           };
         });

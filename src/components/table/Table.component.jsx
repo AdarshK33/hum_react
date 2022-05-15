@@ -78,6 +78,7 @@ const TableComponent = ({
                               disabled={!value.active}
                               type={key}
                               refId={value.refId}
+                              signedLetter={value.signedLetter}
                             />
                           </Link>
                         ) : (

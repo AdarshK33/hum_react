@@ -117,7 +117,7 @@ export const E_signProvider = ({ children }) => {
             location: location,
             rectangle: infoData.recipient2.rectangle,
             name: infoData.recipient2.name,
-            email: infoData.recipient2.email,
+            email:"sachin.nagalikar@theretailinsights.com" , //infoData.recipient2.email,
             phoneNumber:  infoData.recipient2.phoneNumber ?infoData.recipient2.phoneNumber :"+91 1234567890",
             signature_type: "Aadhaar",
           },
@@ -210,26 +210,42 @@ export const E_signProvider = ({ children }) => {
       });
   };
 
-  const getReference = (id, orgId = "6180cd3596d65ededc7d30f6") => {
+  // const getDocument = (letterName) => {
+  //   setLoader(true);
+  //       if (
+  //         letterName &&
+  //         letterName !== null &&
+  //         letterName !== undefined &&
+  //         letterName !== ""
+  //       ) {
+  //         setDocName(letterName);
+  //         setDocShow(true); 
+  //       } else {
+  //         setNotification(true);
+  //       }
+  //       setLoader(false);
+  // };
+
+  const getReference = (id, letterName,orgId = "6180cd3596d65ededc7d30f6") => {
     setLoader(true);
     client
       .get("/api/v1/e-sign/reference/" + orgId + "/" + id)
       .then((response) => {
         console.log("-->>>", response);
         state.referenceResponse = response.data;
-        //toast.info(response.data.message);
-        // console.log("response.eSign", response.data.eSign[0].refId);
-        if (
-          response.data &&
-          response.data.eSign[0] &&
-          response.data.eSign[0].status.toLowerCase() === "in-progress"
-        ) {
-          setNotification(true);
-        } else {
-          // window.open(response.data.eSign[0].downloadUrl, "_blank");
-          setDocName(response.data.eSign[0].downloadUrl);
+
+        if (letterName) {
+          setDocName(letterName);
           setDocShow(true);
-        }
+        }else
+        //  if (
+        //   response.data &&
+        //   response.data.eSign[0] &&
+        //   response.data.eSign[0].status.toLowerCase() === "in-progress"
+        // )
+         {
+          setNotification(true);
+        } 
         setLoader(false);
         return dispatch({
           type: "REFERENCE_CHECK",
@@ -308,12 +324,16 @@ export const E_signProvider = ({ children }) => {
           <Modal.Body>
             {DocName ? (
               <div>
-                <iframe
-                  src={DocName + "#toolbar=0& navpanes=0"}
-                  style={{ width: "100%", height: "900px" }}
-                  frameborder="0"
-                ></iframe>
-              </div>
+                 <iframe
+                    src={
+                      process.env.REACT_APP_S3_URL +
+                      DocName +
+                      "#toolbar=0& navpanes=0"
+                    }
+                    style={{ width: "100%", height: "900px" }}
+                    frameborder="0"
+                  ></iframe>
+                  </div>
             ) : (
               ""
             )}

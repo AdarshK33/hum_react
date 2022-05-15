@@ -23,7 +23,12 @@ export const PartTimeSalaryInputProvider = (props) => {
       .then((response) => {
         toast.info(response.data.message);
         console.log(response,"ViewEmployeeData")
-        state.employeeData = response.data.data[0];
+        if(response.data&& Object.keys(response.data).length &&
+        response.data.data&& Object.keys(response.data.data).length){
+          state.employeeData = response.data.data[0];
+        }else{
+        state.employeeData = null;
+        }
         setLoader(false);
         return dispatch({
           type: "EMPLOYEE_DATA",
