@@ -93,6 +93,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
           showCauseNotice:
             disciplinarySearchData.disciplinaryAction.showCauseNotice,
           status: approver === true ? 0 : 2,//disciplinarySearchData.disciplinaryAction.status,
+          status: approver === true ? 2:0,
           statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -114,7 +115,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
                         .improvementPeriod
                     )
                   : 0,
-                managerComment: disciplinarySearchData.warningManagerReason,
+                managerComment: disciplinarySearchData.disciplinaryWarning.managerComment,
                 pipEndDate:
                   disciplinarySearchData.disciplinaryWarning.pipEndDate,
                 reason: disciplinarySearchData.disciplinaryWarning.reason,
@@ -157,7 +158,8 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
                 reasonDetailsId:
                   disciplinarySearchData.disciplinaryAction.reasonDetailsId,
                 reasonId: disciplinarySearchData.inputReasonId,
-                status: approver === true ? 0 : 2,
+               // status: approver === true ? 0 : 2,
+                status: approver === true ? 2:0,
                 statusDesc:
                   disciplinarySearchData.disciplinaryAction.statusDesc,
                 warningDueDays:
