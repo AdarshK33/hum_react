@@ -687,6 +687,7 @@ const ManagerInitiateExit = () => {
   };
   const handleTermination = () => {
     setTermination(false);
+    setModeOfSeparation("");
   };
   const handleShowAddModalClose = () => setShowAddModal(false);
 
