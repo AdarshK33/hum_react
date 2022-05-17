@@ -92,7 +92,8 @@ const WarningLetter = ({ approver = true, sign = true }) => {
             disciplinarySearchData.disciplinaryAction.showCauseLetter,
           showCauseNotice:
             disciplinarySearchData.disciplinaryAction.showCauseNotice,
-          status: approver === true ? 0 : 2,
+         // status: approver === true ? 0 : 2,
+          status: approver === true ? 2:0,
           statusDesc: disciplinarySearchData.disciplinaryAction.statusDesc,
           warningIssued: true,
         },
@@ -157,7 +158,8 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                 reasonDetailsId:
                   disciplinarySearchData.disciplinaryAction.reasonDetailsId,
                 reasonId: disciplinarySearchData.inputReasonId,
-                status: approver === true ? 0 : 2,
+                // status: approver === true ? 0 : 2, 16/05/2022
+                status: approver === true ? 2:0,
                 statusDesc:
                   disciplinarySearchData.disciplinaryAction.statusDesc,
                 warningDueDays:
