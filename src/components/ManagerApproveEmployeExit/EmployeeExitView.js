@@ -964,7 +964,7 @@ const EmployeeExitView = () => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -1014,7 +1014,7 @@ const EmployeeExitView = () => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                     {state.remarks !== "" &&
                     state.remarks !== null &&
                     state.remarks !== undefined ? (
