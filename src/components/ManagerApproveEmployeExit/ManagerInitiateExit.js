@@ -2295,7 +2295,7 @@ const ManagerInitiateExit = () => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -2344,7 +2344,7 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                      {changeInSeparation === 7?<>
                       <Row>
                         <Col

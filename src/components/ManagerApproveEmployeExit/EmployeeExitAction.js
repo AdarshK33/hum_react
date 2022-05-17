@@ -1237,7 +1237,7 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -1286,7 +1286,7 @@ const EmployeeExitAction = (props) => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                     <div
                       style={{
                         marginTop: "2rem",

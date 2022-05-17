@@ -1082,7 +1082,7 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -1130,7 +1130,7 @@ const EmployeeExitAction = (props) => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                    {state.modeOfSeparationId === 7?<>
                     <div
                       style={{

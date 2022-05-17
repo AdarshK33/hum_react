@@ -2047,7 +2047,7 @@ const ManagerInitiateAction = (props) => {
                           </Form.Group>
                         </Col>
                       </Row>
-                      <Row
+                      {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -2096,7 +2096,7 @@ const ManagerInitiateAction = (props) => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                       <Row>
                         <Col
                           style={{
