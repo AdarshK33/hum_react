@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 import moment from "moment";
 import "./EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
@@ -92,6 +93,8 @@ const EmployeeExitAction = (props) => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  const { withdraw } =
+    useContext(SeparationContext);
   const {rolePermission} =
     useContext(PermissionContext);
   useEffect(() => {
@@ -486,8 +489,9 @@ const EmployeeExitAction = (props) => {
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
       (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true) &
-      (iamStatusValidate() === true)
+      (validateRcryDays() === true) 
+      // &
+      // (iamStatusValidate() === true)
     ) {
       console.log("on true");
       return true;
@@ -496,13 +500,14 @@ const EmployeeExitAction = (props) => {
       return false;
     }
   };
-  const withdrawHandler = () => {
+  const withdrawHandler = (e) => {
+    e.preventDefault()
     console.log("exitId", employeeData.exitId);
-    // withdraw(employeeData.exitId);
+     withdraw(employeeData.exitId);
     setWithdrawThis(true);
-    ViewEmployeeDataById(state.empId);
-    setSubmitted(false);
-    setPreview(false);
+    // ViewEmployeeDataById(state.empId);
+    // setSubmitted(false);
+     setPreview(false);
   };
   const dateOfBirthHandler1 = (e) => {
     console.log(e, "dateOfBirthHandler1");
