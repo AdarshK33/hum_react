@@ -398,8 +398,9 @@ const EmployeeExitAction = (props) => {
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
       (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true) &
-      (iamStatusValidate() === true)
+      (validateRcryDays() === true)
+      //  &
+      // (iamStatusValidate() === true)
     ) {
       console.log("on true");
       return true;

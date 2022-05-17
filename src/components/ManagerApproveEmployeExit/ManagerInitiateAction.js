@@ -962,7 +962,7 @@ const ManagerInitiateAction = (props) => {
       ) ===
         true) &
       (lastWarkingDateValidate() === true) &
-      (iamStatusValidate() === true) &
+      // (iamStatusValidate() === true) &
       (dateOfresignationValidate() === true) &
       (emailValidation() === true)
     ) {
@@ -973,13 +973,14 @@ const ManagerInitiateAction = (props) => {
       return false;
     }
   };
-  const withdrawHandler = () => {
+  const withdrawHandler = (e) => {
+e.preventDefault()
     console.log("exitId", employeeData.exitId);
-    // withdraw(employeeData.exitId);
+     withdraw(employeeData.exitId);
     setWithdrawThis(true);
-    ViewEmployeeDataById(state.empId);
-    setSubmitted(false);
-    setPreview(false);
+    // ViewEmployeeDataById(state.empId);
+    // setSubmitted(false);
+     setPreview(false);
   };
 
   const submitHandler = (e) => {
