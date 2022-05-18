@@ -659,7 +659,8 @@ const EmployeeExitView = () => {
                           <label>
                             <b>Reason of Separation:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {modeOfSeparationReasonId}
+                              &nbsp;&nbsp; {(modeOfSeparationReasonId !== null 
+                              && modeOfSeparationReasonId !== undefined)?modeOfSeparationReasonId:"NA"}
                             </label>
                           </label>
                         </div>
@@ -730,7 +731,9 @@ const EmployeeExitView = () => {
                           <label>
                             <b>Personal Email Id:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.emailId}
+                              &nbsp;&nbsp; {
+                              (state.emailId !== null 
+                                && state.emailId !== undefined)?state.emailId:"NA"}
                             </label>
                           </label>
                         </div>

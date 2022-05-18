@@ -262,7 +262,10 @@ const EmployeeDocementsList = () => {
                             )} */}
 
                             {item.disciplinaryWarning !== null &&
-                            item.disciplinaryWarning !== undefined ? (
+                            item.disciplinaryWarning !== undefined &&
+                            item.disciplinaryWarning.pipStatus !== null &&
+                            item.disciplinaryWarning.pipStatus !== undefined 
+                            ? (
                               <td>{item.disciplinaryWarning.pipStatus}</td>
                             ) : (
                               <td>NA</td>
