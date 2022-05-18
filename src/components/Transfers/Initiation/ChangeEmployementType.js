@@ -733,9 +733,9 @@ const ChangeEmployementType = () => {
                       placeholder={
                         newEmployement !== null && newEmployement !== ""
                           ? newEmployement === "From Part Time to Full Time"
-                            ? "Fixed Gross:"
-                            : "Hourly Pay:"
-                          : "Fixed Gross:"
+                            ? "Fixed Gross"
+                            : "Hourly Pay"
+                          : "Fixed Gross"
                       }
                       value={newGross}
                       className="text-primary"
