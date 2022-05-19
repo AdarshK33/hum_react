@@ -290,15 +290,15 @@ const PromotionApproval = (props) => {
             </label> */}
             <label className="text-center">
             {user !== null && user !== undefined && rolePermission == "admin"
-                ? `Promotion rejected successfully, request sent to the ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center Manager":"Manager"}`
+                ? `Promotion rejected successfully, request sent to  ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center Manager":"Manager"}`
                 : user !== null &&
                   user !== undefined &&
                   rolePermission == "costCenterManager"
-                ? "Promotion rejected successfully, request sent to Admin"
+                ? "Promotion rejected successfully, request sent to Manager"
                 : user !== null &&
                   user !== undefined &&
                   rolePermission == "superCostCenterManager"
-                ? "Promotion rejected successfully, request sent to Admin"
+                ? `Promotion rejected successfully, request sent to ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center Manager":"Manager"}`
                 : ""}
                 </label>
             <div className="text-center mb-2">
