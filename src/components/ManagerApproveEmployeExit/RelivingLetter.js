@@ -66,7 +66,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
         reason: employeeData.reason,
         reasonForResignation: employeeData.reasonForResignation,
         rehireRemark: employeeData.rehireRemark,
-        status: 9,
+        status:rolePermission == "manager"?2:9,
         withdraw: employeeData.withdraw,
         iamStatus:employeeData.iamStatus
         //((employeeData.status == 2 || employeeData.status == 8) && (rolePermission == "admin"||rolePermission == "superCostCenterManager" ||rolePermission == "costCenterManager" ))?"Delete":"inProgress"

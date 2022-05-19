@@ -285,8 +285,22 @@ const PromotionApproval = (props) => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
+            {/* <label className="text-center">
+            Promotion Rejected successfully, request sent to Manager/Admin
+            </label> */}
             <label className="text-center">
-            Promotion Rejected successfully, request sent to Manager/Admin</label>
+            {user !== null && user !== undefined && rolePermission == "admin"
+                ? `Promotion rejected successfully, request sent to  ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center Manager":"Manager"}`
+                : user !== null &&
+                  user !== undefined &&
+                  rolePermission == "costCenterManager"
+                ? "Promotion rejected successfully, request sent to Manager"
+                : user !== null &&
+                  user !== undefined &&
+                  rolePermission == "superCostCenterManager"
+                ? `Promotion rejected successfully, request sent to ${(promotionIdData.loginType == 7 || promotionIdData.additionalRole == 7)?"Cost Center Manager":"Manager"}`
+                : ""}
+                </label>
             <div className="text-center mb-2">
               <Link to={"/promotion-list"}>
                 <Button onClick={handleCloseValue}>Close</Button>

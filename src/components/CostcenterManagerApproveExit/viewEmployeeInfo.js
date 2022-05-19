@@ -398,8 +398,9 @@ const EmployeeExitAction = (props) => {
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
       (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true) &
-      (iamStatusValidate() === true)
+      (validateRcryDays() === true)
+      //  &
+      // (iamStatusValidate() === true)
     ) {
       console.log("on true");
       return true;
@@ -1082,7 +1083,7 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -1130,7 +1131,7 @@ const EmployeeExitAction = (props) => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                    {state.modeOfSeparationId === 7?<>
                     <div
                       style={{
