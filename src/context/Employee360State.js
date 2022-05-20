@@ -365,11 +365,12 @@ const RosterMonthSearchYear =()=>{
   const TeamPerformanceView = () => {
     setLoader(true);
     client
-      .get("/api/v1/employee/360/view/team/performance?page=0&size=10&key=all")
+      .get("/api/v1/employee/360/view/team/performance")
       .then((response) => {
-        state.teamPerformanceData = response.data.data.data[0];
+        console.log("response",response.data.data);
+        state.teamPerformanceData = response.data.data;
         //toast.info(response.data.message);
-        console.log("TeamPerformanceView",response.data.data.data[0]);
+        // console.log("TeamPerformanceView",response.data.data.data[0]);
         setLoader(false);
         return dispatch({
           type: "TEAM_PERFORMANCE",
