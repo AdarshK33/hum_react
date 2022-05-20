@@ -27,7 +27,8 @@ const PersonalInformation = (props) => {
   const { UpdateEmployeeProfile } = useContext(EmployeeProfileContext);
   const { user } = useContext(AppContext);
   const [bloodGrp, setBloodGrp] = useState(user.bloodGroup);
-  const [maritalStatus, setMaritalStatus] = useState(user.maritalStatus);
+  const [maritalStatus, setMaritalStatus] = useState(user && Object.keys(user).length ? user.maritalStatus.toLowerCase() === "unmarried" ||
+  user.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
   const [personalEmailId, setPersonalEmailId] = useState(user.personalEmail);
   const [disability, setDisability] = useState();
 
@@ -227,8 +228,8 @@ const PersonalInformation = (props) => {
                 style={maritalStatusError ? { borderColor: "red" } : {}}
               >
                 <option value="">Select Marital Status</option>
-                <option>Married</option>
-                <option>UnMarried</option>
+                <option value= "Married">Married</option>
+                <option value="UnMarried" >UnMarried</option>
               </Form.Control>
 
               {maritalStatusError ? (
