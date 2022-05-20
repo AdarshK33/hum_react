@@ -60,7 +60,7 @@ const Roster = () => {
           
             
       var weekNumber = Math.ceil(
-          (currentDate.getDay() + 1 + days) / 7);
+          (currentDate.getDay() + 1 + days) / 7) - 1;
           console.log("weekNumber",weekNumber)
           console.log("YearsList",YearsList)
           YearsList.map((item,i)=>{
@@ -71,7 +71,8 @@ const Roster = () => {
                 console.log("refWeekNumber[1]",refWeekNumber[1])
                 shifting(parseInt(item.monthNo-1), "Increment");
                 setRosterMnth(parseInt(item.monthNo-1))
-                setWeekNumFromApi(parseInt(weekNumber));
+                setWeekNumFromApi(item.weekName);
+                SearchByWeekName(weekNumber)
                 setWeekNum({
                   label: item.weekName,
                   value: item.weekName,
@@ -96,12 +97,16 @@ const Roster = () => {
         });
       });
       setWeekOptions(tempArr);
-      if(weekNumFromApi){
+      if(weekNumFromApi) {
+        console.log("weekNumFromApi true" )
+        SearchByWeekName(weekNumFromApi)
       }else{
+        console.log("weekNumFromApi false" )
+ SearchByWeekName(tempArr[0].value);
         setWeekNum(tempArr[0]);
       }
       
-      SearchByWeekName(tempArr[0].value);
+     
     }
   }, [WeeksList]);
 
@@ -142,10 +147,12 @@ const Roster = () => {
 
   const ChangeWeekNum = (option) => {
     console.log("option", option.value);
+    setWeekNumFromApi(null)
     setWeekNum(option);
     SearchByWeekName(option.value);
   };
   const handleShift = (type) => {
+    setWeekNumFromApi(null)
     if (type === "minus") {
       if (rosterMnth !== 0) {
         console.log(type);
