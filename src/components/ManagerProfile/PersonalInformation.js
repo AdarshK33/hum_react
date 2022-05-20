@@ -37,7 +37,8 @@ const PersonalInformation = (props) => {
   //   EmpProfile.personalEmail
   // );
   const [bloodGrp, setBloodGrp] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState(user && Object.keys(user).length ? user.maritalStatus.toLowerCase() === "unmarried" ||
+  user.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
   const [personalEmailId, setPersonalEmailId] = useState("");
   const [disability, setDisability] = useState();
 
@@ -257,9 +258,9 @@ const PersonalInformation = (props) => {
                   // disabled={disabled}
                   style={maritalStatusError ? { borderColor: "red" } : {}}
                 >
-                  <option value="">Select Marital Status</option>
-                  <option>Married</option>
-                  <option>UnMarried</option>
+                <option value="">Select Marital Status</option>
+                <option value= "Married">Married</option>
+                <option value="UnMarried" >UnMarried</option>
                 </Form.Control>
 
                 {maritalStatusError ? (

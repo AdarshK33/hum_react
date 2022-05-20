@@ -26,6 +26,7 @@ const MyLeavesCard = () => {
   useEffect(() => {
     MyLeavesViewUnplanned();
   }, []);
+
   console.log("unPlannedLeaves", unPlannedLeaves);
   console.log("plannedLeaves", plannedLeaves);
   useEffect(() => {

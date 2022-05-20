@@ -72,7 +72,7 @@ const Roster = () => {
                 shifting(parseInt(item.monthNo-1), "Increment");
                 setRosterMnth(parseInt(item.monthNo-1))
                 setWeekNumFromApi(item.weekName);
-                SearchByWeekName(weekNumber)
+                // SearchByWeekName(weekNumber)
                 setWeekNum({
                   label: item.weekName,
                   value: item.weekName,
