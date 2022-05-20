@@ -335,7 +335,7 @@ const PersonalInformation = (props) => {
               <b>Are you an EPS member in your earlier employment?</b>
             </label>
             <br />
-            <label className="itemResult">{user.epsMember}</label>
+            <label className="itemResult">{user.epsMember?user.epsMember:"NA"}</label>
           </Col>
         </Row>
         <Row
@@ -348,14 +348,14 @@ const PersonalInformation = (props) => {
               <b>Reference 1 Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.reference1Name}</label>
+            <label className="itemResult">{user.reference1Name?user.reference1Name:"NA"}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Reference 1 Email Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.reference1Email}</label>
+            <label className="itemResult">{user.reference1Email?user.reference1Email:"NA"}</label>
           </Col>
         </Row>
         {user !== null &&
@@ -373,14 +373,14 @@ const PersonalInformation = (props) => {
                 <b>Reference 2 Name</b>
               </label>
               <br />
-              <label className="itemResult">{user.reference2Name}</label>
+              <label className="itemResult">{user.reference2Name?user.reference2Name:"NA"}</label>
             </Col>
             <Col sm={3}>
               <label>
                 <b>Reference 2 Email Id</b>
               </label>
               <br />
-              <label className="itemResult">{user.reference2Email}</label>
+              <label className="itemResult">{user.reference2Email?user.reference2Email:"NA"}</label>
             </Col>
             <Col sm={3}></Col>
             {/* <Col sm={3} style={{ textAlign: "right" }}>
