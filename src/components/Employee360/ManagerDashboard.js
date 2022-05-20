@@ -113,7 +113,7 @@ const ManagerDashboard = () => {
     history.push("./document-management");
   };
   const GoToCluster = (e) => {
-    history.push("./cluster/viewclustert");
+    history.push("./cluster/viewcluster");
   };
 
   return (

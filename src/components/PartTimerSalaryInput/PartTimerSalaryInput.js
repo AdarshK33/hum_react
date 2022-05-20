@@ -247,6 +247,8 @@ const fixedGrossValidation = () =>{
     }
   const checkValidations = () => {
     console.log("checkValidations");
+    if(employeeData && Object.keys(employeeData).length)
+    {
     if(
       (hoursWorkedValidation() === true) &
       (employeeNameValidation() === true) &
@@ -258,6 +260,10 @@ const fixedGrossValidation = () =>{
     } else {
       return false;
     }
+  }else{
+    toast.error("please search valid employee")
+    return false
+  }
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -281,8 +287,8 @@ const fixedGrossValidation = () =>{
   };
   return (
     <Fragment>
-      {/* <ToastContainer /> */}
-      {/* <Modal
+      <ToastContainer />
+      <Modal
         show={successMessage}
         onHide={handleCloseValue}
         size="md"
@@ -297,7 +303,7 @@ const fixedGrossValidation = () =>{
               <Button onClick={handleCloseValue}>Close</Button>
           </div>
         </Modal.Body>
-      </Modal> */}
+      </Modal>
       <Breadcrumb title="PARTTIMER SALARY INPUT" parent="PARTTIMER SALARY INPUT" />
       <div className="container-fluid">
         <div className="row">

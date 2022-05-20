@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 import moment from "moment";
 import "./EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
@@ -92,6 +93,8 @@ const EmployeeExitAction = (props) => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  const { withdraw } =
+    useContext(SeparationContext);
   const {rolePermission} =
     useContext(PermissionContext);
   useEffect(() => {
@@ -117,7 +120,7 @@ const EmployeeExitAction = (props) => {
       state.mngrId = employeeData.managerId ? employeeData.managerId : "";
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
-      state.remarks = employeeData.rehireRemark;
+      state.remarks = (employeeData.rehireRemark == null|| employeeData.rehireRemark == undefined)?"":employeeData.rehireRemark
       state.iamStatus = employeeData.iamStatus
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
@@ -302,7 +305,6 @@ const EmployeeExitAction = (props) => {
     setModal(false);
     state.remarks = "";
   };
-
   const handleShowAddModalClose = () => setShowAddModal(false);
 
   const handleRelivingClose = () => setShow(false);
@@ -487,8 +489,9 @@ const EmployeeExitAction = (props) => {
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
       (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true) &
-      (iamStatusValidate() === true)
+      (validateRcryDays() === true) 
+      // &
+      // (iamStatusValidate() === true)
     ) {
       console.log("on true");
       return true;
@@ -497,13 +500,14 @@ const EmployeeExitAction = (props) => {
       return false;
     }
   };
-  const withdrawHandler = () => {
+  const withdrawHandler = (e) => {
+    e.preventDefault()
     console.log("exitId", employeeData.exitId);
-    // withdraw(employeeData.exitId);
+     withdraw(employeeData.exitId);
     setWithdrawThis(true);
-    ViewEmployeeDataById(state.empId);
-    setSubmitted(false);
-    setPreview(false);
+    // ViewEmployeeDataById(state.empId);
+    // setSubmitted(false);
+     setPreview(false);
   };
   const dateOfBirthHandler1 = (e) => {
     console.log(e, "dateOfBirthHandler1");
@@ -519,10 +523,11 @@ const EmployeeExitAction = (props) => {
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
+      console.log(RehireNo,"no",RehireYes,"yes",state.remarks)
       if (
         (RehireNo === true && state.remarks === "") ||
-        state.remarks === null ||
-        state.remarks === undefined
+        (state.remarks === null ||
+        state.remarks === undefined)
       ) {
         setModal(true);
       } else {
@@ -1237,7 +1242,7 @@ const EmployeeExitAction = (props) => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -1286,7 +1291,7 @@ const EmployeeExitAction = (props) => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                     <div
                       style={{
                         marginTop: "2rem",

@@ -687,6 +687,7 @@ const ManagerInitiateExit = () => {
   };
   const handleTermination = () => {
     setTermination(false);
+    setModeOfSeparation("");
   };
   const handleShowAddModalClose = () => setShowAddModal(false);
 
@@ -1001,24 +1002,24 @@ const ManagerInitiateExit = () => {
     }
   };
   console.log(rolePermission,"rolePermission")
-  const iamStatusValidate = () => {
-    var status = state.iamStatus
-    if (
-      (status !== "" &&
-      status !== null &&
-      status !== undefined) && 
-      (rolePermission == "admin"||
-      rolePermission == "superCostCenterManager"||
-       rolePermission == "costCenterManager"||
-       rolePermission == "manager")
-    ) {
-      SetIamStatusError(false);
-      return true;
-    } else {
-      SetIamStatusError(true);
-      return false;
-    }
-  };
+  // const iamStatusValidate = () => {
+  //   var status = state.iamStatus
+  //   if (
+  //     (status !== "" &&
+  //     status !== null &&
+  //     status !== undefined) && 
+  //     (rolePermission == "admin"||
+  //     rolePermission == "superCostCenterManager"||
+  //      rolePermission == "costCenterManager"||
+  //      rolePermission == "manager")
+  //   ) {
+  //     SetIamStatusError(false);
+  //     return true;
+  //   } else {
+  //     SetIamStatusError(true);
+  //     return false;
+  //   }
+  // };
   const lastWarkingDateValidate = () => {
     if (
       lastWorkingDate !== "" &&
@@ -1112,7 +1113,7 @@ const ManagerInitiateExit = () => {
       ) ===
         true) &
       (lastWarkingDateValidate() === true) &
-      (iamStatusValidate() === true) &
+      // (iamStatusValidate() === true) &
       (dateOfresignationValidate() === true) &
       (emailValidation() === true)
     ) {
@@ -2295,7 +2296,7 @@ const ManagerInitiateExit = () => {
                     ) : (
                       ""
                     )}
-                     <Row
+                     {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -2344,7 +2345,7 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-                        </Row>
+                        </Row> */}
                      {changeInSeparation === 7?<>
                       <Row>
                         <Col
