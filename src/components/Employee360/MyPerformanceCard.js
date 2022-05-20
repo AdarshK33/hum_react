@@ -95,7 +95,8 @@ const MyPerformanceCard = () => {
             }}
           ></Row>
           <Row style={{ marginTop: "4rem", marginLeft: "1rem" }}>
-            <label>{"Total Working Hours" + "  "} </label>
+            <label>{"Total Working Hours  " + "  "} </label>
+            &nbsp;&nbsp;&nbsp;
             <label className="totalHours">
               {" "}
               {parseInt(myPerformanceData.workedHours) +
