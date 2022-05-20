@@ -367,7 +367,7 @@ const PersonalInformation = (props) => {
                 <b>Are you an EPS member in your earlier employment?</b>
               </label>
               <br />
-              <label className="itemResult">{EmpProfile.epsMember}</label>
+              <label className="itemResult">{EmpProfile.epsMember?EmpProfile.epsMember:"NA"}</label>
             </Col>
           </Row>
           {EmpProfile &&
@@ -384,7 +384,7 @@ const PersonalInformation = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">
-                  {EmpProfile.reference1Name}
+                  {EmpProfile.reference1Name?EmpProfile.reference1Name:"NA"}
                 </label>
               </Col>
               <Col sm={3}>
@@ -393,7 +393,7 @@ const PersonalInformation = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">
-                  {EmpProfile.reference1Email}
+                  {EmpProfile.reference1Email?EmpProfile.reference1Email:"NA"}
                 </label>
               </Col>
             </Row>
@@ -416,7 +416,7 @@ const PersonalInformation = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">
-                  {EmpProfile.reference2Name}
+                  {EmpProfile.reference2Name?EmpProfile.reference2Name:"NA"}
                 </label>
               </Col>
               <Col sm={3}>
@@ -425,7 +425,7 @@ const PersonalInformation = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">
-                  {EmpProfile.reference2Email}
+                  {EmpProfile.reference2Email?EmpProfile.reference2Email:"NA"}
                 </label>
               </Col>
               <Col sm={3}></Col>
