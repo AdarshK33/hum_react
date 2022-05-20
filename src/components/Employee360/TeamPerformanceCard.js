@@ -8,6 +8,7 @@ import { Employee360Context } from "../../context/Employee360State";
 const TeamPerformanceCard = () => {
   const { TeamPerformanceView, teamPerformanceData } =
     useContext(Employee360Context);
+    console.log("teamPerformanceData",teamPerformanceData);
   useEffect(() => {
     TeamPerformanceView();
   }, []);
