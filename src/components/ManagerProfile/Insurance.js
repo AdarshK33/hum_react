@@ -178,7 +178,10 @@ const Insurance = () => {
           <b>Insurance Nomination Details :</b>
         </label>
 
-        {insuranceData.map((item, i) => {
+        {insuranceData !== null &&
+                  insuranceData !== undefined &&
+                  insuranceData.length > 0 &&
+                  insuranceData.map((item, i) => {
           return (
             <div>
               <Row
