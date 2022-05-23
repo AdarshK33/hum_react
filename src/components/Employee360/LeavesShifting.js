@@ -45,11 +45,14 @@ const LeavesShifting = ({ Data }) => {
         month: plannedList[0].month,
         reason: plannedList[0].reason,
       });
-      tempArr.push({
-        date: plannedList[1].date,
-        month: plannedList[1].month,
-        reason: plannedList[1].reason,
-      });
+console.log("plannedList check",parseInt(Object.keys(plannedList).length));
+      if(parseInt(Object.keys(plannedList).length)>1){
+        tempArr.push({
+          date: plannedList[1].date,
+          month: plannedList[1].month,
+          reason: plannedList[1].reason,
+        });
+      }
       setResultData(tempArr);
     }
   }, [plannedList]);
@@ -120,6 +123,7 @@ const LeavesShifting = ({ Data }) => {
             justifyContent: "flex-start",
           }}
         >
+          {parseInt(Object.keys(Data).length)>1?
           <div
             type="button"
             onClick={() => {
@@ -129,6 +133,7 @@ const LeavesShifting = ({ Data }) => {
           >
             &#60;
           </div>
+          :null}
           {resultData.map((item) => {
             return (
               <div className="dateBox">
@@ -142,7 +147,7 @@ const LeavesShifting = ({ Data }) => {
               </div>
             );
           })}
-
+{parseInt(Object.keys(Data).length)>1?
           <div
             ype="button"
             onClick={() => {
@@ -151,7 +156,7 @@ const LeavesShifting = ({ Data }) => {
             className="slidderRight"
           >
             &#62;
-          </div>
+          </div>:null}
         </div>
       ) : (
         ""

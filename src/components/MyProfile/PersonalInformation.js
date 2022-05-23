@@ -239,7 +239,7 @@ const PersonalInformation = (props) => {
               )}
             </Form.Group>
           </Col>
-          <Col sm={3}>
+          {/* <Col sm={3}>
             <label>
               <b>Disability</b>
             </label>
@@ -258,14 +258,21 @@ const PersonalInformation = (props) => {
                 <option value="">Select Disability</option>
                 <option>Yes</option>
                 <option>No</option>
-              </Form.Control>
+              </Form.Control> */}
 
               {/* {bloodGroupError ? (
                 <p style={{ color: "red" }}>Please choose blood group</p>
               ) : (
                 <p></p>
               )} */}
-            </Form.Group>
+            {/* </Form.Group>
+          </Col> */}
+           <Col sm={3}>
+            <label>
+              <b>Aadhaar Number</b>
+            </label>
+            <br />
+            <label className="itemResult">{user.aadhaarNumber}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -304,13 +311,7 @@ const PersonalInformation = (props) => {
               )}
             </Form.Group>
           </Col>
-          <Col sm={3}>
-            <label>
-              <b>Aadhaar Number</b>
-            </label>
-            <br />
-            <label className="itemResult">{user.aadhaarNumber}</label>
-          </Col>
+         
           <Col sm={3}>
             <label>
               <b>PAN Number</b>
