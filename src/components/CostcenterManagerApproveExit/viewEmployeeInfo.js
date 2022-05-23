@@ -156,7 +156,8 @@ const EmployeeExitAction = (props) => {
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.personalEmailId = employeeData.personalEmailId;
-      state.iamStatus = employeeData.iamStatus
+      state.iamStatus = employeeData.iamStatus;
+      state.remarks = employeeData.rehireRemark
 
       if (
         employeeData.department == "AFS" ||

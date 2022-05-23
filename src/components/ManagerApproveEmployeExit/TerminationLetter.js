@@ -72,12 +72,15 @@ const TerminationLetter = () => {
                   <p>
                     <b>Name:</b>&nbsp;&nbsp;
                     {terminationLetterData !== undefined &&
+                    terminationLetterData.employeeName}
+
+                    {/* {terminationLetterData !== undefined &&
                     terminationLetterData.gender == "MALE"
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
                       ? `Miss. ${terminationLetterData.employeeName}`
-                      : `Mrs.${terminationLetterData.employeeName}`}
+                      : `Mrs.${terminationLetterData.employeeName}`} */}
                   </p>
                   <p>
                     <b>EmployeeId:</b>&nbsp;&nbsp;
@@ -94,13 +97,15 @@ const TerminationLetter = () => {
                 <p>
                   Dear{" "}
                   <b>
-                    {terminationLetterData !== undefined &&
+                  {terminationLetterData !== undefined &&
+                    terminationLetterData.employeeName}
+                    {/* {terminationLetterData !== undefined &&
                     terminationLetterData.gender == "MALE"
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
                       ? `Miss. ${terminationLetterData.employeeName}`
-                      : `Mrs.${terminationLetterData.employeeName}`}
+                      : `Mrs.${terminationLetterData.employeeName}`} */}
                   </b>{" "}
                 </p>
                 <br></br>

@@ -337,7 +337,8 @@ const ManagerInitiateAction = (props) => {
       state.reasonForResignation = employeeData.reasonForResignation;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      state.iamStatus = employeeData.iamStatus
+      state.iamStatus = employeeData.iamStatus;
+      state.remarks = employeeData.rehireRemark
       setDateOfResignation(new Date(employeeData.dateOfResignation));
       if (
         employeeData.department == "AFS" ||

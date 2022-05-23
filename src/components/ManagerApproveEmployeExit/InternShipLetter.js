@@ -121,6 +121,8 @@ const InternShipLetter = () => {
                 <p>
                   This is to certify that{" "}
                   {relivingLetterData !== undefined &&
+                    relivingLetterData.employeeName}
+                  {/* {relivingLetterData !== undefined &&
                   (relivingLetterData.gender === "male" ||
                     relivingLetterData.gender === "MALE" ||
                     relivingLetterData.gender === "Male")
@@ -132,7 +134,8 @@ const InternShipLetter = () => {
                       relivingLetterData.maritalStatus === "SINGLE" ||
                       relivingLetterData.maritalStatus === "Single"
                     ? `Miss. ${relivingLetterData.employeeName}`
-                    : `Mrs.${relivingLetterData.employeeName}`}{" "}
+                    : `Mrs.${relivingLetterData.employeeName}`} */}
+                    {" "}
                   has completed internship at {relivingLetterData.company} 
                   , from <b>{relivingLetterData.dateOfJoining}</b> to{" "}
                   <b>{relivingLetterData.lastWorkingDate}</b> on under the

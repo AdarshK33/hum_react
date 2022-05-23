@@ -129,12 +129,14 @@ const RelivingLetter = ({ anotherPath = false }) => {
                 <p>
                   Name:
                   {relivingLetterData !== undefined &&
+                    relivingLetterData.employeeName}
+                  {/* {relivingLetterData !== undefined &&
                   relivingLetterData.gender == "MALE"
                     ? `Mr.${relivingLetterData.employeeName}`
                     : relivingLetterData.gender == "FEMALE" &&
                       relivingLetterData.maritalStatus == "Single"
                     ? `Miss. ${relivingLetterData.employeeName}`
-                    : `Mrs.${relivingLetterData.employeeName}`}
+                    : `Mrs.${relivingLetterData.employeeName}`} */}
                 </p>
                 <p>
                   Employee ID:
@@ -151,13 +153,16 @@ const RelivingLetter = ({ anotherPath = false }) => {
                 <p>
                   Dear{" "}
                   <b>
-                    {relivingLetterData !== undefined &&
+                  {relivingLetterData !== undefined &&
+                    relivingLetterData.employeeName}
+
+                    {/* {relivingLetterData !== undefined &&
                     relivingLetterData.gender == "MALE"
                       ? `Mr.${relivingLetterData.employeeName}`
                       : relivingLetterData.gender == "FEMALE" &&
                         relivingLetterData.maritalStatus == "Single"
                       ? `Miss. ${relivingLetterData.employeeName}`
-                      : `Mrs.${relivingLetterData.employeeName}`}
+                      : `Mrs.${relivingLetterData.employeeName}`} */}
                   </b>{" "}
                 </p>
                 <p>
