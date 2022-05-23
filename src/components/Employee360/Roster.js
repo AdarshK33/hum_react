@@ -60,7 +60,7 @@ const Roster = () => {
           
             
       var weekNumber = Math.ceil(
-          (currentDate.getDay() + 1 + days) / 7) - 1;
+          (currentDate.getDay() + 1 + days) / 7) ;
           console.log("weekNumber",weekNumber)
           console.log("YearsList",YearsList)
           YearsList.map((item,i)=>{
@@ -102,7 +102,7 @@ const Roster = () => {
         SearchByWeekName(weekNumFromApi)
       }else{
         console.log("weekNumFromApi false" )
- SearchByWeekName(tempArr[0].value);
+        SearchByWeekName(tempArr[0].value);
         setWeekNum(tempArr[0]);
       }
       
@@ -203,6 +203,15 @@ const Roster = () => {
     }
     return time.join("");
   };
+
+  Date.prototype.getWeek = function() {
+    var onejan = new Date(this.getFullYear(),0,1);
+    var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
+    console.log("check today",today,onejan);
+    var dayOfYear = ((today - onejan + 86400000)/86400000);
+    return Math.ceil(dayOfYear/7)
+  };
+    console.log("currentWeekNumber",new Date().getWeek());
 
   return (
     <Fragment>
@@ -321,7 +330,9 @@ const Roster = () => {
                       ) : item.holiday !== null &&
                         item.holiday !== undefined ? (
                         <label> </label>
-                      ) : item.startTime !== null &&
+                      ) : item.leave !== null && item.leave !== undefined?(
+                        <label> </label>
+                      ):item.startTime !== null &&
                         item.startTime !== undefined ? (
                         <label>
                           {tConvert(item.startTime.slice(0, -3))}-
@@ -336,6 +347,8 @@ const Roster = () => {
                           ? "Week Off"
                           : item.holiday !== null && item.holiday !== undefined
                           ? item.holiday
+                          : item.leave !== null && item.leave !== undefined
+                          ? item.leave
                           : item.shiftName}
                       </div>
                     </div>
