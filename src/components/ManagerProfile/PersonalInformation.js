@@ -37,8 +37,7 @@ const PersonalInformation = (props) => {
   //   EmpProfile.personalEmail
   // );
   const [bloodGrp, setBloodGrp] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState(user && Object.keys(user).length ? user.maritalStatus.toLowerCase() === "unmarried" ||
-  user.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
+  const [maritalStatus, setMaritalStatus] = useState("");
   const [personalEmailId, setPersonalEmailId] = useState("");
   const [disability, setDisability] = useState();
 
@@ -52,12 +51,17 @@ const PersonalInformation = (props) => {
       Object.keys(EmpProfile).length !== 0
     ) {
       setBloodGrp(EmpProfile.bloodGroup);
-      setMaritalStatus(EmpProfile.maritalStatus);
+      setMaritalStatus(EmpProfile && Object.keys(EmpProfile).length ? EmpProfile.maritalStatus.toLowerCase() === "unmarried" ||
+      EmpProfile.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
+      // setMaritalStatus(EmpProfile.maritalStatus);
+
       setPersonalEmailId(EmpProfile.personalEmail);
+      setDisability(EmpProfile.disability);
     } else {
       setBloodGrp("");
       setMaritalStatus("");
       setPersonalEmailId("");
+      setDisability("");
     }
   }, [EmpProfile]);
 
@@ -103,6 +107,7 @@ const PersonalInformation = (props) => {
         EmpProfile.bloodGroup = bloodGrp;
         EmpProfile.maritalStatus = maritalStatus;
         EmpProfile.personalEmail = personalEmailId;
+        EmpProfile.disability=disability
         console.log("EmpProfile", EmpProfile);
         UpdateEmployeeProfile(EmpProfile);
       }
@@ -270,7 +275,7 @@ const PersonalInformation = (props) => {
                 )}
               </Form.Group>
             </Col>
-            <Col sm={3}>
+            {/* <Col sm={3}>
               <label>
                 <b>Disability</b>
               </label>
@@ -280,23 +285,30 @@ const PersonalInformation = (props) => {
                   as="select"
                   name="disability"
                   className="text-primary"
-                  // value={state.bloodGroup}
-                  // onChange={changeHandler}
-                  required
+                  value={disability}
+                  onChange={(e) => setDisability(e.target.value)}
+                  // required
                   // disabled={disabled}
                   // style={bloodGroupError ? { borderColor: "red" } : {}}
                 >
                   <option value="">Select Disability</option>
                   <option>Yes</option>
                   <option>No</option>
-                </Form.Control>
+                </Form.Control> */}
 
                 {/* {bloodGroupError ? (
                 <p style={{ color: "red" }}>Please choose blood group</p>
               ) : (
                 <p></p>
               )} */}
-              </Form.Group>
+              {/* </Form.Group>
+            </Col> */}
+              <Col sm={3}>
+              <label>
+                <b>Aadhaar Number</b>
+              </label>
+              <br />
+              <label className="itemResult">{EmpProfile.aadhaarNumber}</label>
             </Col>
             <Col sm={3}>
               <label>
@@ -335,13 +347,7 @@ const PersonalInformation = (props) => {
                 )}
               </Form.Group>
             </Col>
-            <Col sm={3}>
-              <label>
-                <b>Aadhaar Number</b>
-              </label>
-              <br />
-              <label className="itemResult">{EmpProfile.aadhaarNumber}</label>
-            </Col>
+          
             <Col sm={3}>
               <label>
                 <b>PAN Number</b>
