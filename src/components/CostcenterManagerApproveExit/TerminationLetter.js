@@ -77,8 +77,10 @@ const TerminationLetter = (props) => {
                 <p>
                   Name:&nbsp;&nbsp;
                   {terminationLetterData !== undefined &&
+                    terminationLetterData.employeeName}
+                  {/* {terminationLetterData !== undefined &&
                   terminationLetterData.gender == "MALE"?`Mr.${terminationLetterData.employeeName}`
-                  :(terminationLetterData.gender == "FEMALE" && terminationLetterData.maritalStatus == "Single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`}
+                  :(terminationLetterData.gender == "FEMALE" && terminationLetterData.maritalStatus == "Single")?`Miss ${terminationLetterData.employeeName}`:`Mrs.${terminationLetterData.employeeName}`} */}
                 </p>
                 <p>
                   EmployeeId:&nbsp;&nbsp;
@@ -101,13 +103,15 @@ const TerminationLetter = (props) => {
                 {" "}
                 Dear{" "}
                 <b>
-                  {terminationLetterData !== undefined &&
+                {terminationLetterData !== undefined &&
+                    terminationLetterData.employeeName}
+                  {/* {terminationLetterData !== undefined &&
                   terminationLetterData.gender == "MALE"?
                   `Mr.${terminationLetterData.employeeName}`
                   :(terminationLetterData.gender == "FEMALE" && 
                   terminationLetterData.maritalStatus == "Single")?
                   `Miss. ${terminationLetterData.employeeName}`
-                  :`Mrs.${terminationLetterData.employeeName}`}
+                  :`Mrs.${terminationLetterData.employeeName}`} */}
                   
                 </b>{" "}
               </p>

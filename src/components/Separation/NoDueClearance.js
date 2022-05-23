@@ -206,7 +206,10 @@ const NoDueClearance = () => {
         formData.itClearanceStatus == 0 &&
         formData.itRemarks !== null &&
         formData.itRemarks !== undefined &&
-        formData.itRemarks !== ""
+        formData.itRemarks !== "" &&
+        formData.itAmount !== null &&
+        formData.itAmount !== undefined &&
+        formData.itAmount > 0
       ) {
         setCleranceData(formData);
         formData['disabled'] = false
@@ -237,7 +240,10 @@ const NoDueClearance = () => {
         formData.itClearanceStatus == 2 &&
         formData.itRemarks !== null &&
         formData.itRemarks !== undefined &&
-        formData.itRemarks !== ""
+        formData.itRemarks !== "" &&
+        formData.itAmount !== null &&
+        formData.itAmount !== undefined &&
+        formData.itAmount > 0
       ) {
         formData['disabled'] = false
 
@@ -251,10 +257,26 @@ const NoDueClearance = () => {
           costCenter
         );
       } else {
-        toast.error(formData.itClearanceStatus == 1?"Please enter IT-remarks and ItAmount should be zero":"Please enter IT-remarks");
+        toast.error(formData.itClearanceStatus == 1?"Please enter IT-remarks and ItAmount should be zero":
+        `Please enter${((formData.itRemarks == null ||
+          formData.itRemarks == undefined ||
+          formData.itRemarks == "") && (formData.itAmount == null ||
+            formData.itAmount == undefined ||
+            formData.itAmount == ""))?` IT-remarks and IT Amount`:(formData.itRemarks == null ||
+              formData.itRemarks == undefined ||
+              formData.itRemarks == "")?" IT-remarks ":" "} ${((formData.itAmount == null ||
+            formData.itAmount == undefined ||
+            formData.itAmount == "")&&(formData.itRemarks !== null &&
+              formData.itRemarks !== undefined &&
+              formData.itRemarks !== ""))?` IT Amount`:(formData.itRemarks !== null &&
+                formData.itRemarks !== undefined &&
+                formData.itRemarks !== "" &&
+                formData.itAmount !== null &&
+                formData.itAmount !== undefined &&
+                formData.itAmount < 0)?" valid amount":""}`);
       }
     } else {
-      toast.error("please enter IT status and remarks");
+      toast.error("please enter IT status,amount and remarks");
     }
     SetEnableValue(null)
   };
