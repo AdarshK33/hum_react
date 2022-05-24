@@ -169,7 +169,7 @@ const InternShipLetter = () => {
                 </p>
                 <br />
                 <p>
-                  <b>For {relivingLetterData.company} ,</b>
+                  <b>For {relivingLetterData.company} </b>
                 </p>
                 <p>
                   <b>Authorised Signatory</b>

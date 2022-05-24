@@ -302,7 +302,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
                   <br />
                 </p>
                 <p>
-                  <b>For {disciplinarySearchData.company},</b>
+                  <b>For {disciplinarySearchData.company}</b>
                 </p>
                 <p>
                   <b>Authorised Signatory</b>
