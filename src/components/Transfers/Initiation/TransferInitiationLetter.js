@@ -55,7 +55,7 @@ const TransferInitationLetter = ({ transferId }) => {
               unchanged.
             </p>
             <p className="mt-5 ">
-              <b> {transferData.currentCompany},</b>
+              <b> {transferData.currentCompany}</b>
             </p>
             {/* <Row>
               <Col sm="8">
