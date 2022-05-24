@@ -295,7 +295,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                   <br />
                 </p>
                 <p>
-                  <b>For {disciplinarySearchData.company} ,</b>
+                  <b>For {disciplinarySearchData.company} </b>
                 </p>
                 <p>
                   <b>Authorized Signatory</b>

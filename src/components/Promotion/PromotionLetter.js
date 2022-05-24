@@ -289,7 +289,7 @@ const PromotionLetter = () => {
                 </p>
                 <p>
                   <p>Yours Sincerely,</p>
-                  <b>For {promotionLetterData.company},</b>
+                  <b>For {promotionLetterData.company}</b>
                 </p>
                 <br />
                 <p>
