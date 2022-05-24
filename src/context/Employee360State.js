@@ -280,6 +280,15 @@ const RosterMonthSearchYear =()=>{
       .then((response) => {
         state.plannedLeaves = response.data.data;
         //toast.info(response.data.message);
+        let currentDate= new Date()
+        let tempArray=[]
+        state.plannedLeaves.map((item)=>{
+          if(currentDate <= new Date(item.todate)){
+            tempArray.push(item)
+          }
+        })
+        state.plannedLeaves = tempArray
+        
         setLoader(false);
         return dispatch({
           type: "PLANNED_LEAVES",
@@ -365,12 +374,11 @@ const RosterMonthSearchYear =()=>{
   const TeamPerformanceView = () => {
     setLoader(true);
     client
-      .get("/api/v1/employee/360/view/team/performance")
+      .get("/api/v1/employee/360/view/team/performance?page=0&size=10&key=all")
       .then((response) => {
-        console.log("response",response.data.data);
-        state.teamPerformanceData = response.data.data;
+        state.teamPerformanceData = response.data.data.data[0];
         //toast.info(response.data.message);
-        // console.log("TeamPerformanceView",response.data.data.data[0]);
+        console.log("TeamPerformanceView",response.data.data.data[0]);
         setLoader(false);
         return dispatch({
           type: "TEAM_PERFORMANCE",
