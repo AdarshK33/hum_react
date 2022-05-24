@@ -504,10 +504,10 @@ const EditPFDeclaration = (props) => {
                   </div>
                 </Form.Group>
               </Col>
-              {pfNominationHoldHealthNo === true ? (
+              {/* {pfNominationHoldHealthNo === true ? (
                 <div>
                   {/* first Nominee */}
-                  <label>
+                  {/* <label>
                     <b>Dependent</b>
                   </label>
                   <Row style={{ marginBottom: "2rem" }}>
@@ -599,7 +599,7 @@ const EditPFDeclaration = (props) => {
                 </div>
               ) : (
                 ""
-              )}
+              )}  */}
               {!candidateId && (
                 <Col sm={2}>
                   <div>
