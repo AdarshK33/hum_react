@@ -1,4 +1,3 @@
-
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { SeparationContext } from "../../context/SepearationState";
@@ -172,13 +171,7 @@ const FinanceClearanceList = () => {
     const formData = value.data;
     console.log(formData, pageCount, "handlelsave");
     if(formData.financeClearanceStatus !== "" && formData.financeClearanceStatus !== null ){
-     if( formData.financeClearanceStatus == 0 &&
-       formData.financeRemarks !==null && 
-      formData.financeRemarks !== undefined &&
-       formData.financeRemarks !=="" && 
-       formData.financeAmount !== null &&
-      formData.financeAmount !== undefined &&
-      formData.financeAmount > 0){
+     if( formData.financeClearanceStatus == 0 && formData.financeRemarks !==null && formData.financeRemarks !== undefined && formData.financeRemarks !==""){
       formData['disabled'] = false
       console.log(formData,"0")
       setCleranceData(formData);
@@ -193,38 +186,18 @@ const FinanceClearanceList = () => {
     }else if(formData.financeClearanceStatus == 2  &&
       formData.financeRemarks !== null &&
       formData.financeRemarks !== undefined &&
-      formData.financeRemarks !== ""  &&
-      formData.financeAmount !== null &&
-      formData.financeAmount !== undefined &&
-      formData.financeAmount > 0){
+      formData.financeRemarks !== ""){
       formData['disabled'] = false
       console.log(formData,"2")
       setCleranceData(formData);
      saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
     }else{
-      toast.error(formData.financeClearanceStatus == 1?
-        "Please enter finance-remarks and financeAmount should be zero":
-      `Please enter${((formData.financeRemarks == null ||
-        formData.financeRemarks == undefined ||
-        formData.financeRemarks == "") && (formData.financeAmount == null ||
-          formData.financeAmount == undefined ||
-          formData.financeAmount == ""))?` finance-remarks and financeAmount`:(formData.financeRemarks == null ||
-            formData.financeRemarks == undefined ||
-            formData.financeRemarks == "")?" finance-remarks ":" "} ${((formData.financeAmount == null ||
-          formData.financeAmount == undefined ||
-          formData.financeAmount == "")&&(formData.financeRemarks !== null &&
-            formData.financeRemarks !== undefined &&
-            formData.financeRemarks !== ""))?` financeAmount`:(formData.financeRemarks !== null &&
-              formData.financeRemarks !== undefined &&
-              formData.financeRemarks !== "" &&
-              formData.financeAmount !== null &&
-              formData.financeAmount !== undefined &&
-              formData.financeAmount < 0)?" valid amount":""}`);
+      toast.error(formData.financeClearanceStatus == 1?"Please enter finance-remarks and financeAmount should be zero":"Please enter finance-remarks");
 
     }
     }else{
-      toast.error("please enter finance status,amount and remarks")
+      toast.error("please enter finance status and remarks")
     }
     SetEnableValue(null)
   };
