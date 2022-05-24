@@ -239,7 +239,7 @@ const EditEmergencyContact = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  Address Line 1<span style={{ color: "red" }}>*</span>
+                  Address Line 1
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -274,7 +274,7 @@ const EditEmergencyContact = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  City<span style={{ color: "red" }}>*</span>
+                  City
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -291,7 +291,7 @@ const EditEmergencyContact = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  Country<span style={{ color: "red" }}>*</span>
+                  Country
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -309,7 +309,7 @@ const EditEmergencyContact = (props) => {
             <div className="col-sm-3">
               <Form.Group>
                 <Form.Label>
-                  PinCode<span style={{ color: "red" }}>*</span>
+                  PinCode
                 </Form.Label>
                 <Form.Control
                   type="text"
