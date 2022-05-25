@@ -102,7 +102,8 @@ console.log(employeeData,"employeeData",state)
         ...state,
         [e.target.name]: e.target.value,
       });
-      if(Number.isInteger(parseInt(e.target.value)) === true){
+      if(Number.isInteger(parseInt(e.target.value)) === true && isNaN(e.target.value) !== true){
+        console.log(e.target.value,"fixed gross")
       if (e.target.value < 90 || e.target.value > 400){
             setFixedGrossError("Fixed gross should be between 90 - 400");
           }else{
@@ -129,7 +130,8 @@ console.log(employeeData,"employeeData",state)
         ...state,
         [e.target.name]: e.target.value,
       });
-      if(Number.isInteger(parseInt(e.target.value)) === true){
+      if(Number.isInteger(parseInt(e.target.value)) === true && isNaN(e.target.value) !== true){
+        console.log(e.target.value,"hours")
       if (e.target.value > 130 || e.target.value < 0){
             setHoursWorkedError("work hours should be  0 to 130 hrs");
           } else {
@@ -168,7 +170,7 @@ console.log(employeeData,"employeeData",state)
     console.log(state, "state");
   };
   const hoursWorkedValidation = () => {
-    if(Number.isInteger(parseInt(state.hoursWorked)) === true){
+    if(Number.isInteger(parseInt(state.hoursWorked)) === true && isNaN(state.hoursWorked) !== true){
       let date1 = new Date(toDate);
       let date2 = new Date(fromDate);
       let timeInMilisec = (date1.getTime() - date2.getTime())
@@ -193,7 +195,7 @@ console.log(employeeData,"employeeData",state)
 }
 }
 const fixedGrossValidation = () =>{
-  if(Number.isInteger(parseInt(state.fixedGross)) === true){
+  if(Number.isInteger(parseInt(state.fixedGross)) === true && isNaN(state.fixedGross) !== true){
   if (state.fixedGross < 90 || state.fixedGross > 400 || state.fixedGross == null){
     setFixedGrossError("Fixed gross should be between 90 - 400");
     return false;
