@@ -35,8 +35,7 @@ const EmergencyContact = (props) => {
     addressLine: "",
     city: "",
     country: "",
-    employeeId: emergencyContactView !== null &&
-    Object.keys(emergencyContactView).length !== 0&&emergencyContactView.employeeId?emergencyContactView.employeeId:user.employeeId,
+    employeeId: user.employeeId,
     contactId: 0,
     locality: "",
     phoneNumber: "",
