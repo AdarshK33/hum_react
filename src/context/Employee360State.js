@@ -342,6 +342,16 @@ const RosterMonthSearchYear =()=>{
       .then((response) => {
         state.teamPlannedLeaves = response.data.data;
         //toast.info(response.data.message);
+        //changes from -->
+        let currentDate= new Date()
+        let tempArray=[]
+        state.teamPlannedLeaves.map((item)=>{
+          if(currentDate <= new Date(item.todate)){
+            tempArray.push(item)
+          }
+        })
+        state.teamPlannedLeaves = tempArray
+                //changes from -->
         setLoader(false);
         return dispatch({
           type: "TEAM_PLANNED_LEAVES",
