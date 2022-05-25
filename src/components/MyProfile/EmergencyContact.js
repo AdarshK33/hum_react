@@ -35,7 +35,8 @@ const EmergencyContact = (props) => {
     addressLine: "",
     city: "",
     country: "",
-    employeeId: 0,
+    employeeId: emergencyContactView !== null &&
+    Object.keys(emergencyContactView).length !== 0&&emergencyContactView.employeeId?emergencyContactView.employeeId:user.employeeId,
     contactId: 0,
     locality: "",
     phoneNumber: "",
@@ -52,22 +53,22 @@ const EmergencyContact = (props) => {
       Object.keys(emergencyContactView).length !== 0
     ) {
       console.log(emergencyContactView, "emergencyContactView3");
-      setState({
-        contactName: emergencyContactView.contactName,
-        addressLine: emergencyContactView.addressLine,
-        employeeId: emergencyContactView.employeeId,
-        contactId: emergencyContactView.contactId,
-        city: emergencyContactView.city,
-        country: emergencyContactView.country,
-        locality: emergencyContactView.locality,
-        phoneNumber: emergencyContactView.phoneNumber,
-        pinCode: emergencyContactView.pinCode,
-        relationship: emergencyContactView.relationship,
-      });
+      
+        state.contactName= emergencyContactView[0].contactName
+        state.addressLine =  emergencyContactView[0].addressLine
+        state.employeeId =  emergencyContactView[0].employeeId?emergencyContactView[0].employeeId:user.employeeId
+        state.contactId = emergencyContactView[0].contactId
+        state.city = emergencyContactView[0].city
+        state.country = emergencyContactView[0].country
+        state.locality = emergencyContactView[0].locality
+        state.phoneNumber = emergencyContactView[0].phoneNumber
+        state.pinCode = emergencyContactView[0].pinCode
+        state.relationship =  emergencyContactView[0].relationship
+    
       setDataExist({ exist: true });
     }
-    console.log(state, "previous2");
   }, [emergencyContactView]);
+  console.log(state,emergencyContactView, "previous2");
   const validateForm = () => {
     let fields = state;
     let stateError = {};
