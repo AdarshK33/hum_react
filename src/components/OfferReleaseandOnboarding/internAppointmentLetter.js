@@ -124,7 +124,7 @@ const InternAppointmentLetter = (props) => {
                   , encourage academic aspirants to learn practical aspects of
                   their academic curriculum. We are pleased to assign the
                   project of your interest and we permit you to carry out the
-                  learning and we engage you as an
+                  learning and we engage you as an{" "}
                   <b>intern</b> for the period{" "}
                   <b>
                     {moment(
@@ -323,7 +323,7 @@ const InternAppointmentLetter = (props) => {
                       </li>
                       <li>
                         Apart from the above mentioned rules , any rules /
-                        procedures framed by te Company from time to time will
+                        procedures framed by the Company from time to time will
                         be applicable to you from the date of your engagement
                         with Decathlon
                       </li>
