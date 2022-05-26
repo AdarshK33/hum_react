@@ -131,7 +131,7 @@ const LocalExpatOfferLetter = () => {
                     ).format("DD-MM-YYYY")}
                   </li>
                   <li>
-                    Your monthly gross salary will not exceed $.{" "}
+                    Your monthly gross salary will not exceed{" "}
                     <b>{offerLetterData.permanentCandidateOffer.grossSalary}</b>
                     ({" "}
                     {number2text(
