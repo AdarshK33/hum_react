@@ -503,7 +503,12 @@ const fixedGrossValidation = () =>{
                                     onChange={(e) => fromDateHandler(e)}
                                     dateFormat="dd-MM-yyyy"
                                     placeholderText="DD-MM-YYYY"
-                                    minDate={
+                                    minDate={new Date().getDate()>20?
+                                      new Date(
+                                        new Date().getFullYear(),
+                                          new Date().getMonth() 
+                                        ,21
+                                      ):
                                       new Date(
                                         new Date().getFullYear(),
                                           new Date().getMonth() - 1
@@ -511,7 +516,11 @@ const fixedGrossValidation = () =>{
                                       )
                                     }
                                     maxDate={
-                                      new Date(
+                                      new Date().getDate()>20?new Date(
+                                        new Date().getFullYear(),
+                                          new Date().getMonth()+1
+                                        ,20
+                                      ):new Date(
                                         new Date().getFullYear(),
                                           new Date().getMonth() 
                                         ,20
@@ -559,6 +568,13 @@ const fixedGrossValidation = () =>{
                                         //   )
                                         // }
                                         maxDate={
+                                          new Date().getDate()>20?
+                                          new Date(
+                                            new Date().getFullYear(),
+                                              new Date().getMonth()+1
+                                            ,20
+                                          )
+                                          :
                                           new Date(
                                             new Date().getFullYear(),
                                               new Date().getMonth() 
