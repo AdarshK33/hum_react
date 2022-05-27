@@ -49,13 +49,13 @@ const TeamPerformanceCard = () => {
               data={[
                 ["Hours Type", "Hours"],
                 [
-                  "Remaining Hours",
-                  parseInt(teamPerformanceData.totalWorkingHours) -
-                    (parseInt(teamPerformanceData.workedHours) +
-                      parseInt(teamPerformanceData.additionalHours)),
+                  "Remaining Hours",((isNaN(parseInt(teamPerformanceData.totalWorkingHours)) == true)?0:parseInt(teamPerformanceData.totalWorkingHours))-
+                    (((isNaN(parseInt(teamPerformanceData.workedHours)) == true)?0:parseInt(teamPerformanceData.workedHours))
+                    +
+                    ((isNaN(parseInt(teamPerformanceData.additionalHours)) == true)?0:parseInt(teamPerformanceData.additionalHours))),
                 ],
-                ["Working Hours", teamPerformanceData.workedHours],
-                ["Additional Hours", teamPerformanceData.additionalHours],
+                ["Working Hours",((isNaN(parseInt(teamPerformanceData.workedHours)) == true)?0:parseInt(teamPerformanceData.workedHours))],
+                ["Additional Hours",((isNaN(parseInt(teamPerformanceData.additionalHours)) == true)?0:parseInt(teamPerformanceData.additionalHours))],
               ]}
               options={PerformanceOption}
             />
@@ -65,16 +65,18 @@ const TeamPerformanceCard = () => {
             <Col sm={12}>
               <label className="workingHours">
                 <b>
-                  {teamPerformanceData.workedHours}/
-                  {teamPerformanceData.totalWorkingHours}
+                  {((isNaN(parseInt(teamPerformanceData.workedHours)) == true)?0:parseInt(teamPerformanceData.workedHours))
+                  }/
+                  {((isNaN(parseInt(teamPerformanceData.totalWorkingHours)) == true)?0:parseInt(teamPerformanceData.totalWorkingHours))}
                 </b>
               </label>
 
               <label className="AdditionalHours">
                 <b>
                   {" "}
-                  {teamPerformanceData.additionalHours}/
-                  {teamPerformanceData.totalWorkingHours}
+                  {((isNaN(parseInt(teamPerformanceData.additionalHours)) == true)?0:parseInt(teamPerformanceData.additionalHours))}
+                          /
+                  {((isNaN(parseInt(teamPerformanceData.totalWorkingHours)) == true)?0:parseInt(teamPerformanceData.totalWorkingHours))}
                 </b>
               </label>
             </Col>
@@ -96,12 +98,13 @@ const TeamPerformanceCard = () => {
             }}
           ></Row>
           <Row style={{ marginTop: "4rem", marginLeft: "1rem" }}>
-            <label>{"Total Working Hours" + "  "} </label>
+            <label>{"Total Working Hours" + "  "} </label>{" "}
             <label className="totalHours">
               {" "}
-              {parseInt(teamPerformanceData.workedHours) +
-                parseInt(teamPerformanceData.additionalHours)}
-              /{teamPerformanceData.totalWorkingHours}
+              {
+                ((isNaN(parseInt(teamPerformanceData.workedHours)) == true)?0:parseInt(teamPerformanceData.workedHours)) +
+                ((isNaN(parseInt(teamPerformanceData.additionalHours)) == true)?0:parseInt(teamPerformanceData.additionalHours))}
+              /{((isNaN(parseInt(teamPerformanceData.totalWorkingHours)) == true)?0:parseInt(teamPerformanceData.totalWorkingHours))}
             </label>
           </Row>
         </div>
