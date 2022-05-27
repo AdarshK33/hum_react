@@ -87,7 +87,7 @@ const LocalExpactAppointmentLetter = (props) => {
               responsibilities would be those of a{" "}
               <b>{candidateLetterData.position}</b> at our{" "}
               <b>{candidateLetterData.location} </b>
-              location effective
+              location effective{" "}
               <b>
                 {moment(
                   candidateLetterData.permanentCandidateOffer.effectiveDate

@@ -876,13 +876,24 @@ const EmployeeExitAction = (props) => {
                       {state.empContractType !== "internship" ? (
                         <Col sm={2}>
                           <div>
-                            <label>
+                            {/* <label>
                               <b>Notice Period:</b>
                               <label className="itemResult">
                                 &nbsp;&nbsp;{" "}
                                 {state.empName ? state.noticePeriod : ""}
                               </label>
-                            </label>
+                            </label> */}
+                            <label>
+                                Notice Period:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{" "}
+                                  {state.noticePeriod === 1
+                                    ? `${state.noticePeriod} Month`
+                                    : state.noticePeriod > 1
+                                    ? `${state.noticePeriod} Months`
+                                    : state.noticePeriod}
+                                </label>
+                              </label>
                           </div>
                         </Col>
                       ) : (
