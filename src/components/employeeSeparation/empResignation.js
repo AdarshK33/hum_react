@@ -872,7 +872,7 @@ const EmpResignation = () => {
                   {submitted === false ? (
                     <Button type="submit">Submit</Button>
                   ) : (
-                    <Button onClick={withdrawHandler}>
+                    <Button disabled={employeeData.modeOfSeparationId == 2?true:false} onClick={withdrawHandler}>
                       WithDraw Resignation
                     </Button>
                   )}

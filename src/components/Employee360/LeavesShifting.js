@@ -123,7 +123,8 @@ console.log("plannedList check",parseInt(Object.keys(plannedList).length));
             justifyContent: "flex-start",
           }}
         >
-          {parseInt(Object.keys(Data).length)>1?
+          {(parseInt(Object.keys(Data).length)>1 ||
+          (parseInt(Object.keys(Data).length) !== 0 && Data[0].dates.length > 2))?
           <div
             type="button"
             onClick={() => {
@@ -147,7 +148,8 @@ console.log("plannedList check",parseInt(Object.keys(plannedList).length));
               </div>
             );
           })}
-{parseInt(Object.keys(Data).length)>1?
+{(parseInt(Object.keys(Data).length)>1 ||
+          (parseInt(Object.keys(Data).length) !== 0 && Data[0].dates.length > 2))?
           <div
             ype="button"
             onClick={() => {

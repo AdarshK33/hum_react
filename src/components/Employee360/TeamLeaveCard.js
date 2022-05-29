@@ -81,26 +81,41 @@ const TeamLeavesCard = () => {
 
   return (
     <Fragment>
-      {teamPlannedLeaves !== null &&
-      teamPlannedLeaves !== undefined &&
-      Object.keys(teamPlannedLeaves).length !== 0 ? (
+      
         <div>
           <div style={{ marginTop: "1rem" }}>
+          {((teamPlannedLeaves !== null &&
+      teamPlannedLeaves !== undefined &&
+      Object.keys(teamPlannedLeaves).length !== 0)||(teamUnPlannedLeaves !== null &&
+        teamUnPlannedLeaves !== undefined &&
+        Object.keys(teamUnPlannedLeaves).length !== 0)) ? (
             <Chart
               width={"100%"}
               height={"150px"}
               chartType="PieChart"
               data={[
                 ["Leave Type", "Days"],
-                ["UnPlanned", teamPlannedLeaves[0].unplanned],
-                ["Applied", teamPlannedLeaves[0].applied],
-                ["Pending", teamPlannedLeaves[0].planned],
+                ["UnPlanned",teamPlannedLeaves !== null &&
+                  teamPlannedLeaves !== undefined &&
+                  Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].unplanned:teamUnPlannedLeaves[0].unplanned],
+                ["Applied",teamPlannedLeaves !== null &&
+                  teamPlannedLeaves !== undefined &&
+                  Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].applied: teamUnPlannedLeaves[0].applied],
+                ["Pending",teamPlannedLeaves !== null &&
+                  teamPlannedLeaves !== undefined &&
+                  Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].planned:teamUnPlannedLeaves[0].planned],
               ]}
               legend_toggle
               options={LeavesOption}
-            />
+            />) : (
+              <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
+                No Records Found
+              </h4>
+            )}
           </div>
-
+          {(teamPlannedLeaves !== null &&
+      teamPlannedLeaves !== undefined &&
+      Object.keys(teamPlannedLeaves).length !== 0) ?<>
           <div style={{ marginTop: "2rem" }}>
             <label>Upcomming Leaves</label>
             <label
@@ -111,8 +126,10 @@ const TeamLeavesCard = () => {
               View All
             </label>
           </div>
-          <LeavesShifting Data={teamPlannedLeaves} />
-
+          <LeavesShifting Data={teamPlannedLeaves} /></>:""}
+          {(teamUnPlannedLeaves !== null &&
+        teamUnPlannedLeaves !== undefined &&
+        Object.keys(teamUnPlannedLeaves).length !== 0) ?<>
           <div style={{ marginTop: "2rem" }}>
             <label>Unplanned Leaves</label>
             <label
@@ -124,12 +141,9 @@ const TeamLeavesCard = () => {
             </label>
           </div>
           <LeavesShifting Data={teamUnPlannedLeaves} />
+          </>:""}
         </div>
-      ) : (
-        <h4 style={{ textAlign: "center", width: "100%", marginTop: "50%" }}>
-          No Records Found
-        </h4>
-      )}
+    
     </Fragment>
   );
 };
