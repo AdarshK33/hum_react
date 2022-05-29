@@ -158,7 +158,7 @@ const NonPerformanceTerminationLetter = () => {
                   <p>
                     <b>Address:</b>&nbsp;&nbsp;
                     {terminationLetterData !== undefined &&
-                      terminationLetterData.address}
+                      terminationLetterData.addressLine}
                   </p>
                 </p>
                 <br />

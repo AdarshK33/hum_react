@@ -1445,7 +1445,30 @@ const DisciplinarySeparation = (props) => {
                       ) : (
                         ""
                       )}
-
+                   {state.remarks !== "" &&
+                    state.remarks !== null &&
+                    state.remarks !== undefined ? (
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={12}>
+                          <div>
+                            <label>
+                              <b>Remarks:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.remarks}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+                    ) : (
+                      ""
+                    )}
                       <Row>
                         <Col
                           style={{
