@@ -49,12 +49,13 @@ const MyPerformanceCard = () => {
                 ["Hours Type", "Hours"],
                 [
                   "Remaining Hours",
-                  ((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours)) -
-                  (((isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours)) +
-                  (isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours)),
+                  (((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours)) -
+                  ((isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours))), 
+                  // +
+                  // (isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours)),
                 ],
                 ["Working Hours",(isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours)],
-                ["Additional Hours",((isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours))],
+                // ["Additional Hours",((isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours))],
               ]}
               options={PerformanceOption}
             />
@@ -72,8 +73,9 @@ const MyPerformanceCard = () => {
               <label className="AdditionalHours">
                 <b>
                   {" "}
-                  {(isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours)}/
-                  {((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours))}
+                  {(isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours)}
+                  {/* /
+                  {((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours))} */}
                 </b>
               </label>
             </Col>
@@ -101,7 +103,7 @@ const MyPerformanceCard = () => {
               {" "}
               {(isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours) +
                 (isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours)}
-              /{((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours))}
+              {/* /{((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours))} */}
             </label>
           </Row>
         </div>
