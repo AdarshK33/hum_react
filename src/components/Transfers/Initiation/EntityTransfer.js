@@ -550,7 +550,7 @@ const EntityTransfer = () => {
                       initiationEmpData.currentCompany.charAt(0) === "d") ? (
                       ""
                     ) : (
-                      <option value="DSI">DSI</option>
+                      <option value="Decathlon Sports India Pvt Ltd">DSI</option>
                     )}
                     {initiationEmpData !== null &&
                     initiationEmpData !== undefined &&
