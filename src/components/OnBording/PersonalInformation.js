@@ -1025,12 +1025,12 @@ const PersonalInformation = (props) => {
       fileObj.type === "image/png" ||
       fileObj.type === "application/pdf"
     ) {
-      if (fileObj.size <= 512000) {
+      if (fileObj.size/(1024*1024)<= 2) {
         setDocName(fileObj.name);
         setDisabilityUploaded(false);
         setDisabilityDocObj(fileObj);
       } else {
-        toast.error("File size should not exceed 500kb");
+        toast.error("File size should not exceed 2mb");
       }
     } else {
       toast.error("Please select jpg, jpeg, png and pdf formats");
