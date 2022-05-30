@@ -142,10 +142,9 @@ const PartTimeAppointmentLetter = (props) => {
                   Thank for your interest in choosing{" "}
                   <b>
                     {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
-                      ? "Decathlon"
+                      ? "Decathlon Sports India Pvt Ltd (DSIPL)"
                       : offerLetterData.companyName}
-                  </b>{" "}
-                  Sports India Pvt Ltd (DSIPL). As we believe your passion for
+                  </b>{" "}. As we believe your passion for
                   sport and your values match those of our Company, we, at{" "}
                   <b>
                     {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
