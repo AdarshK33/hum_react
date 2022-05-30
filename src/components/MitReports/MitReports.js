@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -29,24 +29,28 @@ import { MitReportContext } from "../../context/MitReportState";
 
 const MitReports = () => {
   const { getMitReport } = useContext(MitReportContext);
-  const [company, setCompany] = useState("");
+  const [company, setCompany] = useState();
   const [year, setYear] = useState(new Date());
-  const [month, setMonth] = useState(new Date());
+  const [month, setMonth] = useState();
 
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(
       "MitReports",
       company,
-      parseInt(moment(month).format("MM")),
+      month,
       parseInt(moment(year).format("YYYY"))
     );
-
-    getMitReport(
-      company,
-      parseInt(moment(month).format("MM")),
-      parseInt(moment(year).format("YYYY"))
-    );
+if (company !==undefined && month!==undefined ){
+  getMitReport(
+    company,
+    month,
+    parseInt(moment(year).format("YYYY"))
+  );
+}else{
+  toast.error("Please fill the required filed")
+}
+    
   };
 
   return (
@@ -78,7 +82,7 @@ const MitReports = () => {
                     required
                     onChange={(e) => setCompany(e.target.value)}
                   >
-                    <option value="">Select Company</option>
+                    <option>Select Company</option>
                     <option value="Decathlon Sports India Pvt Ltd">DSI</option>
                     <option value="Indeca Sporting Goods Pvt Ltd">INDECA</option>
                     <option value="Prodin Sporting Pvt Ltd">PRODIN</option>
@@ -112,6 +116,40 @@ const MitReports = () => {
               <Form.Group
                 as={Row}
                 className="mb-3"
+                controlId="reportModuleName"
+              >
+                <Form.Label column sm="3">
+                  Select Company Name:
+                </Form.Label>
+                <Col sm="8">
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    value={month}
+                    placeholder="Select Month"
+                    name="name"
+                    required
+                    onChange={(e) => setMonth(e.target.value)}
+                  >
+                    <option>Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </Form.Control>
+                </Col>
+              </Form.Group>
+              {/* <Form.Group
+                as={Row}
+                className="mb-3"
                 controlId="reportSubModuleName"
               >
                 <Form.Label column sm="3">
@@ -131,7 +169,7 @@ const MitReports = () => {
                     required
                   />{" "}
                 </Col>
-              </Form.Group>
+              </Form.Group> */}
               <Row className="mt-5">
                 <Col className="text-center">
                   <Button
