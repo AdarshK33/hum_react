@@ -291,7 +291,7 @@ const FinanaceAdminNoDueClearance = () => {
         fileUpload.size !== undefined &&
         fileUpload.size !== null &&
         fileUpload.size !== "" &&
-        (fileUpload.size / 1024 < 500 || fileUpload.size / 1024 == 500)
+        (fileUpload.size / (1024*1024) < 2 || fileUpload.size / (1024*1024) == 2)
       ) {
         if (fileUpload !== undefined && fileUpload !== null) {
           FinanceClearanceUploadSettlement(
@@ -304,7 +304,7 @@ const FinanaceAdminNoDueClearance = () => {
           toast.error("Please select a file to upload");
         }
       } else {
-        toast.error("File size should not exceed 500kb ");
+        toast.error("File size should not exceed 2mb ");
       }
     } else {
       toast.error("Please select a valid file to upload");

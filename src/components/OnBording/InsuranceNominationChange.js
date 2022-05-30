@@ -1353,7 +1353,7 @@ const InsuranceNomination = (props) => {
       fileObj.type === "image/png" ||
       fileObj.type === "application/pdf"
     ) {
-      if (fileObj.size <= 512000) {
+      if (fileObj.size/(1024*1024)<= 2) {
         setStateNomine({
           ...stateNomine,
           [event.target.name]: fileObj.name,
@@ -1366,7 +1366,7 @@ const InsuranceNomination = (props) => {
           setNomineUploade(false);
         }
       } else {
-        toast.error("File size should not exceed 500kb");
+        toast.error("File size should not exceed 2mb");
       }
     } else {
       toast.error("Please select jpg, jpeg, png and pdf formats");
