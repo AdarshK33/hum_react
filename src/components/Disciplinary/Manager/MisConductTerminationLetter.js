@@ -157,7 +157,7 @@ const MisConductTerminationLetter = () => {
                   <p>
                     <b>Address :</b>&nbsp;&nbsp;
                     {terminationLetterData !== undefined &&
-                      terminationLetterData.address}
+                      terminationLetterData.addressLine}
                   </p>
                 </p>
                 <br />
@@ -184,8 +184,8 @@ const MisConductTerminationLetter = () => {
 
                 <p>
                   You have been associated with {terminationLetterData.company}{" "}
-                  at its
-                  {terminationLetterData.address} location as{" "}
+                  at its{" "}
+                  {terminationLetterData.location} location as{" "}
                   {terminationLetterData.designation}.
                   {/* You have been associated {terminationLetterData.company}
               You have been associated {terminationLetterData.company} 
