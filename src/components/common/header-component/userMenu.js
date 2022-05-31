@@ -45,7 +45,9 @@ const UserMenu = () => {
     // }
     localStorage.setItem("type", "profile");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard");
+    // history.push("/dashboard/storedashboard");31/05/2022
+    history.push("/employee360");
+
   };
 
   const handleMenuListAdmin = () => {
@@ -89,7 +91,9 @@ const UserMenu = () => {
     // } 
     localStorage.setItem("type", "admin");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard");
+    // history.push("/dashboard/storedashboard");31/05/2022
+    history.push("/manager360");
+
   };
 
   const handleMenuListTeam = () => {
@@ -129,14 +133,18 @@ const UserMenu = () => {
 
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard");
+    // history.push("/dashboard/storedashboard");31/05/2022
+    history.push("/manager360");
+
   };
 
   const handleMenuListCluster = () => {
     getUserMenu(user.clusterManagerMenus);
     localStorage.setItem("type", "leader");
     localStorage.setItem("flag", "1");
-    history.push("/dashboard/storedashboard");
+    // history.push("/dashboard/storedashboard");31/05/2022
+    history.push("/employee360");
+
   };
 
   const TicketListingPage = () => {

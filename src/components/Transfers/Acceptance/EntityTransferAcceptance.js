@@ -366,23 +366,23 @@ const EntityTransferAcceptance = () => {
     //   validForm = false;
     //   setNewEntityErrMsg("Please select new entity");
     // }
-    if (newDept === "") {
+    if (newDept === "" || newDept == "undefined") {
       validForm = false;
       setDeptErrMsg("Please select department");
       console.log("newGross->", newGross);
       console.log("validForm", validForm);
     }
-    if (newPosition === "") {
+    if (newPosition === "" || newPosition == "undefined") {
       validForm = false;
       setPositionErrMsg("Please select position");
       console.log("validForm", validForm);
     }
-    if (newCostCentre === "") {
+    if (newCostCentre === "" || newCostCentre == "undefined") {
       validForm = false;
       setCostCentreErrMsg("Please select cost centre");
       console.log("validForm", validForm);
     }
-    if (newLocation === "") {
+    if (newLocation === ""  || newLocation == "undefined") {
       validForm = false;
       setLocationErrMsg("Please select location");
       console.log("validForm", validForm);
@@ -888,7 +888,7 @@ const EntityTransferAcceptance = () => {
                               placeholder="Select Location"
                               onChange={departmentChangeHandler}
                             >
-                              <option>Select Department</option>
+                              <option value="undefined">Select Department</option>
                               {deptDetails !== null &&
                                 deptDetails !== undefined &&
                                 deptDetails.length > 0 &&
@@ -937,7 +937,7 @@ const EntityTransferAcceptance = () => {
                                 placeholder="Select Cost Centre"
                                 onChange={changeCostCentreHandler}
                               >
-                                <option>Select Cost Centre</option>
+                                <option value="undefined">Select Cost Centre</option>
                                 {costCentreData !== null &&
                                   costCentreData !== undefined &&
                                   costCentreData.length > 0 &&
@@ -989,7 +989,7 @@ const EntityTransferAcceptance = () => {
                                 placeholder="Select Location"
                                 onChange={changeLocationHandler}
                               >
-                                <option>Select Location</option>
+                                <option value="undefined">Select Location</option>
                                 {costCentreLocationData !== null &&
                                   costCentreLocationData !== undefined &&
                                   Object.keys(costCentreLocationData).length !==
@@ -1039,7 +1039,7 @@ const EntityTransferAcceptance = () => {
                                 placeholder="Select Position"
                                 onChange={changePositionHandler}
                               >
-                                <option>Select Position</option>
+                                <option value="undefined">Select Position</option>
                                 {deptPositionData !== null &&
                                   deptPositionData !== undefined &&
                                   deptPositionData.length > 0 &&
