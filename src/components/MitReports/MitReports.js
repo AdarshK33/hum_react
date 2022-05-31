@@ -41,7 +41,7 @@ const MitReports = () => {
       month,
       parseInt(moment(year).format("YYYY"))
     );
-if (company !==undefined && month!==undefined ){
+if (company !==undefined && company !=="undefined" && month !==undefined && month!=="undefined" ){
   getMitReport(
     company,
     month,
@@ -82,7 +82,7 @@ if (company !==undefined && month!==undefined ){
                     required
                     onChange={(e) => setCompany(e.target.value)}
                   >
-                    <option>Select Company</option>
+                    <option value="undefined">Select Company</option>
                     <option value="Decathlon Sports India Pvt Ltd">DSI</option>
                     <option value="Indeca Sporting Goods Pvt Ltd">INDECA</option>
                     <option value="Prodin Sporting Pvt Ltd">PRODIN</option>
@@ -131,7 +131,7 @@ if (company !==undefined && month!==undefined ){
                     required
                     onChange={(e) => setMonth(e.target.value)}
                   >
-                    <option>Select Month</option>
+                    <option value="undefined">Select Month</option>
                     <option value="1">January</option>
                     <option value="2">February</option>
                     <option value="3">March</option>
