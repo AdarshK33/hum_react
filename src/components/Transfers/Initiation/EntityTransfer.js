@@ -261,20 +261,20 @@ const EntityTransfer = () => {
       setDeptErrMsg("Please enter employee id or employee name");
     }
 
-    if (searchInput === "") {
+    if (searchInput === "" ) {
       validForm = false;
       setEmpErrMsg("Please enter employee id or employee name");
     }
 
-    if (newEntity === "") {
+    if (newEntity === "" || newEntity == "undefined") {
       validForm = false;
       setNewEntityErrMsg("Please select new entity");
     }
-    if (newCostCentre === "") {
+    if (newCostCentre === "" || newCostCentre == "undefined") {
       validForm = false;
       setCostCentreErrMsg("Please select cost centre");
     }
-    if (newManager === "") {
+    if (newManager === "" || newManager == "undefined") {
       validForm = false;
       setManagerErrMsg("Please select manager");
     }
@@ -541,7 +541,7 @@ const EntityTransfer = () => {
                     placeholder="Select Position"
                     onChange={changeEntityHandler}
                   >
-                    <option value="">Select New Entity</option>
+                    <option value="undefined">Select New Entity</option>
 
                     {initiationEmpData !== null &&
                     initiationEmpData !== undefined &&
@@ -599,7 +599,7 @@ const EntityTransfer = () => {
                     placeholder="Select Department"
                     onChange={departmentChangeHandler}
                   >
-                    <option>Select Department</option>
+                    <option value="undefined">Select Department</option>
                     {deptDetails !== null &&
                       deptDetails !== undefined &&
                       deptDetails.length > 0 &&
@@ -714,7 +714,7 @@ const EntityTransfer = () => {
                     placeholder="Select Manager"
                     onChange={changeManagerHandler}
                   >
-                    <option>Select Manager</option>
+                    <option value="undefined">Select Manager</option>
                     {costCentreManagersData !== null &&
                       costCentreManagersData !== undefined &&
                       costCentreManagersData.length !== 0 &&

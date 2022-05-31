@@ -7,6 +7,7 @@ import App from "./components/app";
 import Signin from "./auth/signin";
 import Login from "./auth/login";
 import Default from "./components/dashboard/defaultCompo/default";
+import Dashboard from './components/dashboard/dashboard';
 // sample page
 import Samplepage from "./components/sample/samplepage";
 import Roster from "./components/roster/roster";
@@ -248,9 +249,21 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/finance-clearance`}
             component={FinanceClearanceList}
           />
-          <Route
+          {/* <Route
             path={`${process.env.PUBLIC_URL}/dashboard/storedashboard`}
             component={Default}
+          />31/05/2022 */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager360`}
+            component={ManagerDashboard}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee360`}
+            component={Default}
+          />
+           <Route
+            path={`${process.env.PUBLIC_URL}/dashboard/storedashboard`}
+            component={Dashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/codeofconduct`}
@@ -395,17 +408,10 @@ const RoutePath = () => {
           />
 
           <Route
-            path={`${process.env.PUBLIC_URL}/employee360`}
-            component={EmployeeDashboard}
-          />
-          <Route
             path={`${process.env.PUBLIC_URL}/manager_profile`}
             component={ManagerProfileListing}
           />
-          <Route
-            path={`${process.env.PUBLIC_URL}/manager360`}
-            component={ManagerDashboard}
-          />
+          
           <Route
             path={`${process.env.PUBLIC_URL}/my_profile`}
             component={MyProfileSteppers}

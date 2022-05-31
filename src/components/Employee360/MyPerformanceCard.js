@@ -33,6 +33,9 @@ const MyPerformanceCard = () => {
     pieSliceText: "none",
     pieHole: 0.6,
   };
+  console.log((isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours),"myperformance work ")
+  
+   console.log( (isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours),"myperformance")
   return (
     <Fragment>
       {myPerformanceData !== null &&
@@ -101,8 +104,10 @@ const MyPerformanceCard = () => {
             &nbsp;&nbsp;&nbsp;
             <label className="totalHours">
               {" "}
-              {(isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours) +
-                (isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours)}
+              {
+              ((isNaN(parseInt(myPerformanceData.workedHours)) == true)?0:parseInt(myPerformanceData.workedHours)) 
+              +
+                ((isNaN(parseInt(myPerformanceData.additionalHours)) == true)?0:parseInt(myPerformanceData.additionalHours))}
               {/* /{((isNaN(parseInt(myPerformanceData.totalWorkingHours)) == true)?0:parseInt(myPerformanceData.totalWorkingHours))} */}
             </label>
           </Row>

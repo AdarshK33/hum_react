@@ -46,7 +46,9 @@ const Charter=(props)=> {
             (codeOfConduct == true  &&
               dsiItCharter !== true)?<ITCharter data={props}/>:(codeOfConduct == true &&
            dsiItCharter == true)?
-           props.history.push("dashboard/storedashboard"):""}
+          //  props.history.push("dashboard/storedashboard")31/05/2022
+           props.history.push("/employee360")
+           :""}
            {/* <CodeOfConduct data={props}/>
            <EthicsCharter data={props}/>
            <ITCharter data={props}/> */}

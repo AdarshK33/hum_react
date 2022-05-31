@@ -41,7 +41,7 @@ const MitReports = () => {
       month,
       parseInt(moment(year).format("YYYY"))
     );
-if (company !==undefined && company !=="undefined" && month !==undefined && month!=="undefined" ){
+if ((company !== undefined && company !== "undefined") && (month !== undefined && month !== "undefined") ){
   getMitReport(
     company,
     month,
