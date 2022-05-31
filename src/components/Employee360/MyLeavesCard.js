@@ -99,7 +99,7 @@ const MyLeavesCard = () => {
                   Object.keys(unPlannedLeaves).length !== 0)?unPlannedLeaves[0].applied: plannedLeaves[0].applied],
                 ["Pending", (unPlannedLeaves !== null &&
                   unPlannedLeaves !== undefined &&
-                  Object.keys(unPlannedLeaves).length !== 0)?unPlannedLeaves[0].planned:plannedLeaves[0].planned],
+                  Object.keys(unPlannedLeaves).length !== 0)?unPlannedLeaves[0].pendingLeaves:plannedLeaves[0].pendingLeaves],
               ]}
               legend_toggle
               options={LeavesOption}

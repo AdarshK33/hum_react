@@ -101,9 +101,9 @@ const TeamLeavesCard = () => {
                 ["Applied",teamPlannedLeaves !== null &&
                   teamPlannedLeaves !== undefined &&
                   Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].applied: teamUnPlannedLeaves[0].applied],
-                ["Pending",teamPlannedLeaves !== null &&
-                  teamPlannedLeaves !== undefined &&
-                  Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].planned:teamUnPlannedLeaves[0].planned],
+                // ["Pending",teamPlannedLeaves !== null &&
+                //   teamPlannedLeaves !== undefined &&
+                //   Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].planned:teamUnPlannedLeaves[0].planned],
               ]}
               legend_toggle
               options={LeavesOption}
