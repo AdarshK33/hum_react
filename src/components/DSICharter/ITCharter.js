@@ -30,7 +30,9 @@ const ITCharter = (props) => {
 
   const handleClose = () => {
     setShow(false);
-    props.history.push("/dashboard/storedashboard");
+    // props.history.push("/dashboard/storedashboard");31/05/2022
+    props.history.push("/employee360")
+
   };
 
   const handleShow = () => setShow(true);
@@ -63,7 +65,8 @@ const ITCharter = (props) => {
         employeeProfileData.isCodeOfConduct === true &&
         employeeProfileData.isDsiItCharter === true
       ) {
-        props.history.push("/dashboard/storedashboard");
+        // props.history.push("/dashboard/storedashboard");31/05/2022
+        props.history.push("/employee360")
         setShow(false);
       }
     }
@@ -165,7 +168,9 @@ const ITCharter = (props) => {
           // dsiCharterUpdate(infoData,data,blobStore)
 
           //  ExportPDFITCharter(inputRef.current,item.charterId,20,employeeProfileData.employeeId);
-          props.history.push("/dashboard/storedashboard");
+          // props.history.push("/dashboard/storedashboard");31/05/2022
+          props.history.push("/employee360")
+
           setShow(false);
         }
       });

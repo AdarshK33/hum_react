@@ -8,6 +8,8 @@ import { DashboardContext } from "../../context/DashboardState";
 import Select from "react-select";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
+import Breadcrumb from '../common/breadcrumb';
+
 
 function Dashboard() {
   const {
@@ -291,7 +293,9 @@ function Dashboard() {
   console.log("clusterHours cal", clusterHours);
 
   return (
-    <div>
+    <div>   
+                  <Breadcrumb parent="Dashboard" title="Dashboard" />
+                  <div>
       <Row className="Row2">
         <Col sm={6}>
           <Row>
@@ -757,6 +761,7 @@ function Dashboard() {
                         </Col>
                         <Col></Col>
                     </Row> */}
+                    </div>
     </div>
   );
 }

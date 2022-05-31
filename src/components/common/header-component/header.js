@@ -112,7 +112,9 @@ const Header = () => {
     // } 
     localStorage.setItem("type", "admin");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard#admin");
+    // history.push("/dashboard/storedashboard#admin");31/05/2022
+    history.push("/manager360#admin");
+
   };
 
   const scHandler = () => {
@@ -157,7 +159,9 @@ const Header = () => {
     // }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard#team");
+    // history.push("/dashboard/storedashboard#team");31/05/2022
+    history.push("/manager360#team");
+
   };
 
   const costHandler = () => {
@@ -202,7 +206,9 @@ const Header = () => {
     // }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard#team");
+    // history.push("/dashboard/storedashboard#team");31/05/2022
+    history.push("/manager360#team");
+
   };
 
   const managerHandler = () => {
@@ -247,7 +253,9 @@ const Header = () => {
     // }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
-    history.push("/dashboard/storedashboard#team");
+    // history.push("/dashboard/storedashboard#team");31/05/2022
+    history.push("/manager360#team");
+
   };
 
   return (
