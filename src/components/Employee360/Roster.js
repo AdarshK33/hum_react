@@ -54,7 +54,7 @@ const Roster = () => {
       // setWeekOptions(tempArr);
       // SearchByWeekName(tempArr[0].value);
       var currentDate = new Date();
-      var startDate = new Date(currentDate.getFullYear(), 0, 1);
+      var startDate = new Date(currentDate.getFullYear(), 0, 2);
       var days = Math.floor((currentDate - startDate) /
           (24 * 60 * 60 * 1000));
           
