@@ -118,7 +118,7 @@ const Address = (props) => {
       addressViewData.stateId !== undefined &&
       addressViewData.stateId !== null
     ) {
-      stateValue = candidateStateData.filter(
+      stateValue = candidateStateData!==null &&candidateStateData!==undefined && Object.keys(candidateStateData).length && candidateStateData.filter(
         (i) => i.stateId === addressViewData.stateId
       );
       console.log("stateValue", stateValue);
@@ -128,7 +128,7 @@ const Address = (props) => {
         candidatePresentCityList(addressViewData.stateId);
       }
       setPresentCityData(candidatePresentCityData);
-      permanentStatevalue = candidateStateData.filter(
+      permanentStatevalue = candidateStateData!==null &&candidateStateData!==undefined && Object.keys(candidateStateData).length && candidateStateData.filter(
         (i) => i.stateId === addressViewData.permanentStateId
       );
       if (permanentStatevalue.length !== 0) {
