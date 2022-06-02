@@ -18,7 +18,9 @@ const GroupReducer = (state, action) => {
     case "EXTENSION_LETTER":
       console.log("on reducer");
       return { ...state, extensionLetterData: action.payload };
-
+      case "EXTENSION_MAIL_LETTER":
+        console.log("on reducer");
+        return { ...state, extensionMailData: action.payload };
     case "PROBATION_END_LETTER":
       console.log("on reducer");
       return { ...state, endLetterData: action.payload };
