@@ -457,7 +457,7 @@ const DocVerification = () => {
                         ) : item.documentType === 17 ? (
                           <p>
                             <span style={{ color: "black", fontSize: "16px" }}>
-                              FRRO
+                            Employment VISA (work permit)
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </p>

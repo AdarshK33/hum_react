@@ -235,7 +235,7 @@ const ProbationSeparation = () => {
       state.empCostCenterName = probationData.costCentre;
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = probationData.position;
-      state.emailId = probationData.emailId;
+      state.emailId = probationData.personalEmailId;
 
       if (
         state.empContractType === "internship" ||

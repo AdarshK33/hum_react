@@ -315,7 +315,7 @@ const DocVerification = () => {
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                FRRO
+                                Employment VISA (work permit)
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
