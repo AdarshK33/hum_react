@@ -12,6 +12,7 @@ const initial_state = {
   empId: "",
   probationData: {},
   extensionLetterData: {},
+  extensionMailData: {},
   cnfLetterData: {},
   endLetterData: {},
   ShowViewLetterModel: false,
@@ -107,7 +108,7 @@ export const ProbationProvider = (props) => {
   const ViewExtensionLetter = (employeeId) => {
     setLoader(true);
     client
-      .get("/api/v1/probation/send/extension/letter/" + employeeId)
+      .get("/api/v1/probation/view/extension/letter/" + employeeId)
       .then((response) => {
         state.extensionLetterData = response.data.data;
         setLoader(false);
@@ -123,6 +124,27 @@ export const ProbationProvider = (props) => {
         console.log(error);
       });
   };
+  
+  const extentionLetterMail= (employeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/probation/send/extension/letter/" + employeeId)
+      .then((response) => {
+        state.extensionMailData = response.data.data;
+        setLoader(false);
+        console.log(state.extensionMailData);
+        console.log("duesearch", response);
+
+        return dispatch({
+          type: "EXTENSION_MAIL_LETTER",
+          payload: state.extensionMailData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const ViewConfirmationLetter = (employeeId) => {
     setLoader(true);
     client
@@ -206,6 +228,7 @@ export const ProbationProvider = (props) => {
         setLetterView,
         setLetterPreView,
         setSaveTheLetter,
+        extentionLetterMail,
         LetterSaved: state.LetterSaved,
         ShowViewLetterModel: state.ShowViewLetterModel,
         ShowPreViewLetterModel: state.ShowPreViewLetterModel,
@@ -218,6 +241,7 @@ export const ProbationProvider = (props) => {
         probationListData: state.probationListData,
         total: state.total,
         loader: loader,
+        extensionMailData:state.extensionMailData
       }}
     >
       {props.children}

@@ -16,6 +16,7 @@ const ExtensionLetter1 = () => {
     setLetterView,
     empId,
     ViewExtensionLetter,
+    extentionLetterMail
   } = useContext(ProbationContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
@@ -73,6 +74,7 @@ const ExtensionLetter1 = () => {
     );
     CreatePdfAndUpload(infoData, "35,260,185,360");
     ViewExtensionLetter(probationData.empId);
+    extentionLetterMail(probationData.empId)
     setShow(false);
   };
   return (
