@@ -18,11 +18,12 @@ const TeamPerformanceCard = () => {
         color: "#bbb",
       },
       {
-        color: "#006ebb",
-      },
-      {
         color: "orange",
       },
+      {
+        color: "#006ebb",
+      },
+     
     ],
     legend: "none",
     chartArea: {
