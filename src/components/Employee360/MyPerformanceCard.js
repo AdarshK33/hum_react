@@ -17,11 +17,12 @@ const MyPerformanceCard = () => {
         color: "#bbb",
       },
       {
-        color: "#006ebb",
-      },
-      {
         color: "orange",
       },
+      {
+        color: "#006ebb",
+      },
+      
     ],
     legend: "none",
     chartArea: {
