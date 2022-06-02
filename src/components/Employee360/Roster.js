@@ -35,6 +35,14 @@ const Roster = () => {
   // useEffect(() => {
   //   shifting(rosterMnth, "Increment");
   // }, []);
+  Date.prototype.getWeek = function() {
+    var onejan = new Date(this.getFullYear(),0,1);
+    var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
+    console.log("check today",today,onejan);
+    var dayOfYear = ((today - onejan + 86400000)/86400000);
+    return Math.ceil(dayOfYear/7)
+  };
+    console.log("currentWeekNumber",new Date().getWeek());
   useEffect(() => {
     RosterMonthSearchYear()
   },[])
@@ -54,13 +62,14 @@ const Roster = () => {
       // setWeekOptions(tempArr);
       // SearchByWeekName(tempArr[0].value);
       var currentDate = new Date();
-      var startDate = new Date(currentDate.getFullYear(), 0, 2);
+      var startDate = new Date(currentDate.getFullYear(), 0, 1);
       var days = Math.floor((currentDate - startDate) /
           (24 * 60 * 60 * 1000));
           
             
-      var weekNumber = Math.ceil(
-          (currentDate.getDay() + 1 + days) / 7) ;
+      var weekNumber = new Date().getWeek()
+      // Math.ceil(
+      //     (currentDate.getDay() + 1 + days) / 7) ;02/06/2022
           console.log("weekNumber",weekNumber)
           console.log("YearsList",YearsList)
           YearsList.map((item,i)=>{
@@ -204,14 +213,7 @@ const Roster = () => {
     return time.join("");
   };
 
-  Date.prototype.getWeek = function() {
-    var onejan = new Date(this.getFullYear(),0,1);
-    var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
-    console.log("check today",today,onejan);
-    var dayOfYear = ((today - onejan + 86400000)/86400000);
-    return Math.ceil(dayOfYear/7)
-  };
-    console.log("currentWeekNumber",new Date().getWeek());
+  
 
   return (
     <Fragment>

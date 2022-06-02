@@ -103,7 +103,7 @@ const ConfirmationLetter1 = () => {
                   </p>
                   <br></br>
                   <p>
-                    To Ms./Mr. &nbsp;<b>{cnfLetterData.empName}</b>
+                    To  &nbsp;<b>{cnfLetterData.empName}</b>
                   </p>
                   <p>Address :</p>
                   <p>
