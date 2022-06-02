@@ -16,6 +16,7 @@ import { Fragment } from "react";
 import { AppContext } from "../../../context/AppState";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import { BonusContext } from "../../../context/BonusState";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const EntityTransferAcceptance = () => {
   const { transferId } = useParams();
@@ -44,6 +45,7 @@ const EntityTransferAcceptance = () => {
   } = useContext(TransferContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
+    const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEntity, setNewEntity] = useState("");
@@ -500,7 +502,9 @@ const EntityTransferAcceptance = () => {
       setFormValid(true);
     }
   };
-
+  const handleImageView = (data)=>{
+    ImageView(data)
+  }
   return (
     <Fragment>
       <ToastContainer />
@@ -778,16 +782,21 @@ const EntityTransferAcceptance = () => {
                               null &&
                             transferData.internationalTransfer.panNumberDoc !==
                               undefined ? (
+                              // <a
+                              //   href={
+                              //     process.env.REACT_APP_S3_URL +
+                              //     transferData.internationalTransfer
+                              //       .panNumberDoc
+                              //   }
+                              //   target="_blank"
+                              // >
                               <a
-                                href={
-                                  process.env.REACT_APP_S3_URL +
-                                  transferData.internationalTransfer
-                                    .panNumberDoc
-                                }
-                                target="_blank"
-                              >
+                              href={imageViewData.data ? imageViewData.data:""}
+                              target="_blank"
+                            >
                                 {" "}
-                                <u className="text-primary">View</u>
+                                <u className="text-primary" 
+                                onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc)}>View</u>
                               </a>
                             ) : (
                               "(No Documents Available)"
@@ -814,16 +823,21 @@ const EntityTransferAcceptance = () => {
                               .aadhaarNumberDoc !== null &&
                             transferData.internationalTransfer
                               .aadhaarNumberDoc !== undefined ? (
-                              <a
-                                href={
-                                  process.env.REACT_APP_S3_URL +
-                                  transferData.internationalTransfer
-                                    .aadhaarNumberDoc
-                                }
-                                target="_blank"
-                              >
+                              // <a
+                              //   href={
+                              //     process.env.REACT_APP_S3_URL +
+                              //     transferData.internationalTransfer
+                              //       .aadhaarNumberDoc
+                              //   }
+                              //   target="_blank"
+                              // >
+                                 <a
+                              href={imageViewData.data ? imageViewData.data:""}
+                              target="_blank"
+                            >
                                 {" "}
-                                <u className="text-primary">View</u>
+                                <u className="text-primary" 
+                                 onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc)}>View</u>
                               </a>
                             ) : (
                               "(No Documents Available)"

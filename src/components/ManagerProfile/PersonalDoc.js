@@ -4,11 +4,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { PermissionContext } from "../../context/PermissionState";
+
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 
 const PersonalDoc = (props) => {
   const { user } = useContext(AppContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
+
   const {
     DocumentView,
     documentsList,
@@ -119,6 +123,7 @@ const PersonalDoc = (props) => {
         setName("JPG");
       }
     }
+    ImageView(name)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;

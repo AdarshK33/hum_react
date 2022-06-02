@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, useState } from "react";
+import React, { createContext, useReducer, useContext, useState,useEffect } from "react";
 import E_signReducer from "../reducers/E_signReducer";
 import { Button, Modal } from "react-bootstrap";
 import { client } from "../utils/axios";
@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import htmlToPdfmake from "html-to-pdfmake";
+import { PermissionContext } from "../context/PermissionState";
 
 const initial_state = {
   uploadResponse: [],
@@ -16,6 +17,8 @@ const initial_state = {
 export const E_signContext = createContext();
 
 export const E_signProvider = ({ children }) => {
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
+
   const [state, dispatch] = useReducer(E_signReducer, initial_state);
   const [letterShow, setLetterShow] = useState(false);
   const [EsignLoader, setLoader] = useState(false);
@@ -30,6 +33,11 @@ export const E_signProvider = ({ children }) => {
     history: "",
     path: "",
   });
+
+  useEffect(() => {
+    ImageView(DocName)
+  }, [DocName]);
+
   const handleClose = () => {
     setNotif(false);
   };
@@ -322,9 +330,11 @@ export const E_signProvider = ({ children }) => {
         <Modal show={docShow} onHide={handleCloseDoc} size="md">
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
-            {DocName ? (
+            {DocName &&
+             imageViewData !== undefined &&
+             Object.keys(imageViewData).length !== 0? (
               <div>
-                 <iframe
+                 {/* <iframe
                     src={
                       process.env.REACT_APP_S3_URL +
                       DocName +
@@ -332,7 +342,14 @@ export const E_signProvider = ({ children }) => {
                     }
                     style={{ width: "100%", height: "900px" }}
                     frameborder="0"
-                  ></iframe>
+                  ></iframe> */}
+                   <iframe
+                  src={
+                    imageViewData.data ? imageViewData.data +"#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
                   </div>
             ) : (
               ""

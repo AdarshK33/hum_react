@@ -12,7 +12,9 @@ const PermissionReducer = (state, action) => {
         monthlyQtyDetailsList: action.payload,
         loader: action.loader,
       };
-
+    case "IMAGE_VIEW":
+    return{ ...state,imageViewData:action.payload};
+    
     case "VIEW_PERMISSION":
       return { ...state, permissionList: action.payload };
 
