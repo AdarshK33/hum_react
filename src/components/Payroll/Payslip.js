@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 import { PayrollContext } from "../../context/PayrollState";
 import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const Payslip = (props) => {
   const {
@@ -22,6 +23,8 @@ const Payslip = (props) => {
     makePayslipViewDataNull,
     loader,
   } = useContext(PayrollContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
+
   const { downloadFile } = useContext(DocsVerifyContext);
   const [docType, setDocType] = useState("");
   const [current, setCurrent] = useState(true);
@@ -90,6 +93,7 @@ const Payslip = (props) => {
         setName("JPG");
       }
     }
+    ImageView(name)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;

@@ -10,7 +10,8 @@ const initial_state = {
   permissionList: [],
   groupList: [],
   rolePermission: "",
-  grantManagerAccessData:{}
+  grantManagerAccessData:{},
+  imageViewData:{}
 };
 
 export const PermissionContext = createContext();
@@ -19,6 +20,18 @@ export const PermissionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PermissionReducer, initial_state);
   const [loader, setLoader] = useState(false);
 
+  const ImageView=(data)=>{
+return client.get(`/api/v1/document/view/file?fileName=${data}`).then((response)=>{
+  console.log(response.data,"grantValue")
+  state.imageViewData = response.data
+  return dispatch({
+    type: "IMAGE_VIEW",
+    payload: state.imageViewData,
+  });
+}).catch((error)=>{
+  console.log(error)
+})
+  }
   const GrantManagerAccess =(employeeId,grantValue) => {
     
     return client
@@ -249,6 +262,8 @@ export const PermissionProvider = ({ children }) => {
         permissionRoleAccess,
         DebounceSearching,
         GrantManagerAccess,
+        ImageView,
+        imageViewData:state.imageViewData,
         grantManagerAccessData:state.grantManagerAccessData,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,

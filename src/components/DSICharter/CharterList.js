@@ -10,9 +10,13 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { DSICharterContext } from "../../context/DSICharterState";
 import { AppContext } from "../../context/AppState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { PermissionContext } from "../../context/PermissionState";
+
 import moment from "moment";
 const CharterList = () => {
   const { user } = useContext(AppContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
+
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -82,9 +86,10 @@ const showTheLetter = (e, name) => {
   setName(name);
   setShowLetter(true);
   SetLetterView(true);
+  ImageView(e)
   // return <ViewTheLetter DocName={e} />;
 };
-
+console.log(imageViewData,"imageViewData charter")
 const downloadTheLetter = (e,data) => {
   console.log("check", e);
   downloadFile(e,data);
@@ -161,6 +166,7 @@ const downloadTheLetter = (e,data) => {
                 >
                   <Eye
                   display={item.isCodeOfConduct}
+                  // display={imageViewData.data}
                     style={{
                       textAlign: "right",
                       fontSize: "xx-small",
@@ -207,6 +213,8 @@ const downloadTheLetter = (e,data) => {
                 >
                   <Eye
                   display={item.isDsiItCharter}
+                  // display={imageViewData.data}
+
                     style={{
                       textAlign: "right",
                       fontSize: "xx-small",

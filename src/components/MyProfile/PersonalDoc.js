@@ -6,6 +6,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
+import { PermissionContext } from "../../context/PermissionState";
 
 const PersonalDoc = (props) => {
   const { user } = useContext(AppContext);
@@ -18,6 +19,8 @@ const PersonalDoc = (props) => {
     loader,
   } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
+
   const [photoGraphName, setPhotoGraphName] = useState("");
   const [cancelledCheque, setCancelledChequeName] = useState("");
   const [PANName, setPANName] = useState("");
@@ -118,6 +121,7 @@ const PersonalDoc = (props) => {
         setName("JPG");
       }
     }
+    ImageView(name)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;

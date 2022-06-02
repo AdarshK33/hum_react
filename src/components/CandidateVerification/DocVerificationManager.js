@@ -55,7 +55,7 @@ const DocVerification = () => {
     documentRejectComplete,
   } = useContext(DocsVerifyContext);
 
-  const { rolePermission } = useContext(PermissionContext);
+  const { rolePermission,ImageView,imageViewData } = useContext(PermissionContext);
   const {
     candidateData,
     aadhaarNotificationData,
@@ -372,8 +372,7 @@ const DocVerification = () => {
                         onClick={() => downloadDocument(item.documentName)}
                       > */}
                       <a
-                        href={process.env.REACT_APP_S3_URL + item.documentName}
-                        target="_blank"
+                        href={"#"}
                       >
                         {downloadedFile && <img src={downloadedFile} alt="" />}
                         {item.documentName}
@@ -387,11 +386,11 @@ const DocVerification = () => {
                       {/* </p> */}
                     </td>
                     <td className="buttonMargin1">
-                      <a
-                        href={process.env.REACT_APP_S3_URL + item.documentName}
+                    <a
+                        href={imageViewData.data}
                         target="_blank"
                       >
-                        <button className="downloadButton">View</button>
+                        <button className="downloadButton" onClick={()=>ImageView(item.documentName)}>View</button>
                       </a>
                     </td>
                     <td className="buttonMargin1">
@@ -600,10 +599,7 @@ const DocVerification = () => {
                       item.documentType !== 17 ? (
                         <React.Fragment>
                           <a
-                            href={
-                              process.env.REACT_APP_S3_URL + item.documentName
-                            }
-                            target="_blank"
+                            href="#"
                           >
                             {downloadedFile && (
                               <img src={downloadedFile} alt="" />
@@ -627,13 +623,11 @@ const DocVerification = () => {
                     item.documentType !== 17 ? (
                       <React.Fragment>
                         <td className="buttonMargin1">
-                          <a
-                            href={
-                              process.env.REACT_APP_S3_URL + item.documentName
-                            }
-                            target="_blank"
-                          >
-                            <button className="downloadButton">View</button>
+                        <a
+                        href={imageViewData.data}
+                        target="_blank"
+                      >
+                        <button className="downloadButton" onClick={()=>ImageView(item.documentName)}>View</button>
                           </a>
                         </td>
                         <td className="buttonMargin1">
