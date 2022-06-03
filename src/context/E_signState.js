@@ -333,7 +333,7 @@ export const E_signProvider = ({ children }) => {
           <Modal.Body>
             {DocName &&
              imageViewData !== undefined &&
-             Object.keys(imageViewData).length !== 0 &&imageViewData.data!=="File does not exist" ? (
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
               <div>
                  {/* <iframe
                     src={
