@@ -11,6 +11,8 @@ const TeamLeavesCard = () => {
   const [resultData, setResultData] = useState([]);
   const [plannedList, setPlannedList] = useState([]);
   const [plannedCount, setPlannedCount] = useState(1);
+  const [plan,setPlan] = useState(0)
+  const [unPlan,setUnplan] = useState(0)
   const [totalPlannedCount, setTotalPlannedCount] = useState(0);
   const history = useHistory();
   const [state, setState] = useState({ Pending: 0, Applied: 0, UnPlanned: 0 });
@@ -36,12 +38,31 @@ const TeamLeavesCard = () => {
       Object.keys(teamPlannedLeaves).length !== 0
     ) {
       let tempArr = [];
-      teamPlannedLeaves.map((item, i) => {});
+      var count=0;
+      teamPlannedLeaves.map((item, i) => {
+        count=count+item.numberOfDays
+        setPlan(count)
+      });
       setTotalPlannedCount(tempArr.length);
       setPlannedList(tempArr);
     }
   }, [teamPlannedLeaves]);
+  useEffect(()=>{
+    if (
+      teamUnPlannedLeaves !== null &&
+      teamUnPlannedLeaves !== undefined &&
+      Object.keys(teamUnPlannedLeaves).length !== 0
+    ) {
+      var count=0;
+      teamUnPlannedLeaves.map((item, i) => {
+      console.log("item.unplanned",item.numberOfDays);
+      count=count+item.numberOfDays
+        setUnplan(count)
+      });
+    }
+  },[teamUnPlannedLeaves])
   console.log("plannedList", plannedList, totalPlannedCount);
+  console.log("unPlan",unPlan,"plan",plan);
 
   const LeavesOption = {
     slices: [
@@ -97,10 +118,10 @@ const TeamLeavesCard = () => {
                 ["Leave Type", "Days"],
                 ["UnPlanned",teamPlannedLeaves !== null &&
                   teamPlannedLeaves !== undefined &&
-                  Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].unplanned:teamUnPlannedLeaves[0].unplanned],
-                ["Applied",teamPlannedLeaves !== null &&
+                  Object.keys(teamPlannedLeaves).length !== 0?unPlan:0],
+                ["Planned",teamPlannedLeaves !== null &&
                   teamPlannedLeaves !== undefined &&
-                  Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].applied: teamUnPlannedLeaves[0].applied],
+                  Object.keys(teamPlannedLeaves).length !== 0?plan:0],
                 // ["Pending",teamPlannedLeaves !== null &&
                 //   teamPlannedLeaves !== undefined &&
                 //   Object.keys(teamPlannedLeaves).length !== 0?teamPlannedLeaves[0].planned:teamUnPlannedLeaves[0].planned],
