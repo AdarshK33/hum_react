@@ -16,6 +16,7 @@ import { Fragment } from "react";
 import { AppContext } from "../../../context/AppState";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import { BonusContext } from "../../../context/BonusState";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const EntityTransferAction = () => {
   const { transferId } = useParams();
@@ -42,6 +43,7 @@ const EntityTransferAction = () => {
     setLetterViewing,
     letterView,
   } = useContext(TransferContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
   const { user } = useContext(AppContext);
@@ -439,7 +441,9 @@ const EntityTransferAction = () => {
     setLetterSent(true);
     setShowLetterSubmitModal(true);
   };
-
+  const handleImageView = (data)=>{
+    ImageView(data)
+  }
   return (
     <Fragment>
       <ToastContainer />
@@ -716,15 +720,20 @@ const EntityTransferAction = () => {
                             null &&
                           transferData.internationalTransfer.panNumberDoc !==
                             undefined ? (
+                            // <a
+                            //   href={
+                            //     process.env.REACT_APP_S3_URL +
+                            //     transferData.internationalTransfer.panNumberDoc
+                            //   }
+                            //   target="_blank"
+                            // >
                             <a
-                              href={
-                                process.env.REACT_APP_S3_URL +
-                                transferData.internationalTransfer.panNumberDoc
-                              }
-                              target="_blank"
-                            >
+                            href={imageViewData.data ? imageViewData.data:""}
+                            target="_blank"
+                          >
                               {" "}
-                              <u className="text-primary">View</u>
+                              <u className="text-primary"
+                    onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc)}>View</u>
                             </a>
                           ) : (
                             "(No Documents Available)"
@@ -751,16 +760,21 @@ const EntityTransferAction = () => {
                             .aadhaarNumberDoc !== null &&
                           transferData.internationalTransfer
                             .aadhaarNumberDoc !== undefined ? (
-                            <a
-                              href={
-                                process.env.REACT_APP_S3_URL +
-                                transferData.internationalTransfer
-                                  .aadhaarNumberDoc
-                              }
+                            // <a
+                            //   href={
+                            //     process.env.REACT_APP_S3_URL +
+                            //     transferData.internationalTransfer
+                            //       .aadhaarNumberDoc
+                            //   }
+                            //   target="_blank"
+                            // >
+                               <a
+                              href={imageViewData.data ? imageViewData.data:""}
                               target="_blank"
                             >
                               {" "}
-                              <u className="text-primary">View</u>
+                              <u className="text-primary"
+                             onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc)}  >View</u>
                             </a>
                           ) : (
                             "(No Documents Available)"

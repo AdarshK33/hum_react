@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import Breadcrumb from "../../common/breadcrumb";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
+import { PermissionContext } from "../../../context/PermissionState";
 
 import { Fragment } from "react";
 
 const EntityTransfer = ({ transferData }) => {
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEntity, setNewEntity] = useState("");
   const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
@@ -22,7 +24,9 @@ const EntityTransfer = ({ transferData }) => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
-
+  const handleImageView = (data)=>{
+    ImageView(data)
+  }
   return (
     <Fragment>
       {transferData &&
@@ -149,23 +153,28 @@ const EntityTransfer = ({ transferData }) => {
                 ? transferData.internationalTransfer.panNumber
                 : ""}
               &nbsp;&nbsp;
-              {transferData !== null &&
+              {(transferData !== null &&
               transferData !== undefined &&
               Object.keys(transferData).length !== 0 &&
               transferData.internationalTransfer !== null &&
               transferData.internationalTransfer !== undefined &&
               transferData.internationalTransfer.panNumberDoc !== null &&
-              transferData.internationalTransfer.panNumberDoc !== undefined ? (
+              transferData.internationalTransfer.panNumberDoc !== undefined) || true ? (
+                // <a
+                //   href={
+                //     process.env.REACT_APP_S3_URL +
+                //     transferData.internationalTransfer.panNumberDoc
+                //   }
+                //   target="_blank"
+                // >
                 <a
-                  href={
-                    process.env.REACT_APP_S3_URL +
-                    transferData.internationalTransfer.panNumberDoc
-                  }
-                  target="_blank"
-                >
+                href={imageViewData.data ? imageViewData.data:""}
+                target="_blank"
+              >
                   {" "}
-                  <u className="text-primary">View</u>
-                </a>
+                  <u className="text-primary"
+                    onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc)}>View</u>
+                    </a>
               ) : (
                 "(No Documents Available)"
               )}
@@ -190,16 +199,21 @@ const EntityTransfer = ({ transferData }) => {
               transferData.internationalTransfer.aadhaarNumberDoc !== null &&
               transferData.internationalTransfer.aadhaarNumberDoc !==
                 undefined ? (
+                // <a
+                //   href={
+                //     process.env.REACT_APP_S3_URL +
+                //     transferData.internationalTransfer.aadhaarNumberDoc
+                //   }
+                //   target="_blank"
+                // >
                 <a
-                  href={
-                    process.env.REACT_APP_S3_URL +
-                    transferData.internationalTransfer.aadhaarNumberDoc
-                  }
-                  target="_blank"
-                >
+                href={imageViewData.data ? imageViewData.data:""}
+                target="_blank"
+              >
                   {" "}
-                  <u className="text-primary">View</u>
-                </a>
+                  <u className="text-primary"
+            onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc)}  >View</u>
+                             </a>
               ) : (
                 "(No Documents Available)"
               )}

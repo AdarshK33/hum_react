@@ -1,12 +1,17 @@
 import React, { Fragment, useState, useContext ,useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
+import { PermissionContext } from "../../context/PermissionState";
 
 const ViewTheLetter = ({ DocName, Name }) => {
   const { SetLetterView,employeeProfileData ,ViewEmployeeProfile} = useContext(DSICharterContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const [show, setShow] = useState(true);
 
   // const show = true;
+  useEffect(()=>{
+ImageView(DocName)
+  },[DocName])
   const handleClose = () => {
     setShow(false);
     SetLetterView(false);
@@ -44,8 +49,11 @@ const ViewTheLetter = ({ DocName, Name }) => {
           <Modal.Body>
          
 
-            {DocName !== "" && DocName !== null && DocName !== undefined ? (
-                  <iframe
+            {DocName !== "" && DocName !== null && DocName !== undefined && 
+            imageViewData !== undefined &&
+            Object.keys(imageViewData).length !== 0 ? (
+              <div>
+                  {/* <iframe
                     src={
                       process.env.REACT_APP_S3_URL +
                       DocName +
@@ -53,7 +61,17 @@ const ViewTheLetter = ({ DocName, Name }) => {
                     }
                     style={{ width: "100%", height: "900px" }}
                     frameborder="0"
+                  ></iframe> */}
+                    <iframe
+                    src={
+                      imageViewData.data?imageViewData.data +
+                      "#toolbar=0& navpanes=0":"" 
+                      
+                    }
+                    style={{ width: "100%", height: "900px" }}
+                    frameborder="0"
                   ></iframe>
+                  </div>
                 ) 
             : (
               ""
