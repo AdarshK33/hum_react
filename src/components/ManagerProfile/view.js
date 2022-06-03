@@ -29,7 +29,7 @@ const ViewTheLetter = ({ DocName, Name }) => {
           <Modal.Body>
             {DocName !== "" && DocName !== null && DocName !== undefined &&
              imageViewData !== undefined &&
-             Object.keys(imageViewData).length !== 0 ? (
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist"? (
               <div>
                 {name === "PDF" ? (
                   // <iframe
@@ -63,7 +63,7 @@ const ViewTheLetter = ({ DocName, Name }) => {
                 )}
               </div>
             ) : (
-              ""
+              "File does not exist"
             )}
           </Modal.Body>
         </Modal>

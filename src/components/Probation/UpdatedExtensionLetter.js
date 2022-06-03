@@ -74,7 +74,7 @@ const ExtensionLetter1 = () => {
     );
     CreatePdfAndUpload(infoData, "35,260,185,360");
     ViewExtensionLetter(probationData.empId);
-    extentionLetterMail(probationData.empId)
+    // extentionLetterMail(probationData.empId)
     setShow(false);
   };
   return (

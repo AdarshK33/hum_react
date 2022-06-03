@@ -28,7 +28,7 @@ console.log(imageViewData,"imageViewData")
           <Modal.Body>
             {DocName !== "" && DocName !== null && DocName !== undefined &&
              imageViewData !== undefined &&
-             Object.keys(imageViewData).length !== 0 ? (
+             Object.keys(imageViewData).length !== 0 &&imageViewData.data!=="File does not exist" ? (
               <div>
                 {Name === "Code Of Conduct" || Name === "It Charter" ? (
                   // <iframe
@@ -65,7 +65,7 @@ console.log(imageViewData,"imageViewData")
                 )}
               </div>
             ) : (
-              ""
+              "File does not exist"
             )}
           </Modal.Body>
         </Modal>

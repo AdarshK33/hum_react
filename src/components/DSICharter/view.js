@@ -51,7 +51,7 @@ ImageView(DocName)
 
             {DocName !== "" && DocName !== null && DocName !== undefined && 
             imageViewData !== undefined &&
-            Object.keys(imageViewData).length !== 0 ? (
+            Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
               <div>
                   {/* <iframe
                     src={
@@ -74,7 +74,7 @@ ImageView(DocName)
                   </div>
                 ) 
             : (
-              ""
+              "File does not exist"
             )}
           </Modal.Body>
         </Modal>

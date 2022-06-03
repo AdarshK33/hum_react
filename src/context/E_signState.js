@@ -34,6 +34,7 @@ export const E_signProvider = ({ children }) => {
     path: "",
   });
 
+  console.log("imageViewData",imageViewData);
   useEffect(() => {
     ImageView(DocName)
   }, [DocName]);
@@ -332,7 +333,7 @@ export const E_signProvider = ({ children }) => {
           <Modal.Body>
             {DocName &&
              imageViewData !== undefined &&
-             Object.keys(imageViewData).length !== 0? (
+             Object.keys(imageViewData).length !== 0 &&imageViewData.data!=="File does not exist" ? (
               <div>
                  {/* <iframe
                     src={
@@ -352,7 +353,7 @@ export const E_signProvider = ({ children }) => {
                 ></iframe>
                   </div>
             ) : (
-              ""
+              "File does not exist"
             )}
           </Modal.Body>
         </Modal>
