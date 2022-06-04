@@ -58,7 +58,9 @@ const [Name, setName] = useState("");
         viewCharter(searchValue, pageNumber - 1);
     } else {
       if (user !== null && user !== undefined) {
-        viewCharter(user.employeeId, pageNumber - 1);
+        // viewCharter(user.employeeId, pageNumber - 1);4/6/2022 paginationissue
+        viewCharter("all", pageNumber - 1);
+
       }
     }
     setCurrentRecords(charterData);
