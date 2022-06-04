@@ -116,9 +116,9 @@ const TeamLeavesCard = () => {
               chartType="PieChart"
               data={[
                 ["Leave Type", "Days"],
-                ["UnPlanned",teamPlannedLeaves !== null &&
-                  teamPlannedLeaves !== undefined &&
-                  Object.keys(teamPlannedLeaves).length !== 0?unPlan:0],
+                ["UnPlanned",teamUnPlannedLeaves !== null &&
+                  teamUnPlannedLeaves !== undefined &&
+                  Object.keys(teamUnPlannedLeaves).length !== 0?unPlan:0],
                 ["Planned",teamPlannedLeaves !== null &&
                   teamPlannedLeaves !== undefined &&
                   Object.keys(teamPlannedLeaves).length !== 0?plan:0],
