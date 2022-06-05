@@ -22,7 +22,7 @@ const OfferReleaseList = () => {
     viewCandidateId,
     noShowCandidate,
   } = useContext(OfferContext);
-  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
+  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData,MakePersonalInfoNull } =
     useContext(DocsVerifyContext);
   const { getReference, notification } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
@@ -37,6 +37,7 @@ const OfferReleaseList = () => {
   useEffect(() => {
     candidateView("all", pageCount);
     console.log("user role", user);
+    MakePersonalInfoNull()
   }, []);
 
   useEffect(() => {
@@ -81,7 +82,8 @@ const OfferReleaseList = () => {
   const fetchCandidateDetails = (candidateId) => {
     viewCandidateId(candidateId);
     verificationDocsView(candidateId);
-    personalInfo(candidateId);
+    // personalInfo(candidateId);
+    console.log("personalInfoData",personalInfoData);
     viewRole();
     CostCenter();
   };
