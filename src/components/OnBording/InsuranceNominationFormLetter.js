@@ -10,6 +10,11 @@ import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import moment from "moment";
+import jsPDF from "jspdf";
+import pdfMake from "pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
+
 
 const InsuranceNominationFormLetter = (props) => {
   const { CandidatePersonalInfo, candidatePersonalInfoData } =
@@ -38,13 +43,33 @@ const InsuranceNominationFormLetter = (props) => {
     downloadFileOnboard(insuranceResponse);
   };
   const HandleSaveLetter = () => {
-    ExportPDFandUploadInsurance(
-      inputRef.current,
-      0,
-      24,
-      props.data.candidateId
-    );
-    setClickSave(true);
+    const doc = new jsPDF();
+    //get table html
+    const pdfTable = document.getElementById("insurance");
+    //html to pdf format
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+
+    const documentDefinition = { content: html };
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    // pdfMake.createPdf(documentDefinition).open();
+    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+    pdfDocGenerator.getBuffer((buffer) => {
+      var blobStore = new Blob([buffer], { type: "application/pdf" });
+      blobStore.name = "insurance.pdf";
+      const data = {
+        dsiType: "insurance",
+        fileType: 24,
+      };
+
+      ExportPDFandUploadInsurance(
+        blobStore,
+        0,
+        24,
+        props.data.candidateId
+      );
+      setClickSave(true);
+        });
+   
   };
   console.log(props.data, "props");
   return (
