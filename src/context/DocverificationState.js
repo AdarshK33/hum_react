@@ -558,8 +558,58 @@ export const DocsVerificationProvider = (props) => {
   };
 
 
+  // const ExportPDFandUploadInsurance = (
+  //   RefData,
+  //   employeeId = 0,
+  //   fileType = 0,
+  //   candidateId = 0,
+  //   exitId = 0,
+  //   disciplinaryId = 0,
+  //   promotionId = 0,
+  //   transferId = 0
+  // ) => {
+  //   html2canvas(RefData).then((canvas) => {
+  //     // document.body.appendChild(canvas); 
+  //     // if you want see your screenshot in body.
+  //     const imgData = canvas.toDataURL("image/png");
+  //     var imageData = imgData;
+  //     imageData = imgData.slice(22) + imgData.slice(23);
+  //     var data = {
+  //       base64String: imageData,
+  //       candidateId: candidateId,
+  //       fileType: fileType,
+  //     };
+  //     var data = {
+  //       base64String: imageData,
+  //       candidateId: candidateId,
+  //       disciplinaryId: disciplinaryId,
+  //       employeeId: employeeId,
+  //       exitId: exitId,
+  //       fileType: fileType,
+  //       promotionId: promotionId,
+  //       transferId: transferId,
+  //     };
+  //     uploadInsurranceNominationForm(data);
+  //     console.log("base64 data", imageData);
+  //   });
+  // };
+  // const uploadInsurranceNominationForm = (base64Data) => {
+  //   console.log("base64...........", base64Data);
+  //   return (
+  //     candidate.post("/api/v2/candidate/documents/file/upload", base64Data)
+  //       .then((response) => {
+  //         console.log(response);
+  //         state.insuranceResponse = response.data.data;
+  //         return dispatch({ type: "INSURANCE_BASE64_UPLOAD", payload: state.insuranceResponse });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       })
+  //   );
+  // };
+  
   const ExportPDFandUploadInsurance = (
-    RefData,
+    file,
     employeeId = 0,
     fileType = 0,
     candidateId = 0,
@@ -568,35 +618,18 @@ export const DocsVerificationProvider = (props) => {
     promotionId = 0,
     transferId = 0
   ) => {
-    html2canvas(RefData).then((canvas) => {
-      // document.body.appendChild(canvas); 
-      // if you want see your screenshot in body.
-      const imgData = canvas.toDataURL("image/png");
-      var imageData = imgData;
-      imageData = imgData.slice(22) + imgData.slice(23);
-      var data = {
-        base64String: imageData,
-        candidateId: candidateId,
-        fileType: fileType,
-      };
-      var data = {
-        base64String: imageData,
-        candidateId: candidateId,
-        disciplinaryId: disciplinaryId,
-        employeeId: employeeId,
-        exitId: exitId,
-        fileType: fileType,
-        promotionId: promotionId,
-        transferId: transferId,
-      };
-      uploadInsurranceNominationForm(data);
-      console.log("base64 data", imageData);
-    });
+    const photoFile = file;
+    const formData = new FormData();
+    formData.append("file", photoFile, photoFile.name);
+    // formData.append("candidateId", candidateId);
+    // formData.append("fileType",fileType);  
+      uploadInsurranceNominationForm(formData,fileType,candidateId)
   };
-  const uploadInsurranceNominationForm = (base64Data) => {
-    console.log("base64...........", base64Data);
+
+  const uploadInsurranceNominationForm = (formData,fileType,candidateId) => {
+    console.log("base64...........", formData);
     return (
-      candidate.post("/api/v2/candidate/documents/file/upload", base64Data)
+      candidate.post(`api/v2/candidate/documents/pfd/upload?fileType=${fileType}&candidateId=${candidateId}`, formData)
         .then((response) => {
           console.log(response);
           state.insuranceResponse = response.data.data;
@@ -607,7 +640,6 @@ export const DocsVerificationProvider = (props) => {
         })
     );
   };
-  
 
   const ExportPDFITCharter = (
     RefData,
