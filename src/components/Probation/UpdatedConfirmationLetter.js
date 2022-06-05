@@ -127,7 +127,7 @@ const ConfirmationLetter1 = () => {
                   ? moment(new Date(cnfLetterData.appointmentLetterDate)).format(
                       "DD-MM-YYYY"
                     )
-                  : ""}
+                  : ""}{" "}
                       shall remain same.
                       <br />
                       Please sign the copy of this letter as receipt of

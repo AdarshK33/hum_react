@@ -65,14 +65,14 @@ const ConfirmationLetter = () => {
                       "DD-MM-YYYY"
                     )
                   : ""}
-              </b>
+              </b>{" "}
               . All the other terms and conditions of your appointment letter
               dated {" "}{cnfLetterData.appointmentLetterDate !== null &&
                 cnfLetterData.appointmentLetterDate !== undefined
                   ? moment(new Date(cnfLetterData.appointmentLetterDate)).format(
                       "DD-MM-YYYY"
                     )
-                  : ""}
+                  : ""}{" "}
               shall remain same.
               <br />
               <br />
