@@ -261,7 +261,7 @@ const OfferReleaseList = () => {
                                 item.status === 6 ||
                                 item.status === 2 ||
                                 item.status === 3 ||
-                                item.status === 7 ? (
+                                item.status === 7 || item.status === 8 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to="/edit-offer-release">
