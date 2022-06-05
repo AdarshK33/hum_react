@@ -84,6 +84,14 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
+
+  const MakePersonalInfoNull = () => {
+    state.personalInfoData = {};
+    return dispatch({
+      type: "PERSONAL_INFO_TO_VERIFY",
+      payload: state.personalInfoData,
+    });
+  };
   // fetching addressInformation of candidate based on candidateId
   const addressInfo = (candidateId) => {
     setLoader(true);
@@ -749,6 +757,7 @@ export const DocsVerificationProvider = (props) => {
           ExportPDFITCharter,
           uploadITCharter,
           candidateVerificationView,
+          MakePersonalInfoNull,
           itCharterResponse:state.itCharterResponse,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,

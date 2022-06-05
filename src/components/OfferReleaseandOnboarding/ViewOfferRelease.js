@@ -56,17 +56,17 @@ const ViewOfferRelease = () => {
       setCheckStep6(false);
     }
   }, [step6Status]);
-  useEffect(() => {
-    if (
-      candidateData &&
-      candidateData.candidateInformation &&
-      candidateData.candidateInformation.candidateId !== null
-    ) {
-      console.log("------>", candidateData.candidateInformation.candidateId);
-      console.log("List----->", candidateList);
-      personalInfo(candidateData.candidateInformation.candidateId);
-    }
-  }, [candidateData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateData &&
+  //     candidateData.candidateInformation &&
+  //     candidateData.candidateInformation.candidateId !== null
+  //   ) {
+  //     console.log("------>", candidateData.candidateInformation.candidateId);
+  //     console.log("List----->", candidateList);
+  //     personalInfo(candidateData.candidateInformation.candidateId);
+  //   }
+  // }, [candidateData]);
   useEffect(() => {
     if (
       personalInfoData !== null &&
@@ -90,19 +90,14 @@ const ViewOfferRelease = () => {
       candidateList.length > 0 &&
       candidateData &&
       candidateData.candidateInformation &&
-      candidateData.candidateInformation.candidateId !== null &&
-      personalInfoData !== null &&
-      Object.keys(personalInfoData).length !== 0 &&
-      personalInfoData !== undefined
+      candidateData.candidateInformation.candidateId !== null
     ) {
       candidateList.map((item, i) => {
         if (
           item.candidateId === candidateData.candidateInformation.candidateId
         ) {
           if (
-            (item.status === 2 || item.status === 6) &&
-            personalInfoData.documentUploaded === 1 &&
-            personalInfoData.adminVerificationStatus === 1
+            item.status === 2 || item.status === 6
           ) {
             console.log("-->", item);
             setActiveStep5(true);

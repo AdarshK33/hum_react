@@ -171,9 +171,26 @@ const CandidateOnboarding = () => {
       personalInfoData.employeeId !== undefined
     ) {
       viewEmployee(personalInfoData.employeeId);
-      setEmployeeData(empData);
+      // setEmployeeData(empData);
     }
   }, [personalInfoData]);
+
+  useEffect(() => {
+    console.log("employeeData", employeeData);
+    if (
+      personalInfoData !== undefined &&
+      personalInfoData !== null &&
+      personalInfoData.employeeId !== undefined
+    ) {
+      setEmployeeData({
+        ...employeeData,
+        ["email"]:"",
+        ["fedId"]:"",
+    })
+  }
+  }, [personalInfoData]);
+
+
   useEffect(() => {
     if (
       empData !== undefined &&
@@ -238,9 +255,10 @@ const CandidateOnboarding = () => {
         ["phone"]: empData.phone,
         ["position"]: empData.position,
         ["firstName"]: empData.firstName,
-        ["email"]: empData.email,
-        ["fedId"]: (empData.fedId !== null && 
-          empData.fedId !== undefined && empData.fedId !== "")?empData.fedId.replace(/"/g, ''):'',
+        //After identity access need to be enabled
+        // ["email"]: empData.email,
+        // ["fedId"]: (empData.fedId !== null && 
+        //   empData.fedId !== undefined && empData.fedId !== "")?empData.fedId.replace(/"/g, ''):'',
         ["role"]: empData.role,
         ["address"]: empData.address,
         ["isClusterManager"]: 0,
@@ -287,9 +305,9 @@ const CandidateOnboarding = () => {
       dob: "",
       email: "",
       employeeId:
-        onBoardData !== undefined && onBoardData !== null
+        onBoardData !== undefined && onBoardData !== null&& Object.keys(onBoardData).length
           ? onBoardData.employeeId
-          : personalInfoData !== undefined
+          : personalInfoData !== undefined &&personalInfoData!==null && Object.keys(personalInfoData).length
           ? personalInfoData.employeeId
           : "",
       employeeName: "",

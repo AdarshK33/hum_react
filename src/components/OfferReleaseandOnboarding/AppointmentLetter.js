@@ -125,7 +125,7 @@ const AppointmentLetter = (props) => {
                   responsibilities would be those of a{" "}
                   <b>{offerLetterData.position}</b> at our{" "}
                   <b>{offerLetterData.location} </b>
-                  location effective
+                  location effective{" "}
                   <b>
                     {moment(
                       offerLetterData.permanentCandidateOffer.effectiveDate
