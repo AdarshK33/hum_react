@@ -151,6 +151,14 @@ const DocVerification = () => {
 
     step5suscessStatus(true);
     setOnboardPopup(true);
+    if (
+      candidateData &&
+      candidateData.candidateInformation &&
+      candidateData.candidateInformation.candidateId !== null
+    ) {
+      console.log("------>", candidateData.candidateInformation.candidateId);
+      personalInfo(candidateData.candidateInformation.candidateId);
+    }
   };
   var educationDocuments = "";
   var documents =
@@ -779,12 +787,12 @@ const DocVerification = () => {
           <button
             className="onboardButton"
             onClick={() => handleOnboard()}
-            disabled={state.verificationStatus === 1 ? false : true}
-            style={
-              state.verificationStatus === 1
-                ? { opacity: "1" }
-                : { opacity: "0.6" }
-            }
+            // disabled={state.verificationStatus === 1 ? false : true}
+            // style={
+            //   state.verificationStatus === 1
+            //     ? { opacity: "1" }
+            //     : { opacity: "0.6" }
+            // }
           >
             Proceed
           </button>

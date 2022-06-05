@@ -634,8 +634,7 @@ const OfferAccept = (props) => {
               )} */}
 
               {candidateProfileData &&
-              (candidateProfileData.status === 5 ||
-                candidateProfileData.status === 2) ? (
+              (candidateProfileData.status === 5) ? (
                 <React.Fragment>
                   <span style={{ marginRight: "1rem" }}>
                     Do you accept the Offer letter
