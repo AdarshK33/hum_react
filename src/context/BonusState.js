@@ -122,14 +122,13 @@ export const BonusProvider = (props) => {
   ) => {
     client
       .get(
-        "/api/v1/bonus/view?contractType=" +
+        "/api/v1/bonus/view/" +department+"?contractType="+
           contractType +
-          "&department=" +
-          department +
           "&effectiveDate=" +
           effectiveDate
       )
       .then((response) => {
+        
         state.getBonusByContractType = response.data.data;
         return dispatch({
           type: "VIEW_BONUS_BY_CONTRACT",
