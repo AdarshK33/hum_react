@@ -505,7 +505,40 @@ const CandidateOnboarding = () => {
       employeeData.joiningDate !== ""
     ) {
       console.log("inside if");
-      createEmployee(employeeData);
+      const data ={
+          "employeeId": employeeData.employeeId,
+          "firstName": employeeData.firstName,
+          "lastName": employeeData.lastName,
+          "company": employeeData.company,
+          "fatherName": employeeData.fatherName,
+          "phone": employeeData.phone,
+          "costCentre": employeeData.costCentre,
+          "managerId": employeeData.managerId,
+          "dob": employeeData.dob,
+          "gender": employeeData.gender,
+          "address": employeeData.address,
+          "bloodGroup": employeeData.bloodGroup,
+          "personalEmail": employeeData.personalEmail,
+          "nationality": employeeData.nationality,
+          "maritalStatus": employeeData.maritalStatus,
+          "contractType": employeeData.contractType,
+          "joiningDate": employeeData.joiningDate,
+          "department": employeeData.department,
+          "locationId": employeeData.locationId,
+          "paymentType": employeeData.paymentType,
+          "position": employeeData.position,
+          "aadhaarNumber": employeeData.aadhaarNumber,
+          "designation": employeeData.designation,
+          "loginType": employeeData.loginType,
+          "additionalRole": employeeData.additionalRole,
+          "role": employeeData.role,
+          "isClusterManager":employeeData.isClusterManager,
+          "employeeName": employeeData.employeeName,
+          "email": employeeData.email,
+          "fedId": employeeData.fedId,
+          "active": employeeData.active
+      }
+      createEmployee(data);
       saveCostcenterData(costCenterData);
       setError(false);
       setFedError(false);
