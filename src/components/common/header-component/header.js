@@ -72,44 +72,47 @@ const Header = () => {
     setCostChecked(false);
     setManagerChecked(false);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    // if(user.department ==="Finance & Legal" || user.department === "IT"){
+    if(user.department ==="Finance & Legal" || user.department === "IT"){
       getUserMenu(user.adminMenus);
-    // }else{
-    //   let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length &&user.adminMenus.filter(
-    //     (item) => item.menuName !== "Manager 360" && 
-    //      item.menuName !== "Employee Documents Verification" && item.menuName !== "Document Management" && 
-    //      item.menuName !== "Admin F & F  Clearance" && 
-    //      item.menuName !== "Admin No Due Clearance" && 
-    //      item.menuName !== "Charter" && 
-    //      item.menuName !== "Documents" && 
-    //      item.menuName !== "Documents Upload" && 
-    //      item.menuName !== "Part Timer Salary Input" && 
-    //      item.menuName !== "Employee History" && 
-    //      item.menuName !== "Insurance" && 
-    //      item.menuName !== "Bonus Structure" && 
-    //      item.menuName !== "Separation" && 
-    //      item.menuName !== "Initiate Exit" && 
-    //      item.menuName !== "Finance Clearance" && 
-    //      item.menuName !== "IT Clearance" && 
-    //      item.menuName !== "All Reports" && 
-    //      item.menuName !== "MIT Report" && 
-    //      item.menuName !== "Candidate verification" && 
-    //      item.menuName !== "Offer and Onbording" && 
-    //      item.menuName !== "Offers" && 
-    //      item.menuName !== "Manager Profile" && 
-    //      item.menuName !== "Notice Period" && 
-    //      item.menuName !== "Payroll" && 
-    //      item.menuName !== "Payroll Documents" && 
-    //      item.menuName !== "DSI Charter" && 
-    //      item.menuName !== "Exit Approval" && 
-    //      item.menuName !== "Disciplinary" && 
-    //      item.menuName !== "Disciplinary Action" && 
-    //      item.menuName !== "Transfer" && 
-    //      item.menuName !== "Probation" && 
-    //      item.menuName !== "Promotion"
-    //   );
-    //   getUserMenu(departmentList);
-    // } 
+    }else{
+      let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length &&user.adminMenus.filter(
+        (item) => item.menuName !== "Manager 360" && 
+         item.menuName !== "Employee Documents Verification" && item.menuName !== "Document Management" && 
+         item.menuName !== "Admin F & F  Clearance" && 
+         item.menuName !== "Admin No Due Clearance" && 
+         item.menuName !== "Charter" && 
+         item.menuName !== "Documents" && 
+         item.menuName !== "Documents Upload" && 
+         item.menuName !== "Part Timer Salary Input" && 
+         item.menuName !== "Employee History" && 
+         item.menuName !== "Insurance" && 
+         item.menuName !== "Bonus Structure" && 
+         item.menuName !== "Separation" && 
+         item.menuName !== "Initiate Exit" && 
+         item.menuName !== "Finance Clearance" && 
+         item.menuName !== "IT Clearance" && 
+         item.menuName !== "All Reports" && 
+         item.menuName !== "MIT Report" && 
+         item.menuName !== "Candidate verification" && 
+         item.menuName !== "Offer and Onbording" && 
+         item.menuName !== "Offers" && 
+         item.menuName !== "Manager Profile" && 
+         item.menuName !== "Notice Period" && 
+         item.menuName !== "Payroll" && 
+         item.menuName !== "Payroll Documents" && 
+         item.menuName !== "DSI Charter" && 
+         item.menuName !== "Exit Approval" && 
+         item.menuName !== "Disciplinary" && 
+         item.menuName !== "Disciplinary Action" && 
+         item.menuName !== "Transfer" && 
+         item.menuName !== "Probation" && 
+         item.menuName !== "Promotion"&& 
+         item.menuName !== "DSI Charters" &&
+         item.menuName !== "DSI Charter" &&
+         item.menuName !== "Charter"
+      );
+      getUserMenu(departmentList);
+    } 
     localStorage.setItem("type", "admin");
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#admin");31/05/2022
@@ -124,39 +127,41 @@ const Header = () => {
     setCostChecked(false);
     setManagerChecked(false);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    // if(user.department === "Finance & Legal" || 
-    // user.department === "IT"){
+    if(user.department === "Finance & Legal" || 
+    user.department === "IT"){
       getUserMenu(user.managerMenus);
-    // }else{
-    //   let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
-    //     (item) => item.menuName !== "Manager 360" && 
-    //     item.menuName !== "Manager Profile" && 
-    //     item.menuName !== "Documents" && 
-    //     item.menuName !== "Document Management" && 
-    //     item.menuName !== "Documents Upload" && 
-    //     item.menuName !== "Employee History" && 
-    //     item.menuName !== "Part Timer Salary Input" && 
-    //     item.menuName !== "Separation" && 
-    //     item.menuName !== "Initiate Exit"&& 
-    //     item.menuName !== "Exit Approval" && 
-    //     item.menuName !== "All Reports" && 
-    //     item.menuName !== "MIT Report" && 
-    //     item.menuName !== "Disciplinary" && 
-    //     item.menuName !== "Disciplinary Action" && 
-    //     item.menuName !== "Offer and Onbording" && 
-    //     item.menuName !== "Offers" && 
-    //     item.menuName !== "Candidate verification" && 
-    //     item.menuName !== "Transfer" && 
-    //     item.menuName !== "Probation" && 
-    //     item.menuName !== "Promotion" && 
-    //     item.menuName !== "My Profile" && 
-    //     item.menuName !== "Employee 360" && 
-    //     item.menuName !== "Payroll" && 
-    //     item.menuName !== "My Payroll" && 
-    //     item.menuName !== "Employee Documents Verification" 
-    //   );
-    //   getUserMenu(departmentList);
-    // }
+    }else{
+      let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
+        (item) => item.menuName !== "Manager 360" && 
+        item.menuName !== "Manager Profile" && 
+        item.menuName !== "Documents" && 
+        item.menuName !== "Document Management" && 
+        item.menuName !== "Documents Upload" && 
+        item.menuName !== "Employee History" && 
+        item.menuName !== "Part Timer Salary Input" && 
+        item.menuName !== "Separation" && 
+        item.menuName !== "Initiate Exit"&& 
+        item.menuName !== "Exit Approval" && 
+        item.menuName !== "All Reports" && 
+        item.menuName !== "MIT Report" && 
+        item.menuName !== "Disciplinary" && 
+        item.menuName !== "Disciplinary Action" && 
+        item.menuName !== "Offer and Onbording" && 
+        item.menuName !== "Offers" && 
+        item.menuName !== "Candidate verification" && 
+        item.menuName !== "Transfer" && 
+        item.menuName !== "Probation" && 
+        item.menuName !== "Promotion" && 
+        item.menuName !== "My Profile" && 
+        item.menuName !== "Employee 360" && 
+        item.menuName !== "Payroll" && 
+        item.menuName !== "My Payroll" && 
+        item.menuName !== "Employee Documents Verification"&& 
+        item.menuName !== "DSI Charters" &&
+        item.menuName !== "DSI Charter"  
+      );
+      getUserMenu(departmentList);
+    }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#team");31/05/2022
@@ -171,39 +176,41 @@ const Header = () => {
     setCostChecked(true);
     setManagerChecked(false);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    // if(user.department === "Finance & Legal" || 
-    // user.department === "IT"){
+    if(user.department === "Finance & Legal" || 
+    user.department === "IT"){
       getUserMenu(user.managerMenus);
-    // }else{
-    //   let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
-    //     (item) => item.menuName !== "Manager 360" && 
-    //     item.menuName !== "Manager Profile" && 
-    //     item.menuName !== "Documents" && 
-    //     item.menuName !== "Document Management" && 
-    //     item.menuName !== "Documents Upload" && 
-    //     item.menuName !== "Employee History" && 
-    //     item.menuName !== "Part Timer Salary Input" && 
-    //     item.menuName !== "Separation" && 
-    //     item.menuName !== "Initiate Exit"&& 
-    //     item.menuName !== "Exit Approval" && 
-    //     item.menuName !== "All Reports" && 
-    //     item.menuName !== "MIT Report" && 
-    //     item.menuName !== "Disciplinary" && 
-    //     item.menuName !== "Disciplinary Action" && 
-    //     item.menuName !== "Offer and Onbording" && 
-    //     item.menuName !== "Offers" && 
-    //     item.menuName !== "Candidate verification" && 
-    //     item.menuName !== "Transfer" && 
-    //     item.menuName !== "Probation" && 
-    //     item.menuName !== "Promotion" && 
-    //     item.menuName !== "My Profile" && 
-    //     item.menuName !== "Employee 360" && 
-    //     item.menuName !== "Payroll" && 
-    //     item.menuName !== "My Payroll" && 
-    //     item.menuName !== "Employee Documents Verification" 
-    //   );
-    //   getUserMenu(departmentList);
-    // }
+    }else{
+      let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
+        (item) => item.menuName !== "Manager 360" && 
+        item.menuName !== "Manager Profile" && 
+        item.menuName !== "Documents" && 
+        item.menuName !== "Document Management" && 
+        item.menuName !== "Documents Upload" && 
+        item.menuName !== "Employee History" && 
+        item.menuName !== "Part Timer Salary Input" && 
+        item.menuName !== "Separation" && 
+        item.menuName !== "Initiate Exit"&& 
+        item.menuName !== "Exit Approval" && 
+        item.menuName !== "All Reports" && 
+        item.menuName !== "MIT Report" && 
+        item.menuName !== "Disciplinary" && 
+        item.menuName !== "Disciplinary Action" && 
+        item.menuName !== "Offer and Onbording" && 
+        item.menuName !== "Offers" && 
+        item.menuName !== "Candidate verification" && 
+        item.menuName !== "Transfer" && 
+        item.menuName !== "Probation" && 
+        item.menuName !== "Promotion" && 
+        item.menuName !== "My Profile" && 
+        item.menuName !== "Employee 360" && 
+        item.menuName !== "Payroll" && 
+        item.menuName !== "My Payroll" && 
+        item.menuName !== "Employee Documents Verification" && 
+        item.menuName !== "DSI Charters" &&
+        item.menuName !== "DSI Charter" 
+      );
+      getUserMenu(departmentList);
+    }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#team");31/05/2022
@@ -218,39 +225,41 @@ const Header = () => {
     setCostChecked(false);
     setManagerChecked(true);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    // if(user.department === "Finance & Legal" || 
-    // user.department === "IT"){
+    if(user.department === "Finance & Legal" || 
+    user.department === "IT"){
       getUserMenu(user.managerMenus);
-    // }else{
-    //   let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
-    //     (item) => item.menuName !== "Manager 360" && 
-    //     item.menuName !== "Manager Profile" && 
-    //     item.menuName !== "Documents" && 
-    //     item.menuName !== "Document Management" && 
-    //     item.menuName !== "Documents Upload" && 
-    //     item.menuName !== "Employee History" && 
-    //     item.menuName !== "Part Timer Salary Input" && 
-    //     item.menuName !== "Separation" && 
-    //     item.menuName !== "Initiate Exit"&& 
-    //     item.menuName !== "Exit Approval" && 
-    //     item.menuName !== "All Reports" && 
-    //     item.menuName !== "MIT Report" && 
-    //     item.menuName !== "Disciplinary" && 
-    //     item.menuName !== "Disciplinary Action" && 
-    //     item.menuName !== "Offer and Onbording" && 
-    //     item.menuName !== "Offers" && 
-    //     item.menuName !== "Candidate verification" && 
-    //     item.menuName !== "Transfer" && 
-    //     item.menuName !== "Probation" && 
-    //     item.menuName !== "Promotion" && 
-    //     item.menuName !== "My Profile" && 
-    //     item.menuName !== "Employee 360" && 
-    //     item.menuName !== "Payroll" && 
-    //     item.menuName !== "My Payroll" && 
-    //     item.menuName !== "Employee Documents Verification" 
-    //   );
-    //   getUserMenu(departmentList);
-    // }
+    }else{
+      let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
+        (item) => item.menuName !== "Manager 360" && 
+        item.menuName !== "Manager Profile" && 
+        item.menuName !== "Documents" && 
+        item.menuName !== "Document Management" && 
+        item.menuName !== "Documents Upload" && 
+        item.menuName !== "Employee History" && 
+        item.menuName !== "Part Timer Salary Input" && 
+        item.menuName !== "Separation" && 
+        item.menuName !== "Initiate Exit"&& 
+        item.menuName !== "Exit Approval" && 
+        item.menuName !== "All Reports" && 
+        item.menuName !== "MIT Report" && 
+        item.menuName !== "Disciplinary" && 
+        item.menuName !== "Disciplinary Action" && 
+        item.menuName !== "Offer and Onbording" && 
+        item.menuName !== "Offers" && 
+        item.menuName !== "Candidate verification" && 
+        item.menuName !== "Transfer" && 
+        item.menuName !== "Probation" && 
+        item.menuName !== "Promotion" && 
+        item.menuName !== "My Profile" && 
+        item.menuName !== "Employee 360" && 
+        item.menuName !== "Payroll" && 
+        item.menuName !== "My Payroll" && 
+        item.menuName !== "Employee Documents Verification"&& 
+        item.menuName !== "DSI Charters" &&
+        item.menuName !== "DSI Charter"  
+      );
+      getUserMenu(departmentList);
+    }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#team");31/05/2022
