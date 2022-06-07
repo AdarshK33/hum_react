@@ -19,14 +19,37 @@ const UserMenu = () => {
   const handleMenuListProfile = () => {
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
     user.department === "IT"){
-      getUserMenu(user.generalUserMenus, "profile", user);
+      let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
+        (item) =>
+    item.menuName !== "Roster" &&
+    item.menuName !== "Dashboard" &&
+    item.menuName !== "My Roster" 
+    )
+      getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
     user.department === "IT") && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
+        item.menuName !== "Roster" &&
+        item.menuName !== "Dashboard" &&
+        item.menuName !== "My Roster" &&
         item.menuName !== "Separation"
+      );
+      getUserMenu(departmentList, "profile", user);
+    }else if(user.department == "Retail"){
+      let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
+        (item) => item.menuName !== "Documents" &&  
+        item.menuName !== "Document Management" && 
+        item.menuName !== "Resignation" && 
+        item.menuName !== "Separation" && 
+        item.menuName !== "Disciplinary" && 
+        item.menuName !== "Payroll" && 
+        item.menuName !== "Employee 360" && 
+        item.menuName !== "My Disciplinary Action" && 
+        item.menuName !== "My Payroll" && 
+        item.menuName !== "My Profile"
       );
       getUserMenu(departmentList, "profile", user);
     }else{
@@ -40,7 +63,10 @@ const UserMenu = () => {
         item.menuName !== "Employee 360" && 
         item.menuName !== "My Disciplinary Action" && 
         item.menuName !== "My Payroll" && 
-        item.menuName !== "My Profile"
+        item.menuName !== "My Profile" &&
+        item.menuName !== "Roster" &&
+        item.menuName !== "Dashboard" &&
+        item.menuName !== "My Roster" 
       );
       getUserMenu(departmentList, "profile", user);
     }
