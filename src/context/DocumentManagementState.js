@@ -53,7 +53,7 @@ export const DocumentManagementProvider = (props) => {
   };
 
   const getModuleList = () => {
-    // setLoader(true);
+    // setLoader(truee);
     client
       .get("/api/v1/document/modules")
       .then((response) => {
