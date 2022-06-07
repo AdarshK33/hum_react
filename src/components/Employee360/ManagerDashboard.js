@@ -158,7 +158,7 @@ const ManagerDashboard = () => {
                               marginLeft: "-1rem",
                             }}
                           >
-                            View Profile{" "}
+                            Profile Details{" "}
                           </label>
                         </div>
                       </Col>
@@ -353,6 +353,8 @@ const ManagerDashboard = () => {
                         <Roster />
                       </Card>
                     </Col> */}
+                    {user.department==="Retail"|| rolePermission==="admin"?
+                    <Fragment>
                     <Col sm={4}>
                       <Card
                         style={{
@@ -387,6 +389,8 @@ const ManagerDashboard = () => {
                         <TeamPerformanceCard />
                       </Card>
                     </Col>
+                    </Fragment>
+                    :""}
                     {/* <Col sm={3}>
                       <Card
                         style={{
@@ -407,7 +411,7 @@ const ManagerDashboard = () => {
                       <Card
                         style={{
                           borderRadius: "3%",
-                          height: "100%",
+                          height:user.department==="Retail"|| rolePermission==="admin"?"100%":"92%",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
                         className="small-card p-10 main-card"
@@ -420,7 +424,7 @@ const ManagerDashboard = () => {
                         <HolidaysCard />
                       </Card>
                     </Col>
-                  </Row>
+                  {/* </Row>
                   <Row
                     style={{
                       marginTop: "2rem",
@@ -428,8 +432,11 @@ const ManagerDashboard = () => {
                       marginRight: "1rem",
                       marginLeft: "1rem",
                     }}
-                  >
-                    <Col sm={6}>
+                  > */}
+                
+                    <Col style={{
+                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                    }} sm={user.department==="Retail"|| rolePermission==="admin"?6:6}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -456,7 +463,9 @@ const ManagerDashboard = () => {
                         )}
                       </Card>
                     </Col>
-                    <Col sm={6}>
+                    <Col style={{
+                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                    }}sm={6}>
                       <Card
                         style={{
                           borderRadius: "3%",
