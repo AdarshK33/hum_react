@@ -17,10 +17,11 @@ const UserMenu = () => {
   }, []);
 
   const handleMenuListProfile = () => {
-    if(user.department === "Finance & Legal" || 
+    if(user.department === "Finance & Legal" || user.department === "Finance" || 
     user.department === "IT"){
       getUserMenu(user.generalUserMenus, "profile", user);
-    }else if((user.department === "Finance & Legal" || 
+    }else if((user.department === "Finance & Legal" ||
+    user.department === "Finance" || 
     user.department === "IT") && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
@@ -51,7 +52,7 @@ const UserMenu = () => {
   };
 
   const handleMenuListAdmin = () => {
-    if(user.department ==="Finance & Legal" || user.department === "IT"){
+    if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"){
       getUserMenu(user.adminMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length && user.adminMenus.filter(
@@ -100,7 +101,7 @@ const UserMenu = () => {
   };
 
   const handleMenuListTeam = () => {
-    if(user.department === "Finance & Legal" || 
+    if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
       getUserMenu(user.managerMenus);
     }else{

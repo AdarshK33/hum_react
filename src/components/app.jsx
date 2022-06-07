@@ -40,7 +40,7 @@ const AppLayout = ({ children }) => {
         if (flag === 0 && MENUITEMS !== []) {
             setFlagValue(flag)
             if (type === "team") {
-                if(user.department === "Finance & Legal" || 
+                if(user.department === "Finance & Legal" ||user.department === "Finance" || 
                 user.department === "IT"){
                   getUserMenu(user.managerMenus);
                 }else{
@@ -76,7 +76,7 @@ const AppLayout = ({ children }) => {
                   getUserMenu(departmentList);
                 }
             } else if (type === "admin") {
-                if(user.department ==="Finance & Legal" || user.department === "IT"){
+                if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"){
                     getUserMenu(user.adminMenus);
                   }else{
                     let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length && user.adminMenus.filter(
@@ -122,10 +122,10 @@ const AppLayout = ({ children }) => {
             }else if (type === 'support') {
                     getUserMenu(user.supportMenus)
             } else {
-                if(user.department === "Finance & Legal" || 
+                if(user.department === "Finance & Legal" ||user.department === "Finance" || 
                   user.department === "IT"){
                   getUserMenu(user.generalUserMenus, "profile", user);
-            }else if((user.department === "Finance & Legal" || user.department === "IT") && 
+            }else if((user.department === "Finance & Legal" ||user.department === "Finance" || user.department === "IT") && 
               user.contractType === "Internship"){
             let departmentList = user !== null && user !== undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
             (item) => item.menuName !== "Resignation" && 
