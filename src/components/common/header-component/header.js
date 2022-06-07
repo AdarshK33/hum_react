@@ -65,9 +65,10 @@ const Header = () => {
       }
     }
   }
-  const adminHandler = () => {
+  const adminHandler = (e) => {
+    if(adminChecked == false){
     localStorage.setItem("loginRole", "admin");
-    setAdminChecked(true);
+          setAdminChecked(true);
     setScChecked(false);
     setCostChecked(false);
     setManagerChecked(false);
@@ -117,10 +118,22 @@ const Header = () => {
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#admin");31/05/2022
     history.push("/manager360#admin");
+  }else{
+    setAdminChecked(false);
+    setScChecked(false);
+    setCostChecked(false);
+    setManagerChecked(false);
+    getUserMenu(user.supportMenus);
+    localStorage.removeItem("type");
+    localStorage.removeItem("loginRole");
+    localStorage.setItem("flag", "0");
+    history.push("/employee360");
+  }
 
   };
 
   const scHandler = () => {
+    if(scChecked == false){
     localStorage.setItem("loginRole", "superCostCenterManager");
     setAdminChecked(false);
     setScChecked(true);
@@ -166,10 +179,22 @@ const Header = () => {
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#team");31/05/2022
     history.push("/manager360#team");
+  }else{
+    setAdminChecked(false);
+    setScChecked(false);
+    setCostChecked(false);
+    setManagerChecked(false);
+    getUserMenu(user.supportMenus);
+    localStorage.removeItem("type");
+    localStorage.removeItem("loginRole");
+    localStorage.setItem("flag", "0");
+    history.push("/employee360")
+  }
 
   };
 
   const costHandler = () => {
+    if(costChecked == false){
     localStorage.setItem("loginRole", "costCenterManager");
     setAdminChecked(false);
     setScChecked(false);
@@ -215,10 +240,22 @@ const Header = () => {
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#team");31/05/2022
     history.push("/manager360#team");
+  }else{
+    setAdminChecked(false);
+    setScChecked(false);
+    setCostChecked(false);
+    setManagerChecked(false);
+    getUserMenu(user.supportMenus);
+    localStorage.removeItem("type");
+    localStorage.removeItem("loginRole");
+    localStorage.setItem("flag", "0");
+    history.push("/employee360"); 
+  }
 
   };
 
   const managerHandler = () => {
+    if(managerChecked == false){
     localStorage.setItem("loginRole", "manager");
     setAdminChecked(false);
     setScChecked(false);
@@ -264,7 +301,17 @@ const Header = () => {
     localStorage.setItem("flag", "0");
     // history.push("/dashboard/storedashboard#team");31/05/2022
     history.push("/manager360#team");
-
+  }else{
+    setAdminChecked(false);
+    setScChecked(false);
+    setCostChecked(false);
+    setManagerChecked(false);
+    getUserMenu(user.supportMenus);
+    localStorage.removeItem("type");
+    localStorage.removeItem("loginRole");
+    localStorage.setItem("flag", "0");
+    history.push("/employee360");
+  }
   };
 
   return (
@@ -354,6 +401,7 @@ const Header = () => {
                     <input
                       type="checkbox"
                       name="admin"
+                      value={adminChecked}
                       checked={adminChecked}
                       onChange={adminHandler}
                     />{" "}
