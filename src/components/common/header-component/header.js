@@ -72,7 +72,7 @@ const Header = () => {
     setCostChecked(false);
     setManagerChecked(false);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department ==="Finance & Legal" || user.department === "IT"){
+    if(user.department ==="Finance & Legal" || user.department === "Finance" || user.department === "IT"){
       getUserMenu(user.adminMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length &&user.adminMenus.filter(
@@ -127,7 +127,7 @@ const Header = () => {
     setCostChecked(false);
     setManagerChecked(false);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department === "Finance & Legal" || 
+    if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
       getUserMenu(user.managerMenus);
     }else{
@@ -176,7 +176,7 @@ const Header = () => {
     setCostChecked(true);
     setManagerChecked(false);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department === "Finance & Legal" || 
+    if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
       getUserMenu(user.managerMenus);
     }else{
@@ -225,7 +225,7 @@ const Header = () => {
     setCostChecked(false);
     setManagerChecked(true);
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department === "Finance & Legal" || 
+    if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
       getUserMenu(user.managerMenus);
     }else{
