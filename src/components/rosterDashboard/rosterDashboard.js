@@ -336,6 +336,8 @@ const RosterDashboard = () => {
         >
           <Col style={{ maxWidth: "20%" }}>
             {costCenterList && costCenterList.length && (
+              <Fragment>
+              <span>Select Costcentre</span>
               <Select
                 name="filters"
                 // placeholder="Cost Center"
@@ -356,9 +358,11 @@ const RosterDashboard = () => {
                 required
                 isSearchable
               />
+              </Fragment>
             )}
           </Col>
           <Col style={{ maxWidth: "20%", paddingRight: "0px" }}>
+          <span>Select Month</span>
             <Form.Control
               style={{
                 width: "150px",
@@ -378,6 +382,7 @@ const RosterDashboard = () => {
             </Form.Control>
           </Col>
           <Col style={{ maxWidth: "20%", paddingRight: "0px" }}>
+            <span>Select Year</span>
             <Form.Control
               style={{
                 width: "150px",
