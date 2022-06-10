@@ -17,6 +17,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 import ReactExport from "react-data-export";
 import { PermissionContext } from "../../context/PermissionState";
+import { AdminContext } from "../../context/AdminState";
+import MultiSelect from "react-multi-select-component";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -51,10 +53,12 @@ function ViewShift() {
   const [year, setYear] = useState();
   const [checked, setChecked] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [costCenter, setCostCenter] = useState([]);
 
   let history = useHistory();
 
   const { user } = useContext(AppContext);
+  const { CostCenter, costCenterList } = useContext(AdminContext);
 
   const handleEditClose = () => setEditModal(false);
   const handleDeleteClose = () => setDeleteModal(false);
@@ -73,6 +77,9 @@ function ViewShift() {
       ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord)
       : [];
 
+      useEffect(() => {
+        CostCenter();
+      }, []);
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -82,7 +89,28 @@ function ViewShift() {
     const year = moment(getM, ["MMM Do YY"]).format('YYYY');
     viewSalary(month, year, user.costCentre)
   }, []) */
+  useEffect(() => {
+    console.log("cosCentreList", costCenterList);
+    if (
+      costCenterList !== null &&
+      costCenterList !== undefined &&
+      Object.keys(costCenterList).length !== 0 &&
+      Object.keys(costCenterList).length === 1
+    ) {
+      console.log("cosCentreList inside", costCenterList);
+      // ({ label: costCenterList[0].costCentreName, value: costCenterList[0].costCentreName })
+      setCostCenter([
+        {
+          label: costCenterList[0].costCentreName,
+          value: costCenterList[0].costCentreName,
+        },
+      ]);
+    } else {
+      setCostCenter([]);
+    }
+  }, [costCenterList]);
 
+  
   const onSubmit = (e) => {
     e.preventDefault();
     const validate = validation();
@@ -94,7 +122,9 @@ function ViewShift() {
     const salaryData = {
       cluster: flag,
       month: month,
-      storeIds: [user.costCentre],
+      storeIds:  costCenter.length > 0
+          ? costCenter.map((e, i) => costCenter[i].value)
+          : null,
       year: year,
     };
     if (validate) {
@@ -110,7 +140,18 @@ function ViewShift() {
       flag = false;
       return;
     }
+    if (costCenter === "" || Object.keys(costCenter).length === 0) {
+      toast.error("Select Cost Center");
+      flag = false;
+      return;
+    }
     return flag;
+  };
+
+  const setCostCenterHandler = (options) => {
+    let data1 = options !== null ? options.map((e, i) => options[i].value) : [];
+    setCostCenter(options);
+    console.log("options in cost center", data1, options);
   };
 
   const approvedButton = () => {
@@ -126,7 +167,9 @@ function ViewShift() {
     const salaryData = {
       cluster: flag,
       month: month,
-      storeIds: [user.costCentre],
+      storeIds: costCenter.length > 0
+      ? costCenter.map((e, i) => costCenter[i].value)
+      : null,
       year: year,
     };
     const validate = validation();
@@ -151,7 +194,9 @@ function ViewShift() {
     const salaryData = {
       cluster: flag,
       month: month,
-      storeIds: [user.costCentre],
+      storeIds:costCenter.length > 0
+      ? costCenter.map((e, i) => costCenter[i].value)
+      : null,
       year: year,
     };
     const validate = validation();
@@ -243,7 +288,30 @@ function ViewShift() {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label>
-                <Form.Control type="text" disabled value={user.costCentre} />
+                <span style={{ color: "red" }}>*</span>
+                {costCenterList !== null &&
+                costCenterList !== undefined &&
+                Object.keys(costCenterList).length !== 0 &&
+                Object.keys(costCenterList).length === 1 ? (
+                  <Form.Control type="text" disabled value={user.costCentre} />
+                ) : (
+                  <MultiSelect
+                    options={
+                      costCenterList !== null
+                        ? costCenterList.map((e) => ({
+                            label: e.costCentreName,
+                            value: e.costCentreName,
+                          }))
+                        : []
+                    }
+                    value={costCenter}
+                    onChange={setCostCenterHandler}
+                    labelledBy={"Select"}
+                    hasSelectAll={true}
+                    disableSearch={false}
+                  />
+                )}
+               
               </Form.Group>
             </div>
           </Row>
