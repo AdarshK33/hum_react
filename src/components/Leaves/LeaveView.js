@@ -13,6 +13,8 @@ import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LeaveView = () => {
 
@@ -93,6 +95,7 @@ const LeaveView = () => {
     
     return (
         <Fragment>
+            <ToastContainer />
             <Breadcrumb title="Leave View" parent="Leave View" />
             <div className="container-fluid">
             {checkTheYear?
