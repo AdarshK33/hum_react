@@ -120,10 +120,7 @@ export const TransferProvider = (props) => {
     client
 
       .get(
-        "/api/v1/cost_centre/view/company?company=" +
-          entity +
-          "&department=" +
-          dept
+        `/api/v1/cost_centre/view/${entity}/${dept}`
       )
       .then((response) => {
         setLoader(false);

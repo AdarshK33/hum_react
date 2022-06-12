@@ -164,7 +164,7 @@ const CodeFile = React.forwardRef((props,ref)=>{
                 <img style={{display: "block",height: "auto",width: "80%",marginLeft: "auto",marginRight: "auto",marginBottom: "1rem",marginTop: "1rem"}} src={Img51} alt="page51" />
                 <img style={{display: "block",height: "auto",width: "80%",marginLeft: "auto",marginRight: "auto",marginBottom: "1rem",marginTop: "1rem"}} src={Img52} alt="page52" />
                 <div class="flex-container">
-     <b >Name :</b><b style={{  padding: "20px"}}>Sachin</b><br/>
+     <b >Name :</b><b style={{  padding: "20px"}}>User</b><br/>
                      <b>Employee ID :</b><b style={{  padding: "20px"}}>DSI004238</b><br/>
                      <b>Date :</b><b style={{  padding: "20px"}}>20/11/21</b></div>
               </div>

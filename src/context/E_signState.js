@@ -110,7 +110,7 @@ export const E_signProvider = ({ children }) => {
             location: location,
             rectangle: rectangle,
             name: infoData.empName,
-            email: infoData.empEmail, //"deepika@theretailinsights.com",
+            email: infoData.empEmail, //useremail@gmail.com,
             phoneNumber: infoData.empPhNo,
             signature_type: "Aadhaar",
           },
@@ -142,7 +142,7 @@ export const E_signProvider = ({ children }) => {
             location: location,
             rectangle: rectangle,
             name: infoData.empName,
-            email: "deepika@theretailinsights.com", //infoData.empEmail,
+            email:infoData.empEmail, //"useremail@gmail.com"
             phoneNumber: infoData.empPhNo,
             signature_type: "Aadhaar",
           },

@@ -154,7 +154,7 @@ const EmployeeDashboard = () => {
                               marginLeft: "-1rem",
                             }}
                           >
-                            View Profile{" "}
+                            Profile Details{" "}
                           </label>
                         </div>
                       </Col>
@@ -334,6 +334,8 @@ const EmployeeDashboard = () => {
                       height: "150%",
                     }}
                   >
+                    {user.department==="Retail"?
+                    <Fragment>
                     <Col sm={4}>
                       <Card
                         style={{
@@ -349,6 +351,25 @@ const EmployeeDashboard = () => {
                         <Roster />
                       </Card>
                     </Col>
+                    <Col sm={4} px={0}>
+                    <Card
+                      style={{
+                        borderRadius: "3%",
+                        height: "100%",
+                        boxShadow: "0px 0px 2px 0 black",
+                      }}
+                      className="big-card p-10 main-card"
+                    >
+                      <div className="CardHeading">
+                        <label style={{ marginLeft: "1rem" }}>
+                          My Performances
+                        </label>
+                      </div>
+                      <MyPerformanceCard />
+                    </Card>
+                  </Col>
+                  </Fragment>
+                  :""}
                     <Col sm={4}>
                       <Card
                         style={{
@@ -366,24 +387,8 @@ const EmployeeDashboard = () => {
                         <MyLeavesCard />
                       </Card>
                     </Col>
-                    <Col sm={4} px={0}>
-                      <Card
-                        style={{
-                          borderRadius: "3%",
-                          height: "100%",
-                          boxShadow: "0px 0px 2px 0 black",
-                        }}
-                        className="big-card p-10 main-card"
-                      >
-                        <div className="CardHeading">
-                          <label style={{ marginLeft: "1rem" }}>
-                            My Performances
-                          </label>
-                        </div>
-                        <MyPerformanceCard />
-                      </Card>
-                    </Col>
-                    </Row>
+                    
+                    {/* </Row>
                     <Row
                     style={{
                       marginTop: "2rem",
@@ -391,7 +396,7 @@ const EmployeeDashboard = () => {
                       marginRight: "1rem",
                       marginLeft: "1rem",
                     }}
-                  >
+                  > */}
                     {/* <Col sm={4}>
                       <Card
                         style={{
@@ -426,7 +431,9 @@ const EmployeeDashboard = () => {
                         <ApprovalsEmp360Card />
                       </Card>
                     </Col> */}
-                    <Col sm={4}>
+                    <Col style={{
+                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                    }} sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -443,7 +450,9 @@ const EmployeeDashboard = () => {
                         <HolidaysCard />
                       </Card>
                     </Col>
-                    <Col sm={4}>
+                    <Col style={{
+                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                    }} sm={4}>
                       <Card
                         style={{
                           borderRadius: "3%",

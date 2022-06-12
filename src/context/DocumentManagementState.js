@@ -28,21 +28,19 @@ export const DocumentManagementProvider = (props) => {
     const loginType = parseInt(user.loginType);
     const additionalRole = parseInt(user.additionalRole);
 
-    if (loginType === 1 || additionalRole === 1) {
+    if (localStorage.getItem("type")=== "admin") {
       userRole = "Admin";
-    } else if (loginType === 2) {
+    } else if (localStorage.getItem("type")=== "profile") {
       userRole = "Employee";
     } else if (
-      (loginType === 9 || additionalRole === 9) &&
-      user.isManager === true
+      localStorage.getItem("loginRole")=== "superCostCenterManager"
     ) {
       userRole = "SuperCostCentreManager";
     } else if (
-      (loginType === 7 || additionalRole === 7) &&
-      user.isManager === true
+      localStorage.getItem("loginRole")=== "costCenterManager"
     ) {
       userRole = "CostCentreManager";
-    } else if (user.isManager === true) {
+    } else if (localStorage.getItem("loginRole")=== "manager") {
       userRole = "Manager";
     } else {
       userRole = "";
@@ -55,7 +53,7 @@ export const DocumentManagementProvider = (props) => {
   };
 
   const getModuleList = () => {
-    // setLoader(true);
+    // setLoader(truee);
     client
       .get("/api/v1/document/modules")
       .then((response) => {

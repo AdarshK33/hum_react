@@ -287,7 +287,7 @@ const PersonalInformation = (props) => {
       Object.keys(candidatePersonalInfoData).length !== 0 &&
       candidatePersonalInfoData.aadhaarName !== null
     ) {
-      console.log("rajsekhar", candidatePersonalInfoData);
+      console.log("test", candidatePersonalInfoData);
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
         fatherName: candidatePersonalInfoData.fatherName,

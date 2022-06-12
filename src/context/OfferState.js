@@ -104,6 +104,7 @@ export const OfferProvider = (props) => {
         });
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
       });
   };
@@ -143,6 +144,7 @@ export const OfferProvider = (props) => {
         });
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
       });
   };
@@ -160,6 +162,7 @@ export const OfferProvider = (props) => {
         });
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
       });
   };
@@ -177,6 +180,7 @@ export const OfferProvider = (props) => {
         });
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
       });
   };
@@ -349,6 +353,7 @@ export const OfferProvider = (props) => {
         });
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
       });
   };
@@ -367,6 +372,7 @@ export const OfferProvider = (props) => {
         });
       })
       .catch((error) => {
+        toast.error(error.message);
         console.log(error);
       });
   };
