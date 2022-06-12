@@ -120,9 +120,9 @@ const OfferReleaseList = () => {
     setNoShowId(e.target.name);
     setInfoModelShow(true);
   };
-  const GoToLetterView = (refId,signedLetter) => {
-    console.log(refId,signedLetter);
-    getReference(refId,signedLetter);
+  const GoToLetterView = (refId,signedLetter,employeeID) => {
+    console.log(refId,signedLetter,employeeID);
+    getReference(refId,signedLetter,employeeID);
   };
   return (
     <Fragment>
@@ -373,7 +373,7 @@ const OfferReleaseList = () => {
                                 <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      GoToLetterView(item.refId, item.signedLetter);
+                                      GoToLetterView(item.refId, item.signedLetter,item.candidateId);
                                     }}
                                   />
                                 </Link>
@@ -391,7 +391,7 @@ const OfferReleaseList = () => {
                                 <Link>
                                   <AlertCircle
                                     onClick={() => {
-                                      GoToLetterView(item.appointRefId, item.appointmentSignedLetter);
+                                      GoToLetterView(item.appointRefId, item.appointmentSignedLetter,item.candidateId);
                                     }}
                                   />
                                 </Link>

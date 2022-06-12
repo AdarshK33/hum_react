@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState}from "react";
 import { Table, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import TableActionButton from "./TableAction.component";
@@ -11,6 +11,7 @@ const TableComponentManager360 = ({
   height = "265px",
   button = false,
 }) => {
+  const [EmployeeId,setEmployeeId] = useState('')
   return (
     <div style={{ height: height }}>
       <TableScrollbar>
@@ -29,6 +30,7 @@ const TableComponentManager360 = ({
               {tableBody.map((item, itemIndex) => (
                 <tr key={`${item.sno}_${itemIndex}`}>
                   {Object.entries(item).map(([key, value], index) => {
+                    setEmployeeId(item.empId)
                     if (key === "view") {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
@@ -37,12 +39,14 @@ const TableComponentManager360 = ({
                               <TableActionButton
                                 disabled={!value.active}
                                 type={key}
+                                EmployeeId={item.empId}
                               />
                             </Link>
                           ) : (
                             <TableActionButton
                               disabled={!value.active}
                               type={key}
+                              EmployeeId={item.empId}
                             />
                           )}
                         </td>
@@ -59,6 +63,7 @@ const TableComponentManager360 = ({
                                       key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                       disabled={!actValue.active}
                                       type={actKey}
+                                      EmployeeId={item.empId}
                                     />
                                   </Link>
                                 );
@@ -68,6 +73,7 @@ const TableComponentManager360 = ({
                                     key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                     disabled={!actValue.active}
                                     type={actKey}
+                                    EmployeeId={item.empId}
                                   />
                                 );
                               }

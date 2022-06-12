@@ -27,6 +27,7 @@ const AdminDocVerfication = () => {
   const [docType, setDocType] = useState("");
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
 
   const { rolePermission } = useContext(PermissionContext);
   const { downloadFile } = useContext(DocsVerifyContext);
@@ -99,7 +100,7 @@ const AdminDocVerfication = () => {
   //         return "Appointment Letter";
 
   //   }
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,item) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -119,12 +120,13 @@ const AdminDocVerfication = () => {
       }
     }
     setLetterName(name);
+    setEmployeeId(item.employeeId)
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
   };
-  const downloadTheLetter = (e) => {
-    console.log("check", e);
-    downloadFile(e);
+  const downloadTheLetter = (e,item) => {
+    console.log("check", e,item);
+    downloadFile(e,item.employeeId);
   };
   const handleApproveDocument = (Id) => {
     DocApprove(Id);
@@ -148,7 +150,7 @@ const AdminDocVerfication = () => {
   };
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId}/> : ""}
       <Modal show={showModal} onHide={() => handleClose()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
@@ -220,7 +222,7 @@ const AdminDocVerfication = () => {
                                       color: "#4f90ff",
                                     }}
                                     onClick={(e) =>
-                                      showTheLetter(e, item.oldDocumentName)
+                                      showTheLetter(e, item.oldDocumentName,item)
                                     }
                                   />
 
@@ -231,7 +233,7 @@ const AdminDocVerfication = () => {
                                       marginLeft: "2rem",
                                     }}
                                     onClick={(e) =>
-                                      downloadTheLetter(item.oldDocumentName)
+                                      downloadTheLetter(item.oldDocumentName,item)
                                     }
                                   />
                                 </div>
@@ -250,7 +252,7 @@ const AdminDocVerfication = () => {
                                         color: "#4f90ff",
                                       }}
                                       onClick={(e) =>
-                                        showTheLetter(e, item.documentName)
+                                        showTheLetter(e, item.documentName,item)
                                       }
                                     />
                                     <Download
@@ -260,7 +262,7 @@ const AdminDocVerfication = () => {
                                         marginLeft: "2rem",
                                       }}
                                       onClick={(e) =>
-                                        downloadTheLetter(item.documentName)
+                                        downloadTheLetter(item.documentName,item)
                                       }
                                     />
                                   </div>

@@ -28,6 +28,7 @@ const OtherPayrollDoc = ({ docType }) => {
   const [years, setYears] = useState([]);
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
   const [error, setError] = useState(false);
   useEffect(() => {
     let tempArray = [];
@@ -41,13 +42,13 @@ const OtherPayrollDoc = ({ docType }) => {
     }
     setYears(tempArray.reverse());
   }, []);
-  const downloadTheLetter = (e, name) => {
+  const downloadTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
 
-    downloadFile(name);
+    downloadFile(name,EmployeeId);
   };
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -66,9 +67,10 @@ const OtherPayrollDoc = ({ docType }) => {
         setName("JPG");
       }
     }
-    ImageView(name)
+    ImageView(name,EmployeeId)
     setLetterName(name);
     SetLetterView(true);
+    setEmployeeId(EmployeeId)
     // return <ViewTheLetter DocName={e} />;
   };
 
@@ -86,7 +88,7 @@ const OtherPayrollDoc = ({ docType }) => {
   console.log("docType", docType);
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId}/> : ""}
       <Row>
         <Col sm={4}>
           <Form.Group>
@@ -170,7 +172,7 @@ const OtherPayrollDoc = ({ docType }) => {
                               true ? "profileButtons" : "confirmButton"
                             }
                             onClick={(e, name) =>
-                              showTheLetter(e, item.documentLink)
+                              showTheLetter(e, item.documentLink,item.employeeId)
                             }
                             // disabled={photoGraphName ? false : true}
                           >
@@ -184,7 +186,7 @@ const OtherPayrollDoc = ({ docType }) => {
                               true ? "profileButtons" : "confirmButton"
                             }
                             onClick={(e, name) =>
-                              downloadTheLetter(e, item.documentLink)
+                              downloadTheLetter(e, item.documentLink,item.employeeId)
                             }
                             // disabled={photoGraphName ? false : true}
                           >

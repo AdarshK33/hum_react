@@ -4,7 +4,8 @@ import NoDataComp from "../no-data/NoData.component";
 import DocsListTableHeader from "./DocsListTableHeader";
 import DocsListTableBody from "./DocsListTableBody";
 
-const DocsModuleList = ({ docsList }) => {
+const DocsModuleList = ({ docsList,EmployeeId }) => {
+  console.log(docsList,"DocsModuleList")
   return (
     <div className="docs-module-list mt-5">
       {docsList !== null && docsList !== undefined && docsList.length > 0 ? (
@@ -18,7 +19,7 @@ const DocsModuleList = ({ docsList }) => {
             </thead>
             <tbody>
               {docsList.map((doc, index) => (
-                <DocsListTableBody key={doc} doc={doc} index={index + 1} />
+                <DocsListTableBody key={doc} doc={doc} index={index + 1} EmployeeId={EmployeeId} />
               ))}
             </tbody>
           </Table>

@@ -3,14 +3,14 @@ import { Modal } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
 import { PermissionContext } from "../../context/PermissionState";
 
-const ViewTheLetter = ({ DocName, Name }) => {
+const ViewTheLetter = ({ DocName, Name,EmployeeId }) => {
   const { SetLetterView,employeeProfileData ,ViewEmployeeProfile} = useContext(DSICharterContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const [show, setShow] = useState(true);
 
   // const show = true;
   useEffect(()=>{
-ImageView(DocName)
+ImageView(DocName,EmployeeId)
   },[DocName])
   const handleClose = () => {
     setShow(false);

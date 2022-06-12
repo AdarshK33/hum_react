@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { PermissionContext } from "../../context/PermissionState";
 
-const ViewTheLetter = ({ DocName, Name }) => {
+const ViewTheLetter = ({ DocName, Name,EmployeeId }) => {
   const { SetLetterView } = useContext(EmployeeProfileContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
@@ -21,7 +21,7 @@ const ViewTheLetter = ({ DocName, Name }) => {
   console.log("console.log(check, e);", DocName, name, show);
 
   useEffect(() => {
-    ImageView(DocName)
+    ImageView(DocName,EmployeeId)
   }, [DocName]);
   return (
     <Fragment>

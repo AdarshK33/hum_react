@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import { PayrollContext } from "../../context/PayrollState";
 import { PermissionContext } from "../../context/PermissionState";
 
-const ViewTheLetter = ({ DocName, Name }) => {
+const ViewTheLetter = ({ DocName, Name,EmployeeId }) => {
   const { SetLetterView } = useContext(PayrollContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 

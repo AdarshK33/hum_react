@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState}from "react";
 import { Table, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import TableActionButton from "./TableAction.component";
@@ -10,6 +10,7 @@ const TableComponent = ({
   scroll = false,
   button = false,
 }) => {
+  const [EmployeeId,setEmployeeId] = useState('')
   return (
     <div className="table-responsive">
       <Table
@@ -51,6 +52,7 @@ const TableComponent = ({
             {tableBody.map((item, itemIndex) => (
               <tr key={`${item.sno}_${itemIndex}`}>
                 {Object.entries(item).map(([key, value], index) => {
+                                      setEmployeeId(item.empId)
                   if (key === "view") {
                     return (
                       <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
@@ -59,13 +61,15 @@ const TableComponent = ({
                             <TableActionButton
                               disabled={!value.active}
                               type={key}
+                              EmployeeId={item.empId}
                             />
                           </Link>
                         ) : (
                           <TableActionButton
                             disabled={!value.active}
                             type={key}
-                          />
+                            EmployeeId={item.empId}
+                            />
                         )}
                       </td>
                     );
@@ -79,12 +83,14 @@ const TableComponent = ({
                               type={key}
                               refId={value.refId}
                               signedLetter={value.signedLetter}
+                              EmployeeId={item.empId}
                             />
                           </Link>
                         ) : (
                           <TableActionButton
                             disabled={!value.active}
                             type={key}
+                            EmployeeId={item.empId}
                           />
                         )}
                       </td>
@@ -101,6 +107,7 @@ const TableComponent = ({
                                     key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                     disabled={!actValue.active}
                                     type={actKey}
+                                    EmployeeId={item.empId}
                                   />
                                 </Link>
                               );
@@ -110,6 +117,7 @@ const TableComponent = ({
                                   key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                   disabled={!actValue.active}
                                   type={actKey}
+                                  EmployeeId={item.empId}
                                 />
                               );
                             }

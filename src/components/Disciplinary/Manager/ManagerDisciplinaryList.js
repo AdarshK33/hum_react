@@ -123,9 +123,9 @@ const ManagerDisciplinaryList = () => {
     }
   }
   // console.log(getDifferenceInDays("2021-07-03", "2021-07-04"));
-  const GoToLetterView = (refId,signedLetter) => {
-    console.log(refId,signedLetter);
-    getReference(refId,signedLetter);
+  const GoToLetterView = (refId,signedLetter,employeeID) => {
+    console.log(refId,signedLetter,employeeID);
+    getReference(refId,signedLetter,employeeID);
   };
   return (
     <Fragment>
@@ -495,7 +495,8 @@ const ManagerDisciplinaryList = () => {
                                   <AlertCircle
                                     onClick={() => {
                                       GoToLetterView(
-                                        item.disciplinaryAction.refId,item.disciplinaryAction.signedLetter
+                                        item.disciplinaryAction.refId,item.disciplinaryAction.signedLetter,
+                                        item.employeeId
                                       );
                                     }}
                                   />
@@ -518,7 +519,8 @@ const ManagerDisciplinaryList = () => {
                                   <AlertCircle
                                     onClick={() => {
                                       GoToLetterView(
-                                        item.disciplinaryWarning.refId, item.disciplinaryWarning.signedLetter
+                                        item.disciplinaryWarning.refId, item.disciplinaryWarning.signedLetter,
+                                        item.employeeId
                                       );
                                     }}
                                   />

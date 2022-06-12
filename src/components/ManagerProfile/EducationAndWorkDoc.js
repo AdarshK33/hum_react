@@ -24,7 +24,7 @@ const EducationAndWorkDoc = (props) => {
   const [signedDocName, setSignedDocName] = useState("");
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
-
+  const [EmployeeId,setEmployeeId] = useState("")
   useEffect(() => {
     DocumentView(currentEmpId);
   }, []);
@@ -37,6 +37,8 @@ const EducationAndWorkDoc = (props) => {
       Object.keys(documentsList).length !== 0
     ) {
       documentsList.map((item, i) => {
+        setEmployeeId(item.employeeId)
+        console.log(item,"EducationAndWorkDoc")
         if (item.documentType === 6) {
           setEducationDocName(item.documentName);
         } else if (item.documentType === 7) {
@@ -53,12 +55,12 @@ const EducationAndWorkDoc = (props) => {
       });
     }
   }, [documentsList]);
-  const downloadTheLetter = (e, name) => {
+  const downloadTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
-    downloadFile(name);
+    downloadFile(name,EmployeeId);
   };
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -85,7 +87,7 @@ const EducationAndWorkDoc = (props) => {
 
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId}/> : ""}
       <Form>
         <Row>
           <Col sm={8}>
@@ -107,7 +109,7 @@ const EducationAndWorkDoc = (props) => {
                 className={
                   educationDocName ? "profileButtons" : "confirmButton"
                 }
-                onClick={(e, name) => showTheLetter(e, educationDocName)}
+                onClick={(e, name) => showTheLetter(e, educationDocName,EmployeeId)}
                 disabled={educationDocName ? false : true}
               >
                 View
@@ -126,7 +128,7 @@ const EducationAndWorkDoc = (props) => {
                 className={
                   educationDocName ? "profileButtons" : "confirmButton"
                 }
-                onClick={(e, name) => downloadTheLetter(e, educationDocName)}
+                onClick={(e, name) => downloadTheLetter(e, educationDocName,EmployeeId)}
                 disabled={educationDocName ? false : true}
               >
                 Download
@@ -152,7 +154,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={relivingDocName ? "profileButtons" : "confirmButton"}
-                onClick={(e, name) => showTheLetter(e, relivingDocName)}
+                onClick={(e, name) => showTheLetter(e, relivingDocName,EmployeeId)}
                 disabled={relivingDocName ? false : true}
               >
                 View
@@ -169,7 +171,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={relivingDocName ? "profileButtons" : "confirmButton"}
-                onClick={(e, name) => downloadTheLetter(e, relivingDocName)}
+                onClick={(e, name) => downloadTheLetter(e, relivingDocName,EmployeeId)}
                 disabled={relivingDocName ? false : true}
               >
                 Download
@@ -197,7 +199,7 @@ const EducationAndWorkDoc = (props) => {
                 className={
                   latestPayslipDocName ? "profileButtons" : "confirmButton"
                 }
-                onClick={(e, name) => showTheLetter(e, latestPayslipDocName)}
+                onClick={(e, name) => showTheLetter(e, latestPayslipDocName,EmployeeId)}
                 disabled={latestPayslipDocName ? false : true}
               >
                 View
@@ -217,7 +219,7 @@ const EducationAndWorkDoc = (props) => {
                   latestPayslipDocName ? "profileButtons" : "confirmButton"
                 }
                 onClick={(e, name) =>
-                  downloadTheLetter(e, latestPayslipDocName)
+                  downloadTheLetter(e, latestPayslipDocName,EmployeeId)
                 }
                 disabled={latestPayslipDocName ? false : true}
               >
@@ -251,7 +253,7 @@ const EducationAndWorkDoc = (props) => {
                   className={
                     collegeDocName ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => showTheLetter(e, collegeDocName)}
+                  onClick={(e, name) => showTheLetter(e, collegeDocName,EmployeeId)}
                   disabled={collegeDocName ? false : true}
                 >
                   View
@@ -270,7 +272,7 @@ const EducationAndWorkDoc = (props) => {
                   className={
                     collegeDocName ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => downloadTheLetter(e, collegeDocName)}
+                  onClick={(e, name) => downloadTheLetter(e, collegeDocName,EmployeeId)}
                   disabled={collegeDocName ? false : true}
                 >
                   Download
@@ -301,7 +303,7 @@ const EducationAndWorkDoc = (props) => {
                 className={
                   appointmentDocName ? "profileButtons" : "confirmButton"
                 }
-                onClick={(e, name) => showTheLetter(e, appointmentDocName)}
+                onClick={(e, name) => showTheLetter(e, appointmentDocName,EmployeeId)}
                 disabled={appointmentDocName ? false : true}
               >
                 View
@@ -320,7 +322,7 @@ const EducationAndWorkDoc = (props) => {
                 className={
                   appointmentDocName ? "profileButtons" : "confirmButton"
                 }
-                onClick={(e, name) => downloadTheLetter(e, appointmentDocName)}
+                onClick={(e, name) => downloadTheLetter(e, appointmentDocName,EmployeeId)}
                 disabled={appointmentDocName ? false : true}
               >
                 Download
@@ -346,7 +348,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={signedDocName ? "profileButtons" : "confirmButton"}
-                onClick={(e, name) => showTheLetter(e, signedDocName)}
+                onClick={(e, name) => showTheLetter(e, signedDocName,EmployeeId)}
                 disabled={signedDocName ? false : true}
               >
                 View
@@ -363,7 +365,7 @@ const EducationAndWorkDoc = (props) => {
             >
               <button
                 className={signedDocName ? "profileButtons" : "confirmButton"}
-                onClick={(e, name) => downloadTheLetter(e, signedDocName)}
+                onClick={(e, name) => downloadTheLetter(e, signedDocName,EmployeeId)}
                 disabled={signedDocName ? false : true}
               >
                 Download

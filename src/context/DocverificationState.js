@@ -396,9 +396,9 @@ export const DocsVerificationProvider = (props) => {
         });
       });
   };
-  const downloadDocument = (name) => {
+  const downloadDocument = (name,employeeId) => {
     Axios({
-      url: `${process.env.REACT_APP_BASEURL}api/v1/candidate/document/download?name=${name}`,
+      url: `${process.env.REACT_APP_BASEURL}api/v1/candidate/document/download/${employeeId}?name=${name}`,
       method: "GET",
       responseType: "blob",
       headers: {
@@ -411,9 +411,9 @@ export const DocsVerificationProvider = (props) => {
       fileDownload(response.data, name);
     });
   };
-  const downloadFile = (name) => {
+  const downloadFile = (name,employeeId) => {
     Axios({
-      url: `${process.env.REACT_APP_BASEURL}api/v1/document/download?name=${name}`,
+      url: `${process.env.REACT_APP_BASEURL}api/v1/document/download/${employeeId}?name=${name}`,
       method: "GET",
       responseType: "blob",
       headers: {

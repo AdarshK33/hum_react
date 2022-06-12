@@ -28,6 +28,7 @@ const OtherDocuments = (props) => {
   const [signedDocName, setSignedDocName] = useState("");
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
   const [DocName, setDocName] = useState("");
   const [DocNameError, setDocNameError] = useState(false);
 
@@ -56,6 +57,7 @@ const OtherDocuments = (props) => {
       Object.keys(documentsList).length !== 0
     ) {
       documentsList.map((item, i) => {
+        setEmployeeId(item.employeeId)
         if (item.documentType === 28) {
           setEthicsCharter(item.documentName);
         }
@@ -73,12 +75,12 @@ const OtherDocuments = (props) => {
       });
     }
   }, [documentsList]);
-  const downloadTheLetter = (e, name) => {
+  const downloadTheLetter = (e, name,employeeData) => {
     e.preventDefault();
     console.log("check", name);
-    downloadFile(name);
+    downloadFile(name,employeeData);
   };
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,employeeData) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -97,6 +99,7 @@ const OtherDocuments = (props) => {
         setName("JPG");
       }
     }
+    setEmployeeId(employeeData)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
@@ -183,7 +186,7 @@ const OtherDocuments = (props) => {
 
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId} /> : ""}
       <Form>
         <Row>
           <Col sm={8}>
@@ -203,7 +206,7 @@ const OtherDocuments = (props) => {
             >
               <button
                 className={ethicsCharter ? "profileButtons" : "confirmButton"}
-                onClick={(e, name) => showTheLetter(e, ethicsCharter)}
+                onClick={(e, name) => showTheLetter(e, ethicsCharter,EmployeeId)}
                 disabled={ethicsCharter ? false : true}
               >
                 View
@@ -220,7 +223,7 @@ const OtherDocuments = (props) => {
             >
               <button
                 className={ethicsCharter ? "profileButtons" : "confirmButton"}
-                onClick={(e, name) => downloadTheLetter(e, ethicsCharter)}
+                onClick={(e, name) => downloadTheLetter(e, ethicsCharter,EmployeeId)}
                 disabled={ethicsCharter ? false : true}
               >
                 Download
@@ -267,7 +270,7 @@ const OtherDocuments = (props) => {
                           item.documentName ? "profileButtons" : "confirmButton"
                         }
                         onClick={(e, name) =>
-                          showTheLetter(e, item.documentName)
+                          showTheLetter(e, item.documentName,item.employeeId)
                         }
                         disabled={item.documentName ? false : true}
                       >
@@ -287,9 +290,10 @@ const OtherDocuments = (props) => {
                         className={
                           item.documentName ? "profileButtons" : "confirmButton"
                         }
-                        onClick={(e, name) =>
-                          downloadTheLetter(e, item.documentName)
-                        }
+                        onClick={(e, name) =>{
+                          downloadTheLetter(e, item.documentName,item.employeeId)
+                          console.log(item,"otherDocument")
+                        }}
                         disabled={item.documentName ? false : true}
                       >
                         Download
