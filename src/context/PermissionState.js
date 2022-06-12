@@ -20,8 +20,8 @@ export const PermissionProvider = ({ children }) => {
   const [state, dispatch] = useReducer(PermissionReducer, initial_state);
   const [loader, setLoader] = useState(false);
 
-  const ImageView=(data)=>{
-return client.get(`/api/v1/document/view/file?fileName=${data}`).then((response)=>{
+  const ImageView=(data,employeeId)=>{
+return client.get(`/api/v1/document/view/file/${employeeId}?fileName=${data}`).then((response)=>{
   console.log(response.data,"grantValue")
   state.imageViewData = response.data
   return dispatch({

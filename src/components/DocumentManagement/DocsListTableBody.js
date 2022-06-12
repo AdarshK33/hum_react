@@ -4,14 +4,14 @@ import { DocumentManagementContext } from "../../context/DocumentManagementState
 import { PermissionContext } from "../../context/PermissionState";
 
 
-const DocsListTableBody = ({ doc, index }) => {
-  const { downloadModuleDoc } = useContext(DocumentManagementContext);
+const DocsListTableBody = ({ doc, index,EmployeeId }) => {
+  const { downloadModuleDoc ,moduleDocsList} = useContext(DocumentManagementContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   const downloadDoc = (e) => {
     e.preventDefault()
     const docName = e.target.getAttribute("data-doc");
-    downloadModuleDoc(docName);
+    downloadModuleDoc(docName,EmployeeId);
   };
 
   return (
@@ -23,7 +23,7 @@ const DocsListTableBody = ({ doc, index }) => {
           <Eye  />
         </a> */}
         <a href={imageViewData.data ? imageViewData.data:""} target="_blank">
-          <Eye onClick={()=>ImageView(doc)} />
+          <Eye onClick={()=>ImageView(doc,EmployeeId)} />
         </a>
       </td>
       <td>

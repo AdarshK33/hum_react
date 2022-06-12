@@ -36,7 +36,7 @@ const ModuleDocumentList = () => {
                 module={moduleDocsList.moduleName}
                 employee={moduleDocsList.employeeName}
               />
-              <DocsModuleList docsList={moduleDocsList.documents} />
+              <DocsModuleList docsList={moduleDocsList.documents} EmployeeId={moduleDocsList.employeeId}/>
             </div>
           )}
         </div>

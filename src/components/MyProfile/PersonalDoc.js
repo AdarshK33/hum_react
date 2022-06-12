@@ -30,6 +30,7 @@ const PersonalDoc = (props) => {
   const [passPortName, setPassPortName] = useState("");
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
   const [state, setState] = useState({
     photoId: "",
     cancelledCheque: "",
@@ -78,6 +79,7 @@ const PersonalDoc = (props) => {
       Object.keys(documentsList).length !== 0
     ) {
       documentsList.map((item, i) => {
+        setEmployeeId(item.employeeId)
         if (item.documentType === 0) {
           setPhotoGraphName(item.documentName);
         } else if (item.documentType === 5) {
@@ -96,13 +98,13 @@ const PersonalDoc = (props) => {
       });
     }
   }, [documentsList]);
-  const downloadTheLetter = (e, name) => {
+  const downloadTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
 
-    downloadFile(name);
+    downloadFile(name,EmployeeId);
   };
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -121,7 +123,7 @@ const PersonalDoc = (props) => {
         setName("JPG");
       }
     }
-    ImageView(name)
+    ImageView(name,EmployeeId)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
@@ -235,7 +237,7 @@ const PersonalDoc = (props) => {
   };
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId}/> : ""}
       {loader ? (
         <div className="loader-box loader" style={{ width: "100% !important" }}>
           <div className="loader">
@@ -268,7 +270,7 @@ const PersonalDoc = (props) => {
                   className={
                     photoGraphName ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => showTheLetter(e, photoGraphName)}
+                  onClick={(e, name) => showTheLetter(e, photoGraphName,EmployeeId)}
                   disabled={photoGraphName ? false : true}
                 >
                   View
@@ -287,7 +289,7 @@ const PersonalDoc = (props) => {
                   className={
                     photoGraphName ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => downloadTheLetter(e, photoGraphName)}
+                  onClick={(e, name) => downloadTheLetter(e, photoGraphName,EmployeeId)}
                   disabled={photoGraphName ? false : true}
                 >
                   Download
@@ -363,7 +365,7 @@ const PersonalDoc = (props) => {
                   className={
                     cancelledCheque ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => showTheLetter(e, cancelledCheque)}
+                  onClick={(e, name) => showTheLetter(e, cancelledCheque,EmployeeId)}
                   disabled={cancelledCheque ? false : true}
                 >
                   View
@@ -382,7 +384,7 @@ const PersonalDoc = (props) => {
                   className={
                     cancelledCheque ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => downloadTheLetter(e, cancelledCheque)}
+                  onClick={(e, name) => downloadTheLetter(e, cancelledCheque,EmployeeId)}
                   disabled={cancelledCheque ? false : true}
                 >
                   Download
@@ -466,7 +468,7 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={PANName ? "profileButtons" : "confirmButton"}
-                    onClick={(e, name) => showTheLetter(e, PANName)}
+                    onClick={(e, name) => showTheLetter(e, PANName,EmployeeId)}
                     disabled={PANName ? false : true}
                   >
                     View
@@ -483,7 +485,7 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={PANName ? "profileButtons" : "confirmButton"}
-                    onClick={(e, name) => downloadTheLetter(e, PANName)}
+                    onClick={(e, name) => downloadTheLetter(e, PANName,EmployeeId)}
                     disabled={PANName ? false : true}
                   >
                     Download
@@ -561,7 +563,7 @@ const PersonalDoc = (props) => {
                   className={
                     AddressProofName ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => showTheLetter(e, AddressProofName)}
+                  onClick={(e, name) => showTheLetter(e, AddressProofName,EmployeeId)}
                   disabled={AddressProofName ? false : true}
                 >
                   View
@@ -580,7 +582,7 @@ const PersonalDoc = (props) => {
                   className={
                     AddressProofName ? "profileButtons" : "confirmButton"
                   }
-                  onClick={(e, name) => downloadTheLetter(e, AddressProofName)}
+                  onClick={(e, name) => downloadTheLetter(e, AddressProofName,EmployeeId)}
                   disabled={AddressProofName ? false : true}
                 >
                   Download
@@ -663,7 +665,7 @@ const PersonalDoc = (props) => {
                     className={
                       passPortName ? "profileButtons" : "confirmButton"
                     }
-                    onClick={(e, name) => showTheLetter(e, passPortName)}
+                    onClick={(e, name) => showTheLetter(e, passPortName,EmployeeId)}
                     disabled={passPortName ? false : true}
                   >
                     View
@@ -682,7 +684,7 @@ const PersonalDoc = (props) => {
                     className={
                       passPortName ? "profileButtons" : "confirmButton"
                     }
-                    onClick={(e, name) => downloadTheLetter(e, passPortName)}
+                    onClick={(e, name) => downloadTheLetter(e, passPortName,EmployeeId)}
                     disabled={passPortName ? false : true}
                   >
                     Download
@@ -769,7 +771,7 @@ const PersonalDoc = (props) => {
                     className={
                       adharCardName ? "profileButtons" : "confirmButton"
                     }
-                    onClick={(e, name) => showTheLetter(e, adharCardName)}
+                    onClick={(e, name) => showTheLetter(e, adharCardName,EmployeeId)}
                     disabled={adharCardName ? false : true}
                   >
                     View
@@ -788,7 +790,7 @@ const PersonalDoc = (props) => {
                     className={
                       adharCardName ? "profileButtons" : "confirmButton"
                     }
-                    onClick={(e, name) => downloadTheLetter(e, adharCardName)}
+                    onClick={(e, name) => downloadTheLetter(e, adharCardName,EmployeeId)}
                     disabled={adharCardName ? false : true}
                   >
                     Download
@@ -865,7 +867,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                   className={EPFName ? "profileButtons" : "confirmButton"}
-                  onClick={(e, name) => showTheLetter(e, EPFName)}
+                  onClick={(e, name) => showTheLetter(e, EPFName,EmployeeId)}
                   disabled={EPFName ? false : true}
                 >
                   View
@@ -882,7 +884,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={EPFName ? "profileButtons" : "confirmButton"}
-                  onClick={(e, name) => downloadTheLetter(e, EPFName)}
+                  onClick={(e, name) => downloadTheLetter(e, EPFName,EmployeeId)}
                   disabled={EPFName ? false : true}
                 >
                   Download

@@ -4,7 +4,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { PermissionContext } from "../../context/PermissionState";
 
 
-const ViewTheLetter = ({ DocName, Name }) => {
+const ViewTheLetter = ({ DocName, Name ,EmployeeId}) => {
   const { SetLetterView } = useContext(EmployeeProfileContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 

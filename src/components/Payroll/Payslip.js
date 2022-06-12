@@ -46,6 +46,8 @@ const Payslip = (props) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
+
   useEffect(() => {
     if (parseInt(new Date().getMonth()) > 8) {
       setTillSeptember(false);
@@ -68,13 +70,13 @@ const Payslip = (props) => {
     setSelect(e.target.checked);
     setCurrent(!e.target.checked);
   };
-  const downloadTheLetter = (e, name) => {
+  const downloadTheLetter = (e, name,employeeData) => {
     e.preventDefault();
     console.log("check", name);
 
-    downloadFile(name);
+    downloadFile(name,employeeData);
   };
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,employeeData) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -93,7 +95,8 @@ const Payslip = (props) => {
         setName("JPG");
       }
     }
-    ImageView(name)
+    setEmployeeId(employeeData)
+    ImageView(name,employeeData)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
@@ -127,7 +130,7 @@ const Payslip = (props) => {
   console.log("payslipViewData", payslipViewData);
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId} /> : ""}
 
       {tillSeptember ? (
         <Row>
@@ -355,7 +358,7 @@ const Payslip = (props) => {
                               true ? "profileButtons" : "confirmButton"
                             }
                             onClick={(e, name) =>
-                              showTheLetter(e, item.documentLink)
+                              showTheLetter(e, item.documentLink,item.employeeId)
                             }
                           >
                             View
@@ -368,7 +371,7 @@ const Payslip = (props) => {
                               true ? "profileButtons" : "confirmButton"
                             }
                             onClick={(e, name) =>
-                              downloadTheLetter(e, item.documentLink)
+                              downloadTheLetter(e, item.documentLink,item.employeeId)
                             }
                           >
                             Download

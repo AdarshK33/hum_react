@@ -15,26 +15,31 @@ const MyDocumentsCard = ({ height }) => {
   const [showLetter, setShowLetter] = useState(false);
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
+
 
   useEffect(() => {
     MyDocView();
   }, []);
   console.log("MyDocList", MyDocList);
-  const showTheLetter = (e, name) => {
+  const showTheLetter = (e, name,employeeData) => {
     console.log("check", e);
     setLetterName(e);
     setName(name);
     setShowLetter(true);
     SetLetterView(true);
+    setEmployeeId(employeeData)
     // return <ViewTheLetter DocName={e} />;
   };
-  const downloadTheLetter = (e) => {
+  const downloadTheLetter = (e,employeeData) => {
     console.log("check", e);
-    downloadFile(e);
+    downloadFile(e,employeeData);
+    setEmployeeId(employeeData)
+
   };
   return (
     <Fragment>
-      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} /> : ""}
+      {letterShow ? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId}/> : ""}
       {MyDocList !== null &&
       MyDocList !== undefined &&
       MyDocList !== "" &&
@@ -74,14 +79,15 @@ const MyDocumentsCard = ({ height }) => {
                       fontSize: "xx-small",
                       color: "#4f90ff",
                     }}
-                    onClick={(e) =>
-                      showTheLetter(item.documentLink, item.documentName)
-                    }
+                    onClick={(e) =>{
+                      console.log(item,"item employee");
+                      showTheLetter(item.documentLink, item.documentName,item.employeeId)
+                    }}
                   />
 
                   <Download
                     style={{ fontSize: "xx-small", color: "#4f90ff" }}
-                    onClick={(e) => downloadTheLetter(item.documentLink)}
+                    onClick={(e) => {console.log(item,"item employee");downloadTheLetter(item.documentLink,item.employeeId)}}
                   />
                 </Col>
                 {/* <Col>

@@ -47,7 +47,7 @@ export const DSICharterProvider = (props) => {
   }
   const downloadFile = (name,data) => {
     Axios({
-      url: `${process.env.REACT_APP_BASEURL}api/v1/document/download?name=${name}`,
+      url: `${process.env.REACT_APP_BASEURL}api/v1/document/download/${data.employeeId}?name=${name}`,
       method: "GET",
       responseType: "blob",
       headers: {

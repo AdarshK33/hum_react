@@ -27,6 +27,8 @@ const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationC
 const [showLetter, setShowLetter] = useState(false);
 const [LetterName, setLetterName] = useState("");
 const [Name, setName] = useState("");
+const [EmployeeId, setEmployeeId] = useState("");
+
   useEffect(() => {
     if (user !== null && user !== undefined) {
         viewCharter("all",0)
@@ -88,7 +90,8 @@ const showTheLetter = (e, name) => {
   setName(name);
   setShowLetter(true);
   SetLetterView(true);
-  ImageView(e)
+  setEmployeeId(name.employeeId)
+  ImageView(e,name.employeeId)
   // return <ViewTheLetter DocName={e} />;
 };
 console.log(imageViewData,"imageViewData charter")
@@ -98,7 +101,7 @@ const downloadTheLetter = (e,data) => {
 };
   return (
     <Fragment>
-            {letterShow? <ViewTheLetter DocName={LetterName} Name={Name} /> :""}
+            {letterShow? <ViewTheLetter DocName={LetterName} Name={Name} EmployeeId={EmployeeId}/> :""}
       <Breadcrumb
         title="CHARTER LIST"
         parent="CHARTER LIST"
@@ -174,8 +177,10 @@ const downloadTheLetter = (e,data) => {
                       fontSize: "xx-small",
                       color: "#4f90ff",
                     }}
-                    onClick={(e) =>
+                    onClick={(e) =>{
+                      console.log(item,"itemCharter")
                       showTheLetter(item.codeOfConductLetter,item)
+                    }
                     }
                   />
                 </Col>

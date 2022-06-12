@@ -387,16 +387,17 @@ const DocVerification = () => {
                     </td>
                     <td className="buttonMargin1">
                     <a
-                        href={imageViewData.data}
+                        href={(imageViewData !== null && imageViewData !== undefined &&
+                          Object.keys(imageViewData).length !== 0 && imageViewData.data)?imageViewData.data:""}
                         target="_blank"
                       >
-                        <button className="downloadButton" onClick={()=>ImageView(item.documentName)}>View</button>
+                        <button className="downloadButton" onClick={()=>ImageView(item.documentName,item.candidateId)}>View</button>
                       </a>
                     </td>
                     <td className="buttonMargin1">
                       <button
                         className="downloadButton"
-                        onClick={() => downloadDocument(item.documentName)}
+                        onClick={() => downloadDocument(item.documentName,item.candidateId)}
                       >
                         Download
                       </button>
@@ -624,16 +625,17 @@ const DocVerification = () => {
                       <React.Fragment>
                         <td className="buttonMargin1">
                         <a
-                        href={imageViewData.data}
+                        href={(imageViewData !== null && imageViewData !== undefined &&
+                          Object.keys(imageViewData).length !== 0 && imageViewData.data)?imageViewData.data:""}
                         target="_blank"
                       >
-                        <button className="downloadButton" onClick={()=>ImageView(item.documentName)}>View</button>
+                        <button className="downloadButton" onClick={()=>ImageView(item.documentName,item.candidateId)}>View</button>
                           </a>
                         </td>
                         <td className="buttonMargin1">
                           <button
                             className="downloadButton"
-                            onClick={() => downloadDocument(item.documentName)}
+                            onClick={() => downloadDocument(item.documentName,item.candidateId)}
                           >
                             Download
                           </button>

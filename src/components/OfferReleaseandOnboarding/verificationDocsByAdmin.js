@@ -333,7 +333,7 @@ const DocVerification = () => {
                         </p>
                         <p
                           style={{ cursor: "pointer" }}
-                          onClick={() => downloadDocument(item.documentName)}
+                          onClick={() => downloadDocument(item.documentName,item.employeeId)}
                         >
                           {downloadedFile && (
                             <img src={downloadedFile} alt="" />

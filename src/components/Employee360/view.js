@@ -4,13 +4,13 @@ import { Employee360Context } from "../../context/Employee360State";
 import { PermissionContext } from "../../context/PermissionState";
 
 
-const ViewTheLetter = ({ DocName, Name }) => {
+const ViewTheLetter = ({ DocName, Name ,EmployeeId}) => {
   const { SetLetterView } = useContext(Employee360Context);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   const [show, setShow] = useState(true);
   useEffect(() => {
-    ImageView(DocName)
+    ImageView(DocName,EmployeeId)
   }, [DocName]);
   // const show = true;
   const handleClose = () => {

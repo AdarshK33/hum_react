@@ -24,8 +24,8 @@ const EntityTransfer = ({ transferData }) => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
-  const handleImageView = (data)=>{
-    ImageView(data)
+  const handleImageView = (data,employeeId)=>{
+    ImageView(data,employeeId)
   }
   return (
     <Fragment>
@@ -173,7 +173,8 @@ const EntityTransfer = ({ transferData }) => {
               >
                   {" "}
                   <u className="text-primary"
-                    onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc)}>View</u>
+                    onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc,
+                      transferData.currentEmployeeId)}>View</u>
                     </a>
               ) : (
                 "(No Documents Available)"
@@ -212,7 +213,8 @@ const EntityTransfer = ({ transferData }) => {
               >
                   {" "}
                   <u className="text-primary"
-            onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc)}  >View</u>
+            onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc,
+              transferData.currentEmployeeId)}  >View</u>
                              </a>
               ) : (
                 "(No Documents Available)"

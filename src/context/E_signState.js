@@ -25,6 +25,8 @@ export const E_signProvider = ({ children }) => {
   const [showinfo, setShowInfo] = useState(false);
   const [notification, setNotif] = useState(false);
   const [DocName, setDocName] = useState("");
+  const [EmployeeId, setEmployeeId] = useState("");
+
   const [docShow, setDocShow] = useState(false);
   const history = useHistory();
   const [notificationState, setNotificationState] = useState({
@@ -36,7 +38,7 @@ export const E_signProvider = ({ children }) => {
 
   console.log("imageViewData",imageViewData);
   useEffect(() => {
-    ImageView(DocName)
+    ImageView(DocName,EmployeeId)
   }, [DocName]);
 
   const handleClose = () => {
@@ -235,15 +237,15 @@ export const E_signProvider = ({ children }) => {
   //       setLoader(false);
   // };
 
-  const getReference = (id, letterName,orgId = "6180cd3596d65ededc7d30f6") => {
+  const getReference = (id, letterName,employeeId,orgId = "6180cd3596d65ededc7d30f6") => {
     setLoader(true);
     client
       .get("/api/v1/e-sign/reference/" + orgId + "/" + id)
       .then((response) => {
         console.log("-->>>", response);
         state.referenceResponse = response.data;
-
         if (letterName) {
+          setEmployeeId(employeeId)
           setDocName(letterName);
           setDocShow(true);
         }else
