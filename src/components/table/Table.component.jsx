@@ -10,7 +10,7 @@ const TableComponent = ({
   scroll = false,
   button = false,
 }) => {
-  const [EmployeeId,setEmployeeId] = useState('')
+  // const [EmployeeId,setEmployeeId] = useState('')
   return (
     <div className="table-responsive">
       <Table
@@ -52,7 +52,7 @@ const TableComponent = ({
             {tableBody.map((item, itemIndex) => (
               <tr key={`${item.sno}_${itemIndex}`}>
                 {Object.entries(item).map(([key, value], index) => {
-                                      setEmployeeId(item.empId)
+                                      // setEmployeeId(item.empId)
                   if (key === "view") {
                     return (
                       <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
