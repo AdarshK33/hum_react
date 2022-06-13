@@ -461,7 +461,7 @@ export const SeparationProvider = (props) => {
 
   const promotionManagerData = (costCenter,department) => {
     return client
-      .get(`api/v1/employee/view/managers/costCentre/department?department=${department}&storeId=${costCenter}`)
+      .get(`api/v1/employee/view/managers/costCentre/${department}?storeId=${costCenter}`)
       .then((response) => {
         console.log(response, "managerData response");
         state.promotioManagerList = response.data.data;
