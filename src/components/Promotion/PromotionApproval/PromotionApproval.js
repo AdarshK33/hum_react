@@ -657,7 +657,7 @@ const PromotionApproval = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.validatedManagerName}
+                                  {state.validatedManagerName?state.validatedManagerName:"NA"}
                                 </label>
                               </div>
                             </Col>
@@ -677,7 +677,7 @@ const PromotionApproval = (props) => {
                                     ? moment(state.managerValidatedDate).format(
                                         "DD-MM-YYYY"
                                       )
-                                    : ""}
+                                    : "NA"}
                                 </label>
                               </div>
                             </Col>
