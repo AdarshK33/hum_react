@@ -1414,6 +1414,7 @@ const PromotionInitiate = () => {
                                     }
                                     selected={state.effectiveDate}
                                     name="effectiveDate"
+                                    disabled={submitted}
                                     // minDate={moment().toDate()}
                                     required
                                     onChange={(e) => dateOfBirthHandler(e)}

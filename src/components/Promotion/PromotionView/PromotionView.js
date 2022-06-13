@@ -536,7 +536,7 @@ const PromotionView = (props) => {
                                   <Col sm={2}>
                                     <div>
                                       <label className="itemResult">
-                                        {state.validatedManagerName}
+                                        {state.validatedManagerName?state.validatedManagerName:"NA"}
                                       </label>
                                     </div>
                                   </Col>
@@ -645,7 +645,7 @@ const PromotionView = (props) => {
                                   <Col sm={2}>
                                     <div>
                                       <label className="itemResult">
-                                        {state.validatedManagerName}
+                                        {state.validatedManagerName?state.validatedManagerName:"NA"}
                                       </label>
                                     </div>
                                   </Col>
@@ -663,7 +663,7 @@ const PromotionView = (props) => {
                                             state.managerValidatedDate !== null && 
                                             state.managerValidatedDate !== undefined 
                                              && state.managerValidatedDate !== ""?
-                                            moment(state.managerValidatedDate).format("DD-MM-YYYY"):""
+                                            moment(state.managerValidatedDate).format("DD-MM-YYYY"):"NA"
                                         }
                                             </label>
                                     </div>
