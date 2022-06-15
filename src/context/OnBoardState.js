@@ -34,6 +34,7 @@ const initial_state = {
   bankViewData: [],
   bankUpdateData: {},
   documentViewData: [],
+  docViewData:[],
   documentUploadData: {},
   deleteNomineeData: {},
   deleteAllNomineeData: {},
@@ -597,7 +598,23 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
-
+  const CandidateDocView = (candidateId, fileName) => {
+    console.log("documentView", candidateId);
+    candidate
+      .get("/api/v2/candidate/documents/view/file/" + candidateId +"?fileName=" + fileName)
+      .then((response) => {
+        state.docViewData = response.data.data;
+        console.log("docViewData", state.docViewData);
+        return dispatch({
+          type: "CANDIDATE_DOC_VIEW_DATA",
+          payload: state.docViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
   const uploadFile = (fileInfo) => {
     console.log("uploadFile state", fileInfo);
     const photoFile = fileInfo.file;
@@ -830,6 +847,7 @@ export const OnBoardProvider = (props) => {
         generateCandidateLetter,
         premiumView,
         number2text,
+        CandidateDocView,
         deleteAllNomineeData: state.deleteAllNomineeData,
         deleteNomineeData: state.deleteNomineeData,
         emergencyContactData: state.emergencyContactData,
@@ -864,6 +882,7 @@ export const OnBoardProvider = (props) => {
         insuranceTopUpData: state.insuranceTopUpData,
         candidateLetterData: state.candidateLetterData,
         premiumViewData: state.premiumViewData,
+        docViewData:state.docViewData
       }}
     >
       {props.children}
