@@ -75,6 +75,7 @@ const EditWorkInformation = () => {
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
   const [stateValue, setStateValue] = useState();
+  const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState();
   const [cityId, setCityId] = useState();
   const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
@@ -141,7 +142,8 @@ const EditWorkInformation = () => {
       // setDateOfIssue(new Date(workData.passportIssuedDate));
       // setDateOfValidity(new Date(workData.passportExpiryDate));
 
-      setStateValue(workData.stateId);
+      setStateValueCity(workData.stateId)
+      setStateValue(workData.cityName);
       setCity(workData.locationId);
       cityData(workData.stateId);
           setCityId(workData.cityId);
@@ -321,9 +323,15 @@ const EditWorkInformation = () => {
   };
 
   const stateHandler = (e) => {
-    setStateValue(e.target.value);
-    cityData(e.target.value);
-    console.log("stateName in state handler", e.target.value);
+    stateList.map((item, i) => {
+      console.log(stateValueCity)
+      if(item.cityName == e.target.value){
+        setStateValueCity(item.stateId)
+        setStateValue(e.target.value);
+        cityData(item.stateId);
+        console.log("stateName in state handler", e.target.value);
+      }
+    })
   };
 
   const cityHandler = (e) => {
@@ -765,6 +773,7 @@ const EditWorkInformation = () => {
                 <Form.Label>Work Location</Form.Label>
                 <Form.Control
                   as="select"
+                  defaultValue={stateValue}
                   value={stateValue}
                   className="form-input"
                   onChange={stateHandler}
@@ -776,7 +785,7 @@ const EditWorkInformation = () => {
                     stateList !== undefined &&
                     stateList.map((item, i) => {
                       return (
-                        <option key={i} value={item.stateId}>
+                        <option key={i} value={item.cityName}>
                           {item.cityName}/{item.stateName}
                         </option>
                       );
