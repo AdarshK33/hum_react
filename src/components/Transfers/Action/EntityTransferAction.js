@@ -728,7 +728,8 @@ const EntityTransferAction = () => {
                             //   target="_blank"
                             // >
                             <a
-                            href={imageViewData.data ? imageViewData.data:""}
+                            href={(imageViewData !== null && imageViewData !== undefined
+                              && imageViewData.data) ? imageViewData.data:""}
                             target="_blank"
                           >
                               {" "}
@@ -770,7 +771,8 @@ const EntityTransferAction = () => {
                             //   target="_blank"
                             // >
                                <a
-                              href={imageViewData.data ? imageViewData.data:""}
+                              href={(imageViewData !== null && imageViewData !== undefined
+                                 && imageViewData.data) ? imageViewData.data:""}
                               target="_blank"
                             >
                               {" "}

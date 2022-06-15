@@ -1066,6 +1066,7 @@ const RegularTransfer = () => {
                 <DatePicker
                   className="text-primary form-control"
                   selected={effectiveDate}
+                  disabled={formValid}
                   closeOnScroll={true}
                   minDate={moment().toDate()}
                   dateFormat="yyyy-MM-dd"

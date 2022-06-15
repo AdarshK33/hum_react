@@ -25,7 +25,9 @@ const EntityTransfer = ({ transferData }) => {
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
   const handleImageView = (data,employeeId)=>{
+    if(data !== "" && data !== null && data !== undefined){
     ImageView(data,employeeId)
+    }
   }
   return (
     <Fragment>
@@ -168,7 +170,8 @@ const EntityTransfer = ({ transferData }) => {
                 //   target="_blank"
                 // >
                 <a
-                href={imageViewData.data ? imageViewData.data:""}
+                href={(imageViewData !== null && imageViewData !== undefined
+                  && imageViewData.data) ? imageViewData.data:""}
                 target="_blank"
               >
                   {" "}
@@ -208,7 +211,8 @@ const EntityTransfer = ({ transferData }) => {
                 //   target="_blank"
                 // >
                 <a
-                href={imageViewData.data ? imageViewData.data:""}
+                href={(imageViewData !== null && imageViewData !== undefined
+                  && imageViewData.data) ? imageViewData.data:""}
                 target="_blank"
               >
                   {" "}
