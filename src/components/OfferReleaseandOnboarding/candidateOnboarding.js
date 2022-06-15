@@ -734,8 +734,8 @@ const CandidateOnboarding = () => {
                 }
                 required
                 onChange={(e) => dateOfJoiningHandler(e)}
-                minDate={subDays(new Date(employeeData.joiningDate), 7)}
-                maxDate={new Date(employeeData.joiningDate)}
+                // minDate={subDays(new Date(employeeData.joiningDate), 7)}
+                maxDate={new Date()}
                 dateFormat="yyyy-MM-dd"
                 placeholderText="Date of Joining"
               />
