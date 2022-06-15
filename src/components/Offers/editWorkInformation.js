@@ -304,6 +304,7 @@ const EditWorkInformation = () => {
   const changeHandler = (e) => {
     if(e.target.name && e.target.name ==="department" ){
       setStateValue();
+      setStateValueCity()
       setCity("");
       setCityId("");
       setCostCenter("");
@@ -347,7 +348,8 @@ const EditWorkInformation = () => {
   };
   useEffect(()=>{
     if (locationName !== null && locationName !== undefined && costCenter) {
-      setStateValue(locationName.stateId);
+      setStateValue(locationName.cityName);
+      setStateValueCity(locationName.stateId)
       setCity(locationName.locationId);
       setCityId(locationName.cityId);
       cityData(locationName.stateId);
@@ -773,7 +775,6 @@ const EditWorkInformation = () => {
                 <Form.Label>Work Location</Form.Label>
                 <Form.Control
                   as="select"
-                  defaultValue={stateValue}
                   value={stateValue}
                   className="form-input"
                   onChange={stateHandler}
