@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col,Modal } from "react-bootstrap";
 import Breadcrumb from "../../common/breadcrumb";
 import Switch from "react-switch";
 import "../offers.css";
@@ -25,6 +25,8 @@ import PermanentAppointmentLetter from "./AppointmentLetter";
 import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
 import LocalExpactAppointmentLetter from "./localExpactAppointmentLetter";
 import InternAppointmentLetter from "./internAppointmentLetter";
+import { DocsVerifyContext } from "../../../context/DocverificationState";
+
 const OfferAccept = (props) => {
   const [showLetter, setShowLetter] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -45,12 +47,29 @@ const OfferAccept = (props) => {
     generateCandidateLetter,
     candidateLetterData,
     candidateCountryList,
+    documentView,
+    CandidateDocView,
+    docViewData
   } = useContext(OnBoardContext);
+  const {
+    downloadFileOnboard
+  } = useContext(DocsVerifyContext);
   const { candidateRejectOffer, candidateAcceptOffer, offerAcceptData } =
     useContext(CandidateContext);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
+console.log("docViewData",docViewData);
+  const handleClose = () => {
+    setModal(false);
+    setShowLetter(false);
+  }
 
-  const handleClose = () => setModal(false);
+  const handleCloseLetter = () => {
+    setShowLetter(false);
+  }
+  const handleAppCloseLetter = () => {
+    setShowAppointmentLetter(false);
+  }
+  
   const handleRejectClose = () => {
     setRejectModal(false);
   };
@@ -90,6 +109,7 @@ const OfferAccept = (props) => {
   const showLetterClick = (e) => {
     console.log("candidate Offer", candidateLetterData);
     setShowLetter(true);
+    CandidateDocView(candidateProfileData.candidateId,candidateProfileData.signedLetter)
   };
 
   const showInsuranceClick = (e) => {
@@ -98,6 +118,7 @@ const OfferAccept = (props) => {
   };
   const showAppointmentLetterClick = (e) => {
     setShowAppointmentLetter(true);
+    CandidateDocView(candidateProfileData.candidateId,candidateProfileData.appointmentSignedLetter)
   };
 
   const handleSwitch = (e) => {
@@ -143,6 +164,14 @@ const OfferAccept = (props) => {
     console.log("inside candidate logout");
     localStorage.removeItem("candidate_access_token");
     props.history.push("/onboard-offer");
+  };
+
+  const downloadOfferLetter = () => {
+    downloadFileOnboard(candidateProfileData.signedLetter);
+  };
+
+  const downloadAppointmentLetter = () => {
+    downloadFileOnboard(candidateProfileData.appointmentSignedLetter);
   };
 
   return (
@@ -212,14 +241,36 @@ const OfferAccept = (props) => {
                     View Your Offer Letter
                   </span>
                   <Button onClick={showLetterClick}>Show</Button>
-                  {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
+                  <Button onClick={downloadOfferLetter} style={{ marginLeft: "1rem" }}>Download</Button>
                 </div>
               </Container>
               <Container className="last-container">
                 <Row>
                   <Col sm={2}></Col>
                   <Col sm={9}>
-                    {showLetter === true && candidateLetterData ? (
+                  <Fragment>
+        <Modal show={showLetter} onHide={handleCloseLetter} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {docViewData !== undefined &&
+             Object.keys(docViewData).length !== 0 && docViewData!=="File does not exist" ? (
+              <div>
+
+                  <iframe
+                  src={
+                    docViewData ? docViewData +"#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
+    </Fragment>
+                    {/* {showLetter === true && candidateLetterData ? (
                       candidateLetterData.contractType !== undefined &&
                       candidateLetterData.contractType !== null &&
                       candidateLetterData.contractType === "Fulltime" ? (
@@ -239,7 +290,7 @@ const OfferAccept = (props) => {
                       )
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </Col>
                   <Col sm={1}></Col>
                 </Row>
@@ -470,34 +521,34 @@ const OfferAccept = (props) => {
                     View Your Offer Letter
                   </span>
                   <Button onClick={showLetterClick}>Show</Button>
-                  {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
+                  <Button onClick={downloadOfferLetter} style={{ marginLeft: "1rem" }}>Download</Button>
                 </div>
               </Container>
               <Container className="last-container">
                 <Row>
                   <Col sm={2}></Col>
                   <Col sm={9}>
-                    {showLetter === true && candidateLetterData ? (
-                      candidateLetterData.contractType !== undefined &&
-                      candidateLetterData.contractType !== null &&
-                      candidateLetterData.contractType === "Fulltime" ? (
-                        <PermanentOfferLetter />
-                      ) : candidateLetterData &&
-                        candidateLetterData.contractType !== undefined &&
-                        candidateLetterData.contractType !== null &&
-                        candidateLetterData.contractType === "Parttime" ? (
-                        <PartTimeOfferLetter />
-                      ) : candidateLetterData &&
-                        candidateLetterData.contractType !== undefined &&
-                        candidateLetterData.contractType !== null &&
-                        candidateLetterData.contractType === "Local Expat" ? (
-                        <LocalExpatOfferLetter />
-                      ) : (
-                        <InternOfferLetter />
-                      )
-                    ) : (
-                      ""
-                    )}
+                  <Fragment>
+        <Modal show={showLetter} onHide={handleCloseLetter} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {docViewData !== undefined &&
+             Object.keys(docViewData).length !== 0 && docViewData!=="File does not exist" ? (
+              <div>
+                  <iframe
+                  src={
+                    docViewData ? docViewData +"#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
+    </Fragment>
                   </Col>
                   <Col sm={1}></Col>
                 </Row>
@@ -670,7 +721,7 @@ const OfferAccept = (props) => {
                       View Your Appointment Letter
                     </span>
                     <Button onClick={showAppointmentLetterClick}>Show</Button>
-                    {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
+                    <Button onClick={downloadAppointmentLetter} style={{ marginLeft: "1rem" }}>Download</Button>
                   </div>
                 </Container>
               ) : (
@@ -680,7 +731,28 @@ const OfferAccept = (props) => {
                 <Row>
                   <Col sm={2}></Col>
                   <Col sm={9}>
-                    {showAppointmentLetter === true && candidateLetterData ? (
+                  <Fragment>
+        <Modal show={showAppointmentLetter} onHide={handleAppCloseLetter} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {docViewData !== undefined &&
+             Object.keys(docViewData).length !== 0 && docViewData!=="File does not exist" ? (
+              <div>
+                  <iframe
+                  src={
+                    docViewData ? docViewData +"#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
+    </Fragment>
+                    {/* {showAppointmentLetter === true && candidateLetterData ? (
                       candidateLetterData.contractType !== undefined &&
                       candidateLetterData.contractType !== null &&
                       candidateLetterData.contractType === "Fulltime" ? (
@@ -700,7 +772,7 @@ const OfferAccept = (props) => {
                       )
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </Col>
                   <Col sm={1}></Col>
                 </Row>
