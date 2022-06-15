@@ -79,6 +79,7 @@ const WorkInformation = (props) => {
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
   const [stateValue, setStateValue] = useState();
+  const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState();
   const [cityId, setCityId] = useState();
   const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
@@ -165,10 +166,11 @@ const WorkInformation = (props) => {
   useEffect(() => {
     if (costCenter) {
       if (locationName !== null && locationName !== undefined) {
-        setStateValue(locationName.stateId);
+        setStateValue(locationName.cityName);
         setCity(locationName.locationId);
         cityData(locationName.stateId);
         setCityId(locationName.cityId);
+        setStateValueCity(locationName.stateId)
         console.log("state in useEffect", locationName);
       }
     }
@@ -307,8 +309,17 @@ const WorkInformation = (props) => {
   // }, [candidateData]);
 
   const stateHandler = (e) => {
-    setStateValue(e.target.value);
-    cityData(e.target.value);
+    stateList.map((item, i) => {
+      console.log(stateValueCity)
+      if(item.cityName == e.target.value){
+        setStateValueCity(item.stateId)
+        setStateValue(e.target.value);
+        cityData(item.stateId);
+        console.log("stateName in state handler", e.target.value);
+      }
+    })
+    //       setStateValue(e.target.value);
+    // cityData(e.target.value);
     console.log("stateName in state handler", e.target.value);
   };
 
@@ -342,7 +353,9 @@ const WorkInformation = (props) => {
   useEffect(()=>{
     if (locationName && Object.keys(locationName).length && costCenter ) {
       console.log(locationName,cityList,"locationName")
-      setStateValue(locationName.stateId);
+      setStateValue(locationName.cityName);
+      // setStateValue(locationName.stateId);
+
       setCity(locationName.locationId);
       setCityId(locationName.cityId);
       cityData(locationName.stateId);
@@ -812,7 +825,7 @@ const WorkInformation = (props) => {
                     stateList !== undefined &&
                     stateList.map((item, i) => {
                       return (
-                        <option key={i} value={item.stateId}>
+                        <option key={i} value={item.cityName}>
                           {item.cityName}/{item.stateName}
                         </option>
                       );
