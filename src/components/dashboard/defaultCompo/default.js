@@ -11,7 +11,6 @@ const Default = () => {
     const { user, getUserMenu } = useContext(AppContext);
     let history = useHistory();
 
-useEffect(() => {
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
     user.department === "IT"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
@@ -69,8 +68,6 @@ useEffect(() => {
     localStorage.setItem("flag", "0");
     localStorage.setItem("loginRole","Employee");
     // history.push("/dashboard/storedashboard");31/05/2022
-    history.push("/employee360");
-}, [getUserMenu]);
     return (
         <Fragment>
             {/* <Breadcrumb parent="Dashboard" title="Default" /> */}
