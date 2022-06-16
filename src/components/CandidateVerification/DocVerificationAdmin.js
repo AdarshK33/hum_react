@@ -32,6 +32,7 @@ const DocVerification = () => {
   const [UANNo, setNo] = useState(false);
   const [uanNumber, setUanNumber] = useState();
   const [uanError, setUanError] = useState(false);
+  const [docShow, setDocShow] = useState(false);
   const [uanValueError, setUanValueError] = useState(false);
   const [shiftingTheStatus, setShiftingTheStatus] = useState("");
   const [disApproveTheStatus, setDisApproveTheStatus] = useState("");
@@ -298,9 +299,46 @@ const DocVerification = () => {
       setUanValueError(true);
     }
   };
+
+  const handleDocShow = () => {
+    setDocShow(true);
+  };
+
+  const handleDocClose = () => {
+    setDocShow(false);
+  };
   console.log(imageViewData,"imageViewData")
   return (
     <Fragment>
+
+        <Modal show={docShow} onHide={handleDocClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {imageViewData !== undefined &&
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
+              <div>
+
+                  <iframe
+                  src={
+                    imageViewData.data ? imageViewData.data +
+                    "#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+                {/* ) : (
+                  <img
+                  style={{ width: "100%", height: "100%" }}
+                  src={imageViewData.data ? imageViewData.data:""}
+                />
+                )} */}
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
+
       <Modal show={showModal} onHide={() => handleClose()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
@@ -500,14 +538,14 @@ const DocVerification = () => {
                         href={process.env.REACT_APP_S3_URL + item.documentName}
                         target="_blank"
                       > */}
-                         <a
+                         {/* <a
                         href={(imageViewData !== null && imageViewData !== undefined &&
                           Object.keys(imageViewData).length !== 0 && imageViewData.data) ? imageViewData.data:""}
                         target="_blank"
-                      >
+                      > */}
                         
-                        <button className="downloadButton" onClick={()=>ImageView(item.documentName,item.candidateId)}>View</button>
-                      </a>
+                        <button className="downloadButton" onClick={()=>{ImageView(item.documentName,item.candidateId);handleDocShow()}}>View</button>
+                      {/* </a> */}
                     </td>
                     <td className="buttonMargin1">
                       <button
@@ -816,14 +854,14 @@ const DocVerification = () => {
                     item.documentType !== 17 ? (
                       <React.Fragment>
                         <td className="buttonMargin1">
-                             <a
+                             {/* <a
                         href={(imageViewData !== null && imageViewData !== undefined &&
                           Object.keys(imageViewData).length !== 0 && imageViewData.data)?imageViewData.data:""}
                         target="_blank"
-                      >
+                      > */}
                       
-                        <button className="downloadButton" onClick={()=>ImageView(item.documentName,item.candidateId)}>View</button>
-                          </a>
+                        <button className="downloadButton" onClick={()=>{ImageView(item.documentName,item.candidateId);handleDocShow()}}>View</button>
+                          {/* </a> */}
                         </td>
                         <td className="buttonMargin1">
                           <button
