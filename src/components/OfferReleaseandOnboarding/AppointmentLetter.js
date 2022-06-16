@@ -95,8 +95,8 @@ const AppointmentLetter = (props) => {
                   Emp ID: {offerLetterData.employeeId}
                 </h5>
                 <br />
+                <p style={{ textAlign: "right" }}>Date: {moment().format("DD-MM-YYYY")}</p>
                 <p>To,</p>
-                <p>Date: {moment().format("DD-MM-YYYY")}</p>
                 <p>{offerLetterData.candidateName}</p>
                 <p>{offerLetterData.address}</p>
                 <p>{offerLetterData.cityName}</p>
