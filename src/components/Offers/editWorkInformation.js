@@ -74,10 +74,11 @@ const EditWorkInformation = () => {
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
-  const [stateValue, setStateValue] = useState();
+  const [stateValue, setStateValue] = useState("");
   const [stateValueCity, setStateValueCity] = useState("");
-  const [city, setCity] = useState();
-  const [cityId, setCityId] = useState();
+  const [city, setCity] = useState("");
+  const [cityId, setCityId] = useState("");
+  const [ costCenterStatus,setCostCenterStatus] = useState(false)
   const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
   const [noticePeriod, setNoticePeriod] = useState("");
   const [nationalityList, setNationalityList] = useState();
@@ -143,7 +144,7 @@ const EditWorkInformation = () => {
       // setDateOfValidity(new Date(workData.passportExpiryDate));
 
       setStateValueCity(workData.stateId)
-      setStateValue(workData.cityName);
+      setStateValue(workData.cityId);
       setCity(workData.locationId);
       cityData(workData.stateId);
           setCityId(workData.cityId);
@@ -326,7 +327,7 @@ const EditWorkInformation = () => {
   const stateHandler = (e) => {
     stateList.map((item, i) => {
       console.log(stateValueCity)
-      if(item.cityName == e.target.value){
+      if(item.cityId == e.target.value){
         setStateValueCity(item.stateId)
         setStateValue(e.target.value);
         cityData(item.stateId);
@@ -348,18 +349,20 @@ const EditWorkInformation = () => {
   };
   useEffect(()=>{
     if (locationName !== null && locationName !== undefined && costCenter) {
-      setStateValue(locationName.cityName);
-      setStateValueCity(locationName.stateId)
-      setCity(locationName.locationId);
-      setCityId(locationName.cityId);
-      cityData(locationName.stateId);
+      if(costCenterStatus == true){
+        setStateValue(locationName.cityId);
+        setStateValueCity(locationName.stateId)
+        setCity(locationName.locationId);
+        setCityId(locationName.cityId);
+        cityData(locationName.stateId);
+      }
     }
   },[costCenter,locationName])
   const costCenterChangeHandler = (e) => {
     console.log(e.value,"costcenter")
     setCostCenter(e.value);
     locationView(e.value);
-
+    setCostCenterStatus(true)
     console.log("locationView", e.value);
   };
   const dateOfIssueHandler = (date) => {
@@ -413,6 +416,7 @@ const EditWorkInformation = () => {
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
       cityId: cityId,
+      stateId:stateValueCity,
       collegeName: college,
       companyName:
         rolePermission == "admin" ? state.adminCompany : user.company,
@@ -786,7 +790,7 @@ const EditWorkInformation = () => {
                     stateList !== undefined &&
                     stateList.map((item, i) => {
                       return (
-                        <option key={i} value={item.cityName}>
+                        <option key={i} value={item.cityId}>
                           {item.cityName}/{item.stateName}
                         </option>
                       );

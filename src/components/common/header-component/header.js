@@ -14,6 +14,12 @@ const Header = () => {
   const [scChecked, setScChecked] = useState(false);
   const [costChecked, setCostChecked] = useState(false);
   const [managerChecked, setManagerChecked] = useState(false);
+  const [state,setState] = useState({
+    adminChecked:false,
+    scChecked:false,
+    costChecked:false,
+    managerChecked:false
+  })
   const { user, getUserMenu } = useContext(AppContext);
   let history = useHistory();
   const { viewServiceGroup, groupList, permissionRoleAccess, rolePermission } =
@@ -66,12 +72,16 @@ const Header = () => {
     }
   }
   const adminHandler = (e) => {
-    if(adminChecked == false){
+    if(state.adminChecked == false){
     localStorage.setItem("loginRole", "admin");
-          setAdminChecked(true);
-    setScChecked(false);
-    setCostChecked(false);
-    setManagerChecked(false);
+    //       setAdminChecked(true);
+    // setScChecked(false);
+    // setCostChecked(false);
+    // setManagerChecked(false);
+    state.adminChecked = true
+    state.scChecked = false
+    state.costChecked = false
+    state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department ==="Finance & Legal" || user.department === "Finance" || user.department === "IT"){
       getUserMenu(user.adminMenus);
@@ -119,10 +129,14 @@ const Header = () => {
     // history.push("/dashboard/storedashboard#admin");31/05/2022
     history.push("/manager360#admin");
   }else{
-    setAdminChecked(false);
-    setScChecked(false);
-    setCostChecked(false);
-    setManagerChecked(false);
+    // setAdminChecked(false);
+    // setScChecked(false);
+    // setCostChecked(false);
+    // setManagerChecked(false);
+    state.adminChecked = false
+    state.scChecked = false
+    state.costChecked = false
+    state.managerChecked = false
     // getUserMenu(user.supportMenus);
     // localStorage.removeItem("type");
     // localStorage.removeItem("loginRole");
@@ -192,12 +206,16 @@ const Header = () => {
   };
 
   const scHandler = () => {
-    if(scChecked == false){
+    if(state.scChecked == false){
     localStorage.setItem("loginRole", "superCostCenterManager");
-    setAdminChecked(false);
-    setScChecked(true);
-    setCostChecked(false);
-    setManagerChecked(false);
+    // setAdminChecked(false);
+    // setScChecked(true);
+    // setCostChecked(false);
+    // setManagerChecked(false);
+    state.adminChecked = false
+    state.scChecked = true
+    state.costChecked = false
+    state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
@@ -239,10 +257,14 @@ const Header = () => {
     // history.push("/dashboard/storedashboard#team");31/05/2022
     history.push("/manager360#team");
   }else{
-    setAdminChecked(false);
-    setScChecked(false);
-    setCostChecked(false);
-    setManagerChecked(false);
+    // setAdminChecked(false);
+    // setScChecked(false);
+    // setCostChecked(false);
+    // setManagerChecked(false);
+    state.adminChecked = false
+    state.scChecked = false
+    state.costChecked = false
+    state.managerChecked = false
     // getUserMenu(user.supportMenus);
     // localStorage.removeItem("type");
     // localStorage.removeItem("loginRole");
@@ -312,12 +334,16 @@ const Header = () => {
   };
 
   const costHandler = () => {
-    if(costChecked == false){
+    if(state.costChecked == false){
     localStorage.setItem("loginRole", "costCenterManager");
-    setAdminChecked(false);
-    setScChecked(false);
-    setCostChecked(true);
-    setManagerChecked(false);
+    // setAdminChecked(false);
+    // setScChecked(false);
+    // setCostChecked(true);
+    // setManagerChecked(false);
+    state.adminChecked = false
+    state.scChecked = false
+    state.costChecked = true
+    state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
@@ -359,10 +385,14 @@ const Header = () => {
     // history.push("/dashboard/storedashboard#team");31/05/2022
     history.push("/manager360#team");
   }else{
-    setAdminChecked(false);
-    setScChecked(false);
-    setCostChecked(false);
-    setManagerChecked(false);
+    // setAdminChecked(false);
+    // setScChecked(false);
+    // setCostChecked(false);
+    // setManagerChecked(false);
+    state.adminChecked = false
+    state.scChecked = false
+    state.costChecked = false
+    state.managerChecked = false
     // getUserMenu(user.supportMenus);
     // localStorage.removeItem("type");
     // localStorage.removeItem("loginRole");
@@ -432,12 +462,16 @@ const Header = () => {
   };
 
   const managerHandler = () => {
-    if(managerChecked == false){
+    if(state.managerChecked == false){
     localStorage.setItem("loginRole", "manager");
-    setAdminChecked(false);
-    setScChecked(false);
-    setCostChecked(false);
-    setManagerChecked(true);
+    // setAdminChecked(false);
+    // setScChecked(false);
+    // setCostChecked(false);
+    // setManagerChecked(true);
+    state.adminChecked = false
+    state.scChecked = false
+    state.costChecked = false
+    state.managerChecked = true
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
@@ -479,10 +513,14 @@ const Header = () => {
     // history.push("/dashboard/storedashboard#team");31/05/2022
     history.push("/manager360#team");
   }else{
-    setAdminChecked(false);
-    setScChecked(false);
-    setCostChecked(false);
-    setManagerChecked(false);
+    // setAdminChecked(false);
+    // setScChecked(false);
+    // setCostChecked(false);
+    // setManagerChecked(false);
+    state.adminChecked = false
+    state.scChecked = false
+    state.costChecked = false
+    state.managerChecked = false
     // getUserMenu(user.supportMenus);
     // localStorage.removeItem("type");
     // localStorage.removeItem("loginRole");
@@ -629,7 +667,7 @@ const Header = () => {
                 </h6>
               </div>
 
-              <UserMenu adminChecked={adminChecked} />
+              <UserMenu adminChecked={state.adminChecked} />
             </ul>
             <Row>
               <Col sm={12} className="role-text-center">
@@ -639,8 +677,8 @@ const Header = () => {
                     <input
                       type="checkbox"
                       name="admin"
-                      value={adminChecked}
-                      checked={adminChecked}
+                      value={state.adminChecked}
+                      checked={state.adminChecked}
                       onChange={adminHandler}
                     />{" "}
                     <Form.Label>Admin &nbsp; </Form.Label>
@@ -655,7 +693,7 @@ const Header = () => {
                     <input
                       type="checkbox"
                       name="scManager"
-                      checked={scChecked}
+                      checked={state.scChecked}
                       onChange={scHandler}
                     />{" "}
                     <Form.Label>Super Cost Center Manager &nbsp; </Form.Label>
@@ -671,7 +709,7 @@ const Header = () => {
                     <input
                       type="checkbox"
                       name="costManager"
-                      checked={costChecked}
+                      checked={state.costChecked}
                       onChange={costHandler}
                     />{" "}
                     <Form.Label>Cost Center Manager &nbsp; </Form.Label>
@@ -685,7 +723,7 @@ const Header = () => {
                     <input
                       type="checkbox"
                       name="manager"
-                      checked={managerChecked}
+                      checked={state.managerChecked}
                       onChange={managerHandler}
                     />{" "}
                     <Form.Label> Manager &nbsp; </Form.Label>
