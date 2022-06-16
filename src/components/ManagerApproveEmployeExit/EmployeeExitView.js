@@ -732,8 +732,8 @@ const EmployeeExitView = () => {
                             <b>Personal Email Id:</b>
                             <label className="itemResult">
                               &nbsp;&nbsp; {
-                              (state.personalEmailId !== null 
-                                && state.personalEmailId !== undefined)?state.personalEmailId:"NA"}
+                              (state.emailId !== null 
+                                && state.emailId !== undefined)?state.emailId:"NA"}
                             </label>
                           </label>
                         </div>
