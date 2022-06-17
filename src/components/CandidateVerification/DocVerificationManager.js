@@ -427,7 +427,7 @@ const DocVerification = () => {
                     {/* <a
                         href={(imageViewData !== null && imageViewData !== undefined &&
                           Object.keys(imageViewData).length !== 0 && imageViewData.data)?imageViewData.data:""}
-                        target="_blank"
+                        target="_blank."
                       > */}
                         <button className="downloadButton" onClick={()=>{ImageView(item.documentName,item.candidateId);handleDocShow()}}>View</button>
                       {/* </a> */}
