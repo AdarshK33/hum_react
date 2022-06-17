@@ -464,10 +464,11 @@ export const OfferProvider = (props) => {
       });
   };
   //City api
-  const cityData = (stateId) => {
-    if (stateId !== undefined) {
-      client
-        .get("/api/v1/location/view/stateId?stateId=" + stateId)
+  const cityData = (stateId,cityId) => {
+    //"/api/v1/location/view/stateId?stateId=" + stateId  this is changed due to bug in displaying work location 16/6/2022
+    if (stateId !== undefined && cityId !== undefined) {
+      client 
+        .get(`/api/v1/location/view/${stateId}/${cityId}`)
         .then((response) => {
           state.cityList = response.data.data;
           console.log("city name", state.cityList);

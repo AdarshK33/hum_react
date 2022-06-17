@@ -11,7 +11,6 @@ const TableComponentManager360 = ({
   height = "265px",
   button = false,
 }) => {
-  const [EmployeeId,setEmployeeId] = useState('')
   return (
     <div style={{ height: height }}>
       <TableScrollbar>
@@ -30,7 +29,6 @@ const TableComponentManager360 = ({
               {tableBody.map((item, itemIndex) => (
                 <tr key={`${item.sno}_${itemIndex}`}>
                   {Object.entries(item).map(([key, value], index) => {
-                    setEmployeeId(item.empId)
                     if (key === "view") {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
@@ -58,7 +56,7 @@ const TableComponentManager360 = ({
                             {Object.entries(value).map(([actKey, actValue]) => {
                               if (actValue.link !== "") {
                                 return (
-                                  <Link to={actValue.link}>
+                                  <Link to={actValue.link}  key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}>
                                     <TableActionButton
                                       key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                       disabled={!actValue.active}

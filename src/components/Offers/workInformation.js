@@ -78,7 +78,7 @@ const WorkInformation = (props) => {
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
-  const [stateValue, setStateValue] = useState();
+  const [stateValue, setStateValue] = useState("");
   const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState();
   const [cityId, setCityId] = useState();
@@ -166,11 +166,12 @@ const WorkInformation = (props) => {
   useEffect(() => {
     if (costCenter) {
       if (locationName !== null && locationName !== undefined) {
-        setStateValue(locationName.cityName);
         setCity(locationName.locationId);
-        cityData(locationName.stateId);
+        cityData(locationName.stateId,locationName.cityId);
         setCityId(locationName.cityId);
-        setStateValueCity(locationName.stateId)
+         setStateValueCity(locationName.cityId);
+
+         setStateValue(locationName.stateId)
         console.log("state in useEffect", locationName);
       }
     }
@@ -311,10 +312,13 @@ const WorkInformation = (props) => {
   const stateHandler = (e) => {
     stateList.map((item, i) => {
       console.log(stateValueCity)
-      if(item.cityName == e.target.value){
-        setStateValueCity(item.stateId)
-        setStateValue(e.target.value);
-        cityData(item.stateId);
+      if(item.cityId == e.target.value){
+        setStateValue(item.stateId)
+         setStateValueCity(e.target.value);
+         setCityId(item.cityId)
+        // cityData(item.stateId);
+        cityData(item.stateId,item.cityId);
+
         console.log("stateName in state handler", e.target.value);
       }
     })
@@ -333,6 +337,7 @@ const WorkInformation = (props) => {
     console.log(e.target.value);
     if(e.target.name && e.target.name ==="department" ){
       setStateValue();
+      setStateValueCity()
       setCity("");
       setCityId("");
       setCostCenter("");
@@ -353,12 +358,14 @@ const WorkInformation = (props) => {
   useEffect(()=>{
     if (locationName && Object.keys(locationName).length && costCenter ) {
       console.log(locationName,cityList,"locationName")
-      setStateValue(locationName.cityName);
+      setStateValueCity(locationName.cityId);
       // setStateValue(locationName.stateId);
-
+      setStateValue(locationName.stateId)
       setCity(locationName.locationId);
       setCityId(locationName.cityId);
-      cityData(locationName.stateId);
+      // cityData(locationName.stateId);
+      cityData(locationName.stateId,locationName.cityId);
+
     }
   },[costCenter,locationName])
   const costCenterChangeHandler = (e) => {
@@ -424,6 +431,7 @@ const WorkInformation = (props) => {
       createData = {
         candidateId: createCandidateResponse.candidateId,
         cityId: cityId,
+        stateId:stateValue,
         collegeName: college,
         companyName:
           rolePermission == "admin" ? state.adminCompany : user.company,
@@ -814,7 +822,7 @@ const WorkInformation = (props) => {
                 <Form.Label>Work Location</Form.Label>
                 <Form.Control
                   as="select"
-                  value={costCenter === "" ? "" : stateValue}
+                  value={costCenter === "" ? "" : stateValueCity}
                   className="form-input"
                   onChange={stateHandler}
                   disabled={disabled}
@@ -825,7 +833,7 @@ const WorkInformation = (props) => {
                     stateList !== undefined &&
                     stateList.map((item, i) => {
                       return (
-                        <option key={i} value={item.cityName}>
+                        <option key={i} value={item.cityId}>
                           {item.cityName}/{item.stateName}
                         </option>
                       );
