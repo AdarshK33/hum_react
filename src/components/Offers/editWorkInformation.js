@@ -143,10 +143,10 @@ const EditWorkInformation = () => {
       // setDateOfIssue(new Date(workData.passportIssuedDate));
       // setDateOfValidity(new Date(workData.passportExpiryDate));
 
-      setStateValueCity(workData.stateId)
-      setStateValue(workData.cityId);
+      setStateValue(workData.stateId)
+       setStateValueCity(workData.cityId);
       setCity(workData.locationId);
-      cityData(workData.stateId);
+      cityData(workData.stateId,workData.cityId);
           setCityId(workData.cityId);
 
       locationView(workData.costCentre);
@@ -328,9 +328,12 @@ const EditWorkInformation = () => {
     stateList.map((item, i) => {
       console.log(stateValueCity)
       if(item.cityId == e.target.value){
-        setStateValueCity(item.stateId)
-        setStateValue(e.target.value);
-        cityData(item.stateId);
+        setStateValue(item.stateId)
+         setStateValueCity(e.target.value);
+         setCityId(item.cityId)
+        // cityData(item.stateId);
+        cityData(item.stateId,item.cityId);
+
         console.log("stateName in state handler", e.target.value);
       }
     })
@@ -350,12 +353,13 @@ const EditWorkInformation = () => {
   useEffect(()=>{
     if (locationName !== null && locationName !== undefined && costCenter) {
       if(costCenterStatus == true){
-        setStateValue(locationName.cityId);
-        setStateValueCity(locationName.stateId)
+         setStateValueCity(locationName.cityId);
+         setStateValue(locationName.stateId)
         setCity(locationName.locationId);
         setCityId(locationName.cityId);
-        cityData(locationName.stateId);
+        cityData(locationName.stateId,locationName.cityId);
       }
+      setCostCenterStatus(false)
     }
   },[costCenter,locationName])
   const costCenterChangeHandler = (e) => {
@@ -416,7 +420,7 @@ const EditWorkInformation = () => {
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
       cityId: cityId,
-      stateId:stateValueCity,
+      stateId:stateValue,
       collegeName: college,
       companyName:
         rolePermission == "admin" ? state.adminCompany : user.company,
@@ -779,7 +783,7 @@ const EditWorkInformation = () => {
                 <Form.Label>Work Location</Form.Label>
                 <Form.Control
                   as="select"
-                  value={stateValue}
+                  value={stateValueCity}
                   className="form-input"
                   onChange={stateHandler}
                   disabled={disabled}

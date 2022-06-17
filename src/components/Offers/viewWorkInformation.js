@@ -63,7 +63,8 @@ const ViewWorkInformation = () => {
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
-  const [stateValue, setStateValue] = useState();
+  const [stateValue, setStateValue] = useState("");
+  const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState();
 
   useEffect(() => {
@@ -114,9 +115,10 @@ const ViewWorkInformation = () => {
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
 
-      setStateValue(workData.stateId);
+      setStateValueCity(workData.cityId);
+      setStateValue(workData.stateId)
           setCity(workData.locationId);
-          cityData(workData.stateId);
+          cityData(workData.stateId,workData.cityId);
           // setCityId(workData.cityId);
     }
   }, [candidateData]);
@@ -388,7 +390,7 @@ const ViewWorkInformation = () => {
               <Form.Label>Work Location</Form.Label>
               <Form.Control
                 as="select"
-                value={stateValue}
+                value={stateValueCity}
                 className="form-input disable-arrow"
                 disabled="true"
               >
@@ -397,7 +399,7 @@ const ViewWorkInformation = () => {
                   stateList !== undefined &&
                   stateList.map((item, i) => {
                     return (
-                      <option key={i} value={item.stateId}>
+                      <option key={i} value={item.cityId}>
                           {item.cityName}/{item.stateName}
                       </option>
                     );
