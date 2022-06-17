@@ -1837,6 +1837,7 @@ const ManagerInitiateExit = () => {
                                     selected={lastWorkingDate}
                                     name="lastWorkingDate"
                                     minDate={new Date()}
+                                    popperPlacement="bottom-end"
                                     minDate={moment().toDate()}
                                     //maxDate={intern === true?"":lastDateSelection}
                                     // required
