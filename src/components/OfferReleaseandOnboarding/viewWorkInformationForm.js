@@ -106,7 +106,7 @@ const EditWorkInformation = () => {
      
           setStateValue(workData.stateId);
           setCity(workData.locationId);
-          cityData(workData.stateId);
+          cityData(workData.stateId,workData.cityId);
     }
   }, [candidateData]);
 
