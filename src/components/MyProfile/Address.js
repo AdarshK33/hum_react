@@ -903,19 +903,20 @@ const Address = (props) => {
 
       const AddressInfo = {
         presentAddress: {
-          addressId: state.addressId,
+          addressId: state.addressId?state.addressId:0,
           addressLine: state.addressLine,
           // addressProof: ,
           addressType: state.addressType,
           city: cityName,
           country: countryName,
-          employeeId: state.employeeId,
+          employeeId: user.employeeId,
           flatNumber: state.flatNumber,
           locality: state.locality,
           phoneNumber: state.phoneNumber,
           pinCode: state.pinCode,
           state: stateName,
           street: state.street,
+          addressType: 0
         },
 
         permanentAddress:
@@ -927,19 +928,35 @@ const Address = (props) => {
           Object.keys(addressViewData.presentAddress).length !== 0 &&
           addressViewData.presentAddress.addressType === 0
             ? {
-                addressId: state.permanentAddressId,
+                addressId: state.permanentAddressId?state.permanentAddressId:0,
                 addressLine: state.permanentAddressLine,
                 // addressProof: "string",
                 city: permanentCityName,
                 country: permanentCountryName,
-                employeeId: state.employeeId,
+                employeeId: user.employeeId,
                 flatNumber: state.permanentFlatNumber,
                 locality: state.permanentLocality,
                 phoneNumber: state.permanentPhoneNumber,
                 pinCode: state.permanentPinCode,
                 state: permanentStateName,
                 street: state.permanentStreet,
-              }
+              }:((addressViewData.permanentAddress == null  ||
+                addressViewData.permanentAddress == undefined) && ( addressViewData.presentAddress == null 
+                  || addressViewData.presentAddress == null)
+                 )?{
+                  addressId: state.permanentAddressId?state.permanentAddressId:0,
+                  addressLine: state.permanentAddressLine,
+                  // addressProof: "string",
+                  city: permanentCityName,
+                  country: permanentCountryName,
+                  employeeId: user.employeeId,
+                  flatNumber: state.permanentFlatNumber,
+                  locality: state.permanentLocality,
+                  phoneNumber: state.permanentPhoneNumber,
+                  pinCode: state.permanentPinCode,
+                  state: permanentStateName,
+                  street: state.permanentStreet,
+                }
             : null,
       };
 
