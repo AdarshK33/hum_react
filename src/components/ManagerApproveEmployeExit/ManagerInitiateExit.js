@@ -1834,6 +1834,7 @@ const ManagerInitiateExit = () => {
                                         )
                                       )
                                     }
+                                    popperPlacement="bottom-end"
                                     selected={lastWorkingDate}
                                     name="lastWorkingDate"
                                     minDate={new Date()}
