@@ -56,7 +56,7 @@ const EmergencyContact = (props) => {
       setState({
         contactName: emergencyContactView.contactName,
         addressLine: emergencyContactView.addressLine,
-        employeeId: emergencyContactView.employeeId,
+        employeeId: currentEmpId,
         contactId: emergencyContactView.contactId,
         city: emergencyContactView.city,
         country: emergencyContactView.country,
@@ -70,8 +70,8 @@ const EmergencyContact = (props) => {
       setState({
         contactName: "",
         addressLine: "",
-        employeeId: "",
-        contactId: "",
+        employeeId: currentEmpId,
+        contactId: 0,
         city: "",
         country: "",
         locality: "",
@@ -190,7 +190,7 @@ const EmergencyContact = (props) => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("next", state);
+    console.log("next", state,currentEmpId);
     if (validateForm()) {
       console.log("INSIDE SUBMIT HANDLER");
       console.log("state of emergency", state);

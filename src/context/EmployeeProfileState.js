@@ -62,7 +62,8 @@ export const EmployeeProfileProvider = ({ children }) => {
         "/api/v1/employee/profile/view/emergency/contact?employeeId=" + empId
       )
       .then((response) => {
-        state.emergencyContactView = response.data.data;
+        state.emergencyContactView = response.data.data[0];
+        console.log("emergencyContactView",state.emergencyContactView);
         //toast.info(response.data.message);
         setLoader(false);
         return dispatch({
