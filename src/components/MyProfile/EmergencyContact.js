@@ -48,21 +48,21 @@ const EmergencyContact = (props) => {
   }, []);
   useEffect(() => {
     if (
-      emergencyContactView !== null &&
+      emergencyContactView !== null && emergencyContactView !== undefined &&
       Object.keys(emergencyContactView).length !== 0
     ) {
       console.log(emergencyContactView, "emergencyContactView3");
       
-        state.contactName= emergencyContactView[0].contactName
-        state.addressLine =  emergencyContactView[0].addressLine
-        state.employeeId =  emergencyContactView[0].employeeId?emergencyContactView[0].employeeId:user.employeeId
-        state.contactId = emergencyContactView[0].contactId
-        state.city = emergencyContactView[0].city
-        state.country = emergencyContactView[0].country
-        state.locality = emergencyContactView[0].locality
-        state.phoneNumber = emergencyContactView[0].phoneNumber
-        state.pinCode = emergencyContactView[0].pinCode
-        state.relationship =  emergencyContactView[0].relationship
+        state.contactName= emergencyContactView.contactName
+        state.addressLine =  emergencyContactView.addressLine
+        state.employeeId =  emergencyContactView.employeeId?emergencyContactView.employeeId:user.employeeId
+        state.contactId = emergencyContactView.contactId
+        state.city = emergencyContactView.city
+        state.country = emergencyContactView.country
+        state.locality = emergencyContactView.locality
+        state.phoneNumber = emergencyContactView.phoneNumber
+        state.pinCode = emergencyContactView.pinCode
+        state.relationship =  emergencyContactView.relationship
     
       setDataExist({ exist: true });
     }
