@@ -30,6 +30,15 @@ const PersonalDoc = (props) => {
   const [adharCardName, setAdharCardName] = useState("");
   const [EPFName, setEPFName] = useState("");
   const [passPortName, setPassPortName] = useState("");
+
+  const [photoGraphStatus, setPhotoGraphStatus] = useState("");
+  const [cancelledChequeStatus, setCancelledChequeStatus] = useState("");
+  const [PANStatus, setPANStatus] = useState("");
+  const [AddressProofStatus, setAddressProofStatus] = useState("");
+  const [adharCardStatus, setAdharCardStatus] = useState("");
+  const [EPFStatus, setEPFStatus] = useState("");
+  const [passPortStatus, setPassPortStatus] = useState("");
+
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
   const [EmployeeId, setEmployeeId] = useState("");
@@ -84,18 +93,25 @@ const PersonalDoc = (props) => {
         setEmployeeId(item.employeeId)
         if (item.documentType === 0) {
           setPhotoGraphName(item.documentName);
+          setPhotoGraphStatus(item.status)
         } else if (item.documentType === 5) {
           setCancelledChequeName(item.documentName);
+          setCancelledChequeStatus(item.status)
         } else if (item.documentType === 2) {
           setPANName(item.documentName);
+          setPANStatus(item.status)
         } else if (item.documentType === 3) {
           setAddressProofName(item.documentName);
+          setAddressProofStatus(item.status)
         } else if (item.documentType === 1) {
           setAdharCardName(item.documentName);
+          setAdharCardStatus(item.status)
         } else if (item.documentType === 4) {
           setEPFName(item.documentName);
+          setEPFStatus(item.status)
         } else if (item.documentType === 14) {
           setPassPortName(item.documentName);
+          setPassPortStatus(item.status)
         }
       });
     }
@@ -258,6 +274,7 @@ const PersonalDoc = (props) => {
               </label>
               <br />
               <label className="itemResult">{photoGraphName}</label>
+              <p style={{ color: "red" }}>{photoGraphStatus === 0 ? "Admin Document verification is pending" : photoGraphStatus === 2 ? "Admin Rejected the documet":""}</p>
             </Col>
             <Col sm={2}>
               <div
@@ -270,10 +287,10 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                   className={
-                    photoGraphName ? "profileButtons" : "confirmButton"
+                    photoGraphName && photoGraphStatus === 1 ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, photoGraphName)}
-                  disabled={photoGraphName ? false : true}
+                  disabled={photoGraphName && photoGraphStatus === 1 ? false : true}
                 >
                   View
                 </button>
@@ -289,10 +306,10 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    photoGraphName ? "profileButtons" : "confirmButton"
+                    photoGraphName && photoGraphStatus === 1 ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, photoGraphName,EmployeeId)}
-                  disabled={photoGraphName ? false : true}
+                  disabled={photoGraphName && photoGraphStatus === 1 ? false : true}
                 >
                   Download
                 </button>
@@ -353,6 +370,7 @@ const PersonalDoc = (props) => {
               </label>
               <br />
               <label className="itemResult">{cancelledCheque}</label>
+              <p style={{ color: "red" }}>{cancelledChequeStatus=== 0 ? "Admin Document verification is pending": cancelledChequeStatus === 2 ? "Admin Rejected the documet":""}</p>
             </Col>
             <Col sm={2}>
               <div
@@ -364,11 +382,11 @@ const PersonalDoc = (props) => {
               >
                 {/* onClick={submitHandler} */}
                 <button
-                  className={
-                    cancelledCheque ? "profileButtons" : "confirmButton"
+                   className={
+                    cancelledCheque && cancelledChequeStatus === 1 ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, cancelledCheque)}
-                  disabled={cancelledCheque ? false : true}
+                  disabled={cancelledCheque && cancelledChequeStatus === 1 ? false : true}
                 >
                   View
                 </button>
@@ -384,10 +402,10 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    cancelledCheque ? "profileButtons" : "confirmButton"
+                    cancelledCheque && cancelledChequeStatus === 1 ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, cancelledCheque,EmployeeId)}
-                  disabled={cancelledCheque ? false : true}
+                  disabled={cancelledCheque && cancelledChequeStatus === 1 ? false : true}
                 >
                   Download
                 </button>
@@ -458,6 +476,7 @@ const PersonalDoc = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">{PANName}</label>
+                <p style={{ color: "red" }}>{PANStatus=== 0?"Admin Document verification is pending": PANStatus === 2 ? "Admin Rejected the documet":""}</p>
               </Col>
               <Col sm={2}>
                 <div
@@ -469,9 +488,9 @@ const PersonalDoc = (props) => {
                 >
                   {/* onClick={submitHandler} */}
                   <button
-                    className={PANName ? "profileButtons" : "confirmButton"}
+                    className={PANName && PANStatus === 1 ? "profileButtons" : "confirmButton"}
                     onClick={(e, name) => showTheLetter(e, PANName)}
-                    disabled={PANName ? false : true}
+                    disabled={PANName && PANStatus === 1 ? false : true}
                   >
                     View
                   </button>
@@ -486,9 +505,9 @@ const PersonalDoc = (props) => {
                   }}
                 >
                   <button
-                    className={PANName ? "profileButtons" : "confirmButton"}
+                    className={PANName && PANStatus === 1 ? "profileButtons" : "confirmButton"}
                     onClick={(e, name) => downloadTheLetter(e, PANName,EmployeeId)}
-                    disabled={PANName ? false : true}
+                    disabled={PANName && PANStatus === 1 ? false : true}
                   >
                     Download
                   </button>
@@ -551,6 +570,7 @@ const PersonalDoc = (props) => {
               </label>
               <br />
               <label className="itemResult">{AddressProofName}</label>
+              <p style={{ color: "red" }}>{AddressProofStatus === 0 ? "Admin Document verification is pending" : AddressProofStatus === 2 ? "Admin Rejected the documet" : ""}</p>
             </Col>
             <Col sm={2}>
               <div
@@ -562,11 +582,11 @@ const PersonalDoc = (props) => {
               >
                 {/* onClick={submitHandler} */}
                 <button
-                  className={
-                    AddressProofName ? "profileButtons" : "confirmButton"
+                   className={
+                    AddressProofName && AddressProofStatus === 1 ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => showTheLetter(e, AddressProofName)}
-                  disabled={AddressProofName ? false : true}
+                  disabled={AddressProofName && AddressProofStatus === 1 ? false : true}
                 >
                   View
                 </button>
@@ -582,10 +602,10 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    AddressProofName ? "profileButtons" : "confirmButton"
+                    AddressProofName && AddressProofStatus === 1 ? "profileButtons" : "confirmButton"
                   }
                   onClick={(e, name) => downloadTheLetter(e, AddressProofName,EmployeeId)}
-                  disabled={AddressProofName ? false : true}
+                  disabled={AddressProofName && AddressProofStatus === 1 ? false : true}
                 >
                   Download
                 </button>
@@ -653,6 +673,7 @@ const PersonalDoc = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">{passPortName}</label>
+                <p style={{ color: "red" }}>{passPortStatus === 0 ? "Admin Document verification is pending" : passPortStatus === 2 ? "Admin Rejected the documet" : ""}</p>
               </Col>
               <Col sm={2}>
                 <div
@@ -665,10 +686,10 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={
-                      passPortName ? "profileButtons" : "confirmButton"
+                      passPortName && passPortStatus === 1 ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => showTheLetter(e, passPortName)}
-                    disabled={passPortName ? false : true}
+                    disabled={passPortName && passPortStatus === 1 ? false : true}
                   >
                     View
                   </button>
@@ -684,10 +705,10 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={
-                      passPortName ? "profileButtons" : "confirmButton"
+                      passPortName && passPortStatus === 1 ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => downloadTheLetter(e, passPortName,EmployeeId)}
-                    disabled={passPortName ? false : true}
+                    disabled={passPortName && passPortStatus === 1 ? false : true}
                   >
                     Download
                   </button>
@@ -759,6 +780,7 @@ const PersonalDoc = (props) => {
                 </label>
                 <br />
                 <label className="itemResult">{adharCardName}</label>
+                <p style={{ color: "red" }}>{adharCardStatus=== 0 ? "Admin Document verification is pending" : adharCardStatus === 2 ? "Admin Rejected the documet" : ""}</p>
               </Col>
               <Col sm={2}>
                 <div
@@ -771,10 +793,10 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={
-                      adharCardName ? "profileButtons" : "confirmButton"
+                      adharCardName && adharCardStatus === 1 ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => showTheLetter(e, adharCardName)}
-                    disabled={adharCardName ? false : true}
+                    disabled={adharCardName && adharCardStatus === 1 ? false : true}
                   >
                     View
                   </button>
@@ -790,10 +812,10 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={
-                      adharCardName ? "profileButtons" : "confirmButton"
+                      adharCardName && adharCardStatus === 1 ? "profileButtons" : "confirmButton"
                     }
                     onClick={(e, name) => downloadTheLetter(e, adharCardName,EmployeeId)}
-                    disabled={adharCardName ? false : true}
+                    disabled={adharCardName && adharCardStatus === 1 ? false : true}
                   >
                     Download
                   </button>
@@ -857,6 +879,7 @@ const PersonalDoc = (props) => {
               </label>
               <br />
               <label className="itemResult">{EPFName}</label>
+              <p style={{ color: "red" }}>{EPFStatus=== 0 ? "Admin Document verification is pending": EPFStatus === 2 ? "Admin Rejected the documet" : ""}</p>
             </Col>
             <Col sm={2}>
               <div
@@ -868,9 +891,9 @@ const PersonalDoc = (props) => {
               >
                 {/* onClick={submitHandler} */}
                 <button
-                  className={EPFName ? "profileButtons" : "confirmButton"}
+                  className={EPFName && EPFStatus === 1 ? "profileButtons" : "confirmButton"}
                   onClick={(e, name) => showTheLetter(e, EPFName)}
-                  disabled={EPFName ? false : true}
+                  disabled={EPFName && EPFStatus === 1 ? false : true}
                 >
                   View
                 </button>
@@ -885,9 +908,9 @@ const PersonalDoc = (props) => {
                 }}
               >
                 <button
-                  className={EPFName ? "profileButtons" : "confirmButton"}
+                  className={EPFName && EPFStatus === 1 ? "profileButtons" : "confirmButton"}
                   onClick={(e, name) => downloadTheLetter(e, EPFName,EmployeeId)}
-                  disabled={EPFName ? false : true}
+                  disabled={EPFName && EPFStatus===1 ? false : true}
                 >
                   Download
                 </button>
