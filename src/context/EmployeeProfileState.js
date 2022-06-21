@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useContext, useState } from "react";
 import EmployeeProfileReducer from "../reducers/EmployeeProfileReducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
+import { AppContext } from "./AppState";
 // import { SeparationContext } from "./SepearationState";
 const initial_state = {
   addressViewData: [],
@@ -30,6 +31,7 @@ export const EmployeeProfileProvider = ({ children }) => {
   const [letterShow, setLetterShow] = useState(false);
   const [state, dispatch] = useReducer(EmployeeProfileReducer, initial_state);
   const [currentEmpId, setCurrentEmpId] = useState(0);
+  const { getUserInfo, user } = useContext(AppContext);
 
   const setEmployeeId = (val) => {
     setCurrentEmpId(val);
@@ -137,6 +139,7 @@ export const EmployeeProfileProvider = ({ children }) => {
     return client
       .post("/api/v1/employee/profile/update/emergency", updateData)
       .then((response) => {
+        getUserInfo()
         toast.info(response.data.message);
         console.log(response.data.message);
         setLoader(false);
@@ -191,6 +194,7 @@ export const EmployeeProfileProvider = ({ children }) => {
     return client
       .post("/api/v1/employee/profile/update/employee", updateData)
       .then((response) => {
+        getUserInfo()
         toast.info(response.data.message);
         console.log(response.data.message);
         setLoader(false);

@@ -25,7 +25,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 const PersonalInformation = (props) => {
   const { UpdateEmployeeProfile } = useContext(EmployeeProfileContext);
-  const { user } = useContext(AppContext);
+  const { getUserInfo, user } = useContext(AppContext);
   const [bloodGrp, setBloodGrp] = useState(user.bloodGroup);
   const [maritalStatus, setMaritalStatus] = useState(user && Object.keys(user).length ? user.maritalStatus.toLowerCase() === "unmarried" ||
   user.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
@@ -35,6 +35,11 @@ const PersonalInformation = (props) => {
   const [bloodGroupError, setBloodGroupError] = useState(false);
   const [maritalStatusError, setMaritalStatusError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   const DropDownsValidation = (item, setError) => {
     if (item !== "" && item !== null && item !== undefined) {
       setError(false);
