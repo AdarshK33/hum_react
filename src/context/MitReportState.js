@@ -43,7 +43,7 @@ export const MitProvider = (props) => {
         var blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
-        var fileName = "Report.xlsx";
+        var fileName = `Report ${new Date()}.xlsx`;
         saveAs(blob, fileName);
         toast.info(`File downloaded successfully`);
         return dispatch({

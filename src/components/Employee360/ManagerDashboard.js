@@ -463,9 +463,12 @@ const ManagerDashboard = () => {
                         )}
                       </Card>
                     </Col>
+                    {(user.department === "Finance & Legal" ||user.department === "Finance" || 
+                user.department === "IT")|| rolePermission === "admin"?
                     <Col style={{
                       marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
-                    }}sm={6}>
+                    }}sm={(user.department === "Finance & Legal" || user.department === "Finance" || 
+                    user.department === "IT")&&rolePermission !== "admin"?8 : rolePermission === "admin"?6:8}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -482,6 +485,7 @@ const ManagerDashboard = () => {
                         <ApprovalsManager360Card />
                       </Card>
                     </Col>
+                    :""}
                   </Row>
                   {/* <Row
                     style={{
