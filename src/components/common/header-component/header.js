@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment,useEffect } from "react";
 import logo from "../../../assets/images/humineNewLogo.jpg";
 import UserMenu from "./userMenu";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { AlignLeft, Maximize, MoreHorizontal } from "react-feather";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { PermissionContext } from "../../../context/PermissionState";
 import { useHistory } from "react-router-dom";
-const Header = () => {
+const Header = (props) => {
   const [sidebar, setSidebar] = useState(false);
   const [headerbar, setHeaderbar] = useState(true);
   const [adminChecked, setAdminChecked] = useState(false);
@@ -47,6 +47,31 @@ const Header = () => {
   // }
 
   //full screen function
+  const handleStateOfParent =(data)=>{
+    console.log(data,"data header")
+    if(data == "My Profile"){
+      state.adminChecked = false
+      state.scChecked = false
+      state.costChecked = false
+      state.managerChecked = false
+    }else if(data == "Admin"){
+      state.adminChecked = true
+      state.scChecked = false
+      state.costChecked = false
+      state.managerChecked = false
+    }else if(data == "My Team"){
+      state.adminChecked = false
+      state.scChecked = false
+      state.costChecked = false
+      state.managerChecked = true
+    }else{
+      state.adminChecked = false
+      state.scChecked = false
+      state.costChecked = false
+      state.managerChecked = false
+    }
+  
+  }
   function goFull() {
     if (
       (document.fullScreenElement && document.fullScreenElement !== null) ||
@@ -667,7 +692,7 @@ const Header = () => {
                 </h6>
               </div>
 
-              <UserMenu adminChecked={state.adminChecked} />
+              <UserMenu adminChecked={state.adminChecked} handleStateOfParent = {handleStateOfParent} />
             </ul>
             <Row>
               <Col sm={12} className="role-text-center">
