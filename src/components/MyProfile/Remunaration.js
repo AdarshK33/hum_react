@@ -131,11 +131,11 @@ const Remuneration = () => {
                         <b>Salary Type</b>
                       </label>
                       <br />
-                      <label className="itemResult">{state.salaryType}</label>
+                      <label className="itemResult">{state.salaryType==="Stipend"?"Fixed Gross":state.salaryType}</label>
                     </Col>
                     <Col sm={3}>
-                      <label>
-                        <b>Monthly Fixed Gross</b>
+                    <label>
+                        <b>{state.salaryType==="Stipend"?"Monthly Stipend":state.salaryType==="Fixed Gross"?"Monthly Fixed Gross":state.salaryType==="Hourly"?"Hourly Fixed Gross":"Monthly Fixed Gross"}</b>
                       </label>
                       <br />
                       <label className="itemResult">{state.fixedGross}</label>

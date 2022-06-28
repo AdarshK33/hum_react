@@ -285,7 +285,7 @@ const EmployeeDashboard = () => {
                                   ? "IT Admin"
                                   : user.loginType == "10"
                                   ? "HR Strategist"
-                                  : " "}
+                                  : "General User"}
                               </label>
                             </div>
                           </Col>

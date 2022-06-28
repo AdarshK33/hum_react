@@ -144,7 +144,7 @@ const WorkDetails = () => {
             </label>
             <br />
             <label className="itemResult">
-              {moment(user.dateOfTransfer).format("DD-MM-YYYY")}
+            {user.dateOfTransfer!==null? moment(user.dateOfTransfer).format("DD-MM-YYYY"):"NA"}
             </label>
           </Col>
           <Col sm={3}>
@@ -179,7 +179,7 @@ const WorkDetails = () => {
               <b>System Role</b>
             </label>
             <br />
-            <label className="itemResult">{rolePermission}</label>
+            <label className="itemResult">{rolePermission?rolePermission:"General User"}</label>
           </Col>
           <Col sm={3}>
             <label>
