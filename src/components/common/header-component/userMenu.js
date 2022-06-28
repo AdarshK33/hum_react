@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { Row, Col, Form, Button } from "react-bootstrap";
 // const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
-const UserMenu = () => {
+const UserMenu = (props) => {
   const { user, getUserMenu, userLogout } = useContext(AppContext);
   const { viewServiceGroup, groupList, permissionRoleAccess, rolePermission } =
     useContext(PermissionContext);
@@ -17,6 +17,7 @@ const UserMenu = () => {
   }, []);
 
   const handleMenuListProfile = () => {
+    handleClick("My Profile")
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
     user.department === "IT"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
@@ -78,6 +79,7 @@ const UserMenu = () => {
   };
 
   const handleMenuListAdmin = () => {
+    handleClick("Admin")
     if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"){
       getUserMenu(user.adminMenus);
     }else{
@@ -127,6 +129,7 @@ const UserMenu = () => {
   };
 
   const handleMenuListTeam = () => {
+    handleClick("My Team")
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
     user.department === "IT"){
       getUserMenu(user.managerMenus);
@@ -169,8 +172,13 @@ const UserMenu = () => {
     history.push("/manager360");
 
   };
-
+ const handleClick = (data) => {
+    // We will start the process of changing
+    // state of parent from Here...
+    props.handleStateOfParent(data);
+  }
   const handleMenuListCluster = () => {
+    handleClick("Cluster Leader")
     getUserMenu(user.clusterManagerMenus);
     localStorage.setItem("type", "leader");
     localStorage.setItem("flag", "1");
@@ -180,6 +188,7 @@ const UserMenu = () => {
   };
 
   const TicketListingPage = () => {
+    handleClick("Support")
     getUserMenu(user.supportMenus);
     localStorage.setItem("type", "support");
     localStorage.setItem("flag", "0");
