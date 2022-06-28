@@ -199,6 +199,7 @@ const CandidateOnboarding = () => {
       candidateData !== null &&
       Object.keys(candidateData).length !== 0
     ) {
+      console.log("empData check1",empData);
       // let employeeFedId = (empData.fedId !== null && empData.fedId !== undefined && empData.fedId !== " ")?empData.fedId:""
       // var newFedId=   employeeFedId.replace(/"/g, '');
       // setEmployeeFedId(newFedId)
@@ -230,19 +231,19 @@ const CandidateOnboarding = () => {
         //   candidateData.workInformation.dateOfJoin !== ""
         //     ? new Date(candidateData.workInformation.dateOfJoin)
         //     : new Date(),
-        ["joiningDate"]:
-          candidateData !== undefined &&
-          candidateData !== null &&
-          Object.keys(candidateData).length !== 0 &&
-          candidateData.workInformation !== undefined &&
-          candidateData.workInformation !== null &&
-          candidateData.workInformation.dateOfJoin !== null &&
-          candidateData.workInformation.dateOfJoin !== undefined &&
-          candidateData.workInformation.dateOfJoin !== ""
-            ? moment(candidateData.workInformation.dateOfJoin).format(
-                "YYYY-MM-DD"
-              )
-            : moment().format("YYYY-MM-DD"),
+        ["joiningDate"]:moment().format("YYYY-MM-DD"),
+          // candidateData !== undefined &&
+          // candidateData !== null &&
+          // Object.keys(candidateData).length !== 0 &&
+          // candidateData.workInformation !== undefined &&
+          // candidateData.workInformation !== null &&
+          // candidateData.workInformation.dateOfJoin !== null &&
+          // candidateData.workInformation.dateOfJoin !== undefined &&
+          // candidateData.workInformation.dateOfJoin !== ""
+          //   ? moment(candidateData.workInformation.dateOfJoin).format(
+          //       "YYYY-MM-DD"
+          //     )
+          //   : 
         ["locationId"]: empData.locationId,
         ["lastName"]: empData.lastName,
         ["loginType"]: empData.loginType,
@@ -268,6 +269,7 @@ const CandidateOnboarding = () => {
      
     }
   }, [empData]);
+  console.log("empData check",empData);
 
   // useEffect(() => {
   //   if (
@@ -538,6 +540,7 @@ const CandidateOnboarding = () => {
           "fedId": employeeData.fedId,
           "active": employeeData.active
       }
+      console.log("createEmployee",data);
       createEmployee(data);
       saveCostcenterData(costCenterData);
       setError(false);
@@ -730,7 +733,8 @@ const CandidateOnboarding = () => {
                   employeeData.joiningDate !== null &&
                   employeeData.joiningDate !== ""
                     ? moment(employeeData.joiningDate).toDate()
-                    : new Date()
+                    :
+                     new Date()
                 }
                 required
                 onChange={(e) => dateOfJoiningHandler(e)}
