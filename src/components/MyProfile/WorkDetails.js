@@ -179,7 +179,8 @@ const WorkDetails = () => {
               <b>System Role</b>
             </label>
             <br />
-            <label className="itemResult">{rolePermission?rolePermission:"General User"}</label>
+            <label className="itemResult">
+              General User</label>
           </Col>
           <Col sm={3}>
             <label>
