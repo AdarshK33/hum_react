@@ -28,7 +28,7 @@ console.log(imageViewData,"imageViewData")
           <Modal.Body>
             {DocName !== "" && DocName !== null && DocName !== undefined &&
              imageViewData !== undefined &&
-             Object.keys(imageViewData).length !== 0 &&imageViewData.data!=="File does not exist" ? (
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
               <div>
                 {Name === "Code Of Conduct" || Name === "It Charter" ? (
                   // <iframe
@@ -58,10 +58,18 @@ console.log(imageViewData,"imageViewData")
                   //     process.env.REACT_APP_S3_URL + DocName
                   //   }
                   // />
-                  <img
-                    style={{ width: "100%", height: "100%" }}
-                    src={imageViewData.data ? imageViewData.data:""}
-                  />
+                  <iframe
+                  src={
+                    imageViewData.data ? imageViewData.data +
+                    "#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+                  // <img
+                  //   style={{ width: "100%", height: "100%" }}
+                  //   src={imageViewData.data ? imageViewData.data:""}
+                  // />
                 )}
               </div>
             ) : (
