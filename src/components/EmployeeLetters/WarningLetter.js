@@ -10,6 +10,7 @@ import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 import WarningLetter from "../Disciplinary/WarningManager/WarningLetter";
  import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
+ import { PermissionContext } from "../../context/PermissionState";
 import NonPerformanceWarningLetter from "../Disciplinary/WarningManager/NonPerformanceWarningLetter";
 // view-----
 const EmployeWarningLetter = () => {
@@ -19,6 +20,8 @@ const EmployeWarningLetter = () => {
   const [submitted, setSubmitted] = useState(false);
   const [intern, setIntern] = useState(false);
   const history = useHistory();
+  const [view, setView] = useState(false);
+
   const [showShowCauseNoticeModal, setShow] = useState(false);
   const [showShowCauseNoticeModalLink, setShowLink] = useState(false);
   const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
@@ -84,6 +87,7 @@ const EmployeWarningLetter = () => {
     pipEndDate: "",
     warningLetterDW: "",
     statusDW: "",
+    warningLetter:""
   });
   const {
     disciplinaryEmployeeSearch,
@@ -92,6 +96,7 @@ const EmployeWarningLetter = () => {
     issueShowCauseNoticeData,
     createShowCauseIssue,
   } = useContext(DisciplinaryContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   useEffect(() => {
     if (
@@ -176,7 +181,8 @@ const EmployeWarningLetter = () => {
           disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.employeeWarningStatusDW =
           disciplinarySearchData.disciplinaryWarning.employeeWarningStatus;
-
+        state.warningLetter = 
+        disciplinarySearchData.disciplinaryWarning.warningLetter;
         state.managerCommentDW =
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.reasonDW = disciplinarySearchData.disciplinaryWarning.reason;
@@ -214,8 +220,11 @@ const EmployeWarningLetter = () => {
     setShowLink(true);
   };
   const LetterShow1 = () => {
-    console.log(";;;;;");
-    setShowLink1(true);
+    // console.log(";;;;;");
+    // setShowLink1(true);
+
+    setView(true)
+    ImageView(state.warningLetter,state.empId)
   };
   const handleShowCauseLetterCloseLink = () => {
     setShowLink(false);
@@ -392,7 +401,9 @@ const EmployeWarningLetter = () => {
 
     console.log(state);
   };
-
+  const handleDocClose =()=>{
+    setView(false)
+  }
   return (
     <Fragment>
       {/* letter */}
@@ -439,7 +450,33 @@ const EmployeWarningLetter = () => {
           )}
         </Modal.Body>
       </Modal>
+   <Modal show={view} onHide={handleDocClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {imageViewData !== undefined &&
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
+              <div>
 
+                  <iframe
+                  src={
+                    imageViewData.data ? imageViewData.data +
+                    "#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+                {/* ) : (
+                  <img
+                  style={{ width: "100%", height: "100%" }}
+                  src={imageViewData.data ? imageViewData.data:""}
+                />
+                )} */}
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
       {submitLetter ? (
         <Modal
           show={showShowCauseNoticeModal}
