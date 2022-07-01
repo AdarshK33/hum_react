@@ -82,7 +82,7 @@ const PermanentOfferLetter = () => {
             ) : (
               <div ref={inputRef}>
                 
-                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                {/* <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="500.000000pt" height="80.000000pt" viewBox="255 10 500.000000 90"
  preserveAspectRatio="xMidYMid meet">
 
@@ -113,7 +113,7 @@ c-42 -42 -94 -53 -148 -32 -21 8 -39 11 -39 6 0 -5 -34 -9 -75 -9 l-75 0 0
 -58 37 -14 0 -30 -4 -36 -8z"/>
 <path d="M190 251 l0 -71 34 0 c88 0 86 117 -1 135 l-33 7 0 -71z"/>
 </g>
-</svg>
+</svg> */}
                 <p
                   style={{
                     fontWeight: "700",
