@@ -238,6 +238,7 @@ export const E_signProvider = ({ children }) => {
   // };
 
   const getReference = (id, letterName,employeeId,orgId = "6180cd3596d65ededc7d30f6") => {
+    console.log(id, letterName,employeeId,"EsignStatus")
     setLoader(true);
     client
       .get("/api/v1/e-sign/reference/" + orgId + "/" + id)
