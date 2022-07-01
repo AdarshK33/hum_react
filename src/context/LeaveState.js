@@ -277,7 +277,7 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message;
         toast.info(state.message);
         viewList(page);
-        viewLeaveData(newLeave.empId);
+        viewLeaveData(newLeave.empId,new Date().getFullYear());
         getLeave(newLeave.empId);
         viewManagerList(page);
         console.log("new create list response===>", response.data.data);
@@ -299,7 +299,7 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message;
         toast.info(state.message);
         viewEmpLeaveData(newLeave.empId, page);
-        viewLeaveData(newLeave.empId);
+        viewLeaveData(newLeave.empId,new Date().getFullYear());
         getLeave(newLeave.empId);
         console.log("new create list response===>", response.data.data);
         console.log("new create list message===>", state.message);
@@ -349,7 +349,7 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message;
         toast.info(state.message);
         viewList(page);
-        viewLeaveData(editLeave.empId);
+        viewLeaveData(editLeave.empId,new Date().getFullYear());
         getLeave(editLeave.empId);
         viewManagerList(page);
         console.log("??????new edit list response????????", response.data.data);
@@ -371,7 +371,7 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message;
         toast.info(state.message);
         viewEmpLeaveData(editLeave.empId, page);
-        viewLeaveData(editLeave.empId);
+        viewLeaveData(editLeave.empId,new Date().getFullYear());
         getLeave(editLeave.empId);
         console.log("??????new edit list response????????", response.data.data);
         console.log("??????new edit list message????????", state.message);
@@ -414,7 +414,7 @@ export const LeaveProvider = ({ children }) => {
         toast.info(response.data.message);
         console.log("response message for delete", response.data.message);
         viewEmpLeaveData(empId, page);
-        viewLeaveData(empId);
+        viewLeaveData(empId,new Date().getFullYear());
         getLeave(empId);
         console.log("-----delete data-----", response);
         return dispatch({ type: "DELETE_EMP_LEAVE", payload: leaveId });

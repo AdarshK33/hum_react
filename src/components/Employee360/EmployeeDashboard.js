@@ -268,8 +268,8 @@ const EmployeeDashboard = () => {
                                 <b>System Role</b>
                               </label>
                               <br />
-                              <label>
-                                {rolePermission == "costCenterManager"
+                              <label>General User
+                                {/* {rolePermission == "costCenterManager"
                                   ? "Cost Center Manager"
                                   : rolePermission == "superCostCenterManager"
                                   ? "Super Cost Center Manager"
@@ -285,7 +285,7 @@ const EmployeeDashboard = () => {
                                   ? "IT Admin"
                                   : user.loginType == "10"
                                   ? "HR Strategist"
-                                  : " "}
+                                  : "General User"} */}
                               </label>
                             </div>
                           </Col>

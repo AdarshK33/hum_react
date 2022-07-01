@@ -142,3 +142,10 @@ input[type="number"] {
   border: 1px solid #a9a9ac;
   text-align: justify;
 }
+
+.logoStyle{
+  width: 200px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

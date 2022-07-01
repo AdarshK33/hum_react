@@ -25,7 +25,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 const PersonalInformation = (props) => {
   const { UpdateEmployeeProfile } = useContext(EmployeeProfileContext);
-  const { user } = useContext(AppContext);
+  const { getUserInfo, user } = useContext(AppContext);
   const [bloodGrp, setBloodGrp] = useState(user.bloodGroup);
   const [maritalStatus, setMaritalStatus] = useState(user && Object.keys(user).length ? user.maritalStatus.toLowerCase() === "unmarried" ||
   user.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
@@ -35,6 +35,11 @@ const PersonalInformation = (props) => {
   const [bloodGroupError, setBloodGroupError] = useState(false);
   const [maritalStatusError, setMaritalStatusError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   const DropDownsValidation = (item, setError) => {
     if (item !== "" && item !== null && item !== undefined) {
       setError(false);
@@ -65,7 +70,7 @@ const PersonalInformation = (props) => {
     console.log("insideSubmit");
     if (
       (DropDownsValidation(bloodGrp, setBloodGroupError) === true) &
-      (DropDownsValidation(maritalStatus, setMaritalStatusError) === true) &
+      // (DropDownsValidation(maritalStatus, setMaritalStatusError) === true) &
       (emailValidation() === true)
     ) {
       if (
@@ -211,7 +216,7 @@ const PersonalInformation = (props) => {
               {moment(user.joiningDate).format("DD-MM-YYYY")}
             </label>
           </Col>
-          <Col sm={3}>
+          {/* <Col sm={3}>
             <label>
               <b>Marital Status</b><span style={{ color: "red" }}>*</span>
             </label>
@@ -238,6 +243,13 @@ const PersonalInformation = (props) => {
                 <p></p>
               )}
             </Form.Group>
+          </Col> */}
+          <Col sm={3}>
+            <label>
+              <b>Marital Status</b>
+            </label>
+            <br />
+            <label className="itemResult">{maritalStatus}</label>
           </Col>
           {/* <Col sm={3}>
             <label>

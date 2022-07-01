@@ -50,6 +50,7 @@ const BANK_NAMES = [
   "Purulia DCCB",
   "Raiganj DCCB",
   "Rajkot Nagarik Sahakari Bank Ltd",
+  "Standard Chartered Bank",
   "State Bank of India",
   "Shreyas Gramin Bank",
   "Societe Generale",

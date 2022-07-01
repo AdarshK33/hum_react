@@ -1,5 +1,6 @@
 .itemResult {
   color: #006ebb;
+  display: inline;
 }
 .SavebuttonField.button {
   width: 80px;

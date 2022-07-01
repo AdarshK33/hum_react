@@ -163,7 +163,7 @@ const WorkDetails = () => {
             </label>
             <br />
             <label className="itemResult">
-              {moment(EmpProfile.dateOfTransfer).format("DD-MM-YYYY")}
+              {EmpProfile.dateOfTransfer !==null ? moment(EmpProfile.dateOfTransfer).format("DD-MM-YYYY"):"NA"}
             </label>
           </Col>
           <Col sm={3}>
@@ -198,7 +198,7 @@ const WorkDetails = () => {
               <b>System Role</b>
             </label>
             <br />
-            <label className="itemResult">{rolePermission}</label>
+            <label className="itemResult">{EmpProfile.role==="GENERAL_USER" && EmpProfile.isManager===true? "Manager": EmpProfile.role}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -221,7 +221,7 @@ const WorkDetails = () => {
             <label className="itemResult">{EmpProfile.ngoName}</label>
           </Col>
         </Row>
-        {EmpProfile.role == "GENERAL_USER"?<Row  style={{
+        {(EmpProfile.isManager===false||EmpProfile.isManager===null)&& EmpProfile.contractType==="Fulltime" ?<Row  style={{
             marginBottom: "2rem",
           }}>
         <Col sm={3}>

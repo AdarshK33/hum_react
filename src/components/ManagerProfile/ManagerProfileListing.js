@@ -111,7 +111,7 @@ const ManagerProfileListing = () => {
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
                 <b>MANAGER PROFILE LIST</b>
-
+{/* 
                 <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
@@ -126,7 +126,7 @@ const ManagerProfileListing = () => {
                       onClick={searchDataHandler}
                     />
                   </div>
-                </div>
+                </div> */}
                 {/* <Link to="/issue-show-cause-notice">
                   <Button className="apply-button btn btn-light mr-2">
                     Issue Show Cause Notice

@@ -46,7 +46,7 @@ const LeaveAdd = (props) => {
 
   //get api for leave type
   useEffect(() => {
-    viewLeaveData(user.employeeId);
+    viewLeaveData(user.employeeId,new Date().getFullYear());
     /* viewEmpData(user.employeeId) */
   }, [user.employeeId]);
 
