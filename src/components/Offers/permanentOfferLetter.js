@@ -6,7 +6,7 @@ import { OfferContext } from "../../context/OfferState";
 import { E_signContext } from "../../context/E_signState";
 import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
-import decathlonLogo from "../../assets/images/decathlon_logo.PNG";
+// import decathlonLogo from "../../assets/images/decathlon_logo.PNG";
 
 const PermanentOfferLetter = () => {
   const {
