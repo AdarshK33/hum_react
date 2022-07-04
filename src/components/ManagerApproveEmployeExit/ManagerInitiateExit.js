@@ -20,6 +20,10 @@ import InternShipLetter from "./InternShipLetter";
 import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { setDate } from "date-fns";
+
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../context/PromotionState";
+
 const ManagerInitiateExit = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [changeInSeparation, setChangeInSeparation] = useState(0);
@@ -63,6 +67,8 @@ const ManagerInitiateExit = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [termination, setTermination] = useState(false);
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+
 
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
@@ -128,6 +134,32 @@ const ManagerInitiateExit = () => {
     useContext(PermissionContext);
   console.log(employeeData, "state", state, "7795");
 
+  const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+  // console.log("employeeDetails",employeeDetails)
+  useEffect(() => {
+   
+    if (
+      rolePermission === "admin"
+    ){
+     getEmployeeDetails(1);
+    }
+    else if (
+      rolePermission === "superCostCenterManager"
+    ){
+     getEmployeeDetails(9);
+    }
+    else if (
+      rolePermission === "costCenterManager"
+    ){
+     getEmployeeDetails(7);
+    }
+    else if (
+      rolePermission === "manager"
+    ){
+     getEmployeeDetails(2);
+    }
+  
+  }, []);
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -1502,7 +1534,7 @@ const ManagerInitiateExit = () => {
                               </label>
                             ) : (
                               <Form.Group>
-                                <div className="faq-form ">
+                                {/* <div className="faq-form ">
                                   <input
                                     className="form-control"
                                     type="text"
@@ -1522,7 +1554,19 @@ const ManagerInitiateExit = () => {
                                     style={{ color: "#313131" }}
                                     onClick={searchDataHandler}
                                   />
-                                </div>
+                                </div> */}
+                                  <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                       
+                                        labelKey='firstName'
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                      />
                               </Form.Group>
                             )}
                           </div>

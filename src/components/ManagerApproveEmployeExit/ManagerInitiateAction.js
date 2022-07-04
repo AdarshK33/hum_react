@@ -22,6 +22,9 @@ import EndOfProbationLetter from "../Probation/EndOfProbationLetter";
 import NonPerformanceTerminationLetter from "../../components/Disciplinary/Manager/NonPerformanceTerminationLetter";
 import MisConductTerminationLetter from "../../components/Disciplinary/Manager/MisConductTerminationLetter";
 import { setDate } from "date-fns";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../context/PromotionState";
+
 
 const ManagerInitiateAction = (props) => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -67,6 +70,8 @@ const ManagerInitiateAction = (props) => {
   const [iamStatusError,SetIamStatusError] = useState(false)
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+
 
   const [state, setState] = useState({
     empId: "",
@@ -120,7 +125,33 @@ const ManagerInitiateAction = (props) => {
     useContext(OfferContext);
   const { locationDetails, locationDetailsList,rolePermission } =
     useContext(PermissionContext);
+    const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+    // console.log("employeeDetails",employeeDetails)
 
+    useEffect(() => {
+   
+      if (
+        rolePermission === "admin"
+      ){
+       getEmployeeDetails(1);
+      }
+      else if (
+        rolePermission === "superCostCenterManager"
+      ){
+       getEmployeeDetails(9);
+      }
+      else if (
+        rolePermission === "costCenterManager"
+      ){
+       getEmployeeDetails(7);
+      }
+      else if (
+        rolePermission === "manager"
+      ){
+       getEmployeeDetails(2);
+      }
+    
+    }, []);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
   }, [employeeId]);
@@ -1324,7 +1355,7 @@ e.preventDefault()
                               </label>
                             ) : (
                               <Form.Group>
-                                <div className="faq-form ">
+                                {/* <div className="faq-form ">
                                   <input
                                     className="form-control"
                                     type="text"
@@ -1345,7 +1376,19 @@ e.preventDefault()
                                     style={{ color: "#313131" }}
                                     onClick={searchDataHandler}
                                   />
-                                </div>
+                                </div> */}
+                                 <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                       
+                                        labelKey='firstName'
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                      />
                               </Form.Group>
                             )}
                           </div>
