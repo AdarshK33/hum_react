@@ -6,7 +6,7 @@ import { OfferContext } from "../../context/OfferState";
 import { E_signContext } from "../../context/E_signState";
 import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
-import decathlonLogo from "../../assets/images/decathlon_logo.png";
+import decathlonLogo from "../../assets/images/decathlon_logo.PNG";
 
 const PermanentOfferLetter = () => {
   const {
@@ -123,7 +123,9 @@ c-42 -42 -94 -53 -148 -32 -21 8 -39 11 -39 6 0 -5 -34 -9 -75 -9 l-75 0 0
                 >
  
                  {/* <img style={{width: "200px"}} src="https://www.decathlon.design/uploads/8szWpzwC6d69cbNDw52VpQ.jpg" alt="decathlonLogo"/> */}
-                 {/* <img className="logoStyle" src={decathlonLogo} alt="decathlonLogo"/> */}
+                 {/* <img style={{width: "200px"}} src="https://seeklogo.com/images/D/decathlon-logo-ED5D557F8A-seeklogo.com.png"/> */}
+                 
+                 {/* <img src={decathlonLogo} alt="decathlonLogo"/> */}
 
                   <b> OFFER LETTER</b>
                 </p>
