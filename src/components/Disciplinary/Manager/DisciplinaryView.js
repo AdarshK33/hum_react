@@ -7,6 +7,7 @@ import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import ReasonByEmployee from "../Manager/ReasonByEmployee";
 import WarningLetter from "../WarningManager/WarningLetter";
+import { PermissionContext } from "../../../context/PermissionState";
 import NonPerformanceWarningLetter from "../WarningManager/NonPerformanceWarningLetter";
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
@@ -37,6 +38,9 @@ const DisciplinaryView = () => {
     employeeCommentDW: "",
     pipEndDate: "",
     warningIssuedDateDW: "",
+    showCauseLetter:"",
+    employeeResponseLetter:"",
+    warningLetter:""
   });
   const {
     disciplinaryEmployeeSearch,
@@ -48,6 +52,7 @@ const DisciplinaryView = () => {
     setShowValue,
     lettterviewShow
   } = useContext(DisciplinaryContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   useEffect(() => {
     if (
@@ -84,7 +89,9 @@ const DisciplinaryView = () => {
           disciplinarySearchData.disciplinaryAction.managerComment;
         state.reasonForCause =
           disciplinarySearchData.disciplinaryAction.reasonDetails;
-        setShowCauseReason(disciplinarySearchData.disciplinaryAction.reason);
+          state.showCauseLetter=disciplinarySearchData.disciplinaryAction.showCauseLetter
+          state.employeeResponseLetter = disciplinarySearchData.disciplinaryAction.employeeResonseLetter
+          setShowCauseReason(disciplinarySearchData.disciplinaryAction.reason);
       }
       if (
         disciplinarySearchData.disciplinaryWarning !== null &&
@@ -102,21 +109,26 @@ const DisciplinaryView = () => {
           disciplinarySearchData.disciplinaryWarning.pipEndDate;
         state.warningIssuedDateDW =
           disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
+          state.warningLetter = 
+          disciplinarySearchData.disciplinaryWarning.warningLetter;
       }
     }
   }, [disciplinarySearchData]);
   console.log("disciplinarySearchData", disciplinarySearchData);
   const LetterShow = () => {
     console.log(";;;;;");
-    setShowValue(true);
-    setShow(true)
+    // setShowValue(true);21/06/2022
+      setShow(true)
+     ImageView(state.showCauseLetter,state.empId)
   };
 
   const handleShowCauseLetterClose = () => setShow(false);
   const LetterShow1 = () => {
     console.log(";;;;;");
-    setViewLetter(true);
-    setShowLink1(true);
+    // setViewLetter(true);
+    // setShowLink1(true);
+    setShow(true)
+     ImageView(state.warningLetter,state.empId)
   };
   const handleShowCauseLetterCloseLink = () => {
     setShow(false);
@@ -125,12 +137,16 @@ const DisciplinaryView = () => {
 
   const employeeReason = () => {
     console.log(";;;;;");
-    setModal(true);
-    setEmployeeReasonShow(true);
+    // setModal(true);
+    // setEmployeeReasonShow(true);
+    setShow(true)
+     ImageView(state.employeeResponseLetter,state.empId)
   };
 
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
-
+  const handleDocClose = () => {
+    setShow(false);
+  };
   return (
     <Fragment>
       {modalView &&
@@ -187,7 +203,33 @@ const DisciplinaryView = () => {
       ) : (
         ""
       )}
+       <Modal show={showShowCauseNoticeModal} onHide={handleDocClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {imageViewData !== undefined &&
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
+              <div>
 
+                  <iframe
+                  src={
+                    imageViewData.data ? imageViewData.data +
+                    "#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+                {/* ) : (
+                  <img
+                  style={{ width: "100%", height: "100%" }}
+                  src={imageViewData.data ? imageViewData.data:""}
+                />
+                )} */}
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
       {/* <Modal
         show={showShowCauseNoticeModal}
         onHide={handleShowCauseLetterCloseLink}

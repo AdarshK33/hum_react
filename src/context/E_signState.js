@@ -64,16 +64,18 @@ export const E_signProvider = ({ children }) => {
     location = "Bangalore"
   ) => {
     const pdfTable = infoData.inputRef.current;
-    var html = htmlToPdfmake(pdfTable.innerHTML);
+    var html = htmlToPdfmake(pdfTable.innerHTML,{imagesByReference:true});
     var last_page = null;
     const documentDefinition = {
-      content: html,
+      content: html.content,
       tableAutoSize: true,
+      imagesByReference:true,
       styles: {
         "with-margin": {
           marginTop: 43, // apply a margin with the specific class is used
         },
       },
+      images:html.images,
       pageBreakBefore: function (currentNode) {
         return (
           currentNode.style &&

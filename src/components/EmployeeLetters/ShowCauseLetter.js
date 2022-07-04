@@ -10,6 +10,7 @@ import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee";
 import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
+import { PermissionContext } from "../../context/PermissionState";
 
 // view-----
 const EmployeShowCaseLetter = () => {
@@ -20,6 +21,8 @@ const EmployeShowCaseLetter = () => {
   const [intern, setIntern] = useState(false);
   const history = useHistory();
   const [showShowCauseNoticeModal, setShow] = useState(false);
+  const [view, setView] = useState(false);
+
   const [showShowCauseNoticeModalLink, setShowLink] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
@@ -86,6 +89,7 @@ const EmployeShowCaseLetter = () => {
     warningIssuedDateDW: "",
     warningLetterDW: "",
     statusDW: "",
+    showCauseLetter:""
   });
   const {
     disciplinaryEmployeeSearch,
@@ -98,6 +102,7 @@ const EmployeShowCaseLetter = () => {
     setModal,
     modalView,
   } = useContext(DisciplinaryContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   console.log("lettterview", lettterview);
   useEffect(() => {
     if (
@@ -129,6 +134,7 @@ const EmployeShowCaseLetter = () => {
         disciplinarySearchData.disciplinaryAction !== undefined &&
         disciplinarySearchData.disciplinaryAction !== ""
       ) {
+        state.showCauseLetter=disciplinarySearchData.disciplinaryAction.showCauseLetter
         state.empRemark =
           disciplinarySearchData.disciplinaryAction.employeeComment;
         state.reasons =
@@ -218,8 +224,11 @@ const EmployeShowCaseLetter = () => {
   };
   const LetterShow = () => {
     console.log(";;;;;");
-    setModal(true);
-    setShowLink(true);
+    // setModal(true);
+    // setShowLink(true);
+      // setViewLetter(true)
+      setView(true)
+    ImageView(state.showCauseLetter,state.empId)
   };
   const handleShowCauseLetterCloseLink = () => setShowLink(false);
 
@@ -484,6 +493,9 @@ const EmployeShowCaseLetter = () => {
   };
 
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
+  const handleDocClose =()=>{
+    setView(false)
+  }
   return (
     <Fragment>
       {/* letter */}
@@ -558,6 +570,33 @@ const EmployeShowCaseLetter = () => {
           </Modal.Body>
         </Modal>
       ) : null}
+        <Modal show={view} onHide={handleDocClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {imageViewData !== undefined &&
+             Object.keys(imageViewData).length !== 0 && imageViewData.data!=="File does not exist" ? (
+              <div>
+
+                  <iframe
+                  src={
+                    imageViewData.data ? imageViewData.data +
+                    "#toolbar=0& navpanes=0":""
+                  }
+                  style={{ width: "100%", height: "900px" }}
+                  frameborder="0"
+                ></iframe>
+                {/* ) : (
+                  <img
+                  style={{ width: "100%", height: "100%" }}
+                  src={imageViewData.data ? imageViewData.data:""}
+                />
+                )} */}
+              </div>
+            ) : (
+              "File does not exist"
+            )}
+          </Modal.Body>
+        </Modal>
       {lettterview ? (
         <div>
           {disciplinarySearchData &&

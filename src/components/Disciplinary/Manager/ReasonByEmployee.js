@@ -161,7 +161,7 @@ const ReasonByEmployee = ({ sign = true }) => {
         inputRef: inputRef,
         empId: disciplinarySearchData.employeeId,
         candidateId: 0,
-        module: "Disciplinary Action",
+        module: "Disciplinary Action Response",
         empName: user.firstName + " " + user.lastName,
         empEmail: user.email,
         empPhNo: user.phone,

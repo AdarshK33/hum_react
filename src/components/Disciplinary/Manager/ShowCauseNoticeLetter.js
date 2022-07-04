@@ -162,7 +162,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
     lettterviewShow
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
-  const { rolePermission } = useContext(PermissionContext);
+  const { rolePermission,imageViewData } = useContext(PermissionContext);
   const { user } = useContext(AppContext);
   const history = useHistory();
   const ref = React.createRef();
