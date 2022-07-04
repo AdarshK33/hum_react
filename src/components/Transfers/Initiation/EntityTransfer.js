@@ -12,6 +12,10 @@ import TransferInitationLetter from "./TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
 import { BonusContext } from "../../../context/BonusState";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../../context/PromotionState";
+import { PermissionContext } from "../../../context/PermissionState";
+
 
 const EntityTransfer = () => {
   const {
@@ -33,6 +37,9 @@ const EntityTransfer = () => {
   } = useContext(TransferContext);
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
+    const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+    // console.log("employeeDetails",employeeDetails)
+  const { rolePermission } = useContext(PermissionContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEntity, setNewEntity] = useState("");
   const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
@@ -61,8 +68,34 @@ const EntityTransfer = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+ 
   const history = useHistory();
 
+  useEffect(() => {
+   
+    if (
+      rolePermission === "admin"
+    ){
+     getEmployeeDetails(1);
+    }
+    else if (
+      rolePermission === "superCostCenterManager"
+    ){
+     getEmployeeDetails(9);
+    }
+    else if (
+      rolePermission === "costCenterManager"
+    ){
+     getEmployeeDetails(7);
+    }
+    else if (
+      rolePermission === "manager"
+    ){
+     getEmployeeDetails(2);
+    }
+  
+  }, []);
   useEffect(() => {
     if (searchValue !== "") {
       getTransferInitiationEmpData(searchValue);
@@ -482,7 +515,7 @@ const EntityTransfer = () => {
             Employee Name
           </Form.Label>
           <Col md={8}>
-            <Form.Control
+            {/* <Form.Control
               type="text"
               placeholder="search employee"
               value={searchInput}
@@ -492,7 +525,19 @@ const EntityTransfer = () => {
               className="search-icon mr-1"
               style={{ color: "#313131" }}
               onClick={searchValueHandler}
-            />
+            /> */}
+               <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                       
+                                        labelKey='firstName'
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                      />
             {empErrMsg !== "" && (
               <span className="text-danger">{empErrMsg}</span>
             )}

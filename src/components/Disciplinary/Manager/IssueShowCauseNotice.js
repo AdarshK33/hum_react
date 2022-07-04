@@ -11,6 +11,9 @@ import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../../context/PromotionState";
+
 
 const IssueShowCauseNotice = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
@@ -61,6 +64,11 @@ const IssueShowCauseNotice = () => {
   });
   const [disciplinaryReasonList, setdisciplinaryReasonList] = useState([]);
   const [resonsForShowCauseList, setResonsForShowCauseList] = useState([]);
+
+  const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+  // console.log("employeeDetails",employeeDetails)
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+
   const {
     disciplinaryEmployeeSearch,
     disciplinarySearchData,
@@ -80,7 +88,30 @@ const IssueShowCauseNotice = () => {
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
   );
-
+  useEffect(() => {
+   
+    if (
+      rolePermission === "admin"
+    ){
+     getEmployeeDetails(1);
+    }
+    else if (
+      rolePermission === "superCostCenterManager"
+    ){
+     getEmployeeDetails(9);
+    }
+    else if (
+      rolePermission === "costCenterManager"
+    ){
+     getEmployeeDetails(7);
+    }
+    else if (
+      rolePermission === "manager"
+    ){
+     getEmployeeDetails(2);
+    }
+  
+  }, []);
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -744,7 +775,7 @@ const IssueShowCauseNotice = () => {
                         </Col>
                         <Col sm={2}>
                           <Form.Group>
-                            <div className="faq-form ">
+                            {/* <div className="faq-form ">
                               <input
                                 className="form-control"
                                 type="text"
@@ -755,7 +786,7 @@ const IssueShowCauseNotice = () => {
                                 // style={
                                 //   empName1Error ? { borderColor: "red" } : {}
                                 // }
-                                placeholder="Search.."
+                                placeholder="Search......."
                                 onChange={(e) => changeHandler(e)}
                                 required
                               />
@@ -764,7 +795,22 @@ const IssueShowCauseNotice = () => {
                                 style={{ color: "#313131" }}
                                 onClick={searchDataHandler}
                               />
-                            </div>
+                            </div> */}
+                               <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                       
+                                        labelKey='firstName'
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                        style={{ borderRadius: "5px" }}
+                                    
+                                      />
+
                           </Form.Group>
                         </Col>
 

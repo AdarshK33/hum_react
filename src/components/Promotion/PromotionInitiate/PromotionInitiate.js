@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { OfferContext } from "../../../context/OfferState";
@@ -19,6 +21,7 @@ import PromotionLetters from "../PromotionLetter";
 import PromotionSalaryLetters from "../PromotionSalaryLetter";
 import { useHistory } from "react-router-dom";
 import "../Promotion.css";
+
 const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState("");
@@ -88,6 +91,7 @@ const PromotionInitiate = () => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [showRelivingModal, setShow] = useState(false);
   const history = useHistory();
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -114,7 +118,37 @@ const PromotionInitiate = () => {
     createdPromotion,
     lettterview,
     setViewLetter,
+    getEmployeeDetails,
+    employeeDetails
   } = useContext(PromotionContext);
+  const { rolePermission } = useContext(PermissionContext);
+  //get ALL EmployeeDetails
+  useEffect(() => {
+   
+    if (
+      rolePermission === "admin"
+    ){
+     getEmployeeDetails(1);
+    }
+    else if (
+      rolePermission === "superCostCenterManager"
+    ){
+     getEmployeeDetails(9);
+    }
+    else if (
+      rolePermission === "costCenterManager"
+    ){
+     getEmployeeDetails(7);
+    }
+    else if (
+      rolePermission === "manager"
+    ){
+     getEmployeeDetails(2);
+    }
+  
+  }, []);
+//   useEffect(() => {}, [employeeDetails]);
+    //  console.log("employeeDetails",employeeDetails)
   useEffect(() => {
     if (createdPromotion) {
       setModelStatus(true);
@@ -161,7 +195,7 @@ const PromotionInitiate = () => {
       ViewEmployeeDataById(state.employeeId);
     }
   }, [EmpName]);
-
+ 
   useEffect(() => {
     if (
       searchByCostData &&
@@ -694,7 +728,7 @@ const PromotionInitiate = () => {
       // });
     }
 
-    console.log(state, promotionIdData, "state");
+    // console.log(state, promotionIdData, "state");
   };
   const handleChangeLetterSubmit = (e) => {
     e.preventDefault();
@@ -704,7 +738,7 @@ const PromotionInitiate = () => {
       promotionIdData !== undefined &&
       Object.keys(promotionIdData).length !== 0
     ) {
-      console.log("in if");
+      // console.log("in if");
       const infoData = {
         adminValidatedDate: promotionIdData["adminValidatedDate"],
         validatedAdminId: promotionIdData["validatedAdminId"],
@@ -780,7 +814,7 @@ const PromotionInitiate = () => {
   };
 
   const handleShow = () => {
-    console.log("inside show moodal");
+    // console.log("inside show moodal");
     setShow(true);
   };
   const handleRelivingClose = () => setShow(false);
@@ -973,7 +1007,7 @@ const PromotionInitiate = () => {
                               ) : (
                                 <Form.Group>
                                   <div className="faq-form ">
-                                    <input
+                                    {/* <input
                                       className="form-control"
                                       type="text"
                                       name="empName"
@@ -992,7 +1026,26 @@ const PromotionInitiate = () => {
                                       className="search-icon"
                                       style={{ color: "#313131" }}
                                       onClick={searchDataHandler}
-                                    />
+                                    /> */}
+                                       <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                       
+                                        labelKey='firstName'
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                        // ref={searchRef}
+                                        //renderMenuItemChildren={(option) => console.log("item", option)}
+                                        style={
+                                          empNameError
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
+                                      />
                                   </div>
                                   {empNameError ? (
                                     <p style={{ color: "red" }}>

@@ -15,6 +15,8 @@ const initial_state = {
   promotionByEmployee: {},
   approvePromotionData: {},
   rejectPromotionData: {},
+  employeeDetails:[],
+
 };
 
 export const PromotionContext = createContext();
@@ -242,6 +244,23 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
+  const getEmployeeDetails = (loginType) => {
+    client
+      .get("/api/v1/employee/search/"+ loginType )
+      .then((response) => {
+      
+        state.employeeDetails=response.data.data;
+       
+        return dispatch({
+           type: "EMPLOYEE_DATA",
+          payload: state.employeeDetails,
+        });
+      })
+      .catch((error) => {
+        console.log(error  ,"Error in API ./context/PromotionState");
+      });
+  };
+
 
   return (
     <PromotionContext.Provider
@@ -256,6 +275,7 @@ export const PromotionProvider = (props) => {
         approvePromotion,
         rejectPromotion,
         makeViewPromotionById,
+        getEmployeeDetails,
         total: state.total,
         promotionList: state.promotionList,
         positionNew: state.positionNew,
@@ -268,6 +288,7 @@ export const PromotionProvider = (props) => {
         approvePromotionData: state.approvePromotionData,
         rejectPromotionData: state.rejectPromotionData,
         lettterview: lettterview,
+        employeeDetails: state.employeeDetails,
         setViewLetter,
       }}
     >
