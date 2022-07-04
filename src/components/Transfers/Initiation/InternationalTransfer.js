@@ -6,6 +6,9 @@ import moment from "moment";
 import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { TransferContext } from "../../../context/TransferState";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../../context/PromotionState";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const InternationalTransfer = () => {
   const history = useHistory();
@@ -23,6 +26,9 @@ const InternationalTransfer = () => {
     getCostCentreManagersDetails,
     costCentreManagersData,
   } = useContext(TransferContext);
+  const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+  // console.log("employeeDetails",employeeDetails)
+const { rolePermission } = useContext(PermissionContext);
   const transferType = "International Transfer";
   const [searchValue, setSearchValue] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -52,6 +58,31 @@ const InternationalTransfer = () => {
   const [projectTermErrMsg, setProjectTermErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+  useEffect(() => {
+   
+    if (
+      rolePermission === "admin"
+    ){
+     getEmployeeDetails(1);
+    }
+    else if (
+      rolePermission === "superCostCenterManager"
+    ){
+     getEmployeeDetails(9);
+    }
+    else if (
+      rolePermission === "costCenterManager"
+    ){
+     getEmployeeDetails(7);
+    }
+    else if (
+      rolePermission === "manager"
+    ){
+     getEmployeeDetails(2);
+    }
+  
+  }, []);
 
   useEffect(() => {
     if (searchValue !== "") {
@@ -438,7 +469,7 @@ const InternationalTransfer = () => {
           Employee Name
         </Form.Label>
         <Col md={8}>
-          <Form.Control
+          {/* <Form.Control
             type="text"
             placeholder="search employee"
             value={searchInput}
@@ -448,7 +479,19 @@ const InternationalTransfer = () => {
             className="search-icon mr-1"
             style={{ color: "#313131" }}
             onClick={searchValueHandler}
-          />
+          /> */}
+            <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                       
+                                        labelKey='firstName'
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                      />
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>
