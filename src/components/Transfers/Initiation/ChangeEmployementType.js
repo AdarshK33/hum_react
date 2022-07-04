@@ -12,6 +12,10 @@ import FullTimeToPartTimeLetter from "./fullTimeToPartTimeLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
 import "../../Transfers/Transfers.css";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../../context/PromotionState";
+import { PermissionContext } from "../../../context/PermissionState";
+
 
 const ChangeEmployementType = () => {
   const {
@@ -35,6 +39,9 @@ const ChangeEmployementType = () => {
     setLetterViewing,
     letterView,
   } = useContext(TransferContext);
+  const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+  // console.log("employeeDetails",employeeDetails)
+const { rolePermission } = useContext(PermissionContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEmployement, setNewEmployement] = useState("");
   const [newEmployementErrMsg, setNewEmployementErrMsg] = useState("");
@@ -60,8 +67,33 @@ const ChangeEmployementType = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
-  const history = useHistory();
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
 
+  const history = useHistory();
+  useEffect(() => {
+   
+    if (
+      rolePermission === "admin"
+    ){
+     getEmployeeDetails(1);
+    }
+    else if (
+      rolePermission === "superCostCenterManager"
+    ){
+     getEmployeeDetails(9);
+    }
+    else if (
+      rolePermission === "costCenterManager"
+    ){
+     getEmployeeDetails(7);
+    }
+    else if (
+      rolePermission === "manager"
+    ){
+     getEmployeeDetails(2);
+    }
+  
+  }, []);
   useEffect(() => {
     if (searchValue !== "") {
       getTransferInitiationEmpData(searchValue);
@@ -581,7 +613,7 @@ const ChangeEmployementType = () => {
           Employee Name
         </Form.Label>
         <Col md={8}>
-          <Form.Control
+          {/* <Form.Control
             type="text"
             placeholder="search employee"
             value={searchInput}
@@ -591,7 +623,17 @@ const ChangeEmployementType = () => {
             className="search-icon mr-1"
             style={{ color: "#313131" }}
             onClick={searchValueHandler}
-          />
+          /> */}
+                                         <Typeahead
+                                         id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                        // onChange={setSearchSelectedBrand}
+                                        //onSearch={this.handleSearch}
+                                        options={employeeDetails}
+                                        placeholder="Search.."
+                                        selected={searchEmpSelected}
+                                      />
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>

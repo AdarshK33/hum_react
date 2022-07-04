@@ -7,7 +7,7 @@ const PromotionReducer = (state, action) => {
         loader: action.loader,
         data: action.data,
         total: action.total,
-        createdPromotion: action.createdPromotion,
+        createdPromotion: action.createdPromotion,     
       };
     case "PROMOTION_ID":
       return {
@@ -37,6 +37,12 @@ const PromotionReducer = (state, action) => {
       };
     case "REJECT_PROMOTION_DATA":
       return { ...state, rejectPromotionData: action.payload };
+    case "EMPLOYEE_DATA":
+        return {
+          ...state,
+          employeeDetails: action.payload
+        
+        };
   }
 };
 export default PromotionReducer;
