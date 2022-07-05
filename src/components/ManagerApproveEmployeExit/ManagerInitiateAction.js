@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../common/breadcrumb";
@@ -22,8 +22,13 @@ import EndOfProbationLetter from "../Probation/EndOfProbationLetter";
 import NonPerformanceTerminationLetter from "../../components/Disciplinary/Manager/NonPerformanceTerminationLetter";
 import MisConductTerminationLetter from "../../components/Disciplinary/Manager/MisConductTerminationLetter";
 import { setDate } from "date-fns";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import { PromotionContext } from "../../context/PromotionState";
+
 
 const ManagerInitiateAction = (props) => {
+      // const employeeRef = React.createRef();
+      const employeeRef = useRef(null);
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [changeInSeparation, setChangeInSeparation] = useState(0);
   const [RcryYes, setRcryYes] = useState(false);
@@ -67,6 +72,8 @@ const ManagerInitiateAction = (props) => {
   const [iamStatusError,SetIamStatusError] = useState(false)
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+
 
   const [state, setState] = useState({
     empId: "",
@@ -120,7 +127,33 @@ const ManagerInitiateAction = (props) => {
     useContext(OfferContext);
   const { locationDetails, locationDetailsList,rolePermission } =
     useContext(PermissionContext);
+    const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+    // console.log("employeeDetails",employeeDetails)
 
+    useEffect(() => {
+   
+      if (
+        rolePermission === "admin"
+      ){
+       getEmployeeDetails(1);
+      }
+      else if (
+        rolePermission === "superCostCenterManager"
+      ){
+       getEmployeeDetails(9);
+      }
+      else if (
+        rolePermission === "costCenterManager"
+      ){
+       getEmployeeDetails(7);
+      }
+      else if (
+        rolePermission === "manager"
+      ){
+       getEmployeeDetails(2);
+      }
+    
+    }, []);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
   }, [employeeId]);
@@ -456,8 +489,18 @@ const ManagerInitiateAction = (props) => {
   }, [employeeProfileData]);
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
-    if (EmpName !== null) {
-      searchByCostCenter(EmpName);
+    const searchText = employeeRef.current.getInput();
+    setSearchEmpSelected([searchText.value]);
+    setEmpName(searchText.value);
+    setState({
+      ...state,
+      EmpName: searchText.value,
+    });
+
+   if (searchText.value !== null) {
+    // if (EmpName !== null) {
+      // searchText.value or EmpName
+      searchByCostCenter(searchText.value);
       setCheckForExist(true);
       if (
         employeeData &&
@@ -1324,7 +1367,7 @@ e.preventDefault()
                               </label>
                             ) : (
                               <Form.Group>
-                                <div className="faq-form ">
+                                {/* <div className="faq-form ">
                                   <input
                                     className="form-control"
                                     type="text"
@@ -1345,7 +1388,24 @@ e.preventDefault()
                                     style={{ color: "#313131" }}
                                     onClick={searchDataHandler}
                                   />
-                                </div>
+                                </div> */}
+                                 <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                        // labelKey='firstName'
+                                        ref={employeeRef}
+                                        options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        placeholder="Search.."
+                                        selected={''}
+                                      
+                                      />
+                                        <Search
+                                    className="search-icon"
+                                    style={{ color: "#313131" }}
+                                    onClick={searchDataHandler}
+                                  />
                               </Form.Group>
                             )}
                           </div>

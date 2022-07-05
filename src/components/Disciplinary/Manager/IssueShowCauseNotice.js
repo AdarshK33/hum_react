@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
@@ -31,6 +31,8 @@ const IssueShowCauseNotice = () => {
   const [intern, setIntern] = useState(false);
   const [EmpName, setEmpName] = useState();
   let history = useHistory();
+  const employeeRef = useRef(null);
+
 
   const [showCauseReasonError, setShowCauseReasonError] = useState(false);
   const [reasonForCauseError, setReasonForCauseError] = useState(false);
@@ -222,9 +224,18 @@ const IssueShowCauseNotice = () => {
   console.log("disciplinaryResonsData", disciplinaryResonsData);
   console.log("disciplinaryEmpSearchData", disciplinaryEmpSearchData);
   const searchDataHandler = () => {
-    if (EmpName !== null) {
-      EmployeeSearchWithKey(EmpName);
-      setEmpName("");
+     const searchText = employeeRef.current.getInput();
+    //  console.log("sssssssssss",searchText.value)
+     setSearchEmpSelected([searchText.value]);
+      setEmpName(searchText.value);
+      setState({
+        ...state,
+        EmpName: searchText.value,
+      });
+   
+    if (searchText.value!== null) {
+      EmployeeSearchWithKey(searchText.value);
+       setEmpName("");
       setCheckForExist(true);
       state.clickOnsubmit = false;
     }
@@ -796,21 +807,24 @@ const IssueShowCauseNotice = () => {
                                 onClick={searchDataHandler}
                               />
                             </div> */}
-                               <Typeahead
+                                      <Typeahead
                                         id="_empSearchId"
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
-                                       
-                                        labelKey='firstName'
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
+                                        ref={employeeRef}
+                                        // labelKey='firstName'
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
+                                        selected={''}
                                         style={{ borderRadius: "5px" }}
                                     
                                       />
-
+                               <Search
+                                className="search-icon"
+                                style={{ color: "#313131" }}
+                                onClick={searchDataHandler}
+                              />
                           </Form.Group>
                         </Col>
 
