@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search } from "react-feather";
 import DatePicker from "react-datepicker";
@@ -10,8 +10,11 @@ import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 
+
 const InternationalTransfer = () => {
   const history = useHistory();
+  const employeeRef = useRef(null);
+
   const {
     getTransferInitiationEmpData,
     initiationEmpData,
@@ -167,7 +170,8 @@ const { rolePermission } = useContext(PermissionContext);
   }, [initiationStatus]);
 
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
+    const searchText = employeeRef.current.getInput();
+    setSearchInput(searchText.value);
     setEmpErrMsg("");
   };
 
@@ -480,18 +484,27 @@ const { rolePermission } = useContext(PermissionContext);
             style={{ color: "#313131" }}
             onClick={searchValueHandler}
           /> */}
-            <Typeahead
+                                      <Typeahead
                                         id="_empSearchId"
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
-                                       
+                                        ref={employeeRef}
                                         labelKey='firstName'
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
+                                        onChange={searchInputHandler}
                                         options={employeeDetails}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
+                                        selected={''}
+                                        style={
+                                          empErrMsg
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
                                       />
+                                      <Search
+                                              className="search-icon mr-1"
+                                              style={{ color: "#313131" }}
+                                              onClick={searchValueHandler}
+                                            />
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect ,useRef} from "react";
 import Breadcrumb from "../../common/breadcrumb";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 import { Search } from "react-feather";
@@ -71,6 +71,8 @@ const EntityTransfer = () => {
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
  
   const history = useHistory();
+  const employeeRef = useRef(null);
+  
 
   useEffect(() => {
    
@@ -213,11 +215,13 @@ const EntityTransfer = () => {
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
+    const searchText = employeeRef.current.getInput();
+    setSearchInput(searchText.value);
     setEmpErrMsg("");
   };
 
   const searchValueHandler = () => {
+    // const searchText = employeeRef.current.getInput();
     setSearchValue(searchInput);
   };
 
@@ -526,18 +530,27 @@ const EntityTransfer = () => {
               style={{ color: "#313131" }}
               onClick={searchValueHandler}
             /> */}
-               <Typeahead
+                                      <Typeahead
                                         id="_empSearchId"
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
-                                       
+                                        ref={employeeRef}
                                         labelKey='firstName'
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
                                         options={employeeDetails}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
+                                        selected={''}
+                                        onChange={searchInputHandler}
+                                        style={
+                                          empErrMsg
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
                                       />
+                                         <Search
+                                        className="search-icon mr-1"
+                                        style={{ color: "#313131" }}
+                                        onClick={searchValueHandler}
+                                      /> 
             {empErrMsg !== "" && (
               <span className="text-danger">{empErrMsg}</span>
             )}

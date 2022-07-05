@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 import { Search } from "react-feather";
 import Select from "react-select";
@@ -80,6 +80,9 @@ const RegularTransfer = () => {
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
 
   const history = useHistory();
+  const employeeRef = useRef(null);
+
+
 
   useEffect(() => {
    
@@ -226,12 +229,14 @@ const RegularTransfer = () => {
   };
 
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
+    const searchText = employeeRef.current.getInput();
+    setSearchInput(searchText.value);
     setEmpErrMsg("");
   };
 
   const searchValueHandler = () => {
-    setSearchValue(searchInput);
+    // const searchText = employeeRef.current.getInput();
+     setSearchValue(searchInput);
   };
 
   const departmentChangeHandler = (e) => {
@@ -693,7 +698,8 @@ const RegularTransfer = () => {
           Employee Name
         </Form.Label>
         <Col md={8}>
-          {/* <Form.Control
+          {/*
+          <Form.Control
             type="text"
             placeholder="search employee"
             value={searchInput}
@@ -704,18 +710,27 @@ const RegularTransfer = () => {
             style={{ color: "#313131" }}
             onClick={searchValueHandler}
           /> */}
-            <Typeahead
+                                     <Typeahead
                                         id="_empSearchId"
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
-                                       
+                                        ref={employeeRef}
                                         labelKey='firstName'
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
+                                        onChange={searchInputHandler}
                                         options={employeeDetails}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
+                                        selected={''}
+                                        style={
+                                          empErrMsg
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
                                       />
+                                        <Search
+                                        className="search-icon mr-1"
+                                        style={{ color: "#313131" }}
+                                        onClick={searchValueHandler}
+                                        />
 
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
