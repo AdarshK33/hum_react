@@ -27,6 +27,7 @@ const initial_state = {
   empResignData: [],
   managerList: [],
   promotioManagerList:[],
+  allManagerList:[],
   modeOfResponse: [],
   reason: {},
   searchByCostData: [],
@@ -469,6 +470,16 @@ export const SeparationProvider = (props) => {
       });
   };
 
+  const allPromotionManager = () => {
+    return client
+      .get("api/v1/employee/view/managers")
+      .then((response) => {
+        console.log(response, "managerData response");
+        state.allManagerList = response.data.data;
+        return dispatch({ type: "ALL_MANAGERS_LIST", payload: state.allManagerList });
+      });
+  };
+
   const modeOfSeparation = () => {
     return client
       .get("api/v1/mode-of-separation/view")
@@ -584,9 +595,15 @@ const searchByEmployeeNull =()=>{
         searchByCostCenter,
         promotionManagerData,
         searchByEmployeeNull,
+        allPromotionManager,
+        saveFinanceClearanceData,
+        empResign,
+        managerData,
+        modeOfSeparation,
+        withdraw,
         promotioManagerList:state.promotioManagerList,
+        allManagerList:state.allManagerList,
         financeClearanceExport: state.financeClearanceExport,
-
         updateAdminFinanceClearance: state.updateAdminFinanceClearance,
         financeAdminClearanceExport: state.financeAdminClearanceExport,
         noDueClearanceAdminClearanceExport:
@@ -598,17 +615,12 @@ const searchByEmployeeNull =()=>{
         noDueClearanceList: state.noDueClearanceList,
         noDueClearanceClearanceExport: state.noDueClearanceClearanceExport,
         total: state.total,
-        saveFinanceClearanceData,
         separationList: state.separationList,
         loader: state.loader,
         clearanceList: state.clearanceList,
-        empResign,
-        managerData,
         managerList: state.managerList,
-        modeOfSeparation,
         modeOfResponse: state.modeOfResponse,
         reason: state.reason,
-        withdraw,
         searchByCostData: state.searchByCostData,
       }}
     >
