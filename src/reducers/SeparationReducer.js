@@ -62,7 +62,8 @@ const GroupReducer = (state, action) => {
         return { ...state, promotioManagerList: action.payload };
     case "MODE_OF_SEPARATION":
       return { ...state, ...action.payload };
-
+      case "ALL_MANAGERS_LIST":
+        return { ...state, allManagerList: action.payload };
     case "WITHDRAW_RESIGNATION":
       return { ...state };
     case "SEARCH_BY_COST_DATA":

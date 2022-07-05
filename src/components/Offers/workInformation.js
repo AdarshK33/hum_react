@@ -771,9 +771,14 @@ const WorkInformation = (props) => {
                   >
                     <option value="">Select ManagerId</option>
                     {allManagerList.map((item, i) => {
+                       const temp =
+                       item.lastName !== null &&
+                       item.lastName !== undefined
+                         ? item.lastName
+                         : "";
                       return (
                         <option key={i} value={item.employeeId}>
-                          {item.firstName}-{item.employeeId}
+                          {item.firstName + " " + temp}-{item.employeeId}
                         </option>
                       );
                     })}

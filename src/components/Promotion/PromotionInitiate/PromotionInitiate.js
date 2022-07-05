@@ -108,6 +108,8 @@ const PromotionInitiate = () => {
     searchByCostCenter,
     promotionManagerData,
     searchByCostData,
+    allPromotionManager,
+    allManagerList
   } = useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
   const {
@@ -176,6 +178,7 @@ const PromotionInitiate = () => {
 
   useEffect(() => {
     ViewEmployeeProfile();
+    allPromotionManager()
   }, []);
   useEffect(() => {
     if (
@@ -642,7 +645,7 @@ const PromotionInitiate = () => {
       });
       console.log(e.target.value, state, "value666");
     } else if (e.target.name === "reportingManagerId") {
-      promotioManagerList.map((item) => {
+      allManagerList.map((item) => {
         const temp =
           item.lastName !== null && item.lastName !== undefined
             ? item.lastName
@@ -1249,10 +1252,10 @@ const PromotionInitiate = () => {
                                 onChange={(e) => changeHandler(e)}
                               >
                                 <option value="">Select Manager</option>
-                                {promotioManagerList !== null &&
-                                  promotioManagerList !== undefined &&
-                                  promotioManagerList.length > 0 &&
-                                  promotioManagerList.map((item, index) => {
+                                {allManagerList !== null &&
+                                  allManagerList !== undefined &&
+                                  allManagerList.length > 0 &&
+                                  allManagerList.map((item, index) => {
                                     const temp =
                                       item.lastName !== null &&
                                       item.lastName !== undefined
