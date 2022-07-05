@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect ,useRef} from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
@@ -75,6 +75,8 @@ const ManagerInitiateExit = () => {
 
   const [showAddModal, setShowAddModal] = useState(false);
   const history = useHistory();
+    // const employeeRef = React.createRef();
+    const employeeRef = useRef(null);
 
   const [state, setState] = useState({
     exitId: "",
@@ -562,8 +564,19 @@ const ManagerInitiateExit = () => {
   console.log("searchByCostData", searchByCostData);
   console.log(employeeProfileData, "employeeProfileData");
   const searchDataHandler = () => {
-    if (EmpName !== null) {
-      searchByEmployee(EmpName);
+
+    const searchText = employeeRef.current.getInput();
+    setSearchEmpSelected([searchText.value]);
+    setEmpName(searchText.value);
+    setState({
+      ...state,
+      EmpName: searchText.value,
+    });
+
+   if (searchText.value !== null) {
+    // if (EmpName !== null) {
+      // searchText.value or EmpName
+      searchByEmployee(searchText.value);
       setCheckForExist(true);
       if (
         employeeData &&
@@ -1560,12 +1573,17 @@ const ManagerInitiateExit = () => {
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
                                        
-                                        labelKey='firstName'
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
+                                        // labelKey='firstName'
+                                        ref={employeeRef}
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
+                                        selected={''}
+                                      />
+                                        <Search
+                                        className="search-icon"
+                                        style={{ color: "#313131" }}
+                                        onClick={searchDataHandler}
                                       />
                               </Form.Group>
                             )}

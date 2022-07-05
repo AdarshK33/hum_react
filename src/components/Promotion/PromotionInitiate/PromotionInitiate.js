@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 
@@ -92,6 +92,7 @@ const PromotionInitiate = () => {
   const [showRelivingModal, setShow] = useState(false);
   const history = useHistory();
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
+  // console.log("ssssssssssss",searchEmpSelected);
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -122,6 +123,10 @@ const PromotionInitiate = () => {
     employeeDetails
   } = useContext(PromotionContext);
   const { rolePermission } = useContext(PermissionContext);
+  // const employeeRef = React.createRef();
+  const employeeRef = useRef(null);
+
+  // console.log("eeeeee",employeeDetails)
   //get ALL EmployeeDetails
   useEffect(() => {
    
@@ -554,8 +559,16 @@ const PromotionInitiate = () => {
     setState({ ...state, salaryEffectiveDate: AdjusteddateValue });
   };
   const searchDataHandler = () => {
-    if (EmpName !== null) {
-      searchByCostCenter(EmpName);
+    const searchText = employeeRef.current.getInput();
+     setSearchEmpSelected([searchText.value]);
+     setEmpName(searchText.value);
+     setState({
+       ...state,
+       empName: searchText.value,
+     });
+
+    if (searchText.value !== null) {
+      searchByCostCenter(searchText.value);
       if (
         employeeData &&
         employeeData &&
@@ -596,6 +609,7 @@ const PromotionInitiate = () => {
     }
   };
   const changeHandler = (e) => {
+    console.log("ttttttttttttttt",e.target.value)
     let valid = /[^A-Za-z0-9'.,-_ ]/;
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
@@ -825,6 +839,7 @@ const PromotionInitiate = () => {
     setSaveLetter(true);
     setShow(false);
   };
+
   return (
     <Fragment>
       <ToastContainer />
@@ -1029,23 +1044,27 @@ const PromotionInitiate = () => {
                                     /> */}
                                        <Typeahead
                                         id="_empSearchId"
+                                        name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
+                                        // labelKey='firstName'
                                        
-                                        labelKey='firstName'
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
+                                        ref={employeeRef}
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
-                                        // ref={searchRef}
-                                        //renderMenuItemChildren={(option) => console.log("item", option)}
+                                        selected={''}
                                         style={
                                           empNameError
                                             ? { borderColor: "red" }
                                             : { borderRadius: "5px" }
                                         }
                                       />
+                                       <Search
+                                      className="search-icon"
+                                      style={{ color: "#313131" }}
+                                      onClick={searchDataHandler}
+                                    />
                                   </div>
                                   {empNameError ? (
                                     <p style={{ color: "red" }}>

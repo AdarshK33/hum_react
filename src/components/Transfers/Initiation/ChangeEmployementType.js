@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import Breadcrumb from "../../common/breadcrumb";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 import { Search } from "react-feather";
@@ -70,6 +70,8 @@ const { rolePermission } = useContext(PermissionContext);
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
 
   const history = useHistory();
+  const employeeRef = useRef(null);
+
   useEffect(() => {
    
     if (
@@ -164,12 +166,14 @@ const { rolePermission } = useContext(PermissionContext);
   }, [initiationEmpData]);
 
   const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
+    const searchText = employeeRef.current.getInput();
+    setSearchInput(searchText.value);
     setEmpErrMsg("");
   };
 
   const searchValueHandler = () => {
-    setSearchValue(searchInput);
+    const searchText = employeeRef.current.getInput();
+    setSearchValue(searchText.value);
   };
 
   const changeEmployementHandler = (e) => {
@@ -628,12 +632,19 @@ const { rolePermission } = useContext(PermissionContext);
                                          id="_empSearchId"
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
-                                        // onChange={setSearchSelectedBrand}
-                                        //onSearch={this.handleSearch}
+                                        // labelKey='firstName'
+                                        ref={employeeRef}
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={searchEmpSelected}
+                                        selected={''}
+                                        onChange={searchInputHandler}
                                       />
+                                        <Search
+                                      className="search-icon mr-1"
+                                      style={{ color: "#313131" }}
+                                      onClick={searchValueHandler}
+                                    /> 
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>
