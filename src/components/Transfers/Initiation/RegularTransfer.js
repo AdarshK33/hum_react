@@ -717,9 +717,10 @@ const RegularTransfer = () => {
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
                                         ref={employeeRef}
-                                        labelKey='firstName'
+                                        // labelKey='firstName'
                                         onChange={searchInputHandler}
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
                                         selected={''}
                                         style={

@@ -1047,9 +1047,11 @@ const PromotionInitiate = () => {
                                         name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
-                                        labelKey='firstName'
+                                        // labelKey='firstName'
+                                       
                                         ref={employeeRef}
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
                                         selected={''}
                                         style={

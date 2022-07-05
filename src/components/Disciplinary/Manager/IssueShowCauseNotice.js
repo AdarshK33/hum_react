@@ -812,8 +812,9 @@ const IssueShowCauseNotice = () => {
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
                                         ref={employeeRef}
-                                        labelKey='firstName'
+                                        // labelKey='firstName'
                                         options={employeeDetails}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
                                         selected={''}
                                         style={{ borderRadius: "5px" }}
