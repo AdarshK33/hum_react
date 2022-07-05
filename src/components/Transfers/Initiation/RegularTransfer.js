@@ -230,13 +230,15 @@ const RegularTransfer = () => {
 
   const searchInputHandler = (e) => {
     const searchText = employeeRef.current.getInput();
+   
     setSearchInput(searchText.value);
     setEmpErrMsg("");
+ 
   };
 
   const searchValueHandler = () => {
-    // const searchText = employeeRef.current.getInput();
-     setSearchValue(searchInput);
+    const searchText = employeeRef.current.getInput();
+     setSearchValue(searchText.value);
   };
 
   const departmentChangeHandler = (e) => {

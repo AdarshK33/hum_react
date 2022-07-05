@@ -176,7 +176,9 @@ const { rolePermission } = useContext(PermissionContext);
   };
 
   const searchValueHandler = () => {
-    setSearchValue(searchInput);
+    const searchText = employeeRef.current.getInput();
+    setSearchValue(searchText.value);
+    
   };
 
   const countryChangeHandler = (e) => {

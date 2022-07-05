@@ -221,8 +221,9 @@ const EntityTransfer = () => {
   };
 
   const searchValueHandler = () => {
-    // const searchText = employeeRef.current.getInput();
-    setSearchValue(searchInput);
+    const searchText = employeeRef.current.getInput();
+    setSearchValue(searchText.value);
+   
   };
 
   const changeEntityHandler = (e) => {
