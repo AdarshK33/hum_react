@@ -22,6 +22,8 @@ const initial_state = {
   teamPlannedLeaves: [],
   teamUnPlannedLeaves: [],
   teamPerformanceData: {},
+  employeeMyTeam:[],
+  employeeAllTeam:[],
 };
 
 export const Employee360Context = createContext();
@@ -175,6 +177,7 @@ const RosterMonthSearchYear =()=>{
   };
 
   const ClusterSearchByEmployeeName = (cluster, key) => {
+    //FOR ALL TEAM
     setClusterLoader(true);
     client
       .get(
@@ -257,6 +260,7 @@ const RosterMonthSearchYear =()=>{
       });
   };
   const ClusterDirectTeam = (key) => {
+    //MY TEAM
     setClusterLoader(true);
     client
       .get("/api/v1/employee/360/view/cluster/direct/employee?searchKey=" + key)
@@ -400,6 +404,41 @@ const RosterMonthSearchYear =()=>{
         console.log(error);
       });
   };
+  const getEmployeeMyTeam = (managerId) => {
+    //MY TEAM //employeeID
+    setClusterLoader(true);
+    client
+      .get("/api/v1/employee/360/view/my_team/" + managerId)
+      .then((response) => {
+        state.employeeMyTeam = response.data.data;
+        setClusterLoader(false);
+        return dispatch({
+          type: "EMPLOYEE_MY_TEAM",
+          payload: state.employeeMyTeam,
+        });
+      })
+      .catch((error) => {
+        console.log(error,"Error in getEmployeeMyTeam ./context/Employee360state.js");
+      });
+  };
+  const getEmployeeAllTeam = (employeeId) => {
+    //All TEAM //employeeID
+    setClusterLoader(true);
+    client
+      .get("/api/v1/employee/360/view/all-team/employeeId?employeeId="+employeeId)
+      .then((response) => {
+        state.employeeAllTeam = response.data.data;
+        setClusterLoader(false);
+        return dispatch({
+          type: "EMPLOYEE_All_TEAM",
+          payload: state.employeeAllTeam,
+        });
+      })
+      .catch((error) => {
+        console.log(error,"Error in getEmployeeAllTeam ./context/Employee360state.js");
+      });
+  };
+
 
 
   return (
@@ -423,6 +462,8 @@ const RosterMonthSearchYear =()=>{
         TeamLeavesViewPlanned,
         TeamLeavesViewUnplanned,
         TeamPerformanceView,
+        getEmployeeMyTeam,
+        getEmployeeAllTeam,
         YearsList: state.YearsList,
         clusterDirect: state.clusterDirect,
         ClusterEmpList: state.ClusterEmpList,
@@ -444,6 +485,9 @@ const RosterMonthSearchYear =()=>{
         teamPerformanceData: state.teamPerformanceData,
         teamUnPlannedLeaves: state.teamUnPlannedLeaves,
         teamPlannedLeaves: state.teamPlannedLeaves,
+        employeeMyTeam: state.employeeMyTeam,
+        employeeAllTeam: state.employeeAllTeam
+
       }}
     >
       {children}

@@ -9,6 +9,7 @@ import { Employee360Context } from "../../context/Employee360State";
 import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import LoaderIcon from "../Loader/LoaderIcon";
+import { AppContext } from "../../context/AppState";
 
 const ClusterCard = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -21,52 +22,91 @@ const ClusterCard = () => {
     ClusterSearchByEmployeeName,
     ClusterDirectTeam,
     clusterDirect,
+    getEmployeeMyTeam,
+    employeeMyTeam,
+    getEmployeeAllTeam,
+    employeeAllTeam
+
   } = useContext(Employee360Context);
+  
+const { user } = useContext(AppContext);
+// user.employeeId
+// console.log("eeeeeeeeee",employeeAllTeam)
+
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [directTeamArr, setDirectTeamArr] = useState([]);
   const [searchInputDirect, setSearchInputDirect] = useState("");
+  // useEffect(() => {
+  //   // my Team data
+  //   console.log("cccc",clusterDirect)
+  //   if (
+  //     clusterDirect !== null &&
+  //     clusterDirect !== undefined &&
+  //     Object.keys(clusterDirect).length !== 0
+  //   ) {
+  //     let tempArr = [];
+  //     {
+  //       clusterDirect.map((items) => {
+  //         {
+  //           items.employees.map((item) => {
+  //             tempArr.push(item);
+  //           });
+  //         }
+  //       });
+  //     }
+  //     setDirectTeamArr(tempArr);
+  //   } else {
+  //     setDirectTeamArr([]);
+  //   }
+  // }, [clusterDirect]);
+
   useEffect(() => {
+    ClusterView(); //ClusterData
+    getEmployeeMyTeam(user.employeeId); //MY team  //employeeMyTeam
+    // ClusterDirectTeam("all"); //MY team //clusterDirect
+    getEmployeeAllTeam(user.employeeId);// ALL team //employeeAllTeam
+    ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
+  }, []);
+  // console.log("ClusterData", ClusterData);
+  // console.log("ClusterEmpList", ClusterEmpList);
+  // console.log("clusterDirect", clusterDirect);
+  // console.log("directTeamArr", directTeamArr);
+   useEffect(() => {
+    // my Team data
     if (
-      clusterDirect !== null &&
-      clusterDirect !== undefined &&
-      Object.keys(clusterDirect).length !== 0
+      employeeMyTeam !== null &&
+      employeeMyTeam !== undefined &&
+      Object.keys(employeeMyTeam).length !== 0
     ) {
       let tempArr = [];
       {
-        clusterDirect.map((items) => {
+        employeeMyTeam.map((items,itemIndex) => {
           {
-            items.employees.map((item) => {
-              tempArr.push(item);
-            });
+            tempArr.push(items);
+           
           }
         });
+      
       }
       setDirectTeamArr(tempArr);
     } else {
       setDirectTeamArr([]);
     }
-  }, [clusterDirect]);
+  }, [employeeMyTeam]);
+
+
 
   useEffect(() => {
-    ClusterView();
-    ClusterDirectTeam("all");
-    ClusterSearchByEmployeeName("all", "all");
-  }, []);
-  console.log("ClusterData", ClusterData);
-  console.log("ClusterEmpList", ClusterEmpList);
-  console.log("clusterDirect", clusterDirect);
-  console.log("directTeamArr", directTeamArr);
-
-  // useEffect(() => {
-  //   if (cluster !== "") {
-  //     setSearchInput("");
-  //     ClusterSearchByClusterName(cluster);
-  //   }
-  // }, [cluster]);
+    if (cluster !== "") {
+      setSearchInput("");
+      ClusterSearchByClusterName(cluster);
+    }
+  }, [cluster]);
 
   const searchDataHandler = () => {
+     {/* all Team */}
     if (searchInput !== "") {
       ClusterSearchByEmployeeName("all", searchInput);
     } else {
@@ -74,6 +114,7 @@ const ClusterCard = () => {
     }
   };
   const searchDataHandlerDirect = () => {
+    // my team
     if (searchInputDirect !== "") {
       ClusterDirectTeam(searchInputDirect);
     } else {
@@ -118,6 +159,7 @@ const ClusterCard = () => {
                         marginLeft: "-13px",
                       }}
                     >
+                      {/* My Team */}
                       <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
@@ -271,6 +313,7 @@ const ClusterCard = () => {
                       md={6}
                       style={{ marginTop: "7px", marginLeft: "-13px" }}
                     >
+                       {/*All Team */}
                       <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
@@ -298,17 +341,17 @@ const ClusterCard = () => {
                       style={{ zIndex: "0", height: "310px" }}
                     >
                       {/* <div className="circle"></div> */}
-                      {ClusterEmpList !== null &&
-                      ClusterEmpList !== undefined &&
-                      Object.keys(ClusterEmpList).length !== 0 &&
-                      ClusterEmpList[0] !== null &&
-                      ClusterEmpList[0] !== undefined &&
-                      Object.keys(ClusterEmpList[0]).length !== 0 &&
-                      ClusterEmpList[0].employees !== null &&
-                      ClusterEmpList[0].employees !== undefined &&
-                      Object.keys(ClusterEmpList[0].employees).length !== 0 ? (
+                      {employeeAllTeam !== null &&
+                    employeeAllTeam !== undefined &&
+                      Object.keys(employeeAllTeam).length !== 0 &&
+                      employeeAllTeam !== null &&
+                      employeeAllTeam !== undefined &&
+                      Object.keys(employeeAllTeam).length !== 0 &&
+                      employeeAllTeam !== null &&
+                    
+                      Object.keys(employeeAllTeam).length !== 0 ? (
                         <div>
-                          {ClusterEmpList[0].employees.map((item) => {
+                          {employeeAllTeam.map((item) => {
                             return (
                               <div className="clusterEmpployeeBox">
                                 <div
