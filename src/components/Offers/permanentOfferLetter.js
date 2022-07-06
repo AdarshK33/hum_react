@@ -6,7 +6,6 @@ import { OfferContext } from "../../context/OfferState";
 import { E_signContext } from "../../context/E_signState";
 import { AppContext } from "../../context/AppState";
 import { useHistory } from "react-router-dom";
-// import decathlonLogo from "../../assets/images/decathlon_logo.PNG";
 
 const PermanentOfferLetter = () => {
   const {
@@ -122,10 +121,8 @@ c-42 -42 -94 -53 -148 -32 -21 8 -39 11 -39 6 0 -5 -34 -9 -75 -9 l-75 0 0
                   }}
                 >
  
-                 {/* <img style={{width: "200px"}} src="https://www.decathlon.design/uploads/8szWpzwC6d69cbNDw52VpQ.jpg" alt="decathlonLogo"/> */}
-                 {/* <img style={{width: "200px"}} src="https://seeklogo.com/images/D/decathlon-logo-ED5D557F8A-seeklogo.com.png"/> */}
-                 
-                 {/* <img src={decathlonLogo} alt="decathlonLogo"/> */}
+                 <img style={{width: "200px"}} src="https://humine-application.s3.ap-south-1.amazonaws.com/humine_dev/Cheque_CANDID3037.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220704T160544Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAUF5TYHAB7GQC7DLX%2F20220704%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=d93b063443f616c151acea6ae6783da9460400776c5b8b2b22b73d6443bcff3d" alt="decathlonLogo"/>
+                 {/* <img className="logoStyle" style={{width: "200px"}} src={decathlonLogo} alt="decathlonLogo"/> */}
 
                   <b> OFFER LETTER</b>
                 </p>
