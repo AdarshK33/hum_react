@@ -43,6 +43,8 @@ const EmpResignation = () => {
     reason,
     withdraw,
     loader,
+    managersByCostcenter,
+    managersByCostcenterList
   } = useContext(SeparationContext);
   console.log("employeeData", user, employeeData);
   useEffect(() => {
@@ -64,6 +66,7 @@ const EmpResignation = () => {
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     managerData(user.costCentre);
+    managersByCostcenter(user.costCentre)
   }, [user.costCentre]);
   console.log(user, "user");
   useEffect(() => {
@@ -84,16 +87,16 @@ const EmpResignation = () => {
 
   useEffect(() => {
     if (
-      managerList &&
-      managerList &&
-      managerList !== null &&
-      managerList !== undefined &&
-      Object.keys(managerList).length !== 0
+      managersByCostcenterList &&
+      managersByCostcenterList &&
+      managersByCostcenterList !== null &&
+      managersByCostcenterList !== undefined &&
+      Object.keys(managersByCostcenterList).length !== 0
     ) {
-      let managerNames = managerList.filter(
+      let managerNames = managersByCostcenterList.filter(
         (j) => j.employeeId === user.managerId
       );
-      console.log("managerNames", managerNames, managerList);
+      console.log("managerNames", managerNames, managersByCostcenterList);
       if (
         managerNames &&
         managerNames !== null &&
@@ -104,7 +107,7 @@ const EmpResignation = () => {
         setApproverId(managerNames[0].employeeId);
       }
     }
-  }, [managerList]);
+  }, [managersByCostcenterList]);
 
   useEffect(() => {
     console.log("profile data", user, "profile data1", employeeData);
@@ -244,7 +247,7 @@ const EmpResignation = () => {
   }, [employeeData, ModeOfSeparationData]);
 
   useEffect(() => {
-    console.log("loader in useEffect ", loader, managerList);
+    console.log("loader in useEffect ", loader, managersByCostcenterList);
   }, [loader]);
   useEffect(() => {
     if (
@@ -263,16 +266,16 @@ const EmpResignation = () => {
         setReasonOfSepration("");
         setEmailId(user.personalEmail);
         if (
-          managerList &&
-          managerList &&
-          managerList !== null &&
-          managerList !== undefined &&
-          Object.keys(managerList).length !== 0
+          managersByCostcenterList &&
+          managersByCostcenterList &&
+          managersByCostcenterList !== null &&
+          managersByCostcenterList !== undefined &&
+          Object.keys(managersByCostcenterList).length !== 0
         ) {
-          let managerNames = managerList.filter(
+          let managerNames = managersByCostcenterList.filter(
             (j) => j.employeeId === user.managerId
           );
-          console.log("managerNames", managerNames, managerList);
+          console.log("managerNames", managerNames, managersByCostcenterList);
           if (
             managerNames &&
             managerNames !== null &&
