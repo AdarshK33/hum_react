@@ -91,9 +91,9 @@ export const DocumentManagementProvider = (props) => {
       });
   };
 
-  const downloadModuleDoc = (docName) => {
+  const downloadModuleDoc = (empId,docName) => {
     client
-      .get(`/api/v1/document/download?name=${docName}`, {
+      .get(`/api/v1/document/download/${empId}?name=${docName}`, {
         responseType: "blob",
       })
       .then((response) => {

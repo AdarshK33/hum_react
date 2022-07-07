@@ -11,7 +11,7 @@ const DocsListTableBody = ({ doc, index,EmployeeId }) => {
   const downloadDoc = (e) => {
     e.preventDefault()
     const docName = e.target.getAttribute("data-doc");
-    downloadModuleDoc(docName,EmployeeId);
+    downloadModuleDoc(EmployeeId,doc);
   };
 
   return (
