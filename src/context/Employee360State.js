@@ -24,6 +24,9 @@ const initial_state = {
   teamPerformanceData: {},
   employeeMyTeam:[],
   employeeAllTeam:[],
+  total: {},
+  data: [],
+
 };
 
 export const Employee360Context = createContext();
@@ -421,24 +424,40 @@ const RosterMonthSearchYear =()=>{
         console.log(error,"Error in getEmployeeMyTeam ./context/Employee360state.js");
       });
   };
-  const getEmployeeAllTeam = (employeeId) => {
+  const getEmployeeAllTeam = (page,employeeId,key='all', size = 10 ,) => {
     //All TEAM //employeeID
+   
+    // employee/360/view/all-team/employeeId?page=1&size=10&key=all&employeeId=DSI004706
     setClusterLoader(true);
     client
-      .get("/api/v1/employee/360/view/all-team/employeeId?employeeId="+employeeId)
+      .get(
+        "/api/v1/employee/360/view/all-team/employeeId?page=" +
+          page +
+          "&size=" +
+          size +
+          "&key=" +
+          key+
+          "&employeeId=" +
+          employeeId
+      )
       .then((response) => {
-        state.employeeAllTeam = response.data.data;
+        state.employeeAllTeam = response.data.data.data.content;
+        state.data = response.data.data;
+        state.total = state.data.total;
         setClusterLoader(false);
         return dispatch({
           type: "EMPLOYEE_All_TEAM",
           payload: state.employeeAllTeam,
+          loader: loader,
+          data: state.data,
+          total: state.total,
         });
       })
       .catch((error) => {
         console.log(error,"Error in getEmployeeAllTeam ./context/Employee360state.js");
       });
   };
-
+ 
 
 
   return (
@@ -486,8 +505,10 @@ const RosterMonthSearchYear =()=>{
         teamUnPlannedLeaves: state.teamUnPlannedLeaves,
         teamPlannedLeaves: state.teamPlannedLeaves,
         employeeMyTeam: state.employeeMyTeam,
-        employeeAllTeam: state.employeeAllTeam
-
+        employeeAllTeam: state.employeeAllTeam,
+        total: state.total,
+        data: state.total,
+        first: state.first
       }}
     >
       {children}

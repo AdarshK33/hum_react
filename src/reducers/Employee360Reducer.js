@@ -36,7 +36,13 @@ const GroupReducer = (state, action) => {
     case "EMPLOYEE_MY_TEAM":
             return { ...state, employeeMyTeam: action.payload };    
     case "EMPLOYEE_All_TEAM":
-            return { ...state, employeeAllTeam: action.payload };    
+            return { 
+              ...state, 
+              employeeAllTeam: action.payload,
+              loader: action.loader,
+              data: action.data,
+              total: action.total,
+               };    
         
     default:
       return state;

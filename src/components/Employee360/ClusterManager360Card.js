@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import Chart from "react-google-charts";
 import { Row, Col, Form, Cards, NavItem } from "react-bootstrap";
 import { Edit2, Eye, Search, Download } from "react-feather";
@@ -10,6 +10,11 @@ import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import LoaderIcon from "../Loader/LoaderIcon";
 import { AppContext } from "../../context/AppState";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import Pagination from "react-js-pagination";
+
+
+
 
 const ClusterCard = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -25,19 +30,30 @@ const ClusterCard = () => {
     getEmployeeMyTeam,
     employeeMyTeam,
     getEmployeeAllTeam,
-    employeeAllTeam
+    employeeAllTeam,
+    total
 
   } = useContext(Employee360Context);
   
 const { user } = useContext(AppContext);
+const employeeMyTeamRef = useRef(null);
+const employeeAllTeamRef = useRef(null);
+
+
 // user.employeeId
-// console.log("eeeeeeeeee",employeeAllTeam)
+ console.log("eeeeeeeeee",employeeAllTeam)
+ console.log("ttt",total)
+
 
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [directTeamArr, setDirectTeamArr] = useState([]);
   const [searchInputDirect, setSearchInputDirect] = useState("");
+
+
+  const [pageCount, setPageCount] = useState(1);
+  const [currentRecords, setCurrentRecords] = useState([]);
   // useEffect(() => {
   //   // my Team data
   //   console.log("cccc",clusterDirect)
@@ -64,13 +80,18 @@ const { user } = useContext(AppContext);
 
   useEffect(() => {
     ClusterView(); //ClusterData
+   
+    if( user.employeeId !== null &&
+      user.employeeId !== undefined){
     getEmployeeMyTeam(user.employeeId); //MY team  //employeeMyTeam
+    getEmployeeAllTeam(pageCount,user.employeeId);// ALL team //employeeAllTeam
+
+    }
     // ClusterDirectTeam("all"); //MY team //clusterDirect
-    getEmployeeAllTeam(user.employeeId);// ALL team //employeeAllTeam
-    ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
+    // ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
   }, []);
   // console.log("ClusterData", ClusterData);
-  // console.log("ClusterEmpList", ClusterEmpList);
+  // console.log("ClusterEmpList", ClusterEmpList); 
   // console.log("clusterDirect", clusterDirect);
   // console.log("directTeamArr", directTeamArr);
    useEffect(() => {
@@ -107,20 +128,46 @@ const { user } = useContext(AppContext);
 
   const searchDataHandler = () => {
      {/* all Team */}
-    if (searchInput !== "") {
-      ClusterSearchByEmployeeName("all", searchInput);
+    const searchText = employeeAllTeamRef.current.getInput();
+    setSearchInput([searchText.value]);
+    if (searchText.value !== "") {
+      ClusterSearchByEmployeeName("all", searchText.value,pageCount);
     } else {
-      ClusterSearchByEmployeeName("all", "all");
+      ClusterSearchByEmployeeName("all", "all",pageCount);
     }
   };
   const searchDataHandlerDirect = () => {
-    // my team
-    if (searchInputDirect !== "") {
-      ClusterDirectTeam(searchInputDirect);
+    // my team 
+    const searchText = employeeMyTeamRef.current.getInput();
+    setSearchInputDirect([searchText.value]);
+    if (searchText.value !== "") {
+      ClusterDirectTeam(searchText.value);
     } else {
       ClusterDirectTeam("all");
     }
   };
+
+  /*-----------------Pagination------------------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = total;
+  const pageRange = 5;
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+
+  const handlePageChange = (pageNumber) => {
+    setPageCount(pageNumber);
+    setCurrentPage(pageNumber);
+    if (searchInput !== "") {
+      getEmployeeAllTeam(pageNumber ,user.employeeId);
+    } else {
+      getEmployeeAllTeam(pageNumber ,user.employeeId);
+    }
+    setCurrentRecords(employeeAllTeam);
+  };
+
+  /*-----------------Pagination------------------*/
   return (
     <Fragment>
       <div className="tabsHeading">
@@ -160,14 +207,33 @@ const { user } = useContext(AppContext);
                       }}
                     >
                       {/* My Team */}
-                      <Form.Control
+                      {/* <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
                         value={searchInputDirect}
                         placeholder="Search Employee Name/ID"
                         onChange={(e) => setSearchInputDirect(e.target.value)}
                         className="form-control searchButton"
+                          <Search
+                        className="search-icon mr-1"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandlerDirect}
                       />
+                      /> */}
+                                      <Typeahead
+                                        id="_empSearchId"
+                                        name='EmpName'
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                        // labelKey='firstName'
+                                        type="text"
+                                        ref={employeeMyTeamRef}
+                                        options={employeeMyTeam}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        placeholder="Search Employee Name/ID"
+                                        selected={''}
+                                        style={{ border: "1px solid #006ebb" }}
+                                      />
                       <Search
                         className="search-icon mr-1"
                         style={{ color: "#313131" }}
@@ -314,7 +380,7 @@ const { user } = useContext(AppContext);
                       style={{ marginTop: "7px", marginLeft: "-13px" }}
                     >
                        {/*All Team */}
-                      <Form.Control
+                      {/* <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
                         value={searchInput}
@@ -323,6 +389,25 @@ const { user } = useContext(AppContext);
                         className="form-control searchButton"
                       />
                       <Search
+                        className="search-icon mr-1"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandler}
+                      /> */}
+                                       <Typeahead
+                                        id="_empAllSearchId"
+                                        name='allEmpName'
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                        // labelKey='firstName'
+                                        type="text"
+                                        ref={employeeAllTeamRef}
+                                        options={employeeAllTeam}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        placeholder="Search Employee Name/ID"
+                                        selected={''}
+                                        style={{ border: "1px solid #006ebb" }}
+                                      />
+                                       <Search
                         className="search-icon mr-1"
                         style={{ color: "#313131" }}
                         onClick={searchDataHandler}
@@ -438,7 +523,21 @@ const { user } = useContext(AppContext);
                       )}
                     </ScrollArea>
                   )}{" "}
+                     {employeeAllTeam !== null && employeeAllTeam !== undefined && (
+        <Pagination
+          itemClass="page-item"
+          linkClass="page-link"
+          activePage={currentPage}
+           itemsCountPerPage={recordPerPage}
+          totalItemsCount={totalRecords}
+          pageRangeDisplayed={pageRange}
+          onChange={handlePageChange}
+          firstPageText="First"
+          lastPageText="Last"
+        />
+      )}
                 </Fragment>
+                
               );
 
             default:
@@ -446,7 +545,7 @@ const { user } = useContext(AppContext);
           }
         })()}
       </div>
-
+   
       {/* <Row style={{ marginTop: "1rem", marginLeft: "1rem" }}> */}
     </Fragment>
   );
