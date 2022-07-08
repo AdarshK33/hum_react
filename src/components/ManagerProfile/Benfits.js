@@ -67,7 +67,7 @@ const Benfits = () => {
       <Row style={{ marginBottom: "2rem" }}>
         <Container fluid className="container-accordion">
           <Accordion preExpanded={["a"]}>
-            {rolePermission === "admin" ? (
+            {/* {rolePermission === "admin" ? ( */}
               <AccordionItem uuid="a">
                 <AccordionItemHeading>
                   <AccordionItemButton>Insurance</AccordionItemButton>
@@ -76,9 +76,9 @@ const Benfits = () => {
                   <Insurance />
                 </AccordionItemPanel>
               </AccordionItem>
-            ) : (
+            {/* ) : (
               ""
-            )}
+            )} */}
 
             <AccordionItem>
               <AccordionItemHeading>

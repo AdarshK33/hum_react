@@ -379,7 +379,7 @@ const RegularTransferAcceptance = () => {
             <TransferInitationLetter transferId={initiationTransferId} />
             <br></br>
             <Row>
-              {showSignature ? (
+              {/* {showSignature ? (
                 <>
                   <br></br>
                   <img
@@ -399,7 +399,7 @@ const RegularTransferAcceptance = () => {
                     Add digital signature
                   </button>
                 </>
-              )}
+              )} */}
             </Row>
             {showSignature && !previewTransferLetter && (
               <Row>
@@ -684,13 +684,13 @@ const RegularTransferAcceptance = () => {
                               previewTransferLetter &&
                               reject === false && (
                                 <div className="preview-section">
-                                  <br></br>
+                                  {/* <br></br>
                                   <br></br>
                                   <img
                                     src={calendarImage}
                                     alt="calendar"
                                     width="200px"
-                                  />
+                                  /> */}
                                   <br></br>
                                   <button
                                     disabled={letterSent}
