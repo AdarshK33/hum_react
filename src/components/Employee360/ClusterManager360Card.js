@@ -41,8 +41,8 @@ const employeeAllTeamRef = useRef(null);
 
 
 // user.employeeId
- console.log("eeeeeeeeee",employeeAllTeam)
- console.log("ttt",total)
+//  console.log("eeeeeeeeee",employeeAllTeam)
+//  console.log("ttt",total)
 
 
   const [clusterList, setClusterList] = useState([]);
@@ -426,14 +426,9 @@ const employeeAllTeamRef = useRef(null);
                       style={{ zIndex: "0", height: "310px" }}
                     >
                       {/* <div className="circle"></div> */}
-                      {employeeAllTeam !== null &&
-                    employeeAllTeam !== undefined &&
-                      Object.keys(employeeAllTeam).length !== 0 &&
+                      {
                       employeeAllTeam !== null &&
                       employeeAllTeam !== undefined &&
-                      Object.keys(employeeAllTeam).length !== 0 &&
-                      employeeAllTeam !== null &&
-                    
                       Object.keys(employeeAllTeam).length !== 0 ? (
                         <div>
                           {employeeAllTeam.map((item) => {
