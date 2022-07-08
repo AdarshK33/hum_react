@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect,useRef } from "react";
 import Chart from "react-google-charts";
 import { Row, Col, Form, Cards, NavItem } from "react-bootstrap";
 import { Edit2, Eye, Search, Download } from "react-feather";
@@ -9,6 +9,12 @@ import { Employee360Context } from "../../context/Employee360State";
 import ViewTheLetter from "./view";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import LoaderIcon from "../Loader/LoaderIcon";
+import { AppContext } from "../../context/AppState";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+import Pagination from "react-js-pagination";
+
+
+
 
 const ClusterCard = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -21,65 +27,147 @@ const ClusterCard = () => {
     ClusterSearchByEmployeeName,
     ClusterDirectTeam,
     clusterDirect,
+    getEmployeeMyTeam,
+    employeeMyTeam,
+    getEmployeeAllTeam,
+    employeeAllTeam,
+    total
+
   } = useContext(Employee360Context);
+  
+const { user } = useContext(AppContext);
+const employeeMyTeamRef = useRef(null);
+const employeeAllTeamRef = useRef(null);
+
+
+// user.employeeId
+//  console.log("eeeeeeeeee",employeeAllTeam)
+//  console.log("ttt",total)
+
+
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [directTeamArr, setDirectTeamArr] = useState([]);
   const [searchInputDirect, setSearchInputDirect] = useState("");
+
+
+  const [pageCount, setPageCount] = useState(1);
+  const [currentRecords, setCurrentRecords] = useState([]);
+  // useEffect(() => {
+  //   // my Team data
+  //   console.log("cccc",clusterDirect)
+  //   if (
+  //     clusterDirect !== null &&
+  //     clusterDirect !== undefined &&
+  //     Object.keys(clusterDirect).length !== 0
+  //   ) {
+  //     let tempArr = [];
+  //     {
+  //       clusterDirect.map((items) => {
+  //         {
+  //           items.employees.map((item) => {
+  //             tempArr.push(item);
+  //           });
+  //         }
+  //       });
+  //     }
+  //     setDirectTeamArr(tempArr);
+  //   } else {
+  //     setDirectTeamArr([]);
+  //   }
+  // }, [clusterDirect]);
+
   useEffect(() => {
+    ClusterView(); //ClusterData
+   
+    if( user.employeeId !== null &&
+      user.employeeId !== undefined){
+    getEmployeeMyTeam(user.employeeId); //MY team  //employeeMyTeam
+    getEmployeeAllTeam(pageCount,user.employeeId);// ALL team //employeeAllTeam
+
+    }
+    // ClusterDirectTeam("all"); //MY team //clusterDirect
+    // ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
+  }, []);
+  // console.log("ClusterData", ClusterData);
+  // console.log("ClusterEmpList", ClusterEmpList); 
+  // console.log("clusterDirect", clusterDirect);
+  // console.log("directTeamArr", directTeamArr);
+   useEffect(() => {
+    // my Team data
     if (
-      clusterDirect !== null &&
-      clusterDirect !== undefined &&
-      Object.keys(clusterDirect).length !== 0
+      employeeMyTeam !== null &&
+      employeeMyTeam !== undefined &&
+      Object.keys(employeeMyTeam).length !== 0
     ) {
       let tempArr = [];
       {
-        clusterDirect.map((items) => {
+        employeeMyTeam.map((items,itemIndex) => {
           {
-            items.employees.map((item) => {
-              tempArr.push(item);
-            });
+            tempArr.push(items);
+           
           }
         });
+      
       }
       setDirectTeamArr(tempArr);
     } else {
       setDirectTeamArr([]);
     }
-  }, [clusterDirect]);
+  }, [employeeMyTeam]);
+
+
 
   useEffect(() => {
-    ClusterView();
-    ClusterDirectTeam("all");
-    ClusterSearchByEmployeeName("all", "all");
-  }, []);
-  console.log("ClusterData", ClusterData);
-  console.log("ClusterEmpList", ClusterEmpList);
-  console.log("clusterDirect", clusterDirect);
-  console.log("directTeamArr", directTeamArr);
-
-  // useEffect(() => {
-  //   if (cluster !== "") {
-  //     setSearchInput("");
-  //     ClusterSearchByClusterName(cluster);
-  //   }
-  // }, [cluster]);
+    if (cluster !== "") {
+      setSearchInput("");
+      ClusterSearchByClusterName(cluster);
+    }
+  }, [cluster]);
 
   const searchDataHandler = () => {
-    if (searchInput !== "") {
-      ClusterSearchByEmployeeName("all", searchInput);
+     {/* all Team */}
+    const searchText = employeeAllTeamRef.current.getInput();
+    setSearchInput([searchText.value]);
+    if (searchText.value !== "") {
+      ClusterSearchByEmployeeName("all", searchText.value,pageCount);
     } else {
-      ClusterSearchByEmployeeName("all", "all");
+      ClusterSearchByEmployeeName("all", "all",pageCount);
     }
   };
   const searchDataHandlerDirect = () => {
-    if (searchInputDirect !== "") {
-      ClusterDirectTeam(searchInputDirect);
+    // my team 
+    const searchText = employeeMyTeamRef.current.getInput();
+    setSearchInputDirect([searchText.value]);
+    if (searchText.value !== "") {
+      ClusterDirectTeam(searchText.value);
     } else {
       ClusterDirectTeam("all");
     }
   };
+
+  /*-----------------Pagination------------------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = total;
+  const pageRange = 5;
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+
+  const handlePageChange = (pageNumber) => {
+    setPageCount(pageNumber);
+    setCurrentPage(pageNumber);
+    if (searchInput !== "") {
+      getEmployeeAllTeam(pageNumber ,user.employeeId);
+    } else {
+      getEmployeeAllTeam(pageNumber ,user.employeeId);
+    }
+    setCurrentRecords(employeeAllTeam);
+  };
+
+  /*-----------------Pagination------------------*/
   return (
     <Fragment>
       <div className="tabsHeading">
@@ -118,14 +206,34 @@ const ClusterCard = () => {
                         marginLeft: "-13px",
                       }}
                     >
-                      <Form.Control
+                      {/* My Team */}
+                      {/* <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
                         value={searchInputDirect}
                         placeholder="Search Employee Name/ID"
                         onChange={(e) => setSearchInputDirect(e.target.value)}
                         className="form-control searchButton"
+                          <Search
+                        className="search-icon mr-1"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandlerDirect}
                       />
+                      /> */}
+                                      <Typeahead
+                                        id="_empSearchId"
+                                        name='EmpName'
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                        // labelKey='firstName'
+                                        type="text"
+                                        ref={employeeMyTeamRef}
+                                        options={employeeMyTeam}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        placeholder="Search Employee Name/ID"
+                                        selected={''}
+                                        style={{ border: "1px solid #006ebb" }}
+                                      />
                       <Search
                         className="search-icon mr-1"
                         style={{ color: "#313131" }}
@@ -271,7 +379,8 @@ const ClusterCard = () => {
                       md={6}
                       style={{ marginTop: "7px", marginLeft: "-13px" }}
                     >
-                      <Form.Control
+                       {/*All Team */}
+                      {/* <Form.Control
                         type="text"
                         style={{ border: "1px solid #006ebb" }}
                         value={searchInput}
@@ -280,6 +389,25 @@ const ClusterCard = () => {
                         className="form-control searchButton"
                       />
                       <Search
+                        className="search-icon mr-1"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandler}
+                      /> */}
+                                       <Typeahead
+                                        id="_empAllSearchId"
+                                        name='allEmpName'
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={2}
+                                        // labelKey='firstName'
+                                        type="text"
+                                        ref={employeeAllTeamRef}
+                                        options={employeeAllTeam}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        placeholder="Search Employee Name/ID"
+                                        selected={''}
+                                        style={{ border: "1px solid #006ebb" }}
+                                      />
+                                       <Search
                         className="search-icon mr-1"
                         style={{ color: "#313131" }}
                         onClick={searchDataHandler}
@@ -298,17 +426,12 @@ const ClusterCard = () => {
                       style={{ zIndex: "0", height: "310px" }}
                     >
                       {/* <div className="circle"></div> */}
-                      {ClusterEmpList !== null &&
-                      ClusterEmpList !== undefined &&
-                      Object.keys(ClusterEmpList).length !== 0 &&
-                      ClusterEmpList[0] !== null &&
-                      ClusterEmpList[0] !== undefined &&
-                      Object.keys(ClusterEmpList[0]).length !== 0 &&
-                      ClusterEmpList[0].employees !== null &&
-                      ClusterEmpList[0].employees !== undefined &&
-                      Object.keys(ClusterEmpList[0].employees).length !== 0 ? (
+                      {
+                      employeeAllTeam !== null &&
+                      employeeAllTeam !== undefined &&
+                      Object.keys(employeeAllTeam).length !== 0 ? (
                         <div>
-                          {ClusterEmpList[0].employees.map((item) => {
+                          {employeeAllTeam.map((item) => {
                             return (
                               <div className="clusterEmpployeeBox">
                                 <div
@@ -395,7 +518,21 @@ const ClusterCard = () => {
                       )}
                     </ScrollArea>
                   )}{" "}
+                     {employeeAllTeam !== null && employeeAllTeam !== undefined && (
+        <Pagination
+          itemClass="page-item"
+          linkClass="page-link"
+          activePage={currentPage}
+           itemsCountPerPage={recordPerPage}
+          totalItemsCount={totalRecords}
+          pageRangeDisplayed={pageRange}
+          onChange={handlePageChange}
+          firstPageText="First"
+          lastPageText="Last"
+        />
+      )}
                 </Fragment>
+                
               );
 
             default:
@@ -403,7 +540,7 @@ const ClusterCard = () => {
           }
         })()}
       </div>
-
+   
       {/* <Row style={{ marginTop: "1rem", marginLeft: "1rem" }}> */}
     </Fragment>
   );
