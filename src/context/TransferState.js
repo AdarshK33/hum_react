@@ -19,6 +19,7 @@ const initialState = {
   offerLetterData: {},
   countryDetails: [],
   designationDetails: [],
+  regularResponse: ""
 };
 
 export const TransferContext = createContext();
@@ -281,6 +282,35 @@ export const TransferProvider = (props) => {
       });
   };
 
+  const ExportPDFandUploadRegular = (
+    file,
+    employeeId,
+   
+  ) => {
+    const photoFile = file;
+    const formData = new FormData();
+    formData.append("file", photoFile, photoFile.name);
+    formData.append("employeeId", employeeId);
+    // formData.append("fileType",fileType);  
+      uploadRegularTransferForm(formData,employeeId)
+      // current selected ID
+  };
+
+  const uploadRegularTransferForm = (formData,employeeId) => {
+    console.log("base64...........", formData);
+    return (
+      client.post(`api/v1/transfer/upload?empId=${employeeId}`,formData)
+        .then((response) => {
+          console.log(response);
+          state.regularResponse = response.data.data;
+          return dispatch({ type: "REGULAR_BASE64_UPLOAD", payload: state.regularResponse });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+
   return (
     <TransferContext.Provider
       value={{
@@ -315,6 +345,9 @@ export const TransferProvider = (props) => {
         designationDetails: state.designationDetails,
         setLetterViewing,
         letterView: letterView,
+        uploadRegularTransferForm,
+        ExportPDFandUploadRegular,
+        regularResponse: state.regularResponse
       }}
     >
       {props.children}

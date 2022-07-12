@@ -129,6 +129,10 @@ const TransferReducer = (state, action) => {
         ...state,
         designationDetails: [],
       };
+      case "REGULAR_BASE64_UPLOAD":
+        return { ...state, regularResponse: action.payload };  
+    
+  
     default:
       return state;
   }

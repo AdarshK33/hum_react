@@ -15,6 +15,10 @@ import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 
+import jsPDF from "jspdf";
+import pdfMake from "pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import htmlToPdfmake from "html-to-pdfmake";
 
 const RegularTransfer = () => {
   const {
@@ -33,7 +37,11 @@ const RegularTransfer = () => {
     createTransferInitiation,
     initiationStatus,
     initiationTransferId,
+    transferData, loader, regularResponse,
+    ExportPDFandUploadRegular,
+    uploadRegularTransferForm,
   } = useContext(TransferContext);
+  
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
     const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
@@ -228,17 +236,19 @@ const RegularTransfer = () => {
     setTransferErrMsg("");
   };
 
-  const searchInputHandler = (e) => {
-    const searchText = employeeRef.current.getInput();
+  // const searchInputHandler = (e) => {
+  //   const searchText = employeeRef.current.getInput();
    
-    setSearchInput(searchText.value);
-    setEmpErrMsg("");
- 
-  };
+   
+  // };
 
   const searchValueHandler = () => {
     const searchText = employeeRef.current.getInput();
-     setSearchValue(searchText.value);
+    setSearchInput(searchText.value);
+    setSearchValue(searchText.value);
+    setEmpErrMsg("");
+ 
+    
   };
 
   const departmentChangeHandler = (e) => {
@@ -350,8 +360,37 @@ const RegularTransfer = () => {
   const addDigitalSignature = () => setShowSignature(true);
 
   const handleTransferLetterModalClose = () => {
-    setShowInitiationLetter(false);
+    const doc = new jsPDF();
+    //get table html
+    const pdfTable = document.getElementById("regular");
+    //html to pdf format
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+
+    const documentDefinition = { content: html };
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    // pdfMake.createPdf(documentDefinition).open();
+    const pdfDocGenerator = pdfMake.createPdf(documentDefinition);
+    pdfDocGenerator.getBuffer((buffer) => {
+      var blobStore = new Blob([buffer], { type: "application/pdf" });
+      blobStore.name = "regular.pdf";
+      const data = {
+        dsiType: "regular",
+        fileType: 24,
+      };
+      console.log("bbbbbbbbbbbb",blobStore)
+
+      ExportPDFandUploadRegular(
+        blobStore,
+        // props.data.candidateId
+        // user.employeeId,
+        transferData.currentEmployeeId
+      );
+      setShowInitiationLetter(false);
     setPreviewTransferLetter(true);
+        });
+   
+
+   
   };
 
   const showTransferLetterModal = (e) => {
@@ -660,7 +699,7 @@ const RegularTransfer = () => {
               </>
             )}
           </Row> */}
-          { !previewTransferLetter && (
+          { !previewTransferLetter ? (
               <Row style={{textAlign:"center"}}>
                 <Col sm={{ span: 5, offset: 4 }}>
                   <Button
@@ -671,6 +710,17 @@ const RegularTransfer = () => {
                   </Button>
                 </Col>
               </Row>
+            ):(
+              <Row style={{textAlign:"center"}}>
+              <Col sm={{ span: 5, offset: 4 }}>
+                <Button
+                  variant="primary"
+                  onClick={handleTransferLetterModalClose}
+                >
+                  Save 
+                </Button>
+              </Col>
+            </Row>
             )}
         </Modal.Body>
       </Modal>
@@ -718,23 +768,30 @@ const RegularTransfer = () => {
                                         minLength={2}
                                         ref={employeeRef}
                                         // labelKey='firstName'
-                                        onChange={searchInputHandler}
+                                        // onChange={searchInputHandler}
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
                                         style={
                                           empErrMsg
                                             ? { borderColor: "red" }
                                             : { borderRadius: "5px" }
                                         }
                                       />
-                                        <Search
-                                        className="search-icon mr-1"
-                                        style={{ color: "#313131" }}
-                                        onClick={searchValueHandler}
-                                        />
+                                                                                      
+                                                {searchEmpSelected.length > 0  ? (
 
+                                                <Search
+                                                className="search-icon mr-1"
+                                                style={{ color: "#313131" }}
+                                                onClick={searchValueHandler}
+                                                />
+
+                                                ) : (
+                                                ""
+                                                )}
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>

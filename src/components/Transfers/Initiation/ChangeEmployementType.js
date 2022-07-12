@@ -165,14 +165,16 @@ const { rolePermission } = useContext(PermissionContext);
     }
   }, [initiationEmpData]);
 
-  const searchInputHandler = (e) => {
-    const searchText = employeeRef.current.getInput();
-    setSearchInput(searchText.value);
-    setEmpErrMsg("");
-  };
+  // const searchInputHandler = (e) => {
+  //   const searchText = employeeRef.current.getInput();
+  //   setSearchInput(searchText.value);
+  //   setEmpErrMsg("");
+  // };
 
   const searchValueHandler = () => {
     const searchText = employeeRef.current.getInput();
+    setSearchInput(searchText.value);
+    setEmpErrMsg("");
     setSearchValue(searchText.value);
   };
 
@@ -637,14 +639,23 @@ const { rolePermission } = useContext(PermissionContext);
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
-                                        onChange={searchInputHandler}
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
+                                        // onChange={searchInputHandler}
                                       />
-                                        <Search
-                                      className="search-icon mr-1"
-                                      style={{ color: "#313131" }}
-                                      onClick={searchValueHandler}
-                                    /> 
+                                    
+                                       {searchEmpSelected.length > 0  ? (
+
+                                    <Search
+                                    className="search-icon"
+                                    style={{ color: "#313131" }}
+                                    onClick={searchValueHandler}
+                                    />
+                                    ) : (
+                                    ""
+                                    )}
+
+
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>

@@ -490,7 +490,6 @@ const ManagerInitiateAction = (props) => {
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();
-    setSearchEmpSelected([searchText.value]);
     setEmpName(searchText.value);
     setState({
       ...state,
@@ -502,15 +501,6 @@ const ManagerInitiateAction = (props) => {
       // searchText.value or EmpName
       searchByCostCenter(searchText.value);
       setCheckForExist(true);
-      if (
-        employeeData &&
-        employeeData &&
-        employeeData !== null &&
-        employeeData !== undefined &&
-        Object.keys(employeeData).length !== 0
-      ) {
-        employeeData.employeeId = 0;
-      }
       //   setFirstClick(true);
     }
   };
@@ -1398,14 +1388,25 @@ e.preventDefault()
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
+                                       
+                                       
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
                                       
                                       />
+                                                                          
+
+                                        {searchEmpSelected.length > 0  ? (
+
                                         <Search
-                                    className="search-icon"
-                                    style={{ color: "#313131" }}
-                                    onClick={searchDataHandler}
-                                  />
+                                        className="search-icon"
+                                        style={{ color: "#313131" }}
+                                        onClick={searchDataHandler}
+                                        />
+                                        ) : (
+                                        ""
+                                        )}
+
                               </Form.Group>
                             )}
                           </div>
