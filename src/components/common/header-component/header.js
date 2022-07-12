@@ -108,7 +108,7 @@ const Header = (props) => {
     state.costChecked = false
     state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department ==="Finance & Legal" || user.department === "Finance" || user.department === "IT"){
+    if(user.department ==="Finance & Legal" || user.department === "Finance" || user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       getUserMenu(user.adminMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length &&user.adminMenus.filter(
@@ -168,7 +168,7 @@ const Header = (props) => {
     // localStorage.setItem("flag", "0");
     // history.push("/employee360");
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
@@ -178,7 +178,7 @@ const Header = (props) => {
       getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
-    user.department === "IT") && 
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
@@ -243,7 +243,7 @@ const Header = (props) => {
     state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       getUserMenu(user.managerMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
@@ -296,7 +296,7 @@ const Header = (props) => {
     // localStorage.setItem("flag", "0");
     // history.push("/employee360")
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
@@ -306,7 +306,7 @@ const Header = (props) => {
       getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
-    user.department === "IT") && 
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
@@ -371,7 +371,7 @@ const Header = (props) => {
     state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       getUserMenu(user.managerMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
@@ -424,7 +424,7 @@ const Header = (props) => {
     // localStorage.setItem("flag", "0");
     // history.push("/employee360"); 
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
@@ -434,7 +434,7 @@ const Header = (props) => {
       getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
-    user.department === "IT") && 
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
@@ -499,7 +499,7 @@ const Header = (props) => {
     state.managerChecked = true
     permissionRoleAccess(localStorage.getItem("loginRole"));
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       getUserMenu(user.managerMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
@@ -553,7 +553,7 @@ const Header = (props) => {
     // history.push("/employee360");
 
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
@@ -563,7 +563,7 @@ const Header = (props) => {
       getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
-    user.department === "IT") && 
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 

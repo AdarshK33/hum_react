@@ -19,7 +19,7 @@ const UserMenu = (props) => {
   const handleMenuListProfile = () => {
     handleClick("My Profile")
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
@@ -29,7 +29,7 @@ const UserMenu = (props) => {
       getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
-    user.department === "IT") && 
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
@@ -80,7 +80,7 @@ const UserMenu = (props) => {
 
   const handleMenuListAdmin = () => {
     handleClick("Admin")
-    if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"){
+    if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       getUserMenu(user.adminMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length && user.adminMenus.filter(
@@ -131,7 +131,7 @@ const UserMenu = (props) => {
   const handleMenuListTeam = () => {
     handleClick("My Team")
     if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       getUserMenu(user.managerMenus);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
