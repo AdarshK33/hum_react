@@ -13,7 +13,7 @@ const Default = () => {
 
     useEffect(() => {
     if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT"){
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
@@ -23,7 +23,7 @@ const Default = () => {
       getUserMenu(departmentList, "profile", user);
     }else if((user.department === "Finance & Legal" ||
     user.department === "Finance" || 
-    user.department === "IT") && 
+    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
     user.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
