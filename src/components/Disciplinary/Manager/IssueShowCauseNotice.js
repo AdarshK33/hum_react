@@ -225,8 +225,7 @@ const IssueShowCauseNotice = () => {
   console.log("disciplinaryEmpSearchData", disciplinaryEmpSearchData);
   const searchDataHandler = () => {
      const searchText = employeeRef.current.getInput();
-    //  console.log("sssssssssss",searchText.value)
-     setSearchEmpSelected([searchText.value]);
+
       setEmpName(searchText.value);
       setState({
         ...state,
@@ -816,15 +815,21 @@ const IssueShowCauseNotice = () => {
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
                                         style={{ borderRadius: "5px" }}
                                     
                                       />
-                               <Search
-                                className="search-icon"
-                                style={{ color: "#313131" }}
-                                onClick={searchDataHandler}
-                              />
+                               {searchEmpSelected.length > 0  ? (
+
+                                    <Search
+                                    className="search-icon"
+                                    style={{ color: "#313131" }}
+                                    onClick={searchDataHandler}
+                                    />
+                                    ) : (
+                                    ""
+                                    )}
                           </Form.Group>
                         </Col>
 

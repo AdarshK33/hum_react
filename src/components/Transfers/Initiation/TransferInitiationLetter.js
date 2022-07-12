@@ -1,12 +1,16 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect,useRef,useState} from "react";
 import moment from "moment";
 import { TransferContext } from "../../../context/TransferState";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 
-const TransferInitationLetter = ({ transferId }) => {
-  const { getTransferData, transferData, loader } = useContext(TransferContext);
+const TransferInitationLetter = ({ transferId,props }) => {
+  const { getTransferData, transferData, loader, regularResponse,
+    ExportPDFandUploadRegular,
+    uploadRegularTransferForm, } = useContext(TransferContext);
+  const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
 
+  const inputRef = useRef(null);
   useEffect(() => {
     if (transferId !== null && transferId !== undefined && transferId !== "") {
       getTransferData(transferId);
@@ -19,6 +23,7 @@ const TransferInitationLetter = ({ transferId }) => {
         <LoaderIcon />
       ) : (
         <Fragment>
+            <div id="regular" ref={inputRef}>
           <p className="">
             {" "}
             Date: <b>{moment().format("DD-MM-YYYY")}</b>
@@ -62,7 +67,8 @@ const TransferInitationLetter = ({ transferId }) => {
                 <p>Authorised Signatory</p>
               </Col>
             </Row> */}
-            <div className="float-right "></div>
+            {/* <div className="float-right "></div> */}
+          </div>
           </div>
         </Fragment>
       )}

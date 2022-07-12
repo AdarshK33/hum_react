@@ -540,19 +540,26 @@ const EntityTransfer = () => {
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
-                                        onChange={searchInputHandler}
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
+                                        // onChange={searchInputHandler}
                                         style={
                                           empErrMsg
                                             ? { borderColor: "red" }
                                             : { borderRadius: "5px" }
                                         }
                                       />
-                                         <Search
-                                        className="search-icon mr-1"
-                                        style={{ color: "#313131" }}
-                                        onClick={searchValueHandler}
-                                      /> 
+                                       {searchEmpSelected.length > 0  ? (
+
+                                              <Search
+                                              className="search-icon mr-1"
+                                              style={{ color: "#313131" }}
+                                              onClick={searchValueHandler}
+                                              />
+
+                                              ) : (
+                                              ""
+                                              )}
             {empErrMsg !== "" && (
               <span className="text-danger">{empErrMsg}</span>
             )}

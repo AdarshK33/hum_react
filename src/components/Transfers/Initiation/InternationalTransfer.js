@@ -169,14 +169,15 @@ const { rolePermission } = useContext(PermissionContext);
     initiationStatus === true ? setModalShow(true) : setModalShow(false);
   }, [initiationStatus]);
 
-  const searchInputHandler = (e) => {
-    const searchText = employeeRef.current.getInput();
-    setSearchInput(searchText.value);
-    setEmpErrMsg("");
-  };
+  // const searchInputHandler = (e) => {
+  //   const searchText = employeeRef.current.getInput();
+   
+  // };
 
   const searchValueHandler = () => {
     const searchText = employeeRef.current.getInput();
+    setSearchInput(searchText.value);
+    setEmpErrMsg("");
     setSearchValue(searchText.value);
     
   };
@@ -492,22 +493,29 @@ const { rolePermission } = useContext(PermissionContext);
                                         minLength={2}
                                         ref={employeeRef}
                                         // labelKey='firstName'
-                                        onChange={searchInputHandler}
+                                        // onChange={searchInputHandler}
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
                                         style={
                                           empErrMsg
                                             ? { borderColor: "red" }
                                             : { borderRadius: "5px" }
                                         }
                                       />
-                                      <Search
-                                              className="search-icon mr-1"
-                                              style={{ color: "#313131" }}
-                                              onClick={searchValueHandler}
-                                            />
+                                     {searchEmpSelected.length > 0  ? (
+
+                                    <Search
+                                    className="search-icon mr-1"
+                                    style={{ color: "#313131" }}
+                                    onClick={searchValueHandler}
+                                    />
+
+                                    ) : (
+                                    ""
+                                    )}
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>

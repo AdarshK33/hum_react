@@ -13,9 +13,6 @@ import { AppContext } from "../../context/AppState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import Pagination from "react-js-pagination";
 
-
-
-
 const ClusterCard = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const {
@@ -41,7 +38,7 @@ const employeeAllTeamRef = useRef(null);
 
 
 // user.employeeId
-//  console.log("eeeeeeeeee",employeeAllTeam)
+//console.log("eeeeeeeeee",employeeAllTeam)
 //  console.log("ttt",total)
 
 
@@ -50,6 +47,8 @@ const employeeAllTeamRef = useRef(null);
   const [searchInput, setSearchInput] = useState("");
   const [directTeamArr, setDirectTeamArr] = useState([]);
   const [searchInputDirect, setSearchInputDirect] = useState("");
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+
 
 
   const [pageCount, setPageCount] = useState(1);
@@ -83,8 +82,8 @@ const employeeAllTeamRef = useRef(null);
    
     if( user.employeeId !== null &&
       user.employeeId !== undefined){
-    getEmployeeMyTeam(user.employeeId); //MY team  //employeeMyTeam
-    getEmployeeAllTeam(pageCount,user.employeeId);// ALL team //employeeAllTeam
+    getEmployeeMyTeam('all'); //MY team  //employeeMyTeam
+    getEmployeeAllTeam(pageCount);// ALL team //employeeAllTeam
 
     }
     // ClusterDirectTeam("all"); //MY team //clusterDirect
@@ -160,9 +159,9 @@ const employeeAllTeamRef = useRef(null);
     setPageCount(pageNumber);
     setCurrentPage(pageNumber);
     if (searchInput !== "") {
-      getEmployeeAllTeam(pageNumber ,user.employeeId);
+      getEmployeeAllTeam(pageNumber,searchInput);
     } else {
-      getEmployeeAllTeam(pageNumber ,user.employeeId);
+      getEmployeeAllTeam(pageNumber);
     }
     setCurrentRecords(employeeAllTeam);
   };
@@ -231,14 +230,22 @@ const employeeAllTeamRef = useRef(null);
                                         options={employeeMyTeam}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search Employee Name/ID"
-                                        selected={''}
+                                    
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
                                         style={{ border: "1px solid #006ebb" }}
                                       />
-                      <Search
-                        className="search-icon mr-1"
-                        style={{ color: "#313131" }}
-                        onClick={searchDataHandlerDirect}
-                      />
+                    
+                         {searchEmpSelected.length > 0  ? (
+
+<Search
+className="search-icon mr-1"
+style={{ color: "#313131" }}
+onClick={searchDataHandlerDirect}
+/>
+) : (
+""
+)}
                     </Col>
                   </Row>
                   {clusterLoader ? (
@@ -431,7 +438,8 @@ const employeeAllTeamRef = useRef(null);
                       employeeAllTeam !== undefined &&
                       Object.keys(employeeAllTeam).length !== 0 ? (
                         <div>
-                          {employeeAllTeam.map((item) => {
+                        
+                          {employeeAllTeam.data.map((item) => {
                             return (
                               <div className="clusterEmpployeeBox">
                                 <div
