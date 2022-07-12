@@ -45,13 +45,16 @@ const employeeAllTeamRef = useRef(null);
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
   const [searchInput, setSearchInput] = useState("");
-  const [directTeamArr, setDirectTeamArr] = useState([]);
-  const [searchInputDirect, setSearchInputDirect] = useState("");
-  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+  const [directTeamArr, setDirectTeamArr] = useState([]);//my team data
+ 
+  const [searchMyTeamSelected, setSearchMyTeamSelected] = useState("");
+  const [searchAllTeamSelected, setSearchAllTeamSelected] = useState("");
+
+  // console.log("sssssssssss",searchMyTeamSelected)
 
 
 
-  const [pageCount, setPageCount] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   // useEffect(() => {
   //   // my Team data
@@ -79,13 +82,10 @@ const employeeAllTeamRef = useRef(null);
 
   useEffect(() => {
     ClusterView(); //ClusterData
-   
-    if( user.employeeId !== null &&
-      user.employeeId !== undefined){
     getEmployeeMyTeam('all'); //MY team  //employeeMyTeam
-    getEmployeeAllTeam(pageCount);// ALL team //employeeAllTeam
+    getEmployeeAllTeam(pageCount,'all');// ALL team //employeeAllTeam
 
-    }
+   
     // ClusterDirectTeam("all"); //MY team //clusterDirect
     // ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
   }, []);
@@ -116,7 +116,24 @@ const employeeAllTeamRef = useRef(null);
     }
   }, [employeeMyTeam]);
 
+  useEffect(() => {
+    if ( employeeAllTeam!== null && employeeAllTeam !== undefined) {
+      setCurrentRecords(employeeAllTeam);
+    }
+   
+  }, [currentRecords]);
 
+useEffect(() => {
+  if (searchAllTeamSelected.length== 0) {
+    getEmployeeAllTeam(pageCount,'all');
+  } 
+}, [searchAllTeamSelected]);
+
+useEffect(() => {
+  if (searchMyTeamSelected.length== 0) {
+    getEmployeeMyTeam('all');
+  } 
+}, [searchMyTeamSelected]);
 
   useEffect(() => {
     if (cluster !== "") {
@@ -127,22 +144,26 @@ const employeeAllTeamRef = useRef(null);
 
   const searchDataHandler = () => {
      {/* all Team */}
+   
     const searchText = employeeAllTeamRef.current.getInput();
-    setSearchInput([searchText.value]);
-    if (searchText.value !== "") {
-      ClusterSearchByEmployeeName("all", searchText.value,pageCount);
-    } else {
-      ClusterSearchByEmployeeName("all", "all",pageCount);
+    if (searchAllTeamSelected.length > 0) {
+      // ClusterSearchByEmployeeName("all", searchText.value,pageCount);
+      getEmployeeAllTeam(pageCount,searchText.value);
+     } 
+     else {
+      // ClusterSearchByEmployeeName("all", "all",pageCount);
+      getEmployeeAllTeam(pageCount,'all');
     }
   };
+
   const searchDataHandlerDirect = () => {
     // my team 
     const searchText = employeeMyTeamRef.current.getInput();
-    setSearchInputDirect([searchText.value]);
-    if (searchText.value !== "") {
-      ClusterDirectTeam(searchText.value);
-    } else {
-      ClusterDirectTeam("all");
+    if (searchMyTeamSelected.length>0) {
+      getEmployeeMyTeam(searchText.value);
+    } 
+    else {
+      getEmployeeMyTeam("all");
     }
   };
 
@@ -158,10 +179,10 @@ const employeeAllTeamRef = useRef(null);
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber);
     setCurrentPage(pageNumber);
-    if (searchInput !== "") {
-      getEmployeeAllTeam(pageNumber,searchInput);
+    if (searchAllTeamSelected.length> 0) {
+      getEmployeeAllTeam(pageNumber,searchAllTeamSelected);
     } else {
-      getEmployeeAllTeam(pageNumber);
+      getEmployeeAllTeam(pageNumber,"all");
     }
     setCurrentRecords(employeeAllTeam);
   };
@@ -230,22 +251,21 @@ const employeeAllTeamRef = useRef(null);
                                         options={employeeMyTeam}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search Employee Name/ID"
-                                    
-                                        onChange={setSearchEmpSelected}
-                                        selected={searchEmpSelected}
+                                        onChange={setSearchMyTeamSelected}
+                                        selected={searchMyTeamSelected}
                                         style={{ border: "1px solid #006ebb" }}
                                       />
                     
-                         {searchEmpSelected.length > 0  ? (
+                                {searchMyTeamSelected.length > 0  ? (
 
-<Search
-className="search-icon mr-1"
-style={{ color: "#313131" }}
-onClick={searchDataHandlerDirect}
-/>
-) : (
-""
-)}
+                                      <Search
+                                      className="search-icon mr-1"
+                                      style={{ color: "#313131" }}
+                                      onClick={searchDataHandlerDirect}
+                                      />
+                                      ) : (
+                                      ""
+                                      )}
                     </Col>
                   </Row>
                   {clusterLoader ? (
@@ -400,25 +420,33 @@ onClick={searchDataHandlerDirect}
                         style={{ color: "#313131" }}
                         onClick={searchDataHandler}
                       /> */}
-                                       <Typeahead
-                                        id="_empAllSearchId"
-                                        name='allEmpName'
+
+                                         <Typeahead
+                                        id="_empSearchId"
+                                        name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
                                         // labelKey='firstName'
                                         type="text"
                                         ref={employeeAllTeamRef}
                                         options={employeeAllTeam}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search Employee Name/ID"
-                                        selected={''}
+                                        onChange={setSearchAllTeamSelected}
+                                        selected={searchAllTeamSelected}
                                         style={{ border: "1px solid #006ebb" }}
                                       />
-                                       <Search
-                        className="search-icon mr-1"
-                        style={{ color: "#313131" }}
-                        onClick={searchDataHandler}
-                      />
+                    
+                                {searchAllTeamSelected.length > 0  ? (
+
+                                      <Search
+                                      className="search-icon mr-1"
+                                      style={{ color: "#313131" }}
+                                      onClick={searchDataHandler}
+                                      />
+                                      ) : (
+                                      ""
+                                      )}
                     </Col>
                   </Row>
                   {clusterLoader ? (
@@ -439,7 +467,7 @@ onClick={searchDataHandlerDirect}
                       Object.keys(employeeAllTeam).length !== 0 ? (
                         <div>
                         
-                          {employeeAllTeam.data.map((item) => {
+                          {employeeAllTeam.map((item) => {
                             return (
                               <div className="clusterEmpployeeBox">
                                 <div
