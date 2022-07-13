@@ -732,14 +732,14 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Highest Education
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 7 ? (
                           <p>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Relieving Letter
                             </span>
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                             <span
                               style={{
                                 color: "#47ef47",
@@ -754,14 +754,14 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Latest play slip
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 9 ? (
                           <p>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               OfferLetter
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 10 ? (
                           <p>
@@ -789,7 +789,7 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               DisabilityDoc
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 15 ? (
                           <p>
