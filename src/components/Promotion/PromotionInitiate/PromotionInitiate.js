@@ -94,6 +94,8 @@ const PromotionInitiate = () => {
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
   const [reportManager, setReportManager] = useState();
   
+  const [searchSelected, setSearchSelected] = useState("");
+
   // console.log("ssssssssssss",searchEmpSelected);
   const {
     employeeData,
@@ -563,9 +565,9 @@ const PromotionInitiate = () => {
     );
     setState({ ...state, salaryEffectiveDate: AdjusteddateValue });
   };
+  
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();
-     setSearchEmpSelected([searchText.value]);
      setEmpName(searchText.value);
      setState({
        ...state,
@@ -574,15 +576,7 @@ const PromotionInitiate = () => {
 
     if (searchText.value !== null) {
       searchByCostCenter(searchText.value);
-      if (
-        employeeData &&
-        employeeData &&
-        employeeData !== null &&
-        employeeData !== undefined &&
-        Object.keys(employeeData).length !== 0
-      ) {
-        employeeData.employeeId = 0;
-      }
+    
     }
   };
   const handlePromotionTypeYes = (e) => {
@@ -1079,18 +1073,26 @@ const PromotionInitiate = () => {
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
                                         placeholder="Search.."
-                                        selected={''}
-                                        style={
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
+                                        style={ 
                                           empNameError
                                             ? { borderColor: "red" }
                                             : { borderRadius: "5px" }
                                         }
                                       />
-                                       <Search
-                                      className="search-icon"
-                                      style={{ color: "#313131" }}
-                                      onClick={searchDataHandler}
-                                    />
+                                     
+                                    {searchEmpSelected.length > 0  ? (
+
+                                        <Search
+                                        className="search-icon"
+                                        style={{ color: "#313131" }}
+                                        onClick={searchDataHandler}
+                                      />
+                                  ) : (
+                                   ""
+                                  )}
+
                                   </div>
                                   {empNameError ? (
                                     <p style={{ color: "red" }}>

@@ -407,12 +407,13 @@ const RosterMonthSearchYear =()=>{
         console.log(error);
       });
   };
-  const getEmployeeMyTeam = (managerId) => {
+  const getEmployeeMyTeam = (key) => {
     //MY TEAM //employeeID
     setClusterLoader(true);
     client
-      .get("/api/v1/employee/360/view/my_team/" + managerId)
+      .get("/api/v1/employee/360/view/my_team/{key}?key=" + key)
       .then((response) => {
+        console.log("rrrrrrrrrrrrr",response)
         state.employeeMyTeam = response.data.data;
         setClusterLoader(false);
         return dispatch({
@@ -424,10 +425,10 @@ const RosterMonthSearchYear =()=>{
         console.log(error,"Error in getEmployeeMyTeam ./context/Employee360state.js");
       });
   };
-  const getEmployeeAllTeam = (page,employeeId,key='all', size = 10 ,) => {
+  const getEmployeeAllTeam = (page,key,size = 10) => {
     //All TEAM //employeeID
    
-    // employee/360/view/all-team/employeeId?page=1&size=10&key=all&employeeId=DSI004706
+    //http://huminedev.theretailinsights.co/api/v1/employee/360/view/all-team/employeeId?page=0&size=10&key=DSI000771
     setClusterLoader(true);
     client
       .get(
@@ -436,12 +437,11 @@ const RosterMonthSearchYear =()=>{
           "&size=" +
           size +
           "&key=" +
-          key+
-          "&employeeId=" +
-          employeeId
+          key
       )
       .then((response) => {
-        state.employeeAllTeam = response.data.data.data.content;
+       
+        state.employeeAllTeam = response.data.data.data;
         state.data = response.data.data;
         state.total = state.data.total;
         setClusterLoader(false);
