@@ -12,8 +12,15 @@ import LoaderIcon from "../Loader/LoaderIcon";
 import { AppContext } from "../../context/AppState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import Pagination from "react-js-pagination";
+import { useHistory } from "react-router-dom";
+
+import { PermissionContext } from "../../context/PermissionState";
+
 
 const ClusterCard = () => {
+  const history = useHistory();
+  const { rolePermission } = useContext(PermissionContext);
+
   const [tabIndex, setTabIndex] = useState(0);
   const {
     ClusterView,
@@ -49,12 +56,14 @@ const employeeAllTeamRef = useRef(null);
  
   const [searchMyTeamSelected, setSearchMyTeamSelected] = useState("");
   const [searchAllTeamSelected, setSearchAllTeamSelected] = useState("");
+  const [backToEmpList, setBackToEmpList] = useState(1);
+
 
   // console.log("sssssssssss",searchMyTeamSelected)
 
 
 
-  const [pageCount, setPageCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
   // useEffect(() => {
   //   // my Team data
@@ -141,19 +150,23 @@ useEffect(() => {
       ClusterSearchByClusterName(cluster);
     }
   }, [cluster]);
-
+  const GoToCluster = (e) => {
+    history.push("./manager_profile");
+  };
   const searchDataHandler = () => {
      {/* all Team */}
-   
+  //  console.log("callled ",employeeAllTeam)
     const searchText = employeeAllTeamRef.current.getInput();
     if (searchAllTeamSelected.length > 0) {
+      // console.log("callled1",searchText.value);
+      // console.log("callled2",pageCount)
       // ClusterSearchByEmployeeName("all", searchText.value,pageCount);
-      getEmployeeAllTeam(pageCount,searchText.value);
+      getEmployeeAllTeam('0',searchText.value);
      } 
      else {
       // ClusterSearchByEmployeeName("all", "all",pageCount);
       getEmployeeAllTeam(pageCount,'all');
-    }
+     }
   };
 
   const searchDataHandlerDirect = () => {
@@ -181,7 +194,8 @@ useEffect(() => {
     setCurrentPage(pageNumber);
     if (searchAllTeamSelected.length> 0) {
       getEmployeeAllTeam(pageNumber,searchAllTeamSelected);
-    } else {
+    } 
+    else {
       getEmployeeAllTeam(pageNumber,"all");
     }
     setCurrentRecords(employeeAllTeam);
@@ -193,16 +207,18 @@ useEffect(() => {
       <div className="tabsHeading">
         <div
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
-          onClick={(e) => setTabIndex(0)}
+          onClick={() => {setSearchMyTeamSelected([]);setTabIndex(0); }}
         >
-          <label>My Team</label>
+        <label>My Team</label>
         </div>
+        {user.department == "Retail"||rolePermission === "admin" &&
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
-          onClick={(e) => setTabIndex(1)}
+          onClick={() => {setSearchAllTeamSelected([]);setTabIndex(1); }}
         >
-          <label>All Team</label>
+        <label>All Team</label>
         </div>
+        }
       </div>
       <div style={{ width: "100%", height: "100%" }}>
         {(() => {
@@ -241,8 +257,8 @@ useEffect(() => {
                       />
                       /> */}
                                       <Typeahead
-                                        id="_empSearchId"
-                                        name='EmpName'
+                                        id="_myEmpSearchId"
+                                        name='MyEmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
                                         // labelKey='firstName'
@@ -271,6 +287,7 @@ useEffect(() => {
                   {clusterLoader ? (
                     <LoaderIcon />
                   ) : (
+                    <>
                     <ScrollArea
                       speed={0.4}
                       // className="area"
@@ -324,7 +341,7 @@ useEffect(() => {
                                       </p>
                                     </Col>
                                   </Row>
-                                  <Row style={{ marginTop: "-1rem" }}>
+                                  <Row style={{ marginTop: "0rem" }}>
                                     <Col sm={5}>
                                       <label
                                         style={{
@@ -357,6 +374,7 @@ useEffect(() => {
                               </div>
                             );
                           })}
+                          
                         </div>
                       ) : (
                         <h4
@@ -370,6 +388,19 @@ useEffect(() => {
                         </h4>
                       )}
                     </ScrollArea>
+    {!clusterLoader  ? (
+      <div style={{ float: "bottom", textAlign: "center" }}>
+        <label
+          className="itemResult"
+          onClick={(e) => GoToCluster(e)}
+        >
+          View All
+        </label>
+      </div>
+    ) : (
+      ""
+    )}
+                    </>
                   )}{" "}
                 </Fragment>
               );
@@ -422,7 +453,7 @@ useEffect(() => {
                       /> */}
 
                                          <Typeahead
-                                        id="_empSearchId"
+                                        id="_AllEmpSearchId"
                                         name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
@@ -452,6 +483,7 @@ useEffect(() => {
                   {clusterLoader ? (
                     <LoaderIcon />
                   ) : (
+                  
                     <ScrollArea
                       speed={0.4}
                       // className="area"
@@ -507,7 +539,7 @@ useEffect(() => {
                                       </p>
                                     </Col>
                                   </Row>
-                                  <Row style={{ marginTop: "-1rem" }}>
+                                  <Row style={{ marginTop: "0rem" }}>
                                     <Col sm={5}>
                                       <label
                                         style={{
@@ -535,12 +567,34 @@ useEffect(() => {
                                         {item.phone}
                                       </label>
                                     </Col>
+
+
                                   </Row>
                                 </div>
                               </div>
                             );
                           })}
+                                                                <div>
+                                                      {employeeAllTeam !== null  && employeeAllTeam !== undefined && searchAllTeamSelected.length>0  ?(
+                                      
+                                    ""
+                                          ):(
+                                            <Pagination
+                                            itemClass="page-item"
+                                            linkClass="page-link"
+                                            activePage={currentPage}
+                                            itemsCountPerPage={recordPerPage}
+                                            totalItemsCount={totalRecords}
+                                            pageRangeDisplayed={pageRange}
+                                            onChange={handlePageChange}
+                                            firstPageText="First"
+                                            lastPageText="Last"
+                                          />
+                                            )
+                                        }
+                                        </div>
                         </div>
+                        
                       ) : (
                         <h4
                           style={{
@@ -553,20 +607,12 @@ useEffect(() => {
                         </h4>
                       )}
                     </ScrollArea>
-                  )}{" "}
-                     {employeeAllTeam !== null && employeeAllTeam !== undefined && (
-        <Pagination
-          itemClass="page-item"
-          linkClass="page-link"
-          activePage={currentPage}
-           itemsCountPerPage={recordPerPage}
-          totalItemsCount={totalRecords}
-          pageRangeDisplayed={pageRange}
-          onChange={handlePageChange}
-          firstPageText="First"
-          lastPageText="Last"
-        />
-      )}
+                    
+                 
+                  )}
+               
+                  {" "}
+                
                 </Fragment>
                 
               );
