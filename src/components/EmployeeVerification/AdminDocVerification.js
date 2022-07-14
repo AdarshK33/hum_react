@@ -178,15 +178,15 @@ const AdminDocVerfication = () => {
         </Container>
       </Modal>
       <Breadcrumb
-        title="EMPLOYEE DOCUMENT VERFICATION"
-        parent="EMPLOYEE DOCUMENT VERFICATIONE"
+        title="EMPLOYEE DOCUMENT VERIFICATION"
+        parent="EMPLOYEE DOCUMENT VERIFICATION"
       />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div className="OnBoardHeading">
-                <strong>EMPLOYEE DOCUMENT VERFICATION </strong>
+                <strong>EMPLOYEE DOCUMENT VERIFICATION </strong>
               </div>
               <div className="mt-5">
                 <Table className="tableWrapper table table-borderless">

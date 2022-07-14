@@ -140,3 +140,22 @@
     background-color: rgb(223, 28, 28) !important;
   }
   
+  .activeButton{
+    color:white;
+    background-color:"#006EBB" !important;
+  }
+
+  .activeButton:hover{
+    color:white;
+    background-color:"#006EBB" !important;
+  }
+
+  .inactiveButton{
+    color:blue !important;
+    background-color:white !important;
+  }
+
+  .inactiveButton:hover{
+    color:blue !important;
+    background-color:white !important;
+  }

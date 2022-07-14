@@ -40,7 +40,7 @@ const MyPayroll = (props) => {
                         onClick={(e) => setTabIndex(0)}
                       >
                         <label style={{ paddingTop: "5px" }}>
-                          Payroll Till September
+                          Payroll Till Sept 2021
                         </label>
                       </div>
                       <div
@@ -49,7 +49,7 @@ const MyPayroll = (props) => {
                       >
                         <a href="https://idpdecathlon.oxylane.com/idp/startSSO.ping?PartnerSpId=ADPIND" target="_blank">
                         <label style={{ paddingTop: "5px" }}>
-                          Payroll After September
+                          Payroll After Sept 2021
                         </label>
                         </a>
                       </div>

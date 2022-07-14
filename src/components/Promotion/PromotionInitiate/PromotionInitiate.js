@@ -266,6 +266,7 @@ const PromotionInitiate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("state.reportingManagerName",state.reportingManagerName);
     console.log("fixedgross", state.newFixedGross, state.oldFixedGross);
     var empName = state.empName;
     if (empName == "" || empName == null || empName == undefined) {
@@ -373,6 +374,7 @@ const PromotionInitiate = () => {
       reportingManagerName == null ||
       reportingManagerName == undefined
     ) {
+      toast.error("Please select reporting manager")
       setReportingManagerError("Please select reporting manager ");
     } else {
       setReportingManagerError("");
@@ -407,7 +409,7 @@ const PromotionInitiate = () => {
       departmentId !== "" &&
       empName !== "" &&
       effectiveDate !== "" &&
-      //reportingManagerName !== "" &&
+      reportingManagerName !== "" &&
       newDepartment !== null &&
       reason !== null &&
       newFixedGross !== null &&
@@ -415,14 +417,14 @@ const PromotionInitiate = () => {
       departmentId !== null &&
       empName !== null &&
       effectiveDate !== null &&
-      //reportingManagerName !== null &&
+      reportingManagerName !== null &&
       newDepartment !== undefined &&
       reason !== undefined &&
       newFixedGross !== undefined &&
       positionId !== undefined &&
       departmentId !== undefined &&
       effectiveDate !== undefined &&
-      //reportingManagerName !== undefined &&
+      reportingManagerName !== undefined &&
       empName !== undefined &&
       ((state.promotionType == 1 &&
         state.oldFixedGross < state.newFixedGross) ||
