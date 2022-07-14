@@ -111,8 +111,8 @@ const ManagerProfileListing = () => {
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
                 <b>MANAGER PROFILE LIST</b>
-{/* 
-                <div className="job-filter">
+
+                {/* <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
                       className="form-control searchButton"

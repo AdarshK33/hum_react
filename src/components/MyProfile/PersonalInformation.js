@@ -214,7 +214,7 @@ const PersonalInformation = (props) => {
             </label>
             <br />
             <label className="itemResult">
-            {user.actualJoiningDate}
+            {user.actualJoiningDate?user.actualJoiningDate:moment(user.joiningDate).format("DD-MM-YYYY")}
             </label>
           </Col>
           {/* <Col sm={3}>
