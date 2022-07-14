@@ -27,6 +27,8 @@ const DocumentManagementReducer = (state, action) => {
         moduleDocsList: action.payload,
         docsStatus: true,
       };
+      case 'DOCUMENT_EMPLOYEE_DATA':
+        return { ...state, documentEmployeeData: action.payload }
     case "FETCH_MODULES_DOCS_ERR":
       return {
         ...state,

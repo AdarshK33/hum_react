@@ -9,6 +9,7 @@ const initialState = {
   loginRole: "",
   moduleDocsList: {},
   docsStatus: false,
+  documentEmployeeData:[]
 };
 
 export const DocumentManagementContext = createContext();
@@ -50,6 +51,28 @@ export const DocumentManagementProvider = (props) => {
       type: "GET_LOGIN_ROLE",
       payload: userRole,
     });
+  };
+
+  const documentEmployeeList = (costData) => {
+    client
+      .get(
+        "/api/v1/employee/view/costCentre/employee?costCentre=" + costData)
+      .then((response) => {
+        state.documentEmployeeData = response.data.data;
+        if (response.data.data === null) {
+          state.documentEmployeeData = [];
+        } else {
+          state.documentEmployeeData = response.data.data;
+        }
+        console.log("employee id data", state.documentEmployeeData);
+        return dispatch({
+          type: "DOCUMENT_EMPLOYEE_DATA",
+          payload: state.documentEmployeeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const getModuleList = () => {
@@ -118,6 +141,8 @@ export const DocumentManagementProvider = (props) => {
         moduleDocsList: state.moduleDocsList,
         docsStatus: state.docsStatus,
         downloadModuleDoc,
+        documentEmployeeList,
+        documentEmployeeData:state.documentEmployeeData 
       }}
     >
       {props.children}
