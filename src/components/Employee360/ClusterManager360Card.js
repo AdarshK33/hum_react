@@ -12,8 +12,15 @@ import LoaderIcon from "../Loader/LoaderIcon";
 import { AppContext } from "../../context/AppState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import Pagination from "react-js-pagination";
+import { useHistory } from "react-router-dom";
+
+import { PermissionContext } from "../../context/PermissionState";
+
 
 const ClusterCard = () => {
+  const history = useHistory();
+  const { rolePermission } = useContext(PermissionContext);
+
   const [tabIndex, setTabIndex] = useState(0);
   const {
     ClusterView,
@@ -143,7 +150,9 @@ useEffect(() => {
       ClusterSearchByClusterName(cluster);
     }
   }, [cluster]);
-
+  const GoToCluster = (e) => {
+    history.push("./manager_profile");
+  };
   const searchDataHandler = () => {
      {/* all Team */}
   //  console.log("callled ",employeeAllTeam)
@@ -198,16 +207,18 @@ useEffect(() => {
       <div className="tabsHeading">
         <div
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
-          onClick={() => {setTabIndex(0); setSearchAllTeamSelected("")}}
+          onClick={() => {setSearchMyTeamSelected([]);setTabIndex(0); }}
         >
         <label>My Team</label>
         </div>
+        {user.department == "Retail"||rolePermission === "admin" &&
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
-          onClick={() => {setTabIndex(1); setSearchMyTeamSelected("")}}
+          onClick={() => {setSearchAllTeamSelected([]);setTabIndex(1); }}
         >
         <label>All Team</label>
         </div>
+        }
       </div>
       <div style={{ width: "100%", height: "100%" }}>
         {(() => {
@@ -247,7 +258,7 @@ useEffect(() => {
                       /> */}
                                       <Typeahead
                                         id="_myEmpSearchId"
-                                        name='EmpName'
+                                        name='MyEmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
                                         // labelKey='firstName'
@@ -276,6 +287,7 @@ useEffect(() => {
                   {clusterLoader ? (
                     <LoaderIcon />
                   ) : (
+                    <>
                     <ScrollArea
                       speed={0.4}
                       // className="area"
@@ -362,6 +374,7 @@ useEffect(() => {
                               </div>
                             );
                           })}
+                          
                         </div>
                       ) : (
                         <h4
@@ -375,6 +388,19 @@ useEffect(() => {
                         </h4>
                       )}
                     </ScrollArea>
+    {!clusterLoader  ? (
+      <div style={{ float: "bottom", textAlign: "center" }}>
+        <label
+          className="itemResult"
+          onClick={(e) => GoToCluster(e)}
+        >
+          View All
+        </label>
+      </div>
+    ) : (
+      ""
+    )}
+                    </>
                   )}{" "}
                 </Fragment>
               );
@@ -457,6 +483,7 @@ useEffect(() => {
                   {clusterLoader ? (
                     <LoaderIcon />
                   ) : (
+                  
                     <ScrollArea
                       speed={0.4}
                       // className="area"
@@ -567,6 +594,7 @@ useEffect(() => {
                                         }
                                         </div>
                         </div>
+                        
                       ) : (
                         <h4
                           style={{
@@ -579,6 +607,8 @@ useEffect(() => {
                         </h4>
                       )}
                     </ScrollArea>
+                    
+                 
                   )}
                
                   {" "}

@@ -113,7 +113,7 @@ const ManagerDashboard = () => {
     history.push("./document-management");
   };
   const GoToCluster = (e) => {
-    history.push("./cluster/viewcluster");
+    history.push("./manager_profile");
   };
 
   return (
@@ -449,7 +449,8 @@ const ManagerDashboard = () => {
                           <label style={{ marginLeft: "1rem" }}>Team</label>
                         </div>
                         <ClusterCard />
-                        {!clusterLoader ? (
+                    
+                        {/* {!clusterLoader  ? (
                           <div style={{ float: "bottom", textAlign: "center" }}>
                             <label
                               className="itemResult"
@@ -460,7 +461,7 @@ const ManagerDashboard = () => {
                           </div>
                         ) : (
                           ""
-                        )}
+                        )} */}
                       </Card>
                     </Col>
                     {(user.department === "Finance & Legal" ||user.department === "Finance" || 
