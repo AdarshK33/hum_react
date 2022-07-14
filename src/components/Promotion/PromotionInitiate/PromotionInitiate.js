@@ -566,15 +566,15 @@ const PromotionInitiate = () => {
   
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();
+    // let key =searchText.value.split("/")
+    // console.log("aaaaaaaaaaaaaa",key[0])
      setEmpName(searchText.value);
      setState({
        ...state,
-       empName: searchText.value,
+       empName:searchText.value,
      });
-
     if (searchText.value !== null) {
-      searchByCostCenter(searchText.value);
-    
+      searchByCostCenter(searchText.value); 
     }
   };
   const handlePromotionTypeYes = (e) => {
@@ -1048,7 +1048,9 @@ const PromotionInitiate = () => {
                                        
                                         ref={employeeRef}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName} ${option.lastName} ${option.employeeId}`}
+
+                                        // labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}
                                         placeholder="Search.."
                                         onChange={setSearchEmpSelected}
                                         selected={searchEmpSelected}

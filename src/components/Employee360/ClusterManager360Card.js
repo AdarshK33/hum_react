@@ -49,12 +49,14 @@ const employeeAllTeamRef = useRef(null);
  
   const [searchMyTeamSelected, setSearchMyTeamSelected] = useState("");
   const [searchAllTeamSelected, setSearchAllTeamSelected] = useState("");
+  const [backToEmpList, setBackToEmpList] = useState(1);
+
 
   // console.log("sssssssssss",searchMyTeamSelected)
 
 
 
-  const [pageCount, setPageCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
   // useEffect(() => {
   //   // my Team data
@@ -144,16 +146,18 @@ useEffect(() => {
 
   const searchDataHandler = () => {
      {/* all Team */}
-   
+  //  console.log("callled ",employeeAllTeam)
     const searchText = employeeAllTeamRef.current.getInput();
     if (searchAllTeamSelected.length > 0) {
+      // console.log("callled1",searchText.value);
+      // console.log("callled2",pageCount)
       // ClusterSearchByEmployeeName("all", searchText.value,pageCount);
-      getEmployeeAllTeam(pageCount,searchText.value);
+      getEmployeeAllTeam('0',searchText.value);
      } 
      else {
       // ClusterSearchByEmployeeName("all", "all",pageCount);
       getEmployeeAllTeam(pageCount,'all');
-    }
+     }
   };
 
   const searchDataHandlerDirect = () => {
@@ -181,7 +185,8 @@ useEffect(() => {
     setCurrentPage(pageNumber);
     if (searchAllTeamSelected.length> 0) {
       getEmployeeAllTeam(pageNumber,searchAllTeamSelected);
-    } else {
+    } 
+    else {
       getEmployeeAllTeam(pageNumber,"all");
     }
     setCurrentRecords(employeeAllTeam);
@@ -193,15 +198,15 @@ useEffect(() => {
       <div className="tabsHeading">
         <div
           className={tabIndex === 0 ? "activeTab" : "disabledTab"}
-          onClick={(e) => setTabIndex(0)}
+          onClick={() => {setTabIndex(0); setSearchAllTeamSelected("")}}
         >
-          <label>My Team</label>
+        <label>My Team</label>
         </div>
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
-          onClick={(e) => setTabIndex(1)}
+          onClick={() => {setTabIndex(1); setSearchMyTeamSelected("")}}
         >
-          <label>All Team</label>
+        <label>All Team</label>
         </div>
       </div>
       <div style={{ width: "100%", height: "100%" }}>
@@ -241,7 +246,7 @@ useEffect(() => {
                       />
                       /> */}
                                       <Typeahead
-                                        id="_empSearchId"
+                                        id="_myEmpSearchId"
                                         name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
@@ -324,7 +329,7 @@ useEffect(() => {
                                       </p>
                                     </Col>
                                   </Row>
-                                  <Row style={{ marginTop: "-1rem" }}>
+                                  <Row style={{ marginTop: "0rem" }}>
                                     <Col sm={5}>
                                       <label
                                         style={{
@@ -422,7 +427,7 @@ useEffect(() => {
                       /> */}
 
                                          <Typeahead
-                                        id="_empSearchId"
+                                        id="_AllEmpSearchId"
                                         name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
                                         minLength={2}
@@ -507,7 +512,7 @@ useEffect(() => {
                                       </p>
                                     </Col>
                                   </Row>
-                                  <Row style={{ marginTop: "-1rem" }}>
+                                  <Row style={{ marginTop: "0rem" }}>
                                     <Col sm={5}>
                                       <label
                                         style={{
@@ -535,11 +540,32 @@ useEffect(() => {
                                         {item.phone}
                                       </label>
                                     </Col>
+
+
                                   </Row>
                                 </div>
                               </div>
                             );
                           })}
+                                                                <div>
+                                                      {employeeAllTeam !== null  && employeeAllTeam !== undefined && searchAllTeamSelected.length>0  ?(
+                                      
+                                    ""
+                                          ):(
+                                            <Pagination
+                                            itemClass="page-item"
+                                            linkClass="page-link"
+                                            activePage={currentPage}
+                                            itemsCountPerPage={recordPerPage}
+                                            totalItemsCount={totalRecords}
+                                            pageRangeDisplayed={pageRange}
+                                            onChange={handlePageChange}
+                                            firstPageText="First"
+                                            lastPageText="Last"
+                                          />
+                                            )
+                                        }
+                                        </div>
                         </div>
                       ) : (
                         <h4
@@ -553,20 +579,10 @@ useEffect(() => {
                         </h4>
                       )}
                     </ScrollArea>
-                  )}{" "}
-                     {employeeAllTeam !== null && employeeAllTeam !== undefined && (
-        <Pagination
-          itemClass="page-item"
-          linkClass="page-link"
-          activePage={currentPage}
-           itemsCountPerPage={recordPerPage}
-          totalItemsCount={totalRecords}
-          pageRangeDisplayed={pageRange}
-          onChange={handlePageChange}
-          firstPageText="First"
-          lastPageText="Last"
-        />
-      )}
+                  )}
+               
+                  {" "}
+                
                 </Fragment>
                 
               );
