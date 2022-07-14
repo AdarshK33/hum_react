@@ -1048,7 +1048,7 @@ const PromotionInitiate = () => {
                                        
                                         ref={employeeRef}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName} ${option.employeeId}`}
+                                        labelKey={option => `${option.firstName} ${option.lastName}`}
 
                                         // labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}
                                         placeholder="Search.."
