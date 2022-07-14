@@ -22,6 +22,8 @@ const DocumentForm = () => {
     getModuleDocuments,
     docsStatus,
     loader,
+    documentEmployeeList,
+    documentEmployeeData
   } = useContext(DocumentManagementContext);
   const { user } = useContext(AppContext);
   const { AllCostCenter, allCostCenterList } = useContext(OfferContext);
@@ -71,15 +73,15 @@ const DocumentForm = () => {
 
   /* To get the employee list options */
   const employeeOptions = useMemo(() => {
-    return employeeIdList !== null && employeeIdList.length > 0
-      ? employeeIdList.map((item) => {
+    return documentEmployeeData !== null && documentEmployeeData.length > 0
+      ? documentEmployeeData.map((item) => {
           return {
             label: `${item.firstName} - ${item.employeeId}`,
             value: item.employeeId,
           };
         })
       : [];
-  }, [employeeIdList]);
+  }, [documentEmployeeData]);
 
   /* To get the selected cost center value */
   const selectedCostCenterValue = useMemo(() => {
@@ -149,7 +151,8 @@ const DocumentForm = () => {
       selectedCostCenterValue !== "" &&
       loginRole !== "Employee"
     ) {
-      employeeIdData(selectedCostCenterValue);
+      // employeeIdData(selectedCostCenterValue);
+      documentEmployeeList(selectedCostCenterValue);
     }
   }, [selectedCostCenterValue, loginRole]);
 
