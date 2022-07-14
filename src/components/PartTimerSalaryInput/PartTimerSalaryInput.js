@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../common/breadcrumb";
@@ -9,10 +9,14 @@ import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import "./PartTimeSalaryInput.css";
+
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
+
 const PartTimerSalaryInput = () => {
   const [EmpName, setEmpName] = useState();
   const [contractType, setContractType] = useState("");
- 
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+  // const collect = require('collect.js'); 
 
   const [state, setState] = useState({
     empName: "",
@@ -23,6 +27,8 @@ const PartTimerSalaryInput = () => {
     fromDate: null,
 
   });
+  // console.log("nnnnnnnnnnnnnn",state.empName)
+
   const [empNameError, setEmpNameError] = useState(null);
   const [fixedGrossError, setFixedGrossError] = useState(null);
   const [hoursWorkedError, setHoursWorkedError] = useState(null);
@@ -34,24 +40,33 @@ const PartTimerSalaryInput = () => {
   const {
     ViewEmployeeData,employeeData,CreateSalaryInput,createdData
   } = useContext(PartTimeSalaryInputContext);
+  const employeeRef = useRef(null);
+  useEffect(() => {
+    ViewEmployeeData('all');
+  }, []);
 
   useEffect(() => {
+    console.log("callled")
   if (
    employeeData &&
    employeeData !== null &&
    employeeData !== undefined &&
    Object.keys(employeeData).length
  ){
-   state.empName = employeeData.firstName + " " +employeeData.lastName;
-   setEmpName(employeeData.firstName + " " +
-   employeeData.lastName + " / " + employeeData.employeeId)
-   setContractType(employeeData.contractType)
-   state.employeeId = employeeData.employeeId;
-   state.contractType = employeeData.contractType;
+   state.empName = employeeData[0].firstName + " " +employeeData[0].lastName;
+   setEmpName(employeeData[0].firstName + " " +
+   employeeData[0].lastName + " / " + employeeData[0].employeeId)
+   setContractType(employeeData[0].contractType)
+   state.employeeId = employeeData[0].employeeId;
+   state.contractType = employeeData[0].contractType;
+  //  console.log("employeeData", employeeData[0]);
+   state.fixedGross= employeeData[0].fixedGross;
  }
-}, [employeeData]);
-console.log(employeeData,"employeeData",state)
+ 
+ 
+}, [searchEmpSelected,employeeData]);
 
+// console.log("employeeData", employeeData[0].firstName);
   const fromDateHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -70,17 +85,29 @@ console.log(employeeData,"employeeData",state)
   };
 
   const searchDataHandler = () => {
-    if (EmpName !== null) {
-      ViewEmployeeData(EmpName);
-      if (
-        employeeData &&
-        employeeData &&
-        employeeData !== null &&
-        employeeData !== undefined &&
-        Object.keys(employeeData).length !== 0
-      ) {
-        employeeData.employeeId = 0;
-      }
+    // if (EmpName !== null) {
+    //   ViewEmployeeData(EmpName);
+    //   if (
+    //     employeeData &&
+    //     employeeData &&
+    //     employeeData !== null &&
+    //     employeeData !== undefined &&
+    //     Object.keys(employeeData).length !== 0
+    //   ) {
+    //     employeeData.employeeId = 0;
+    //   }
+    // }
+    const searchText = employeeRef.current.getInput();
+     let key =searchText.value.split("/")
+    // console.log("aaaaaaaaaaaaaa",key[0])
+    setEmpName(key[0]);
+    setState({
+      ...state,
+      empName: key[0],
+    });
+    if (searchText.value !== null) {
+      ViewEmployeeData(key[0]);
+
     }
   };
   
@@ -282,7 +309,22 @@ const fixedGrossValidation = () =>{
       };
       CreateSalaryInput(infoData);
       // setSuccessMessage(true)
+      setEmpName()
+      setState({
+        empName: "",
+        employeeId: "",
+        fixedGross: 0,
+        hoursWorked:0,
+        toDate: null,
+        fromDate: null,
+       
+      });
+      setSearchEmpSelected([]);
+      setFromDate(null);
+      setToDate(null);
+      ViewEmployeeData('all');
   }
+
   }
   const handleCloseValue = () => {
     setSuccessMessage(false);
@@ -346,37 +388,70 @@ const fixedGrossValidation = () =>{
                                   &nbsp;&nbsp; {EmpName} &nbsp;{state.employeeId}
                                 </label>
                               ) : (
-                                <Form.Group>
-                                  <div className="faq-form ">
-                                    <input
-                                      className="form-control"
-                                      type="text"
-                                      name="empName"
-                                      // disabled={disabled}
-                                      value={EmpName}
-                                      style={
-                                        empNameError
-                                          ? { borderColor: "red" }
-                                          : { borderRadius: "5px" }
-                                      }
-                                      placeholder="Search.."
-                                      onChange={(e) => changeHandler(e)}
-                                      required
-                                    />
-                                    <Search
-                                      className="search-icon"
-                                      style={{ color: "#313131" }}
-                                      onClick={searchDataHandler}
-                                    />
-                                  </div>
-                                  {empNameError ? (
-                                    <p style={{ color: "red" }}>
-                                      {empNameError}
-                                    </p>
-                                  ) : (
-                                    ""
-                                  )}
-                                </Form.Group>
+                                // <Form.Group>
+                                //   <div className="faq-form ">
+                                //     <input
+                                //       className="form-control"
+                                //       type="text"
+                                //       name="empName"
+                                //       // disabled={disabled}
+                                //       value={EmpName}
+                                //       style={
+                                //         empNameError
+                                //           ? { borderColor: "red" }
+                                //           : { borderRadius: "5px" }
+                                //       }
+                                //       placeholder="Search.."
+                                //       onChange={(e) => changeHandler(e)}
+                                //       required
+                                //     />
+                                //     <Search
+                                //       className="search-icon"
+                                //       style={{ color: "#313131" }}
+                                //       onClick={searchDataHandler}
+                                //     />
+                                //   </div>
+                                //   {empNameError ? (
+                                //     <p style={{ color: "red" }}>
+                                //       {empNameError}
+                                //     </p>
+                                //   ) : (
+                                //     ""
+                                //   )}
+                                // </Form.Group>
+
+                              <>
+                                <Typeahead
+                                id="_empSearchId"
+                                name='EmpName'
+                                filterBy={['firstName', 'lastName', 'employeeId']}
+                                minLength={2}
+                                //  labelKey='firstName'
+                               
+                                ref={employeeRef}
+                                options={employeeData}
+                                 labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}
+                                placeholder="Search.."
+                                onChange={setSearchEmpSelected}
+                                selected={searchEmpSelected}
+                                style={ 
+                                  empNameError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                              />
+                             
+                            {searchEmpSelected.length > 0  ? (
+
+                                <Search
+                                className="search-icon"
+                                style={{ color: "#313131" }}
+                                onClick={searchDataHandler}
+                              />
+                          ) : (
+                           ""
+                          )}
+                          </>
                               )}
                             </div>
                           </Col>
@@ -410,6 +485,7 @@ const fixedGrossValidation = () =>{
                                         type="text"
                                         placeholder=""
                                         required
+                                        disabled
                                         name="fixedGross"
                                         value={state.fixedGross}
                                         onChange={(e) => changeHandler(e)}

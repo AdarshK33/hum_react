@@ -17,18 +17,21 @@ export const PartTimeSalaryInputProvider = (props) => {
   const [loader, setLoader] = useState(false);
 
   const ViewEmployeeData = (key) => {
-    setLoader(true);
+    // http://huminedev.theretailinsights.co/api/v1/employee/parttime_employee_search?key=all
+    setLoader(true); 
     client
       .get("/api/v1/employee/parttime_employee_search?key=" + key)
       .then((response) => {
-        toast.info(response.data.message);
-        console.log(response,"ViewEmployeeData")
-        if(response.data&& Object.keys(response.data).length &&
-        response.data.data&& Object.keys(response.data.data).length){
-          state.employeeData = response.data.data[0];
-        }else{
-        state.employeeData = null;
-        }
+        // toast.info(response.data.message);
+        
+        // if(response.data&& Object.keys(response.data).length &&
+        // response.data.data&& Object.keys(response.data.data).length){
+        //   state.employeeData = response.data.data[0];
+        // }else{
+        // state.employeeData = null;
+        // }
+         state.employeeData = response.data.data;
+        // console.log(response,"ViewEmployeeData")
         setLoader(false);
         return dispatch({
           type: "EMPLOYEE_DATA",
