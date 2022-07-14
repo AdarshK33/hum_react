@@ -282,7 +282,7 @@ const EducationAndWorkDoc = (props) => {
         ) : (
           ""
         )}
-        <Row>
+        {/* <Row>
           <Col sm={8}>
             <label>
               <b>System Generated Appointment Letter :</b>
@@ -328,7 +328,7 @@ const EducationAndWorkDoc = (props) => {
               </button>
             </div>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col sm={8}>
             <label>
