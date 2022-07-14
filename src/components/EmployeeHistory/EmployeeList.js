@@ -53,12 +53,12 @@ const EmployeeList = (props) => {
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
               </Col>
               <Col sm={2} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button name="active" value={1} onClick={(e)=>setStepNumber(parseInt(1))} className="submitButton">
+              <Button name="active" value={1} onClick={(e)=>setStepNumber(parseInt(1))}className={stepCount === 1?"activeButton":"inactiveButton"}>
             Active Employees
           </Button>
               </Col>
               <Col sm={4} style={{paddingTop:"29px",paddingLeft:"50px"}} >
-              <Button name="inactive" value={0} onClick={(e)=>setStepNumber(parseInt(0))} className="submitButton">
+              <Button name="inactive" value={0} onClick={(e)=>setStepNumber(parseInt(0))} className={stepCount === 0?"activeButton":"inactiveButton"} >
               Inactive Employees
           </Button>
               </Col>
