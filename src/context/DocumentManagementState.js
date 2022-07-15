@@ -7,7 +7,7 @@ var fileDownload = require("js-file-download");
 const initialState = {
   moduleList: [],
   loginRole: "",
-  moduleDocsList: {},
+  moduleDocsList: [],
   docsStatus: false,
   documentEmployeeData:[]
 };
@@ -103,7 +103,7 @@ export const DocumentManagementProvider = (props) => {
         toast.info(response.data.message);
         return dispatch({
           type: "FETCH_MODULES_DOCS",
-          payload: response.data.data[0],
+          payload: response.data.data,
         });
       })
       .catch(() => {

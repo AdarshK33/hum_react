@@ -12,7 +12,7 @@ import {
   Table,
 } from "react-bootstrap";
 
-const DocsListTableBody = ({ doc, index,EmployeeId }) => {
+const DocsListTableBody = ({ docsList,EmployeeId }) => {
   const { downloadModuleDoc ,moduleDocsList} = useContext(DocumentManagementContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
@@ -21,7 +21,7 @@ const DocsListTableBody = ({ doc, index,EmployeeId }) => {
   const downloadDoc = (e) => {
     e.preventDefault()
     const docName = e.target.getAttribute("data-doc");
-    downloadModuleDoc(EmployeeId,doc);
+    downloadModuleDoc(EmployeeId,docName);
   };
 
   const handleDocShow = () => {
@@ -54,25 +54,27 @@ const DocsListTableBody = ({ doc, index,EmployeeId }) => {
       )}
     </Modal.Body>
   </Modal>
+  {docsList.map((doc, index) => (
     <tr>
-      <td>{index}</td>
-      <td>{doc}</td>
+      <td>{index+1}</td>
+      <td>{doc.documents[0]}</td>
       <td>
         {/* <a href={process.env.REACT_APP_S3_URL + doc} target="_blank">
           <Eye  />
         </a> */}
         {/* <a href={imageViewData.data ? imageViewData.data:""} target="_blank"> */}
-          <Eye onClick={()=>{ImageView(doc,EmployeeId);handleDocShow()}} />
+          <Eye onClick={()=>{ImageView(doc.documents[0],EmployeeId);handleDocShow()}} />
         {/* </a> */}
       </td>
       <td>
         <Download
-          data-doc={doc}
+          data-doc={doc.documents[0]}
           onClick={downloadDoc}
           style={{ color: "#007bff", cursor: "pointer" }}
         />
       </td>
     </tr>
+    ))}
     </Fragment>
   );
 };
