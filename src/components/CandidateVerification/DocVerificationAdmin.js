@@ -568,7 +568,7 @@ const DocVerification = () => {
                       (item.adminStatus === 1 || item.adminStatus === 2) ? (
                       <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : (
-                      <td className=" buttonMargin1">
+                      <td className=" buttonMargin2">
                         {rolePermission == "admin" &&
                         item.documentType === 1 &&
                         item.adminStatus === 0 ? (
@@ -901,7 +901,7 @@ const DocVerification = () => {
                       (item.adminStatus === 1 || item.adminStatus === 2) ? (
                       <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : (
-                      <td className=" buttonMargin1">
+                      <td className=" buttonMargin2">
                         {rolePermission == "admin" &&
                         item.documentType === 10 &&
                         item.adminStatus === 0 ? (

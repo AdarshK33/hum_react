@@ -25,7 +25,6 @@ const initial_state = {
   employeeMyTeam:[],
   employeeAllTeam:[],
   total: {},
-  data: [],
 
 };
 
@@ -413,8 +412,14 @@ const RosterMonthSearchYear =()=>{
     client
       .get("/api/v1/employee/360/view/my_team/{key}?key=" + key)
       .then((response) => {
-        console.log("rrrrrrrrrrrrr",response)
+        // console.log("rrrrrrrrrrrrr",response)
+        if (
+          response.data.data!== null &&
+          response.data.data !== undefined &&
+        Object.keys(response.data.data).length !== 0
+      ) {
         state.employeeMyTeam = response.data.data;
+      }
         setClusterLoader(false);
         return dispatch({
           type: "EMPLOYEE_MY_TEAM",
@@ -440,16 +445,20 @@ const RosterMonthSearchYear =()=>{
           key
       )
       .then((response) => {
-       
+        if (
+                response.data.data.data!== null &&
+               response.data.data.data !== undefined &&
+              Object.keys( response.data.data.data).length !== 0
+            ) {
         state.employeeAllTeam = response.data.data.data;
-        state.data = response.data.data;
-        state.total = state.data.total;
+        state.total = response.data.data.total;
+       
+            }
         setClusterLoader(false);
         return dispatch({
           type: "EMPLOYEE_All_TEAM",
           payload: state.employeeAllTeam,
           loader: loader,
-          data: state.data,
           total: state.total,
         });
       })
