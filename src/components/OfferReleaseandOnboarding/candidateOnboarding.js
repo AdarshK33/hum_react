@@ -265,6 +265,9 @@ const CandidateOnboarding = () => {
         ["isClusterManager"]: 0,
         ["aadhaarNumber"]: empData.aadhaarNumber,
         ["designation"]: empData.designation,
+        ["aadhaarDoc"]: empData.aadhaarDoc,
+        ["panDoc"]:empData.panDoc,
+        ["photo"]:empData.photo
       });
      
     }
@@ -538,7 +541,10 @@ const CandidateOnboarding = () => {
           "employeeName": employeeData.employeeName,
           "email": employeeData.email,
           "fedId": employeeData.fedId,
-          "active": employeeData.active
+          "active": employeeData.active,
+          "aadhaarDoc": employeeData.aadhaarDoc,
+          "panDoc":employeeData.panDoc,
+          "photo":employeeData.photo
       }
       console.log("createEmployee",data);
       createEmployee(data);
