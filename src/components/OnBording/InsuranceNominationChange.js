@@ -2177,6 +2177,7 @@ const InsuranceNomination = (props) => {
           relationship: null,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2300,6 +2301,7 @@ const InsuranceNomination = (props) => {
           relationship: state.relationship !== null ? state.relationship : null,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2336,6 +2338,7 @@ const InsuranceNomination = (props) => {
           relationship: state.nominee2Relationship,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2372,6 +2375,7 @@ const InsuranceNomination = (props) => {
           relationship: state.nominee3Relationship,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2409,6 +2413,7 @@ const InsuranceNomination = (props) => {
           relationship: state.nominee4Relationship,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2445,6 +2450,7 @@ const InsuranceNomination = (props) => {
           relationship: state.nominee5Relationship,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2482,6 +2488,7 @@ const InsuranceNomination = (props) => {
           relationship: state.In_law_nominee1Relationship,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2518,6 +2525,7 @@ const InsuranceNomination = (props) => {
           relationship: state.In_law_nominee2Relationship,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2558,6 +2566,7 @@ const InsuranceNomination = (props) => {
             state.extra1relationship !== null ? state.extra1relationship : null,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2597,6 +2606,7 @@ const InsuranceNomination = (props) => {
             state.extra2relationship !== null ? state.extra2relationship : null,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
@@ -2634,6 +2644,7 @@ const InsuranceNomination = (props) => {
           relationship: state.nominee5Relationship1,
           premiumAmount: premiumAmnt,
           sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
           insuranceNominationHoldDeath:
             insuranceHoldDeathYes === true ? true : false,
