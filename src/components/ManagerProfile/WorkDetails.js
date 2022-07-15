@@ -208,6 +208,7 @@ const WorkDetails = () => {
             <label className="itemResult">{EmpProfile.recruitmentSource}</label>
           </Col>
         </Row>
+        {EmpProfile.recruitmentSource==="NGO"?
         <Row
           style={{
             marginBottom: "2rem",
@@ -221,6 +222,8 @@ const WorkDetails = () => {
             <label className="itemResult">{EmpProfile.ngoName}</label>
           </Col>
         </Row>
+        :""
+}
         {(EmpProfile.isManager===false||EmpProfile.isManager===null)&& EmpProfile.contractType==="Fulltime" ?<Row  style={{
             marginBottom: "2rem",
           }}>
