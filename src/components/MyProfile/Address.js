@@ -240,11 +240,16 @@ const Address = (props) => {
       });
     } else {
       // setPermanentCountryName("");
-      countryDetails.map((item, i) => {
-        if (item.countryName === addressViewData.presentAddress.country) {
-          setPermanentCountryName(item.countryName);
+      if(addressViewData.presentAddress !== null &&
+        addressViewData.presentAddress !== undefined &&
+        Object.keys(addressViewData.presentAddress).length !== 0){
+          countryDetails.map((item, i) => {
+            if (item.countryName === addressViewData.presentAddress.country) {
+              setPermanentCountryName(item.countryName);
+            }
+          });
         }
-      });
+
     }
   }, [addressViewData, countryDetails]);
   useEffect(() => {
@@ -291,7 +296,9 @@ const Address = (props) => {
       if (
         costCentreLocationData !== null &&
         costCentreLocationData !== undefined &&
-        Object.keys(costCentreLocationData).length !== 0)
+        Object.keys(costCentreLocationData).length !== 0&& addressViewData.presentAddress !== null &&
+        addressViewData.presentAddress !== undefined &&
+        Object.keys(addressViewData.presentAddress).length !== 0)
         {
       costCentreLocationData.map((item, i) => {
         if (item.stateName === addressViewData.presentAddress.state) {
@@ -345,7 +352,9 @@ const Address = (props) => {
       // setPermanentCityName("");
       if(stateList !== null &&
         stateList !== undefined &&
-        Object.keys(stateList).length !== 0){
+        Object.keys(stateList).length !== 0&& addressViewData.presentAddress !== null &&
+        addressViewData.presentAddress !== undefined &&
+        Object.keys(addressViewData.presentAddress).length !== 0){
           stateList.map((item, i) => {
             if (item.cityName === addressViewData.presentAddress.city) {
               setPermanentCityName(item.cityName);
