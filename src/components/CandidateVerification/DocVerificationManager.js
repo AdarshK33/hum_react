@@ -446,7 +446,7 @@ const DocVerification = () => {
                     item.documentType !== 5 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
-                      <td className="buttonMargin1">
+                      <td className="buttonMargin2">
                         {(rolePermission == "superCostCenterManager" ||
                           rolePermission == "costCenterManager" ||
                           rolePermission == "manager") &&
@@ -703,7 +703,7 @@ const DocVerification = () => {
                       item.documentType !== 10 &&
                       item.documentType !== 11 &&
                       item.documentType !== 12 ? (
-                      <td className="buttonMargin1">
+                      <td className="buttonMargin2">
                         <button
                           className="approveButton"
                           onClick={() => handleApproveDocument(item.documentId)}
