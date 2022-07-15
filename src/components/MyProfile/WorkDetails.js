@@ -190,6 +190,7 @@ const WorkDetails = () => {
             <label className="itemResult">{user.recruitmentSource}</label>
           </Col>
         </Row>
+        {user.recruitmentSource==="NGO"?
         <Row
           style={{
             marginBottom: "2rem",
@@ -203,6 +204,7 @@ const WorkDetails = () => {
             <label className="itemResult">{user.ngoName}</label>
           </Col>
         </Row>
+        :""}
       </Form>
     </Fragment>
   );
