@@ -76,7 +76,7 @@ const DocumentForm = () => {
     return documentEmployeeData !== null && documentEmployeeData.length > 0
       ? documentEmployeeData.map((item) => {
           return {
-            label: `${item.firstName} - ${item.employeeId}`,
+            label: `${item.firstName} ${item.lastName} - ${item.employeeId}`,
             value: item.employeeId,
           };
         })

@@ -45,8 +45,6 @@ const EducationAndWorkDoc = (props) => {
         } else if (item.documentType === 15) {
           setCollegeDocName(item.documentName);
         } else if (item.documentType === 18) {
-          setAppointmentDocName(item.documentName);
-        } else if (item.documentType === 18) {
           setSignedDocName(item.documentName);
         }
       });

@@ -18,6 +18,7 @@ const ModuleDocumentList = () => {
     getLoginRole(user);
   }, [user]);
 
+  console.log("moduleDocsList",moduleDocsList);
   return (
     <div className="document_management_container">
       <Breadcrumb title="DOCUMENTS" parent="DOCUMENTS" />
@@ -32,11 +33,11 @@ const ModuleDocumentList = () => {
             <div className="m-5">
               <DocsModuleInfo
                 loginRole={loginRole}
-                costCentre={moduleDocsList.costCentre}
-                module={moduleDocsList.moduleName}
-                employee={moduleDocsList.employeeName}
+                costCentre={moduleDocsList!==null&&moduleDocsList!==undefined&& Object.keys(moduleDocsList).length!==0?moduleDocsList[0].costCentre:null}
+                module={moduleDocsList!==null&&moduleDocsList!==undefined&& Object.keys(moduleDocsList).length!==0?moduleDocsList[0].moduleName:null}
+                employee={moduleDocsList!==null&&moduleDocsList!==undefined&& Object.keys(moduleDocsList).length!==0?moduleDocsList[0].employeeName:null}
               />
-              <DocsModuleList docsList={moduleDocsList.documents} EmployeeId={moduleDocsList.employeeId}/>
+              <DocsModuleList docsList={moduleDocsList} EmployeeId={moduleDocsList!==null&&moduleDocsList!==undefined&& Object.keys(moduleDocsList).length!==0?moduleDocsList[0].employeeId:null}/>
             </div>
           )}
         </div>
