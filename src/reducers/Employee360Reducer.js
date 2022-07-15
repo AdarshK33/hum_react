@@ -40,8 +40,7 @@ const GroupReducer = (state, action) => {
               ...state, 
               employeeAllTeam: action.payload,
               loader: action.loader,
-              data: action.data,
-              total: action.total,
+              total: action.total, 
                };    
         
     default:

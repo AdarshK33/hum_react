@@ -24,14 +24,15 @@ export const PartTimeSalaryInputProvider = (props) => {
       .then((response) => {
         // toast.info(response.data.message);
         
-        // if(response.data&& Object.keys(response.data).length &&
-        // response.data.data&& Object.keys(response.data.data).length){
+        if(response.data&& Object.keys(response.data).length &&
+        response.data.data&& Object.keys(response.data.data).length){
         //   state.employeeData = response.data.data[0];
         // }else{
         // state.employeeData = null;
         // }
          state.employeeData = response.data.data;
         // console.log(response,"ViewEmployeeData")
+        }
         setLoader(false);
         return dispatch({
           type: "EMPLOYEE_DATA",

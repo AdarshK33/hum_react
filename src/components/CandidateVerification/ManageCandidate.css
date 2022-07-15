@@ -57,6 +57,11 @@
   margin-top: 45px !important;
   padding-top: 55px !important;
 }
+.buttonMargin2 {
+  margin-top:0px !important;
+  display: flex;
+  padding-top: 55px !important;
+}
 
 .downloadButton {
   background-color: #006ebb;

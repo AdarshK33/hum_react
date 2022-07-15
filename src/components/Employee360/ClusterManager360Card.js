@@ -35,20 +35,14 @@ const ClusterCard = () => {
     employeeMyTeam,
     getEmployeeAllTeam,
     employeeAllTeam,
-    total
+    total,
 
   } = useContext(Employee360Context);
   
 const { user } = useContext(AppContext);
 const employeeMyTeamRef = useRef(null);
 const employeeAllTeamRef = useRef(null);
-
-
-// user.employeeId
 //console.log("eeeeeeeeee",employeeAllTeam)
-//  console.log("ttt",total)
-
-
   const [clusterList, setClusterList] = useState([]);
   const [cluster, setCluster] = useState("");
   const [searchInput, setSearchInput] = useState("");
@@ -57,12 +51,6 @@ const employeeAllTeamRef = useRef(null);
   const [searchMyTeamSelected, setSearchMyTeamSelected] = useState("");
   const [searchAllTeamSelected, setSearchAllTeamSelected] = useState("");
   const [backToEmpList, setBackToEmpList] = useState(1);
-
-
-  // console.log("sssssssssss",searchMyTeamSelected)
-
-
-
   const [pageCount, setPageCount] = useState(1);
   const [currentRecords, setCurrentRecords] = useState([]);
   // useEffect(() => {
@@ -93,8 +81,6 @@ const employeeAllTeamRef = useRef(null);
     ClusterView(); //ClusterData
     getEmployeeMyTeam('all'); //MY team  //employeeMyTeam
     getEmployeeAllTeam(pageCount,'all');// ALL team //employeeAllTeam
-
-   
     // ClusterDirectTeam("all"); //MY team //clusterDirect
     // ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
   }, []);
@@ -155,11 +141,8 @@ useEffect(() => {
   };
   const searchDataHandler = () => {
      {/* all Team */}
-  //  console.log("callled ",employeeAllTeam)
     const searchText = employeeAllTeamRef.current.getInput();
     if (searchAllTeamSelected.length > 0) {
-      // console.log("callled1",searchText.value);
-      // console.log("callled2",pageCount)
       // ClusterSearchByEmployeeName("all", searchText.value,pageCount);
       getEmployeeAllTeam('0',searchText.value);
      } 
@@ -185,18 +168,17 @@ useEffect(() => {
   const recordPerPage = 10;
   const totalRecords = total;
   const pageRange = 5;
-
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 
   const handlePageChange = (pageNumber) => {
-    setPageCount(pageNumber);
+    setPageCount(pageNumber-1);
     setCurrentPage(pageNumber);
     if (searchAllTeamSelected.length> 0) {
-      getEmployeeAllTeam(pageNumber,searchAllTeamSelected);
+      getEmployeeAllTeam(pageNumber-1,searchAllTeamSelected);
     } 
     else {
-      getEmployeeAllTeam(pageNumber,"all");
+      getEmployeeAllTeam(pageNumber-1,"all");
     }
     setCurrentRecords(employeeAllTeam);
   };
@@ -214,7 +196,7 @@ useEffect(() => {
         {user.department == "Retail"||rolePermission === "admin" &&
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
-          onClick={() => {setSearchAllTeamSelected([]);setTabIndex(1); }}
+          onClick={() => {setSearchAllTeamSelected([]);setTabIndex(1);}}
         >
         <label>All Team</label>
         </div>
@@ -337,7 +319,7 @@ useEffect(() => {
                                         >
                                           <b>Email:</b>
                                         </span>
-                                        {item.personalEmail}
+                                        {item.email}
                                       </p>
                                     </Col>
                                   </Row>
@@ -535,7 +517,7 @@ useEffect(() => {
                                         >
                                           <b>Email:</b>
                                         </span>
-                                        {item.personalEmail}
+                                        {item.email}
                                       </p>
                                     </Col>
                                   </Row>
