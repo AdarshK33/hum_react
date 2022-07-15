@@ -239,7 +239,12 @@ const Address = (props) => {
         }
       });
     } else {
-      setPermanentCountryName("");
+      // setPermanentCountryName("");
+      countryDetails.map((item, i) => {
+        if (item.countryName === addressViewData.presentAddress.country) {
+          setPermanentCountryName(item.countryName);
+        }
+      });
     }
   }, [addressViewData, countryDetails]);
   useEffect(() => {
@@ -282,7 +287,18 @@ const Address = (props) => {
         }
       });
     } else {
-      setPermanentStateName("");
+      // setPermanentStateName("");
+      if (
+        costCentreLocationData !== null &&
+        costCentreLocationData !== undefined &&
+        Object.keys(costCentreLocationData).length !== 0)
+        {
+      costCentreLocationData.map((item, i) => {
+        if (item.stateName === addressViewData.presentAddress.state) {
+          setPermanentStateName(item.stateName);
+        }
+      });
+    }
     }
   }, [addressViewData, costCentreLocationData]);
 
@@ -326,7 +342,16 @@ const Address = (props) => {
         }
       });
     } else {
-      setPermanentCityName("");
+      // setPermanentCityName("");
+      if(stateList !== null &&
+        stateList !== undefined &&
+        Object.keys(stateList).length !== 0){
+          stateList.map((item, i) => {
+            if (item.cityName === addressViewData.presentAddress.city) {
+              setPermanentCityName(item.cityName);
+            }
+          });
+        }
     }
   }, [addressViewData, stateList]);
   // useEffect(() => {
