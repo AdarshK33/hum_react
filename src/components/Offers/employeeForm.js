@@ -522,7 +522,7 @@ if(createCandidateResponse && Object.keys(createCandidateResponse).length){
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={4}>
             <Form.Group>
-              <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
+              <Form.Label>Search by Account Number/Aadhaar Number</Form.Label>
               <div className="faq-form ">
                 <input
                   className="form-control searchButton"

@@ -1355,7 +1355,7 @@ const PersonalInformation = (props) => {
                 />
                 {aadharNumberError ? (
                   <p style={{ color: "red" }}>
-                    Please enter valid aadhar number
+                    Please enter valid aadhaar number
                   </p>
                 ) : (
                   <p></p>

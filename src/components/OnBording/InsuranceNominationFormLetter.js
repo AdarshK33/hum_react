@@ -157,7 +157,7 @@ const InsuranceNominationFormLetter = (props) => {
               <p> Employee Name:&nbsp;&nbsp;{props.data.employeeName}</p>
               <p>Employee Signature:&nbsp;&nbsp;{}</p>
               <p>
-                Employee Aadhar Number:&nbsp;&nbsp;
+                Employee Aadhaar Number:&nbsp;&nbsp;
                 {props.data.employeeAadharNumber}
               </p>
               <div className="float-right "></div>
