@@ -334,7 +334,7 @@ const DocVerification = () => {
                         ) : item.documentType === 1 ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
-                              Aadhar Card
+                              Aadhaar Card
                             </span>{" "}
                             {personalInfoData.contractType !== "Local Expat" ? (
                               <span style={{ color: "red" }}>*</span>

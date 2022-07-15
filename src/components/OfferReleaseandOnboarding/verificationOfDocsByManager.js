@@ -334,7 +334,7 @@ const DocVerification = () => {
                           ) : item.documentType === 1 ? (
                             <label>
                               <span style={{ color: "black" }}>
-                                Aadhar Card
+                                Aadhaar Card
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                               <span
