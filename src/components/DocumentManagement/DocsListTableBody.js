@@ -11,13 +11,15 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import countryList from "react-select-country-list";
 
 const DocsListTableBody = ({ docsList,EmployeeId }) => {
   const { downloadModuleDoc ,moduleDocsList} = useContext(DocumentManagementContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   const [docShow, setDocShow] = useState(false);
-
+  
+let count=[''];
   const downloadDoc = (e) => {
     e.preventDefault()
     const docName = e.target.getAttribute("data-doc");
@@ -31,6 +33,7 @@ const DocsListTableBody = ({ docsList,EmployeeId }) => {
   const handleDocClose = () => {
     setDocShow(false);
   };
+  console.log("docsList",docsList)
 
   return (
     <Fragment>
@@ -54,27 +57,39 @@ const DocsListTableBody = ({ docsList,EmployeeId }) => {
       )}
     </Modal.Body>
   </Modal>
-  {docsList.map((doc, index) => (
-    <tr>
-      <td>{index+1}</td>
-      <td>{doc.documents[0]}</td>
-      <td>
-        {/* <a href={process.env.REACT_APP_S3_URL + doc} target="_blank">
-          <Eye  />
-        </a> */}
-        {/* <a href={imageViewData.data ? imageViewData.data:""} target="_blank"> */}
-          <Eye onClick={()=>{ImageView(doc.documents[0],EmployeeId);handleDocShow()}} />
-        {/* </a> */}
-      </td>
-      <td>
+  {docsList.map((doc, index) =>{ 
+    // console.log("doc--", doc)
+    return(
+   <>
+      {doc.documents.map((list, index) =>{ 
+         // console.log("docList--", list)
+        count++;
+        return (
+          <>
+          <tr> <td>{count}</td>
+         <td>{list}</td>
+         <td>
+         <a href={process.env.REACT_APP_S3_URL + list} target="_blank">
+           {/* <Eye  /> */}
+         </a> 
+         {/* {/* <a href={imageViewData.data ? imageViewData.data:""} target="_blank"> */}
+           <Eye onClick={()=>{ImageView(list,EmployeeId);handleDocShow()}} /> 
+         {/* </a> */}
+       </td>
+       <td>
         <Download
-          data-doc={doc.documents[0]}
+          data-doc={list}
           onClick={downloadDoc}
           style={{ color: "#007bff", cursor: "pointer" }}
         />
       </td>
-    </tr>
-    ))}
+      </tr>
+       </>
+      )})}
+    
+    </>
+   
+    )})}
     </Fragment>
   );
 };
