@@ -67,11 +67,10 @@ let count=[''];
         return (
           <>
           <tr> <td>{count}</td>
-        
          <td>{list}</td>
          <td>
          <a href={process.env.REACT_APP_S3_URL + list} target="_blank">
-           <Eye  />
+           {/* <Eye  /> */}
          </a> 
          {/* {/* <a href={imageViewData.data ? imageViewData.data:""} target="_blank"> */}
            <Eye onClick={()=>{ImageView(list,EmployeeId);handleDocShow()}} /> 
