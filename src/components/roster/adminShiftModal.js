@@ -300,6 +300,18 @@ useEffect(() => {
     }
   };
 
+  const setShiftAdminList = (event) => {
+    console.log("setShiftAdminList",event.target.value);
+    setValue(event.target.value);
+    if (event.target.value) {
+      setAShiftButton(false);
+      setMsg(false);
+  } else {
+    setMsg("* Select Shift Is Required ");
+    setAShiftButton(true);
+  }
+  };
+
   const handleDayList1 = (options) => {
     setDaysList(options);
     // if (options !== null && employee !== null && employee !== undefined) {
@@ -329,14 +341,9 @@ useEffect(() => {
     console.log("new Day", newDay);
   };
 
-  const setShiftAdminList = (event) => {
-    console.log(event.target.value);
-    setValue(event.target.value);
-  };
-
   const onSubmit1 = (event) => {
     event.preventDefault();
-
+console.log("onSubmit1",days,employee,value,props.mystoreId);
     const adminAssignShift = {
       dates: days.map((e, i) => days[i].value),
       employeeIds: employee.map((e, i) => employee[i].value),
@@ -345,7 +352,7 @@ useEffect(() => {
     };
     assignAdminShift(adminAssignShift);
     props.handleClose();
-    setAShiftButton(true);
+    // setAShiftButton(true);
   };
 
   return (

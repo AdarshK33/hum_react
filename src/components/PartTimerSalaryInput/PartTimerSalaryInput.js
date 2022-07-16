@@ -587,7 +587,7 @@ const fixedGrossValidation = () =>{
                                       ):
                                       new Date(
                                         new Date().getFullYear(),
-                                          new Date().getMonth() - 1
+                                          new Date().getMonth() - 2
                                         ,21
                                       )
                                     }

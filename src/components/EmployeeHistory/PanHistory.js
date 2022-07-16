@@ -112,7 +112,7 @@ console.log(dates)
                                             <th>SL. NO</th>
                                             <th>NAME</th>
                                             <th>PAN NUMBER</th>
-                                            <th>UPDATEED BY</th>
+                                            <th>UPDATED BY</th>
                                             <th>UPDATED ON</th>
                                            
                                         </tr>

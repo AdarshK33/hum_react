@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect,useRef } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
-
+import Select from "react-select";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { OfferContext } from "../../../context/OfferState";
@@ -92,6 +92,8 @@ const PromotionInitiate = () => {
   const [showRelivingModal, setShow] = useState(false);
   const history = useHistory();
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
+  const [reportManager, setReportManager] = useState();
+  
   const [searchSelected, setSearchSelected] = useState("");
 
   // console.log("ssssssssssss",searchEmpSelected);
@@ -264,6 +266,7 @@ const PromotionInitiate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("state.reportingManagerName",state.reportingManagerName);
     console.log("fixedgross", state.newFixedGross, state.oldFixedGross);
     var empName = state.empName;
     if (empName == "" || empName == null || empName == undefined) {
@@ -371,6 +374,7 @@ const PromotionInitiate = () => {
       reportingManagerName == null ||
       reportingManagerName == undefined
     ) {
+      toast.error("Please select reporting manager")
       setReportingManagerError("Please select reporting manager ");
     } else {
       setReportingManagerError("");
@@ -405,7 +409,7 @@ const PromotionInitiate = () => {
       departmentId !== "" &&
       empName !== "" &&
       effectiveDate !== "" &&
-      //reportingManagerName !== "" &&
+      reportingManagerName !== "" &&
       newDepartment !== null &&
       reason !== null &&
       newFixedGross !== null &&
@@ -413,14 +417,14 @@ const PromotionInitiate = () => {
       departmentId !== null &&
       empName !== null &&
       effectiveDate !== null &&
-      //reportingManagerName !== null &&
+      reportingManagerName !== null &&
       newDepartment !== undefined &&
       reason !== undefined &&
       newFixedGross !== undefined &&
       positionId !== undefined &&
       departmentId !== undefined &&
       effectiveDate !== undefined &&
-      //reportingManagerName !== undefined &&
+      reportingManagerName !== undefined &&
       empName !== undefined &&
       ((state.promotionType == 1 &&
         state.oldFixedGross < state.newFixedGross) ||
@@ -605,8 +609,27 @@ const PromotionInitiate = () => {
       }
     }
   };
+
+  const reportManagerChangeHandler = (e) => {
+    setReportManager(e.value);
+    let selectedEmployeeId=e.value.split("-")[1].trim()
+    allManagerList.map((item) => {
+      const temp =
+        item.lastName !== null && item.lastName !== undefined
+          ? item.lastName
+          : "";
+      if (item.employeeId === selectedEmployeeId) {
+        setState({
+          ...state,
+          reportingManagerId: item.employeeId,
+          reportingManagerName: item.firstName + " " + temp,
+        });
+      }
+    });
+  };
+
   const changeHandler = (e) => {
-    console.log("ttttttttttttttt",e.target.value)
+    console.log("ttttttttttttttt",e)
     let valid = /[^A-Za-z0-9'.,-_ ]/;
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
@@ -638,22 +661,24 @@ const PromotionInitiate = () => {
         }
       });
       console.log(e.target.value, state, "value666");
-    } else if (e.target.name === "reportingManagerId") {
-      allManagerList.map((item) => {
-        const temp =
-          item.lastName !== null && item.lastName !== undefined
-            ? item.lastName
-            : "";
-        if (item.firstName + " " + temp === e.target.value) {
-          setState({
-            ...state,
-            reportingManagerId: item.employeeId,
-            reportingManagerName: item.firstName + " " + temp,
-          });
-        }
-      });
-      console.log(e.target.value, state, "value666");
-    } else if (e.target.name === "newFixedGross") {
+    } 
+    // else if (e.target.name === "reportingManagerId") {
+      // allManagerList.map((item) => {
+      //   const temp =
+      //     item.lastName !== null && item.lastName !== undefined
+      //       ? item.lastName
+      //       : "";
+      //   if (item.firstName + " " + temp === e.target.value) {
+      //     setState({
+      //       ...state,
+      //       reportingManagerId: item.employeeId,
+      //       reportingManagerName: item.firstName + " " + temp,
+      //     });
+      //   }
+      // });
+      // console.log(e.target.value, state, "value666");
+    // }
+     else if (e.target.name === "newFixedGross") {
       console.log(typeof(e.target.value,"numnbe"))
       if(typeof(parseInt(e.target.value)) == "number" && !isNaN(e.target.value) && !(e.target.value).includes(".")){
       setState({
@@ -1243,7 +1268,7 @@ const PromotionInitiate = () => {
                             <label>Reporting Manager </label>
                           </Col>
                           <Col sm={4}>
-                            <Form.Group>
+                            {/* <Form.Group>
                               <Form.Control
                                 as="select"
                                 name="reportingManagerId"
@@ -1267,7 +1292,7 @@ const PromotionInitiate = () => {
                                         : "";
                                     return (
                                       <option key={index + 1}>
-                                        {item.firstName + " " + temp}
+                                        {item.firstName + " " + temp}-{item.employeeId}
                                       </option>
                                     );
                                   })}
@@ -1279,8 +1304,33 @@ const PromotionInitiate = () => {
                               ) : (
                                 ""
                               )}
-                            </Form.Group>
-                          </Col>
+                            </Form.Group> */}
+                          
+                          <div className="form-input" >
+                  <Select
+                  name="reportingManagerId"
+                  as="select"
+                  value={{
+                    'label': reportManager,
+                    'value':reportManager}} 
+                  className="form-input"
+                  aria-label="reportingManagerId"
+                  placeholder="Select Manager"
+                  onChange={(e) => reportManagerChangeHandler(e)}
+                  // styles= {customStyles}
+                  options={
+                    allManagerList !== null &&
+                    allManagerList !== undefined &&
+                    allManagerList.length > 0 &&
+                    allManagerList.map((item, index) => ({
+                    label:item.firstName + " " + item.lastName + "-" + item.employeeId,
+                    value:item.firstName + " " + item.lastName +"-" + item.employeeId,
+                        }))}
+                  required
+                  isSearchable
+                />
+                </div>
+                </Col>
                         </Row>
                         <Row
                           style={{

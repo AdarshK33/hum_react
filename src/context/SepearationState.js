@@ -31,6 +31,7 @@ const initial_state = {
   modeOfResponse: [],
   reason: {},
   searchByCostData: [],
+  managersByCostcenterList:[]
 };
 
 export const SeparationContext = createContext();
@@ -480,6 +481,16 @@ export const SeparationProvider = (props) => {
       });
   };
 
+  const managersByCostcenter = (costCenter) => {
+    return client
+      .get(`api/v1/employee/view/managers/${costCenter}`)
+      .then((response) => {
+        console.log(response, "managerData response");
+        state.managersByCostcenterList = response.data.data;
+        return dispatch({ type: "MANAGERS_BY_COSTCENTER_LIST", payload: state.managersByCostcenterList });
+      });
+  };
+
   const modeOfSeparation = () => {
     return client
       .get("api/v1/mode-of-separation/view")
@@ -601,6 +612,7 @@ const searchByEmployeeNull =()=>{
         managerData,
         modeOfSeparation,
         withdraw,
+        managersByCostcenter,
         promotioManagerList:state.promotioManagerList,
         allManagerList:state.allManagerList,
         financeClearanceExport: state.financeClearanceExport,
@@ -622,6 +634,7 @@ const searchByEmployeeNull =()=>{
         modeOfResponse: state.modeOfResponse,
         reason: state.reason,
         searchByCostData: state.searchByCostData,
+        managersByCostcenterList:state.managersByCostcenterList
       }}
     >
       {props.children}

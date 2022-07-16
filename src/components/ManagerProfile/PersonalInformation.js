@@ -229,7 +229,7 @@ const PersonalInformation = (props) => {
               </label>
               <br />
               <label className="itemResult">
-                {EmpProfile.actualJoiningDate}
+              {moment(EmpProfile.joiningDate).format("DD-MM-YYYY")}
               </label>
             </Col>
           </Row>
@@ -244,7 +244,7 @@ const PersonalInformation = (props) => {
               </label>
               <br />
               <label className="itemResult">
-                {moment(EmpProfile.joiningDate).format("DD-MM-YYYY")}
+              {EmpProfile.actualJoiningDate?EmpProfile.actualJoiningDate:moment(EmpProfile.joiningDate).format("DD-MM-YYYY")}
               </label>
             </Col>
             <Col sm={3}>

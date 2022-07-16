@@ -334,7 +334,7 @@ const DocVerification = () => {
                         ) : item.documentType === 1 ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
-                              Aadhar Card
+                              Aadhaar Card
                             </span>{" "}
                             {personalInfoData.contractType !== "Local Expat" ? (
                               <span style={{ color: "red" }}>*</span>
@@ -533,14 +533,14 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Highest Education
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 7 ? (
                           <p>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Relieving Letter
                             </span>
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                             <span
                               style={{
                                 color: "#47ef47",
@@ -555,14 +555,14 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Latest play slip
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 9 ? (
                           <p>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Offer Letter
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : item.documentType === 10 ? (
                           <p>
@@ -590,7 +590,7 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               DisabilityDoc
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {/* <span style={{ color: "red" }}>*</span> */}
                           </p>
                         ) : //  item.documentType === 14 ? (
                         //   <p>

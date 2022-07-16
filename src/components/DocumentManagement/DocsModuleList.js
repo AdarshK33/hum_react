@@ -18,9 +18,15 @@ const DocsModuleList = ({ docsList,EmployeeId }) => {
               <DocsListTableHeader />
             </thead>
             <tbody>
+<<<<<<< HEAD
               {docsList.map((doc, index) => (
                 <DocsListTableBody key={index} doc={doc} index={index + 1} EmployeeId={EmployeeId} />
               ))}
+=======
+              {/* {docsList.map((doc, index) => ( */}
+                <DocsListTableBody docsList={docsList} EmployeeId={EmployeeId} />
+              {/* ))} */}
+>>>>>>> 43351869262527784ad3529f0ff830f5b23262ed
             </tbody>
           </Table>
         </div>

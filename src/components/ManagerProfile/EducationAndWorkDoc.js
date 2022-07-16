@@ -5,9 +5,11 @@ import { AppContext } from "../../context/AppState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
+import { PermissionContext } from "../../context/PermissionState";
 
 const EducationAndWorkDoc = (props) => {
   const { user } = useContext(AppContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const {
     DocumentView,
     documentsList,
@@ -48,8 +50,6 @@ const EducationAndWorkDoc = (props) => {
         } else if (item.documentType === 15) {
           setCollegeDocName(item.documentName);
         } else if (item.documentType === 18) {
-          setAppointmentDocName(item.documentName);
-        } else if (item.documentType === 18) {
           setSignedDocName(item.documentName);
         }
       });
@@ -79,6 +79,7 @@ const EducationAndWorkDoc = (props) => {
         setName("JPG");
       }
     }
+    ImageView(name,EmployeeId)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
@@ -283,7 +284,7 @@ const EducationAndWorkDoc = (props) => {
         ) : (
           ""
         )}
-        <Row>
+        {/* <Row>
           <Col sm={8}>
             <label>
               <b>System Generated Appointment Letter :</b>
@@ -329,7 +330,7 @@ const EducationAndWorkDoc = (props) => {
               </button>
             </div>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col sm={8}>
             <label>

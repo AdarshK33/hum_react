@@ -75,7 +75,7 @@ const ActiveEmployeeHistoryList = (props) => {
   };
 
   useEffect(() => {
-    ViewEmployeeHistoryData(fromDate,toDate,searchValue, pageCount,role,1);
+    ViewEmployeeHistoryData(fromDate,toDate,"all", pageCount,role,1);
     console.log("user role------>", user);
   }, []);
 

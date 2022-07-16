@@ -45,8 +45,6 @@ const EducationAndWorkDoc = (props) => {
         } else if (item.documentType === 15) {
           setCollegeDocName(item.documentName);
         } else if (item.documentType === 18) {
-          setAppointmentDocName(item.documentName);
-        } else if (item.documentType === 18) {
           setSignedDocName(item.documentName);
         }
       });
@@ -282,7 +280,7 @@ const EducationAndWorkDoc = (props) => {
         ) : (
           ""
         )}
-        <Row>
+        {/* <Row>
           <Col sm={8}>
             <label>
               <b>System Generated Appointment Letter :</b>
@@ -328,7 +326,7 @@ const EducationAndWorkDoc = (props) => {
               </button>
             </div>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col sm={8}>
             <label>

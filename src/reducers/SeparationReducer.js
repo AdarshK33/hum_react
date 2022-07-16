@@ -66,6 +66,8 @@ const GroupReducer = (state, action) => {
         return { ...state, allManagerList: action.payload };
     case "WITHDRAW_RESIGNATION":
       return { ...state };
+      case "MANAGERS_BY_COSTCENTER_LIST":
+        return { ...state, managersByCostcenterList: action.payload };
     case "SEARCH_BY_COST_DATA":
       return { ...state, searchByCostData: action.payload };
   }

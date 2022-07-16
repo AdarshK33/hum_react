@@ -218,7 +218,7 @@ const Insurance = () => {
                     <b>Gender</b>
                   </label>
                   <br />
-                  <label className="itemResult">{item.gender}</label>
+                  <label className="itemResult">{item.gender?item.gender:"NA"}</label>
                 </Col>
                 <Col sm={3}>
                   <label>
@@ -241,14 +241,14 @@ const Insurance = () => {
                     <b>Age</b>
                   </label>
                   <br />
-                  <label className="itemResult">{item.age}</label>
+                  <label className="itemResult">{item.age?item.age:"NA"}</label>
                 </Col>
                 <Col sm={3}>
                   <label>
                     <b>Blood Group</b>
                   </label>
                   <br />
-                  <label className="itemResult">{item.bloodGroup}</label>
+                  <label className="itemResult">{item.bloodGroup?item.bloodGroup:"NA"}</label>
                 </Col>
               </Row>
             </div>

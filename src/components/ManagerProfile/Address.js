@@ -265,7 +265,17 @@ const Address = (props) => {
         }
       });
     } else {
-      setPermanentCountryName("");
+      if(addressViewData.presentAddress !== null &&
+        addressViewData.presentAddress !== undefined &&
+        Object.keys(addressViewData.presentAddress).length !== 0){
+      countryDetails.map((item, i) => {
+        if (item.countryName === addressViewData.presentAddress.country) {
+          setPermanentCountryName(item.countryName);
+        }
+      });
+    }
+      // setPermanentCountryName("");
+      
     }
   }, [addressViewData, countryDetails]);
   useEffect(() => {
@@ -308,9 +318,23 @@ const Address = (props) => {
         }
       });
     } else {
-      setPermanentStateName("");
+      if (
+        costCentreLocationData !== null &&
+        costCentreLocationData !== undefined &&
+        Object.keys(costCentreLocationData).length !== 0&& addressViewData.presentAddress !== null &&
+        addressViewData.presentAddress !== undefined &&
+        Object.keys(addressViewData.presentAddress).length !== 0)
+        {
+      costCentreLocationData.map((item, i) => {
+        if (item.stateName === addressViewData.presentAddress.state) {
+          setPermanentStateName(item.stateName);
+        }
+      });
+    }
+      // setPermanentStateName("");
     }
   }, [addressViewData, costCentreLocationData]);
+  console.log("costCentreLocationData",costCentreLocationData);
 
   useEffect(() => {
     if (
@@ -352,7 +376,19 @@ const Address = (props) => {
         }
       });
     } else {
-      setPermanentCityName("");
+if(stateList !== null &&
+  stateList !== undefined &&
+  Object.keys(stateList).length !== 0&& addressViewData.presentAddress !== null &&
+  addressViewData.presentAddress !== undefined &&
+  Object.keys(addressViewData.presentAddress).length !== 0){
+    stateList.map((item, i) => {
+      if (item.cityName === addressViewData.presentAddress.city) {
+        setPermanentCityName(item.cityName);
+      }
+    });
+  }
+      
+      // setPermanentCityName("");
     }
   }, [addressViewData, stateList]);
   // useEffect(() => {
@@ -862,6 +898,8 @@ const Address = (props) => {
     setPermanentCityName(e.target.value);
     // setPermanentCityId(filteredListOfCity[0].cityId);
   };
+
+  
   const changeHandler1 = (event) => {
     console.log("changeHandler", event.target.name);
     let fileObj = event.target.files[0];

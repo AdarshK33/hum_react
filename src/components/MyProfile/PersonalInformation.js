@@ -199,7 +199,8 @@ const PersonalInformation = (props) => {
               <b>Date of Joining Group</b>
             </label>
             <br />
-            <label className="itemResult">{user.actualJoiningDate}</label>
+            <label className="itemResult">
+            {moment(user.joiningDate).format("DD-MM-YYYY")}</label>
           </Col>
         </Row>
         <Row
@@ -213,7 +214,7 @@ const PersonalInformation = (props) => {
             </label>
             <br />
             <label className="itemResult">
-              {moment(user.joiningDate).format("DD-MM-YYYY")}
+            {user.actualJoiningDate?user.actualJoiningDate:moment(user.joiningDate).format("DD-MM-YYYY")}
             </label>
           </Col>
           {/* <Col sm={3}>

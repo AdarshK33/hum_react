@@ -41,7 +41,7 @@ const AppLayout = ({ children }) => {
             setFlagValue(flag)
             if (type === "team") {
                 if(user.department === "Finance & Legal" ||user.department === "Finance" || 
-                user.department === "IT"){
+                user.department === "IT"|| user.loginType == 1 || user.additionalRole == 1){
                   getUserMenu(user.managerMenus);
                 }else{
                   let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
@@ -76,7 +76,7 @@ const AppLayout = ({ children }) => {
                   getUserMenu(departmentList);
                 }
             } else if (type === "admin") {
-                if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"){
+                if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"|| user.loginType == 1 || user.additionalRole == 1){
                     getUserMenu(user.adminMenus);
                   }else{
                     let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length && user.adminMenus.filter(
@@ -124,7 +124,7 @@ const AppLayout = ({ children }) => {
                     getUserMenu(user.supportMenus)
             } else {
                 if(user.department === "Finance & Legal" ||user.department === "Finance" || 
-                  user.department === "IT"){
+                  user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
                     let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
                         (item) =>
                     item.menuName !== "Roster" &&
@@ -132,7 +132,7 @@ const AppLayout = ({ children }) => {
                     item.menuName !== "My Roster" 
                     )
                   getUserMenu(departmentList, "profile", user);
-            }else if((user.department === "Finance & Legal" ||user.department === "Finance" || user.department === "IT") && 
+            }else if((user.department === "Finance & Legal" ||user.department === "Finance" || user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
               user.contractType === "Internship"){
             let departmentList = user !== null && user !== undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
             (item) => item.menuName !== "Resignation" && 

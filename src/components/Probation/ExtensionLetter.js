@@ -97,22 +97,30 @@ const ExtensionLetter = () => {
                   : ""}
               </b>
               .
+              </p>
               <br />
               <br />
+              <p>
               Within this period, you are advised to improve your skills and
               performance and to work closely with your manager for guidance and
               feedback.
+              </p>
               <br />
               <br />
+              <p>
               At the end of this period, your performance will be appraised and
               the final decision regarding your employment will be made in view
               of your performance in the period.
+              </p>
               <br />
               <br />
+              <p>
               However, if your performance is still unsatisfactory, the company
               may decide to terminate your services due to non-confirmation.
+              </p>
               <br />
               <br />
+              <p>
               All the other terms and conditions of your appointment letter
               {" "}
               {/* <b>
@@ -125,11 +133,15 @@ const ExtensionLetter = () => {
                   : ""}
               </b> ,*/}
               shall remain the same.
+              </p>
               <br />
               <br />
+              <p>
               Please sign the copy of this letter as receipt of acceptance.
+              </p>
               <br />
               <br />
+              <p>
               Yours Sincerely,
             </p>
             <p className="mt-2 ">

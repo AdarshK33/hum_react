@@ -7,8 +7,9 @@ var fileDownload = require("js-file-download");
 const initialState = {
   moduleList: [],
   loginRole: "",
-  moduleDocsList: {},
+  moduleDocsList: [],
   docsStatus: false,
+  documentEmployeeData:[]
 };
 
 export const DocumentManagementContext = createContext();
@@ -52,6 +53,28 @@ export const DocumentManagementProvider = (props) => {
     });
   };
 
+  const documentEmployeeList = (costData) => {
+    client
+      .get(
+        "/api/v1/employee/view/costCentre/employee?costCentre=" + costData)
+      .then((response) => {
+        state.documentEmployeeData = response.data.data;
+        if (response.data.data === null) {
+          state.documentEmployeeData = [];
+        } else {
+          state.documentEmployeeData = response.data.data;
+        }
+        console.log("employee id data", state.documentEmployeeData);
+        return dispatch({
+          type: "DOCUMENT_EMPLOYEE_DATA",
+          payload: state.documentEmployeeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const getModuleList = () => {
     // setLoader(truee);
     client
@@ -80,7 +103,7 @@ export const DocumentManagementProvider = (props) => {
         toast.info(response.data.message);
         return dispatch({
           type: "FETCH_MODULES_DOCS",
-          payload: response.data.data[0],
+          payload: response.data.data,
         });
       })
       .catch(() => {
@@ -91,9 +114,9 @@ export const DocumentManagementProvider = (props) => {
       });
   };
 
-  const downloadModuleDoc = (docName) => {
+  const downloadModuleDoc = (empId,docName) => {
     client
-      .get(`/api/v1/document/download?name=${docName}`, {
+      .get(`/api/v1/document/download/${empId}?name=${docName}`, {
         responseType: "blob",
       })
       .then((response) => {
@@ -118,6 +141,8 @@ export const DocumentManagementProvider = (props) => {
         moduleDocsList: state.moduleDocsList,
         docsStatus: state.docsStatus,
         downloadModuleDoc,
+        documentEmployeeList,
+        documentEmployeeData:state.documentEmployeeData 
       }}
     >
       {props.children}
