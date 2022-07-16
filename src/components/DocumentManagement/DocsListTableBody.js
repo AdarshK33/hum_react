@@ -11,13 +11,15 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import countryList from "react-select-country-list";
 
 const DocsListTableBody = ({ docsList,EmployeeId }) => {
   const { downloadModuleDoc ,moduleDocsList} = useContext(DocumentManagementContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   const [docShow, setDocShow] = useState(false);
-
+  
+let count=[''];
   const downloadDoc = (e) => {
     e.preventDefault()
     const docName = e.target.getAttribute("data-doc");
@@ -56,14 +58,15 @@ const DocsListTableBody = ({ docsList,EmployeeId }) => {
     </Modal.Body>
   </Modal>
   {docsList.map((doc, index) =>{ 
-    console.log("doc--", doc)
+    // console.log("doc--", doc)
     return(
    <>
       {doc.documents.map((list, index) =>{ 
-        console.log("lllllll",list)
+         // console.log("docList--", list)
+        count++;
         return (
           <>
-          <tr>  <td>{index+1}</td>
+          <tr> <td>{count}</td>
         
          <td>{list}</td>
          <td>
