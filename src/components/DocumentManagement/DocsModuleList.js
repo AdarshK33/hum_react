@@ -19,7 +19,7 @@ const DocsModuleList = ({ docsList,EmployeeId }) => {
             </thead>
             <tbody>
               {docsList.map((doc, index) => (
-                <DocsListTableBody key={doc} doc={doc} index={index + 1} EmployeeId={EmployeeId} />
+                <DocsListTableBody key={index} doc={doc} index={index + 1} EmployeeId={EmployeeId} />
               ))}
             </tbody>
           </Table>
