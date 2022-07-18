@@ -9,6 +9,7 @@ import { PermissionContext } from "../../context/PermissionState";
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 
+
 const PersonalDoc = (props) => {
   const { user } = useContext(AppContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
@@ -268,8 +269,8 @@ const PersonalDoc = (props) => {
       ) : (
         <Form>
           <Row>
-            <Col sm={3}>
-              <label>
+            <Col sm={3} >
+              <label className="keyField">
                 <b>Photograph :</b>
               </label>
               <br />
@@ -287,7 +288,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                   className={
-                    photoGraphName && photoGraphStatus === 1 ? "profileButtons" : "confirmButton"
+                    photoGraphName && photoGraphStatus === 1 ? "profileButtons" : "confirmButton2"
                   }
                   onClick={(e, name) => showTheLetter(e, photoGraphName)}
                   disabled={photoGraphName && photoGraphStatus === 1 ? false : true}
@@ -306,7 +307,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    photoGraphName && photoGraphStatus === 1 ? "profileButtons" : "confirmButton"
+                    photoGraphName && photoGraphStatus === 1 ? "profileButtons" : "confirmButton2"
                   }
                   onClick={(e, name) => downloadTheLetter(e, photoGraphName,EmployeeId)}
                   disabled={photoGraphName && photoGraphStatus === 1 ? false : true}
@@ -318,7 +319,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.photoId !== ""
                       ? stateOfName.photoId
@@ -335,7 +336,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       className="custom_file_Upload_button"
@@ -346,7 +347,7 @@ const PersonalDoc = (props) => {
                     />
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                      id="custom_file_upload_icons2"
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>
@@ -365,7 +366,7 @@ const PersonalDoc = (props) => {
           </Row>
           <Row>
             <Col sm={3}>
-              <label>
+              <label className="keyField">
                 <b>Cancelled Cheque :</b>
               </label>
               <br />
@@ -383,7 +384,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                    className={
-                    cancelledCheque && cancelledChequeStatus === 1 ? "profileButtons" : "confirmButton"
+                    cancelledCheque && cancelledChequeStatus === 1 ? "profileButtons" : "confirmButton2"
                   }
                   onClick={(e, name) => showTheLetter(e, cancelledCheque)}
                   disabled={cancelledCheque && cancelledChequeStatus === 1 ? false : true}
@@ -402,7 +403,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    cancelledCheque && cancelledChequeStatus === 1 ? "profileButtons" : "confirmButton"
+                    cancelledCheque && cancelledChequeStatus === 1 ? "profileButtons" : "confirmButton2"
                   }
                   onClick={(e, name) => downloadTheLetter(e, cancelledCheque,EmployeeId)}
                   disabled={cancelledCheque && cancelledChequeStatus === 1 ? false : true}
@@ -414,7 +415,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.cancelledCheque !== ""
                       ? stateOfName.cancelledCheque
@@ -431,7 +432,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       name="cancelledCheque"
@@ -443,7 +444,7 @@ const PersonalDoc = (props) => {
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                      id="custom_file_upload_icons2"
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>
@@ -471,7 +472,7 @@ const PersonalDoc = (props) => {
           ) : (
             <Row>
               <Col sm={3}>
-                <label>
+                <label className="keyField">
                   <b>PAN :</b>
                 </label>
                 <br />
@@ -488,7 +489,7 @@ const PersonalDoc = (props) => {
                 >
                   {/* onClick={submitHandler} */}
                   <button
-                    className={PANName && PANStatus === 1 ? "profileButtons" : "confirmButton"}
+                    className={PANName && PANStatus === 1 ? "profileButtons" : "confirmButton2"}
                     onClick={(e, name) => showTheLetter(e, PANName)}
                     disabled={PANName && PANStatus === 1 ? false : true}
                   >
@@ -505,7 +506,7 @@ const PersonalDoc = (props) => {
                   }}
                 >
                   <button
-                    className={PANName && PANStatus === 1 ? "profileButtons" : "confirmButton"}
+                    className={PANName && PANStatus === 1 ? "profileButtons" : "confirmButton2"}
                     onClick={(e, name) => downloadTheLetter(e, PANName,EmployeeId)}
                     disabled={PANName && PANStatus === 1 ? false : true}
                   >
@@ -516,7 +517,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField">
+                    <label className="fileInputField3">
                       &nbsp;&nbsp;
                       {stateOfName.panId !== ""
                         ? stateOfName.panId
@@ -533,7 +534,7 @@ const PersonalDoc = (props) => {
                       />
                     </label>
 
-                    <label className="custom-file-upload">
+                    <label className="custom-file-upload2">
                       <input
                         type="button"
                         name="panId"
@@ -545,7 +546,7 @@ const PersonalDoc = (props) => {
                       {/* <i className="fa fa-cloud-upload" />  */}
                       Upload File{" "}
                       <i
-                        id="custom_file_upload_icon"
+                        id="custom_file_upload_icons2"
                         className="fa fa-upload"
                         aria-hidden="true"
                       ></i>
@@ -565,7 +566,7 @@ const PersonalDoc = (props) => {
           )}
           <Row>
             <Col sm={3}>
-              <label>
+              <label className="keyField">
                 <b>Address Proof :</b>
               </label>
               <br />
@@ -583,7 +584,7 @@ const PersonalDoc = (props) => {
                 {/* onClick={submitHandler} */}
                 <button
                    className={
-                    AddressProofName && AddressProofStatus === 1 ? "profileButtons" : "confirmButton"
+                    AddressProofName && AddressProofStatus === 1 ? "profileButtons" : "confirmButton2"
                   }
                   onClick={(e, name) => showTheLetter(e, AddressProofName)}
                   disabled={AddressProofName && AddressProofStatus === 1 ? false : true}
@@ -602,7 +603,7 @@ const PersonalDoc = (props) => {
               >
                 <button
                   className={
-                    AddressProofName && AddressProofStatus === 1 ? "profileButtons" : "confirmButton"
+                    AddressProofName && AddressProofStatus === 1 ? "profileButtons" : "confirmButton2"
                   }
                   onClick={(e, name) => downloadTheLetter(e, AddressProofName,EmployeeId)}
                   disabled={AddressProofName && AddressProofStatus === 1 ? false : true}
@@ -614,7 +615,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.addressProof !== ""
                       ? stateOfName.addressProof
@@ -631,7 +632,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       name="addressProof"
@@ -643,7 +644,7 @@ const PersonalDoc = (props) => {
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                      id="custom_file_upload_icons2"
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>
@@ -668,7 +669,7 @@ const PersonalDoc = (props) => {
           user.contractType.toLowerCase() === "local expat" ? (
             <Row>
               <Col sm={3}>
-                <label>
+                <label className="keyField">
                   <b>Passport :</b>
                 </label>
                 <br />
@@ -686,7 +687,7 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={
-                      passPortName && passPortStatus === 1 ? "profileButtons" : "confirmButton"
+                      passPortName && passPortStatus === 1 ? "profileButtons" : "confirmButton2"
                     }
                     onClick={(e, name) => showTheLetter(e, passPortName)}
                     disabled={passPortName && passPortStatus === 1 ? false : true}
@@ -705,7 +706,7 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={
-                      passPortName && passPortStatus === 1 ? "profileButtons" : "confirmButton"
+                      passPortName && passPortStatus === 1 ? "profileButtons" : "confirmButton2"
                     }
                     onClick={(e, name) => downloadTheLetter(e, passPortName,EmployeeId)}
                     disabled={passPortName && passPortStatus === 1 ? false : true}
@@ -717,7 +718,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField">
+                    <label className="fileInputField3">
                       &nbsp;&nbsp;
                       {stateOfName.passport !== ""
                         ? stateOfName.passport
@@ -734,7 +735,7 @@ const PersonalDoc = (props) => {
                       />
                     </label>
 
-                    <label className="custom-file-upload">
+                    <label className="custom-file-upload2">
                       <input
                         type="button"
                         name="passport"
@@ -746,7 +747,7 @@ const PersonalDoc = (props) => {
                       {/* <i className="fa fa-cloud-upload" />  */}
                       Upload File{" "}
                       <i
-                        id="custom_file_upload_icon"
+                        id="custom_file_upload_icons2"
                         className="fa fa-upload"
                         aria-hidden="true"
                       ></i>
@@ -775,7 +776,7 @@ const PersonalDoc = (props) => {
           ) : (
             <Row>
               <Col sm={3}>
-                <label>
+                <label className="keyField">
                   <b>Adhar Card :</b>
                 </label>
                 <br />
@@ -793,7 +794,7 @@ const PersonalDoc = (props) => {
                   {/* onClick={submitHandler} */}
                   <button
                     className={
-                      adharCardName && adharCardStatus === 1 ? "profileButtons" : "confirmButton"
+                      adharCardName && adharCardStatus === 1 ? "profileButtons" : "confirmButton2"
                     }
                     onClick={(e, name) => showTheLetter(e, adharCardName)}
                     disabled={adharCardName && adharCardStatus === 1 ? false : true}
@@ -812,7 +813,7 @@ const PersonalDoc = (props) => {
                 >
                   <button
                     className={
-                      adharCardName && adharCardStatus === 1 ? "profileButtons" : "confirmButton"
+                      adharCardName && adharCardStatus === 1 ? "profileButtons" : "confirmButton2"
                     }
                     onClick={(e, name) => downloadTheLetter(e, adharCardName,EmployeeId)}
                     disabled={adharCardName && adharCardStatus === 1 ? false : true}
@@ -824,7 +825,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField">
+                    <label className="fileInputField3">
                       &nbsp;&nbsp;
                       {stateOfName.aadharId !== ""
                         ? stateOfName.aadharId
@@ -841,7 +842,7 @@ const PersonalDoc = (props) => {
                       />
                     </label>
 
-                    <label className="custom-file-upload">
+                    <label className="custom-file-upload2">
                       <input
                         type="button"
                         name="aadharId"
@@ -853,7 +854,7 @@ const PersonalDoc = (props) => {
                       {/* <i className="fa fa-cloud-upload" />  */}
                       Upload File{" "}
                       <i
-                        id="custom_file_upload_icon"
+                        id="custom_file_upload_icons2"
                         className="fa fa-upload"
                         aria-hidden="true"
                       ></i>
@@ -874,7 +875,7 @@ const PersonalDoc = (props) => {
           )}
           <Row>
             <Col sm={3}>
-              <label>
+              <label className="keyField">
                 <b>EPF Passbook (first page):</b>
               </label>
               <br />
@@ -891,7 +892,7 @@ const PersonalDoc = (props) => {
               >
                 {/* onClick={submitHandler} */}
                 <button
-                  className={EPFName && EPFStatus === 1 ? "profileButtons" : "confirmButton"}
+                  className={EPFName && EPFStatus === 1 ? "profileButtons" : "confirmButton2"}
                   onClick={(e, name) => showTheLetter(e, EPFName)}
                   disabled={EPFName && EPFStatus === 1 ? false : true}
                 >
@@ -908,7 +909,7 @@ const PersonalDoc = (props) => {
                 }}
               >
                 <button
-                  className={EPFName && EPFStatus === 1 ? "profileButtons" : "confirmButton"}
+                  className={EPFName && EPFStatus === 1 ? "profileButtons" : "confirmButton2"}
                   onClick={(e, name) => downloadTheLetter(e, EPFName,EmployeeId)}
                   disabled={EPFName && EPFStatus===1 ? false : true}
                 >
@@ -919,7 +920,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.epfPassBook !== ""
                       ? stateOfName.epfPassBook
@@ -936,7 +937,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       name="epfPassBook"
@@ -947,7 +948,7 @@ const PersonalDoc = (props) => {
                     />
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                      id="custom_file_upload_icons2"
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>

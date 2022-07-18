@@ -71,6 +71,22 @@
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
 }
+
+
+.fileInputField3 {
+  /* select upload */
+  flex-grow: 1;
+  height: 33px;
+  border: 1px solid #aaa;
+  margin-top: 0.5rem;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  padding: 5px 0;
+}
+.uploadDocSelect .form-group {
+  font-size: 12px;
+  margin-bottom: 1rem;
+}
 .custom-file-upload {
   display: flex;
   justify-content: space-between;
@@ -86,6 +102,22 @@
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
+.custom-file-upload2 {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 4px 14px;
+  cursor: pointer;
+  color: white;
+  background-color: #006ebb;
+  font-size: 15px;
+  margin-top: 7px;
+  margin-right: 5px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
 
 .custom-file-disable {
   display: flex;
@@ -109,6 +141,10 @@
   margin-left: 30px;
   font-size: 18px;
 }
+#custom_file_upload_icons2 {
+  margin-left: 10px;
+  font-size: 18px;
+}
 .FileInput label {
   margin-left: 20px;
   color: black;
@@ -121,4 +157,76 @@
 .FileInputWithOutStar label {
   margin-left: 20px;
   color: black;
+}
+
+.fileInputField3 {
+  /* select upload */
+  flex-grow: 1;
+  height: 33px;
+  border: 1px solid #aaa;
+  margin-top: 0.5rem;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+ 
+}
+.uploadDocSelect .form-group {
+  font-size: 12px;
+  margin-bottom: 1rem;
+}
+.custom-file-upload2 {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 4px 13px;
+  cursor: pointer;
+  color: white;
+  background-color: #006ebb;
+  font-size: 15px;
+  margin-top: 7px;
+  margin-right: 5px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.keyField{
+  padding-top: 17px;
+}
+
+@media (max-width: 1200px) {
+
+  .fileInputField3 {
+    /* select upload */
+    flex-grow: 1;
+    height: 33px;
+    border: 1px solid #aaa;
+    margin-top: 0.5rem;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+   
+  }
+  .uploadDocSelect .form-group {
+    font-size: 12px;
+    margin-bottom: 1rem;
+  }
+  .custom-file-upload2 {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 4px 13px;
+    cursor: pointer;
+    color: white;
+    background-color: #006ebb;
+    font-size: 15px;
+    margin-top: 7px;
+    margin-right: 5px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  .keyField{
+    padding-top: 17px;
+  }
+}
+@media (min-width: 576px){
+
 }
