@@ -2183,7 +2183,7 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-           insuranceNominationHoldDeath: false,
+          insuranceNominationHoldDeath: false,
             // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
@@ -2201,6 +2201,8 @@ const InsuranceNomination = (props) => {
         }
       }
     } else {
+
+
       
       state.extra2relationship = "Mother";
       state.extra2gender = "Female";
@@ -2282,6 +2284,38 @@ const InsuranceNomination = (props) => {
         }
 
         const CountOFNominees = NomineeCount;
+
+        const NAInfo = {
+          age: 0,
+          bloodGroup: null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: null,
+          gender: null,
+          nomineeVariant: 20,
+          nomineeType: 20,
+          nominiId: state.NAnominiId,
+          nominiName: null,
+          relationship: null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
+          topUpInsured: topupYes === true ? true : false,
+           insuranceNominationHoldDeath: false,
+            // insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
+        };
         const first_nomine_info = {
           age: state.age !== null ? state.age : null,
           bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
@@ -2776,9 +2810,42 @@ const InsuranceNomination = (props) => {
        
         if (sumInsuredError === false) {
        
-          NominiInfo=  setDeathNominee(NominiInfo, nominee)
-          
-          CreateNominee(NominiInfo);
+            // NominiInfo=  setDeathNominee(NominiInfo, nominee)
+        
+         const NAInfo = {
+          age: 0,
+          bloodGroup: null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: null,
+          gender: null,
+          nomineeVariant: 20,
+          nomineeType: 20,
+          nominiId: state.NAnominiId,
+          nominiName: null,
+          relationship: null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
+          topUpInsured: topupYes === true ? true : false,
+           insuranceNominationHoldDeath: true,
+            // insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
+        };
+        let arrayNew=[...NominiInfo,NAInfo];
+        console.log("check",arrayNew);
+          CreateNominee(arrayNew);
           UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
           const nextPage = props.NextStep;
           nextPage(true);
@@ -2789,7 +2856,7 @@ const InsuranceNomination = (props) => {
 
   const setDeathNominee = (NominiInfo,nominee) => {
     let searchNominiInfo = NominiInfo.map(arr =>{
-     
+    
        if(arr.relationship === nominee.nomineeRelationship) {
         return {
           ...arr,
@@ -2797,11 +2864,12 @@ const InsuranceNomination = (props) => {
         }
       }
       else{
-        return   arr;
+        return  {arr}
       
       }
       
-    });
+  
+  });
    
   }
 
