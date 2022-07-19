@@ -1200,7 +1200,7 @@ const InsuranceNomination = (props) => {
     ) {
       candidateInsuranceNominationData.map((item) => {
         if (
-          item.insuranceNominationHoldDeath === true &&
+           item.insuranceNominationHoldDeath === true &&
           item.candidateInsuranceDeathNomination !== null &&
           item.candidateInsuranceDeathNomination !== undefined &&
           Object.keys(item.candidateInsuranceDeathNomination) !== 0
@@ -2129,7 +2129,9 @@ const InsuranceNomination = (props) => {
 
     // for unmarried
     let sumInsuredError = false;
+   
     if (topupYes === true) {
+     
       if (sumInsured === "" || sumInsured === null) {
         sumInsuredError = true;
         setSumValueError(true);
@@ -2139,8 +2141,9 @@ const InsuranceNomination = (props) => {
       }
     }
 
-    console.log("submit", insuranceHoldDeathYes, insuranceHoldDeathNo);
+  
     if (NAcheck2 === true) {
+      console.log('Hello check Inside NAcheck2 == yes')
       if (
         (nomineeNameValidation() === true) &
         (nomineeDobValidation() === true) &
@@ -2158,6 +2161,7 @@ const InsuranceNomination = (props) => {
         // }
         UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
         // updating the one object if na checked
+        
         const NAInfo = {
           age: 0,
           bloodGroup: null,
@@ -2179,8 +2183,8 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2189,6 +2193,7 @@ const InsuranceNomination = (props) => {
             relationship: nominee.nomineeRelationship,
           },
         };
+       
         if (sumInsuredError === false) {
           CreateNominee([NAInfo]);
           const nextPage = props.NextStep;
@@ -2196,6 +2201,9 @@ const InsuranceNomination = (props) => {
         }
       }
     } else {
+
+
+      
       state.extra2relationship = "Mother";
       state.extra2gender = "Female";
       // for married
@@ -2276,6 +2284,38 @@ const InsuranceNomination = (props) => {
         }
 
         const CountOFNominees = NomineeCount;
+
+        const NAInfo = {
+          age: 0,
+          bloodGroup: null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: null,
+          gender: null,
+          nomineeVariant: 20,
+          nomineeType: 20,
+          nominiId: state.NAnominiId,
+          nominiName: null,
+          relationship: null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
+          topUpInsured: topupYes === true ? true : false,
+           insuranceNominationHoldDeath: false,
+            // insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
+        };
         const first_nomine_info = {
           age: state.age !== null ? state.age : null,
           bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
@@ -2303,8 +2343,8 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2313,6 +2353,7 @@ const InsuranceNomination = (props) => {
             relationship: nominee.nomineeRelationship,
           },
         };
+       
         const second_nomine_info = {
           age: state.nominee2Age,
           bloodGroup: state.nominee2BloodGroup,
@@ -2340,8 +2381,8 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2350,6 +2391,7 @@ const InsuranceNomination = (props) => {
             relationship: nominee.nomineeRelationship,
           },
         };
+        
         const third_nomine_info = {
           age: state.nominee3Age,
           bloodGroup: state.nominee3BloodGroup,
@@ -2377,8 +2419,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+         
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2387,6 +2430,7 @@ const InsuranceNomination = (props) => {
             relationship: nominee.nomineeRelationship,
           },
         };
+      
         const fourth_nomine_info = {
           age: state.nominee4Age,
           bloodGroup: state.nominee4BloodGroup,
@@ -2415,8 +2459,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+         
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2452,8 +2497,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+          
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2490,8 +2536,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+         
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2527,8 +2574,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+          
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2568,8 +2616,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+        
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2608,8 +2657,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+         
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2646,8 +2696,9 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath:
-            insuranceHoldDeathYes === true ? true : false,
+          insuranceNominationHoldDeath: false,
+        
+            // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -2660,28 +2711,29 @@ const InsuranceNomination = (props) => {
         const NominiInfo = [{}, {}, {}, {}, {}];
         var itemIncrease = 0;
 
+       
         if (addFirst === true) {
-          console.log("one", NominiInfo);
+        
           NominiInfo[itemIncrease] = first_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
         if (addSecond === true) {
-          console.log("two", NominiInfo);
+
           NominiInfo[itemIncrease] = second_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
         if (addThird === true) {
-          console.log("three", NominiInfo);
+       
           NominiInfo[itemIncrease] = fifth_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
         if ((addOne === true) & (NAcheck === false) & (parentsCheck === true)) {
-          console.log("addOne", NominiInfo);
+       
           NominiInfo[itemIncrease] = third_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
         if ((addTwo === true) & (NAcheck === false) & (parentsCheck === true)) {
-          console.log("addTwo", NominiInfo);
+         
           NominiInfo[itemIncrease] = fourth_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
@@ -2689,33 +2741,34 @@ const InsuranceNomination = (props) => {
           (addFirstInLaw === true) &
           (NAcheck === false) &
           (InlawCheck === true)
-        ) {
-          console.log("addFirstInlaw", NominiInfo);
-          NominiInfo[itemIncrease] = sixth_nomine_info;
-          itemIncrease = itemIncrease + 1;
-        }
-        if (
-          (addSecondInLaw === true) &
-          (NAcheck === false) &
-          (InlawCheck === true)
-        ) {
-          console.log("addSecondInLaw", NominiInfo);
+          ) {
+         
+            NominiInfo[itemIncrease] = sixth_nomine_info;
+            itemIncrease = itemIncrease + 1;
+          }
+          if (
+            (addSecondInLaw === true) &
+            (NAcheck === false) &
+            (InlawCheck === true)
+            ) {
+         
           NominiInfo[itemIncrease] = seventh_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
-
+        
         if (addExtraFirst === true) {
-          console.log("addExtraFirst");
+        
           NominiInfo[itemIncrease] = Eight_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
         if (addExtraSecond === true) {
-          console.log("addExtraSecond");
+         
           NominiInfo[itemIncrease] = Ninenth_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
         if (addExtraThird === true) {
-          console.log("addExtraThird");
+         
+     
           NominiInfo[itemIncrease] = tenth_nomine_info;
           itemIncrease = itemIncrease + 1;
         }
@@ -2744,8 +2797,8 @@ const InsuranceNomination = (props) => {
         //         ]
         //       : [];
 
-        if (NominiInfo.length < 5) {
-          console.log("nominee length", NominiInfo.length);
+        if (NominiInfo.length <5) {
+         
           let len = 5 - NominiInfo.length;
           console.log("nominee adjust length", len);
           // for (let i = 0; i <= len; i++) {
@@ -2753,9 +2806,46 @@ const InsuranceNomination = (props) => {
           //   NominiInfo[NominiInfo.length + i] = {};
           // }
         }
-        console.log(NominiInfo);
+     
+       
         if (sumInsuredError === false) {
-          CreateNominee(NominiInfo);
+       
+            // NominiInfo=  setDeathNominee(NominiInfo, nominee)
+        
+         const NAInfo = {
+          age: 0,
+          bloodGroup: null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: null,
+          gender: null,
+          nomineeVariant: 20,
+          nomineeType: 20,
+          nominiId: state.NAnominiId,
+          nominiName: null,
+          relationship: null,
+          premiumAmount: premiumAmnt,
+          sumInsured: sumInsured,
+          year:parseInt(moment().format("YYYY")),
+          topUpInsured: topupYes === true ? true : false,
+           insuranceNominationHoldDeath: true,
+            // insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
+        };
+        let arrayNew=[...NominiInfo,NAInfo];
+        console.log("check",arrayNew);
+          CreateNominee(arrayNew);
           UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
           const nextPage = props.NextStep;
           nextPage(true);
@@ -2763,6 +2853,25 @@ const InsuranceNomination = (props) => {
       }
     }
   };
+
+  const setDeathNominee = (NominiInfo,nominee) => {
+    let searchNominiInfo = NominiInfo.map(arr =>{
+    
+       if(arr.relationship === nominee.nomineeRelationship) {
+        return {
+          ...arr,
+          insuranceNominationHoldDeath: true
+        }
+      }
+      else{
+        return  {arr}
+      
+      }
+      
+  
+  });
+   
+  }
 
   const PrevStep = () => {
     console.log("previous");
@@ -3230,6 +3339,7 @@ const InsuranceNomination = (props) => {
     // setAddFirstInLaw(false);
     // setAddSecondInLaw(false);
   };
+  // NA
   const handleNACheckboxChange2 = (val) => {
     if (val === true || val === false) {
       console.log("val", val);
