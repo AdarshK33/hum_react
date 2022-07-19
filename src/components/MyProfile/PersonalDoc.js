@@ -774,7 +774,7 @@ const PersonalDoc = (props) => {
             <Row>
               <Col sm={3}>
                 <label>
-                  <b>Adhar Card :</b>
+                  <b>Aadhaar Card :</b>
                 </label>
                 <br />
                 <label className="itemResult">{adharCardName}</label>

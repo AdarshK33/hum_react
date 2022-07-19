@@ -131,34 +131,37 @@ const ExtensionLetter1 = () => {
                     starting from{" "}
                     <b>{extensionLetterData.probationStartDate}</b> to{" "}
                     <b>{extensionLetterData.probationEndDate}</b>.
-                    <br />
+                    </p>
+                    <p>
                     Within this period, you are advised to improve your skills
                     and performance and to work closely with your manager for
                     guidance and feedback.
-                    <br />
+                    </p>
+                    <p>
                     At the end of this period, your performance will be
                     appraised and the final decision regarding your employment
-                    will be made in view of your performance in the period.
-                    <br />
+                    will be made in view of your performance in the period.</p>
+                    <p>
                     However, if your performance is still unsatisfactory, the
                     company may decide to terminate your services due to
                     non-confirmation.
-                    <br />
+                    </p>
+                    <p>
                     All the other terms and conditions of your appointment
                     letter {" "}
                     {/* <b>{extensionLetterData.appointmentLetterDate}</b> */}
-                    , shall
+                    shall
                     remain the same.
-                    <br />
-                    <br />
+                    </p>
+                    <p>
                     Please sign the copy of this letter as receipt of
                     acceptance.
+                    </p>
                     <br />
-                    <br />
+                    <p>
                     Yours Sincerely,
-                    <br />
-                  </p>
-                  <p className="mt-5 ">
+                    </p>
+                  <p>
                     <b>For {extensionLetterData.company},</b>
                   </p>
                   <div className="float-right "></div>

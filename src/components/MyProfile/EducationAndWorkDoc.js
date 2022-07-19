@@ -89,7 +89,7 @@ const EducationAndWorkDoc = (props) => {
         <Row>
           <Col sm={8}>
             <label>
-              <b>Heighest Education Certificate :</b>
+              <b>Highest Education Certificate :</b>
             </label>
             <br />
             <label className="itemResult">{educationDocName}</label>
