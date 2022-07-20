@@ -2151,6 +2151,11 @@ const InsuranceNomination = (props) => {
         (nomineeRelationValidation() === true) &
         (insuranceUploadValidation() === true)
       ) {
+        console.log("NAcheck2 condition",(nomineeNameValidation() === true) &
+        (nomineeDobValidation() === true) &
+        (nomineeAddressValidation() === true) &
+        (nomineeRelationValidation() === true) &
+        (insuranceUploadValidation() === true));
         // if (
         //   candidateInsuranceNominationData &&
         //   candidateInsuranceNominationData !== null &&
@@ -2285,38 +2290,6 @@ const InsuranceNomination = (props) => {
         }
 
         const CountOFNominees = NomineeCount;
-
-        const NAInfo = {
-          age: 0,
-          bloodGroup: null,
-          candidateId:
-            candidateProfileData &&
-            candidateProfileData !== null &&
-            candidateProfileData !== undefined &&
-            candidateProfileData.candidateId !== null
-              ? candidateProfileData.candidateId
-              : 0,
-          dateOfBirth: null,
-          gender: null,
-          nomineeVariant: 20,
-          nomineeType: 20,
-          nominiId: state.NAnominiId,
-          nominiName: null,
-          relationship: null,
-          premiumAmount: premiumAmnt,
-          sumInsured: sumInsured,
-          year:parseInt(moment().format("YYYY")),
-          topUpInsured: topupYes === true ? true : false,
-           insuranceNominationHoldDeath: false,
-            // insuranceHoldDeathYes === true ? true : false,
-          candidateInsuranceDeathNomination: {
-            address: nominee.nomineeAddress,
-            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
-            nomineeId: nomineeValue,
-            nomineeName: nominee.nomineeName,
-            relationship: nominee.nomineeRelationship,
-          },
-        };
         const first_nomine_info = {
           age: state.age !== null ? state.age : null,
           bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
