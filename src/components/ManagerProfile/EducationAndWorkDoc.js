@@ -62,7 +62,7 @@ const EducationAndWorkDoc = (props) => {
   };
   const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
-    console.log("check", name);
+    console.log("check", name,EmployeeId);
     if (name !== null && name !== undefined) {
       let splitStr = name.split(".");
 
