@@ -2159,6 +2159,7 @@ const InsuranceNomination = (props) => {
         // ) {
         //   DeleteAllInsuranceNominations(candidateProfileData.candidateId);
         // }
+        console.log("inside check");
         UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
         // updating the one object if na checked
         
@@ -2183,7 +2184,7 @@ const InsuranceNomination = (props) => {
           sumInsured: sumInsured,
           year:parseInt(moment().format("YYYY")),
           topUpInsured: topupYes === true ? true : false,
-          insuranceNominationHoldDeath: false,
+          insuranceNominationHoldDeath: true,
             // insuranceHoldDeathYes === true ? true : false,
           candidateInsuranceDeathNomination: {
             address: nominee.nomineeAddress,
@@ -2193,7 +2194,7 @@ const InsuranceNomination = (props) => {
             relationship: nominee.nomineeRelationship,
           },
         };
-       
+       console.log("inside check info",NAInfo);
         if (sumInsuredError === false) {
           CreateNominee([NAInfo]);
           const nextPage = props.NextStep;
