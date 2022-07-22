@@ -22,8 +22,6 @@ const Insurance = () => {
     UpdateInsurance,
   } = useContext(EmployeeProfileContext);
 
-  console.log("insuranceData", insuranceData);
-  console.log("insuranceTopUpData", insuranceTopUpData);
   const [sumInsured, setSumInsured] = useState("");
   const [premiumAmnt, setPremiumAmnt] = useState("");
   const [sumInsuredId, setSumInsuredId] = useState("");
@@ -41,6 +39,7 @@ const Insurance = () => {
 
   useEffect(() => {
     if (
+      year&&
       sumInsuredId !== "" &&
       sumInsuredId !== null &&
       sumInsuredId !== undefined &&
@@ -50,12 +49,14 @@ const Insurance = () => {
       Object.keys(user).length !== 0
     ) {
       premiumView(sumInsuredId, user.employeeId);
+   
     }
   }, [sumInsuredId]);
   console.log("premiumViewData", premiumViewData);
 
   useEffect(() => {
     if (
+      year&&
       premiumViewData !== "" &&
       premiumViewData !== null &&
       premiumViewData !== undefined &&

@@ -46,6 +46,10 @@ const PartTimerSalaryInput = () => {
   }, []);
 
   useEffect(() => {
+    ViewEmployeeData('all');
+  }, [searchEmpSelected]);
+
+  useEffect(() => {
     console.log("callled")
   if (
    employeeData &&
