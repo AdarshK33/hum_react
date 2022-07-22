@@ -6,6 +6,8 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
+import { PermissionContext } from "../../context/PermissionState";
+
 const OtherDocuments = (props) => {
   const { user } = useContext(AppContext);
   const {
@@ -19,6 +21,7 @@ const OtherDocuments = (props) => {
     otherDocumentsList,
     loader,
   } = useContext(EmployeeProfileContext);
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [ethicsCharter, setEthicsCharter] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
@@ -80,7 +83,7 @@ const OtherDocuments = (props) => {
     console.log("check", name);
     downloadFile(name,employeeData);
   };
-  const showTheLetter = (e, name,employeeData) => {
+  const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -99,7 +102,8 @@ const OtherDocuments = (props) => {
         setName("JPG");
       }
     }
-    setEmployeeId(employeeData)
+    ImageView(name,EmployeeId)
+    setEmployeeId(EmployeeId)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
