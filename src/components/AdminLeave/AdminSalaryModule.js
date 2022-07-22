@@ -728,7 +728,7 @@ const AdminSalaryModule = () => {
                                 moment().format("DD") <= "25" &&
                                 (item.statusDesc === "Pending" ||
                                   item.statusDesc === "Approved")) ||
-                              (moment().format("DD") <= "23" &&
+                              (moment().format("DD") <= "20" &&
                                 item.statusDesc === "Pending") ? (
                                 <Edit2
                                   onClick={() => {
