@@ -73,7 +73,11 @@ let count=[''];
            {/* <Eye  /> */}
          </a> 
          {/* {/* <a href={imageViewData.data ? imageViewData.data:""} target="_blank"> */}
-           <Eye onClick={()=>{ImageView(list,EmployeeId);handleDocShow()}} /> 
+           <Eye   style={{
+                      textAlign: "right",
+                      fontSize: "xx-small",
+                      color: "#4f90ff",
+                    }} onClick={()=>{ImageView(list,EmployeeId);handleDocShow()}} /> 
          {/* </a> */}
        </td>
        <td>

@@ -1,4 +1,4 @@
-import React,{useState}from "react";
+import React,{useState,useContext,useEffect}from "react";
 import { Table, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import TableActionButton from "./TableAction.component";
@@ -10,7 +10,9 @@ const TableComponentManager360 = ({
   tableBody,
   height = "265px",
   button = false,
+
 }) => {
+
   return (
     <div style={{ height: height }}>
       <TableScrollbar>
@@ -29,10 +31,11 @@ const TableComponentManager360 = ({
               {tableBody.map((item, itemIndex) => (
                 <tr key={`${item.sno}_${itemIndex}`}>
                   {Object.entries(item).map(([key, value], index) => {
+                    console.log(value,key,"table1")
                     if (key === "view") {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                          {value.link !== "" ? (
+                          {value.link !== "" ? (           
                             <Link to={value.link}>
                               <TableActionButton
                                 disabled={!value.active}
@@ -54,6 +57,7 @@ const TableComponentManager360 = ({
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
                           <Row className="text-center">
                             {Object.entries(value).map(([actKey, actValue]) => {
+                              console.log(actValue,actKey,"table2")
                               if (actValue.link !== "") {
                                 return (
                                   <Link to={actValue.link}  key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}>
@@ -94,6 +98,7 @@ const TableComponentManager360 = ({
                   })}
                 </tr>
               ))}
+                              
             </tbody>
           ) : (
             <tbody>
@@ -103,6 +108,7 @@ const TableComponentManager360 = ({
             </tbody>
           )}
         </table>
+      
       </TableScrollbar>
     </div>
   );

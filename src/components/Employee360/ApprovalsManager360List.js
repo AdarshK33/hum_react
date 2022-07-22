@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom";
 
 const ApprovalsManager360List = ({ ListType }) => {
   const history = useHistory();
-  const { Manager360ListView, Manager360ListData, approvalsLoader } =
+  const { Manager360ListView, Manager360ListData, approvalsLoader ,totalManager360ListData} =
     useContext(Employee360Context);
   const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
@@ -26,8 +26,16 @@ const ApprovalsManager360List = ({ ListType }) => {
   const [transferType, setTransferType] = useState(ListType);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
+
   const [status, setStatus] = useState(5);
   const [activePage, setActivePage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentRecords, setCurrentRecords] = useState([]);
+
+  const [test, setTest] = useState("");
+
+
+  console.log("hello test",test)
 
   const TableHeaders =
     ListType === "promotion"
@@ -44,9 +52,9 @@ const ApprovalsManager360List = ({ ListType }) => {
   const [tableBody, setTableBody] = useState([]);
 
   useEffect(() => {
-    Manager360ListView(ListType, rolePermission);
+    Manager360ListView(ListType, rolePermission,pageCount );
   }, [ListType]);
-  console.log("Manager360ListData", Manager360ListData);
+  console.log("totalManager360ListData", totalManager360ListData);
   useEffect(() => {
     makeBonusByContractTypeEmpty();
   }, []);
@@ -334,18 +342,75 @@ const ApprovalsManager360List = ({ ListType }) => {
     }
   }, [Manager360ListData]);
 
+/*-----------------Pagination------------------*/
+const [currentPage, setCurrentPage] = useState(1);
+const recordPerPage = 10;
+const totalRecords = totalManager360ListData;
+const pageRange = 5;
+const indexOfLastRecord = currentPage * recordPerPage;
+const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+
+useEffect(() => {
+  if ( Manager360ListView!== null && Manager360ListView !== undefined) {
+    setCurrentRecords(Manager360ListData);
+  }
+ 
+}, [currentRecords,]);
+
+const handlePageChange = (pageNumber) => {
+  setPageCount(pageNumber-1);
+  setCurrentPage(pageNumber)
+  if(ListType && pageNumber ){
+Manager360ListView(ListType,rolePermission,pageNumber-1) //call api
+  }
+  else{
+    Manager360ListView(ListType, rolePermission,pageCount );
+  }
+setTest(Manager360ListData);
+   setCurrentRecords(Manager360ListData);
+ 
+};
+
+/*-----------------Pagination------------------*/
+console.log("hello pagination",Manager360ListData)
+
+
   return (
     <Fragment>
       <div>
         {approvalsLoader ? (
           <LoaderIcon />
         ) : (
+          <>
           <TableComponentManager360
             tableHeaders={TableHeaders}
             tableBody={tableBody}
+            ListType ={ListType}
             // button={true}
-            height={"370px"}
+            height={"280px"}
           />
+
+                                           <div>
+                                                      {Manager360ListData !== null  && Manager360ListData !== undefined  ?(
+                                      
+                                            <Pagination
+                                            itemClass="page-item"
+                                            linkClass="page-link"
+                                            activePage={currentPage}
+                                            itemsCountPerPage={recordPerPage}
+                                            totalItemsCount={totalRecords}
+                                            pageRangeDisplayed={pageRange}
+                                            onChange={handlePageChange}
+                                            firstPageText="First"
+                                            lastPageText="Last"
+                                          />
+                                          ):(
+                                                ""
+                                            )
+                                        }
+                                        </div>
+              
+        </>
         )}
 
         {!approvalsLoader ? (

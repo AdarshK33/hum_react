@@ -73,20 +73,7 @@
 }
 
 
-.fileInputField3 {
-  /* select upload */
-  flex-grow: 1;
-  height: 33px;
-  border: 1px solid #aaa;
-  margin-top: 0.5rem;
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  padding: 5px 0;
-}
-.uploadDocSelect .form-group {
-  font-size: 12px;
-  margin-bottom: 1rem;
-}
+
 .custom-file-upload {
   display: flex;
   justify-content: space-between;
@@ -102,22 +89,6 @@
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-.custom-file-upload2 {
-  display: flex;
-  justify-content: space-between;
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 4px 14px;
-  cursor: pointer;
-  color: white;
-  background-color: #006ebb;
-  font-size: 15px;
-  margin-top: 7px;
-  margin-right: 5px;
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
 
 .custom-file-disable {
   display: flex;
@@ -159,6 +130,14 @@
   color: black;
 }
 
+/* upload */
+.profileButtons {
+    width: 100px !important;
+    height: 30px !important;
+    margin-left: 0px !important;
+}
+
+
 .fileInputField3 {
   /* select upload */
   flex-grow: 1;
@@ -173,12 +152,13 @@
   font-size: 12px;
   margin-bottom: 1rem;
 }
+
 .custom-file-upload2 {
   display: flex;
   justify-content: space-between;
   border: 1px solid #ccc;
   display: inline-block;
-  padding: 4px 13px;
+  padding: 4px 4px;
   cursor: pointer;
   color: white;
   background-color: #006ebb;
@@ -188,6 +168,7 @@
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
+
 .keyField{
   padding-top: 17px;
 }
@@ -213,7 +194,7 @@
     justify-content: space-between;
     border: 1px solid #ccc;
     display: inline-block;
-    padding: 4px 13px;
+    padding: 4px 4px;
     cursor: pointer;
     color: white;
     background-color: #006ebb;
