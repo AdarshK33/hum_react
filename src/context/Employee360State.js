@@ -25,7 +25,7 @@ const initial_state = {
   employeeMyTeam:[],
   employeeAllTeam:[],
   total: {},
-
+  totalManager360ListData:{}
 };
 
 export const Employee360Context = createContext();
@@ -225,20 +225,21 @@ const RosterMonthSearchYear =()=>{
       });
   };
 
-  const Manager360ListView = (key, roleCheck) => {
+  const Manager360ListView = (key, roleCheck,page) => {
     let api = "";
+
     setApprovalsLoader(true);
     if (key === "transfer") {
       api =
-        "/api/v1/transfer/view?key=all&page=0&size=10&status=6&transferType=all";
+        "/api/v1/employee/360/view/employee/transfer?page="+page+"&size=10&key=all";
     } else if (key === "promotion") {
       api =
-        "/api/v1/employee/360/view/promotion/manager?key=all&page=0&size=10&superManager=0";
+        "/api/v1/employee/360/view/promotion/manager?key=all&page=0&size=5&superManager=0";
     } else if (key === "probation") {
-      api = "/api/v1/probation/view?days=0&key=all&page=0&size=10&status=0";
+      api = "/api/v1/probation/view/all?page="+page+"&size=10&key=all&superManager=0";
     } else if (key === "disciplinary") {
       api =
-        "/api/v1/disciplinary/view?key=all&page=0&size=10&status=15&superManager=0";
+        "/api/v1/disciplinary/view/all?page="+page+"&size=10&key=all&superManager=0";
     } else if (key === "separation") {
       if (roleCheck === "costCenterManager") {
         api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=10";
@@ -251,10 +252,16 @@ const RosterMonthSearchYear =()=>{
       .get(api)
       .then((response) => {
         state.Manager360ListData = response.data.data.data;
+        if(response.data.data.total){
+          console.log("rrrrrrrrrrrrr m",response.data.data.total)
+        state.totalManager360ListData = response.data.data.total;
+        }
+
         setApprovalsLoader(false);
         return dispatch({
           type: "MANAGER_360_APROVAL",
           payload: state.Manager360ListData,
+          totalManager360ListData: state.totalManager360ListData,
         });
       })
       .catch((error) => {
@@ -468,7 +475,6 @@ const RosterMonthSearchYear =()=>{
   };
  
 
-
   return (
     <Employee360Context.Provider
       value={{
@@ -492,10 +498,12 @@ const RosterMonthSearchYear =()=>{
         TeamPerformanceView,
         getEmployeeMyTeam,
         getEmployeeAllTeam,
+       
         YearsList: state.YearsList,
         clusterDirect: state.clusterDirect,
         ClusterEmpList: state.ClusterEmpList,
         Manager360ListData: state.Manager360ListData,
+        totalManager360ListData: state.totalManager360ListData,
         myPerformanceData: state.myPerformanceData,
         unPlannedLeaves: state.unPlannedLeaves,
         plannedLeaves: state.plannedLeaves,
@@ -517,7 +525,8 @@ const RosterMonthSearchYear =()=>{
         employeeAllTeam: state.employeeAllTeam,
         total: state.total,
         data: state.total,
-        first: state.first
+        first: state.first,
+       
       }}
     >
       {children}

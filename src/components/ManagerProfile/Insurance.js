@@ -23,14 +23,13 @@ const Insurance = () => {
     currentEmpId,
   } = useContext(EmployeeProfileContext);
 
-  console.log("insuranceData", insuranceData);
-  console.log("insuranceTopUpData", insuranceTopUpData);
   const [sumInsured, setSumInsured] = useState("");
   const [premiumAmnt, setPremiumAmnt] = useState("");
   const [sumInsuredId, setSumInsuredId] = useState("");
   const [year, setYear] = useState();
   const [yearError, setYearError] = useState(false);
   const [sumValueError, setSumValueError] = useState(false);
+  const [isSumInsureUpdated, setIsSumInsureUpdated] = useState(false);  
   useEffect(() => {
     InsuranceView(currentEmpId);
   }, []);
@@ -42,18 +41,16 @@ const Insurance = () => {
 
   useEffect(() => {
     if (
-      sumInsuredId !== "" &&
-      sumInsuredId !== null &&
-      sumInsuredId !== undefined &&
-      user !== "" &&
-      user !== null &&
-      user !== undefined &&
+      isSumInsureUpdated &&
+      sumInsuredId && 
+      user &&
       Object.keys(user).length !== 0
-    ) {
+    ) {    
       premiumView(sumInsuredId, currentEmpId);
     }
+   
+
   }, [sumInsuredId]);
-  console.log("premiumViewData", premiumViewData);
 
   useEffect(() => {
     if (
@@ -73,8 +70,7 @@ const Insurance = () => {
       insuranceTopUpData !== undefined &&
       Object.keys(insuranceTopUpData).length !== 0
     ) {
-      console.log("insuranceTopUpData", insuranceTopUpData, sumInsured);
-      if (
+       if (
         sumInsured !== "" &&
         sumInsured !== null &&
         sumInsured !== undefined
@@ -87,7 +83,6 @@ const Insurance = () => {
           premiumValue !== undefined &&
           Object.keys(premiumValue).length !== 0
         ) {
-          console.log("premiumAmnt", premiumValue[0]);
           setSumInsuredId(premiumValue[0].insuranceNominationId);
         } else {
           setSumInsuredId(0);
@@ -136,8 +131,7 @@ const Insurance = () => {
     }
   }, [insuranceData]);
 
-  const DropDownsValidation = (item, setError) => {
-    console.log("sumInsured", sumInsured);
+  const DropDownsValidation = (item, setError) => {  
     if (item !== "" && item !== null && item !== undefined) {
       setError(false);
       return true;
@@ -161,8 +155,7 @@ const Insurance = () => {
         item.premiumAmount = parseInt(premiumAmnt);
         item.year = parseInt(year);
         item.dob = moment(item.dob).format("DD-MM-YYY");
-      });
-      console.log("data insurance", insuranceData);
+      });    
       UpdateInsurance(insuranceData);
     }
   };
@@ -297,7 +290,10 @@ const Insurance = () => {
                 as="select"
                 name="insuredAmount"
                 value={sumInsured}
-                onChange={(e) => setSumInsured(e.target.value)}
+                onChange={(e) => {
+                  setIsSumInsureUpdated(true);
+                  setSumInsured(e.target.value)
+                }}
                 required
                 style={sumValueError ? { borderColor: "red" } : {}}
               >

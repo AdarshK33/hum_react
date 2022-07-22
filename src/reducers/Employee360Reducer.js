@@ -22,7 +22,10 @@ const GroupReducer = (state, action) => {
     case "MY_PERFORMANCE":
       return { ...state, myPerformanceData: action.payload };
     case "MANAGER_360_APROVAL":
-      return { ...state, Manager360ListData: action.payload };
+      return { ...state, 
+        Manager360ListData: action.payload,
+        totalManager360ListData: action.totalManager360ListData, 
+      };
     case "CLUSTER_DIRECT":
       return { ...state, clusterDirect: action.payload };
     case "YEARS_LIST":
@@ -34,7 +37,7 @@ const GroupReducer = (state, action) => {
     case "TEAM_PERFORMANCE":
           return { ...state, teamPerformanceData: action.payload }; 
     case "EMPLOYEE_MY_TEAM":
-            return { ...state, employeeMyTeam: action.payload };    
+            return { ...state, employeeMyTeam: action.payload };         
     case "EMPLOYEE_All_TEAM":
             return { 
               ...state, 
@@ -42,7 +45,6 @@ const GroupReducer = (state, action) => {
               loader: action.loader,
               total: action.total, 
                };    
-        
     default:
       return state;
   }

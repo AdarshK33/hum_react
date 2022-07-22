@@ -78,6 +78,7 @@ const MyDocumentsCard = ({ height }) => {
                       textAlign: "right",
                       fontSize: "xx-small",
                       color: "#4f90ff",
+                      marginRight: "10px"
                     }}
                     onClick={(e) =>{
                       console.log(item,"item employee");
@@ -86,7 +87,7 @@ const MyDocumentsCard = ({ height }) => {
                   />
 
                   <Download
-                    style={{ fontSize: "xx-small", color: "#4f90ff" }}
+                    style={{ fontSize: "xx-small", color: "#4f90ff",marginRight: "10px" }}
                     onClick={(e) => {console.log(item,"item employee");downloadTheLetter(item.documentLink,item.employeeId)}}
                   />
                 </Col>
