@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import { PromotionContext } from "../../../context/PromotionState";
-
+import { AppContext } from "../../../context/AppState";
 
 const IssueShowCauseNotice = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
@@ -90,6 +90,7 @@ const IssueShowCauseNotice = () => {
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
   );
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   useEffect(() => {
    
     if (
@@ -116,6 +117,7 @@ const IssueShowCauseNotice = () => {
   }, []);
   useEffect(() => {
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
   }, []);
   // useEffect(() => {
   //   if (

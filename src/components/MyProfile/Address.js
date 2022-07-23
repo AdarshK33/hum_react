@@ -17,7 +17,7 @@ import { TransferContext } from "../../context/TransferState";
 import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 const Address = (props) => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { addressView, addressViewData, bankView, UpdateAddress, uploadFile } =
     useContext(EmployeeProfileContext);
   const {
@@ -112,11 +112,11 @@ const Address = (props) => {
   const [addressValue, setAddressValue] = useState(0);
   // un commect
   useEffect(() => {
-    addressView(user.employeeId);
+    addressView(fetchemployeeData.employeeId);
     getCountryDetails();
     getCostCentreLocationDetails();
     stateData();
-    bankView(user.employeeId);
+    bankView(fetchemployeeData.employeeId);
   }, []);
 
   useEffect(() => {
@@ -915,7 +915,7 @@ const Address = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: user.employeeId,
+        employeeId: fetchemployeeData.employeeId,
         file: fileUpload,
         fileType: fileType,
       };
@@ -943,7 +943,7 @@ const Address = (props) => {
           addressType: state.addressType,
           city: cityName,
           country: countryName,
-          employeeId: user.employeeId,
+          employeeId: fetchemployeeData.employeeId,
           flatNumber: state.flatNumber,
           locality: state.locality,
           phoneNumber: state.phoneNumber,
@@ -967,7 +967,7 @@ const Address = (props) => {
                 // addressProof: "string",
                 city: permanentCityName,
                 country: permanentCountryName,
-                employeeId: user.employeeId,
+                employeeId: fetchemployeeData.employeeId,
                 flatNumber: state.permanentFlatNumber,
                 locality: state.permanentLocality,
                 phoneNumber: state.permanentPhoneNumber,
@@ -983,7 +983,7 @@ const Address = (props) => {
                   // addressProof: "string",
                   city: permanentCityName,
                   country: permanentCountryName,
-                  employeeId: user.employeeId,
+                  employeeId: fetchemployeeData.employeeId,
                   flatNumber: state.permanentFlatNumber,
                   locality: state.permanentLocality,
                   phoneNumber: state.permanentPhoneNumber,

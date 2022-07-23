@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { PermissionContext } from "../../context/PermissionState";
 
 const PersonalDoc = (props) => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const {
     DocumentView,
     documentsList,
@@ -77,7 +77,7 @@ const PersonalDoc = (props) => {
   ]);
 
   useEffect(() => {
-    DocumentView(user.employeeId);
+    DocumentView(fetchemployeeData.employeeId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -241,7 +241,7 @@ const PersonalDoc = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: user.employeeId,
+        employeeId: fetchemployeeData.employeeId,
         file: fileUpload,
         fileType: fileType,
       };
@@ -460,11 +460,11 @@ const PersonalDoc = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {user &&
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          user.contractType.toLowerCase() === "local expat" ? (
+          {fetchemployeeData &&
+          fetchemployeeData !== null &&
+          fetchemployeeData !== undefined &&
+          Object.keys(fetchemployeeData).length !== 0 &&
+          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             ""
           ) : (
             <Row>
@@ -659,11 +659,11 @@ const PersonalDoc = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {user &&
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          user.contractType.toLowerCase() === "local expat" ? (
+          {fetchemployeeData &&
+          fetchemployeeData !== null &&
+          fetchemployeeData !== undefined &&
+          Object.keys(fetchemployeeData).length !== 0 &&
+          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             <Row>
               <Col sm={3}>
                 <label>
@@ -764,11 +764,11 @@ const PersonalDoc = (props) => {
           ) : (
             ""
           )}
-          {user &&
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          user.contractType.toLowerCase() === "local expat" ? (
+          {fetchemployeeData &&
+          fetchemployeeData !== null &&
+          fetchemployeeData !== undefined &&
+          Object.keys(fetchemployeeData).length !== 0 &&
+          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             ""
           ) : (
             <Row>

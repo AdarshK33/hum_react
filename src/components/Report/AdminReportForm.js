@@ -23,7 +23,7 @@ const AdminReportForm = () => {
   const [leave, setLeave] = useState([]);
   const [costCenter, setCostCenter] = useState("");
   const [employeeCostCenter, setEmployeeCostCenter] = useState([]);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   const reportTypeList = [
     { reportTypeData: "Monthly", id: 1 },
@@ -48,11 +48,11 @@ const AdminReportForm = () => {
       rolePermission !== "admin" &&
       rolePermission !== "superCostCenterManager"
     ) {
-      setCostCenter(user.costCentre);
-      employeeIdData(user.costCentre);
-      console.log("data1", user.costCentre);
+      setCostCenter(fetchemployeeData.costCentre);
+      employeeIdData(fetchemployeeData.costCentre);
+      console.log("data1", fetchemployeeData.costCentre);
     }
-  }, [user.costCentre, user.loginType]);
+  }, [fetchemployeeData.costCentre, user.loginType]);
 
   useEffect(() => {
     getLeaveReport();

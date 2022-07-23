@@ -45,7 +45,7 @@ const EditClusterModal = (props) => {
     getSingleCluster1,
     getEmployeesNames,
   } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
+  const { user, fetchemployeeData } = useContext(AppContext);
   const { costCenter } = useContext(RosterContext);
   const { rolePermission } = useContext(PermissionContext);
   console.log("getEmployeesNames", getEmployeesNames);
@@ -82,9 +82,9 @@ const EditClusterModal = (props) => {
       rolePermission !== "manager" ||
       rolePermission !== "admin"
     ) {
-      setCostCenterName(user.costCentre);
+      setCostCenterName(fetchemployeeData.costCentre);
     }
-  }, [user.costCentre, user.loginType]);
+  }, [fetchemployeeData.costCentre, user.loginType]);
 
   // const getCostCenterName = (e) => {
   //   let data = e.target.value
@@ -96,8 +96,8 @@ const EditClusterModal = (props) => {
   const getCostCenterName = (options) => {
     let data = options !== null ? options.value : "";
     setCostCenterName(data);
-    callClusterEmployees(data, user.employeeId);
-    callClusterLeaders(data, user.employeeId);
+    callClusterEmployees(data, fetchemployeeData.employeeId);
+    callClusterLeaders(data, fetchemployeeData.employeeId);
   };
 
   //cost center name

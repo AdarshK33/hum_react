@@ -81,7 +81,6 @@ const PromotionInitiate = () => {
   const [modelStatus, setModelStatus] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [directing, setDirecting] = useState(true);
-  const { user } = useContext(AppContext);
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
@@ -105,6 +104,7 @@ const PromotionInitiate = () => {
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   const {
     empResign,
     withdraw,
@@ -182,6 +182,7 @@ const PromotionInitiate = () => {
 
   useEffect(() => {
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
     allPromotionManager()
   }, []);
   useEffect(() => {

@@ -67,7 +67,7 @@ const DocVerification = () => {
     aadhaarNotificationData,
     adhaarVerificationNotification,
   } = useContext(OfferContext);
-  const { getUserInfo, user } = useContext(AppContext);
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   let history = useHistory();
 
@@ -84,6 +84,7 @@ const DocVerification = () => {
   }, [aadharStatus]);
   useEffect(() => {
     getUserInfo();
+    fetchEmployeeProfile();
     personalInfo(candidateId);
     fetchPfDetails(candidateId);
     setPFData(pfDetails);

@@ -20,7 +20,7 @@ const Header = (props) => {
     costChecked:false,
     managerChecked:false
   })
-  const { user, getUserMenu } = useContext(AppContext);
+  const { user,fetchemployeeData, getUserMenu } = useContext(AppContext);
   let history = useHistory();
   const { viewServiceGroup, groupList, permissionRoleAccess, rolePermission } =
     useContext(PermissionContext);
@@ -108,8 +108,8 @@ const Header = (props) => {
     state.costChecked = false
     state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department ==="Finance & Legal" || user.department === "Finance" || user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
-      getUserMenu(user.adminMenus);
+    if(fetchemployeeData.department ==="Finance & Legal" || fetchemployeeData.department === "Finance" || fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+      getUserMenu(user.adminMenus,"admin",fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length &&user.adminMenus.filter(
         (item) => item.menuName !== "Manager 360" && 
@@ -147,7 +147,7 @@ const Header = (props) => {
          item.menuName !== "DSI Charter" &&
          item.menuName !== "Charter"
       );
-      getUserMenu(departmentList);
+      getUserMenu(departmentList,"admin",fetchemployeeData);
     } 
     localStorage.setItem("type", "admin");
     localStorage.setItem("flag", "0");
@@ -167,19 +167,19 @@ const Header = (props) => {
     // localStorage.removeItem("loginRole");
     // localStorage.setItem("flag", "0");
     // history.push("/employee360");
-    if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
     item.menuName !== "Dashboard" &&
     item.menuName !== "My Roster" 
     )
-      getUserMenu(departmentList, "profile", user);
-    }else if((user.department === "Finance & Legal" ||
-    user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
-    user.contractType === "Internship"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if((fetchemployeeData.department === "Finance & Legal" ||
+    fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
+    fetchemployeeData.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
         item.menuName !== "Roster" &&
@@ -187,8 +187,8 @@ const Header = (props) => {
         item.menuName !== "My Roster" &&
         item.menuName !== "Separation"
       );
-      getUserMenu(departmentList, "profile", user);
-    }else if(user.department == "Retail"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if(fetchemployeeData.department == "Retail"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
         item.menuName !== "Document Management" && 
@@ -201,7 +201,7 @@ const Header = (props) => {
         item.menuName !== "My Payroll" && 
         item.menuName !== "My Profile"
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
@@ -218,7 +218,7 @@ const Header = (props) => {
         item.menuName !== "Dashboard" &&
         item.menuName !== "My Roster" 
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }
     localStorage.setItem("type", "profile");
     localStorage.setItem("flag", "0");
@@ -242,9 +242,9 @@ const Header = (props) => {
     state.costChecked = false
     state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
-      getUserMenu(user.managerMenus);
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" ||
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+      getUserMenu(user.managerMenus,"team",fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
         (item) => item.menuName !== "Manager 360" && 
@@ -275,7 +275,7 @@ const Header = (props) => {
         item.menuName !== "DSI Charters" &&
         item.menuName !== "DSI Charter"  
       );
-      getUserMenu(departmentList);
+      getUserMenu(departmentList,"team",fetchemployeeData);
     }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
@@ -295,19 +295,19 @@ const Header = (props) => {
     // localStorage.removeItem("loginRole");
     // localStorage.setItem("flag", "0");
     // history.push("/employee360")
-    if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
     item.menuName !== "Dashboard" &&
     item.menuName !== "My Roster" 
     )
-      getUserMenu(departmentList, "profile", user);
-    }else if((user.department === "Finance & Legal" ||
-    user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
-    user.contractType === "Internship"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if((fetchemployeeData.department === "Finance & Legal" ||
+    fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
+    fetchemployeeData.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
         item.menuName !== "Roster" &&
@@ -315,8 +315,8 @@ const Header = (props) => {
         item.menuName !== "My Roster" &&
         item.menuName !== "Separation"
       );
-      getUserMenu(departmentList, "profile", user);
-    }else if(user.department == "Retail"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if(fetchemployeeData.department == "Retail"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
         item.menuName !== "Document Management" && 
@@ -329,7 +329,7 @@ const Header = (props) => {
         item.menuName !== "My Payroll" && 
         item.menuName !== "My Profile"
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
@@ -346,7 +346,7 @@ const Header = (props) => {
         item.menuName !== "Dashboard" &&
         item.menuName !== "My Roster" 
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }
     localStorage.setItem("type", "profile");
     localStorage.setItem("flag", "0");
@@ -370,9 +370,9 @@ const Header = (props) => {
     state.costChecked = true
     state.managerChecked = false
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
-      getUserMenu(user.managerMenus);
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" ||
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+      getUserMenu(user.managerMenus,"team",fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
         (item) => item.menuName !== "Manager 360" && 
@@ -403,7 +403,7 @@ const Header = (props) => {
         item.menuName !== "DSI Charters" &&
         item.menuName !== "DSI Charter" 
       );
-      getUserMenu(departmentList);
+      getUserMenu(departmentList,"team",fetchemployeeData);
     }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
@@ -423,19 +423,19 @@ const Header = (props) => {
     // localStorage.removeItem("loginRole");
     // localStorage.setItem("flag", "0");
     // history.push("/employee360"); 
-    if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
     item.menuName !== "Dashboard" &&
     item.menuName !== "My Roster" 
     )
-      getUserMenu(departmentList, "profile", user);
-    }else if((user.department === "Finance & Legal" ||
-    user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
-    user.contractType === "Internship"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if((fetchemployeeData.department === "Finance & Legal" ||
+    fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
+    fetchemployeeData.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
         item.menuName !== "Roster" &&
@@ -443,8 +443,8 @@ const Header = (props) => {
         item.menuName !== "My Roster" &&
         item.menuName !== "Separation"
       );
-      getUserMenu(departmentList, "profile", user);
-    }else if(user.department == "Retail"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if(fetchemployeeData.department == "Retail"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
         item.menuName !== "Document Management" && 
@@ -457,7 +457,7 @@ const Header = (props) => {
         item.menuName !== "My Payroll" && 
         item.menuName !== "My Profile"
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
@@ -474,7 +474,7 @@ const Header = (props) => {
         item.menuName !== "Dashboard" &&
         item.menuName !== "My Roster" 
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }
     localStorage.setItem("type", "profile");
     localStorage.setItem("flag", "0");
@@ -498,9 +498,9 @@ const Header = (props) => {
     state.costChecked = false
     state.managerChecked = true
     permissionRoleAccess(localStorage.getItem("loginRole"));
-    if(user.department === "Finance & Legal" || user.department === "Finance" ||
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
-      getUserMenu(user.managerMenus);
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" ||
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+      getUserMenu(user.managerMenus,"team",fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
         (item) => item.menuName !== "Manager 360" && 
@@ -531,7 +531,7 @@ const Header = (props) => {
         item.menuName !== "DSI Charters" &&
         item.menuName !== "DSI Charter"  
       );
-      getUserMenu(departmentList);
+      getUserMenu(departmentList,"team",fetchemployeeData);
     }
     localStorage.setItem("type", "team");
     localStorage.setItem("flag", "0");
@@ -552,19 +552,19 @@ const Header = (props) => {
     // localStorage.setItem("flag", "0");
     // history.push("/employee360");
 
-    if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
     item.menuName !== "Dashboard" &&
     item.menuName !== "My Roster" 
     )
-      getUserMenu(departmentList, "profile", user);
-    }else if((user.department === "Finance & Legal" ||
-    user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
-    user.contractType === "Internship"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if((fetchemployeeData.department === "Finance & Legal" ||
+    fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
+    fetchemployeeData.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
         item.menuName !== "Roster" &&
@@ -572,8 +572,8 @@ const Header = (props) => {
         item.menuName !== "My Roster" &&
         item.menuName !== "Separation"
       );
-      getUserMenu(departmentList, "profile", user);
-    }else if(user.department == "Retail"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if(fetchemployeeData.department == "Retail"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
         item.menuName !== "Document Management" && 
@@ -586,7 +586,7 @@ const Header = (props) => {
         item.menuName !== "My Payroll" && 
         item.menuName !== "My Profile"
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
@@ -603,7 +603,7 @@ const Header = (props) => {
         item.menuName !== "Dashboard" &&
         item.menuName !== "My Roster" 
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }
     localStorage.setItem("type", "profile");
     localStorage.setItem("flag", "0");
@@ -655,7 +655,7 @@ const Header = (props) => {
                     textAlign: "left",
                   }}
                 >
-                  Hello, {user !== null ? user.firstName : ""}
+                  Hello, {fetchemployeeData !== null ? fetchemployeeData.firstName : ""}
                 </h6>
                 <h6
                   style={{
@@ -666,7 +666,7 @@ const Header = (props) => {
                   }}
                 >
                   {" "}
-                  {user !== null ? user.costCentre : ""}
+                  {fetchemployeeData !== null ? fetchemployeeData.costCentre : ""}
                 </h6>
 
                 <h6
@@ -677,7 +677,7 @@ const Header = (props) => {
                   }}
                 >
                   {" "}
-                  {user !== null ? user.employeeId : ""}
+                  {fetchemployeeData !== null ? fetchemployeeData.employeeId : ""}
                 </h6>
                 <h6
                   style={{
@@ -688,7 +688,7 @@ const Header = (props) => {
                   }}
                 >
                   {" "}
-                  {user !== null ? user.position : ""}
+                  {fetchemployeeData !== null ? fetchemployeeData.position : ""}
                 </h6>
               </div>
 

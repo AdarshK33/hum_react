@@ -28,16 +28,16 @@ const EmployeeDocementsList = () => {
     disciplinarySearchData,
     MakedisciplinaryEmployeeSearchNull,
   } = useContext(DisciplinaryContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
-    if (user !== null && user !== undefined) {
-      MyDisciplinaryActionListView(user.employeeId, pageCount);
-      console.log("user role", user);
+    if (fetchemployeeData !== null && fetchemployeeData !== undefined) {
+      MyDisciplinaryActionListView(fetchemployeeData.employeeId, pageCount);
+      console.log("user role", fetchemployeeData);
     }
   }, []);
 
@@ -67,8 +67,8 @@ const EmployeeDocementsList = () => {
     if (searchValue !== "") {
       MyDisciplinaryActionListView(searchValue, pageNumber - 1);
     } else {
-      if (user !== null && user !== undefined) {
-        MyDisciplinaryActionListView(user.employeeId, pageNumber - 1);
+      if (fetchemployeeData !== null && fetchemployeeData !== undefined) {
+        MyDisciplinaryActionListView(fetchemployeeData.employeeId, pageNumber - 1);
       }
     }
     setCurrentRecords(myDiscilinaryListData);
@@ -85,8 +85,8 @@ const EmployeeDocementsList = () => {
     if (searchValue !== "") {
       MyDisciplinaryActionListView(searchValue, 0);
     } else {
-      if (user !== null && user !== undefined) {
-        MyDisciplinaryActionListView(user.employeeId, 0);
+      if (fetchemployeeData !== null && fetchemployeeData !== undefined) {
+        MyDisciplinaryActionListView(fetchemployeeData.employeeId, 0);
       }
     }
   };

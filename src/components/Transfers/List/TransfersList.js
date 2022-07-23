@@ -25,7 +25,7 @@ const TransferPage = () => {
   } = useContext(TransferContext);
   const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [transferType, setTransferType] = useState(TRANSFERtype);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
@@ -97,14 +97,14 @@ const TransferPage = () => {
                 active:
                   item.status === 3
                     ? true
-                    : item.promotedManagerId === user.employeeId &&
+                    : item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                     ? true
                     : false,
                 link:
                   item.status === 3
                     ? `/transferaction/${item.transferId}`
-                    : item.promotedManagerId === user.employeeId &&
+                    : item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                     ? `/transfer/${item.transferId}`
                     : "",
@@ -138,14 +138,14 @@ const TransferPage = () => {
                 active:
                   item.status === 3
                     ? true
-                    : item.promotedManagerId === user.employeeId &&
+                    : item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                     ? true
                     : false,
                 link:
                   item.status === 3
                     ? `/entity-transferaction/${item.transferId}`
-                    : item.promotedManagerId === user.employeeId &&
+                    : item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                     ? `/entity-transfer/${item.transferId}`
                     : "",

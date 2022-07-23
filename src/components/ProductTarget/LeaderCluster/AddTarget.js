@@ -28,7 +28,7 @@ const AddTarget = (props) => {
 
 
     const { viewCostCentre } = useContext(DashboardContext);
-    const { user } = useContext(AppContext)
+    const { user, fetchemployeeData } = useContext(AppContext)
     const { leaderClusterList, viewLeaderClusterList,addTarget} = useContext(ClusterProductContext);
 
 
@@ -102,7 +102,7 @@ const AddTarget = (props) => {
             month: MonthData,
             monthName: "",
             productTarget: target,
-            storeName: user.costCentre,
+            storeName: fetchemployeeData.costCentre,
             targetId: 0,
             year: year
           }
@@ -151,7 +151,7 @@ const AddTarget = (props) => {
                                     <div className="col-sm-12">
                                         <Form.Group>
                                             <Form.Label>Select Cost Center :</Form.Label>
-                                            <Form.Control value={user.costCentre} readOnly />
+                                            <Form.Control value={fetchemployeeData.costCentre} readOnly />
                                             
                                             {/* <Form.Control as="select"
                                                 onChange={(e)=>fromStoreHandler(e.target.value)}

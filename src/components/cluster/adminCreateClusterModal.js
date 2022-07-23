@@ -43,7 +43,7 @@ const AdminCreateClusterModal = (props) => {
     callClusterEmployees,
     callClusterLeaders,
   } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
   const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
@@ -53,7 +53,7 @@ const AdminCreateClusterModal = (props) => {
   useEffect(() => {
     costCenter();
     if (rolePermission !== "admin") {
-      setCostCenterName(user.costCentre);
+      setCostCenterName(fetchemployeeData.costCentre);
     }
   }, []);
 

@@ -57,7 +57,7 @@ function ViewShift() {
 
   let history = useHistory();
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
 
   const handleEditClose = () => setEditModal(false);
@@ -293,7 +293,7 @@ function ViewShift() {
                 costCenterList !== undefined &&
                 Object.keys(costCenterList).length !== 0 &&
                 Object.keys(costCenterList).length === 1 ? (
-                  <Form.Control type="text" disabled value={user.costCentre} />
+                  <Form.Control type="text" disabled value={fetchemployeeData.costCentre} />
                 ) : (
                   <MultiSelect
                     options={
@@ -478,7 +478,7 @@ function ViewShift() {
                     currentRecords.length > 0 &&
                     (rolePermission == "costCenterManager" ||
                       rolePermission == "manager") &&
-                    user.isClusterManager === 1 ? (
+                      fetchemployeeData.isClusterManager === 1 ? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -586,7 +586,7 @@ function ViewShift() {
           totalHours={totalHours}
           year={year}
           additionalHours={additionalHours}
-          costCenter={user.costCentre}
+          costCenter={fetchemployeeData.costCentre}
         />
       </div>
       {salaryList !== null &&

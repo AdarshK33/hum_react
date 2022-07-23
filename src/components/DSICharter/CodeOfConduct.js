@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { Modal, Button, Col, Form, Row } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
 import codeBase64 from "./CharterFile/codeofconduct";
+import { AppContext } from "../../context/AppState";
 // import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import Img1 from "./img/img1.png";
 import Img2 from "./img/img2.png";
@@ -77,7 +78,8 @@ const CodeOfConduct = (props) => {
     uploadAllCharter,
     downloadFile,
   } = useContext(DSICharterContext);
-
+  const { getUserInfo,fetchEmployeeProfile,fetchemployeeData, user } = useContext(AppContext);
+  
   const [showModal, setShow] = useState(false);
   const [codeOfConduct, setCodeOfConduct] = useState(false);
   const [codeOfConductError, setCodeOfConductError] = useState("");
@@ -104,44 +106,45 @@ const CodeOfConduct = (props) => {
   };
   useEffect(() => {
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
     viewCharterAll();
   }, []);
 
   useEffect(() => {
     if (
-      employeeProfileData !== undefined &&
-      employeeProfileData !== null &&
-      employeeProfileData !== "" &&
-      Object.keys(employeeProfileData).length !== 0
+      fetchemployeeData !== undefined &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== "" &&
+      Object.keys(fetchemployeeData).length !== 0
     ) {
       if (
-        employeeProfileData.isCodeOfConduct === true &&
-        employeeProfileData.isDsiItCharter !== true
+        fetchemployeeData.isCodeOfConduct === true &&
+        fetchemployeeData.isDsiItCharter !== true
       ) {
         props.history.push("/itcharter");
         // props.history.push("/codeofconduct")
         setShow(false);
       } else if (
-        employeeProfileData.isCodeOfConduct === true &&
-        employeeProfileData.isDsiItCharter === true
+        fetchemployeeData.isCodeOfConduct === true &&
+        fetchemployeeData.isDsiItCharter === true
       ) {
         //props.history.push("/dashboard/storedashboard");31/05/2022
         props.history.push("/employee360")
 
         setShow(false);
       } else if (
-        (employeeProfileData.isCodeOfConduct !== true &&
-          employeeProfileData.isDsiItCharter !== true) ||
-        (employeeProfileData.isCodeOfConduct === null &&
-          employeeProfileData.isDsiItCharter === null)
+        (fetchemployeeData.isCodeOfConduct !== true &&
+          fetchemployeeData.isDsiItCharter !== true) ||
+        (fetchemployeeData.isCodeOfConduct === null &&
+          fetchemployeeData.isDsiItCharter === null)
       ) {
-        setCharterId(employeeProfileData.charterId);
+        setCharterId(fetchemployeeData.charterId);
 
-        console.log(employeeProfileData, "employeeProfileData");
+        console.log(fetchemployeeData, "employeeProfileData");
         handleShow();
       }
     }
-  }, [employeeProfileData, props]);
+  }, [fetchemployeeData, props]);
   // console.log(inputRef,props,charterDataAll,employeeProfileData,"charter code")
   function base64ToArrayBuffer(imageValue) {
     var bString = window.atob(imageValue);
@@ -165,13 +168,13 @@ const CodeOfConduct = (props) => {
     } else {
       setCodeOfConductError("");
     }
-    console.log(charterId, employeeProfileData, "employeeProfileData");
+    console.log(charterId, fetchemployeeData, "employeeProfileData");
     if (codeOfConduct === true) {
       if (charterId === 0) {
         let history = props.history;
         const infoData = {
           charterId: charterIdValue,
-          employeeId: employeeProfileData.employeeId,
+          employeeId: fetchemployeeData.employeeId,
           isCodeOfConduct: true,
           isDsiItCharter: false,
         };
@@ -203,7 +206,7 @@ const CodeOfConduct = (props) => {
             imageValue.name = "codeofconduct.pdf";
             const data = {
               dsiType: "Code of Conduct",
-              employeeId: employeeProfileData.employeeId,
+              employeeId: fetchemployeeData.employeeId,
               fileType: 19,
             };
             dsiCharterCreate(infoData, history, data, imageValue);
@@ -223,12 +226,12 @@ const CodeOfConduct = (props) => {
         // // setShow(false)
       } else {
         charterDataAll.map((item) => {
-          if (item.employeeId === employeeProfileData.employeeId) {
+          if (item.employeeId === fetchemployeeData.employeeId) {
             let history = props.history;
 
             const infoData = {
               charterId: item.charterId,
-              employeeId: employeeProfileData.employeeId,
+              employeeId: fetchemployeeData.employeeId,
               dsiCharterAcknowledgement: [
                 {
                   charterAcknowledgementId: 0,
@@ -237,7 +240,7 @@ const CodeOfConduct = (props) => {
               ],
               acknowledge: true,
               isCodeOfConduct: true,
-              isDsiItCharter: employeeProfileData.isDsiItCharter,
+              isDsiItCharter: fetchemployeeData.isDsiItCharter,
               itCharterLetter: ITCHARTER,
             };
             var element = document.getElementById("codeToPrint");
@@ -266,7 +269,7 @@ const CodeOfConduct = (props) => {
                 imageValue.name = "codeofconduct.pdf";
                 const data = {
                   dsiType: "Code of Conduct",
-                  employeeId: employeeProfileData.employeeId,
+                  employeeId: fetchemployeeData.employeeId,
                   fileType: 19,
                 };
 
@@ -324,15 +327,15 @@ const CodeOfConduct = (props) => {
   };
   useEffect(() => {
     if (
-      employeeProfileData !== undefined &&
-      employeeProfileData !== null &&
-      employeeProfileData !== "" &&
+      fetchemployeeData !== undefined &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== "" &&
       charterDataAll !== undefined &&
       charterDataAll !== null &&
       charterDataAll !== ""
     ) {
       charterDataAll.map((item) => {
-        if (item.employeeId == employeeProfileData.employeeId) {
+        if (item.employeeId == fetchemployeeData.employeeId) {
           if (item.codeOfConduct == true) {
             setCodeOfConduct(true);
           } else {
@@ -442,14 +445,14 @@ const CodeOfConduct = (props) => {
                   <br />
                   <b>Employee ID :</b>
                   <b style={{ padding: "20px" }}>
-                    {employeeProfileData.employeeId}
+                    {fetchemployeeData.employeeId}
                   </b>
                   <br />
                   <b>Signed and Accepted by Employee :</b>
                   <b style={{ padding: "20px" }}>
-                    {employeeProfileData.firstName +
+                    {fetchemployeeData.firstName +
                       "  " +
-                      employeeProfileData.lastName}
+                      fetchemployeeData.lastName}
                   </b>
                   <br />
                 </div>

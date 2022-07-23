@@ -22,7 +22,7 @@ const AddLeaderTarget = (props) => {
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
-    const { user } = useContext(AppContext);
+    const { user,fetchemployeeData } = useContext(AppContext);
     
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
     const { StateData,getStateData,addTarget,NewTarget } = useContext(StoreProductContext);
@@ -42,13 +42,13 @@ const AddLeaderTarget = (props) => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        if(user.costCentre !== undefined){
-            setStoreType(user.costCentre);
-            getStateData(user.costCentre) ;
+        if(fetchemployeeData.costCentre !== undefined){
+            setStoreType(fetchemployeeData.costCentre);
+            getStateData(fetchemployeeData.costCentre) ;
         }
         
         
-    }, [user.costCentre]);
+    }, [fetchemployeeData.costCentre]);
 
     const fromStoreHandler = (e) => {
         setStoreType(e);
@@ -187,7 +187,7 @@ const AddLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Store : </Form.Label>
-                                        <Form.Control as="input" required value = {user.costCentre} readOnly />
+                                        <Form.Control as="input" required value = {fetchemployeeData.costCentre} readOnly />
                                     </Form.Group>
                                 </div>
                             </Row>

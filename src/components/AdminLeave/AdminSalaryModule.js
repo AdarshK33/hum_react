@@ -80,7 +80,7 @@ const AdminSalaryModule = () => {
     costcenterByDepartment,
     costcenterByDepartmentData,
   } = useContext(OfferContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const handleEditClose = () => setEditModal(false);
@@ -403,7 +403,7 @@ const AdminSalaryModule = () => {
                     className="form-control Value"
                     required
                     readOnly
-                    value={user.costCentre}
+                    value={fetchemployeeData.costCentre}
                   />
                 ) : (
                   <MultiSelect

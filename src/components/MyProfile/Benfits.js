@@ -29,13 +29,13 @@ import moment from "moment";
 
 const Benfits = () => {
   const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [activeStep, setActiveStep] = useState(false);
   useEffect(() => {
     if (
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0 &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0 &&
       rolePermission !== "" &&
       rolePermission !== null &&
       rolePermission !== undefined &&
@@ -43,13 +43,13 @@ const Benfits = () => {
         rolePermission === "superCostCenterManager" ||
         rolePermission === "admin")
     ) {
-      if (user.department.toLowerCase() === "retail") {
+      if (fetchemployeeData.department.toLowerCase() === "retail") {
         setActiveStep(false);
       } else {
         setActiveStep(true);
       }
     }
-  }, [user]);
+  }, [fetchemployeeData]);
   return (
     <Fragment>
       <label>

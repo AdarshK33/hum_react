@@ -17,7 +17,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
 
   const history = useHistory();
@@ -79,9 +79,9 @@ const RelivingLetter = ({ anotherPath = false }) => {
         empId: relivingLetterData.employeeId,
         candidateId: 0,
         module: "Separation",
-        empName: user.firstName + " " + user.lastName,
-        empEmail: user.email,
-        empPhNo: user.phone,
+        empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+        empEmail: fetchemployeeData.email,
+        empPhNo: fetchemployeeData.phone,
         history: history,
         path: anotherPath ? "../employee-separation-listing" : "/exit-approval",
       };

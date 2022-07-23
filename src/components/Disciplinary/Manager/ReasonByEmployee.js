@@ -31,7 +31,7 @@ const ReasonByEmployee = ({ sign = true }) => {
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const ref = React.createRef();
   const inputRef = useRef(null);
@@ -162,9 +162,9 @@ const ReasonByEmployee = ({ sign = true }) => {
         empId: disciplinarySearchData.employeeId,
         candidateId: 0,
         module: "Disciplinary Action Response",
-        empName: user.firstName + " " + user.lastName,
-        empEmail: user.email,
-        empPhNo: user.phone,
+        empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+        empEmail: fetchemployeeData.email,
+        empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../my_disciplinary",
       };

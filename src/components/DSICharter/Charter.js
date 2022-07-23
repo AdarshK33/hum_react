@@ -1,6 +1,7 @@
 import React, { useState ,useContext,useEffect} from "react";
 import { Modal, Button ,Col,Form,Row} from "react-bootstrap";
 import CodeOfConduct from "./CodeOfConduct";
+import { AppContext } from "../../context/AppState";
 // import EthicsCharter from "./EthicCharter";
 import ITCharter from "./ITCharter";
 import { DSICharterContext } from "../../context/DSICharterState";
@@ -8,7 +9,8 @@ import {EmployeeSeparationContext} from "../../context/EmployeeSeparationState"
 import "./charter.css"
 const Charter=(props)=> {
   const { dsiCharterCreate ,dsiCharterData,viewCharterAll,charterDataAll} = useContext(DSICharterContext);
-  const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)    
+  const {ViewEmployeeProfile,employeeProfileData} = useContext(EmployeeSeparationContext)
+  const { getUserInfo,fetchEmployeeProfile,fetchemployeeData, user } = useContext(AppContext);    
   const [showModal, setShow] = useState(true);
    
   const [codeOfConduct,setCodeOfConduct] = useState(false)
@@ -18,14 +20,15 @@ const Charter=(props)=> {
 
   useEffect(() => {
     ViewEmployeeProfile()
+    fetchEmployeeProfile()
     viewCharterAll("all",0)
   }, [])
 
   useEffect(() => {
-    if(employeeProfileData !== undefined && employeeProfileData !== null && employeeProfileData !== "" &&
+    if(fetchemployeeData !== undefined && fetchemployeeData !== null && fetchemployeeData !== "" &&
       charterDataAll !== undefined && charterDataAll !== null && charterDataAll !== ""){
       charterDataAll.map((item)=>{
-        if(item.employeeId == employeeProfileData.employeeId){
+        if(item.employeeId == fetchemployeeData.employeeId){
           setCodeOfConduct(item.codeOfConduct)
           // setEthicsCharter(item.ethicsCharter)
           setDsiItCharter(item.dsiItCharter)

@@ -14,7 +14,7 @@ import { PermissionContext } from "../../context/PermissionState";
 
 import moment from "moment";
 const CharterList = () => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   const [pageCount, setPageCount] = useState(0);
@@ -32,7 +32,7 @@ const [EmployeeId, setEmployeeId] = useState("");
   useEffect(() => {
     if (user !== null && user !== undefined) {
         viewCharter("all",0)
-        console.log("user role", user);
+        console.log("user role", user,fetchemployeeData);
     }
   }, []);
 

@@ -39,7 +39,7 @@ const ClusterCard = () => {
 
   } = useContext(Employee360Context);
   
-const { user } = useContext(AppContext);
+const { user,fetchemployeeData } = useContext(AppContext);
 const employeeMyTeamRef = useRef(null);
 const employeeAllTeamRef = useRef(null);
 //console.log("eeeeeeeeee",employeeAllTeam)
@@ -193,7 +193,7 @@ useEffect(() => {
         >
         <label>My Team</label>
         </div>
-        {user.department == "Retail"||rolePermission === "admin" &&
+        {fetchemployeeData.department == "Retail"||rolePermission === "admin" &&
         <div
           className={tabIndex === 1 ? "activeTab" : "disabledTab"}
           onClick={() => {setSearchAllTeamSelected([]);setTabIndex(1);}}

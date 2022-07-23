@@ -8,7 +8,8 @@ import {
   SET_ACCESS_TOKEN_SUCCESS,
   SET_ACCESS_TOKEN_FAIL,
   AUTHENTICATE_USER,
-  FETCH_USER_INFO
+  FETCH_USER_INFO,
+  FETCH_EMPLOYEE_PROFILE
 } from "../constant/actionTypes";
 import ConfigDB from "../data/customizer/config";
 
@@ -100,6 +101,8 @@ export default (state = initial_state, action) => {
         ...state,
         user: action.payload
       };
+      case FETCH_EMPLOYEE_PROFILE:
+        return { ...state, fetchemployeeData: action.payload };
 
     default:
       return { ...state };

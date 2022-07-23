@@ -20,7 +20,7 @@ import InternShipLetter from "./InternShipLetter";
 import TerminationLetter from "./TerminationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { setDate } from "date-fns";
-
+import { AppContext } from "../../context/AppState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import { PromotionContext } from "../../context/PromotionState";
 
@@ -122,6 +122,7 @@ const ManagerInitiateExit = () => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  const { getUserInfo,fetchEmployeeProfile,fetchemployeeData, user } = useContext(AppContext);
   const { EmployeeSearchWithKey } = useContext(DisciplinaryContext);
   const {
     empResign,
@@ -164,6 +165,7 @@ const ManagerInitiateExit = () => {
   }, []);
   useEffect(() => {
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
   }, []);
 //   useEffect(()=>{
 // if(rolePermission == "manager"){
@@ -544,25 +546,25 @@ const ManagerInitiateExit = () => {
 
   useEffect(() => {
     if (
-      employeeProfileData &&
-      employeeProfileData &&
-      employeeProfileData !== null &&
-      employeeProfileData !== undefined &&
-      Object.keys(employeeProfileData).length !== 0
+      fetchemployeeData &&
+      fetchemployeeData &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0
     ) {
       state.mngrName =
-        employeeProfileData.lastName !== null &&
-        employeeProfileData.lastName !== undefined
-          ? employeeProfileData.firstName + " " + employeeProfileData.lastName
-          : employeeProfileData.firstName;
-      state.mngrId = employeeProfileData.employeeId;
-      state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.position;
+      fetchemployeeData.lastName !== null &&
+      fetchemployeeData.lastName !== undefined
+          ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
+          : fetchemployeeData.firstName;
+      state.mngrId = fetchemployeeData.employeeId;
+      state.mngrCostCenterName = fetchemployeeData.costCentre;
+      state.mngrPosition = fetchemployeeData.position;
     }
-  }, [employeeProfileData]);
+  }, [fetchemployeeData]);
 
   console.log("searchByCostData", searchByCostData);
-  console.log(employeeProfileData, "employeeProfileData");
+  console.log(employeeProfileData,fetchemployeeData, "employeeProfileData");
 
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();
@@ -1305,6 +1307,7 @@ const ManagerInitiateExit = () => {
   console.log(
     "employeeData","-->",
     employeeProfileData,"-->",
+    fetchemployeeData,
     searchByCostData,"-->",
     employeeData
   );

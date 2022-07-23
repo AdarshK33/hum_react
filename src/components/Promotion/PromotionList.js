@@ -30,7 +30,7 @@ const PromotionList = () => {
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
   const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -377,9 +377,9 @@ const PromotionList = () => {
                               </Link>
                             </td>
 
-                            {user !== null &&
-                            user !== undefined &&
-                            user.employeeId === item.initiatedBy ? (
+                            {fetchemployeeData !== null &&
+                            fetchemployeeData !== undefined &&
+                            fetchemployeeData.employeeId === item.initiatedBy ? (
                               <td>
                                 {item.status === 1 || item.status === 5 ? (
                                   <Link to={"/promotion/" + item.employeeId}>
@@ -393,8 +393,8 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) : user !== null &&
-                              user !== undefined &&
+                            ) : fetchemployeeData !== null &&
+                            fetchemployeeData !== undefined &&
                               rolePermission == "admin" ? (
                               <td>
                                 {item.status === 2 ? (
@@ -414,8 +414,8 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) : user !== null &&
-                              user !== undefined &&
+                            ) : fetchemployeeData !== null &&
+                            fetchemployeeData !== undefined &&
                               rolePermission == "costCenterManager" ? (
                               <td>
                                 {item.status === 0 ? (
@@ -434,8 +434,8 @@ const PromotionList = () => {
                                   <Edit2 />
                                 )}
                               </td>
-                            ) : user !== null &&
-                              user !== undefined &&
+                            ) : fetchemployeeData !== null &&
+                            fetchemployeeData !== undefined &&
                               rolePermission == "superCostCenterManager" ? (
                               <td>
                                 {item.status === 0 ? (

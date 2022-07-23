@@ -15,10 +15,10 @@ const LeaderStoreProductTarget = () => {
     const [Year, setYear] = useState();
     const [editModal, setEditModal] = useState(false);
     const { storeLeaderProductList, LeaderTargetList, editTargetHandler, editTarget, loader } = useContext(StoreProductContext);
-    const { user } = useContext(AppContext);
+    const { user, fetchemployeeData } = useContext(AppContext);
 
     const handleClose = () => {
-        LeaderTargetList(user.costCentre);
+        LeaderTargetList(fetchemployeeData.costCentre);
         setModal(false);
         setCurrentPage(1);
     }
@@ -30,11 +30,11 @@ const LeaderStoreProductTarget = () => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        if (user.costCentre !== undefined) {
-            LeaderTargetList(user.costCentre);
+        if (fetchemployeeData.costCentre !== undefined) {
+            LeaderTargetList(fetchemployeeData.costCentre);
         }
 
-    }, [user.costCentre]);
+    }, [fetchemployeeData.costCentre]);
 
     const targetEditHandler = (id) => {
 

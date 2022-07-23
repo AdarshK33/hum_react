@@ -8,23 +8,23 @@ import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
 
 const Default = () => {
-    const { user, getUserMenu } = useContext(AppContext);
+    const { user, fetchemployeeData,getUserMenu } = useContext(AppContext);
     let history = useHistory();
 
     useEffect(() => {
-    if(user.department === "Finance & Legal" || user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+    if(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) =>
     item.menuName !== "Roster" &&
     item.menuName !== "Dashboard" &&
     item.menuName !== "My Roster" 
     )
-      getUserMenu(departmentList, "profile", user);
-    }else if((user.department === "Finance & Legal" ||
-    user.department === "Finance" || 
-    user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
-    user.contractType === "Internship"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if((fetchemployeeData.department === "Finance & Legal" ||
+    fetchemployeeData.department === "Finance" || 
+    fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
+    fetchemployeeData.contractType === "Internship"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Resignation" && 
         item.menuName !== "Roster" &&
@@ -32,8 +32,8 @@ const Default = () => {
         item.menuName !== "My Roster" &&
         item.menuName !== "Separation"
       );
-      getUserMenu(departmentList, "profile", user);
-    }else if(user.department == "Retail"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if(fetchemployeeData.department == "Retail"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
         item.menuName !== "Document Management" && 
@@ -46,7 +46,7 @@ const Default = () => {
         item.menuName !== "My Payroll" && 
         item.menuName !== "My Profile"
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }else{
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
@@ -63,7 +63,7 @@ const Default = () => {
         item.menuName !== "Dashboard" &&
         item.menuName !== "My Roster" 
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }
     localStorage.setItem("type", "profile");
     localStorage.setItem("flag", "0");

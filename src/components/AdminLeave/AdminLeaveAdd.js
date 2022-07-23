@@ -37,7 +37,7 @@ const AdminLeaveAdd = (props) => {
   const { CostCenter, costCenterList, employeeIdData, employeeIdList } =
     useContext(AdminContext);
 
-  const { user } = useContext(AppContext);
+  const { user, fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   const today = new Date();
 
@@ -75,11 +75,11 @@ const AdminLeaveAdd = (props) => {
       rolePermission !== "superCostCenterManager" &&
       rolePermission !== "admin"
     ) {
-      setCostCenter(user.costCentre);
-      employeeIdData(user.costCentre);
-      console.log("disabled costcenter", user.costCentre);
+      setCostCenter(fetchemployeeData.costCentre);
+      employeeIdData(fetchemployeeData.costCentre);
+      console.log("disabled costcenter", fetchemployeeData.costCentre);
     }
-  }, [user.costCentre, user.loginType]);
+  }, [fetchemployeeData.costCentre, user.loginType]);
 
   const setCostCenterHandler = (options) => {
     costCenter = options !== null ? options.value : "";
