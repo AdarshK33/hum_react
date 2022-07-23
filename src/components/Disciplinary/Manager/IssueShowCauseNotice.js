@@ -14,7 +14,6 @@ import { PermissionContext } from "../../../context/PermissionState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import { PromotionContext } from "../../../context/PromotionState";
 
-
 const IssueShowCauseNotice = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [changeInReason, setChangeInReason] = useState(0);
@@ -67,8 +66,8 @@ const IssueShowCauseNotice = () => {
   const [disciplinaryReasonList, setdisciplinaryReasonList] = useState([]);
   const [resonsForShowCauseList, setResonsForShowCauseList] = useState([]);
 
-  const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
-  // console.log("employeeDetails",employeeDetails)
+  const {  getEmployeeDetails,employeeDetails} = useContext(PromotionContext);
+
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
 
   const {
@@ -91,29 +90,30 @@ const IssueShowCauseNotice = () => {
     EmployeeSeparationContext
   );
   useEffect(() => {
-   
+   //condtion  checkbox
     if (
       rolePermission === "admin"
     ){
      getEmployeeDetails(1);
     }
-    else if (
+     if (
       rolePermission === "superCostCenterManager"
     ){
      getEmployeeDetails(9);
     }
-    else if (
+     if (
       rolePermission === "costCenterManager"
     ){
      getEmployeeDetails(7);
     }
-    else if (
+     if (
       rolePermission === "manager"
-    ){
+    )
+    {
      getEmployeeDetails(2);
     }
   
-  }, []);
+  }, [searchEmpSelected]);
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -174,7 +174,6 @@ const IssueShowCauseNotice = () => {
             disciplinaryEmpSearchData.disciplinaryAction !== null &&
             disciplinaryEmpSearchData.disciplinaryAction !== undefined
           ) {
-            console.log("********");
             setShowInfoModal(true);
             setCheckForExist(false);
             setFirstTimeUpdate(false);
@@ -220,9 +219,6 @@ const IssueShowCauseNotice = () => {
       }
     }
   }, [disciplinaryEmpSearchData]);
-
-  console.log("disciplinaryResonsData", disciplinaryResonsData);
-  console.log("disciplinaryEmpSearchData", disciplinaryEmpSearchData);
   const searchDataHandler = () => {
      const searchText = employeeRef.current.getInput();
 
@@ -253,8 +249,6 @@ const IssueShowCauseNotice = () => {
     });
     setdisciplinaryReasonList(tempArr);
   }, []);
-  console.log("disciplinaryReasonList", disciplinaryReasonList);
-
   useEffect(() => {
     if (
       disciplinaryResonsData &&
@@ -274,7 +268,6 @@ const IssueShowCauseNotice = () => {
       setResonsForShowCauseList(tempArray);
     }
   }, [disciplinaryResonsData, changeInReason]);
-  console.log("resonsForShowCauseList", resonsForShowCauseList);
 
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
@@ -303,7 +296,7 @@ const IssueShowCauseNotice = () => {
       disciplinarySearchData.disciplinaryAction !== undefined &&
       disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      console.log("INSIDE");
+ 
       var reasonDetailsId = 0;
       resonsForShowCauseList.map((item, i) => {
         if (resonsForShowCauseList[i].label === state.reasonForCause) {
@@ -361,7 +354,6 @@ const IssueShowCauseNotice = () => {
         // },
       };
 
-      console.log("createShowCauseData", InfoData);
       createShowCauseIssue(InfoData, state.empId);
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
@@ -413,12 +405,10 @@ const IssueShowCauseNotice = () => {
     }
   };
   const handleShow = () => {
-    console.log("inside show moodal");
     setShow(true);
   };
   // end
   const handleClose = () => {
-    console.log("22222")
     setModal(false);
     setSuccessModal(false);
   };
@@ -448,7 +438,6 @@ const IssueShowCauseNotice = () => {
     let valid = /[^A-Za-z0-9'.,-_ ]/;
     if (e.target.name === "reason" && e.target.value !== "") {
       if (valid.test(e.target.value) === true) {
-        console.log("do nothing");
       } else {
         setState({
           ...state,
@@ -600,8 +589,6 @@ const IssueShowCauseNotice = () => {
         //   "warningLetter": "string"
         // },
       };
-
-      console.log("createShowCauseData", InfoData, rolePermission);
       setSubmitted(true);
       state.clickOnsubmit = true;
       createShowCauseIssue(InfoData, state.empId,history);
