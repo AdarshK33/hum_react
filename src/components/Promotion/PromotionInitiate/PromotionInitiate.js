@@ -157,7 +157,7 @@ const PromotionInitiate = () => {
      getEmployeeDetails(2);
     }
   
-  }, []);
+  }, [searchEmpSelected]);
 //   useEffect(() => {}, [employeeDetails]);
     //  console.log("employeeDetails",employeeDetails)
   useEffect(() => {

@@ -249,7 +249,14 @@ export const PromotionProvider = (props) => {
       .get("/api/v1/employee/search/"+ loginType )
       .then((response) => {
       
+        if (
+          response.data.data!== null &&
+         response.data.data !== undefined &&
+        Object.keys( response.data.data).length !== 0
+      ) {
+
         state.employeeDetails=response.data.data;
+      }
        
         return dispatch({
            type: "EMPLOYEE_DATA",
