@@ -58,7 +58,7 @@ const EmpResignation = () => {
     Object.keys(locationDetailsList).length !== 0
   ) {
     locationDetailsList.map((item, i) => {
-      if (item.locationId === fetchemployeeData.locationId) {
+      if (item.locationId === user.locationId) {
         fetchemployeeData["locationName"] = item.locationName;
       }
     });
@@ -347,7 +347,7 @@ const EmpResignation = () => {
         exitId: 0,
         hoursWorked: 0,
         lastWorkingDate:moment(lastDate).format("YYYY-MM-DD"),
-        location: fetchemployeeData.locationId,
+        location: user.locationId,
         managerCostCentre: null,
         managerEmailId: null,
         managerId: fetchemployeeData.managerId ? fetchemployeeData.managerId : "",

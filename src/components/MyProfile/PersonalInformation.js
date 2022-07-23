@@ -84,7 +84,7 @@ const PersonalInformation = (props) => {
         fetchemployeeData.maritalStatus = maritalStatus;
         fetchemployeeData.personalEmail = personalEmailId;
         console.log("user", user);
-        UpdateEmployeeProfile(user);
+        UpdateEmployeeProfile(fetchemployeeData);
       }
     }
   };
