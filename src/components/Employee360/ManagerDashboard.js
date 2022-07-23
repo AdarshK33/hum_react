@@ -77,7 +77,7 @@ const ManagerDashboard = () => {
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === fetchemployeeData.locationId) {
+        if (item.locationId === user.locationId) {
           setState({
             ...state,
             ["empCity"]: item.cityName,
