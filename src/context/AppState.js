@@ -26,6 +26,7 @@ const initialState = {
   user: {},
   flag: 0,
   MenuPermissionsRoute: [],
+  fetchemployeeData:{}
 };
 // const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 export const AppContext = createContext();
@@ -111,6 +112,22 @@ export const AppProvider = ({ children, history }) => {
         }, 4000);
         toast.error("User does not exist");
         //4 sec
+      });
+  };
+
+  const fetchEmployeeProfile = () => {
+    client
+      .get("/api/v1/employee/my-profile")
+      .then((response) => {
+        state.fetchemployeeData = response.data.data;
+        console.log("employee profile", response);
+        return dispatch({
+          type: "FETCH_EMPLOYEE_PROFILE",
+          payload: state.fetchemployeeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -227,12 +244,14 @@ export const AppProvider = ({ children, history }) => {
         getUserInfo,
         getUserMenu,
         userLogout,
+        fetchEmployeeProfile,
         user: state.user,
         state,
         MENUITEMS: state.MENUITEMS,
         flag: state.flag,
         app: state.app,
         MenuPermissionsRoute: state.MenuPermissionsRoute,
+        fetchemployeeData:state.fetchemployeeData
       }}
     >
       {children}

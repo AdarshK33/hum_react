@@ -35,7 +35,7 @@ const ManagerLeaveAdd = (props) => {
 
      const {/* CostCenter,costCenterList, */ managerEmployeeId, managerEmployeeIdList } = useContext(AdminContext)
 
-     const { user } = useContext(AppContext);
+     const { user,fetchemployeeData } = useContext(AppContext);
 
      const today = new Date()
      
@@ -61,8 +61,8 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
         managerEmployeeId()
     },[])
     useEffect(() => {
-        setCostCenter(user.costCentre)
-    },[user.costCentre])
+        setCostCenter(fetchemployeeData.costCentre)
+    },[fetchemployeeData.costCentre])
 
      useEffect(() => {
         setEmployeeId(props.employeeId)

@@ -40,7 +40,7 @@ const EmployeeDashboard = () => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   const [stateId, setStateId] = useState("");
   const [state, setState] = useState({
@@ -64,11 +64,11 @@ const EmployeeDashboard = () => {
 
   useEffect(() => {
     if (
-      user &&
-      user &&
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0 &&
+      fetchemployeeData &&
+      fetchemployeeData &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0 &&
       locationDetailsList &&
       locationDetailsList &&
       locationDetailsList !== null &&
@@ -76,7 +76,7 @@ const EmployeeDashboard = () => {
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {
+        if (item.locationId === fetchemployeeData.locationId) {
           setState({
             ...state,
             ["empCity"]: item.cityName,
@@ -87,7 +87,7 @@ const EmployeeDashboard = () => {
         }
       });
     }
-  }, [locationDetailsList, user]);
+  }, [locationDetailsList, fetchemployeeData]);
   useEffect(() => {
     if (
       stateId !== "" &&
@@ -108,6 +108,8 @@ const EmployeeDashboard = () => {
       });
     }
   }, [stateId, stateList]);
+
+  console.log("countryemployee",country,state.empState,state.empCity,state.empLocation);
   const GoToDocuments = (e) => {
     history.push("./document-management");
   };
@@ -124,9 +126,9 @@ const EmployeeDashboard = () => {
                   <b>EMplodewd</b>
                 </div> */}
                 <Form>
-                  {user !== null &&
-                  user !== undefined &&
-                  Object.keys(user).length !== 0 ? (
+                  {fetchemployeeData !== null &&
+                  fetchemployeeData !== undefined &&
+                  Object.keys(fetchemployeeData).length !== 0 ? (
                     <Row
                       style={{
                         marginLeft: "2rem",
@@ -167,18 +169,18 @@ const EmployeeDashboard = () => {
                     ></div> */}
                       <Col sm={3}>
                         <label>
-                          <b> {user.firstName + " " + user.lastName}</b>
+                          <b> {fetchemployeeData.firstName + " " + fetchemployeeData.lastName}</b>
                         </label>
                         <br />
-                        <label>{user.position}</label>
+                        <label>{fetchemployeeData.position}</label>
                         <br />
                         <label style={{ marginRight: "1rem" }}>
                           {" "}
-                          {user.employeeId}
+                          {fetchemployeeData.employeeId}
                         </label>
                         <label>|</label>
                         <label style={{ marginLeft: "1rem" }}>
-                          {user.contractType}
+                          {fetchemployeeData.contractType}
                         </label>
                         <br />
 
@@ -218,7 +220,7 @@ const EmployeeDashboard = () => {
                                 <b>Cost Center</b>
                               </label>
                               <br />
-                              <label>{user.costCentre}</label>
+                              <label>{fetchemployeeData.costCentre}</label>
                               <br />
                               <label>
                                 <b>City & State</b>
@@ -240,7 +242,7 @@ const EmployeeDashboard = () => {
                                 <b>Manager</b>
                               </label>
                               <br />
-                              <label>{user.managerName}</label>
+                              <label>{fetchemployeeData.managerName}</label>
                             </div>
                           </Col>
                         </Row>
@@ -253,7 +255,7 @@ const EmployeeDashboard = () => {
                                 <b>Joining Date</b>
                               </label>
                               <br />
-                              <label>{user.joiningDate}</label>
+                              <label>{fetchemployeeData.joiningDate}</label>
                               <br />
                               <label>
                                 <b>Work Location</b>
@@ -298,7 +300,7 @@ const EmployeeDashboard = () => {
                           </label>
                           <br />
                           <label className="itemResult">
-                            Name: {user.emergencyContactName}
+                            Name: {fetchemployeeData.emergencyContactName}
                           </label>
                           <br />
                           <div style={{ color: "#006ebb" }}>
@@ -306,7 +308,7 @@ const EmployeeDashboard = () => {
                               style={{ fontSize: "25px" }}
                               className="fa fa-phone"
                             ></i>
-                            <label> {user.emergencyContactNo} </label>
+                            <label> {fetchemployeeData.emergencyContactNo} </label>
                           </div>
                         </div>
                       </Col>
@@ -334,7 +336,7 @@ const EmployeeDashboard = () => {
                       height: "150%",
                     }}
                   >
-                    {user.department==="Retail"?
+                    {fetchemployeeData.department==="Retail"?
                     <Fragment>
                     <Col sm={4}>
                       <Card
@@ -432,7 +434,7 @@ const EmployeeDashboard = () => {
                       </Card>
                     </Col> */}
                     <Col style={{
-                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                      marginTop:fetchemployeeData.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
                     }} sm={4}>
                       <Card
                         style={{
@@ -451,7 +453,7 @@ const EmployeeDashboard = () => {
                       </Card>
                     </Col>
                     <Col style={{
-                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                      marginTop:fetchemployeeData.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
                     }} sm={4}>
                       <Card
                         style={{

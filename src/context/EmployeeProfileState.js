@@ -31,7 +31,7 @@ export const EmployeeProfileProvider = ({ children }) => {
   const [letterShow, setLetterShow] = useState(false);
   const [state, dispatch] = useReducer(EmployeeProfileReducer, initial_state);
   const [currentEmpId, setCurrentEmpId] = useState(0);
-  const { getUserInfo, user } = useContext(AppContext);
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
 
   const setEmployeeId = (val) => {
     setCurrentEmpId(val);
@@ -140,6 +140,7 @@ export const EmployeeProfileProvider = ({ children }) => {
       .post("/api/v1/employee/profile/update/emergency", updateData)
       .then((response) => {
         getUserInfo()
+        fetchEmployeeProfile()
         toast.info(response.data.message);
         console.log(response.data.message);
         setLoader(false);
@@ -195,6 +196,7 @@ export const EmployeeProfileProvider = ({ children }) => {
       .post("/api/v1/employee/profile/update/employee", updateData)
       .then((response) => {
         getUserInfo()
+        fetchEmployeeProfile()
         toast.info(response.data.message);
         console.log(response.data.message);
         setLoader(false);

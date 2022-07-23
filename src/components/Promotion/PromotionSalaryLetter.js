@@ -110,7 +110,7 @@ const PromotionSalaryLetter = () => {
   } = useContext(OfferContext);
   console.log(promotionLetterData, "promotionLetterData");
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const [show, setShow] = useState(true);
@@ -173,9 +173,9 @@ const PromotionSalaryLetter = () => {
         empId: promotionLetterData.employeeId,
         candidateId: 0,
         module: "Promotion",
-        empName: user.firstName + " " + user.lastName,
-        empEmail: user.email,
-        empPhNo: user.phone,
+        empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+        empEmail: fetchemployeeData.email,
+        empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../promotion-list",
       };

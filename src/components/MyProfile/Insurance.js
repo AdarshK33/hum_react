@@ -11,7 +11,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import moment from "moment";
 
 const Insurance = () => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const {
     InsuranceView,
     insuranceData,
@@ -29,7 +29,7 @@ const Insurance = () => {
   const [yearError, setYearError] = useState(false);
   const [sumValueError, setSumValueError] = useState(false);
   useEffect(() => {
-    InsuranceView(user.employeeId);
+    InsuranceView(fetchemployeeData.employeeId);
   }, []);
   useEffect(() => {
     if (year !== null && year !== undefined && year !== "") {
@@ -43,12 +43,12 @@ const Insurance = () => {
       sumInsuredId !== "" &&
       sumInsuredId !== null &&
       sumInsuredId !== undefined &&
-      user !== "" &&
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0
+      fetchemployeeData !== "" &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0
     ) {
-      premiumView(sumInsuredId, user.employeeId);
+      premiumView(sumInsuredId, fetchemployeeData.employeeId);
    
     }
   }, [sumInsuredId]);

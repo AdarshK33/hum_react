@@ -30,7 +30,7 @@ const EditTarget = (props) => {
 
     const { viewCostCentre } = useContext(DashboardContext);
     const {  viewLeaderClusterList,editTarget, leaderClusterList} = useContext(ClusterProductContext);
-    const { user } = useContext(AppContext);
+    const { user,fetchemployeeData } = useContext(AppContext);
 
       useEffect(() => {
         setCostCenter(props.singleClusterTarget.storeName);
@@ -192,7 +192,7 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Cost Center</Form.Label>
-                                        <Form.Control value={user.costCentre} readOnly />
+                                        <Form.Control value={fetchemployeeData.costCentre} readOnly />
                                         {/* <Form.Control as="select"                                             
                                             onChange={(e) => setCosCenterHandler(e.target.value)}>
                                             <option value={costCenter}>{costCenter}</option>

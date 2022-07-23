@@ -38,7 +38,7 @@ const CreateTicket = () => {
   const [deleteThirdFile, setDeleteThirdFile] = useState();
 
   let history = useHistory();
-  const { user } = useContext(AppContext);
+  const { user, fetchemployeeData } = useContext(AppContext);
   const {
     getRolesForSupport,
     getRoles,
@@ -303,7 +303,7 @@ const CreateTicket = () => {
       e.preventDefault();
 
       const createSingleTicket = {
-        employeeId: user.employeeId,
+        employeeId: fetchemployeeData.employeeId,
         categoryId,
         completionStatus: 0,
         description,
@@ -311,7 +311,7 @@ const CreateTicket = () => {
         priorityId: priorityListId,
         resolution: null,
         role,
-        storeId: user.costCentre,
+        storeId: fetchemployeeData.costCentre,
         ticketId: 0,
         ticketStatus: 0,
         title,
@@ -334,7 +334,7 @@ const CreateTicket = () => {
       e.preventDefault();
 
       const createSingleTicket = {
-        employeeId: user.employeeId,
+        employeeId: fetchemployeeData.employeeId,
         categoryId,
         completionStatus: 0,
         description,
@@ -342,7 +342,7 @@ const CreateTicket = () => {
         priorityId: priorityListId,
         resolution: null,
         role,
-        storeId: user.costCentre,
+        storeId: fetchemployeeData.costCentre,
         ticketId: 0,
         ticketStatus: 0,
         title,
@@ -384,7 +384,7 @@ const CreateTicket = () => {
                   <Col sm="6">
                     <Form.Control
                       type="text"
-                      value={user.position}
+                      value={fetchemployeeData.position}
                       readOnly
                       className="disabledValue blueText"
                     />
@@ -399,7 +399,7 @@ const CreateTicket = () => {
                   <Col sm="6">
                     <Form.Control
                       type="text"
-                      value={user.costCentre}
+                      value={fetchemployeeData.costCentre}
                       readOnly
                       className="disabledValue blueText"
                     />
@@ -416,7 +416,7 @@ const CreateTicket = () => {
                   <Col sm="6">
                     <Form.Control
                       type="text"
-                      value={user.firstName + " " + user.lastName}
+                      value={fetchemployeeData.firstName + " " + fetchemployeeData.lastName}
                       readOnly
                       className="disabledValue blueText"
                     />
@@ -431,7 +431,7 @@ const CreateTicket = () => {
                   <Col sm="6">
                     <Form.Control
                       type="text"
-                      value={user.fedId}
+                      value={fetchemployeeData.fedId}
                       readOnly
                       className="disabledValue blueText"
                     />
@@ -448,7 +448,7 @@ const CreateTicket = () => {
                   <Col sm="7">
                     <Form.Control
                       type="text"
-                      value={user.email}
+                      value={fetchemployeeData.email}
                       readOnly
                       className="disabledValue blueText"
                     />

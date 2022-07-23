@@ -22,7 +22,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { AppContext } from "../../context/AppState";
 
 const Remuneration = () => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const {
     RemunerationView,
     remunerationData,
@@ -39,8 +39,8 @@ const Remuneration = () => {
   const [vpfValue, setVpfValue] = useState("");
   const [vpfError, setVpfError] = useState(false);
   useEffect(() => {
-    RemunerationView(user.employeeId);
-    CostCentreSplitView(user.employeeId);
+    RemunerationView(fetchemployeeData.employeeId);
+    CostCentreSplitView(fetchemployeeData.employeeId);
   }, []);
   useEffect(() => {
     if (

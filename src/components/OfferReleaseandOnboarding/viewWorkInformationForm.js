@@ -58,7 +58,7 @@ const EditWorkInformation = () => {
     allManagerList,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [stateValue, setStateValue] = useState();
   const [city, setCity] = useState();
   const { viewCountries, countryList } = useContext(MasterFilesContext);
@@ -153,7 +153,7 @@ const EditWorkInformation = () => {
       candidateId: candidateData.candidateInformation.candidateId,
       cityId: city,
       collegeName: college,
-      companyName: user.company,
+      companyName: fetchemployeeData.company,
       contractType: state.employmentType,
       costCentre: costCenter,
       dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -169,7 +169,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: locationName.locationId,
-      managerId: allManagerList !== null ? state.managerId : user.employeeId,
+      managerId: allManagerList !== null ? state.managerId : fetchemployeeData.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
@@ -205,7 +205,7 @@ const EditWorkInformation = () => {
               <Form.Group>
                 <Form.Label>Company Name</Form.Label>
                 <br></br>
-                <Form.Label className="headingColor">{user.company}</Form.Label>
+                <Form.Label className="headingColor">{fetchemployeeData.company}</Form.Label>
               </Form.Group>
             </Col>
             <Col sm={3}>
@@ -273,7 +273,7 @@ const EditWorkInformation = () => {
                 <Form.Label>Manager Name/Id</Form.Label>
                 <br></br>
                 {allManagerList === null ? (
-                  <Form.Label>{user.employeeId}</Form.Label>
+                  <Form.Label>{fetchemployeeData.employeeId}</Form.Label>
                 ) : (
                   <Form.Label className="headingColor">
                     {state.managerId}

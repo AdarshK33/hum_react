@@ -5,10 +5,10 @@ import { AppContext } from "../../context/AppState";
 
 const EmpPayroll = (props) => {
   const { setManagerFlag, setEmployeeId } = useContext(PayrollContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   useEffect(() => {
-    if (user && Object.keys(user).length) {
-      setEmployeeId(user.employeeId);
+    if (fetchemployeeData && Object.keys(fetchemployeeData).length) {
+      setEmployeeId(fetchemployeeData.employeeId);
       setManagerFlag(false);
     }
   }, []);

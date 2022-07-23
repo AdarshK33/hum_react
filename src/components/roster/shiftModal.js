@@ -36,7 +36,7 @@ const ShiftModal = (props) => {
     adminCalculateWeek,
     adminCalculateWeekResult,
   } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user, fetchemployeeData } = useContext(AppContext);
   let days = [
     "Sunday",
     "Monday",
@@ -158,7 +158,7 @@ const ShiftModal = (props) => {
 
     const newWeekOff = {
       date: WeekDate.map((e, i) => WeekDate[i].value),
-      employeeId: user.employeeId,
+      employeeId: fetchemployeeData.employeeId,
     };
 console.log("roaster weekoff",WeekDate,daysList);
     addWeekOff(newWeekOff);
@@ -210,7 +210,7 @@ console.log("roaster weekoff",WeekDate,daysList);
     event.preventDefault();
     const assindata = {
       date: props.Date,
-      employeeId: user.employeeId,
+      employeeId: fetchemployeeData.employeeId,
       shiftId: value,
     };
     console.log("roaster shift",props.Date);
@@ -275,7 +275,7 @@ console.log("roaster weekoff",WeekDate,daysList);
                 <div className="row py-2 ">
                   <div className="col-sm-6 px-2">Employee Name:</div>
                   <div className="col-sm-6 px-2">
-                    {user.firstName} - {user.employeeId}
+                    {fetchemployeeData.firstName} - {fetchemployeeData.employeeId}
                   </div>
                 </div>
                 

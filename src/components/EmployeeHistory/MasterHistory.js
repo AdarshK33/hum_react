@@ -67,7 +67,7 @@ const MasterHistory = (props) => {
 
 ])
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
     const {
     ViewEmployeeHistoryData,
@@ -114,7 +114,7 @@ const MasterHistory = (props) => {
       rolePermission == "costCenterManager"
     ) {
        setManagerStatus(rolePermission);
-      console.log("disabled costcenter", user.costCentre);
+      console.log("disabled costcenter", fetchemployeeData.costCentre);
     }
   }, [ user.loginType]);
   useEffect(() => {

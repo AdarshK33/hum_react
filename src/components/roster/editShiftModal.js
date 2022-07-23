@@ -45,7 +45,7 @@ const EditShiftModal = (props) => {
     viewContractTypes,
     shiftContractNames,
   } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   const setClear = () => {
     setInvalidText(false);
@@ -83,9 +83,9 @@ const EditShiftModal = (props) => {
       rolePermission !== "admin" &&
       rolePermission !== "superCostCenterManager"
     ) {
-      setCostCenterName(user.costCentre);
+      setCostCenterName(fetchemployeeData.costCentre);
     }
-  }, [user.costCentre, user.loginType]);
+  }, [fetchemployeeData.costCentre, user.loginType]);
 
   useEffect(() => {
     if (shiftType === "NA") {

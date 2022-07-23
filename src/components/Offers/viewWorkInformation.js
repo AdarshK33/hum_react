@@ -62,7 +62,7 @@ const ViewWorkInformation = () => {
     positionByDepartmentData
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [stateValue, setStateValue] = useState("");
   const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState();
@@ -182,7 +182,7 @@ const ViewWorkInformation = () => {
               ) : (
                 <Form.Control
                   type="text"
-                  value={user.company}
+                  value={fetchemployeeData.company}
                   className="form-input"
                   name="company"
                   readOnly
@@ -327,7 +327,7 @@ const ViewWorkInformation = () => {
               {allManagerList === null ? (
                 <Form.Control
                   type="text"
-                  value={user.employeeId}
+                  value={fetchemployeeData.employeeId}
                   className="form-input disable-arrow"
                   readOnly
                 />

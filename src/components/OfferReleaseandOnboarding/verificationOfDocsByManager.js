@@ -57,11 +57,11 @@ const DocVerification = () => {
     aadhaarNotificationData,
     adhaarVerificationNotification,
   } = useContext(OfferContext);
-  const { getUserInfo, user } = useContext(AppContext);
+  const { getUserInfo,fetchEmployeeProfile, user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     setState(personalInfoData);
-  }, [user]);
+  }, [fetchemployeeData]);
   // useEffect(() => {
   //   if (rejectMessage) {
   //     setDisapprovePopup(true);
@@ -89,6 +89,7 @@ const DocVerification = () => {
   // }, [disapprovePopup]);
   useEffect(() => {
     getUserInfo();
+    fetchEmployeeProfile();
     setState(personalInfoData);
   }, []);
   useEffect(() => {

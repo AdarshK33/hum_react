@@ -29,9 +29,9 @@ import moment from "moment";
 
 const Documents = () => {
   const { DocumentView, documentsList } = useContext(EmployeeProfileContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   useEffect(() => {
-    DocumentView(user.employeeId);
+    DocumentView(fetchemployeeData.employeeId);
   }, []);
 
   return (

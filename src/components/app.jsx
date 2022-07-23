@@ -12,7 +12,7 @@ import { accessToken } from '../utils/axios';
 
 const AppLayout = ({ children }) => {
     let history = useHistory();
-    const { authenticateUser, getUserInfo, state, getUserMenu, flag, app } = useContext(AppContext);
+    const { authenticateUser, getUserInfo,fetchEmployeeProfile, state, getUserMenu, flag, app } = useContext(AppContext);
     const [flagValue, setFlagValue] = useState();
     const [menuItems, setMenuItems] = useState();
    // const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
@@ -34,15 +34,15 @@ const AppLayout = ({ children }) => {
 
 
     useEffect(() => {
-        const { MENUITEMS, flag, user } = state
+        const { MENUITEMS, flag, user,fetchemployeeData } = state
         setMenuItems(MENUITEMS);
         let type = localStorage.getItem('type')
         if (flag === 0 && MENUITEMS !== []) {
             setFlagValue(flag)
             if (type === "team") {
-                if(user.department === "Finance & Legal" ||user.department === "Finance" || 
-                user.department === "IT"|| user.loginType == 1 || user.additionalRole == 1){
-                  getUserMenu(user.managerMenus);
+                if(fetchemployeeData.department === "Finance & Legal" ||fetchemployeeData.department === "Finance" || 
+                fetchemployeeData.department === "IT"|| user.loginType == 1 || user.additionalRole == 1){
+                  getUserMenu(user.managerMenus,"team",fetchemployeeData);
                 }else{
                   let departmentList = user !==null && user!==undefined && user.managerMenus !== null && user.managerMenus !== undefined && Object.keys(user.managerMenus).length &&user.managerMenus.filter(
                     (item) => item.menuName !== "Manager 360" && 
@@ -73,11 +73,11 @@ const AppLayout = ({ children }) => {
                     item.menuName !== "DSI Charters" &&
                     item.menuName !== "DSI Charter" 
                   );
-                  getUserMenu(departmentList);
+                  getUserMenu(departmentList,"team",fetchemployeeData);
                 }
             } else if (type === "admin") {
-                if(user.department ==="Finance & Legal" ||user.department === "Finance" || user.department === "IT"|| user.loginType == 1 || user.additionalRole == 1){
-                    getUserMenu(user.adminMenus);
+                if(fetchemployeeData.department ==="Finance & Legal" ||fetchemployeeData.department === "Finance" || fetchemployeeData.department === "IT"|| user.loginType == 1 || user.additionalRole == 1){
+                    getUserMenu(user.adminMenus,"admin",fetchemployeeData);
                   }else{
                     let departmentList = user !==null && user!==undefined && user.adminMenus !== null && user.adminMenus !== undefined && Object.keys(user.adminMenus).length && user.adminMenus.filter(
                       (item) => item.menuName !== "Manager 360" && 
@@ -116,24 +116,24 @@ const AppLayout = ({ children }) => {
                        item.menuName !== "DSI Charter" &&
                        item.menuName !== "Charter"
                     );
-                    getUserMenu(departmentList);
+                    getUserMenu(departmentList,"admin",fetchemployeeData);
                   }  
             } else if (type === "leader") {
-                getUserMenu(user.clusterManagerMenus);
+                getUserMenu(user.clusterManagerMenus,"leader",fetchemployeeData);
             }else if (type === 'support') {
-                    getUserMenu(user.supportMenus)
+                    getUserMenu(user.supportMenus,"support",fetchemployeeData)
             } else {
-                if(user.department === "Finance & Legal" ||user.department === "Finance" || 
-                  user.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
+                if(fetchemployeeData.department === "Finance & Legal" ||fetchemployeeData.department === "Finance" || 
+                fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1){
                     let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
                         (item) =>
                     item.menuName !== "Roster" &&
                     item.menuName !== "Dashboard" &&
                     item.menuName !== "My Roster" 
                     )
-                  getUserMenu(departmentList, "profile", user);
-            }else if((user.department === "Finance & Legal" ||user.department === "Finance" || user.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
-              user.contractType === "Internship"){
+                  getUserMenu(departmentList,"profile",fetchemployeeData);
+            }else if((fetchemployeeData.department === "Finance & Legal" ||fetchemployeeData.department === "Finance" || fetchemployeeData.department === "IT" || user.loginType == 1 || user.additionalRole == 1) && 
+            fetchemployeeData.contractType === "Internship"){
             let departmentList = user !== null && user !== undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
             (item) => item.menuName !== "Resignation" && 
                      item.menuName !== "Roster" &&
@@ -141,8 +141,8 @@ const AppLayout = ({ children }) => {
                     item.menuName !== "My Roster" &&
                      item.menuName !== "Separation" 
       );
-      getUserMenu(departmentList, "profile", user);
-    }else if(user.department == "Retail"){
+      getUserMenu(departmentList, "profile", fetchemployeeData);
+    }else if(fetchemployeeData.department == "Retail"){
       let departmentList = user !==null && user!==undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
       
@@ -156,7 +156,7 @@ const AppLayout = ({ children }) => {
         item.menuName !== "My Payroll" && 
         item.menuName !== "My Profile"
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }else{
       let departmentList = user !== null && user !== undefined && user.generalUserMenus !== null && user.generalUserMenus !== undefined && Object.keys(user.generalUserMenus).length && user.generalUserMenus.filter(
         (item) => item.menuName !== "Documents" &&  
@@ -173,7 +173,7 @@ const AppLayout = ({ children }) => {
         item.menuName !== "Dashboard" &&
         item.menuName !== "My Roster" 
       );
-      getUserMenu(departmentList, "profile", user);
+      getUserMenu(departmentList, "profile", fetchemployeeData);
     }
     localStorage.setItem('flag', "0")
             }
@@ -194,6 +194,7 @@ const AppLayout = ({ children }) => {
             console.log("access token present ")
             authenticateUser(true)
             getUserInfo()
+            fetchEmployeeProfile()
             console.log("login valid")
         }
         else {

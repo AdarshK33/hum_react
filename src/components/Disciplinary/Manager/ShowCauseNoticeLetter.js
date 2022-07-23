@@ -163,7 +163,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
   } = useContext(DisciplinaryContext);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission,imageViewData } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const ref = React.createRef();
   const inputRef = useRef(null);
@@ -255,9 +255,9 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
         empId: disciplinarySearchData.employeeId,
         candidateId: 0,
         module: "Disciplinary Action",
-        empName: user.firstName + " " + user.lastName,
-        empEmail: user.email,
-        empPhNo: user.phone,
+        empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+        empEmail: fetchemployeeData.email,
+        empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../disciplinary-action",
       };

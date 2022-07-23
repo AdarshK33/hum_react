@@ -36,7 +36,7 @@ const LeaveAdd = (props) => {
     viewLeaveData,
   } = useContext(LeaveContext);
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   /*  useEffect(() => {
          viewEmpData(props.empid)
@@ -46,9 +46,9 @@ const LeaveAdd = (props) => {
 
   //get api for leave type
   useEffect(() => {
-    viewLeaveData(user.employeeId,new Date().getFullYear());
+    viewLeaveData(fetchemployeeData.employeeId,new Date().getFullYear());
     /* viewEmpData(user.employeeId) */
-  }, [user.employeeId]);
+  }, [fetchemployeeData.employeeId]);
 
   useEffect(() => {
     getLeave(props.empid);
@@ -119,7 +119,7 @@ const LeaveAdd = (props) => {
         }
 
         const newPopup = {
-            empId: user.employeeId,
+            empId: fetchemployeeData.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
             /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: newData,
@@ -148,7 +148,7 @@ const LeaveAdd = (props) => {
     var d3 = d2.setDate(d2.getDate() + 179);
 
     const newPopup1 = {
-      empId: user.employeeId,
+      empId: fetchemployeeData.employeeId,
       fromDate: moment(value2).format("YYYY-MM-DD"),
       /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
       leaveCategory: "Planned",
@@ -224,7 +224,7 @@ const LeaveAdd = (props) => {
     }
 
     const newLeave1 = {
-      empId: user.employeeId,
+      empId: fetchemployeeData.employeeId,
       fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
       /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
       leaveCategory: "Planned",
@@ -247,7 +247,7 @@ const LeaveAdd = (props) => {
     }
 
     const newLeave = {
-      empId: user.employeeId,
+      empId: fetchemployeeData.employeeId,
       fromDate: moment(startDate).format("YYYY-MM-DD"),
       /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
       leaveCategory: newData,

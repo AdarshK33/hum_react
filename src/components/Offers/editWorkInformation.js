@@ -73,7 +73,7 @@ const EditWorkInformation = () => {
     positionByDepartmentNull
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [stateValue, setStateValue] = useState("");
   const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState("");
@@ -423,7 +423,7 @@ const EditWorkInformation = () => {
       stateId:stateValue,
       collegeName: college,
       companyName:
-        rolePermission == "admin" ? state.adminCompany : user.company,
+        rolePermission == "admin" ? state.adminCompany : fetchemployeeData.company,
       contractType: state.employmentType,
       costCentre: costCenter,
       dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -439,7 +439,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: city,
-      managerId: allManagerList !== null ? state.managerId : user.employeeId,
+      managerId: allManagerList !== null ? state.managerId : fetchemployeeData.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
@@ -505,7 +505,7 @@ const EditWorkInformation = () => {
                 ) : (
                   <Form.Control
                     type="text"
-                    value={user.company}
+                    value={fetchemployeeData.company}
                     className="form-input"
                     name="company"
                     readOnly
@@ -716,7 +716,7 @@ const EditWorkInformation = () => {
                 {allManagerList === null ? (
                   <Form.Control
                     type="text"
-                    value={user.employeeId}
+                    value={fetchemployeeData.employeeId}
                     className="form-input"
                     readOnly
                   />

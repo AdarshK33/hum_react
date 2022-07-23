@@ -21,7 +21,7 @@ const ApprovalsManager360List = ({ ListType }) => {
     useContext(Employee360Context);
   const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const {  ViewPromotionById} = useContext(PromotionContext);
   const [transferType, setTransferType] = useState(ListType);
   const [searchValue, setSearchValue] = useState("all");
@@ -145,12 +145,12 @@ const ApprovalsManager360List = ({ ListType }) => {
               ? {
                   edit: {
                     active:
-                      item.promotedManagerId === user.employeeId &&
+                      item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                         ? true
                         : false,
                     link:
-                      item.promotedManagerId === user.employeeId &&
+                      item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                         ? `/transfer/${item.transferId}`
                         : "",
@@ -164,12 +164,12 @@ const ApprovalsManager360List = ({ ListType }) => {
                       edit: {
                         active:
                           // true,
-                          item.promotedManagerId === user.employeeId &&
+                          item.promotedManagerId === fetchemployeeData.employeeId &&
                           item.status === 0
                             ? true
                             : false,
                         link:
-                          item.promotedManagerId === user.employeeId &&
+                          item.promotedManagerId === fetchemployeeData.employeeId &&
                           item.status === 0
                             ? `/entity-transfer/${item.transferId}`
                             : "",
@@ -242,9 +242,9 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? item.disciplinaryWarning.statusDesc
                 : item.disciplinaryAction.statusDesc,
             action:
-              (user !== null &&
-                user !== undefined &&
-                user.employeeId !== item.initiatedBy &&
+              (fetchemployeeData !== null &&
+                fetchemployeeData !== undefined &&
+                fetchemployeeData.employeeId !== item.initiatedBy &&
                 rolePermission == "costCenterManager" &&
                 item.disciplinaryAction !== null &&
                 item.disciplinaryAction !== undefined &&
@@ -254,9 +254,9 @@ const ApprovalsManager360List = ({ ListType }) => {
                   "Warning Letter Issued" ||
                   item.disciplinaryAction.statusDesc ===
                     "Show Cause Notice Issued")) ||
-              (user !== null &&
-                user !== undefined &&
-                user.employeeId !== item.initiatedBy &&
+              (fetchemployeeData !== null &&
+                fetchemployeeData !== undefined &&
+                fetchemployeeData.employeeId !== item.initiatedBy &&
                 rolePermission == "superCostCenterManager" &&
                 item.disciplinaryAction !== null &&
                 item.disciplinaryAction !== undefined &&
@@ -266,9 +266,9 @@ const ApprovalsManager360List = ({ ListType }) => {
                   "Warning Letter Issued" ||
                   item.disciplinaryAction.statusDesc ===
                     "Show Cause Notice Issued")) ||
-              (user !== null &&
-                user !== undefined &&
-                user.employeeId !== item.initiatedBy &&
+              (fetchemployeeData !== null &&
+                fetchemployeeData !== undefined &&
+                fetchemployeeData.employeeId !== item.initiatedBy &&
                 rolePermission == "admin" &&
                 item.disciplinaryAction !== null &&
                 item.disciplinaryAction !== undefined &&

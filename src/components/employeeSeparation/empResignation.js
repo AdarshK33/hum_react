@@ -26,7 +26,7 @@ const EmpResignation = () => {
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const {
     employeeData,
     ModeOfSeparationData,
@@ -46,7 +46,7 @@ const EmpResignation = () => {
     managersByCostcenter,
     managersByCostcenterList
   } = useContext(SeparationContext);
-  console.log("employeeData", user, employeeData);
+  console.log("employeeData", user, fetchemployeeData,employeeData);
   useEffect(() => {
     locationDetails();
   }, []);
@@ -58,20 +58,20 @@ const EmpResignation = () => {
     Object.keys(locationDetailsList).length !== 0
   ) {
     locationDetailsList.map((item, i) => {
-      if (item.locationId === user.locationId) {
-        user["locationName"] = item.locationName;
+      if (item.locationId === fetchemployeeData.locationId) {
+        fetchemployeeData["locationName"] = item.locationName;
       }
     });
   }
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
-    managerData(user.costCentre);
-    managersByCostcenter(user.costCentre)
-  }, [user.costCentre]);
-  console.log(user, "user");
+    managerData(fetchemployeeData.costCentre);
+    managersByCostcenter(fetchemployeeData.costCentre)
+  }, [fetchemployeeData.costCentre]);
+  console.log(user,fetchemployeeData, "user");
   useEffect(() => {
     if (employeeData == null) {
-      ViewEmployeeDataById(user.employeeId);
+      ViewEmployeeDataById(fetchemployeeData.employeeId);
       setSubmitted(false);
       setReasonOfSepration("");
       setComments();
@@ -82,8 +82,8 @@ const EmpResignation = () => {
   useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
-    ViewEmployeeDataById(user.employeeId);
-  }, [user]);
+    ViewEmployeeDataById(fetchemployeeData.employeeId);
+  }, [fetchemployeeData]);
 
   useEffect(() => {
     if (
@@ -94,7 +94,7 @@ const EmpResignation = () => {
       Object.keys(managersByCostcenterList).length !== 0
     ) {
       let managerNames = managersByCostcenterList.filter(
-        (j) => j.employeeId === user.managerId
+        (j) => j.employeeId === fetchemployeeData.managerId
       );
       console.log("managerNames", managerNames, managersByCostcenterList);
       if (
@@ -112,14 +112,14 @@ const EmpResignation = () => {
   useEffect(() => {
     console.log("profile data", user, "profile data1", employeeData);
     if (
-      user !== null &&
-      user !== undefined &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
       (employeeData === null ||
         employeeData === undefined ||
         Object.keys(employeeData).length > 0)
     ) {
-      console.log("profile data", user);
-      setEmailId(user.personalEmail);
+      console.log("profile data", fetchemployeeData);
+      setEmailId(fetchemployeeData.personalEmail);
       // if(user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance"){
       //   setNoticePeriod(2)
       // }else{
@@ -127,13 +127,13 @@ const EmpResignation = () => {
       // }
     }
     if (
-      user !== null &&
-      user !== undefined &&
-      (user.department == "AFS" ||
-        user.department == "IT" ||
-        user.department == "Legal" ||
-        user.department == "Finance") &&
-      (user.contractType === "Fulltime" || user.contractType === "parttime")
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      (fetchemployeeData.department == "AFS" ||
+      fetchemployeeData.department == "IT" ||
+      fetchemployeeData.department == "Legal" ||
+      fetchemployeeData.department == "Finance") &&
+      (fetchemployeeData.contractType === "Fulltime" || fetchemployeeData.contractType === "parttime")
     ) {
       setNoticePeriod(2);
       var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 2));
@@ -142,7 +142,7 @@ const EmpResignation = () => {
       );
       setLastDateSelection(aboveDateValue);
        setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(2))))
-      setEmailId(user.personalEmail);
+      setEmailId(fetchemployeeData.personalEmail);
       console.log(dateValue, aboveDateValue, "2");
     } else {
       setNoticePeriod(1);
@@ -152,10 +152,10 @@ const EmpResignation = () => {
       );
       setLastDateSelection(aboveDateValue);
        setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(1))))
-      setEmailId(user.personalEmail);
+      setEmailId(fetchemployeeData.personalEmail);
       console.log(dateValue, aboveDateValue, "1");
     }
-  }, [user]);
+  }, [fetchemployeeData]);
 
   useEffect(() => {
     if (
@@ -264,7 +264,7 @@ const EmpResignation = () => {
         setRegDate();
         setLastDate();
         setReasonOfSepration("");
-        setEmailId(user.personalEmail);
+        setEmailId(fetchemployeeData.personalEmail);
         if (
           managersByCostcenterList &&
           managersByCostcenterList &&
@@ -273,7 +273,7 @@ const EmpResignation = () => {
           Object.keys(managersByCostcenterList).length !== 0
         ) {
           let managerNames = managersByCostcenterList.filter(
-            (j) => j.employeeId === user.managerId
+            (j) => j.employeeId === fetchemployeeData.managerId
           );
           console.log("managerNames", managerNames, managersByCostcenterList);
           if (
@@ -328,29 +328,29 @@ const EmpResignation = () => {
         console.log(reasonOfSeparationList[i].value);
       }
     });
-    console.log(user, "user888");
-    if (user.contractType == "internship") {
+    console.log(fetchemployeeData, "user888");
+    if (fetchemployeeData.contractType == "internship") {
       toast.error("internship employee cannot raise self resignation");
     } else {
       const data1 = {
-        company: user.company,
-        contractType: user.contractType,
+        company: fetchemployeeData.company,
+        contractType: fetchemployeeData.contractType,
         costCentreManagerEmailId: null,
         costCentreManagerName: null,
-        costCentreName: user.costCentre,
+        costCentreName: fetchemployeeData.costCentre,
         dateOfResignation: moment(regDate).format("YYYY-MM-DD"),
         personalEmailId: emailId,
-        empName: user.firstName + user.lastName,
+        empName: fetchemployeeData.firstName + fetchemployeeData.lastName,
         employeeComment: comments,
-        employeeId: user.employeeId,
-        employeeName: user.firstName + user.lastName,
+        employeeId: fetchemployeeData.employeeId,
+        employeeName: fetchemployeeData.firstName + fetchemployeeData.lastName,
         exitId: 0,
         hoursWorked: 0,
         lastWorkingDate:moment(lastDate).format("YYYY-MM-DD"),
-        location: user.locationId,
+        location: fetchemployeeData.locationId,
         managerCostCentre: null,
         managerEmailId: null,
-        managerId: user.managerId ? user.managerId : "",
+        managerId: fetchemployeeData.managerId ? fetchemployeeData.managerId : "",
         managerName: approver,
         managerPosition: null,
         modeOfSeparationId: 4,
@@ -358,7 +358,7 @@ const EmpResignation = () => {
         noticePeriod: noticePeriod,
         noticePeriodRecovery: 0,
         noticePeriodRecoveryDays: 0,
-        position: user.position,
+        position: fetchemployeeData.position,
         reHire: 0,
         reason: null,
         reasonForResignation: reasonOfSepration,
@@ -379,7 +379,7 @@ const EmpResignation = () => {
       // };
       // console.log("create", create);
       // empResign(data1);
-      CreateEmplyoeeExist(data1, user.employeeId);
+      CreateEmplyoeeExist(data1, fetchemployeeData.employeeId);
       // ViewEmployeeDataById(user.employeeId);
       setSubmitted(true);
     }
@@ -396,8 +396,8 @@ const EmpResignation = () => {
   };
   const withdrawHandler = (e) => {
     setWithdrawThis(true);
-    ViewEmployeeDataById(user.employeeId);
-    managerData(user.costCentre);
+    ViewEmployeeDataById(fetchemployeeData.employeeId);
+    managerData(fetchemployeeData.costCentre);
     setReasonOfSepration("");
 
     setComments("");
@@ -458,7 +458,7 @@ const EmpResignation = () => {
                     <Col sm="8">
                       <Form.Control
                         type="text"
-                        value={` ${user.firstName} ${user.lastName}/ ${user.employeeId} `}
+                        value={` ${fetchemployeeData.firstName} ${fetchemployeeData.lastName}/ ${fetchemployeeData.employeeId} `}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -473,7 +473,7 @@ const EmpResignation = () => {
                     <Col sm="7">
                       <Form.Control
                         type="text"
-                        value={user.contractType}
+                        value={fetchemployeeData.contractType}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -488,7 +488,7 @@ const EmpResignation = () => {
                     <Col sm="7">
                       <Form.Control
                         type="text"
-                        value={user.costCentre}
+                        value={fetchemployeeData.costCentre}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -506,7 +506,7 @@ const EmpResignation = () => {
                     <Col sm="8">
                       <Form.Control
                         type="text"
-                        value={user.locationName}
+                        value={fetchemployeeData.locationName}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -521,7 +521,7 @@ const EmpResignation = () => {
                     <Col sm="7">
                       <Form.Control
                         type="text"
-                        value={user.position}
+                        value={fetchemployeeData.position}
                         readOnly
                         className="disabledValue readTextBlue"
                       />

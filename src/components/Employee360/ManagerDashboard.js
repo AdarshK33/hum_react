@@ -40,7 +40,7 @@ const ManagerDashboard = () => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   const [stateId, setStateId] = useState("");
   const [state, setState] = useState({
@@ -65,11 +65,11 @@ const ManagerDashboard = () => {
 
   useEffect(() => {
     if (
-      user &&
-      user &&
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0 &&
+      fetchemployeeData &&
+      fetchemployeeData &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0 &&
       locationDetailsList &&
       locationDetailsList &&
       locationDetailsList !== null &&
@@ -77,7 +77,7 @@ const ManagerDashboard = () => {
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {
+        if (item.locationId === fetchemployeeData.locationId) {
           setState({
             ...state,
             ["empCity"]: item.cityName,
@@ -88,7 +88,7 @@ const ManagerDashboard = () => {
         }
       });
     }
-  }, [locationDetailsList, user]);
+  }, [locationDetailsList, fetchemployeeData]);
   useEffect(() => {
     if (
       stateId !== "" &&
@@ -128,9 +128,9 @@ const ManagerDashboard = () => {
                   <b>EMplodewd</b>
                 </div> */}
                 <Form>
-                  {user !== null &&
-                  user !== undefined &&
-                  Object.keys(user).length !== 0 ? (
+                  {fetchemployeeData !== null &&
+                  fetchemployeeData !== undefined &&
+                  Object.keys(fetchemployeeData).length !== 0 ? (
                     <Row
                       style={{
                         marginLeft: "2rem",
@@ -171,18 +171,18 @@ const ManagerDashboard = () => {
                     ></div> */}
                       <Col sm={3}>
                         <label>
-                          <b> {user.firstName + " " + user.lastName}</b>
+                          <b> {fetchemployeeData.firstName + " " + fetchemployeeData.lastName}</b>
                         </label>
                         <br />
-                        <label>{user.position}</label>
+                        <label>{fetchemployeeData.position}</label>
                         <br />
                         <label style={{ marginRight: "1rem" }}>
                           {" "}
-                          {user.employeeId}
+                          {fetchemployeeData.employeeId}
                         </label>
                         <label>|</label>
                         <label style={{ marginLeft: "1rem" }}>
-                          {user.contractType}
+                          {fetchemployeeData.contractType}
                         </label>
                         <br />
 
@@ -222,7 +222,7 @@ const ManagerDashboard = () => {
                                 <b>Cost Center</b>
                               </label>
                               <br />
-                              <label>{user.costCentre}</label>
+                              <label>{fetchemployeeData.costCentre}</label>
                               <br />
                               <label>
                                 <b>City & State</b>
@@ -244,7 +244,7 @@ const ManagerDashboard = () => {
                                 <b>Manager</b>
                               </label>
                               <br />
-                              <label>{user.managerName}</label>
+                              <label>{fetchemployeeData.managerName}</label>
                             </div>
                           </Col>
                         </Row>
@@ -257,7 +257,7 @@ const ManagerDashboard = () => {
                                 <b>Joining Date</b>
                               </label>
                               <br />
-                              <label>{user.joiningDate}</label>
+                              <label>{fetchemployeeData.joiningDate}</label>
                               <br />
                               <label>
                                 <b>Work Location</b>
@@ -302,7 +302,7 @@ const ManagerDashboard = () => {
                           </label>
                           <br />
                           <label className="itemResult">
-                            Name: {user.emergencyContactName}
+                            Name: {fetchemployeeData.emergencyContactName}
                           </label>
                           <br />
                           <div style={{ color: "#006ebb" }}>
@@ -310,7 +310,7 @@ const ManagerDashboard = () => {
                               style={{ fontSize: "25px" }}
                               className="fa fa-phone"
                             ></i>
-                            <label> {user.emergencyContactNo} </label>
+                            <label> {fetchemployeeData.emergencyContactNo} </label>
                           </div>
                         </div>
                       </Col>
@@ -353,7 +353,7 @@ const ManagerDashboard = () => {
                         <Roster />
                       </Card>
                     </Col> */}
-                    {user.department==="Retail"|| rolePermission==="admin"?
+                    {fetchemployeeData.department==="Retail"|| rolePermission==="admin"?
                     <Fragment>
                     <Col sm={4}>
                       <Card
@@ -411,7 +411,7 @@ const ManagerDashboard = () => {
                       <Card
                         style={{
                           borderRadius: "3%",
-                          height:user.department==="Retail"|| rolePermission==="admin"?"100%":"92%",
+                          height:fetchemployeeData.department==="Retail"|| rolePermission==="admin"?"100%":"92%",
                           boxShadow: "0px 0px 2px 0 black",
                         }}
                         className="small-card p-10 main-card"
@@ -435,8 +435,8 @@ const ManagerDashboard = () => {
                   > */}
                 
                     <Col style={{
-                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
-                    }} sm={user.department==="Retail"|| rolePermission==="admin"?6:6}>
+                      marginTop:fetchemployeeData.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                    }} sm={fetchemployeeData.department==="Retail"|| rolePermission==="admin"?6:6}>
                       <Card
                         style={{
                           borderRadius: "3%",
@@ -464,12 +464,12 @@ const ManagerDashboard = () => {
                         )} */}
                       </Card>
                     </Col>
-                    {(user.department === "Finance & Legal" ||user.department === "Finance" || 
-                user.department === "IT")|| rolePermission === "admin"?
+                    {(fetchemployeeData.department === "Finance & Legal" ||fetchemployeeData.department === "Finance" || 
+                fetchemployeeData.department === "IT")|| rolePermission === "admin"?
                     <Col style={{
-                      marginTop:user.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
-                    }}sm={(user.department === "Finance & Legal" || user.department === "Finance" || 
-                    user.department === "IT")&&rolePermission !== "admin"?8 : rolePermission === "admin"?6:8}>
+                      marginTop:fetchemployeeData.department==="Retail"|| rolePermission==="admin"?"2rem":"0px",
+                    }}sm={(fetchemployeeData.department === "Finance & Legal" || fetchemployeeData.department === "Finance" || 
+                    fetchemployeeData.department === "IT")&&rolePermission !== "admin"?8 : rolePermission === "admin"?6:8}>
                       <Card
                         style={{
                           borderRadius: "3%",

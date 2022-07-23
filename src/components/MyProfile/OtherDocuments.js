@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { PermissionContext } from "../../context/PermissionState";
 
 const OtherDocuments = (props) => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const {
     DocumentView,
     documentsList,
@@ -48,8 +48,8 @@ const OtherDocuments = (props) => {
   ]);
 
   useEffect(() => {
-    DocumentView(user.employeeId);
-    OtherDocumentView(user.employeeId);
+    DocumentView(fetchemployeeData.employeeId);
+    OtherDocumentView(fetchemployeeData.employeeId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -155,7 +155,7 @@ const OtherDocuments = (props) => {
       if (fileUpload) {
         console.log("inside file info", fileUpload, fileName);
         const fileInfo = {
-          employeeId: user.employeeId,
+          employeeId: fetchemployeeData.employeeId,
           file: fileUpload,
           fileName: fileName,
         };

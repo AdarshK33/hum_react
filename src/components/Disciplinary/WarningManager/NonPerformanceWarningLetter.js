@@ -32,7 +32,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
   console.log(disciplinarySearchData);
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [showShowCauseNoticeModal, setShow] = useState(true);
   const history = useHistory();
   const ref = React.createRef();
@@ -188,9 +188,9 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
           disciplinarySearchData.disciplinaryAction.disciplinaryId
         ),
         module: "Disciplinary Warning",
-        empName: user.firstName + " " + user.lastName,
-        empEmail: user.email,
-        empPhNo: user.phone,
+        empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+        empEmail: fetchemployeeData.email,
+        empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../disciplinary-action",
       };

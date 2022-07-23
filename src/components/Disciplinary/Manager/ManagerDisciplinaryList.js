@@ -32,7 +32,7 @@ const ManagerDisciplinaryList = () => {
     showCauseIssueCreateResponseMessageNull,
   } = useContext(DisciplinaryContext);
   const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -45,7 +45,7 @@ const ManagerDisciplinaryList = () => {
       pageCount,
       rolePermission == "superCostCenterManager" ? 1 : 0
     );
-    console.log("user role", user);
+    console.log("user role", fetchemployeeData,user);
   }, []);
   console.log("ROLEEE", rolePermission);
   // useEffect(() => {
@@ -270,9 +270,9 @@ const ManagerDisciplinaryList = () => {
                                 />
                               </Link>
                             </td>
-                            {(user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            {(fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "admin" &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
@@ -280,9 +280,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryAction.status === 13) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "admin" &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
@@ -290,9 +290,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryWarning.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryWarning.status === 14) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "superCostCenterManager" &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
@@ -300,9 +300,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryAction.status === 12) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "superCostCenterManager" &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
@@ -310,9 +310,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryWarning.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryWarning.status === 13) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "costCenterManager" &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
@@ -320,9 +320,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryAction.status === 11) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "costCenterManager" &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
@@ -330,9 +330,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryWarning.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryWarning.status === 12) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "manager" &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
@@ -340,9 +340,9 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryAction.initiatedRole ==
                                 rolePermission &&
                               item.disciplinaryAction.status === 10) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               rolePermission == "manager" &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
@@ -368,9 +368,9 @@ const ManagerDisciplinaryList = () => {
                                 <AlertCircle />
                               </td>
                             )}
-                            {(user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            {(fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
                               item.disciplinaryAction !== "" &&
@@ -384,9 +384,9 @@ const ManagerDisciplinaryList = () => {
                               (item.disciplinaryAction.employeeActionStatus ===
                                 "Responded" ||
                                 item.disciplinaryAction.actionDueDays === 0)) ||
-                            (user !== null &&
-                              user !== undefined &&
-                              user.employeeId === item.initiatedBy &&
+                            (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId === item.initiatedBy &&
                               item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
                               item.disciplinaryWarning !== "" &&
@@ -413,9 +413,9 @@ const ManagerDisciplinaryList = () => {
                                   />
                                 </Link>
                               </td>
-                            ) : (user !== null &&
-                                user !== undefined &&
-                                user.employeeId !== item.initiatedBy &&
+                            ) : (fetchemployeeData !== null &&
+                              fetchemployeeData !== undefined &&
+                              fetchemployeeData.employeeId !== item.initiatedBy &&
                                 rolePermission == "costCenterManager" &&
                                 item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
@@ -429,9 +429,9 @@ const ManagerDisciplinaryList = () => {
                                     "Warning Letter Issued") ||
                                   item.disciplinaryAction.statusDesc ===
                                     "Show Cause Notice Issued")) ||
-                              (user !== null &&
-                                user !== undefined &&
-                                user.employeeId !== item.initiatedBy &&
+                              (fetchemployeeData !== null &&
+                                fetchemployeeData !== undefined &&
+                                fetchemployeeData.employeeId !== item.initiatedBy &&
                                 rolePermission == "superCostCenterManager" &&
                                 item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
@@ -445,9 +445,9 @@ const ManagerDisciplinaryList = () => {
                                     "Warning Letter Issued") ||
                                   item.disciplinaryAction.statusDesc ===
                                     "Show Cause Notice Issued")) ||
-                              (user !== null &&
-                                user !== undefined &&
-                                user.employeeId !== item.initiatedBy &&
+                              (fetchemployeeData !== null &&
+                                fetchemployeeData !== undefined &&
+                                fetchemployeeData.employeeId !== item.initiatedBy &&
                                 rolePermission == "admin" &&
                                 item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&

@@ -8,10 +8,11 @@ import VerificationDocsByManager from "./verificationOfDocsByManager";
 import { PermissionContext } from "../../context/PermissionState";
 
 const VerifyCandidateDocs = () => {
-  const { getUserInfo, user } = useContext(AppContext);
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     getUserInfo();
+    fetchEmployeeProfile();
   }, []);
 
   return (

@@ -25,7 +25,7 @@ const DocumentForm = () => {
     documentEmployeeList,
     documentEmployeeData
   } = useContext(DocumentManagementContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { AllCostCenter, allCostCenterList } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
   const history = useHistory();
@@ -161,18 +161,18 @@ const DocumentForm = () => {
     if (loginRole === "Employee") {
       setEmployee({
         ...employee,
-        value: user.employeeId,
+        value: fetchemployeeData.employeeId,
         errMsg: "",
       });
       setCostCentre({
         ...costCentre,
-        value: user.costCentre,
+        value: fetchemployeeData.costCentre,
         errMsg: "",
       });
     } else if (loginRole === "Manager") {
       setCostCentre({
         ...costCentre,
-        value: user.costCentre,
+        value: fetchemployeeData.costCentre,
         errMsg: "",
       });
     } else if (loginRole !== "") {
