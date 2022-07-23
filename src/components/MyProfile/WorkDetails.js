@@ -11,7 +11,7 @@ import { PermissionContext } from "../../context/PermissionState";
 import moment from "moment";
 
 const WorkDetails = () => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission, locationDetails, locationDetailsList } =
     useContext(PermissionContext);
   const [locationName, setLocationName] = useState("");
@@ -21,21 +21,21 @@ const WorkDetails = () => {
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     if (
-      user !== null &&
-      user !== undefined &&
-      Object.keys(user).length !== 0 &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0 &&
       locationDetailsList &&
       locationDetailsList !== null &&
       locationDetailsList !== undefined &&
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {
+        if (item.locationId === fetchemployeeData.locationId) {
           setLocationName(item.locationName);
         }
       });
     }
-  }, [locationDetailsList, user]);
+  }, [locationDetailsList, fetchemployeeData]);
   return (
     <Fragment>
       <Form>
@@ -61,28 +61,28 @@ const WorkDetails = () => {
               <b>Email Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.email}</label>
+            <label className="itemResult">{fetchemployeeData.email}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Fed Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.fedId}</label>
+            <label className="itemResult">{fetchemployeeData.fedId}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Contract Type</b>
             </label>
             <br />
-            <label className="itemResult">{user.contractType}</label>
+            <label className="itemResult">{fetchemployeeData.contractType}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Department</b>
             </label>
             <br />
-            <label className="itemResult">{user.department}</label>
+            <label className="itemResult">{fetchemployeeData.department}</label>
           </Col>
         </Row>
         <Row
@@ -95,28 +95,28 @@ const WorkDetails = () => {
               <b>Position</b>
             </label>
             <br />
-            <label className="itemResult">{user.position}</label>
+            <label className="itemResult">{fetchemployeeData.position}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Designation</b>
             </label>
             <br />
-            <label className="itemResult">{user.designation}</label>
+            <label className="itemResult">{fetchemployeeData.designation}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Sport</b>
             </label>
             <br />
-            <label className="itemResult">{user.sport?user.sport:"NA"}</label>
+            <label className="itemResult">{fetchemployeeData.sport?fetchemployeeData.sport:"NA"}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Cost Center</b>
             </label>
             <br />
-            <label className="itemResult">{user.costCentre}</label>
+            <label className="itemResult">{fetchemployeeData.costCentre}</label>
           </Col>
         </Row>
         <Row
@@ -136,7 +136,7 @@ const WorkDetails = () => {
               <b>Company Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.company}</label>
+            <label className="itemResult">{fetchemployeeData.company}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -144,7 +144,7 @@ const WorkDetails = () => {
             </label>
             <br />
             <label className="itemResult">
-            {user.dateOfTransfer!==null? moment(user.dateOfTransfer).format("DD-MM-YYYY"):"NA"}
+            {fetchemployeeData.dateOfTransfer!==null? moment(fetchemployeeData.dateOfTransfer).format("DD-MM-YYYY"):"NA"}
             </label>
           </Col>
           <Col sm={3}>
@@ -152,7 +152,7 @@ const WorkDetails = () => {
               <b>Manager Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.managerId}</label>
+            <label className="itemResult">{fetchemployeeData.managerId}</label>
           </Col>
         </Row>
         <Row
@@ -165,14 +165,14 @@ const WorkDetails = () => {
               <b>Manager Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.managerName}</label>
+            <label className="itemResult">{fetchemployeeData.managerName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Probation Period</b>
             </label>
             <br />
-            <label className="itemResult">{user.probationPeriod}</label>
+            <label className="itemResult">{fetchemployeeData.probationPeriod}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -187,10 +187,10 @@ const WorkDetails = () => {
               <b>Recruitment Source</b>
             </label>
             <br />
-            <label className="itemResult">{user.recruitmentSource}</label>
+            <label className="itemResult">{fetchemployeeData.recruitmentSource}</label>
           </Col>
         </Row>
-        {user.recruitmentSource==="NGO"?
+        {fetchemployeeData.recruitmentSource==="NGO"?
         <Row
           style={{
             marginBottom: "2rem",
@@ -201,7 +201,7 @@ const WorkDetails = () => {
               <b>NGO Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.ngoName}</label>
+            <label className="itemResult">{fetchemployeeData.ngoName}</label>
           </Col>
         </Row>
         :""}

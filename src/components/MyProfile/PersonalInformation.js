@@ -25,11 +25,11 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 
 const PersonalInformation = (props) => {
   const { UpdateEmployeeProfile } = useContext(EmployeeProfileContext);
-  const { getUserInfo, user } = useContext(AppContext);
-  const [bloodGrp, setBloodGrp] = useState(user.bloodGroup);
-  const [maritalStatus, setMaritalStatus] = useState(user && Object.keys(user).length ? user.maritalStatus.toLowerCase() === "unmarried" ||
-  user.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
-  const [personalEmailId, setPersonalEmailId] = useState(user.personalEmail);
+  const { getUserInfo,fetchEmployeeProfile, user,fetchemployeeData } = useContext(AppContext);
+  const [bloodGrp, setBloodGrp] = useState(fetchemployeeData.bloodGroup);
+  const [maritalStatus, setMaritalStatus] = useState(fetchemployeeData && Object.keys(fetchemployeeData).length ? fetchemployeeData.maritalStatus.toLowerCase() === "unmarried" ||
+  fetchemployeeData.maritalStatus.toLowerCase() === "single" ? "UnMarried" : "Married" : null );
+  const [personalEmailId, setPersonalEmailId] = useState(fetchemployeeData.personalEmail);
   const [disability, setDisability] = useState();
 
   const [bloodGroupError, setBloodGroupError] = useState(false);
@@ -38,6 +38,7 @@ const PersonalInformation = (props) => {
   
   useEffect(() => {
     getUserInfo();
+    fetchEmployeeProfile();
   }, []);
 
   const DropDownsValidation = (item, setError) => {
@@ -74,14 +75,14 @@ const PersonalInformation = (props) => {
       (emailValidation() === true)
     ) {
       if (
-        user !== null &&
-        user !== undefined &&
-        user !== "" &&
-        Object.keys(user).length !== 0
+        fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        fetchemployeeData !== "" &&
+        Object.keys(fetchemployeeData).length !== 0
       ) {
-        user.bloodGroup = bloodGrp;
-        user.maritalStatus = maritalStatus;
-        user.personalEmail = personalEmailId;
+        fetchemployeeData.bloodGroup = bloodGrp;
+        fetchemployeeData.maritalStatus = maritalStatus;
+        fetchemployeeData.personalEmail = personalEmailId;
         console.log("user", user);
         UpdateEmployeeProfile(user);
       }
@@ -114,28 +115,28 @@ const PersonalInformation = (props) => {
               <b>Employee Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.employeeId}</label>
+            <label className="itemResult">{fetchemployeeData.employeeId}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>First Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.firstName}</label>
+            <label className="itemResult">{fetchemployeeData.firstName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Last Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.lastName}</label>
+            <label className="itemResult">{fetchemployeeData.lastName}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Father's Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.fatherName}</label>
+            <label className="itemResult">{fetchemployeeData.fatherName}</label>
           </Col>
         </Row>
         <Row
@@ -150,7 +151,7 @@ const PersonalInformation = (props) => {
             <br />
 
             <label className="itemResult">
-              {moment(user.dob).format("DD-MM-YYYY")}
+              {moment(fetchemployeeData.dob).format("DD-MM-YYYY")}
             </label>
           </Col>
           <Col sm={3}>
@@ -158,7 +159,7 @@ const PersonalInformation = (props) => {
               <b>Gender</b>
             </label>
             <br />
-            <label className="itemResult">{user.gender}</label>
+            <label className="itemResult">{fetchemployeeData.gender}</label>
           </Col>
           <Col sm={3}>
             <label>
@@ -200,7 +201,7 @@ const PersonalInformation = (props) => {
             </label>
             <br />
             <label className="itemResult">
-            {moment(user.joiningDate).format("DD-MM-YYYY")}</label>
+            {moment(fetchemployeeData.joiningDate).format("DD-MM-YYYY")}</label>
           </Col>
         </Row>
         <Row
@@ -214,7 +215,7 @@ const PersonalInformation = (props) => {
             </label>
             <br />
             <label className="itemResult">
-            {user.actualJoiningDate?user.actualJoiningDate:moment(user.joiningDate).format("DD-MM-YYYY")}
+            {fetchemployeeData.actualJoiningDate?fetchemployeeData.actualJoiningDate:moment(fetchemployeeData.joiningDate).format("DD-MM-YYYY")}
             </label>
           </Col>
           {/* <Col sm={3}>
@@ -285,14 +286,14 @@ const PersonalInformation = (props) => {
               <b>Aadhaar Number</b>
             </label>
             <br />
-            <label className="itemResult">{user.aadhaarNumber}</label>
+            <label className="itemResult">{fetchemployeeData.aadhaarNumber}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Nationality</b>
             </label>
             <br />
-            <label className="itemResult">{user.nationality}</label>
+            <label className="itemResult">{fetchemployeeData.nationality}</label>
           </Col>
         </Row>
         <Row
@@ -330,14 +331,14 @@ const PersonalInformation = (props) => {
               <b>PAN Number</b>
             </label>
             <br />
-            <label className="itemResult">{user.panNo}</label>
+            <label className="itemResult">{fetchemployeeData.panNo}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>PF UAN Number</b>
             </label>
             <br />
-            <label className="itemResult">{user.pfUanNo}</label>
+            <label className="itemResult">{fetchemployeeData.pfUanNo}</label>
           </Col>
         </Row>
         <Row
@@ -350,7 +351,7 @@ const PersonalInformation = (props) => {
               <b>Are you an EPS member in your earlier employment?</b>
             </label>
             <br />
-            <label className="itemResult">{user.epsMember?user.epsMember:"NA"}</label>
+            <label className="itemResult">{fetchemployeeData.epsMember?fetchemployeeData.epsMember:"NA"}</label>
           </Col>
         </Row>
         <Row
@@ -363,21 +364,21 @@ const PersonalInformation = (props) => {
               <b>Reference 1 Name</b>
             </label>
             <br />
-            <label className="itemResult">{user.reference1Name?user.reference1Name:"NA"}</label>
+            <label className="itemResult">{fetchemployeeData.reference1Name?fetchemployeeData.reference1Name:"NA"}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Reference 1 Email Id</b>
             </label>
             <br />
-            <label className="itemResult">{user.reference1Email?user.reference1Email:"NA"}</label>
+            <label className="itemResult">{fetchemployeeData.reference1Email?fetchemployeeData.reference1Email:"NA"}</label>
           </Col>
         </Row>
-        {user !== null &&
-        user !== undefined &&
-        Object.keys(user).length !== 0 &&
-        user.reference2Name !== null &&
-        user.reference2Name !== undefined ? (
+        {fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 &&
+        fetchemployeeData.reference2Name !== null &&
+        fetchemployeeData.reference2Name !== undefined ? (
           <Row
             style={{
               marginBottom: "2rem",
@@ -388,14 +389,14 @@ const PersonalInformation = (props) => {
                 <b>Reference 2 Name</b>
               </label>
               <br />
-              <label className="itemResult">{user.reference2Name?user.reference2Name:"NA"}</label>
+              <label className="itemResult">{fetchemployeeData.reference2Name?fetchemployeeData.reference2Name:"NA"}</label>
             </Col>
             <Col sm={3}>
               <label>
                 <b>Reference 2 Email Id</b>
               </label>
               <br />
-              <label className="itemResult">{user.reference2Email?user.reference2Email:"NA"}</label>
+              <label className="itemResult">{fetchemployeeData.reference2Email?fetchemployeeData.reference2Email:"NA"}</label>
             </Col>
             <Col sm={3}></Col>
             {/* <Col sm={3} style={{ textAlign: "right" }}>

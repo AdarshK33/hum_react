@@ -6,6 +6,7 @@ import { saveAs } from "file-saver";
 import { access_token } from "../auth/signin";
 import Axios from "axios";
 import codeBase64 from "../components/DSICharter/CharterFile/codeofconduct"
+import { AppContext } from "./AppState";
 // import { EmployeeSeparationContext } from "./EmployeeSeparationState";
 var fileDownload = require("js-file-download");
 
@@ -30,6 +31,7 @@ export const DSICharterProvider = (props) => {
   const [CODEOFCONDUCT, setCodeOfConduct]= useState(null)
   const [letterShow, setLetterShow] = useState(false);
 
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   // const { ViewEmployeeProfile,employeeProfileData } = useContext(EmployeeSeparationContext);
   const handleDate = (data)=>{
     let current = new Date(data)
@@ -66,7 +68,7 @@ export const DSICharterProvider = (props) => {
   const ViewEmployeeProfile = () => {
     setLoader(true);
     client
-      .post("/api/v1/employee/profile")
+      .get("/api/v1/employee/my-profile")
       .then((response) => {
         state.employeeProfileData = response.data.data;
         setCharterIdValue(response.data.data.charterId)
@@ -96,6 +98,7 @@ export const DSICharterProvider = (props) => {
         viewCharterAll()
         viewCharter("all",0);
         ViewEmployeeProfile()
+        fetchEmployeeProfile()
         if(response.data.message === "SUCCESS"){
           value.history.push("/itcharter")
           setLoader(false);
@@ -123,6 +126,7 @@ export const DSICharterProvider = (props) => {
         uploadAllCharter(data,blob,value,"CODEOFCONDUCT")
         viewCharterAll()
         ViewEmployeeProfile()
+        fetchEmployeeProfile()
         setLoader(false);
         return dispatch({
           type: "DSICHARTER_UPDATE",
@@ -144,6 +148,7 @@ export const DSICharterProvider = (props) => {
           
           viewCharterAll()
           ViewEmployeeProfile()
+          fetchEmployeeProfile()
           setLoader(false);
           return dispatch({
             type: "DSICHARTER_ENABLE",

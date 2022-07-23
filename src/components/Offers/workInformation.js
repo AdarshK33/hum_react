@@ -77,7 +77,7 @@ const WorkInformation = (props) => {
   } = useContext(OfferContext);
   const { rolePermission } = useContext(PermissionContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [stateValue, setStateValue] = useState("");
   const [stateValueCity, setStateValueCity] = useState("");
   const [city, setCity] = useState();
@@ -434,7 +434,7 @@ const WorkInformation = (props) => {
         stateId:stateValue,
         collegeName: college,
         companyName:
-          rolePermission == "admin" ? state.adminCompany : user.company,
+          rolePermission == "admin" ? state.adminCompany : fetchemployeeData.company,
         contractType: state.employmentType,
         costCentre: costCenter,
         dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -449,7 +449,7 @@ const WorkInformation = (props) => {
         internshipPeriod:
           state.employmentType === "Internship" ? state.internship : 0,
         locationId: city,
-        managerId: allManagerList !== null ? state.managerId : user.employeeId,
+        managerId: allManagerList !== null ? state.managerId : fetchemployeeData.employeeId,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
         probationPeriod:
@@ -477,7 +477,7 @@ const WorkInformation = (props) => {
         cityId: cityId,
         collegeName: college,
         companyName:
-          rolePermission == "admin" ? state.adminCompany : user.company,
+          rolePermission == "admin" ? state.adminCompany : fetchemployeeData.company,
         contractType: state.employmentType,
         costCentre: costCenter,
         dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -492,7 +492,7 @@ const WorkInformation = (props) => {
         internshipPeriod:
           state.employmentType === "Internship" ? state.internship : 0,
         locationId: city,
-        managerId: allManagerList !== null ? state.managerId : user.employeeIds,
+        managerId: allManagerList !== null ? state.managerId : fetchemployeeData.employeeIds,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
         probationPeriod:
@@ -553,7 +553,7 @@ const WorkInformation = (props) => {
                 ) : (
                   <Form.Control
                     type="text"
-                    value={user.company}
+                    value={fetchemployeeData.company}
                     className="form-input"
                     name="company"
                     readOnly
@@ -755,7 +755,7 @@ const WorkInformation = (props) => {
                 {allManagerList === null ? (
                   <Form.Control
                     type="text"
-                    value={user.employeeId}
+                    value={fetchemployeeData.employeeId}
                     className="form-input"
                     readOnly
                   />

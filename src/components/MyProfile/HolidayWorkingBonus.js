@@ -23,7 +23,7 @@ const HolidayWorkingBonus = () => {
   const [HolidayId, setHolidayId] = useState(0);
   const [HoloidayDate, setHolidayDate] = useState("");
   const [HolidayError, setHolidayError] = useState(false);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   useEffect(() => {
     HolidaysView();
@@ -70,7 +70,7 @@ const HolidayWorkingBonus = () => {
         Object.keys(HolidaysList).length !== 0
       ) {
         let data = {
-          employeeId: user.employeeId,
+          employeeId: fetchemployeeData.employeeId,
           holidayDate: HoloidayDate,
           holidayName: HolidayName,
           holidayId: HolidayId,

@@ -37,7 +37,7 @@ const LeaveView = () => {
 
     const [currentRecords, setCurrentRecords] = useState([])
     const [selectyear, setSelectyear] = useState(new Date().getFullYear())
-    const { user } = useContext(AppContext);
+    const { user,fetchemployeeData } = useContext(AppContext);
 
     useEffect(() => {
         if(leaveEmpList !== null && leaveEmpList !== undefined){
@@ -63,7 +63,7 @@ const LeaveView = () => {
     const handlePageChange = pageNumber => {
         setPageCount(pageNumber-1)
         setCurrentPage(pageNumber);
-        viewEmpLeaveData(user.employeeId,pageNumber - 1)
+        viewEmpLeaveData(fetchemployeeData.employeeId,pageNumber - 1)
         setCurrentRecords(leaveEmpList)
     }
     /*-----------------Pagination------------------*/
@@ -79,18 +79,18 @@ const LeaveView = () => {
 
     useEffect(() => {
         console.log("currentYear",currentYear);
-        viewLeaveData(user.employeeId,new Date().getFullYear())
-    }, [user.employeeId,deleteModal])
+        viewLeaveData(fetchemployeeData.employeeId,new Date().getFullYear())
+    }, [fetchemployeeData.employeeId,deleteModal])
 
     
     useEffect(() => {
-        viewEmpLeaveData(user.employeeId, pageCount)
+        viewEmpLeaveData(fetchemployeeData.employeeId, pageCount)
        
-    }, [user.employeeId, pageCount])
+    }, [fetchemployeeData.employeeId, pageCount])
 
     const handlechange = (year) => {
         console.log("currentYear",currentYear,year);
-        viewLeaveData(user.employeeId,year)  
+        viewLeaveData(fetchemployeeData.employeeId,year)  
     }
     
     return (
@@ -282,9 +282,9 @@ const LeaveView = () => {
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
                         <Button className="apply-button btn btn-light"
-                            onClick={() => { setModal(true); setEmpID(user.employeeId) }}>Apply</Button>
+                            onClick={() => { setModal(true); setEmpID(fetchemployeeData.employeeId) }}>Apply</Button>
                     </Col>
-                    {user.employeeId !== undefined ?
+                    {fetchemployeeData.employeeId !== undefined ?
                         <LeaveAdd handleClose={handleClose} modal={modal} empid={empId} pageNumber={pageCount}  /> : ""}
 
                 </Row>
@@ -363,9 +363,9 @@ const LeaveView = () => {
                                 <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
 
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} 
-                    empid={user.employeeId} pageNumber={pageCount} />
-                    {user.employeeId !== undefined ?
-                        <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId} numberOfDays={numberOfDays}
+                    empid={fetchemployeeData.employeeId} pageNumber={pageCount} />
+                    {fetchemployeeData.employeeId !== undefined ?
+                        <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={fetchemployeeData.employeeId} numberOfDays={numberOfDays}
                             leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
                                 leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
                             reason={reason} ltId={ltId} pageNumber={pageCount} /> : ""}

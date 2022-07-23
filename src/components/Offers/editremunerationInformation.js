@@ -361,7 +361,6 @@ const EditRemunerationInformation = (props) => {
       fixedGross,
       monthlyBonus,
       stipened,
-      user.role,
       remunerationData,
       remunerationViewData,
       saveclick

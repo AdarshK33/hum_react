@@ -30,7 +30,7 @@ const EditLeave = (props) => {
 
     const { getLeave, leaveType, addPopup, editEmpList, editPopup, editLeavesData} = useContext(LeaveContext);
 
-    const { user } = useContext(AppContext);
+    const { user,fetchemployeeData } = useContext(AppContext);
 
     const today = new Date()
     
@@ -136,7 +136,7 @@ const EditLeave = (props) => {
              newData = 'Unplanned'
         }
         const newPopup = {
-            empId: user.employeeId,
+            empId: fetchemployeeData.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -165,7 +165,7 @@ console.log("value 2", value2)
         console.log("d3", moment(d3).format("YYYY-MM-DD"))
 
         const editPopupData = {
-            empId: user.employeeId,
+            empId: fetchemployeeData.employeeId,
             fromDate: moment(value2).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory:'Planned',
@@ -198,8 +198,8 @@ console.log("value 2", value2)
 
     //get api for leave type
     useEffect(() => {
-        getLeave(user.employeeId);
-    }, [user.employeeId]);
+        getLeave(fetchemployeeData.employeeId);
+    }, [fetchemployeeData.employeeId]);
 
     // create api
     const onSubmit = e => {
@@ -208,7 +208,7 @@ console.log("startMaternityDate",moment(startMaternityDate).format("YYYY-MM-DD")
 console.log("d3",moment(d3).format("YYYY-MM-DD"))
 
         const editLeave = {
-            empId: user.employeeId,
+            empId: fetchemployeeData.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
             leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
@@ -230,7 +230,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
              newData = 'Unplanned'
         }
         const editLeave1 = {
-            empId: user.employeeId,
+            empId: fetchemployeeData.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,

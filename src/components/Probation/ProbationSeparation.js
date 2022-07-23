@@ -17,6 +17,7 @@ import EndOfProbationLetter from "../Probation/EndOfProbationLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../../context/AppState";
 
 const ProbationSeparation = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("End of Probation");
@@ -98,6 +99,7 @@ const ProbationSeparation = () => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
+  const { getUserInfo,fetchEmployeeProfile,fetchemployeeData, user } = useContext(AppContext);
   const { probationData, ViewProbationEndLetter, endLetterData } =
     useContext(ProbationContext);
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
@@ -110,6 +112,7 @@ const ProbationSeparation = () => {
 
   useEffect(() => {
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
   }, []);
 
   useEffect(() => {
@@ -250,22 +253,22 @@ const ProbationSeparation = () => {
 
   useEffect(() => {
     if (
-      employeeProfileData &&
-      employeeProfileData &&
-      employeeProfileData !== null &&
-      employeeProfileData !== undefined &&
-      Object.keys(employeeProfileData).length !== 0
+      fetchemployeeData &&
+      fetchemployeeData &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== undefined &&
+      Object.keys(fetchemployeeData).length !== 0
     ) {
       state.mngrName =
-        employeeProfileData.lastName !== null &&
-        employeeProfileData.lastName !== undefined
-          ? employeeProfileData.firstName + " " + employeeProfileData.lastName
-          : employeeProfileData.firstName;
-      state.mngrId = employeeProfileData.employeeId;
-      state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.position;
+      fetchemployeeData.lastName !== null &&
+      fetchemployeeData.lastName !== undefined
+          ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
+          : fetchemployeeData.firstName;
+      state.mngrId = fetchemployeeData.employeeId;
+      state.mngrCostCenterName = fetchemployeeData.costCentre;
+      state.mngrPosition = fetchemployeeData.position;
     }
-  }, [employeeProfileData]);
+  }, [fetchemployeeData]);
   console.log(ModeOfSeparationData);
   console.log("probationData", probationData);
 

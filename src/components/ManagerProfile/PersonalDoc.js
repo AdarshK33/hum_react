@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 
 const PersonalDoc = (props) => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
 
   const {
@@ -463,11 +463,11 @@ const PersonalDoc = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {user &&
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          user.contractType.toLowerCase() === "local expat" ? (
+          {fetchemployeeData &&
+          fetchemployeeData !== null &&
+          fetchemployeeData !== undefined &&
+          Object.keys(fetchemployeeData).length !== 0 &&
+          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             ""
           ) : (
             <Row>
@@ -662,11 +662,11 @@ const PersonalDoc = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {user &&
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          user.contractType.toLowerCase() === "local expat" ? (
+          {fetchemployeeData &&
+          fetchemployeeData !== null &&
+          fetchemployeeData !== undefined &&
+          Object.keys(fetchemployeeData).length !== 0 &&
+          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             <Row>
               <Col sm={3}>
                 <label className="keyField">
@@ -767,11 +767,11 @@ const PersonalDoc = (props) => {
           ) : (
             ""
           )}
-          {user &&
-          user !== null &&
-          user !== undefined &&
-          Object.keys(user).length !== 0 &&
-          user.contractType.toLowerCase() === "local expat" ? (
+          {fetchemployeeData &&
+          fetchemployeeData !== null &&
+          fetchemployeeData !== undefined &&
+          Object.keys(fetchemployeeData).length !== 0 &&
+          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             ""
           ) : (
             <Row>

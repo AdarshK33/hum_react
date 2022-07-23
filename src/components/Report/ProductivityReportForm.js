@@ -25,7 +25,7 @@ const ProductivityReportForm = () => {
   const [yearly, setYearly] = useState(new Date());
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   const reportTypeList = [
     { reportTypeData: "Monthly", id: 1 },
@@ -59,12 +59,12 @@ const ProductivityReportForm = () => {
       rolePermission !== "admin" &&
       rolePermission !== "superCostCenterManager"
     ) {
-      setCostCenter(user.costCentre);
-      employeeIdData(user.costCentre);
-      viewClusterCostCenter(user.costCentre);
-      console.log("data1", user.costCentre);
+      setCostCenter(fetchemployeeData.costCentre);
+      employeeIdData(fetchemployeeData.costCentre);
+      viewClusterCostCenter(fetchemployeeData.costCentre);
+      console.log("data1", fetchemployeeData.costCentre);
     }
-  }, [user.costCentre, user.loginType]);
+  }, [fetchemployeeData.costCentre, fetchemployeeData.loginType]);
 
   const setCostCenterHandler = (options) => {
     let data1 = options !== null ? options.map((e, i) => options[i].value) : [];

@@ -388,7 +388,6 @@ const RemunerationInformation = (props) => {
       fixedGross,
       monthlyBonus,
       stipened,
-      user.role,
       typeof stipened,
       workInfoViewData
     );

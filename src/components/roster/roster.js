@@ -19,7 +19,7 @@ const Roster = () => {
   const [weekName, setweekName] = useState(false);
   const { weekOffDataEmp, weekOffDataList, availableShifts } =
     useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user , fetchemployeeData} = useContext(AppContext);
   const handleClose = () => setModal(false);
   const handleShow = (item, weekId, weekName) => {
     console.log(item, "item onclick");
@@ -34,13 +34,13 @@ const Roster = () => {
   };
 
   useEffect(() => {
-    console.log(user.employeeId, weekOffDataList, "weekOffDataList");
+    console.log(fetchemployeeData.employeeId, weekOffDataList, "weekOffDataList");
     weekOffDataEmp(
       endDate.format("YYYY-MM-DD"),
       startDate.format("YYYY-MM-DD"),
-      user.employeeId
+      fetchemployeeData.employeeId
     );
-  }, [user.employeeId]);
+  }, [fetchemployeeData.employeeId]);
   //use effect
 
   const submitDate = (e) => {
@@ -48,7 +48,7 @@ const Roster = () => {
     weekOffDataEmp(
       endDate.format("YYYY-MM-DD"),
       startDate.format("YYYY-MM-DD"),
-      user.employeeId
+      fetchemployeeData.employeeId
     );
     console.log("weekOff Data", startDate);
   };

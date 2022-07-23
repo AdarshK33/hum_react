@@ -23,7 +23,7 @@ const ExitListing = () => {
     changeEmployeeId,
     ViewEmployeeProfile,
   } = useContext(EmployeeSeparationContext);
-  const { user ,getUserInfo} = useContext(AppContext);
+  const { user ,getUserInfo,fetchEmployeeProfile,fetchemployeeData} = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
 
   const [pageCount, setPageCount] = useState(0);
@@ -33,6 +33,7 @@ const ExitListing = () => {
   useEffect(() => {
     EmployeeSeparationListExitView("all", pageCount, 9);
     getUserInfo()
+    fetchEmployeeProfile()
   }, []);
   useEffect(() => {
     if (rolePermission == "superCostCenterManager") {
@@ -111,7 +112,7 @@ const ExitListing = () => {
       setCurrentRecords(EmployeeSeparationExitList);
     }
   }, [EmployeeSeparationExitList, ModeOfSeparationData]);
-  console.log(user, "user");
+  console.log(user,fetchemployeeData, "user");
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;

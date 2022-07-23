@@ -24,7 +24,7 @@ function Dashboard() {
   } = useContext(DashboardContext);
   const { rolePermission } = useContext(PermissionContext);
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [startDate, setStartDate] = useState();
   const [StoreType, setStoreType] = useState("");
   const [ClusterType, setClusterType] = useState("");
@@ -126,12 +126,12 @@ function Dashboard() {
       rolePermission !== "admin" &&
       rolePermission !== "superCostCenterManager"
     ) {
-      setStoreType(user.costCentre);
-      if (user.costCentre !== undefined) {
-        viewClusterCostCenter(user.costCentre);
+      setStoreType(fetchemployeeData.costCentre);
+      if (fetchemployeeData.costCentre !== undefined) {
+        viewClusterCostCenter(fetchemployeeData.costCentre);
       }
     }
-  }, [user]);
+  }, [fetchemployeeData]);
 
   useEffect(() => {
     // if(user.loginType === '1' && user.loginType === '9' && user.additionalRole === "1" && user.additionalRole === "9"){
@@ -159,7 +159,7 @@ function Dashboard() {
       setStoreType(cosCentreList[0].costCentreName);
       // viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
     }
-  }, [user.costCentre, cosCentreList, clusterCostCenterList]);
+  }, [fetchemployeeData.costCentre, cosCentreList, clusterCostCenterList]);
 
   useEffect(() => {
     // viewClusterCostCenter(StoreType)
@@ -452,7 +452,7 @@ function Dashboard() {
                     className="form-control Value"
                     required
                     readOnly
-                    value={user.costCentre}
+                    value={fetchemployeeData.costCentre}
                   />
                 )}
               </div>

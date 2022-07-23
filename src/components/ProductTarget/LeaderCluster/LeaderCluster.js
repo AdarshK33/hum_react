@@ -18,11 +18,11 @@ function LeaderCluster() {
     const [Year, setYear] = useState();
 
     const { leaderClusterProductList, singleClusterTarget, viewLeaderClusterTarget, viewSingleClusterTarget, loader } = useContext(ClusterProductContext);
-    const { user } = useContext(AppContext);
+    const { user,fetchemployeeData } = useContext(AppContext);
 
 
     const handleClose = () => {
-        viewLeaderClusterTarget(user.costCentre);
+        viewLeaderClusterTarget(fetchemployeeData.costCentre);
         setModal(false);
         setCurrentPage(1);
     }
@@ -40,11 +40,11 @@ function LeaderCluster() {
         setMonth(mm);
         setYear(yyyy);
 
-        if (user.costCentre !== undefined) {
-            viewLeaderClusterTarget(user.costCentre);
+        if (fetchemployeeData.costCentre !== undefined) {
+            viewLeaderClusterTarget(fetchemployeeData.costCentre);
         }
 
-    }, [user.costCentre]);
+    }, [fetchemployeeData.costCentre]);
 
     useEffect(() => {
         console.log(loader)
@@ -149,7 +149,7 @@ function LeaderCluster() {
                                             <tbody key={i + 1}>
                                                 <tr>
                                                     <td>{i + 1 + indexOfFirstRecord}</td>
-                                                    <td>{user.costCentre}</td>
+                                                    <td>{fetchemployeeData.costCentre}</td>
                                                     <td>{item.clusterName}</td>
                                                     <td>{item.monthName}</td>
                                                     <td>{item.year}</td>

@@ -6,6 +6,7 @@ import pdfMake from "pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import htmlToPdfmake from "html-to-pdfmake";
 import itBase64 from "./CharterFile/itcharter";
+import { AppContext } from "../../context/AppState";
 const ITCharter = (props) => {
   const {
     dsiCharterUpdate,
@@ -19,6 +20,7 @@ const ITCharter = (props) => {
     charterAllResponse,
     uploadAllCharter,
   } = useContext(DSICharterContext);
+  const { getUserInfo,fetchEmployeeProfile,fetchemployeeData, user } = useContext(AppContext);
   const [showModal, setShow] = useState(true);
   const [dsiItCharter, setDsiItCharter] = useState(false);
   const [dsiItCharterError, setDsiItCharterError] = useState("");
@@ -47,30 +49,31 @@ const ITCharter = (props) => {
   useEffect(() => {
     viewCharterAll();
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
   }, [charterIdValue]);
   console.log(CODEOFCONDUCT, "CODEOFCONDUCT");
   useEffect(() => {
     if (
-      employeeProfileData !== undefined &&
-      employeeProfileData !== null &&
-      employeeProfileData !== ""
+      fetchemployeeData !== undefined &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== ""
     ) {
-      setCharterId(employeeProfileData.charterId);
+      setCharterId(fetchemployeeData.charterId);
       if (
-        employeeProfileData.isCodeOfConduct === true &&
-        employeeProfileData.isDsiItCharter !== true
+        fetchemployeeData.isCodeOfConduct === true &&
+        fetchemployeeData.isDsiItCharter !== true
       ) {
         setShow(true);
       } else if (
-        employeeProfileData.isCodeOfConduct === true &&
-        employeeProfileData.isDsiItCharter === true
+        fetchemployeeData.isCodeOfConduct === true &&
+        fetchemployeeData.isDsiItCharter === true
       ) {
         // props.history.push("/dashboard/storedashboard");31/05/2022
         props.history.push("/employee360")
         setShow(false);
       }
     }
-  }, [employeeProfileData, props]);
+  }, [fetchemployeeData, props]);
 
   function base64ToArrayBuffer(imageValue) {
     var bString = window.atob(imageValue);
@@ -89,6 +92,7 @@ const ITCharter = (props) => {
       props,
       dsiItCharter,
       employeeProfileData,
+      fetchemployeeData,
       charterDataAll,
       "charter it"
     );
@@ -116,7 +120,7 @@ const ITCharter = (props) => {
       //     "isDsiItCharter": true
       //     }
       charterDataAll.map((item) => {
-        if (item.employeeId === employeeProfileData.employeeId) {
+        if (item.employeeId === fetchemployeeData.employeeId) {
           const infoData = {
             acknowledge: true,
             charterId: item.charterId,
@@ -126,7 +130,7 @@ const ITCharter = (props) => {
                 charterId: item.charterId,
               },
             ],
-            employeeId: employeeProfileData.employeeId,
+            employeeId: fetchemployeeData.employeeId,
             isCodeOfConduct: item.isCodeOfConduct === null ? false : true,
             isDsiItCharter: true,
             codeOfConductLetter:
@@ -149,7 +153,7 @@ const ITCharter = (props) => {
             blobStore.name = "itcharter.pdf";
             const data = {
               dsiType: "It Charter",
-              employeeId: employeeProfileData.employeeId,
+              employeeId: fetchemployeeData.employeeId,
               fileType: 20,
             };
 
@@ -179,11 +183,11 @@ const ITCharter = (props) => {
 
   useEffect(() => {
     if (
-      employeeProfileData !== undefined &&
-      employeeProfileData !== null &&
-      employeeProfileData !== ""
+      fetchemployeeData !== undefined &&
+      fetchemployeeData !== null &&
+      fetchemployeeData !== ""
     ) {
-      if (employeeProfileData.isDsiItCharter == true) {
+      if (fetchemployeeData.isDsiItCharter == true) {
         setDsiItCharter(true);
       } else {
         setDsiItCharter(false);
@@ -838,16 +842,16 @@ const ITCharter = (props) => {
                   <p>
                     <b>Employee ID :</b>
                     <b style={{ padding: "20px" }}>
-                      {employeeProfileData.employeeId}
+                      {fetchemployeeData.employeeId}
                     </b>
                   </p>
                   <p>
                     {" "}
                     <b>Signed and Accepted by Employee :</b>
                     <b style={{ padding: "20px" }}>
-                      {employeeProfileData.firstName +
+                      {fetchemployeeData.firstName +
                         "  " +
-                        employeeProfileData.lastName}
+                        fetchemployeeData.lastName}
                     </b>
                   </p>
                 </div>

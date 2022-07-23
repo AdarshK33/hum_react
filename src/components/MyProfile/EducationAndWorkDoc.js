@@ -8,7 +8,7 @@ import ViewTheLetter from "./view";
 import { PermissionContext } from "../../context/PermissionState";
 
 const EducationAndWorkDoc = (props) => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { DocumentView, documentsList, letterShow, SetLetterView } = useContext(
     EmployeeProfileContext
   );
@@ -25,7 +25,7 @@ const EducationAndWorkDoc = (props) => {
   const [EmployeeId, setEmployeeId] = useState("");
 
   useEffect(() => {
-    DocumentView(user.employeeId);
+    DocumentView(fetchemployeeData.employeeId);
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -228,11 +228,11 @@ const EducationAndWorkDoc = (props) => {
             </div>
           </Col>
         </Row>
-        {user &&
-        user !== null &&
-        user !== undefined &&
-        Object.keys(user).length !== 0 &&
-        user.contractType.toLowerCase() === "internship" ? (
+        {fetchemployeeData &&
+        fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 &&
+        fetchemployeeData.contractType.toLowerCase() === "internship" ? (
           <Row>
             <Col sm={8}>
               <label>

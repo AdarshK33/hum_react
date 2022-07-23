@@ -43,7 +43,7 @@ const AdminEditClusterModal = (props) => {
     getSingleCluster1,
     getEmployeesNames,
   } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { costCenter } = useContext(RosterContext);
   const { rolePermission } = useContext(PermissionContext);
 
@@ -74,9 +74,9 @@ const AdminEditClusterModal = (props) => {
   useEffect(() => {
     costCenter();
     if (rolePermission !== "admin") {
-      setCostCenterName(user.costCentre);
+      setCostCenterName(fetchemployeeData.costCentre);
     }
-  }, [user.costCentre, user.loginType]);
+  }, [fetchemployeeData.costCentre, user.loginType]);
 
   // console.log("PROPS " + props.shiftData.storeId);
 

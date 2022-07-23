@@ -51,15 +51,16 @@ const DocVerification = () => {
     approveAadharByAdmin,
     disapproveAadharByAdmin,
   } = useContext(DocsVerifyContext);
-  const { getUserInfo, user } = useContext(AppContext);
+  const { getUserInfo,fetchEmployeeProfile, user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   useEffect(() => {
     getUserInfo();
+    fetchEmployeeProfile();
     setState(personalInfoData);
   }, []);
   useEffect(() => {
     setState(personalInfoData);
-  }, [user]);
+  }, [fetchemployeeData]);
   const handleShifting = () => {
     changeState(!isChecked);
   };

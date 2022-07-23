@@ -45,7 +45,7 @@ const CreateShiftModal = (props) => {
     costCenter,
   } = useContext(RosterContext);
   const { rolePermission } = useContext(PermissionContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
 
   useEffect(() => {
     costCenter();
@@ -202,7 +202,7 @@ const CreateShiftModal = (props) => {
       rolePermission !== "admin" &&
       rolePermission !== "superCostCenterManager"
     ) {
-      storeId = user.costCentre;
+      storeId = fetchemployeeData.costCentre;
       var result = parseInt(workingHours);
       if (result <= 5) {
         e.preventDefault();

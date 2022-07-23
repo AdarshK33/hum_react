@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
+import { AppContext } from "../../context/AppState";
 
 const CharterEdit = () => {
 
@@ -20,27 +21,28 @@ const CharterEdit = () => {
   const [endDateError,setEndDateError] = useState("")
 
   const {  dsiCharterEnable,charterEnable,ViewEmployeeProfile,employeeProfileData} = useContext(DSICharterContext);
-
+  const { getUserInfo,fetchEmployeeProfile,fetchemployeeData, user } = useContext(AppContext);
   useEffect(()=>{
     ViewEmployeeProfile()
+    fetchEmployeeProfile()
   },[])
   useEffect(()=>{
-    if(employeeProfileData !== null && 
-      employeeProfileData !== undefined && 
-      employeeProfileData !== ""){
-    if(employeeProfileData.isAdminEnabled !== null && 
-      employeeProfileData.isAdminEnabled !== "" && 
-       employeeProfileData.isAdminEnabled !== undefined){
-         console.log(employeeProfileData,"employeeProfileDataedit")
-        setStatus(employeeProfileData.isAdminEnabled)
-        SetStartDate(new Date(employeeProfileData.startingDate === null||employeeProfileData.startingDate === undefined || employeeProfileData.startingDate === "" ?new Date():employeeProfileData.startingDate))
-          setEndDate(new Date(employeeProfileData.closingDate === null 
-            || employeeProfileData.closingDate === undefined || employeeProfileData.closingDate === "" ?new Date():employeeProfileData.closingDate))
+    if(fetchemployeeData !== null && 
+      fetchemployeeData !== undefined && 
+      fetchemployeeData !== ""){
+    if(fetchemployeeData.isAdminEnabled !== null && 
+      fetchemployeeData.isAdminEnabled !== "" && 
+      fetchemployeeData.isAdminEnabled !== undefined){
+         console.log(fetchemployeeData,"employeeProfileDataedit")
+        setStatus(fetchemployeeData.isAdminEnabled)
+        SetStartDate(new Date(fetchemployeeData.startingDate === null||fetchemployeeData.startingDate === undefined || fetchemployeeData.startingDate === "" ?new Date():fetchemployeeData.startingDate))
+          setEndDate(new Date(fetchemployeeData.closingDate === null 
+            || fetchemployeeData.closingDate === undefined || fetchemployeeData.closingDate === "" ?new Date():fetchemployeeData.closingDate))
           // SetEndDate(new Date(employeeProfileData.closingDate))
           
        }
     }
-  },[employeeProfileData])
+  },[fetchemployeeData])
   console.log(status,startDate,endDate)
   const handleCheckBox =(e)=>{
     console.log(e.target.value)

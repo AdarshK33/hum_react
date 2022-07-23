@@ -7,7 +7,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { AppContext } from "../../context/AppState";
 
 const WorkingBonusList = () => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { HolidayWorkingBonusView, holidayWorkingBonusList } = useContext(
     EmployeeProfileContext
   );
@@ -17,8 +17,8 @@ const WorkingBonusList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [employeeExitStatus, setEmployeeExitStatus] = useState("");
   useEffect(() => {
-    if (user !== null && user !== undefined && Object.keys(user).length !== 0) {
-      HolidayWorkingBonusView(user.employeeId);
+    if (fetchemployeeData !== null && fetchemployeeData !== undefined && Object.keys(fetchemployeeData).length !== 0) {
+      HolidayWorkingBonusView(fetchemployeeData.employeeId);
     }
   }, []);
   console.log("holidayWorkingBonusList", holidayWorkingBonusList);

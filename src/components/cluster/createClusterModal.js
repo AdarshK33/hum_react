@@ -43,7 +43,7 @@ const CreateClusterModal = (props) => {
     callClusterEmployees,
     callClusterLeaders,
   } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
   useEffect(() => {
@@ -59,7 +59,7 @@ const CreateClusterModal = (props) => {
       rolePermission !== "manager" ||
       rolePermission !== "admin"
     ) {
-      setCostCenterName(user.costCentre);
+      setCostCenterName(fetchemployeeData.costCentre);
     }
   }, []);
 
@@ -137,8 +137,8 @@ const CreateClusterModal = (props) => {
   const getCostCenterName = (options) => {
     let data = options !== null ? options.value : "";
     setCostCenterName(data);
-    callClusterEmployees(data, user.employeeId);
-    callClusterLeaders(data, user.employeeId);
+    callClusterEmployees(data, fetchemployeeData.employeeId);
+    callClusterLeaders(data, fetchemployeeData.employeeId);
   };
 
   const handleMultiChange = (option) => {

@@ -31,7 +31,7 @@ const AdminRoster = () => {
   const [date, setDate] = useState();
   const [employeId, setEmployeId] = useState("");
   const [lastName, setlastName] = useState("");
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
   const [weekDAY,setWeekDAY]= useState("")
 
@@ -79,11 +79,11 @@ const AdminRoster = () => {
       rolePermission !== "superCostCenterManager" &&
       rolePermission !== "costCenterManager"
     ) {
-      setCostCenter1(user.costCenter);
-      setstorecostCenterName(user.costCenter);
-      viewClusterCostCenter(user.costCentre);
+      setCostCenter1(fetchemployeeData.costCenter);
+      setstorecostCenterName(fetchemployeeData.costCenter);
+      viewClusterCostCenter(fetchemployeeData.costCentre);
     }
-  }, [user.costCenter, user.loginType]);
+  }, [fetchemployeeData.costCenter, user.loginType]);
 
   const handleClose = () => setAdminModal(false);
   const handleShow = (item, employeId,lastName,name, ctype, weekId,index) => {

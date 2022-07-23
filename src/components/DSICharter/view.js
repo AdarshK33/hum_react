@@ -2,10 +2,12 @@ import React, { Fragment, useState, useContext ,useEffect} from "react";
 import { Modal } from "react-bootstrap";
 import { DSICharterContext } from "../../context/DSICharterState";
 import { PermissionContext } from "../../context/PermissionState";
+import { AppContext } from "../../context/AppState";
 
 const ViewTheLetter = ({ DocName, Name,EmployeeId }) => {
   const { SetLetterView,employeeProfileData ,ViewEmployeeProfile} = useContext(DSICharterContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   const [show, setShow] = useState(true);
 
   // const show = true;
@@ -18,6 +20,7 @@ ImageView(DocName,EmployeeId)
   };
   useEffect(() => {
     ViewEmployeeProfile();
+    fetchEmployeeProfile();
   }, []);
   console.log("console.log(check, e);", DocName,employeeProfileData, show);
   const handleDate = (data)=>{

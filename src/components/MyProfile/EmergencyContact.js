@@ -14,7 +14,7 @@ const EmergencyContact = (props) => {
     useContext(EmployeeProfileContext);
   const [disabled, setDisableState] = useState(false);
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   // acessing employeeId from params
 
   const [stateError, setStateError] = useState({
@@ -35,7 +35,7 @@ const EmergencyContact = (props) => {
     addressLine: "",
     city: "",
     country: "",
-    employeeId: user.employeeId,
+    employeeId: fetchemployeeData.employeeId,
     contactId: 0,
     locality: "",
     phoneNumber: "",
@@ -43,7 +43,7 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
   useEffect(() => {
-    EmergencyContactView(user.employeeId);
+    EmergencyContactView(fetchemployeeData.employeeId);
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
   useEffect(() => {
@@ -55,7 +55,7 @@ const EmergencyContact = (props) => {
       
         state.contactName= emergencyContactView.contactName
         state.addressLine =  emergencyContactView.addressLine
-        state.employeeId =  emergencyContactView.employeeId?emergencyContactView.employeeId:user.employeeId
+        state.employeeId =  emergencyContactView.employeeId?emergencyContactView.employeeId:fetchemployeeData.employeeId
         state.contactId = emergencyContactView.contactId
         state.city = emergencyContactView.city
         state.country = emergencyContactView.country

@@ -70,7 +70,7 @@ const CandidateOnboarding = () => {
 
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission } = useContext(PermissionContext);
 
   const [count, setCount] = useState(1);
@@ -815,7 +815,7 @@ const CandidateOnboarding = () => {
                     if (
                       // item.roleName !== "ADMIN" &&
                       // item.roleName !== "IT_ADMIN"
-                      (rolePermission == "manager" && item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
+                      (rolePermission == "manager" && item.roleName == "GENERAL_USER")|| ((fetchemployeeData.department.includes("finance")||fetchemployeeData.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
@@ -826,7 +826,7 @@ const CandidateOnboarding = () => {
                     }else if (
                       rolePermission == "costCenterManager" &&(
                        item.roleName == "MANAGER" ||
-                       item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
+                       item.roleName == "GENERAL_USER")|| ((fetchemployeeData.department.includes("finance")||fetchemployeeData.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")){
                       return (
                         <option key={i} value={item.roleId}>
@@ -837,7 +837,7 @@ const CandidateOnboarding = () => {
                       rolePermission == "superCostCenterManager" &&(
                        item.roleName == "MANAGER" ||
                        item.roleName == "COST_CENTER_MANAGER" ||
-                       item.roleName == "GENERAL_USER")|| ((user.department.includes("finance")||user.department.includes("Finance")) && 
+                       item.roleName == "GENERAL_USER")|| ((fetchemployeeData.department.includes("finance")||fetchemployeeData.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (

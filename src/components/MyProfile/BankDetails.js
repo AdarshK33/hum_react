@@ -16,7 +16,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
 const BankDetails = (props) => {
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const { bankView, bankViewData, BankUpdate, uploadFile } = useContext(
     EmployeeProfileContext
   );
@@ -53,7 +53,7 @@ const BankDetails = (props) => {
     },
   ]);
   useEffect(() => {
-    bankView(user.employeeId);
+    bankView(fetchemployeeData.employeeId);
   }, []);
 
   useEffect(() => {
@@ -219,7 +219,7 @@ const BankDetails = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: user.employeeId,
+        employeeId: fetchemployeeData.employeeId,
         file: fileUpload,
         fileType: fileType,
       };

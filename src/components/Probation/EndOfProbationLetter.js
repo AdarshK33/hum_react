@@ -20,7 +20,7 @@ const EndOfProbationLetter = () => {
   } = useContext(ProbationContext);
   const { employeeData, UpdateEmplyoeeExist, lettterview, setViewLetter } =
     useContext(EmployeeSeparationContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const [show, setShow] = useState(true);
@@ -81,9 +81,9 @@ const EndOfProbationLetter = () => {
         empId: endLetterData.empId,
         candidateId: 0,
         module: "Separation",
-        empName: user.firstName + " " + user.lastName,
-        empEmail: user.email,
-        empPhNo: user.phone,
+        empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+        empEmail: fetchemployeeData.email,
+        empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../employee-separation-listing",
       };

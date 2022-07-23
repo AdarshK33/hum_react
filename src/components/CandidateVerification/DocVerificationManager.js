@@ -62,7 +62,7 @@ const DocVerification = () => {
     aadhaarNotificationData,
     adhaarVerificationNotification,
   } = useContext(OfferContext);
-  const { getUserInfo, user } = useContext(AppContext);
+  const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
 
   // useEffect(() => {
   //   console.log("acceptStatus+rejectStatus");
@@ -74,6 +74,7 @@ const DocVerification = () => {
   useEffect(() => {
     console.log("userinfo");
     getUserInfo();
+    fetchEmployeeProfile();
     personalInfo(candidateId);
   }, []);
 

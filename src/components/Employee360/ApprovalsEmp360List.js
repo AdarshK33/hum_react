@@ -18,7 +18,7 @@ const ApprovalsEmp360List = ({ ListType }) => {
     useContext(Employee360Context);
   const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const [transferType, setTransferType] = useState(ListType);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
@@ -38,7 +38,7 @@ const ApprovalsEmp360List = ({ ListType }) => {
   const [tableBody, setTableBody] = useState([]);
 
   useEffect(() => {
-    Employee360ListView(ListType, user.employeeId);
+    Employee360ListView(ListType, fetchemployeeData.employeeId);
   }, [ListType]);
   console.log("employee360ListData", employee360ListData);
   useEffect(() => {
