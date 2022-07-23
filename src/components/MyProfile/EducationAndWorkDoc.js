@@ -5,12 +5,14 @@ import { AppContext } from "../../context/AppState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
+import { PermissionContext } from "../../context/PermissionState";
 
 const EducationAndWorkDoc = (props) => {
   const { user } = useContext(AppContext);
   const { DocumentView, documentsList, letterShow, SetLetterView } = useContext(
     EmployeeProfileContext
   );
+  const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [educationDocName, setEducationDocName] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
@@ -57,7 +59,7 @@ const EducationAndWorkDoc = (props) => {
     console.log("check", name);
     downloadFile(name,employeeData);
   };
-  const showTheLetter = (e, name,employeeData) => {
+  const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
     console.log("check", name);
     if (name !== null && name !== undefined) {
@@ -76,6 +78,7 @@ const EducationAndWorkDoc = (props) => {
         setName("JPG");
       }
     }
+    ImageView(name,EmployeeId)
     setLetterName(name);
     SetLetterView(true);
     // return <ViewTheLetter DocName={e} />;
@@ -89,7 +92,7 @@ const EducationAndWorkDoc = (props) => {
         <Row>
           <Col sm={8}>
             <label>
-              <b>Heighest Education Certificate :</b>
+              <b>Highest Education Certificate :</b>
             </label>
             <br />
             <label className="itemResult">{educationDocName}</label>

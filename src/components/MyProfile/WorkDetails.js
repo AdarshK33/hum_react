@@ -109,7 +109,7 @@ const WorkDetails = () => {
               <b>Sport</b>
             </label>
             <br />
-            <label className="itemResult">{user.sport}</label>
+            <label className="itemResult">{user.sport?user.sport:"NA"}</label>
           </Col>
           <Col sm={3}>
             <label>

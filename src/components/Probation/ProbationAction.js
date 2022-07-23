@@ -529,7 +529,7 @@ const ProbationAction = () => {
           moment(dateOfConfirmation).format("YYYY-MM-DD"),
         probationConfirmationLetter: probationData.probationConfirmationLetter,
         probationExtensionEndDate:
-          probationStatus === "Extended" ? dateOfExtension : null,
+          probationStatus === "Extended" ?moment(dateOfExtension).format("YYYY-MM-DD") : null,
         probationExtensionPeriod:
           probationStatus === "Extended"
             ? probationMonths === "3 Months"
@@ -588,7 +588,7 @@ const ProbationAction = () => {
           probationConfirmationLetter:
             probationData.probationConfirmationLetter,
           probationExtensionEndDate:
-            probationStatus === "Extended" ? dateOfExtension : null,
+            probationStatus === "Extended" ? moment(dateOfExtension).format("YYYY-MM-DD") : null,
           probationExtensionPeriod:
             probationStatus === "Extended"
               ? probationMonths === "3 Months"

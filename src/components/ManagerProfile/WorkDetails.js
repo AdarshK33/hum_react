@@ -128,7 +128,7 @@ const WorkDetails = () => {
               <b>Sport</b>
             </label>
             <br />
-            <label className="itemResult">{EmpProfile.sport}</label>
+            <label className="itemResult">{EmpProfile.sport?EmpProfile.sport:"NA"}</label>
           </Col>
           <Col sm={3}>
             <label>

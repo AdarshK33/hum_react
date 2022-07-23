@@ -62,7 +62,7 @@ const EducationAndWorkDoc = (props) => {
   };
   const showTheLetter = (e, name,EmployeeId) => {
     e.preventDefault();
-    console.log("check", name);
+    console.log("check", name,EmployeeId);
     if (name !== null && name !== undefined) {
       let splitStr = name.split(".");
 
@@ -93,7 +93,7 @@ const EducationAndWorkDoc = (props) => {
         <Row>
           <Col sm={8}>
             <label>
-              <b>Heighest Education Certificate :</b>
+              <b>Highest Education Certificate :</b>
             </label>
             <br />
             <label className="itemResult">{educationDocName}</label>
