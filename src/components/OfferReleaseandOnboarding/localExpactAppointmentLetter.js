@@ -44,7 +44,7 @@ const LocalExpactAppointmentLetter = (props) => {
         candidateId: candidateData.candidateInformation.candidateId,
         module: "Appointment",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../offer-release-list",

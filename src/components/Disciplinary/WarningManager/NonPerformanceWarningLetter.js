@@ -189,7 +189,7 @@ const NonPerformanceWarningLetter = ({ approver = true, sign = true }) => {
         ),
         module: "Disciplinary Warning",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../disciplinary-action",
