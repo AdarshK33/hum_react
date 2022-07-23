@@ -85,7 +85,7 @@ const { rolePermission } = useContext(PermissionContext);
      getEmployeeDetails(2);
     }
   
-  }, []);
+  }, [searchEmpSelected]);
 
   useEffect(() => {
     if (searchValue !== "") {

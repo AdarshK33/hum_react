@@ -115,7 +115,7 @@ const RegularTransfer = () => {
      getEmployeeDetails(2);
     }
   
-  }, []);
+  }, [searchEmpSelected]);
   useEffect(() => {
     if (
       initiationEmpData !== null &&
