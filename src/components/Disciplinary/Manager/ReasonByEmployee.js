@@ -163,7 +163,7 @@ const ReasonByEmployee = ({ sign = true }) => {
         candidateId: 0,
         module: "Disciplinary Action Response",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../my_disciplinary",

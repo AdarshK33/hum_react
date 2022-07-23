@@ -76,7 +76,7 @@ const PartTimeToFullTimeLetter = (props) => {
         candidateId: 0,
         module: "Transfer",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../transfers",

@@ -82,7 +82,7 @@ const EndOfProbationLetter = () => {
         candidateId: 0,
         module: "Separation",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../employee-separation-listing",

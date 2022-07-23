@@ -80,7 +80,7 @@ const RelivingLetter = ({ anotherPath = false }) => {
         candidateId: 0,
         module: "Separation",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: anotherPath ? "../employee-separation-listing" : "/exit-approval",

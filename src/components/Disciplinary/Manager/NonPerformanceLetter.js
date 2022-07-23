@@ -240,7 +240,7 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
         candidateId: 0,
         module: "Disciplinary Action",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../disciplinary-action",

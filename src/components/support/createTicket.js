@@ -431,7 +431,7 @@ const CreateTicket = () => {
                   <Col sm="6">
                     <Form.Control
                       type="text"
-                      value={fetchemployeeData.fedId}
+                      value={user.fedId}
                       readOnly
                       className="disabledValue blueText"
                     />
@@ -448,7 +448,7 @@ const CreateTicket = () => {
                   <Col sm="7">
                     <Form.Control
                       type="text"
-                      value={fetchemployeeData.email}
+                      value={user.email}
                       readOnly
                       className="disabledValue blueText"
                     />

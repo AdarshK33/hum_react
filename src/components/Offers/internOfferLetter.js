@@ -42,7 +42,7 @@ const InternOfferLetter = () => {
         candidateId: candidateData.candidateInformation.candidateId,
         module: "Offer and On Boarding",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../offer-release-list",

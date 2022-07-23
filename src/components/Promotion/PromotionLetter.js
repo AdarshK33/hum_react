@@ -181,7 +181,7 @@ const PromotionLetter = () => {
         candidateId: 0,
         module: "Promotion",
         empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-        empEmail: fetchemployeeData.email,
+        empEmail: user.email,
         empPhNo: fetchemployeeData.phone,
         history: history,
         path: "../promotion-list",

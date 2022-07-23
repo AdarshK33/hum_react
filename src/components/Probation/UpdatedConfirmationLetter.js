@@ -63,7 +63,7 @@ const ConfirmationLetter1 = () => {
       candidateId: 0,
       module: "Probation",
       empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
-      empEmail: fetchemployeeData.email,
+      empEmail: user.email,
       empPhNo: fetchemployeeData.phone,
       history: history,
       path: "../probation",

@@ -61,14 +61,14 @@ const WorkDetails = () => {
               <b>Email Id</b>
             </label>
             <br />
-            <label className="itemResult">{fetchemployeeData.email}</label>
+            <label className="itemResult">{user.email}</label>
           </Col>
           <Col sm={3}>
             <label>
               <b>Fed Id</b>
             </label>
             <br />
-            <label className="itemResult">{fetchemployeeData.fedId}</label>
+            <label className="itemResult">{user.fedId}</label>
           </Col>
           <Col sm={3}>
             <label>
