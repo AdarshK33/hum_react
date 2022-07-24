@@ -6,8 +6,8 @@ import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import { toast } from "react-toastify";
 import {
-    JsonToExcel
-} from 'react-json-excel';
+    JsonToCsv
+} from 'react-json-csv';
 import Pagination from 'react-js-pagination'
 
 const MasterLeave = () => {
@@ -98,9 +98,9 @@ const MasterLeave = () => {
                                 />
                                 <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
                                 {data.length > 0 &&
-                                    <JsonToExcel
+                                    <JsonToCsv
                                         data={data}
-                                        className="btn btn-light mr-2"
+                                        style={{padding: "2px",border:"none"}}
                                         filename={filename}
                                         fields={fields}
 

@@ -5,8 +5,8 @@ import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import {
-    JsonToExcel
-  } from 'react-json-excel';
+    JsonToCsv
+  } from 'react-json-csv';
 
 const AdminMasterLeave = () => {
    /*  const [search, setSearch] = useState('') */
@@ -86,9 +86,9 @@ const AdminMasterLeave = () => {
                                     style={{ padding: "10px" }}
                                 />
                                 {data.length > 0 &&
-                                    <JsonToExcel
+                                    <JsonToCsv
                                     data={data}
-                                    className="btn btn-light mr-2"
+                                    style={{padding: "2px",border:"none"}}
                                     filename={filename}
                                     fields={fields}                                    
                                     text="Export excel"

@@ -3,8 +3,8 @@ import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
 import { RosterContext } from "../../context/RosterState";
 import {
-  JsonToExcel
-} from 'react-json-excel';
+  JsonToCsv
+} from 'react-json-csv';
 import { toast } from "react-toastify";
 import { Button, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
@@ -179,9 +179,9 @@ const MasterWeek = () => {
                   <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
 
                   {data.length > 0 ?
-                    <JsonToExcel
+                    <JsonToCsv
                       data={data}
-                      className="btn btn-light mr-2"
+                      style={{padding: "2px",border:"none"}}
                       filename={filename}
                       fields={fields}
 
