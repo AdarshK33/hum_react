@@ -89,7 +89,7 @@ const MasterWorkLocation = () => {
                         {data.length > 0 &&
                             <JsonToCsv
                                 data={data}
-                                style={{padding: "2px",border:"none"}}
+                    style={{padding: " 6px 12px;",border:"none", lineheight: "27px",marginright: "5px",fontfamily:"Cairo"}}
                                 filename={filename}
                                 fields={fields}
 

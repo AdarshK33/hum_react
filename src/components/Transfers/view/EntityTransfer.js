@@ -161,7 +161,7 @@ const EntityTransfer = ({ transferData }) => {
               transferData.internationalTransfer !== null &&
               transferData.internationalTransfer !== undefined &&
               transferData.internationalTransfer.panNumberDoc !== null &&
-              transferData.internationalTransfer.panNumberDoc !== undefined) || true ? (
+              transferData.internationalTransfer.panNumberDoc !== undefined) ? (
                 // <a
                 //   href={
                 //     process.env.REACT_APP_S3_URL +
