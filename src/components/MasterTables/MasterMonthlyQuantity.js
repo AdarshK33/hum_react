@@ -7,8 +7,8 @@ import { Button, Form, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
-    JsonToExcel
-} from 'react-json-excel';
+    JsonToCsv
+} from 'react-json-csv';
 import { toast } from "react-toastify";
 import { DashboardContext } from "../../context/DashboardState";
 import moment from "moment";
@@ -232,9 +232,9 @@ const MasterMonthlyQuantity = () => {
                     <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
 
                     {data.length > 0 &&
-                        <JsonToExcel
+                        <JsonToCsv
                             data={data}
-                            className="btn btn-light mr-2"
+                            style={{padding: "2px",border:"none"}}
                             filename={filename}
                             fields={fields}
 

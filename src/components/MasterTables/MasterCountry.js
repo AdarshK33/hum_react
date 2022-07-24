@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
-  JsonToExcel
-} from 'react-json-excel';
+  JsonToCsv
+} from 'react-json-csv';
 
 const MasterCountry = () => {
 
@@ -84,9 +84,9 @@ const MasterCountry = () => {
                   <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button> */}
 
                   {data.length > 0 &&
-                    <JsonToExcel
+                    <JsonToCsv
                       data={data}
-                      className="btn btn-light mr-2"
+                      style={{padding: "2px",border:"none"}}
                       filename={filename}
                       fields={fields}
 

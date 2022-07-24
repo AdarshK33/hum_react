@@ -25,7 +25,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { JsonToExcel } from "react-json-excel";
+import { JsonToCsv } from "react-json-csv";
 
 import ReactExport from "react-data-export";
 
