@@ -11,8 +11,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import {
-  JsonToExcel
-} from 'react-json-excel';
+  JsonToCsv
+} from 'react-json-csv';
 
 
 
@@ -216,9 +216,9 @@ const MasterDailyQty = () => {
                   />
                   <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
                   {data.length > 0 &&
-                    <JsonToExcel
+                    <JsonToCsv
                       data={data}
-                      className="btn btn-light mr-2"
+                      style={{padding: "2px",border:"none"}}
                       filename={filename}
                       fields={fields}
 

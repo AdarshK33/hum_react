@@ -11,7 +11,7 @@ import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
 
 import { Search } from "react-feather";
-import { JsonToExcel } from "react-json-excel";
+import { JsonToCsv } from "react-json-csv";
 import { SearchContext } from "../../context/SearchState";
 
 const HolidayList = () => {
@@ -159,9 +159,9 @@ const HolidayList = () => {
                     Upload File
                   </Button>
                   {data.length > 0 && (
-                    <JsonToExcel
+                    <JsonToCsv
                       data={data}
-                      className="btn btn-light mr-2"
+                      style={{padding: "2px",border:"none"}}
                       filename={filename}
                       fields={fields}
                       text="Export excel"

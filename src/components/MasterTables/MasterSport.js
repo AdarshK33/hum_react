@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { ClusterContext } from '../../context/ClusterState';
 import {
-  JsonToExcel
-} from 'react-json-excel';
+  JsonToCsv
+} from 'react-json-csv';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
@@ -73,9 +73,9 @@ const MasterSport = () => {
                       style={{ padding: "10px" }}
                     /> */}
                 {data.length > 0 &&
-                  <JsonToExcel
+                  <JsonToCsv
                     data={data}
-                    className="btn btn-light mr-2"
+                    style={{padding: "2px",border:"none"}}
                     filename={filename}
                     fields={fields}
 

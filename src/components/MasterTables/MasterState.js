@@ -4,8 +4,8 @@ import Pagination from 'react-js-pagination'
 import { toast } from "react-toastify";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
-  JsonToExcel
-} from 'react-json-excel';
+  JsonToCsv
+} from 'react-json-csv';
 import { Button } from 'react-bootstrap';
 
 
@@ -94,9 +94,9 @@ const MasterState = () => {
 
                   <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
                   {data.length > 0 &&
-                    <JsonToExcel
+                    <JsonToCsv
                       data={data}
-                      className="btn btn-light mr-2"
+                      style={{padding: "2px",border:"none"}}
                       filename={filename}
                       fields={fields}
 

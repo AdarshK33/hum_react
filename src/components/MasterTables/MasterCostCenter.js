@@ -2,8 +2,8 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination';
 import {
-    JsonToExcel
-} from 'react-json-excel';
+    JsonToCsv
+} from 'react-json-csv';
 import { AdminContext } from '../../context/AdminState'
 const MasterCostCenter = () => {
 
@@ -78,9 +78,9 @@ const MasterCostCenter = () => {
 
                     <div className="title_bar" >
                         {data.length > 0 &&
-                            <JsonToExcel
+                            <JsonToCsv
                                 data={data}
-                                className="btn btn-light mr-2"
+                                style={{padding: "2px",border:"none"}}
                                 filename={filename}
                                 fields={fields}
                                 text="Export excel"

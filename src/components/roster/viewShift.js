@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment, useContext, useState } from "react";
 import moment from "moment";
-import { JsonToExcel } from "react-json-excel";
+import { JsonToCsv } from "react-json-csv";
 import Breadcrumb from "../common/breadcrumb";
 import "./roster.css";
 import "../../assets/css/search.css";
@@ -154,9 +154,9 @@ function ViewShift() {
                   Create
                 </Button>
                 {data.length > 0 ? (
-                  <JsonToExcel
+                  <JsonToCsv
                     data={data}
-                    className="btn btn-light mr-2"
+                    style={{padding: "2px",border:"none"}}
                     filename={filename}
                     fields={fields}
                     text="Export excel"
