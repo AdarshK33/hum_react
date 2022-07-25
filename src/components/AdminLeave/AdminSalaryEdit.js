@@ -188,7 +188,7 @@ const AdminSalaryEdit = (props) => {
     const duplicateElementa = toFindDuplicates(val2);
     if(Object.keys(duplicateElementa).length){
     toast.error("Please provide valid date")
-    }{
+    }else{
     const EditSalary = {
       additionalHours: additionalHours,
       contractType: contractType,
