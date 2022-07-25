@@ -124,7 +124,7 @@ console.log("plannedList check",parseInt(Object.keys(plannedList).length));
           }}
         >
           {(parseInt(Object.keys(Data).length)>1 ||
-          (parseInt(Object.keys(Data).length) !== 0 && Data[0].dates.length > 2))?
+          (parseInt(Object.keys(Data).length) !== 0 && Data[0].dates!==null && Data[0].dates !==undefined && Data[0].dates.length > 2))?
           <div
             type="button"
             onClick={() => {
