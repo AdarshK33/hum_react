@@ -636,14 +636,13 @@ const RegularTransferAction = () => {
                               >
                                 Save
                               </button>
-                              {
+                              {!previewTransferLetter &&
                                 <button
                                   className={"LettersButtons"}
                                   onClick={showTransferLetterModal}
                                 >
-                                  {previewTransferLetter
-                                    ? "Preview Transfer Letter"
-                                    : "Generate Transfer Letter"}
+                                 
+                                  Generate Transfer Letter
                                 </button>
                               }
 

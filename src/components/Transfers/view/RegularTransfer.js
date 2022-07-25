@@ -88,7 +88,7 @@ const RegularTransferView = ({ transferData }) => {
           {transferData.promotedMonthlyBonus !== null &&
           transferData.promotedMonthlyBonus !== undefined &&
           transferData.promotedMonthlyBonus !== 0
-            ? transferData.promotedMonthlyBonus
+            ? transferData.promotedMonthlyBonus +`%`
             : "NA"}
         </Col>
         <Col md={2} className="py-0">

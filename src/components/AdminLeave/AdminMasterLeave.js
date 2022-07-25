@@ -88,7 +88,8 @@ const AdminMasterLeave = () => {
                                 {data.length > 0 &&
                                     <JsonToCsv
                                     data={data}
-                                    style={{padding: "2px",border:"none"}}
+                    style={{padding: " 6px 12px;",border:"none", lineHeight: "35px",marginRight: "5px",fontFamily:"Cairo"}}
+                                            
                                     filename={filename}
                                     fields={fields}                                    
                                     text="Export excel"
