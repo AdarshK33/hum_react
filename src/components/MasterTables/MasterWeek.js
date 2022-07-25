@@ -106,16 +106,19 @@ const MasterWeek = () => {
   // console.log(masterWeeks);
   // console.log("=============", data)
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
+
     if (fileUpload !== undefined && fileUpload !== null) {
       uploadWeeks(fileUpload)
     } else {
-      toast.info("Please select a file to upload")
+      toast.error("Please select a file to upload")
     }
+    const y1 = moment(year, ["MMM Do YY"]).format("YYYY");
+    getMasterWeeks(y1)
 
-    setTimeout(() => {
-      window.location.reload()
-    }, 5000)
+    // setTimeout(() => {
+    //   window.location.reload()
+    // }, 5000)
   }
 
   return (

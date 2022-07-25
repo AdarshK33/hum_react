@@ -64,12 +64,12 @@ const MasterCity = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
       uploadMasterFile(fileUpload)
     } else {
-      toast.info("Please select a file to upload")
+      toast.error("Please select a file to upload")
     }
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 5000)
+    getCity()
+    // setTimeout(() => {
+    //   window.location.reload()
+    // }, 5000)
   }
 
 

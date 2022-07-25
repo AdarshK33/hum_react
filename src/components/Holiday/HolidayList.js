@@ -128,12 +128,12 @@ const HolidayList = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
       uploadFile(fileUpload);
     } else {
-      toast.info("Please select a file to upload");
+      toast.error("Please select a file to upload");
     }
-
-    setTimeout(() => {
-      window.location.reload();
-    }, 5000);
+    getHoliday();
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 5000);
   };
 
   return (
