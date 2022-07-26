@@ -41,6 +41,11 @@ const Roster = () => {
       fetchemployeeData.employeeId
     );
   }, [fetchemployeeData.employeeId]);
+
+  useEffect(() => {
+    console.log("end date check",moment(startDate).add("30", "d"));
+    setEndDate(moment(startDate, "YYYY-MM-DD").add("30", "d"))
+  }, [startDate]);
   //use effect
 
   const submitDate = (e) => {
@@ -115,7 +120,7 @@ const Roster = () => {
   };
   return (
     <Fragment>
-      <Breadcrumb title="Roster" parent="Roster page" />
+      <Breadcrumb title="Roster" parent="Roster" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
