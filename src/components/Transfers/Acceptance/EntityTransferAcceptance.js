@@ -62,6 +62,8 @@ const EntityTransferAcceptance = () => {
   const [newCostCentre, setNewCostCentre] = useState("");
   const [costCentreErrMsg, setCostCentreErrMsg] = useState("");
   const [newLocation, setNewLocation] = useState("");
+  const [locatioName, setLocatioName] = useState("");
+
   const [locationErrMsg, setLocationErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
@@ -78,7 +80,7 @@ const EntityTransferAcceptance = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
   const history = useHistory();
-  console.log("user->", user);
+
   useEffect(() => {
     if (transferId !== null && transferId !== undefined) {
       getTransferData(transferId);
@@ -103,7 +105,7 @@ const EntityTransferAcceptance = () => {
       );
     }
   }, [newDeptName, newPositionName]);
-  console.log("getBonusByContractType->", getBonusByContractType);
+
   useEffect(() => {
     if (
       getBonusByContractType !== null &&
@@ -300,7 +302,7 @@ const EntityTransferAcceptance = () => {
         promotedEmployeeId: transferData.promotedEmployeeId,
         promotedFixedGross: parseInt(newGross),
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedLocation: parseInt(newLocation),
+        promotedLocation: newLocation,
         promotedManagerId: transferData.promotedManagerId,
         promotedMonthlyBonus:
           bonus !== "" && bonus !== null && bonus !== undefined
@@ -342,7 +344,22 @@ const EntityTransferAcceptance = () => {
     setCostCentreErrMsg("");
   };
   const changeLocationHandler = (e) => {
+  
+
     setNewLocation(e.target.value);
+     let found = costCentreLocationData.find(element => {
+      if(element.stateId==e.target.value){
+       setLocatioName(element.stateName);
+      //  console.log("hello element",element.stateId)
+      //  console.log("hello target",e.target.value)
+      }
+      // else{
+      //   // console.log("hello not called",e.target.value)
+      // }
+    
+     });
+
+    
     setLocationErrMsg("");
   };
   const changeRelocationBonusHandler = (e) => {
@@ -414,6 +431,11 @@ const EntityTransferAcceptance = () => {
           setGrossErrMsg("Value should be greater than 18000");
           console.log("validForm", validForm);
         }
+        if(transferData.currentFixedGross >parseInt(newGross)) {
+          validForm = false;
+          setGrossErrMsg("New Gross should be greater than Fixed Gross");
+          console.log("validForm", validForm);
+        }
       } else {
         validForm = false;
         setGrossErrMsg("Value should be number");
@@ -482,7 +504,7 @@ const EntityTransferAcceptance = () => {
         promotedEmployeeId: transferData.promotedEmployeeId,
         promotedFixedGross: parseInt(newGross),
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedLocation: parseInt(newLocation),
+        promotedLocation: newLocation,
         promotedManagerId: transferData.promotedManagerId,
         promotedMonthlyBonus:
           bonus !== "" && bonus !== null && bonus !== undefined
@@ -894,35 +916,41 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label> Department:</Form.Label>
                           </Col>
-
-                          <Col md={4}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="department"
-                              value={newDept}
-                              placeholder="Select Location"
-                              onChange={departmentChangeHandler}
-                            >
-                              <option value="undefined">Select Department</option>
-                              {deptDetails !== null &&
-                                deptDetails !== undefined &&
-                                deptDetails.length > 0 &&
-                                deptDetails.map((item) => {
-                                  return (
-                                    <option
-                                      key={`dept_${item.deptId}`}
-                                      value={item.deptId}
-                                    >
-                                      {item.departmentName}
-                                    </option>
-                                  );
-                                })}
-                            </Form.Control>
-                            {deptErrMsg !== "" && (
-                              <span className="text-danger">{deptErrMsg}</span>
-                            )}
+                          {initiationStatus ? (
+                          <Col md={4} className="text-primary">
+                          {transferData.promotedDepartment}
                           </Col>
+                          ):(
+                          <Col md={4}>
+                          <Form.Control
+                            as="select"
+                            className="text-primary"
+                            aria-label="department"
+                            value={newDept}
+                            placeholder="Select Location"
+                            onChange={departmentChangeHandler}
+                          >
+                            <option value="undefined">Select Department</option>
+                            {deptDetails !== null &&
+                              deptDetails !== undefined &&
+                              deptDetails.length > 0 &&
+                              deptDetails.map((item) => {
+                                return (
+                                  <option
+                                    key={`dept_${item.deptId}`}
+                                    value={item.deptId}
+                                  >
+                                    {item.departmentName}
+                                  </option>
+                                );
+                              })}
+                          </Form.Control>
+                          {deptErrMsg !== "" && (
+                            <span className="text-danger">{deptErrMsg}</span>
+                          )}
+                          </Col>
+                          )}
+                          
                         </Form.Group>
 
                         <Form.Group
@@ -993,7 +1021,7 @@ const EntityTransferAcceptance = () => {
                           </Col>
                           {transferData.promotedLocation ? (
                             <Col md={4} className="text-primary">
-                              {transferData.promotedLocation}
+                              {locatioName}
                             </Col>
                           ) : (
                             <Col md={4}>
