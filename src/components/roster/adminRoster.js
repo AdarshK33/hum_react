@@ -52,6 +52,12 @@ const AdminRoster = () => {
   const { viewClusterCostCenter, clusterCostCenterList } =
     useContext(ClusterContext);
 
+
+    useEffect(() => {
+      console.log("end date check",moment(startDate).add("30", "d"));
+      setEndDate(moment(startDate, "YYYY-MM-DD").add("30", "d"))
+    }, [startDate]);
+    
   const setWeekCalc = (e) => {
     let data1 = e.target.value;
     getSingleWeek(data1);
