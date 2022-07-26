@@ -1,11 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment,useContext } from "react";
 import { Home } from "react-feather";
 import { Link } from "react-router-dom";
 // import Bookmark from './bookmark';
+import { PermissionContext } from "../../context/PermissionState";
+
 
 const Breadcrumb = (props) => {
   const breadcrumb = props;
-
+  const { rolePermission } = useContext(PermissionContext);
   return (
     <Fragment>
       <div className="container-fluid">
@@ -16,9 +18,15 @@ const Breadcrumb = (props) => {
                 <h3>{breadcrumb.title}</h3>
                 <ol className="breadcrumb pull-right">
                   <li className="breadcrumb-item">
-                    <Link to="/dashboard/default">
-                      <Home />
-                    </Link>
+                   { rolePermission === "manager" || rolePermission === "admin"  ||rolePermission === "costCenterManager" ||rolePermission === "superCostCenterManager" ? (
+                     <Link to={"/manager360"}>
+                     <Home />
+                   </Link>
+                   ):(
+                    <Link to="/employee360">
+                    <Home />
+                  </Link>
+                   )}
                   </li>
                   <li className="breadcrumb-item">{breadcrumb.parent}</li>
                   {/* <li className="breadcrumb-item active">{breadcrumb.title}</li> */}
