@@ -400,7 +400,7 @@ console.log("monthdate",moment(moment(), "YYYY-MM-DD").subtract("30", "d").forma
                           onChange={(e) => fromDateHandler(e)}
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
-                          minDate={currentYearEnd}
+                          minDate={currentYear}
                           // minDate={new Date(moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD"))}
                           maxDate={currentYearEnd}
                           placeholderText="From Date"
