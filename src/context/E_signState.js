@@ -38,7 +38,10 @@ export const E_signProvider = ({ children }) => {
 
   console.log("imageViewData",imageViewData);
   useEffect(() => {
-    ImageView(DocName,EmployeeId)
+    if(DocName && EmployeeId){
+      console.log("inside esin");
+      ImageView(DocName,EmployeeId)
+    }
   }, [DocName]);
 
   const handleClose = () => {

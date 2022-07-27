@@ -70,7 +70,7 @@ const LeaveAdd = (props) => {
 
     let currentYearEnd = new Date()
     currentYearEnd.setFullYear(currentYearEnd.getFullYear(), 11, 31)
-
+console.log("monthdate",moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD"));
     const fromDateHandler = (date) => {
         let value = date
         setStartDate(value);
@@ -401,6 +401,7 @@ const LeaveAdd = (props) => {
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
                           minDate={currentYear}
+                          // minDate={new Date(moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD"))}
                           maxDate={currentYearEnd}
                           placeholderText="From Date"
                           required
