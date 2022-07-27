@@ -373,7 +373,9 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={currentYear} maxDate={currentYearEnd}
+                                                // minDate={new Date(moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD"))} 
+                                                minDate={currentYearEnd}
+                                                maxDate={currentYearEnd}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>

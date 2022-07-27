@@ -482,7 +482,8 @@ const AdminLeaveAdd = (props) => {
                           onChange={(e) => fromDateHandler(e)}
                           className="input_date"
                           dateFormat="yyyy-MM-dd"
-                          minDate={currentYear}
+                          minDate={currentYearEnd}
+                          // minDate={new Date(moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD"))} 
                           maxDate={currentYearEnd}
                           placeholderText="From Date"
                           required
