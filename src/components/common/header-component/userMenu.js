@@ -183,8 +183,7 @@ const UserMenu = (props) => {
     localStorage.setItem("type", "leader");
     localStorage.setItem("flag", "1");
     // history.push("/dashboard/storedashboard");31/05/2022
-    history.push("/employee360");
-
+    history.push("/manager360");
   };
 
   const TicketListingPage = () => {
