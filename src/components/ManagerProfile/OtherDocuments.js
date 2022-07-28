@@ -7,7 +7,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 import { PermissionContext } from "../../context/PermissionState";
-
+import "./myProfile.css";
 const OtherDocuments = (props) => {
   const { user } = useContext(AppContext);
   const {
@@ -344,7 +344,7 @@ const OtherDocuments = (props) => {
           <Col sm={8} style={{ marginTop: "1.5rem" }}>
             <Form.Group>
               <div className="parentInput">
-                <label className="fileInputField">
+                <label className="fileInputField managerField">
                   &nbsp;&nbsp;
                   {stateOfName.OtherDocument !== ""
                     ? stateOfName.OtherDocument

@@ -6,3 +6,102 @@
   border: 1px solid#006ebb;
   margin-left: 40px;
 }
+
+.fileInputField3 {
+  /* select upload */
+  flex-grow: 1;
+  height: 33px;
+  border: 1px solid #aaa;
+  margin-top: 0.5rem;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+ 
+}
+
+ .profileField{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 50%;
+}
+.uploadDocSelect .form-group {
+  font-size: 12px;
+  margin-bottom: 1rem;
+}
+.custom-file-upload-other{
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 5px 15px;
+  cursor: pointer;
+  color: white;
+  background-color: #006ebb;
+  font-size: 15px;
+  margin-top: 7px;
+  margin-right: 5px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.custom-file-upload2 {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 4px 0px;
+  cursor: pointer;
+  color: white;
+  background-color: #006ebb;
+  font-size: 15px;
+  margin-top: 7px;
+  margin-right: 5px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+/* .keyField{
+  padding-top: 17px;
+} */
+
+
+#custom_file_upload_icon_profile {
+  margin-left: 10px !important;
+  font-size: 18px !important;
+  margin-right: 10px !important;
+}
+
+
+@media (max-width: 1200px) {
+
+  .fileInputField3 {
+    /* select upload */
+    flex-grow: 1;
+    height: 33px;
+    border: 1px solid #aaa;
+    margin-top: 0.5rem;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+   
+  }
+  .uploadDocSelect .form-group {
+    font-size: 12px;
+    margin-bottom: 1rem;
+  }
+  .custom-file-upload2 {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 4px 4px;
+    cursor: pointer;
+    color: white;
+    background-color: #006ebb;
+    font-size: 15px;
+    margin-top: 7px;
+    margin-right: 5px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+  .keyField{
+    padding-top: 17px;
+  }
+}
