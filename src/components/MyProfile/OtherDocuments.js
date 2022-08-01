@@ -7,6 +7,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 import { PermissionContext } from "../../context/PermissionState";
+import "./myProfile.css";
 
 const OtherDocuments = (props) => {
   const { user,fetchemployeeData } = useContext(AppContext);
@@ -344,11 +345,11 @@ const OtherDocuments = (props) => {
           <Col sm={8} style={{ marginTop: "1.5rem" }}>
             <Form.Group>
               <div className="parentInput">
-                <label className="fileInputField">
+                <label className="fileInputField3 profileField">
                   &nbsp;&nbsp;
                   {stateOfName.OtherDocument !== ""
                     ? stateOfName.OtherDocument
-                    : "Select File Here"}
+                    : "Select File Here"}                
                   <input
                     type="file"
                     accept="image/*,.pdf"
@@ -361,7 +362,7 @@ const OtherDocuments = (props) => {
                   />
                 </label>
 
-                <label className="custom-file-upload">
+                <label className="custom-file-upload-other">
                   <input
                     type="button"
                     name="OtherDocument"

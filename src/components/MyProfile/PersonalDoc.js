@@ -7,7 +7,7 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 import { PermissionContext } from "../../context/PermissionState";
-
+import "./myProfile.css";
 const PersonalDoc = (props) => {
   const { user,fetchemployeeData } = useContext(AppContext);
   const {
@@ -316,7 +316,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.photoId !== ""
                       ? stateOfName.photoId
@@ -333,7 +333,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       className="custom_file_Upload_button"
@@ -344,7 +344,8 @@ const PersonalDoc = (props) => {
                     />
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                                           id="custom_file_upload_icon_profile"
+
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>
@@ -412,7 +413,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.cancelledCheque !== ""
                       ? stateOfName.cancelledCheque
@@ -429,7 +430,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       name="cancelledCheque"
@@ -441,7 +442,7 @@ const PersonalDoc = (props) => {
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                      id="custom_file_upload_icon_profile"
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>
@@ -514,7 +515,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField">
+                    <label className="fileInputField3">
                       &nbsp;&nbsp;
                       {stateOfName.panId !== ""
                         ? stateOfName.panId
@@ -531,7 +532,7 @@ const PersonalDoc = (props) => {
                       />
                     </label>
 
-                    <label className="custom-file-upload">
+                    <label className="custom-file-upload2">
                       <input
                         type="button"
                         name="panId"
@@ -543,7 +544,8 @@ const PersonalDoc = (props) => {
                       {/* <i className="fa fa-cloud-upload" />  */}
                       Upload File{" "}
                       <i
-                        id="custom_file_upload_icon"
+                                            id="custom_file_upload_icon_profile"
+
                         className="fa fa-upload"
                         aria-hidden="true"
                       ></i>
@@ -612,7 +614,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.addressProof !== ""
                       ? stateOfName.addressProof
@@ -629,7 +631,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       name="addressProof"
@@ -641,7 +643,8 @@ const PersonalDoc = (props) => {
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                                           id="custom_file_upload_icon_profile"
+
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>
@@ -715,7 +718,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField">
+                    <label className="fileInputField3">
                       &nbsp;&nbsp;
                       {stateOfName.passport !== ""
                         ? stateOfName.passport
@@ -732,7 +735,7 @@ const PersonalDoc = (props) => {
                       />
                     </label>
 
-                    <label className="custom-file-upload">
+                    <label className="custom-file-upload2">
                       <input
                         type="button"
                         name="passport"
@@ -744,7 +747,8 @@ const PersonalDoc = (props) => {
                       {/* <i className="fa fa-cloud-upload" />  */}
                       Upload File{" "}
                       <i
-                        id="custom_file_upload_icon"
+                                             id="custom_file_upload_icon_profile"
+
                         className="fa fa-upload"
                         aria-hidden="true"
                       ></i>
@@ -822,7 +826,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField">
+                    <label className="fileInputField3">
                       &nbsp;&nbsp;
                       {stateOfName.aadharId !== ""
                         ? stateOfName.aadharId
@@ -839,7 +843,7 @@ const PersonalDoc = (props) => {
                       />
                     </label>
 
-                    <label className="custom-file-upload">
+                    <label className="custom-file-upload2">
                       <input
                         type="button"
                         name="aadharId"
@@ -851,7 +855,8 @@ const PersonalDoc = (props) => {
                       {/* <i className="fa fa-cloud-upload" />  */}
                       Upload File{" "}
                       <i
-                        id="custom_file_upload_icon"
+                                            id="custom_file_upload_icon_profile"
+
                         className="fa fa-upload"
                         aria-hidden="true"
                       ></i>
@@ -917,7 +922,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField">
+                  <label className="fileInputField3">
                     &nbsp;&nbsp;
                     {stateOfName.epfPassBook !== ""
                       ? stateOfName.epfPassBook
@@ -934,7 +939,7 @@ const PersonalDoc = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label className="custom-file-upload2">
                     <input
                       type="button"
                       name="epfPassBook"
@@ -945,7 +950,8 @@ const PersonalDoc = (props) => {
                     />
                     Upload File{" "}
                     <i
-                      id="custom_file_upload_icon"
+                                           id="custom_file_upload_icon_profile"
+
                       className="fa fa-upload"
                       aria-hidden="true"
                     ></i>

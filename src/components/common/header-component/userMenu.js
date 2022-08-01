@@ -184,7 +184,6 @@ const UserMenu = (props) => {
     localStorage.setItem("flag", "1");
     // history.push("/dashboard/storedashboard");31/05/2022
     history.push("/manager360");
-
   };
 
   const TicketListingPage = () => {

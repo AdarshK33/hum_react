@@ -11,7 +11,7 @@ import moment from "moment";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ScrollArea from "react-scrollbar";
-
+import "./rosterDashboard.css"
 const RosterTable = (storeID) => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add("30", "d"));
@@ -345,11 +345,13 @@ const RosterTable = (storeID) => {
             rosterLoading ? (
               <ScrollArea
           speed={1}
-          // className="area"
+          
+          className="rosterScrollHeight"
           // contentClassName="content"
           smoothScrolling={true}
           horizontal={false}
-          style={{ zIndex: "0" }}
+          vertical={false}
+          style={{ zIndex: "0"}}
         >
               <table className="roster-table roaster-table-sticky">
                 <thead className="roaster-header-sticky">
