@@ -267,7 +267,7 @@ const PersonalDoc = (props) => {
         <Form>
           <Row>
             <Col sm={3}>
-              <label>
+              <label class="keyField">
                 <b>Photograph :</b>
               </label>
               <br />
@@ -364,7 +364,7 @@ const PersonalDoc = (props) => {
           </Row>
           <Row>
             <Col sm={3}>
-              <label>
+              <label class="keyField">
                 <b>Cancelled Cheque :</b>
               </label>
               <br />
@@ -470,7 +470,7 @@ const PersonalDoc = (props) => {
           ) : (
             <Row>
               <Col sm={3}>
-                <label>
+                <label class="keyField">
                   <b>PAN :</b>
                 </label>
                 <br />
@@ -565,7 +565,7 @@ const PersonalDoc = (props) => {
           )}
           <Row>
             <Col sm={3}>
-              <label>
+              <label class="keyField">
                 <b>Address Proof :</b>
               </label>
               <br />
@@ -669,7 +669,7 @@ const PersonalDoc = (props) => {
           fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
             <Row>
               <Col sm={3}>
-                <label>
+                <label class="keyField">
                   <b>Passport :</b>
                 </label>
                 <br />
@@ -777,7 +777,7 @@ const PersonalDoc = (props) => {
           ) : (
             <Row>
               <Col sm={3}>
-                <label>
+                <label class="keyField">
                   <b>Aadhaar Card :</b>
                 </label>
                 <br />
