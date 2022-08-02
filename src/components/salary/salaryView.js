@@ -30,9 +30,8 @@ function ViewShift() {
   }, []);
   const [shiftButton] = useState(false);
   const [getM, setGetM] = useState("");
-
   const { viewCostCentre } = useContext(DashboardContext);
-  const { viewSalary, salaryList, salaryApproval, loader } =
+  const { viewSalary, salaryList, salaryApproval, viewSalaryHistoryHours,salaryHistoryHourList,loader } =
     useContext(ClusterContext);
   const { rolePermission } = useContext(PermissionContext);
   const [editModal, setEditModal] = useState(false);
@@ -54,7 +53,7 @@ function ViewShift() {
   const [checked, setChecked] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
   const [costCenter, setCostCenter] = useState([]);
-
+  const [submitButton, setSubmitButton]  = useState(false);
   let history = useHistory();
 
   const { user,fetchemployeeData } = useContext(AppContext);
@@ -63,20 +62,22 @@ function ViewShift() {
   const handleEditClose = () => setEditModal(false);
   const handleDeleteClose = () => setDeleteModal(false);
 
+  console.log("hello salaryHistoryHourList==>",salaryHistoryHourList);
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
   const totalRecords =
-    salaryList !== null && salaryList !== undefined && salaryList.length;
+    salaryHistoryHourList !== null && salaryHistoryHourList !== undefined && salaryHistoryHourList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const currentRecords =
-    salaryList !== null && salaryList !== undefined
-      ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord)
+    salaryHistoryHourList !== null && salaryHistoryHourList !== undefined && Object.keys(salaryHistoryHourList).length> 0
+      ? salaryHistoryHourList.slice(indexOfFirstRecord, indexOfLastRecord)
+      // ?salaryHistoryHourList
       : [];
-
+console.log("currentRecords",currentRecords);
       useEffect(() => {
         CostCenter();
       }, []);
@@ -120,7 +121,7 @@ function ViewShift() {
     let flag = localStorage.getItem("flag");
     // alert(month, year)
     const salaryData = {
-      cluster: flag,
+      // cluster: flag,
       month: month,
       storeIds:  costCenter.length > 0
           ? costCenter.map((e, i) => costCenter[i].value)
@@ -128,7 +129,9 @@ function ViewShift() {
       year: year,
     };
     if (validate) {
-      viewSalary(salaryData);
+      // viewSalary(salaryData);
+      viewSalaryHistoryHours(salaryData);
+      setSubmitButton(true)
     }
     setGetM(getM);
   };
@@ -226,9 +229,9 @@ function ViewShift() {
     });
   };
   //File export
-  /*  const filename = 'salaryList';
+  /*  const filename = 'salaryHistoryHourList';
   let fields = {
-    "salaryListId": "S. No",
+    "salaryHistoryHourListId": "S. No",
     "employeeId": "Employee Id",
     "firstName": "Employee Name",
     "numberOfHours": "Number Of Hours",
@@ -240,19 +243,19 @@ function ViewShift() {
   }
 
   let data = [];
-  if (salaryList !== undefined && salaryList !== null) {
-    for (let i = 0; i < salaryList.length; i++) {
-      console.log(salaryList[i].holidayDate)
+  if (salaryHistoryHourList !== undefined && salaryHistoryHourList !== null) {
+    for (let i = 0; i < salaryHistoryHourList.length; i++) {
+      console.log(salaryHistoryHourList[i].holidayDate)
       data.push({
-        salaryListId: i + 1,
-        employeeId: salaryList[i].employeeId,
-        firstName: salaryList[i].firstName,
-        numberOfHours: salaryList[i].numberOfHours,
-        lop: salaryList[i].lop,
-        contractType: salaryList[i].contractType,
-        extraHours: salaryList[i].extraHours,
-        totalHours: salaryList[i].totalHours,
-        statusDesc: salaryList[i].statusDesc
+        salaryHistoryHourListId: i + 1,
+        employeeId: salaryHistoryHourList[i].employeeId,
+        firstName: salaryHistoryHourList[i].firstName,
+        numberOfHours: salaryHistoryHourList[i].numberOfHours,
+        lop: salaryHistoryHourList[i].lop,
+        contractType: salaryHistoryHourList[i].contractType,
+        extraHours: salaryHistoryHourList[i].extraHours,
+        totalHours: salaryHistoryHourList[i].totalHours,
+        statusDesc: salaryHistoryHourList[i].statusDesc
       })
     }
   } */
@@ -342,7 +345,7 @@ function ViewShift() {
                   }
                 >
                   <ExcelSheet
-                    data={salaryList}
+                    data={salaryHistoryHourList}
                     name="Salary List"
                     style={{ width: "500px" }}
                   >
@@ -372,6 +375,7 @@ function ViewShift() {
                 </Button>
               )}
 
+              {/* according Amit clarification 30-07-2022
               {(rolePermission == "superCostCenterManager" ||
                 rolePermission == "costCenterManager" ||
                 rolePermission == "admin") &&
@@ -396,7 +400,7 @@ function ViewShift() {
                 </div>
               ) : (
                 <div></div>
-              )}
+              )} */}
             </div>
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
               <Modal.Body style={{ marginTop: "1rem" }}>
@@ -431,11 +435,12 @@ function ViewShift() {
                     style={{ backgroundColor: "#2f3c4e" }}
                   >
                     <tr>
+                      {/* according Amit clarification 30-07-2022
                       {rolePermission == "costCenterManager" ? (
                         <th>Select</th>
                       ) : (
                         <th></th>
-                      )}
+                      )} */}
 
                       <th>S. No</th>
                       <th scope="col">Employee Id</th>
@@ -448,7 +453,7 @@ function ViewShift() {
                       <th scope="col">Additional Hours</th>
                       <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
-                      <th></th>
+                      {/* <th></th> according Amit clarification 30-07-2022*/}
                     </tr>
                   </thead>
 
@@ -475,14 +480,17 @@ function ViewShift() {
                     </tbody>
                   ) : currentRecords !== null &&
                     currentRecords !== undefined &&
-                    currentRecords.length > 0 &&
-                    (rolePermission == "costCenterManager" ||
-                      rolePermission == "manager") &&
-                      fetchemployeeData.isClusterManager === 1 ? (
+                    currentRecords.length > 0 && (Object.keys(costCenter).length!==0 && getM)&& submitButton
+                    //according Amit clarification 30-07-2022
+                    // (rolePermission == "costCenterManager" ||
+                    //   rolePermission == "manager")
+                    //    && user.isClusterManager === 1 
+                      ? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
+                            {/* according Amit clarification 30-07-2022
                             {rolePermission == "costCenterManager" ? (
                               <td>
                                 {" "}
@@ -503,7 +511,7 @@ function ViewShift() {
                               </td>
                             ) : (
                               <td></td>
-                            )}
+                            )} */}
                             <td>{i + 1 + indexOfFirstRecord}</td>
 
                             <td>{item.employeeId}</td>
@@ -518,7 +526,8 @@ function ViewShift() {
                             <td>{item.additionalHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            {rolePermission == "costCenterManager" ? (
+                            {/* according Amit clarification 30-07-2022
+                             {rolePermission == "costCenterManager" ? (
                               <td>
                                 {item.statusDesc === "Pending" ? (
                                   <Edit2
@@ -550,7 +559,7 @@ function ViewShift() {
                               </td>
                             ) : (
                               <td></td>
-                            )}
+                            )} */}
                           </tr>
                         </tbody>
                       );
@@ -563,7 +572,7 @@ function ViewShift() {
                     </tbody>
                   )}
                 </Table>
-                {/*  {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null} */}
+                {/*  {(salaryHistoryHourList !== null && salaryHistoryHourList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null} */}
               </div>
             </div>
           </div>
@@ -589,9 +598,9 @@ function ViewShift() {
           costCenter={fetchemployeeData.costCentre}
         />
       </div>
-      {salaryList !== null &&
-        salaryList !== undefined &&
-        salaryList.length > 10 && (
+      {salaryHistoryHourList !== null &&
+        salaryHistoryHourList !== undefined &&
+        salaryHistoryHourList.length > 10 && (Object.keys(costCenter).length!==0 && getM) && submitButton && (
           <Pagination
             itemClass="page-item"
             linkClass="page-link"

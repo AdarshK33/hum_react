@@ -23,6 +23,7 @@ const initial_state = {
   callClusterEmployeesList: [],
   callClusterLeadersList: [],
   clusterCostCenter: {},
+  salaryHistoryHourList:{},
 };
 
 export const ClusterContext = createContext();
@@ -231,6 +232,28 @@ export const ClusterProvider = ({ children }) => {
         return dispatch({
           type: "FETCH_SALARY_LIST",
           payload: state.salaryList,
+          loader: loader,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  // History - Hours -view - salary 
+  const viewSalaryHistoryHours = (salaryData) => {
+    setLoader(true);
+    console.log("salaryHistoryData", salaryData);
+    return client
+      .post("/api/v1/salary/view/history-hours", salaryData)
+      .then(function (response) {
+        state.salaryHistoryHourList = response.data.data;
+        if (response.data.data === null) {
+          toast.info(response.data.message);
+        }
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_SALARY_HISTORY_HOURS_LIST",
+          payload: state.salaryHistoryHourList,
           loader: loader,
         });
       })
@@ -533,6 +556,7 @@ export const ClusterProvider = ({ children }) => {
         callClusterLeaders,
         updateAdminEditCluster,
         updateAdminaddCluster,
+        viewSalaryHistoryHours,
         clusterList: state.clusterList,
         clusterLeaderNames: state.clusterLeaderNames,
         sportsNames: state.sportsNames,
@@ -549,6 +573,7 @@ export const ClusterProvider = ({ children }) => {
         viewManagerByCostCenterList: state.viewManagerByCostCenterList,
         callClusterEmployeesList: state.callClusterEmployeesList,
         callClusterLeadersList: state.callClusterLeadersList,
+        salaryHistoryHourList : state.salaryHistoryHourList,
         loader: loader,
       }}
     >
