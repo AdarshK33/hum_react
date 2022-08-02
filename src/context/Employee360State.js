@@ -417,9 +417,9 @@ const RosterMonthSearchYear =()=>{
     //MY TEAM //employeeID
     setClusterLoader(true);
     client
-      .get("/api/v1/employee/360/view/my_team/{key}?key=" + key)
+      .get(`/api/v1/employee/360/view/my_team/${key}`) 
       .then((response) => {
-        // console.log("rrrrrrrrrrrrr",response)
+        // console.log("rrrrrrrrrrrrr",responsee)
         if (
           response.data.data!== null &&
           response.data.data !== undefined &&
