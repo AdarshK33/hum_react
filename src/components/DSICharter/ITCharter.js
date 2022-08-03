@@ -214,8 +214,8 @@ const ITCharter = (props) => {
 
     let cTime =
       hours == 0
-        ? "12" + ":" + minutes + "  " + am_pm
-        : hours + ":" + minutes + "  " + am_pm;
+        ? "12" + ":" + minutes + " " + am_pm
+        : hours + ":" + minutes + " " + am_pm;
     let dateTime = cDate + " " + cTime;
     return dateTime;
   };
@@ -837,20 +837,20 @@ const ITCharter = (props) => {
                   <p>
                     {" "}
                     <b>Date :</b>
-                    <b style={{ padding: "20px" }}>{handleDate(new Date())}</b>
+                    <b style={{ padding: "10px" }}>{handleDate(new Date())}</b>
                   </p>
                   <p>
                     <b>Employee ID :</b>
-                    <b style={{ padding: "20px" }}>
+                    <b style={{ padding: "10px" }}>
                       {fetchemployeeData.employeeId}
                     </b>
                   </p>
                   <p>
                     {" "}
                     <b>Signed and Accepted by Employee :</b>
-                    <b style={{ padding: "20px" }}>
+                    <b style={{ padding: "10px" }}>
                       {fetchemployeeData.firstName +
-                        "  " +
+                        " " +
                         fetchemployeeData.lastName}
                     </b>
                   </p>

@@ -8,8 +8,8 @@ import { PermissionContext } from "../../context/PermissionState";
 
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
-
-
+//OnBording/documents.css
+//Myprofile/myProfile.css
 const PersonalDoc = (props) => {
   const { user,fetchemployeeData } = useContext(AppContext);
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
@@ -319,7 +319,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField3">
+                  <label className="fileInputField3 profileField">
                     &nbsp;&nbsp;
                     {stateOfName.photoId !== ""
                       ? stateOfName.photoId
@@ -415,7 +415,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField3">
+                  <label className="fileInputField3 profileField">
                     &nbsp;&nbsp;
                     {stateOfName.cancelledCheque !== ""
                       ? stateOfName.cancelledCheque
@@ -517,7 +517,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField3">
+                    <label className="fileInputField3 profileField">
                       &nbsp;&nbsp;
                       {stateOfName.panId !== ""
                         ? stateOfName.panId
@@ -615,7 +615,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField3">
+                  <label className="fileInputField3 profileField">
                     &nbsp;&nbsp;
                     {stateOfName.addressProof !== ""
                       ? stateOfName.addressProof
@@ -718,7 +718,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField3">
+                    <label className="fileInputField3 profileField">
                       &nbsp;&nbsp;
                       {stateOfName.passport !== ""
                         ? stateOfName.passport
@@ -825,7 +825,7 @@ const PersonalDoc = (props) => {
               <Col sm={5} style={{ marginTop: "0.5rem" }}>
                 <Form.Group>
                   <div className="parentInput">
-                    <label className="fileInputField3">
+                    <label className="fileInputField3 profileField">
                       &nbsp;&nbsp;
                       {stateOfName.aadharId !== ""
                         ? stateOfName.aadharId
@@ -920,7 +920,7 @@ const PersonalDoc = (props) => {
             <Col sm={5} style={{ marginTop: "0.5rem" }}>
               <Form.Group>
                 <div className="parentInput">
-                  <label className="fileInputField3">
+                  <label className="fileInputField3 profileField">
                     &nbsp;&nbsp;
                     {stateOfName.epfPassBook !== ""
                       ? stateOfName.epfPassBook

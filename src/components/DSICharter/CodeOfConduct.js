@@ -320,8 +320,8 @@ const CodeOfConduct = (props) => {
 
     let cTime =
       hours == 0
-        ? "12" + ":" + minutes + "  " + am_pm
-        : hours + ":" + minutes + "  " + am_pm;
+        ? "12" + ":" + minutes + " " + am_pm
+        : hours + ":" + minutes + " " + am_pm;
     let dateTime = cDate + " " + cTime;
     return dateTime;
   };
@@ -439,19 +439,18 @@ const CodeOfConduct = (props) => {
                      <b>Date :</b><b style={{  padding: "20px"}}>{handleDate(new Date())}</b>
                      </div > */}
 
-                <div style={{ padding: "20px" }}>
+                <div style={{ padding: "10px" }}>
                   <b>Date :</b>
-                  <b style={{ padding: "20px" }}>{handleDate(new Date())}</b>
+                  <b style={{ padding: "10px" }}>{handleDate(new Date())}</b>
                   <br />
                   <b>Employee ID :</b>
-                  <b style={{ padding: "20px" }}>
+                  <b style={{ padding: "10px" }}>
                     {fetchemployeeData.employeeId}
                   </b>
                   <br />
                   <b>Signed and Accepted by Employee :</b>
-                  <b style={{ padding: "20px" }}>
-                    {fetchemployeeData.firstName +
-                      "  " +
+                  <b style={{ padding: "10px" }}>
+                    {fetchemployeeData.firstName + " "+
                       fetchemployeeData.lastName}
                   </b>
                   <br />
@@ -484,9 +483,9 @@ const CodeOfConduct = (props) => {
         </Row>
 
         {/* </Modal.Footer> */}
-        <div style={{ textAlign: "center" }}>
+        <div style={{ textAlign: "center",marginTop:"5px" }}>
           <Button variant="primary" onClick={handleSave}>
-            Save & Next
+            Save & Next 
           </Button>
         </div>
         <br />
