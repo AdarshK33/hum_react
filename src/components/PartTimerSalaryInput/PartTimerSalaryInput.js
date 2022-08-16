@@ -16,8 +16,7 @@ const PartTimerSalaryInput = () => {
   const [EmpName, setEmpName] = useState();
   const [contractType, setContractType] = useState("");
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
-  // const collect = require('collect.js'); 
-
+  const [searchClickHandle, setSearchClickHandle] = useState(""); //on click search Emp. we set value and clear when select the dropdown for fixed gross value.
   const [state, setState] = useState({
     empName: "",
     employeeId: "",
@@ -27,7 +26,6 @@ const PartTimerSalaryInput = () => {
     fromDate: null,
 
   });
-  // console.log("nnnnnnnnnnnnnn",state.empName)
 
   const [empNameError, setEmpNameError] = useState(null);
   const [fixedGrossError, setFixedGrossError] = useState(null);
@@ -46,29 +44,44 @@ const PartTimerSalaryInput = () => {
   }, []);
 
   useEffect(() => {
-    ViewEmployeeData('all');
+    if(searchEmpSelected.length==0){
+       ViewEmployeeData('all');
+      setSearchClickHandle([]);
+      setState({
+        empName: "",
+        employeeId: "",
+        fixedGross: 0,
+        hoursWorked:0,
+        toDate: null,
+        fromDate: null,
+       
+      });
+    }
+      const searchText = employeeRef.current.getInput();
+      let key =searchText.value.split("/")
+       ViewEmployeeData(key[0]);
+ 
   }, [searchEmpSelected]);
 
   useEffect(() => {
-    console.log("callled")
   if (
    employeeData &&
+   searchEmpSelected.length>0 &&
+   searchClickHandle.length>0 &&
    employeeData !== null &&
    employeeData !== undefined &&
    Object.keys(employeeData).length
  ){
-   state.empName = employeeData[0].firstName + " " +employeeData[0].lastName;
-   setEmpName(employeeData[0].firstName + " " +
-   employeeData[0].lastName + " / " + employeeData[0].employeeId)
-   setContractType(employeeData[0].contractType)
-   state.employeeId = employeeData[0].employeeId;
-   state.contractType = employeeData[0].contractType;
+   state.empName = employeeData[0]?.firstName + " " +employeeData[0]?.lastName;
+   setEmpName(employeeData[0]?.firstName + " " +
+   employeeData[0]?.lastName + " / " + employeeData[0]?.employeeId)
+   setContractType(employeeData[0]?.contractType)
+   state.employeeId = employeeData[0]?.employeeId;
+   state.contractType = employeeData[0]?.contractType;
   //  console.log("employeeData", employeeData[0]);
-   state.fixedGross= employeeData[0].fixedGross;
+   state.fixedGross= employeeData[0]?.fixedGross;
  }
- 
- 
-}, [searchEmpSelected,employeeData]);
+}, [employeeData,searchClickHandle]);
 
 // console.log("employeeData", employeeData[0].firstName);
   const fromDateHandler = (date) => {
@@ -77,7 +90,7 @@ const PartTimerSalaryInput = () => {
     );
     setState({ ...state, fromDate: AdjusteddateValue,toDate:null });
     setFromDate(AdjusteddateValue)
-    setToDate(null)
+    setToDate(null) 
   };
   const toDateHandler = (date) => {
     var AdjusteddateValue = new Date(
@@ -103,11 +116,11 @@ const PartTimerSalaryInput = () => {
     // }
     const searchText = employeeRef.current.getInput();
      let key =searchText.value.split("/")
-    // console.log("aaaaaaaaaaaaaa",key[0])
+    setSearchClickHandle(key[1]);//emp ID
     setEmpName(key[0]);
     setState({
       ...state,
-      empName: key[0],
+      empName: key[0],//full name
     });
     if (searchText.value !== null) {
       ViewEmployeeData(key[0]);
@@ -128,35 +141,37 @@ const PartTimerSalaryInput = () => {
       }else{
         setEmpNameError("");
       }
-    }else if(e.target.name === "fixedGross"){
-      setState({
-        ...state,
-        [e.target.name]: e.target.value,
-      });
-      if(Number.isInteger(parseInt(e.target.value)) === true && isNaN(e.target.value) !== true){
-        console.log(e.target.value,"fixed gross")
-      if (e.target.value < 90 || e.target.value > 400){
-            setFixedGrossError("Fixed gross should be between 90 - 400");
-          }else{
-            setFixedGrossError("");
-          }
-        }else{
-          setFixedGrossError("Please Enter Only Number");
-        }
-      // if (contractType === "Parttime" || contractType === "parttime") {
-      //   if (e.target.value < 90 || e.target.value > 400) {
-      //     setFixedGrossError("Value should be between 90 - 400");
-      //   } else {
-      //     setFixedGrossError("");
-      //   }
-      // } else if (contractType === "Fulltime" || contractType === "fulltime") {
-      //   if (e.target.value < 18000 || e.target.value == 18000) {
-      //     setFixedGrossError("Value should be above 18000");
-      //   } else {
-      //     setFixedGrossError("");
-      //   }
-      // }
-    }else if(e.target.name === "hoursWorked"){
+    }
+    // else if(e.target.name === "fixedGross"){
+    //   // setState({
+    //   //   ...state,
+    //   //   [e.target.name]: e.target.value,
+    //   // });
+    //   if(Number.isInteger(parseInt(e.target.value)) === true && isNaN(e.target.value) !== true){
+    //     console.log(e.target.value,"fixed gross")
+    //   if (e.target.value < 90 || e.target.value > 400){
+    //         setFixedGrossError("Fixed gross should be between 90 - 400");
+    //       }else{
+    //         setFixedGrossError("");
+    //       }
+    //     }else{
+    //       setFixedGrossError("Please Enter Only Number");
+    //     }
+    //   // if (contractType === "Parttime" || contractType === "parttime") {
+    //   //   if (e.target.value < 90 || e.target.value > 400) {
+    //   //     setFixedGrossError("Value should be between 90 - 400");
+    //   //   } else {
+    //   //     setFixedGrossError("");
+    //   //   }
+    //   // } else if (contractType === "Fulltime" || contractType === "fulltime") {
+    //   //   if (e.target.value < 18000 || e.target.value == 18000) {
+    //   //     setFixedGrossError("Value should be above 18000");
+    //   //   } else {
+    //   //     setFixedGrossError("");
+    //   //   }
+    //   // }
+    // }
+    else if(e.target.name === "hoursWorked"){
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -225,20 +240,21 @@ const PartTimerSalaryInput = () => {
   return false; 
 }
 }
-const fixedGrossValidation = () =>{
-  if(Number.isInteger(parseInt(state.fixedGross)) === true && isNaN(state.fixedGross) !== true){
-  if (state.fixedGross < 90 || state.fixedGross > 400 || state.fixedGross == null){
-    setFixedGrossError("Fixed gross should be between 90 - 400");
-    return false;
-  } else {
-    setFixedGrossError("");
-    return true;
-};
-  }else{
-    setFixedGrossError("Please Enter Only Number");
-    return false; 
-  }
-}
+// const fixedGrossValidation = () =>{
+//   if(Number.isInteger(parseInt(state.fixedGross)) === true && isNaN(state.fixedGross) !== true){
+//   // if (state.fixedGross < 90 || state.fixedGross > 400 || state.fixedGross == null){
+//   //   setFixedGrossError("Fixed gross should be between 90 - 400");
+//   //   return false;
+//   // } 
+//   // else {
+//     setFixedGrossError("");
+//     return true;
+// // };
+//   }else{
+//     setFixedGrossError("Please Enter Only Number");
+//     return false; 
+//   }
+// }
     const employeeNameValidation =()=>{
       if(
         state.empName === "" ||
@@ -286,8 +302,9 @@ const fixedGrossValidation = () =>{
       (hoursWorkedValidation() === true) &
       (employeeNameValidation() === true) &
       (fromDateValidation() === true) &
-      (toDateValidation() === true) &
-      (fixedGrossValidation() === true)
+      (toDateValidation() === true)
+      //  &
+      // (fixedGrossValidation() === true)
     ){
         return true;
     } else {
@@ -324,6 +341,7 @@ const fixedGrossValidation = () =>{
        
       });
       setSearchEmpSelected([]);
+      setSearchClickHandle([]);
       setFromDate(null);
       setToDate(null);
       ViewEmployeeData('all');
@@ -483,8 +501,8 @@ const fixedGrossValidation = () =>{
                                     <label className="itemResult">
                                       &nbsp;&nbsp; {}
                                     </label>
-                                  ) : (
-                                    <Form.Group>
+                                  ) : (                              
+                                    <Form.Group>                             
                                       <Form.Control
                                         type="text"
                                         placeholder=""
@@ -501,7 +519,7 @@ const fixedGrossValidation = () =>{
                                       />
                                     </Form.Group>
                                   )}
-                                  {fixedGrossError ? (
+                                  {fixedGrossError?(
                                     <p style={{ color: "red" }}>
                                       {fixedGrossError}
                                     </p>
