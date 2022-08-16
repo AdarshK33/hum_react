@@ -152,7 +152,7 @@ const ITCharter = (props) => {
             var blobStore = new Blob([buffer], { type: "application/pdf" });
             blobStore.name = "itcharter.pdf";
             const data = {
-              dsiType: "It Charter",
+              dsiType: "It_Charter",
               employeeId: fetchemployeeData.employeeId,
               fileType: 20,
             };

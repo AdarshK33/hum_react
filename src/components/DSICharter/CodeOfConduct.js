@@ -205,7 +205,7 @@ const CodeOfConduct = (props) => {
             var imageValue = item;
             imageValue.name = "codeofconduct.pdf";
             const data = {
-              dsiType: "Code of Conduct",
+              dsiType: "Code_Of_Conduct",
               employeeId: fetchemployeeData.employeeId,
               fileType: 19,
             };
@@ -268,11 +268,10 @@ const CodeOfConduct = (props) => {
                 var imageValue = item;
                 imageValue.name = "codeofconduct.pdf";
                 const data = {
-                  dsiType: "Code of Conduct",
+                  dsiType: "Code_Of_Conduct",
                   employeeId: fetchemployeeData.employeeId,
                   fileType: 19,
                 };
-
                 dsiCharterUpdate(infoData, data, imageValue, history);
               });
 
