@@ -53,10 +53,10 @@ const AdminRoster = () => {
     useContext(ClusterContext);
 
 
-    useEffect(() => {
-      console.log("end date check",moment(startDate).add("30", "d"));
-      setEndDate(moment(startDate, "YYYY-MM-DD").add("30", "d"))
-    }, [startDate]);
+    // useEffect(() => {
+    //   console.log("end date check",moment(startDate).add("30", "d"));
+    //   setEndDate(moment(startDate, "YYYY-MM-DD").add("30", "d"))
+    // }, [startDate]);
     
   const setWeekCalc = (e) => {
     let data1 = e.target.value;
@@ -156,10 +156,12 @@ const AdminRoster = () => {
     }
   };
   const calcWeek = () => {
+    if(endDate!==null && endDate!==undefined&&startDate!==null && startDate!==undefined) {
     adminCalculateWeek(
       endDate.format("YYYY-MM-DD"),
       startDate.format("YYYY-MM-DD")
     );
+    }
   };
 
   const exportSheet = (e) => {
@@ -254,6 +256,9 @@ const AdminRoster = () => {
                             selected={startDate.toDate()}
                             dateFormat="yyyy-MM-dd"
                             required
+                            onCalendarClose={() => {
+                              calcWeek();
+                            }}
                             onChange={(date) =>
                               setStartDate(moment(date, "YYYY-MM-DD"))
                             }
@@ -280,6 +285,8 @@ const AdminRoster = () => {
                             }
                           />
                         </div>
+                        {endDate.format("YYYY-MM-DD")<=
+      startDate.format("YYYY-MM-DD")?<span style={{color: "red"}}>Please select valid date </span>:""}
                       </div>
                     </div>
                     {(() => {
@@ -408,7 +415,8 @@ const AdminRoster = () => {
                           paddingRight: "40px",
                           fontWeight: "bold",
                         }}
-                        disabled={adminRosterButton}
+                        disabled={adminRosterButton===false&&endDate.format("YYYY-MM-DD")>=
+                        startDate.format("YYYY-MM-DD")?false:true}
                         type="button"
                         onClick={(e) => submitDate(e)}
                       >
