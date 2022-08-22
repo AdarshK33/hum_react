@@ -61,6 +61,7 @@ console.log("docViewData",docViewData);
   const handleClose = () => {
     setModal(false);
     setShowLetter(false);
+    setYesChecked(false)
   }
 
   const handleCloseLetter = () => {
@@ -72,6 +73,7 @@ console.log("docViewData",docViewData);
   
   const handleRejectClose = () => {
     setRejectModal(false);
+    setNoChecked(false)
   };
   const handleOk = () => {
     candidateRejectOffer({
@@ -133,16 +135,30 @@ console.log("docViewData",docViewData);
   };
 
   const checkedYesHandler = () => {
-    setYesChecked(!yesChecked);
-    setNoChecked(yesChecked);
-    setModal(true);
-    setRejectModal(false);
+    if(yesChecked === false){
+      setYesChecked(true);
+      setNoChecked(false);
+      setModal(true);
+      setRejectModal(false);
+    }else{
+      setYesChecked(false);
+      setNoChecked(false);
+      setModal(false);
+      setRejectModal(false);
+    }
   };
   const checkedNoHandler = () => {
-    setNoChecked(!noChecked);
-    setYesChecked(noChecked);
+    if(noChecked===false){
+      setNoChecked(true);
+      setYesChecked(false);
+      setModal(false);
+      setRejectModal(true);
+    }else{
+    setNoChecked(false);
+    setYesChecked(false);
     setModal(false);
-    setRejectModal(true);
+    setRejectModal(false);
+    }
   };
 
   const onDocumentLoadSuccess = ({ numPages }) => {

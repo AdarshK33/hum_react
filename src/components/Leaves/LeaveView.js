@@ -334,16 +334,17 @@ const LeaveView = () => {
                                                 <td>{item.numberOfDays}</td>
                                                 <td>{item.fromDate}</td>
                                                 <td>{item.toDate}</td>
-                                                <td>{moment(item.fromDate).isBefore(moment( moment().subtract(30, 'days') ).format("YYYY-MM-DD"))?<Edit2 disabled
+                                                <td>{moment(item.fromDate).format("YYYY-MM-DD") <= moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD")?<Edit2 disabled
                                   style={{ color: "lightgray" }}/>:<Edit2 onClick={() => {
                                                     setEditModal(true); setLeaveTypeId(item.leaveTypeId);
                                                     setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
                                                     setltId(item.ltId); setNumberOfDays(item.numberOfDays)
                                                 }} />}
                                                 </td>
-                                                <td><Trash2 onClick={() => {
+                                                <td>{moment(item.fromDate).format("YYYY-MM-DD") <= moment(moment(), "YYYY-MM-DD").subtract("30", "d").format("YYYY-MM-DD")?<Trash2 disabled
+                                  style={{ color: "lightgray" }}/>:<Trash2 onClick={() => {
                                                     setDeleteModal(true); setltId(item.ltId)
-                                                }} />
+                                                }} />}
 
                                                 </td>
 
