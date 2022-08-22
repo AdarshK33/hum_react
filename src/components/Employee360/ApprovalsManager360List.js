@@ -302,13 +302,21 @@ const ApprovalsManager360List = ({ ListType }) => {
             dateOfJoining: item.dateOfJoining,
 
             dueDays: item.dueDays,
-            status: "Due for confirmation",
+            status:item.status === 0? "Due for confirmation":item.status === 5 || item.status === 6
+            ? "Action Required"
+            : "",
 
             action: {
               edit: {
-                active: item.status === 0 ? true : false,
+                active: (item.status === 0 ||
+                  item.status === 5 ||
+                  item.status === 6) &&
+                item.dueDays > 0  ? true : false,
                 link:
-                  item.status === 0 ? `/probation-action/${item.empId}` : "",
+                (item.status === 0 ||
+                  item.status === 5 ||
+                  item.status === 6) &&
+                item.dueDays > 0  ? `/probation-action/${item.empId}` : "",
               },
             },
           };
