@@ -145,7 +145,8 @@ const PromotionList = () => {
       <Container fluid>
         <Row>
           <Col sm={12}>
-            <div className="card" style={{ overflowX: "auto" }}>
+            {/* <div className="card" style={{ overflowX: "auto" }}> */}
+            <div className="card">
               <div
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
