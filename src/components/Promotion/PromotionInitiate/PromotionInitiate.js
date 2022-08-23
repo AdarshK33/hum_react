@@ -306,7 +306,7 @@ const PromotionInitiate = () => {
     ) {
       console.log("inside if");
       if (contractType === "Parttime" || contractType === "parttime") {
-        if (state.newFixedGross < state.oldFixedGross) {
+        if (state.newFixedGross <= state.oldFixedGross) {
           setNewFixedGrossError(
             "Fixed gross should be greater than old fixed gross"
           );
