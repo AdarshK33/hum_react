@@ -375,6 +375,7 @@ const DocVerification = () => {
                                 color: "#47ef47",
                                 fontStyle: "italic",
                                 fontSize: "16px",
+                                position:"absolute"
                               }}
                             >
                               (First page of the book)
