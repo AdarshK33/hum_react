@@ -546,6 +546,7 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
+                                   position:"absolute"
                               }}
                             >
                               (Upload the first and last page)
