@@ -454,6 +454,7 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
+                                 position:"absolute"
                               }}
                             >
                               (Upload the first and last page)
@@ -482,6 +483,7 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
+                                position:"absolute"
                               }}
                             >
                               (First page of the book)
@@ -745,6 +747,8 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
+                                position:"absolute"
+
                               }}
                             >
                               (Upload the first and last page)
