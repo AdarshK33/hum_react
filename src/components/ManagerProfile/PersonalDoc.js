@@ -22,6 +22,7 @@ const PersonalDoc = (props) => {
     uploadFile,
     loader,
     currentEmpId,
+    EmpProfile
   } = useContext(EmployeeProfileContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [photoGraphName, setPhotoGraphName] = useState("");
@@ -31,6 +32,7 @@ const PersonalDoc = (props) => {
   const [adharCardName, setAdharCardName] = useState("");
   const [EPFName, setEPFName] = useState("");
   const [passPortName, setPassPortName] = useState("");
+  const [frroName, setFrroName] = useState("");
 
   const [photoGraphStatus, setPhotoGraphStatus] = useState("");
   const [cancelledChequeStatus, setCancelledChequeStatus] = useState("");
@@ -39,7 +41,7 @@ const PersonalDoc = (props) => {
   const [adharCardStatus, setAdharCardStatus] = useState("");
   const [EPFStatus, setEPFStatus] = useState("");
   const [passPortStatus, setPassPortStatus] = useState("");
-
+  const [frroStatus, setFrroStatus] = useState("");
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
   const [EmployeeId, setEmployeeId] = useState("");
@@ -51,6 +53,7 @@ const PersonalDoc = (props) => {
     aadharId: "",
     epfPassBook: "",
     passport: "",
+    frro:""
   });
   const [stateOfName, setStateOfNames] = useState({
     photoId: "",
@@ -60,6 +63,7 @@ const PersonalDoc = (props) => {
     aadharId: "",
     epfPassBook: "",
     passport: "",
+    frro:""
   });
   const [UploadedArray, setUploadedError] = useState([
     {
@@ -113,6 +117,9 @@ const PersonalDoc = (props) => {
         } else if (item.documentType === 14) {
           setPassPortName(item.documentName);
           setPassPortStatus(item.status)
+        } else if (item.documentType === 17 ) {
+          setFrroName(item.documentName);
+          setFrroStatus(item.status)
         }
       });
     }
@@ -181,6 +188,8 @@ const PersonalDoc = (props) => {
           UploadedArray[0].ULAddressProof = false;
         } else if (event.target.name === "passport") {
           UploadedArray[0].ULPassport = false;
+        } else if (event.target.name === "frro") {
+          UploadedArray[0].ULFrro = false;
         } else if (event.target.name === "epfPassBook") {
           UploadedArray[0].ULEpfPassBook = false;
         } else if (event.target.name === "cancelledCheque") {
@@ -228,6 +237,10 @@ const PersonalDoc = (props) => {
       fileType = 14;
       UploadedArray[0].ULPassport = true;
       // }
+    } else if (event.target.name === "frro") {
+      fileUpload = state.frro;
+      fileType = 17;
+      UploadedArray[0].ULFrro = true;
     } else if (event.target.name === "epfPassBook") {
       // if (EPFValidation() === true) {
       fileUpload = state.epfPassBook;
@@ -463,11 +476,11 @@ const PersonalDoc = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {fetchemployeeData &&
-          fetchemployeeData !== null &&
-          fetchemployeeData !== undefined &&
-          Object.keys(fetchemployeeData).length !== 0 &&
-          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
+          {EmpProfile &&
+          EmpProfile !== null &&
+          EmpProfile !== undefined &&
+          Object.keys(EmpProfile).length !== 0 &&
+          EmpProfile.contractType.toLowerCase() === "local expat" ? (
             ""
           ) : (
             <Row>
@@ -662,11 +675,11 @@ const PersonalDoc = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {fetchemployeeData &&
-          fetchemployeeData !== null &&
-          fetchemployeeData !== undefined &&
-          Object.keys(fetchemployeeData).length !== 0 &&
-          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
+          {EmpProfile &&
+          EmpProfile !== null &&
+          EmpProfile !== undefined &&
+          Object.keys(EmpProfile).length !== 0 &&
+          EmpProfile.contractType.toLowerCase() === "local expat" ? (
             <Row>
               <Col sm={3}>
                 <label className="keyField">
@@ -767,11 +780,118 @@ const PersonalDoc = (props) => {
           ) : (
             ""
           )}
-          {fetchemployeeData &&
-          fetchemployeeData !== null &&
-          fetchemployeeData !== undefined &&
-          Object.keys(fetchemployeeData).length !== 0 &&
-          fetchemployeeData.contractType.toLowerCase() === "local expat" ? (
+
+{EmpProfile &&
+          EmpProfile !== null &&
+          EmpProfile !== undefined &&
+          Object.keys(EmpProfile).length !== 0 &&
+          EmpProfile.contractType.toLowerCase() === "local expat" ? (
+            <Row>
+              <Col sm={3}>
+                <label class="keyField">
+                  <b>Employment VISA (work permit) :</b>
+                </label>
+                <br />
+                <label className="itemResult">{frroName}</label>
+                <p style={{ color: "red" }}>{frroStatus=== 0 ? "Admin Document verification is pending": frroStatus === 2 ? "Admin Rejected the documet" : ""}</p>
+              </Col>
+              <Col sm={2}>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginBottom: "1rem",
+                    textAlign: "right",
+                  }}
+                >
+                  {/* onClick={submitHandler} */}
+                  <button
+                    className={
+                      frroName && frroStatus === 1 ? "profileButtons" : "confirmButton"
+                    }
+                    onClick={(e, name) => showTheLetter(e, frroName,EmployeeId)}
+                    disabled={frroName && frroStatus === 1 ? false : true}
+                  >
+                    View
+                  </button>
+                </div>
+              </Col>
+              <Col sm={2}>
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    marginBottom: "1rem",
+                    textAlign: "right",
+                  }}
+                >
+                  <button
+                    className={
+                      frroName && frroStatus === 1 ? "profileButtons" : "confirmButton"
+                    }
+                    onClick={(e, name) => downloadTheLetter(e, frroName,EmployeeId)}
+                    disabled={frroName && frroStatus === 1 ? false : true}
+                  >
+                    Download
+                  </button>
+                </div>
+              </Col>
+              <Col sm={5} style={{ marginTop: "0.5rem" }}>
+                <Form.Group>
+                  <div className="parentInput">
+                    <label className="fileInputField3 profileField">
+                      &nbsp;&nbsp;
+                      {stateOfName.frro !== ""
+                        ? stateOfName.frro
+                        : "Select File Here"}
+                      <input
+                        type="file"
+                        accept="image/*,.pdf"
+                        name="frro"
+                        style={{ display: "none" }}
+                        onChange={(e) => {
+                          changeHandler(e);
+                        }}
+                        readOnly
+                      />
+                    </label>
+
+                    <label className="custom-file-upload2">
+                      <input
+                        type="button"
+                        name="frro"
+                        className="custom_file_Upload_button"
+                        onClick={(e) => {
+                          handleUpload(e);
+                        }}
+                      />
+                      {/* <i className="fa fa-cloud-upload" />  */}
+                      Upload File{" "}
+                      <i
+                                             id="custom_file_upload_icon_profile"
+
+                        className="fa fa-upload"
+                        aria-hidden="true"
+                      ></i>
+                    </label>
+                  </div>
+                  {/* {passportError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the passport
+                  </p>
+                ) : (
+                  <p></p>
+                )} */}
+                </Form.Group>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
+          {EmpProfile &&
+          EmpProfile !== null &&
+          EmpProfile !== undefined &&
+          Object.keys(EmpProfile).length !== 0 &&
+          EmpProfile.contractType.toLowerCase() === "local expat" ? (
             ""
           ) : (
             <Row>

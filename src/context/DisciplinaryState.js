@@ -123,7 +123,7 @@ export const DisciplinaryProvider = (props,context) => {
     setLoader(true);
     client
       .get(
-        "/api/v1/disciplinary/view/reason/disciplinary?disciplinaryType= " + key
+        "/api/v1/disciplinary/view/reason/disciplinary?disciplinaryType=" + key
       )
       .then((response) => {
         state.disciplinaryResonsData = response.data.data;
