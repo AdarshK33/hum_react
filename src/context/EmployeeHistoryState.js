@@ -374,7 +374,7 @@ export const EmployeeHistoryProvider = (props) => {
     const viewcontractFreezeDataById=(employeeId)=>{
       setLoader(true);
       client
-        .get("api/v1/employee_history/contractFreezeSubbatical/" + employeeId)
+        .get("api/v1/employee_history/contractFreezeSabbatical/" + employeeId)
         .then((response) => {
           state.contractFreezeData = new Array(response.data.data)
   
