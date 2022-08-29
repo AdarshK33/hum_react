@@ -38,8 +38,9 @@ const ManagerProfileListing = () => {
       rolePermission == "superCostCenterManager" ? 1 : 0
     );
     console.log("user role", user);
+  console.log("hello called EmployeesListView");
   }, []);
-  console.log("ROLEEE", rolePermission);
+  
   // useEffect(() => {
   //   MakedisciplinaryEmployeeSearchNull();
   // }, []);
@@ -64,7 +65,6 @@ const ManagerProfileListing = () => {
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
@@ -77,8 +77,17 @@ const ManagerProfileListing = () => {
   };
 
   /*-----------------Pagination------------------*/
+
+
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
+    if(e.target.value.length===0){
+      EmployeesListView(
+        "all",
+         0,//pageCount
+        rolePermission == "superCostCenterManager" ? 1 : 0
+      );
+    }
   };
 
   const searchDataHandler = () => {
@@ -89,6 +98,7 @@ const ManagerProfileListing = () => {
     } else {
       EmployeesListView("all", 0, role);
     }
+    setCurrentRecords(EmployeesList);
   };
 
   //   const fetchCandidateDetails = (candidateId) => {
@@ -150,8 +160,8 @@ const ManagerProfileListing = () => {
                     </tr>
                   </thead>
                   {loader === true &&
-                  currentRecords !== null &&
-                  currentRecords !== undefined ? (
+                  EmployeesList !== null &&
+                  EmployeesList !== undefined ? (
                     <tbody>
                       <tr>
                         <td colSpan="12">
@@ -169,14 +179,13 @@ const ManagerProfileListing = () => {
                         </td>
                       </tr>
                     </tbody>
-                  ) : currentRecords !== undefined &&
-                    currentRecords !== null &&
-                    currentRecords.length > 0 &&
-                    Object.keys(currentRecords).length !== 0 &&
-                    total !== 0 ? (
-                    currentRecords.map((item, i) => {
+                  ) : EmployeesList !== undefined &&
+                  EmployeesList !== null &&
+                  EmployeesList.length > 0 &&
+                    total > 0 ? (
+                      EmployeesList.map((item, i) => {
                       return (
-                        <tbody key={item.employeeId}>
+                        <tbody key={i}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.employeeId}</td>
@@ -209,7 +218,7 @@ const ManagerProfileListing = () => {
           </Col>
         </Row>
       </Container>
-      {currentRecords !== null && currentRecords !== undefined && (
+      {EmployeesList !== null && EmployeesList !== undefined && (
         <Pagination
           itemClass="page-item"
           linkClass="page-link"

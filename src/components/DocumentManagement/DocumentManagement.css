@@ -32,4 +32,20 @@
   background-color: "#006ebb";
   text-align: "center";
   color: "white"
-      }
+}
+
+.parentInputDoc {
+  align-items: center;
+  display: flex;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.fileInputFieldDoc {
+  flex-grow: 1;
+  height: 33px;
+  border: 1px solid #aaa;
+  margin-top: 0.5rem;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}

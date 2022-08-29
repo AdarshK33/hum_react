@@ -6,6 +6,8 @@ import { OfferContext } from "../../context/OfferState";
 import { useHistory } from "react-router-dom";
 import RehiredModal from "./RehiredModal";
 import { toast } from "react-toastify";
+// import insuranceFile from "../../assets/Insurance_Benefits_2022.pdf";
+
 
 const EmployeeForm = (props) => {
   const [state, setState] = useState({
@@ -516,6 +518,22 @@ if(createCandidateResponse && Object.keys(createCandidateResponse).length){
       viewCandidateId(candidateData.candidateInformation.candidateId);
     }
   };
+//   const onButtonPDFClick = () => {
+//     // using Java Script method to get PDF file
+//     fetch(insuranceFile).then(response => {
+//         response.blob().then(blob => {
+//             // Creating new object of PDF file
+//             const fileURL = window.URL.createObjectURL(blob);
+//             // Setting various property values
+//             let alink = document.c
+
+//             createElement('a');
+//             alink.href = fileURL;
+//             alink.download = 'Insurance_Benefits_2022.pdf';
+//             alink.click();
+//         })
+//     })
+// }
   return (
     <Fragment>
       <Form onSubmit={submitHandler}>
@@ -754,6 +772,11 @@ if(createCandidateResponse && Object.keys(createCandidateResponse).length){
               Save
             </Button>
           </Col>
+          {/* <Col sm={2}>
+            <Button onClick={onButtonPDFClick}>
+            Download PDF
+            </Button>
+          </Col> */}
           {editButton === true && createCandidateResponse !== null ? (
             <Col sm={2}>
               <Button onClick={editHandler}>Edit</Button>

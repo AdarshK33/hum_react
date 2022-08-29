@@ -1,3 +1,11 @@
+.itemResult {
+	color: #006ebb;
+  display: block !important;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: break-word;
+  }
+
 .nodue_title{
   background: #006EBB;
   font-weight: bold;

@@ -26,6 +26,7 @@ export const DocumentUploadProvider = (props) => {
         "/api/v1/admin/uploads/upload?moduleName=" + moduleName,formData)
       .then((response) => {
         console.log(response, "reponse excel");
+        toast.info(response.data.message);
         setLoader(false);
         ViewEmployeeUpload()
          state.documentUploadData =response.data.data
@@ -40,7 +41,7 @@ export const DocumentUploadProvider = (props) => {
       });
   };
 
-  const downloadDocumentUpload = (moduleName,fromDate) => {
+  const downloadDocumentUpload = (moduleName,fromDate,documentName) => {
     console.log(moduleName,fromDate,"downloadDocumentUpload")
     setLoader(true);
     let formData = {
@@ -60,7 +61,7 @@ export const DocumentUploadProvider = (props) => {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         
-        var fileName = "export.xlsx";
+        var fileName = `${documentName}.xlsx`;
         saveAs(blob, fileName);
         toast.info(response.data.message);
         setLoader(false);
