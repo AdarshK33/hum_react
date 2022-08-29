@@ -476,25 +476,31 @@ export const EmployeeProfileProvider = ({ children }) => {
 
   const EmployeesListView = (key, pageNumber, role = 0) => {
     setLoader(true);
+    // http://humine.theretailinsights.co/api/v1/employee/profile/view?page=0&size=10&key=Aditya%20&superManager=0
     client
       .get(
-        "/api/v1/employee/profile/view?key=" +
-          key +
-          "&page=" +
-          pageNumber +
-          "&size=10&superManager=" +
+        "/api/v1/employee/profile/view?page="
+          +pageNumber
+          +"&size=10&key=" +
+          key
+          +"&superManager=" +
           role
       )
       .then((response) => {
+        if (
+          response.data.data.data!== null &&
+         response.data.data.data !== undefined &&
+        Object.keys( response.data.data.data).length !== 0
+      ) {
         state.EmployeesList = response.data.data.data;
         state.total = response.data.data.total;
+      }
         setLoader(false);
-        console.log(state.total);
-        console.log(response);
-
         return dispatch({
           type: "MANAGER_EMP_LISTING",
           payload: state.EmployeesList,
+          loader: loader,
+          total: state.total,
         });
       })
       .catch((error) => {

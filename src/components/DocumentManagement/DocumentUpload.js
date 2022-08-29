@@ -43,6 +43,9 @@ const DocumentUpload = () => {
   useEffect(()=>{
     ViewEmployeeUpload()
   },[])
+  useEffect(()=>{
+    setFileInputName("Select Document Here")
+  },[document])
 
   useEffect(() => {
     if (rolePermission == "admin"){
@@ -115,8 +118,7 @@ const DocumentUpload = () => {
   const checkValidations = () => {
     console.log("on validation");
     if (
-      (validateEmpDetails() === true) &
-      (validateFileUpload() === true)
+      (validateEmpDetails() === true) &&(validateFileUpload() === true)
     ) {
       console.log("on true");
       return true;
@@ -242,12 +244,13 @@ const DocumentUpload = () => {
                     Select Document:
                 </Form.Label>
                                 <Col sm="8">      
-                    <div className="fileInput_upload">
+                                <div className="fileInput_upload parentInputDoc">
                   <label 
-                  className="fileInputField_upload">
+                  className="fileInputField_upload fileInputFieldDoc">
+                     &nbsp;&nbsp;
                     {fileInputName ? fileInputName :
-                    <label>&nbsp;&nbsp;
-                    Select Document Here</label>}
+                  
+                    "Select Document Here"}
                     <input
                       type="file"
                       placeholder="Select Document"
@@ -342,7 +345,7 @@ const DocumentUpload = () => {
                 <Button
                   variant="primary"
                   type="button"
-                  onClick={(e) => downloadDocumentUpload(item.uploadId,item.auditField.createdDate)}
+                  onClick={(e) => downloadDocumentUpload(item.uploadId,item.auditField.createdDate,item.documentName)}
                 >
                   Download
                 </Button>

@@ -1,4 +1,5 @@
 const GroupReducer = (state, action) => {
+  console.log("adarsh reducer",action)
   switch (action.type) {
     case "ADDRESS_VIEW":
       console.log("on reducer");
@@ -26,7 +27,11 @@ const GroupReducer = (state, action) => {
     case "HOLIDAY_WORKING_BONUS_VIEW":
       return { ...state, holidayWorkingBonusList: action.payload };
     case "MANAGER_EMP_LISTING":
-      return { ...state, EmployeesList: action.payload };
+      return { ...state,
+         EmployeesList: action.payload ,
+         loader: action.loader,
+         total: action.total, 
+        };
     case "EMP_PROFILE":
       return { ...state, EmpProfile: action.payload };
     case "EMP_DOCS_VERIFY_LISTING":
