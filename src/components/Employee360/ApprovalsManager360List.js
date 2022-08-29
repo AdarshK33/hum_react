@@ -240,7 +240,10 @@ const ApprovalsManager360List = ({ ListType }) => {
               item.disciplinaryWarning !== null &&
               item.disciplinaryWarning !== undefined
                 ? item.disciplinaryWarning.statusDesc
-                : item.disciplinaryAction.statusDesc,
+                :item.disciplinaryAction !== null &&
+                item.disciplinaryAction !== undefined 
+                ? item.disciplinaryAction.statusDesc
+                : "NA",
             action:
               (fetchemployeeData !== null &&
                 fetchemployeeData !== undefined &&
