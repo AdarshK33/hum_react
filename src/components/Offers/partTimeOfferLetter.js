@@ -151,10 +151,10 @@ const PartTimeOfferLetter = () => {
                     </li>
                   </ol>
                 </p>
-                <p>
+                {/* <p>
                   Also, please sign the duplicate of this offer as your
                   acceptance and forward the same to us.
-                </p>
+                </p> */}
                 <br></br>
                 <p>For {offerLetterData.companyName}</p>
                 <br></br>
