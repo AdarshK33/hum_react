@@ -511,6 +511,11 @@ const DocVerification = () => {
                               >
                                 Cancelled Cheque
                               </span>{" "}
+                              {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                             </label>
                           )
                         )}

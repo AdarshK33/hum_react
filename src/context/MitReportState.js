@@ -15,7 +15,7 @@ export const MitProvider = (props) => {
   const [state, dispatch] = useReducer(MitReducer, initialState);
   const [loader, setLoader] = useState(false);
 
-  const getMitReport = (company, month, year) => {
+  const getMitReport = (company, month, year, monthName) => {
     setLoader(true);
     console.log("company",company)
 //     var companyName = null
@@ -43,7 +43,7 @@ export const MitProvider = (props) => {
         var blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
-        var fileName = `Report ${new Date()}.xlsx`;
+        var fileName = `${monthName} Report.xlsx`;
         saveAs(blob, fileName);
         toast.info(`File downloaded successfully`);
         return dispatch({
