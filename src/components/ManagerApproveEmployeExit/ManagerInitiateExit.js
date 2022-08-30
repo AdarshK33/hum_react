@@ -2350,7 +2350,7 @@ const ManagerInitiateExit = () => {
                       >
                         <Col sm={12}>
                         <div className="newRemarks">
-                            <p className="remarks">
+                            <p className="ItemRemarks">
                               <b>Remarks:</b>
                               <span className="itemResultSeparation">
                                
