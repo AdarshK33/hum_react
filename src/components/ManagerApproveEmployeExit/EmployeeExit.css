@@ -1,6 +1,17 @@
 .itemResult {
   color: #006ebb;
 }
+.testadarsh{
+  width: 100%;
+}
+.itemResultSeparation {
+	color: #006ebb;
+  display: block !important;
+  /* overflow: hidden;
+  white-space: nowrap; */
+  word-wrap: break-word;
+  }
+
 .LettersButtons {
   width: 180px;
   height: 30px;

@@ -8,7 +8,6 @@ import "../../ManagerApproveEmployeExit/EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
-import "../nodueclearance.css"
 
 const HistoryView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
