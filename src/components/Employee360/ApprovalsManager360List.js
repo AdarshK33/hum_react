@@ -285,10 +285,129 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? {
                     edit: {
                       active: true,
-                      link: `/disciplinary-action/${item.disciplinaryAction.disciplinaryId}`,
+                      link: `/disciplinary-action-page/${item.disciplinaryAction.disciplinaryId}`,
                     },
                   }
-                : {
+                : (fetchemployeeData !== null &&
+                  fetchemployeeData !== undefined &&
+                  fetchemployeeData.employeeId === item.initiatedBy &&
+                  item.disciplinaryAction !== null &&
+                  item.disciplinaryAction !== undefined &&
+                  item.disciplinaryAction !== "" &&
+                  item.disciplinaryAction.initiatedRole ==
+                    rolePermission &&
+                  item.disciplinaryAction.statusDesc !==
+                    "Action Required By Employee" &&
+                  item.disciplinaryAction.statusDesc !==
+                    "Exit Initiated" &&
+                  item.disciplinaryWarning === null &&
+                  (item.disciplinaryAction.employeeActionStatus ===
+                    "Responded" ||
+                    item.disciplinaryAction.actionDueDays === 0)) ||
+                (fetchemployeeData !== null &&
+                  fetchemployeeData !== undefined &&
+                  fetchemployeeData.employeeId === item.initiatedBy &&
+                  item.disciplinaryWarning !== null &&
+                  item.disciplinaryWarning !== undefined &&
+                  item.disciplinaryWarning !== "" &&
+                  item.disciplinaryWarning.initiatedRole ==
+                    rolePermission &&
+                  item.disciplinaryWarning.statusDesc !==
+                    "Exit Initiated" &&
+                  item.disciplinaryWarning.statusDesc ===
+                    "Warning Letter Approved" &&
+                  item.disciplinaryWarning.pipDueDays === 0)?
+                  {
+                    edit: {
+                      active: true,
+                      link: `/manager-warning-action-view/${item.employeeId}`,
+                    },
+                  }:(fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "admin" &&
+                    item.disciplinaryAction !== null &&
+                    item.disciplinaryAction !== undefined &&
+                    item.disciplinaryAction !== "" &&
+                    item.disciplinaryAction.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryAction.status === 13) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "admin" &&
+                    item.disciplinaryWarning !== null &&
+                    item.disciplinaryWarning !== undefined &&
+                    item.disciplinaryWarning !== "" &&
+                    item.disciplinaryWarning.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryWarning.status === 14) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "superCostCenterManager" &&
+                    item.disciplinaryAction !== null &&
+                    item.disciplinaryAction !== undefined &&
+                    item.disciplinaryAction !== "" &&
+                    item.disciplinaryAction.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryAction.status === 12) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "superCostCenterManager" &&
+                    item.disciplinaryWarning !== null &&
+                    item.disciplinaryWarning !== undefined &&
+                    item.disciplinaryWarning !== "" &&
+                    item.disciplinaryWarning.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryWarning.status === 13) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "costCenterManager" &&
+                    item.disciplinaryAction !== null &&
+                    item.disciplinaryAction !== undefined &&
+                    item.disciplinaryAction !== "" &&
+                    item.disciplinaryAction.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryAction.status === 11) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "costCenterManager" &&
+                    item.disciplinaryWarning !== null &&
+                    item.disciplinaryWarning !== undefined &&
+                    item.disciplinaryWarning !== "" &&
+                    item.disciplinaryWarning.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryWarning.status === 12) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "manager" &&
+                    item.disciplinaryAction !== null &&
+                    item.disciplinaryAction !== undefined &&
+                    item.disciplinaryAction !== "" &&
+                    item.disciplinaryAction.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryAction.status === 10) ||
+                  (fetchemployeeData !== null &&
+                    fetchemployeeData !== undefined &&
+                    fetchemployeeData.employeeId === item.initiatedBy &&
+                    rolePermission == "manager" &&
+                    item.disciplinaryWarning !== null &&
+                    item.disciplinaryWarning !== undefined &&
+                    item.disciplinaryWarning !== "" &&
+                    item.disciplinaryWarning.initiatedRole ==
+                      rolePermission &&
+                    item.disciplinaryWarning.status === 11)? 
+                    {
+                      edit: {
+                        active: true,
+                        link: `/manager-action-view/${item.employeeId}`,
+                      },
+                    }:{
                     edit: {
                       active: false,
                       link: "",
