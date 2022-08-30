@@ -2349,13 +2349,15 @@ const ManagerInitiateExit = () => {
                         }}
                       >
                         <Col sm={12}>
-                          <div>
-                            <label>
+                        <div className="newRemarks">
+                            <p className="ItemRemarks">
                               <b>Remarks:</b>
-                              <label className="itemResult">
+                              <span className="itemResultSeparation">
+                               
                                 &nbsp;&nbsp; {state.remarks}
-                              </label>
-                            </label>
+                              
+                              </span>
+                            </p>
                           </div>
                         </Col>
                       </Row>

@@ -117,6 +117,8 @@ export const EmploeeSeparationProvider = ({ children }) => {
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING",
           payload: state.EmployeeSeparationList,
+          loader: loader,
+          total: state.total,
         });
       })
       .catch((error) => {
@@ -147,6 +149,9 @@ export const EmploeeSeparationProvider = ({ children }) => {
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING_EXIT",
           payload: state.EmployeeSeparationExitList,
+          loader: loader,
+          total: state.total,
+
         });
       })
       .catch((error) => {
