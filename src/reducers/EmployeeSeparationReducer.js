@@ -1,8 +1,13 @@
 const GroupReducer = (state, action) => {
+  console.log("adarsh separation",action)
   switch (action.type) {
     case "EMPLOYEE_SEPARATION_LISTING":
-      console.log("on reducer");
-      return { ...state, EmployeeSeparationList: action.payload };
+      return {
+         ...state,
+          EmployeeSeparationList: action.payload,
+          loader: action.loader,
+          total: action.total,
+         };
 
     case "EMPLOYEE_ID":
       return { ...state, employeeId: action.payload };
