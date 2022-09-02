@@ -47,7 +47,7 @@ const AdminDocVerfication = () => {
     { key: "Photo", value: "Photo Id" },
     { key: "PAN", value: "PAN Card" },
     { key: "Aadhaar", value: "Aadhaar Card" },
-    { key: "Address", value: "Address Proof" },
+    // { key: "Address", value: "Address Proof" },
     { key: "EPF", value: "EPF Pass Book" },
     { key: "Address", value: "Address Proof" },
     { key: "Cheque", value: "Cancelled Cheque" },

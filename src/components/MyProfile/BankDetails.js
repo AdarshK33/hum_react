@@ -42,7 +42,7 @@ const BankDetails = (props) => {
     employeeId: "",
   });
   const [stateOfOb, setStateOfOb] = useState({
-    cancelledCheque: "",
+    cancelledCheque: null,
   });
   const [stateOfName, setStateOfNames] = useState({
     cancelledCheque: "",
@@ -226,7 +226,7 @@ const BankDetails = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Please select file");
+      toast.error("Please select file");
     }
   };
   const submitHandler = (e) => {
@@ -243,18 +243,24 @@ const BankDetails = (props) => {
     //     : bankViewData.bankId;
     // }
     const value = checkValidations();
-    if (value === true) {
-      console.log("INSIDE BANK SUBMIT");
-      const bankInfo = {
-        accountNumber: state.accountNumber,
-        bankId: bankIdValue,
-        bankName: selectedBankName,
-        ifscCode: state.ifscCode,
-        panNumber: state.panNo,
-        employeeId: bankViewData.employeeId,
-      };
-      console.log("bank payload", bankInfo);
-      BankUpdate(bankInfo);
+    if (value === true ) {
+      if(stateOfOb.cancelledCheque===null){
+        toast.error("Please select document");
+      }else if(UploadedArray[0].ULcancelledCheque !== true){
+        toast.error("Please upload document");
+      }else{
+        console.log("INSIDE BANK SUBMIT");
+        const bankInfo = {
+          accountNumber: state.accountNumber,
+          bankId: bankIdValue,
+          bankName: selectedBankName,
+          ifscCode: state.ifscCode,
+          panNumber: state.panNo,
+          employeeId: bankViewData.employeeId,
+        };
+        console.log("bank payload", bankInfo);
+        BankUpdate(bankInfo);
+      }
       // if (
       //   (bankSaveData && bankSaveData.bankId) ||
       //   (bankViewData && bankViewData.bankId)
