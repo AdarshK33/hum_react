@@ -522,7 +522,7 @@ const PromotionInitiate = () => {
       } else if (
         state.promotionType == 0 &&
         (contractType.toLowerCase() == "parttime" ||
-          contractType.toLowerCase() == "fulltime")
+          contractType.toLowerCase() == "fulltime" || contractType.toLowerCase() == "local expat") 
       ) {
         // setModelStatus(true);
         setSubmitted(true);
@@ -628,6 +628,8 @@ const PromotionInitiate = () => {
       }
     });
   };
+
+  const getStringValue = (data, type) => data[type] || '';
 
   const changeHandler = (e) => {
     console.log("ttttttttttttttt",e)
@@ -1324,7 +1326,7 @@ const PromotionInitiate = () => {
                     allManagerList !== undefined &&
                     allManagerList.length > 0 &&
                     allManagerList.map((item, index) => ({
-                    label:item.firstName + " " + item.lastName + "-" + item.employeeId,
+                    label:getStringValue(item, 'firstName') + " " + getStringValue(item, 'lastName') + "-" + item.employeeId,
                     value:item.firstName + " " + item.lastName +"-" + item.employeeId,
                         }))}
                   required
