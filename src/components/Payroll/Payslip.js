@@ -29,17 +29,17 @@ const Payslip = (props) => {
   const [docType, setDocType] = useState("");
   const [current, setCurrent] = useState(true);
   const [select, setSelect] = useState(false);
-  const [fromYear, setFromYear] = useState(new Date());
-  const [toYear, setToYear] = useState(new Date());
+  const [fromYear, setFromYear] = useState(new Date(2021,8));
+  const [toYear, setToYear] = useState(new Date(2021,8));
   const [fromMonth, setFromMonth] = useState(
-    parseInt(new Date().getMonth()) > 8
-      ? new Date(new Date(new Date().getFullYear(), "8"))
-      : new Date()
+    // parseInt(new Date().getMonth()) > 8
+    //   ? new Date(new Date(new Date().getFullYear(), "8"))
+    //   : new Date()
   );
   const [toMonth, setToMonth] = useState(
-    parseInt(new Date().getMonth()) > 8
-      ? new Date(new Date(new Date().getFullYear(), "8"))
-      : new Date()
+    // parseInt(new Date().getMonth()) > 8
+    //   ? new Date(new Date(new Date().getFullYear(), "8"))
+    //   : new Date()
   );
   const [tillSeptember, setTillSeptember] = useState(true);
   const [currentYear, setCurrentYear] = useState(new Date());
@@ -59,6 +59,19 @@ const Payslip = (props) => {
       setSelect(false);
     }
   }, []);
+
+  useEffect(() => {
+console.log("setCurrentMonth",fromMonth,toMonth);
+console.log("check month",new Date(new Date(new Date(2018, 11).getFullYear(), "8")));
+console.log("setCurrentYear",fromYear,toYear);
+
+let selectedFromYear = new Date(fromYear).getFullYear()
+let selectedToYear = new Date(toYear).getFullYear()
+console.log("year check",selectedFromYear,selectedToYear);
+setFromMonth(new Date(new Date(new Date(selectedFromYear, 0).getFullYear(), "0")))
+setToMonth(new Date(new Date(new Date(selectedToYear, 0).getFullYear(), "0")))
+  }, [fromYear,toYear]);
+
   useEffect(() => {
     makePayslipViewDataNull();
   }, [current, select]);
@@ -246,7 +259,7 @@ const Payslip = (props) => {
                   className="form-control onBoard-view"
                   selected={fromYear}
                   onChange={(e) => setFromYear(e)}
-                  maxDate={new Date()}
+                  maxDate={new Date("2021")}
                   required
                   placeholderText="Select Year"
                   dateFormat="yyyy"
@@ -259,7 +272,7 @@ const Payslip = (props) => {
                 <DatePicker
                   className="form-control onBoard-view"
                   selected={fromMonth}
-                  maxDate={new Date(new Date().getFullYear(), "8")}
+                  maxDate={new Date(new Date("2021").getFullYear(), "8")}
                   onChange={(e) => setFromMonth(e)}
                   required
                   placeholderText="Select Month"
@@ -281,6 +294,7 @@ const Payslip = (props) => {
                   className="form-control onBoard-view"
                   selected={toYear}
                   onChange={(e) => setToYear(e)}
+                  minDate={fromYear}
                   maxDate={new Date()}
                   required
                   placeholderText="Select Year"
@@ -294,7 +308,8 @@ const Payslip = (props) => {
                 <DatePicker
                   className="form-control onBoard-view"
                   selected={toMonth}
-                  maxDate={new Date(new Date().getFullYear(), "8")}
+                  minDate={fromMonth}
+                  maxDate={new Date(new Date("2021").getFullYear(), "8")}
                   onChange={(e) => setToMonth(e)}
                   required
                   placeholderText="Select Month"

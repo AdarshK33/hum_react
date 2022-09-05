@@ -145,12 +145,16 @@ const ApprovalsManager360List = ({ ListType }) => {
               ? {
                   edit: {
                     active:
-                      item.promotedManagerId === fetchemployeeData.employeeId &&
+                       item.status === 3
+                      ? true
+                      :item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                         ? true
                         : false,
                     link:
-                      item.promotedManagerId === fetchemployeeData.employeeId &&
+                    item.status === 3
+                      ? `/transferaction/${item.transferId}`
+                      :item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                         ? `/transfer/${item.transferId}`
                         : "",
@@ -159,23 +163,26 @@ const ApprovalsManager360List = ({ ListType }) => {
                     //   : "/transfers",
                   },
                 }
-              : (item.transferType = "Entity Transfer "
+              : item.transferType = "Entity Transfer "
                   ? {
                       edit: {
                         active:
-                          // true,
-                          item.promotedManagerId === fetchemployeeData.employeeId &&
+                          item.status === 3
+                          ? true
+                          : item.promotedManagerId === fetchemployeeData.employeeId &&
                           item.status === 0
                             ? true
                             : false,
                         link:
-                          item.promotedManagerId === fetchemployeeData.employeeId &&
+                        item.status === 3
+                         ? `/entity-transferaction/${item.transferId}`
+                         : item.promotedManagerId === fetchemployeeData.employeeId &&
                           item.status === 0
                             ? `/entity-transfer/${item.transferId}`
                             : "",
                       },
                     }
-                  : (item.transferType = "International Transfer "
+                  : item.transferType = "International Transfer "
                       ? {
                           edit: {
                             active:
@@ -192,12 +199,22 @@ const ApprovalsManager360List = ({ ListType }) => {
                                 : "",
                           },
                         }
-                      : {
+                      :item.transferType = "Employment Type Transfer "
+                      ? {
+                          edit: {
+                            active:
+                            item.status === 3 ? true : false,
+                            link:
+                            item.status === 3
+                            ? `/changeinemp-transfer/${item.transferId}`
+                                : "",
+                          },
+                        }: {
                           edit: {
                             active: false,
                             link: "",
                           },
-                        }))),
+                        }),
           };
         });
         setTableBody(tableData);

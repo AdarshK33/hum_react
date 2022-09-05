@@ -487,14 +487,9 @@ export const EmployeeProfileProvider = ({ children }) => {
           role
       )
       .then((response) => {
-        if (
-          response.data.data.data!== null &&
-         response.data.data.data !== undefined &&
-        Object.keys( response.data.data.data).length !== 0
-      ) {
+ 
         state.EmployeesList = response.data.data.data;
         state.total = response.data.data.total;
-      }
         setLoader(false);
         return dispatch({
           type: "MANAGER_EMP_LISTING",
