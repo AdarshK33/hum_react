@@ -109,7 +109,7 @@ const InternAppointmentLetter = (props) => {
                 <p>
                   We thank you for your interest in choosing{" "}
                   {offerLetterData.companyName === "Decathlon Sports India Pvt Ltd"
-                    ? "DSIPL"
+                    ? "Decathlon Sports India Pvt Ltd (DSIPL)"
                     : offerLetterData.companyName}{" "}
                   . We are in receipt of your application authorised by your
                   institute/college/university to do an internship project on
@@ -203,7 +203,7 @@ const InternAppointmentLetter = (props) => {
                       : offerLetterData.companyName}{" "}
                     and take the utmost autonomy to complete your Project and
                     enhance the learnings.
-                    <ol type="i">
+                    {/* <ol type="i"> */}
                       <li>
                         We believe you will treat your team mates and customers
                         with utmost respect{" "}
@@ -282,42 +282,44 @@ const InternAppointmentLetter = (props) => {
                          However, your engagement will be subjected to
                         immediate termination on the following conditions:
                         <ul>
-                          <li>
+                        {/* <menu> */}
+                            <li style={{ listStyleType: "disc" }}>
                             wilful in subordination or disobedience, whether
                             alone or in combination with others, to any lawful
                             and reasonable order of a superior
                           </li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}>
                             theft, fraud or dishonesty in connection with the
                             employers business or property
                           </li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}>
                             wilful damage to or loss of employers goods or
                             property
                           </li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}>
                             taking or giving bribes or any illegal gratification
                           </li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}>
                             habitual absence without leave or absence without
                             leave for more than 10 days
                           </li>
-                          <li>habitual late attendance</li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}>habitual late attendance</li>
+                            <li style={{ listStyleType: "disc" }}>
                             habitual breach of any law applicable to the
                             establishment
                           </li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}>
                             riotous or disorderly behaviours during working
                             hours at the establishment or any act subversive of
                             discipline
                           </li>
-                          <li> habitual negligence or neglect of work</li>
-                          <li>
+                            <li style={{ listStyleType: "disc" }}> habitual negligence or neglect of work</li>
+                            <li style={{ listStyleType: "disc" }}>
                             unauthorised strike of work or inciting others to
                             strike work in contravention of the provision of any
                             law, or rule having the force of law.
                           </li>
+                          {/* </menu> */}
                         </ul>
                       </li>
                       <li>
@@ -342,7 +344,7 @@ const InternAppointmentLetter = (props) => {
                         quarterly basis by your leader/ mentor and shall be
                         discussed with you for further guidance etc.
                       </li>
-                    </ol>
+                    {/* </ol> */}
                   </li>
                 </ol>
                 <br></br>

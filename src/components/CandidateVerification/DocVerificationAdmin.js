@@ -60,7 +60,8 @@ const DocVerification = () => {
     fetchPfDetails,
     documentRejectComplete,
     adminRejectComplete,
-    candidateVerificationView
+    candidateVerificationView,
+    verificationMailSend
   } = useContext(DocsVerifyContext);
   const {
     candidateData,
@@ -199,9 +200,11 @@ const DocVerification = () => {
         setUanError(false);
         setUanValueError(false);
         setOnboardPopup(true);
+        verificationMailSend(personalInfoData.candidateId);
       }
     } else {
       setOnboardPopup(true);
+      verificationMailSend(personalInfoData.candidateId);
     }
   };
 

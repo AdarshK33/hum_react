@@ -43,7 +43,7 @@ const BankDetails = (props) => {
     employeeId: "",
   });
   const [stateOfOb, setStateOfOb] = useState({
-    cancelledCheque: "",
+    cancelledCheque: null,
   });
   const [stateOfName, setStateOfNames] = useState({
     cancelledCheque: "",
@@ -230,7 +230,7 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Please select file");
+      toast.error("Please select file");
     }
   };
   const submitHandler = (e) => {
@@ -248,6 +248,11 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
     // }
     const value = checkValidations();
     if (value === true) {
+      if(stateOfOb.cancelledCheque===null){
+        toast.error("Please select document");
+      }else if(UploadedArray[0].ULcancelledCheque !== true){
+        toast.error("Please upload document");
+      }else{
       console.log("INSIDE BANK SUBMIT");
       const bankInfo = {
         accountNumber: state.accountNumber,
@@ -269,6 +274,7 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
       // }
       // const nextPage = props.NextStep;
       // nextPage(true);
+    }
     }
   };
 

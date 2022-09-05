@@ -126,7 +126,9 @@ const PromotionInitiate = () => {
     lettterview,
     setViewLetter,
     getEmployeeDetails,
-    employeeDetails
+    employeeDetails,
+    getEmployeeList,
+    promotionEmployeeDetails
   } = useContext(PromotionContext);
   const { rolePermission } = useContext(PermissionContext);
   // const employeeRef = React.createRef();
@@ -139,22 +141,22 @@ const PromotionInitiate = () => {
     if (
       rolePermission === "admin"
     ){
-     getEmployeeDetails(1);
+     getEmployeeList(1);
     }
     else if (
       rolePermission === "superCostCenterManager"
     ){
-     getEmployeeDetails(9);
+     getEmployeeList(9);
     }
     else if (
       rolePermission === "costCenterManager"
     ){
-     getEmployeeDetails(7);
+     getEmployeeList(7);
     }
     else if (
       rolePermission === "manager"
     ){
-     getEmployeeDetails(2);
+     getEmployeeList(2);
     }
   
   }, [searchEmpSelected]);
@@ -1075,7 +1077,7 @@ const PromotionInitiate = () => {
                                         // labelKey='firstName'
                                        
                                         ref={employeeRef}
-                                        options={employeeDetails}
+                                        options={promotionEmployeeDetails}
                                         labelKey={option => `${option.firstName} ${option.lastName}`}
 
                                         // labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}

@@ -340,6 +340,26 @@ const PersonalInformation = (props) => {
             <br />
             <label className="itemResult">{fetchemployeeData.pfUanNo}</label>
           </Col>
+          {fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 &&fetchemployeeData.contractType.toLowerCase() === "internship"?
+          <Col sm={3}>
+            <label>
+              <b>College Name</b>
+            </label>
+            <br />
+            <label className="itemResult">{fetchemployeeData.collegeName}</label>
+          </Col>:null}
+          {fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 &&fetchemployeeData.contractType.toLowerCase() === "local expat"?
+          <Col sm={3}>
+            <label>
+              <b>Passport Number</b>
+            </label>
+            <br />
+            <label className="itemResult">{fetchemployeeData.passportNumber}</label>
+          </Col>:null}
         </Row>
         <Row
           style={{

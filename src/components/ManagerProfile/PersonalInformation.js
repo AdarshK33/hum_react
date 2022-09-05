@@ -362,6 +362,26 @@ const PersonalInformation = (props) => {
               <br />
               <label className="itemResult">{EmpProfile.pfUanNo}</label>
             </Col>
+            {EmpProfile !== null &&
+        EmpProfile !== undefined &&
+        Object.keys(EmpProfile).length !== 0 && EmpProfile.contractType.toLowerCase() === "internship"?
+          <Col sm={3}>
+            <label>
+              <b>College Name</b>
+            </label>
+            <br />
+            <label className="itemResult">{EmpProfile.collegeName}</label>
+          </Col>:null}
+          {EmpProfile !== null &&
+        EmpProfile !== undefined &&
+        Object.keys(EmpProfile).length !== 0 && EmpProfile.contractType.toLowerCase() === "local expat"?
+          <Col sm={3}>
+            <label>
+              <b>Passport Number</b>
+            </label>
+            <br />
+            <label className="itemResult">{EmpProfile.passportNumber}</label>
+          </Col>:null}
           </Row>
           <Row
             style={{

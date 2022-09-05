@@ -84,7 +84,7 @@ const ManagerProfileListing = () => {
     if(e.target.value.length===0){
       EmployeesListView(
         "all",
-         0,//pageCount
+        pageCount,//pageCount
         rolePermission == "superCostCenterManager" ? 1 : 0
       );
     }

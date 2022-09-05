@@ -641,6 +641,17 @@ export const DocsVerificationProvider = (props) => {
     );
   };
 
+  const verificationMailSend = (candidateId) => {
+    client
+      .get("/api/v1/candidate/sendEmail?candidateId="+candidateId)
+      .then((response) => {
+        toast.info(response.data.message);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
   const ExportPDFITCharter = (
     RefData,
    charterId = 0,
@@ -758,6 +769,7 @@ export const DocsVerificationProvider = (props) => {
           uploadITCharter,
           candidateVerificationView,
           MakePersonalInfoNull,
+          verificationMailSend,
           itCharterResponse:state.itCharterResponse,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
