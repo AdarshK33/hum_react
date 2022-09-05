@@ -242,9 +242,9 @@ const RosterMonthSearchYear =()=>{
         "/api/v1/disciplinary/view/all?page="+page+"&size=10&key=all&superManager=0";
     } else if (key === "separation") {
       if (roleCheck === "costCenterManager") {
-        api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=10";
+        api = "/api/v1/employee/360/view/exit?key=all&page="+page+"&size=10&status=10";
       } else {
-        api = "/api/v1/employee/360/view/exit?key=all&page=0&size=10&status=9";
+        api = "/api/v1/employee/360/view/exit?key=all&page="+page+"&size=10&status=9";
       }
     }
 

@@ -772,15 +772,15 @@ const Address = (props) => {
   };
 
   const checkValidations = () => {
-    if (
-      (flatNumberValidation() == true) &
-      (addressLineValidations() == true) &
-      (countryValidation() == true) &
-      (StateValidation() == true) &
-      (CityValidation() == true) &
-      (PinCodeErrorValidations() == true) &
-      (PhoneNoErrorValidations() == true)
-    ) {
+    // if (
+    //   (flatNumberValidation() == true) &
+    //   (addressLineValidations() == true) &
+    //   (countryValidation() == true) &
+    //   (StateValidation() == true) &
+    //   (CityValidation() == true) &
+    //   (PinCodeErrorValidations() == true) &
+    //   (PhoneNoErrorValidations() == true)
+    // ) {
       if (
         addressViewData !== null &&
         addressViewData !== undefined &&
@@ -807,9 +807,10 @@ const Address = (props) => {
       } else {
         return true;
       }
-    } else {
-      return false;
-    }
+    // } 
+    //else {
+    //   return false;
+    // }
   };
   const countryHandler = (e) => {
     // console.log("countryHandler", e.target.value);

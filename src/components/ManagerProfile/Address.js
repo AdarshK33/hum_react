@@ -571,117 +571,118 @@ if(stateList !== null &&
   //   }
   // }, [addressViewData]);
 
-  const flatNumberValidation = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.flatNumber !== "" && state.flatNumber !== undefined) {
-      setFlatNumberError(false);
-      console.log("flatNumberSuccess");
-      return true;
-    } else {
-      setFlatNumberError(true);
-      console.log("flatNumberError");
-      return false;
-    }
-  };
-  const addressLineValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.addressLine !== "" && state.addressLine !== undefined) {
-      setAddressLineError(false);
-      console.log("flatNumberSuccess");
-      return true;
-    } else {
-      setAddressLineError(true);
-      console.log("flatNumberError");
-      return false;
-    }
-  };
-  const countryValidation = () => {
-    console.log("--------------->", countryName);
-    if (
-      (countryName !== null) &
-      (countryName !== undefined) &
-      (countryName !== "") &
-      (countryName !== "Select Country")
-    ) {
-      setCountryError(false);
-      console.log("CountrySucess");
-      return true;
-    } else {
-      setCountryError(true);
-      console.log("countryFaill");
-      return false;
-    }
-  };
-  const StateValidation = () => {
-    if (
-      (stateName !== null) &
-      (stateName !== undefined) &
-      (stateName !== 0) &
-      (stateName !== "") &
-      (stateName !== "Select State")
-    ) {
-      setStateError(false);
-      console.log("StateSucess");
-      return true;
-    } else {
-      setStateError(true);
-      console.log("stateFaill");
-      return false;
-    }
-  };
-  const CityValidation = () => {
-    if (
-      (cityName !== null) &
-      (cityName !== undefined) &
-      (cityName !== 0) &
-      (cityName !== "") &
-      (cityName !== "Select City")
-    ) {
-      setCityError(false);
-      console.log("citySucess");
-      return true;
-    } else {
-      setCityError(true);
-      console.log("cityFaill");
-      return false;
-    }
-  };
-  const PinCodeErrorValidations = () => {
-    const aadharValid = /^[0-9\b]+$/;
-    if (
-      state.pinCode !== "" &&
-      state.pinCode !== undefined &&
-      aadharValid.test(state.pinCode) &&
-      state.pinCode.length === 6
-    ) {
-      setPinCodeError(false);
+  // const flatNumberValidation = () => {
+  //   const nameValid = /^[a-zA-Z\b]+$/;
+  //   if (state.flatNumber !== "" && state.flatNumber !== undefined) {
+  //     setFlatNumberError(false);
+  //     console.log("flatNumberSuccess");
+  //     return true;
+  //   }
+  //    else {
+  //     setFlatNumberError(true);
+  //     console.log("flatNumberError");
+  //     return false;
+  //   }
+  // };
+  // const addressLineValidations = () => {
+  //   const nameValid = /^[a-zA-Z\b]+$/;
+  //   if (state.addressLine !== "" && state.addressLine !== undefined) {
+  //     setAddressLineError(false);
+  //     console.log("flatNumberSuccess");
+  //     return true;
+  //   } else {
+  //     setAddressLineError(true);
+  //     console.log("flatNumberError");
+  //     return false;
+  //   }
+  // };
+  // const countryValidation = () => {
+  //   console.log("--------------->", countryName);
+  //   if (
+  //     (countryName !== null) &
+  //     (countryName !== undefined) &
+  //     (countryName !== "") &
+  //     (countryName !== "Select Country")
+  //   ) {
+  //     setCountryError(false);
+  //     console.log("CountrySucess");
+  //     return true;
+  //   } else {
+  //     setCountryError(true);
+  //     console.log("countryFaill");
+  //     return false;
+  //   }
+  // };
+  // const StateValidation = () => {
+  //   if (
+  //     (stateName !== null) &
+  //     (stateName !== undefined) &
+  //     (stateName !== 0) &
+  //     (stateName !== "") &
+  //     (stateName !== "Select State")
+  //   ) {
+  //     setStateError(false);
+  //     console.log("StateSucess");
+  //     return true;
+  //   } else {
+  //     setStateError(true);
+  //     console.log("stateFaill");
+  //     return false;
+  //   }
+  // };
+  // const CityValidation = () => {
+  //   if (
+  //     (cityName !== null) &
+  //     (cityName !== undefined) &
+  //     (cityName !== 0) &
+  //     (cityName !== "") &
+  //     (cityName !== "Select City")
+  //   ) {
+  //     setCityError(false);
+  //     console.log("citySucess");
+  //     return true;
+  //   } else {
+  //     setCityError(true);
+  //     console.log("cityFaill");
+  //     return false;
+  //   }
+  // };
+  // const PinCodeErrorValidations = () => {
+  //   const aadharValid = /^[0-9\b]+$/;
+  //   if (
+  //     state.pinCode !== "" &&
+  //     state.pinCode !== undefined &&
+  //     aadharValid.test(state.pinCode) &&
+  //     state.pinCode.length === 6
+  //   ) {
+  //     setPinCodeError(false);
 
-      console.log("pinCodeSuccess", state.pinCode.length);
-      return true;
-    } else {
-      setPinCodeError(true);
-      console.log("pinCodeFailError");
-      return false;
-    }
-  };
-  const PhoneNoErrorValidations = () => {
-    const aadharValid = /^[0-9\b]+$/;
+  //     console.log("pinCodeSuccess", state.pinCode.length);
+  //     return true;
+  //   } else {
+  //     setPinCodeError(true);
+  //     console.log("pinCodeFailError");
+  //     return false;
+  //   }
+  // };
+  // const PhoneNoErrorValidations = () => {
+  //   const aadharValid = /^[0-9\b]+$/;
 
-    if (
-      state.phoneNumber !== "" &&
-      state.phoneNumber !== undefined &&
-      aadharValid.test(state.phoneNumber) &&
-      state.phoneNumber.length === 10
-    ) {
-      setPhoneNoError(false);
-      console.log("phoneNoeSuccess");
-      return true;
-    } else {
-      setPhoneNoError(true);
-      console.log("phoneNumberFailError");
-      return false;
-    }
-  };
+  //   if (
+  //     state.phoneNumber !== "" &&
+  //     state.phoneNumber !== undefined &&
+  //     aadharValid.test(state.phoneNumber) &&
+  //     state.phoneNumber.length === 10
+  //   ) {
+  //     setPhoneNoError(false);
+  //     console.log("phoneNoeSuccess");
+  //     return true;
+  //   } else {
+  //     setPhoneNoError(true);
+  //     console.log("phoneNumberFailError");
+  //     return false;
+  //   }
+  // };
 
   const permanentFlatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -800,15 +801,15 @@ if(stateList !== null &&
   };
 
   const checkValidations = () => {
-    if (
-      (flatNumberValidation() == true) &
-      (addressLineValidations() == true) &
-      (countryValidation() == true) &
-      (StateValidation() == true) &
-      (CityValidation() == true) &
-      (PinCodeErrorValidations() == true) &
-      (PhoneNoErrorValidations() == true)
-    ) {
+    // if (
+    //   (flatNumberValidation() == true) &
+    //   (addressLineValidations() == true) &
+    //   (countryValidation() == true) &
+    //   (StateValidation() == true) &
+    //   (CityValidation() == true) &
+    //   (PinCodeErrorValidations() == true) &
+    //   (PhoneNoErrorValidations() == true)
+    // ) {
       if (
         addressViewData !== null &&
         addressViewData !== undefined &&
@@ -817,7 +818,8 @@ if(stateList !== null &&
         addressViewData.presentAddress !== undefined &&
         Object.keys(addressViewData.presentAddress).length !== 0 &&
         addressViewData.presentAddress.addressType === 0
-      ) {
+      ) 
+      {
         console.log("isChecked");
         if (
           (permanentFlatNumberValidation() == true) &
@@ -829,15 +831,19 @@ if(stateList !== null &&
           (permanentPhoneNoErrorValidations() == true)
         ) {
           return true;
-        } else {
+        }
+         else {
           return false;
         }
-      } else {
+      } 
+      
+      else {
         return true;
       }
-    } else {
-      return false;
-    }
+    //} 
+    // else {
+    //   return false;
+    // }
   };
   const countryHandler = (e) => {
     // console.log("countryHandler", e.target.value);
