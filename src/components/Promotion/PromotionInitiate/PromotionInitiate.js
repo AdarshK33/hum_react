@@ -93,7 +93,8 @@ const PromotionInitiate = () => {
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
   const [reportManager, setReportManager] = useState();
   
-  const [searchSelected, setSearchSelected] = useState("");
+  const [managerListDep, setManagerListDep] = useState(false);
+  const [managerListPos, setManagerListPos] = useState(false);
 
   // console.log("ssssssssssss",searchEmpSelected);
   const {
@@ -182,6 +183,11 @@ const PromotionInitiate = () => {
     }
   }, [departmentNew]);
 
+  useEffect(() => {
+    if(managerListDep){
+      setManagerListPos(true);
+    }
+  }, [position]);
   useEffect(() => {
     ViewEmployeeProfile();
     fetchEmployeeProfile();
@@ -648,6 +654,7 @@ const PromotionInitiate = () => {
       );
       console.log(e.target.value, value, state, "department1");
       setDepartmentNew(e.target.value);
+      setManagerListDep(true);
       setState({
         ...state,
         newDepartment: value[0].departmentName,
@@ -658,6 +665,9 @@ const PromotionInitiate = () => {
       positionNew.map((item) => {
         if (item.position === e.target.value) {
           setPosition(e.target.value);
+          if(managerListDep){
+            setManagerListPos(true);
+          }
           setState({
             ...state,
             positionId: item.positionId,
@@ -1310,9 +1320,11 @@ const PromotionInitiate = () => {
                                 ""
                               )}
                             </Form.Group> */}
-                          
-                          <div className="form-input" >
-                  <Select
+                           {managerListPos? (
+                            <>
+                               <div className="form-input" >
+                
+                              <Select
                   name="reportingManagerId"
                   as="select"
                   value={{
@@ -1321,6 +1333,8 @@ const PromotionInitiate = () => {
                   className="form-input"
                   aria-label="reportingManagerId"
                   placeholder="Select Manager"
+                  // disabled=
+                  // isDisabled={managerListPos}
                   onChange={(e) => reportManagerChangeHandler(e)}
                   // styles= {customStyles}
                   options={
@@ -1334,7 +1348,38 @@ const PromotionInitiate = () => {
                   required
                   isSearchable
                 />
-                </div>
+                </div> 
+                            </>
+                          ):(
+                            <>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="reportingManagerId"
+                                style={
+                                  departmentIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                // defaultValue={departmentNew}
+                                // onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Manager</option>
+                              
+                              </Form.Control>
+                              {reportingManagerError ? (
+                                <p style={{ color: "red" }}>
+                                  {reportingManagerError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                            </>
+                          )}
+                       
+                 
+                     
                 </Col>
                         </Row>
                         <Row
@@ -1417,7 +1462,7 @@ const PromotionInitiate = () => {
                             </div>
                           </Col>
                           <Col sm={1}>
-                            <label className="itemResult">
+                            <label className="itemResult fixedGrossResult">
                               &nbsp;&nbsp; {state.oldFixedGross}
                             </label>
                           </Col>

@@ -140,7 +140,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
       }
     }
-  }, [candidateData, onBoardData]);
+  }, [candidateData]);
   console.log("RoleList", RoleList,user);
 
   useEffect(() => {

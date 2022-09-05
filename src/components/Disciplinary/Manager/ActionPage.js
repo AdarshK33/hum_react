@@ -12,6 +12,7 @@ import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { PermissionContext } from "../../../context/PermissionState";
 import { useHistory, useParams } from "react-router-dom";
+import { Employee360Context } from "../../../context/Employee360State";
 
 // view-----
 const ActionPage = () => {
@@ -35,7 +36,11 @@ const ActionPage = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const { rolePermission } = useContext(PermissionContext);
-  const { employeeid } = useParams();
+  const {employeeid   } = useParams();
+  const params = useParams();
+
+  const paramsemployeeId = params["employeeId"];
+ 
   const [state, setState] = useState({
     empId: "",
     empName: "",
@@ -96,6 +101,16 @@ const ActionPage = () => {
     setViewLetter,
   } = useContext(DisciplinaryContext);
 
+  const { Manager360ListData} =useContext(Employee360Context);
+  useEffect(() => {
+    if (Manager360ListData) {
+          let getDisciplinaryId = Manager360ListData.map((item)=>{
+          if(item?.employeeId===paramsemployeeId ){
+            disciplinaryEmployeeSearch(item?.disciplinaryAction?.disciplinaryId);
+          }
+    });
+  }
+  }, [paramsemployeeId]);
   useEffect(() => {
     disciplinaryEmployeeSearch(employeeid);
   }, [employeeid]);
