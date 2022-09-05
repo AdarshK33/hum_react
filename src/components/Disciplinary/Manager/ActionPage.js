@@ -36,7 +36,7 @@ const ActionPage = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const { rolePermission } = useContext(PermissionContext);
-  // const {employeeid   } = useParams();
+  const {employeeid   } = useParams();
   const params = useParams();
 
   const paramsemployeeId = params["employeeId"];
@@ -111,6 +111,9 @@ const ActionPage = () => {
     });
   }
   }, [paramsemployeeId]);
+  useEffect(() => {
+    disciplinaryEmployeeSearch(employeeid);
+  }, [employeeid]);
 
   useEffect(() => {
     if (
