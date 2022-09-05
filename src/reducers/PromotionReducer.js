@@ -43,6 +43,12 @@ const PromotionReducer = (state, action) => {
           employeeDetails: action.payload
         
         };
+    case "PROMOTION_EMPLOYEE_DATA":
+        return {
+        ...state,
+        promotionEmployeeDetails: action.payload
+          
+          };
   }
 };
 export default PromotionReducer;

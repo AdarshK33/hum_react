@@ -146,7 +146,7 @@ if ((company !== undefined && company !== "undefined") && (month !== undefined &
                 controlId="reportModuleName"
               >
                 <Form.Label column sm="3">
-                  Select Company Name:
+                  Select Month:
                 </Form.Label>
                 <Col sm="8">
                   <Form.Control
