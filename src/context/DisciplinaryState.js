@@ -41,29 +41,30 @@ export const DisciplinaryProvider = (props,context) => {
   const setModalLetter = (val) => {
     setModalViewletter(val);
   };
-  const disciplinaryListView = (key, pageNumber, role) => {
+  const disciplinaryListView = (key, pageNumber, role) => { 
     setLoader(true);
+    // http://humine.theretailinsights.co/api/v1/disciplinary/view?page=0&size=10&key=all&superManager=0
     client
       .get(
-        "/api/v1/disciplinary/view?key=" +
-          key +
-          "&page=" +
-          pageNumber +
-          "&size=10&superManager=" +
-          role
-        // +"$super"
-      )
+        "/api/v1/disciplinary/view?page=" +
+        pageNumber +
+        "&size=10&key="+
+        key+
+        "&superManager="+
+        role
+         )
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;
         state.total = response.data.data.total;
         MakedisciplinaryEmployeeSearchNull();
         setLoader(false);
-        console.log(state.total);
+        console.log("hello state.total",state.total);
         console.log(response);
-
         return dispatch({
           type: "DISCIPLINARY_LISTING",
           payload: state.disciplinaryListData,
+          loader: loader,
+          total: state.total,
         });
       })
       .catch((error) => {

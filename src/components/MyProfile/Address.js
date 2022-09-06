@@ -991,7 +991,23 @@ const Address = (props) => {
                   pinCode: state.permanentPinCode,
                   state: permanentStateName,
                   street: state.permanentStreet,
-                }
+                }:(((addressViewData.permanentAddress == null  ||
+                  addressViewData.permanentAddress == undefined) ||( addressViewData.presentAddress !== null 
+                    || addressViewData.presentAddress !== undefined)) && addressViewData.presentAddress.addressType === 1
+                   )?{
+                    addressId: state.permanentAddressId?state.permanentAddressId:0,
+                    addressLine: state.permanentAddressLine,
+                    // addressProof: "string",
+                    city: permanentCityName,
+                    country: permanentCountryName,
+                    employeeId: fetchemployeeData.employeeId,
+                    flatNumber: state.permanentFlatNumber,
+                    locality: state.permanentLocality,
+                    phoneNumber: state.permanentPhoneNumber,
+                    pinCode: state.permanentPinCode,
+                    state: permanentStateName,
+                    street: state.permanentStreet,
+                  }
             : null,
       };
 
