@@ -15,6 +15,8 @@ import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 const PartTimerSalaryInput = () => {
   const [EmpName, setEmpName] = useState();
   const [contractType, setContractType] = useState("");
+  const [errorData, setErrorData] = useState("");
+
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
   const [searchClickHandle, setSearchClickHandle] = useState(""); //on click search Emp. we set value and clear when select the dropdown for fixed gross value.
   const [state, setState] = useState({
@@ -80,6 +82,9 @@ const PartTimerSalaryInput = () => {
    state.contractType = employeeData[0]?.contractType;
   //  console.log("employeeData", employeeData[0]);
    state.fixedGross= employeeData[0]?.fixedGross;
+ }
+ else{
+  setErrorData("*Part Timer Employees Not Found")
  }
 }, [employeeData,searchClickHandle]);
 
@@ -178,8 +183,8 @@ const PartTimerSalaryInput = () => {
       });
       if(Number.isInteger(parseInt(e.target.value)) === true && isNaN(e.target.value) !== true){
         console.log(e.target.value,"hours")
-      if (e.target.value > 130 || e.target.value < 0){
-            setHoursWorkedError("work hours should be  0 to 130 hrs");
+      if (e.target.value > 130 || e.target.value < 1){
+            setHoursWorkedError("work hours should be  1 to 130 hrs");
           } else {
             setHoursWorkedError("");
           }
@@ -223,13 +228,13 @@ const PartTimerSalaryInput = () => {
       let daysBetweenDates = Math.round(Math.abs(timeInMilisec / (1000 * 60 * 60 * 24))) == 0?1:Math.round(Math.abs(timeInMilisec / (1000 * 60 * 60 * 24)))+1
       console.log(daysBetweenDates,Math.round(Math.abs(timeInMilisec / (1000 * 60 * 60 * 24))),"hours")
     if(state.hoursWorked > 130){
-      setHoursWorkedError("work hours should be  0 to 130 hrs");
+      setHoursWorkedError("work hours should be  1 to 130 hrs");
       return false;
     } else if((state.hoursWorked > daysBetweenDates*8 && state.hoursWorked <= 130 )){
           setHoursWorkedError(`work hours can not be greater then ${daysBetweenDates*8} hrs`);
           return false;
         } else if (state.hoursWorked <= 0 || state.hoursWorked == null ){
-        setHoursWorkedError("work hours should be  0 to 130 hrs");
+        setHoursWorkedError("work hours should be  1 to 130 hrs");
         return false;
       } else {
         setHoursWorkedError("");
@@ -449,7 +454,7 @@ const PartTimerSalaryInput = () => {
                                 filterBy={['firstName', 'lastName', 'employeeId']}
                                 minLength={2}
                                 //  labelKey='firstName'
-                               
+                                disabled={!employeeData.length}
                                 ref={employeeRef}
                                 options={employeeData}
                                  labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}
@@ -473,9 +478,26 @@ const PartTimerSalaryInput = () => {
                           ) : (
                            ""
                           )}
+                          
                           </>
                               )}
+                             
                             </div>
+                            { 
+                          
+                              employeeData &&
+                                  employeeData &&
+                                  employeeData !== null &&
+                                  employeeData !== undefined &&
+                                  Object.keys(employeeData).length !== 0
+                             ? (
+                              ""
+                                   
+                                  ) : (
+                                    <p style={{ color: "red" }}>
+                                  {errorData}
+                                  </p>
+                                  )}
                           </Col>
                         </Row>
                         <Row

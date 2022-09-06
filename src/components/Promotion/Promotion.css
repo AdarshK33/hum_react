@@ -1,3 +1,6 @@
+.fixedGrossResult{
+  display: inline-block !important;
+}
 .container-accordion .accordion__button {
   background-color: #006ebb;
   color: white;
