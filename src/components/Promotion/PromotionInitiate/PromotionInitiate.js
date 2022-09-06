@@ -527,6 +527,32 @@ const PromotionInitiate = () => {
         }
         // PromotionCreate(infoData);
         console.log("all okay2", infoData);
+      }else if (
+        contractType.toLowerCase() == "local expat" &&
+        state.newFixedGross > 25000
+      ) {
+        // setModelStatus(true);
+        setSubmitted(true);
+        setDirecting(false);
+
+        if (
+          user !== null &&
+          user !== undefined &&
+          (user.loginType == 7 || user.additionalRole == "7")
+        ) {
+          PromotionCreate(infoData, 2,history);
+        } else if (
+          user !== null &&
+          user !== undefined &&
+          (user.additionalRole === "1" || user.loginType == "1")
+        ) {
+          PromotionCreate(infoData, 1,history);
+          setPreview(true);
+        } else {
+          PromotionCreate(infoData,'',history);
+        }
+        // PromotionCreate(infoData);
+        console.log("all okay3", infoData);
       } else if (
         state.promotionType == 0 &&
         (contractType.toLowerCase() == "parttime" ||
