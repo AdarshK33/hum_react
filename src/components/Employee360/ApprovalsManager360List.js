@@ -138,10 +138,12 @@ const ApprovalsManager360List = ({ ListType }) => {
             effectiveDate: item.promotedJoiningDate,
             transferType: item.transferType,
             status:
-              item.transferType === "International Transfer "
+              item.transferType === "International Transfer"
                 ? "Request Sent To Admin"
+                : item.transferType === "Employment Type Transfer" && item.status === 0 
+                ? "Completed"
                 : item.statusDesc,
-            action: (item.transferType = "Regular Transfer "
+            action: (item.transferType === "Regular Transfer"
               ? {
                   edit: {
                     active:
@@ -163,7 +165,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                     //   : "/transfers",
                   },
                 }
-              : item.transferType = "Entity Transfer "
+              : item.transferType === "Entity Transfer"
                   ? {
                       edit: {
                         active:
@@ -182,7 +184,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                             : "",
                       },
                     }
-                  : item.transferType = "International Transfer "
+                  : item.transferType === "International Transfer"
                       ? {
                           edit: {
                             active:
@@ -199,7 +201,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                                 : "",
                           },
                         }
-                      :item.transferType = "Employment Type Transfer "
+                      :item.transferType === "Employment Type Transfer"
                       ? {
                           edit: {
                             active:
