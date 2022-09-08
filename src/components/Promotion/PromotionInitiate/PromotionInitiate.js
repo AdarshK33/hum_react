@@ -1109,7 +1109,7 @@ const PromotionInitiate = () => {
                                         id="_empSearchId"
                                         name='EmpName'
                                         filterBy={['firstName', 'lastName', 'employeeId']}
-                                        minLength={2}
+                                        minLength={1}
                                         // labelKey='firstName'
                                        
                                         ref={employeeRef}
