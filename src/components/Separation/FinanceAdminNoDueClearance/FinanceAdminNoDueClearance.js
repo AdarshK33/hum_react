@@ -548,6 +548,8 @@ const FinanaceAdminNoDueClearance = () => {
                                 null &&
                               rowNode.data.fullAndFinalProcessDate !== null &&
                               // rowNode.data.fullAndFinalAmount !== null &&
+                              // rowNode.data.isFullAndFinalCompleted == true //true or false
+                              //  && 
                               rowNode.data.disabled !== true
                           : false;
                       }}

@@ -1,8 +1,13 @@
 const DisciplinaryReducer = (state, action) => {
-  console.log(action,"action")
+  console.log(action,"hello action DisciplinaryReducer")
   switch (action.type) {
     case "DISCIPLINARY_LISTING":
-      return { ...state, disciplinaryListData: action.payload };
+      return {
+         ...state,
+         disciplinaryListData: action.payload,
+         loader: action.loader,
+         total: action.total, 
+         };
 
     case "DISCIPLINARY_SEARCH":
       return { ...state, disciplinarySearchData: action.payload };
