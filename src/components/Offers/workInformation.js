@@ -500,7 +500,7 @@ const WorkInformation = (props) => {
         recruitmentSource:
           state.employmentType === "Internship" ? null : state.recuritment,
         relievingLetter: null,
-        workId: workInfoViewData.workId,
+        workId: workInfoViewData.workId?workInfoViewData.workId:0,
         ngoDetails: state.ngoDetail,
         noticePeriod: state.employmentType === "Internship" ? 0 : noticePeriod,
         sportId: state.sports,

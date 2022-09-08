@@ -8,6 +8,7 @@ import { PermissionContext } from "../../context/PermissionState";
 
 import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
+import { useParams, Link } from "react-router-dom";
 //OnBording/documents.css
 //Myprofile/myProfile.css
 const PersonalDoc = (props) => {
@@ -45,6 +46,9 @@ const PersonalDoc = (props) => {
   const [LetterName, setLetterName] = useState("");
   const [Name, setName] = useState("");
   const [EmployeeId, setEmployeeId] = useState("");
+  const params = useParams();
+  const empId = params["employeeid"];
+console.log("paramsid",empId);
   const [state, setState] = useState({
     photoId: "",
     cancelledCheque: "",
@@ -84,7 +88,11 @@ const PersonalDoc = (props) => {
   ]);
 
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     DocumentView(currentEmpId);
+    }else{
+      DocumentView(empId);
+    }
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -257,7 +265,7 @@ const PersonalDoc = (props) => {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: currentEmpId,
+        employeeId: currentEmpId !==0 ? currentEmpId :empId,
         file: fileUpload,
         fileType: fileType,
       };

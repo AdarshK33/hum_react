@@ -10,7 +10,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useParams, Link } from "react-router-dom";
 import { Employee360Context } from "../../context/Employee360State";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import WorkingBonusList from "./WorkingBonusList";
@@ -27,6 +27,9 @@ const HolidayWorkingBonus = () => {
   const [HolidayError, setHolidayError] = useState(false);
   const { user } = useContext(AppContext);
 
+  const params = useParams();
+  const empId = params["employeeid"];
+  
   useEffect(() => {
     HolidaysView();
   }, []);
@@ -72,7 +75,7 @@ const HolidayWorkingBonus = () => {
         Object.keys(HolidaysList).length !== 0
       ) {
         let data = {
-          employeeId: currentEmpId,
+          employeeId: currentEmpId !== 0 ? currentEmpId : empId,
           holidayDate: HoloidayDate,
           holidayName: HolidayName,
           holidayId: HolidayId,

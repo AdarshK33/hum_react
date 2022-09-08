@@ -16,6 +16,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
+import { useParams, Link } from "react-router-dom";
 const BankDetails = (props) => {
   const { user } = useContext(AppContext);
   const { bankView, bankViewData, BankUpdate, uploadFile, currentEmpId } =
@@ -28,6 +29,8 @@ const BankDetails = (props) => {
     bankUpdate,
     bankUpdateData,
   } = useContext(OnBoardContext);
+  const params = useParams();
+  const empId = params["employeeid"];
   const { rolePermission } = useContext(PermissionContext);
   const [disabled, setDisableState] = useState(false);
   const [accountNumberError, setAccountNumberError] = useState(false);
@@ -54,7 +57,11 @@ const BankDetails = (props) => {
     },
   ]);
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     bankView(currentEmpId);
+    }else{
+      bankView(empId);
+    }
   }, []);
 
   useEffect(() => {
@@ -223,7 +230,7 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: currentEmpId,
+        employeeId: currentEmpId!==0?currentEmpId:empId,
         file: fileUpload,
         fileType: fileType,
       };

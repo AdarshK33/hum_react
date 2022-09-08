@@ -38,9 +38,23 @@ const Remuneration = () => {
   });
   const [vpfValue, setVpfValue] = useState("");
   const [vpfError, setVpfError] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
   useEffect(() => {
     RemunerationView(fetchemployeeData.employeeId);
     CostCentreSplitView(fetchemployeeData.employeeId);
+  }, []);
+
+  useEffect(() => {
+    if (
+      remunerationData !== null &&
+      remunerationData !== undefined &&
+      Object.keys(remunerationData).length !== 0
+    ) {
+    setDisabled(false)
+    }else{
+    setDisabled(true)
+    }
   }, []);
   useEffect(() => {
     if (
@@ -192,6 +206,7 @@ const Remuneration = () => {
                     >
                       <button
                         className="profileButtons"
+                        // disabled={disabled}
                         onClick={submitHandler}
                       >
                         Update

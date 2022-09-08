@@ -10,6 +10,7 @@ import { AppContext } from "../../context/AppState";
 import { PermissionContext } from "../../context/PermissionState";
 import moment from "moment";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
+import { useParams, Link } from "react-router-dom";
 
 const WorkDetails = () => {
   const { EmpProfileView, EmpProfile, currentEmpId } = useContext(
@@ -21,10 +22,17 @@ const WorkDetails = () => {
   const [locationName, setLocationName] = useState("");
   const [grantValue,setGrantValue] = useState(false)
   const [grantValueError,setGrantValueError] = useState(false)
+  const params = useParams();
+  const empId = params["employeeid"];
+console.log("paramsid",empId);
 
   useEffect(() => {
     locationDetails();
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     EmpProfileView(currentEmpId);
+    }else{
+      EmpProfileView(empId);
+    }
   }, []);
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {

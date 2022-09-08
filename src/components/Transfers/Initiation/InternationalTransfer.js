@@ -373,11 +373,16 @@ const { rolePermission } = useContext(PermissionContext);
       setManagerErrMsg("Please select manager");
     }
     const emailValid =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (newMangerMailId === "" || !emailValid.test(newMangerMailId)
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (newMangerMailId !== "" || emailValid.test(newMangerMailId)
     ) {
-      validForm = false;
-      setManagerMailIdErrMsg("Please enter manager email");
+      if(newMangerMailId.includes("@decathlon.com")){
+        validForm = true;
+      setManagerMailIdErrMsg("");
+      }else{
+        validForm = false;
+        setManagerMailIdErrMsg("Please enter decathlon email");
+      } 
     }
 
     if (newGross === "") {

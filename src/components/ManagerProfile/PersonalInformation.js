@@ -22,12 +22,21 @@ import EmergencyContact from "./EmergencyContact";
 import BankDetails from "./BankDetails";
 import moment from "moment";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
-
+import { useParams, Link } from "react-router-dom";
 const PersonalInformation = (props) => {
   const { UpdateEmployeeProfile, EmpProfileView, EmpProfile, currentEmpId } =
     useContext(EmployeeProfileContext);
+
+    const params = useParams();
+    const empId = params["employeeid"];
+  console.log("paramsid",empId);
+
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     EmpProfileView(currentEmpId);
+    }else{
+      EmpProfileView(empId);
+    }
   }, []);
 
   const { user } = useContext(AppContext);
