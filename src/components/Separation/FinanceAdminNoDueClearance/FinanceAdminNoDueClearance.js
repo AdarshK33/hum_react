@@ -28,6 +28,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { JsonToCsv } from "react-json-csv";
 
 import ReactExport from "react-data-export";
+import { LargeTextCellEditor } from "ag-grid";
 
 const FinanaceAdminNoDueClearance = () => {
   const { ViewEmployeeDataById, changeEmployeeId, ModeOfSeparationView } =
@@ -140,9 +141,10 @@ const FinanaceAdminNoDueClearance = () => {
     //   }
 
     //  var uniqueArray = removeDuplicates(preValue, "employeeId");
-    console.log(checkedData, "submit");
-
-    // setCheckedData(uniqueArray)
+      
+     // console.log(checkedData, "hello submit");
+   
+    // // setCheckedData(uniqueArray)
     UpdateAdminFinanceClearanceList(
       checkedData,
       searchValue,
@@ -150,6 +152,7 @@ const FinanaceAdminNoDueClearance = () => {
       costCenter
     );
   };
+
   const handleValidCheck = (e) => {
     console.log(e, "handleValidCheck");
     return true;
@@ -318,13 +321,13 @@ const FinanaceAdminNoDueClearance = () => {
     } else if (checkedValue == true) {
       setCheckedValue(false);
     }
-    if (formData["disabled"] == false) {
+    if (formData["disabled"] == false ||formData["isFullAndFinalCompleted"]==true) {
       let preValue = checkedData;
       let keyValues = [];
       preValue.map((item) => {
         keyValues.push(item.employeeId);
       });
-      console.log(keyValues, "keyValues");
+      console.log(keyValues, " hello keyValues");
       if (
         formData["deactivateProfile"] !== null &&
         formData["fullAndFinalCompleteStatus"] !== null &&
@@ -335,7 +338,8 @@ const FinanaceAdminNoDueClearance = () => {
           console.log(formData, "push");
           preValue.push(formData);
           setCheckedData(preValue);
-        } else if (keyValues.includes(formData.employeeId)) {
+        } 
+        else if (keyValues.includes(formData.employeeId)) {
           console.log(formData, "splice");
 
           preValue.map((item, index) => {
@@ -346,6 +350,15 @@ const FinanaceAdminNoDueClearance = () => {
           });
         }
       }
+     
+      const updatedData = checkedData.map((data)=>{      
+        return {
+          ...data,
+          isFullAndFinalCompleted:false
+          }
+         //set isFullAndFinalCompleted false for unCheck Box
+        });
+      setCheckedData(updatedData);
     } else {
       // toast.error("Details for the selected record is not present")
     }
@@ -385,7 +398,6 @@ const FinanaceAdminNoDueClearance = () => {
     //             }
     // })
   };
-
   const handleExport = (e) => {
     const value = e.target.value;
     FinanceAdminClearanceExport(value);
@@ -548,9 +560,9 @@ const FinanaceAdminNoDueClearance = () => {
                                 null &&
                               rowNode.data.fullAndFinalProcessDate !== null &&
                               // rowNode.data.fullAndFinalAmount !== null &&
-                              // rowNode.data.isFullAndFinalCompleted == true //true or false
-                              //  && 
-                              rowNode.data.disabled !== true
+                               rowNode.data.isFullAndFinalCompleted == true //true or false
+                              //   && 
+                              // rowNode.data.disabled !== true
                           : false;
                       }}
                       // pagination={true}
