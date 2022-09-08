@@ -6,6 +6,7 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useParams, Link } from "react-router-dom";
 
 const EmergencyContact = (props) => {
   const { candidateProfileData, addressView } = useContext(OnBoardContext);
@@ -17,6 +18,8 @@ const EmergencyContact = (props) => {
   } = useContext(EmployeeProfileContext);
   const [disabled, setDisableState] = useState(false);
   // acessing employeeId from params
+  const params = useParams();
+  const empId = params["employeeid"];
 
   const [stateError, setStateError] = useState({
     contactNameError: "",
@@ -44,7 +47,11 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     EmergencyContactView(currentEmpId);
+  }else{
+    EmergencyContactView(empId);
+  }
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
   useEffect(() => {
@@ -56,7 +63,7 @@ const EmergencyContact = (props) => {
       setState({
         contactName: emergencyContactView.contactName,
         addressLine: emergencyContactView.addressLine,
-        employeeId: currentEmpId,
+        employeeId: currentEmpId !== 0 ? currentEmpId : empId,
         contactId: emergencyContactView.contactId,
         city: emergencyContactView.city,
         country: emergencyContactView.country,
@@ -70,7 +77,7 @@ const EmergencyContact = (props) => {
       setState({
         contactName: "",
         addressLine: "",
-        employeeId: currentEmpId,
+        employeeId: currentEmpId !== 0 ? currentEmpId :empId,
         contactId: 0,
         city: "",
         country: "",

@@ -452,7 +452,11 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               AadhaarID
                             </span>
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" && personalInfoData.contractType !== "Internship"  ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                             <span
                               style={{
                                 color: "#47ef47",
@@ -468,7 +472,11 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Pan Number
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" && personalInfoData.contractType !== "Internship" && personalInfoData.contractType !== "parttime" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 3 ? (
                           <label>

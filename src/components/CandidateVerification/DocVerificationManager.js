@@ -337,7 +337,7 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Aadhaar Card
                             </span>{" "}
-                            {personalInfoData.contractType !== "Local Expat" ? (
+                            {personalInfoData.contractType !== "Local Expat" && personalInfoData.contractType !== "Internship" ? (
                               <span style={{ color: "red" }}>*</span>
                             ) : (
                               ""
@@ -348,7 +348,7 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Pan Number
                             </span>{" "}
-                            {personalInfoData.contractType !== "Local Expat" ? (
+                            {personalInfoData.contractType !== "Local Expat" && personalInfoData.contractType !== "Internship" && personalInfoData.contractType !== "parttime" ? (
                               <span style={{ color: "red" }}>*</span>
                             ) : (
                               ""

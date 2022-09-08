@@ -19,7 +19,7 @@ import {
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
-
+import { useParams, Link } from "react-router-dom";
 const Remuneration = () => {
   const {
     RemunerationView,
@@ -37,9 +37,18 @@ const Remuneration = () => {
   });
   const [vpfValue, setVpfValue] = useState("");
   const [vpfError, setVpfError] = useState(false);
+  const params = useParams();
+  const empId = params["employeeid"];
+console.log("paramsid",empId);
+
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     RemunerationView(currentEmpId);
     CostCentreSplitView(currentEmpId);
+    }else{
+    RemunerationView(empId);
+    CostCentreSplitView(empId);
+    }
   }, []);
   useEffect(() => {
     if (

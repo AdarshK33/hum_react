@@ -139,8 +139,9 @@ const InternShipLetter = () => {
                   has completed internship at {relivingLetterData.company} 
                   , from <b>{relivingLetterData.dateOfJoining}</b> to{" "}
                   <b>{relivingLetterData.lastWorkingDate}</b> on under the
-                  guidance of {relivingLetterData.managerName}.<br />
+                  guidance of {relivingLetterData.managerName}.</p>
                   <br />
+                  <p>
                   During the period of{" "}
                   {relivingLetterData.gender === "male" ||
                   relivingLetterData.gender === "MALE" ||
@@ -153,7 +154,11 @@ const InternShipLetter = () => {
                   relivingLetterData.gender === "Male"
                     ? "he"
                     : "she"}{" "}
-                  was punctual, hardworking and inquisitive. We wish{" "}
+                  was punctual, hardworking and inquisitive.
+                  </p>
+                  
+                  <p>
+                  We wish{" "}
                   {relivingLetterData.gender === "male" ||
                   relivingLetterData.gender === "MALE" ||
                   relivingLetterData.gender === "Male"

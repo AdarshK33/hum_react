@@ -8,6 +8,7 @@ import ViewTheLetter from "./view";
 import { ToastContainer, toast } from "react-toastify";
 import { PermissionContext } from "../../context/PermissionState";
 import "./myProfile.css";
+import { useParams, Link } from "react-router-dom";
 const OtherDocuments = (props) => {
   const { user } = useContext(AppContext);
   const {
@@ -47,10 +48,18 @@ const OtherDocuments = (props) => {
       ULOtherDocument: false,
     },
   ]);
+  const params = useParams();
+  const empId = params["employeeid"];
+console.log("paramsid",empId);
 
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     DocumentView(currentEmpId);
     OtherDocumentView(currentEmpId);
+    }else{
+      DocumentView(empId);
+    OtherDocumentView(empId);
+    }
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {
@@ -156,7 +165,7 @@ const OtherDocuments = (props) => {
       if (fileUpload) {
         console.log("inside file info", fileUpload, fileName);
         const fileInfo = {
-          employeeId: currentEmpId,
+          employeeId: currentEmpId !== 0 ? currentEmpId :empId,
           file: fileUpload,
           fileName: fileName,
         };
