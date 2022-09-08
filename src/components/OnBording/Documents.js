@@ -267,84 +267,84 @@ const Documents = (props) => {
           console.log("photodoc", item.documentName, item.documentType);
           photo = item.documentName ? item.documentName : "";
           photoStatus = item.status ? item.status : 0;
-          tempArray[0].ULPhotoId = true;
+          tempArray[0].ULPhotoId = item.status ===2 ? false :true;
         }
         if (item.documentType === 1 && item.documentName) {
           aadhar = item.documentName ? item.documentName : "";
           aadharStatus = item.status ? item.status : 0;
           adminAadharId = item.adminStatus ? item.adminStatus : 0;
-          tempArray[0].ULAdharId = true;
+          tempArray[0].ULAdharId = (item.status === 2 || item.adminStatus===2)? false : true;
         }
 
         if (item.documentType === 2 && item.documentName) {
           pan = item.documentName ? item.documentName : "";
           panStatus = item.status ? item.status : 0;
-          tempArray[0].ULPanId = true;
+          tempArray[0].ULPanId = item.status === 2 ? false : true;
         }
 
         if (item.documentType === 3 && item.documentName) {
           address = item.documentName ? item.documentName : "";
           addressStatus = item.status ? item.status : 0;
-          tempArray[0].ULAddressProof = true;
+          tempArray[0].ULAddressProof = item.status === 2 ? false : true;
         }
 
         if (item.documentType === 14 && item.documentName) {
           passportDoc = item.documentName ? item.documentName : "";
           passportDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULPassport = true;
+          tempArray[0].ULPassport = item.status === 2 ? false : true;
         }
 
         if (item.documentType === 17 && item.documentName) {
           frroDoc = item.documentName ? item.documentName : "";
           frroDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULFrro = true;
+          tempArray[0].ULFrro = item.status === 2 ? false : true;
         }
 
         if (item.documentType === 4 && item.documentName) {
           epfPassBookDoc = item.documentName ? item.documentName : "";
           epfPassBookDocStatus = item.status ? item.status : 0;
           adminEpfPassBook = item.adminStatus ? item.adminStatus : 0;
-          tempArray[0].ULEpfPassBook = true;
+          tempArray[0].ULEpfPassBook = (item.status === 2 || item.adminStatus===2)? false : true;
         }
 
         if (item.documentType === 5 && item.documentName) {
           cancelledChequeDoc = item.documentName ? item.documentName : "";
           cancelledChequeDocStatus = item.status ? item.status : 0;
           adminCancelledCheque = item.adminStatus ? item.adminStatus : 0;
-          tempArray[0].ULCancelledCheque = true;
+          tempArray[0].ULCancelledCheque = (item.status === 2 || item.adminStatus===2)? false : true;
         }
 
         if (item.documentType === 15 && item.documentName) {
           collegeLetterDoc = item.documentName ? item.documentName : "";
           collegeLetterDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULCollegeLetter = true;
+          tempArray[0].ULCollegeLetter = (item.status === 2 || item.adminStatus===2)? false : true;
           adminCollegeLetter = item.adminStatus ? item.adminStatus : 0;
         }
 
         if (item.documentType === 16 && item.documentName) {
           collegeIdDoc = item.documentName ? item.documentName : "";
           collegeIdDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULCollegeId = true;
+          tempArray[0].ULCollegeId = (item.status === 2 || item.adminStatus===2)? false : true;
           adminCollegeId = item.adminStatus ? item.adminStatus : 0;
         }
 
         if (item.documentType === 6 && item.documentName) {
           educationCertificateDoc = item.documentName ? item.documentName : "";
           educationCertificateDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULEducationCer = true;
+          tempArray[0].ULEducationCer = (item.status === 2 || item.adminStatus===2)? false : true;
           adminEducationCertificate = item.adminStatus ? item.adminStatus : 0;
         }
 
         if (item.documentType === 7 && item.documentName) {
           relievingLetterDoc = item.documentName ? item.documentName : "";
           relievingLetterDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULRelivingLetter = true;
+          tempArray[0].ULRelivingLetter =  item.status === 2 ? false : true;
         }
 
         if (item.documentType === 8 && item.documentName) {
           latestPaySlipsDoc = item.documentName ? item.documentName : "";
           latestPaySlipsDocStatus = item.status ? item.status : 0;
-          tempArray[0].ULLatestPaySlip = true;
+          tempArray[0].ULLatestPaySlip =  item.status === 2 ? false : true;
         }
       });
       setStateOfNames({
@@ -610,6 +610,8 @@ const Documents = (props) => {
   // UPLOAD VALIDATIONS
 
   const PhotoIdUploadValidation = () => {
+    console.log("PhotoIdUploadValidation1",FandP_Time_Required[0].ReqPhotoId);
+    console.log("PhotoIdUploadValidation2",UploadedArray[0].ULPhotoId);
     if (FandP_Time_Required[0].ReqPhotoId === true) {
       if (UploadedArray[0].ULPhotoId === false) {
         if (PhotoIdErrorValidation() === true) {

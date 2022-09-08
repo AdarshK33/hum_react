@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { TransferContext } from "../../context/TransferState";
 import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
+import { useParams, Link } from "react-router-dom";
 const Address = (props) => {
   const { user } = useContext(AppContext);
   const {
@@ -48,6 +49,9 @@ const Address = (props) => {
     candidateProfileData,
   } = useContext(OnBoardContext);
 
+  const params = useParams();
+  const empId = params["employeeid"];
+console.log("paramsid",empId);
   const [isChecked, changeCheckState] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const options = useMemo(() => countryList().getData(), []);
@@ -117,12 +121,18 @@ const Address = (props) => {
   const [permanentCityId, setPermanentCityId] = useState();
   const [addressValue, setAddressValue] = useState(0);
   // un commect
-  useEffect(() => {
-    addressView(currentEmpId);
+  useEffect(() => {   
     getCountryDetails();
     getCostCentreLocationDetails();
     stateData();
-    bankView(currentEmpId);
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
+      addressView(currentEmpId);
+      bankView(currentEmpId);
+    }else{
+      addressView(empId);
+      bankView(empId); 
+    }
+
   }, []);
 
   useEffect(() => {
@@ -951,7 +961,7 @@ if(stateList !== null &&
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
       const fileInfo = {
-        employeeId: currentEmpId,
+        employeeId: currentEmpId!==0?currentEmpId:empId,
         file: fileUpload,
         fileType: fileType,
       };
@@ -979,7 +989,7 @@ if(stateList !== null &&
           addressType: state.addressType,
           city: cityName,
           country: countryName,
-          employeeId: currentEmpId,
+          employeeId: currentEmpId !==0 ? currentEmpId :empId,
           flatNumber: state.flatNumber,
           locality: state.locality,
           phoneNumber: state.phoneNumber,
@@ -1003,7 +1013,7 @@ if(stateList !== null &&
                 // addressProof: "string",
                 city: permanentCityName,
                 country: permanentCountryName,
-                employeeId: currentEmpId,
+                employeeId: currentEmpId !== 0 ? currentEmpId :empId,
                 flatNumber: state.permanentFlatNumber,
                 locality: state.permanentLocality,
                 phoneNumber: state.permanentPhoneNumber,
@@ -1019,7 +1029,7 @@ if(stateList !== null &&
                 // addressProof: "string",
                 city: permanentCityName,
                 country: permanentCountryName,
-                employeeId: currentEmpId,
+                employeeId: currentEmpId !==0 ? currentEmpId :empId,
                 flatNumber: state.permanentFlatNumber,
                 locality: state.permanentLocality,
                 phoneNumber: state.permanentPhoneNumber,

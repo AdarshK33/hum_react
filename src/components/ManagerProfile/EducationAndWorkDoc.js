@@ -6,6 +6,7 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import ViewTheLetter from "./view";
 import { PermissionContext } from "../../context/PermissionState";
+import { useParams, Link } from "react-router-dom";
 
 const EducationAndWorkDoc = (props) => {
   const { user,fetchemployeeData } = useContext(AppContext);
@@ -17,6 +18,8 @@ const EducationAndWorkDoc = (props) => {
     SetLetterView,
     currentEmpId,
   } = useContext(EmployeeProfileContext);
+  const params = useParams();
+  const empId = params["employeeid"];
   const { downloadFile } = useContext(DocsVerifyContext);
   const [educationDocName, setEducationDocName] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
@@ -28,7 +31,11 @@ const EducationAndWorkDoc = (props) => {
   const [Name, setName] = useState("");
   const [EmployeeId,setEmployeeId] = useState("")
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     DocumentView(currentEmpId);
+    }else{
+    DocumentView(empId);
+    }
   }, []);
   console.log("documentsList", documentsList);
   useEffect(() => {

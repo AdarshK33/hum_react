@@ -24,16 +24,23 @@ import PersonalDoc from "./PersonalDoc";
 import OtherDocuments from "./OtherDocuments";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { PermissionContext } from "../../context/PermissionState";
-
+import { useParams, Link } from "react-router-dom";
 import moment from "moment";
 
 const Documents = () => {
+  const params = useParams();
+  const empId = params["employeeid"];
+
   const { rolePermission } = useContext(PermissionContext);
   const { DocumentView, documentsList, currentEmpId } = useContext(
     EmployeeProfileContext
   );
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     DocumentView(currentEmpId);
+    }else{
+      DocumentView(empId);
+    }
   }, []);
 
   return (

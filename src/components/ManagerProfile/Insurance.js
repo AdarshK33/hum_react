@@ -9,6 +9,7 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { AppContext } from "../../context/AppState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import moment from "moment";
+import { useParams, Link } from "react-router-dom";
 
 const Insurance = () => {
   const { user } = useContext(AppContext);
@@ -22,7 +23,8 @@ const Insurance = () => {
     UpdateInsurance,
     currentEmpId,
   } = useContext(EmployeeProfileContext);
-
+  const params = useParams();
+  const empId = params["employeeid"];
   const [sumInsured, setSumInsured] = useState("");
   const [premiumAmnt, setPremiumAmnt] = useState("");
   const [sumInsuredId, setSumInsuredId] = useState("");
@@ -31,7 +33,11 @@ const Insurance = () => {
   const [sumValueError, setSumValueError] = useState(false);
   const [isSumInsureUpdated, setIsSumInsureUpdated] = useState(false);  
   useEffect(() => {
+    if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
     InsuranceView(currentEmpId);
+    }else{
+      InsuranceView(empId); 
+    }
   }, []);
   useEffect(() => {
     if (year !== null && year !== undefined && year !== "") {
@@ -45,8 +51,12 @@ const Insurance = () => {
       sumInsuredId && 
       user &&
       Object.keys(user).length !== 0
-    ) {    
+    ) {
+      if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {    
       premiumView(sumInsuredId, currentEmpId);
+      }else{
+        premiumView(sumInsuredId, empId);
+      }
     }
    
 

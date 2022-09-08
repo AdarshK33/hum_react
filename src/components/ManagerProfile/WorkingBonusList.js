@@ -5,6 +5,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { AppContext } from "../../context/AppState";
+import { useParams, Link } from "react-router-dom";
 
 const WorkingBonusList = () => {
   const { user } = useContext(AppContext);
@@ -14,6 +15,11 @@ const WorkingBonusList = () => {
     EmpProfile,
     currentEmpId,
   } = useContext(EmployeeProfileContext);
+
+  const params = useParams();
+  const empId = params["employeeid"];
+console.log("paramsid",empId);
+
   const [actionStatus, setActionStatus] = useState("9");
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -25,7 +31,11 @@ const WorkingBonusList = () => {
       EmpProfile !== undefined &&
       Object.keys(EmpProfile).length !== 0
     ) {
+      if(currentEmpId !== 0 && currentEmpId !== null && currentEmpId !== undefined) {
       HolidayWorkingBonusView(currentEmpId);
+      }else{
+        HolidayWorkingBonusView(empId);
+      }
     }
   }, []);
   console.log("holidayWorkingBonusList", holidayWorkingBonusList);
