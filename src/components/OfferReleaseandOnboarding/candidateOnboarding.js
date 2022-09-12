@@ -146,8 +146,8 @@ const CandidateOnboarding = () => {
   useEffect(() => {
     if (
       onBoardData === null &&
-      candidateData !== undefined &&
-      candidateData.candidateInformation !== undefined
+      candidateData !== undefined && Object.keys(candidateData).length > 0 &&
+      candidateData.candidateInformation !== undefined && candidateData.candidateInformation !== null
     ) {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
@@ -167,7 +167,7 @@ const CandidateOnboarding = () => {
     console.log("employeeData", employeeData);
     if (
       personalInfoData !== undefined &&
-      personalInfoData !== null &&
+      personalInfoData !== null && Object.keys(personalInfoData).length > 0 &&
       personalInfoData.employeeId !== undefined
     ) {
       viewEmployee(personalInfoData.employeeId);
