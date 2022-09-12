@@ -133,7 +133,7 @@ const EmpResignation = () => {
       fetchemployeeData.department == "IT" ||
       fetchemployeeData.department == "Legal" ||
       fetchemployeeData.department == "Finance") &&
-      (fetchemployeeData.contractType === "Fulltime" || fetchemployeeData.contractType === "parttime")
+      (fetchemployeeData.contractType === "Fulltime" || fetchemployeeData.contractType === "parttime" || fetchemployeeData.contractType === "Parttime")
     ) {
       setNoticePeriod(2);
       var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 2));
