@@ -132,14 +132,14 @@ const CandidateOnboarding = () => {
     ) {
       candidateOnBoard(candidateData.candidateInformation.candidateId);
     }
-    if (onBoardData === null) {
-      if (
-        candidateData !== undefined &&
-        candidateData.candidateInformation !== undefined && candidateData.candidateInformation !== null
-      ) {
-      personalInfo(candidateData.candidateInformation.candidateId);
-      }
-    }
+    // if (onBoardData === null) {
+    //   if (
+    //     candidateData !== undefined &&
+    //     candidateData.candidateInformation !== undefined && candidateData.candidateInformation !== null
+    //   ) {
+    //   personalInfo(candidateData.candidateInformation.candidateId);
+    //   }
+    // }
   }, [candidateData]);
   console.log("RoleList", RoleList,user);
 
