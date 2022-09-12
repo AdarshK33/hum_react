@@ -79,7 +79,7 @@ const ChangeEmployementType = ({ transferData }) => {
               {transferData.salaryType}
             </Col>
 
-            <Col md={2}>{transferData.promotedContractType == "parttime"?"Hourly Pay":"Fixed Gross:"}</Col>
+            <Col md={2}>{transferData.promotedContractType == "Parttime"?"Hourly Pay":"Fixed Gross:"}</Col>
             <Col md={4} className="text-primary">
               {transferData.promotedFixedGross}
             </Col>

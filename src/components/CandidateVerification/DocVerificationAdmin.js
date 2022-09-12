@@ -472,7 +472,7 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Pan Number
                             </span>{" "}
-                            {personalInfoData.contractType !== "Local Expat" && personalInfoData.contractType !== "Internship" && personalInfoData.contractType !== "parttime" ? (
+                            {personalInfoData.contractType !== "Local Expat" && personalInfoData.contractType !== "Internship" && personalInfoData.contractType !== "Parttime" ? (
                               <span style={{ color: "red" }}>*</span>
                             ) : (
                               ""

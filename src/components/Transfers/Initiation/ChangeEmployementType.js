@@ -253,7 +253,7 @@ const { rolePermission } = useContext(PermissionContext);
             newEmployement !== null && newEmployement !== ""
               ? newEmployement === "From Part Time to Full Time"
                 ? "Fulltime"
-                : "parttime"
+                : "Parttime"
               : null,
           salaryType:
             newEmployement !== null && newEmployement !== ""
