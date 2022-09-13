@@ -236,7 +236,10 @@ const ManagerInitiateExit = () => {
         state.empContractType === "fulltime" ||
         state.empContractType === "parttime" ||
         state.empContractType === "PartTime" ||
-        state.empContractType === "Parttime"
+        state.empContractType === "Parttime" ||
+        state.empContractType ===  "local expat"||
+        state.empContractType === "Local Expat"
+
       ) {
         var dateValue = new Date(
           new Date().setMonth(
@@ -495,7 +498,10 @@ const ManagerInitiateExit = () => {
         state.empContractType === "Fulltime" ||
         state.empContractType === "fulltime" ||
         state.empContractType === "parttime" ||
-        state.empContractType === "Parttime"
+        state.empContractType === "Parttime" ||
+        state.empContractType ===  "local expat"||
+        state.empContractType === "Local Expat"
+
       ) {
         var dateValue = new Date(
           new Date().setMonth(
@@ -543,7 +549,6 @@ const ManagerInitiateExit = () => {
       setEmpName("");
     }
   }, [searchByCostData]);
-
   useEffect(() => {
     if (
       fetchemployeeData &&
@@ -562,9 +567,6 @@ const ManagerInitiateExit = () => {
       state.mngrPosition = fetchemployeeData.position;
     }
   }, [fetchemployeeData]);
-
-  console.log("searchByCostData", searchByCostData);
-  console.log(employeeProfileData,fetchemployeeData, "employeeProfileData");
 
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();
@@ -1781,7 +1783,10 @@ const ManagerInitiateExit = () => {
                                      ( state.empContractType == "fulltime" ||
                                       state.empContractType == "Fulltime" ||
                                       state.empContractType == "Parttime" ||
-                                      state.empContractType == "parttime") &&
+                                      state.empContractType == "parttime" ||
+                                      state.empContractType =="Local Expat" ||
+                                      state.empContractType == "local expat"
+                                      ) &&
                                       item.label !== "End of Contract" 
                                     ) {
                                       return (

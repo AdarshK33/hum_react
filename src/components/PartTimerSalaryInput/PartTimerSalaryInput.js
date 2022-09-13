@@ -59,10 +59,11 @@ const PartTimerSalaryInput = () => {
        
       });
     }
+    else{
       const searchText = employeeRef.current.getInput();
       let key =searchText.value.split("/")
        ViewEmployeeData(key[0]);
- 
+    }
   }, [searchEmpSelected]);
 
   useEffect(() => {
