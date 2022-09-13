@@ -199,7 +199,8 @@ const EmployeeExitAction = (props) => {
         state.contractType === "Fulltime" ||
         state.contractType === "fulltime" ||
         state.contractType === "parttime" ||
-        state.contractType === "PartTime"
+        state.contractType === "PartTime" ||
+        state.contractType === "Parttime"
       ) {
         var dateValue = new Date(
           new Date().setMonth(new Date().getMonth() + state.noticePeriod)

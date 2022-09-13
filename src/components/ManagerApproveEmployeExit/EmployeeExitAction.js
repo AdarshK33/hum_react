@@ -159,7 +159,9 @@ const EmployeeExitAction = (props) => {
         state.empContractType === "Fulltime" ||
         state.empContractType === "fulltime" ||
         state.empContractType === "parttime" ||
-        state.empContractType === "PartTime"
+        state.empContractType === "PartTime" ||
+        state.empContractType === "Parttime"
+
       ) {
         var dateValue = new Date(
           new Date(employeeData.dateOfResignation).setMonth(

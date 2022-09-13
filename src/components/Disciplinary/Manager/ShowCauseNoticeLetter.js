@@ -312,9 +312,9 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
                     disciplinarySearchData.gender !== undefined &&
                     disciplinarySearchData.maritalStatus !== null &&
                     disciplinarySearchData.maritalStatus !== undefined
-                      ? disciplinarySearchData.gender === "MALE"
+                      ? disciplinarySearchData.gender === "MALE" 
                         ? "Mr."
-                        : disciplinarySearchData.maritalStatus === "Married"
+                        : disciplinarySearchData.gender == "FEMALE" && disciplinarySearchData.maritalStatus === "Married"
                         ? "Mrs."
                         : "Miss."
                       : "Mr./Ms."}

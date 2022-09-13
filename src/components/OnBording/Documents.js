@@ -412,7 +412,7 @@ const Documents = (props) => {
       let tempArray = [...FandP_Time_Required];
       tempArray[0].ReqPhotoId = true;
       tempArray[0].ReqAdharId = true;
-      tempArray[0].ReqPanId = true;
+      tempArray[0].ReqPanId = fullTime === true ? true: false;
       tempArray[0].ReqAddressProof = true;
       tempArray[0].ReqEpfPassBook = true;
       tempArray[0].ReqCancelledCheque = true;
