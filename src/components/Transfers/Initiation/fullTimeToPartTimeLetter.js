@@ -125,8 +125,10 @@ const FullTimeToPartTimeLetter = (props) => {
                   <b>Change from Full time to Part Time </b>
                 </h5>
                 <br />
+                <div style={{display: "flex", justifyContent: "space-between"}}>
                 <p>To,</p>
                 <p>Date: {moment().format("DD-MM-YYYY")}</p>
+                </div>
                 <br />
 
                 <p>{offerLetterData.candidateName}</p>
@@ -172,8 +174,7 @@ const FullTimeToPartTimeLetter = (props) => {
                 <p>
                   We are pleased to appoint you as Permanent Employee on a Part
                   Time basis, You will be designated as{" "}
-                  <b>{offerLetterData.position}</b> your responsibilities would
-                  be those of a <b>{offerLetterData.position}</b> at our{" "}
+                  <b>{offerLetterData.position}</b> at our{" "}
                   <b>{offerLetterData.location} </b> location effective{" "}
                   <b>{offerLetterData.partTimeCandidateOffer.effectiveDate}</b>.
                 </p>

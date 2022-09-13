@@ -374,22 +374,22 @@ const LocalExpatOfferLetter = () => {
                       <td>Gratuity </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.gratuity
+                          offerLetterData.permanentCandidateOffer.gratuity.toFixed(1)
                         )}
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.gratuity 
+                          offerLetterData.permanentCandidateOffer.gratuity.toFixed(1) 
                         )* 12}
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.gratuity
+                          offerLetterData.permanentCandidateOffer.gratuity.toFixed(1)
                         )}
                       </td>
                       <td>
                         {Math.round(
-                          offerLetterData.permanentCandidateOffer.gratuity 
+                          offerLetterData.permanentCandidateOffer.gratuity.toFixed(1) 
                         )* 12}
                       </td>
                     </tr>

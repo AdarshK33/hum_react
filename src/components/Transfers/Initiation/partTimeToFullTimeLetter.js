@@ -122,9 +122,10 @@ const PartTimeToFullTimeLetter = (props) => {
                   <b>Change from Part time to Full Time </b>
                 </h5>
                 <br />
+                <div style={{display: "flex", justifyContent: "space-between"}}>
                 <p>To,</p>
                 <p>Date: {moment().format("DD-MM-YYYY")}</p>
-
+                </div>
                 <br />
                 <p>{offerLetterData.candidateName}</p>
                 <p>{offerLetterData.employeeId}</p>
