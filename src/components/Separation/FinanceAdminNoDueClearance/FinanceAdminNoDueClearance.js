@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, { Fragment, useState, useContext, useEffect,useRef } from "react";
 import Breadcrumb from "../../common/breadcrumb";
 import { SeparationContext } from "../../../context/SepearationState";
 import {
@@ -65,6 +65,7 @@ const FinanaceAdminNoDueClearance = () => {
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const [currentRecords, setCurrentRecords] = useState([]);
   // const currentRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined ? financeAdminNoDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const inputUploadRef = useRef(null);
 
   useEffect(() => {
     console.log(pageCount, "pageCount");
@@ -295,13 +296,14 @@ const FinanaceAdminNoDueClearance = () => {
         fileUpload.size !== "" &&
         (fileUpload.size / (1024*1024) < 2 || fileUpload.size / (1024*1024) == 2)
       ) {
-        if (fileUpload !== undefined && fileUpload !== null) {
+        if (fileUpload !== undefined && fileUpload !== null && inputUploadRef.current.value) {
           FinanceClearanceUploadSettlement(
             fileUpload,
             searchValue,
             pageCount,
             costCenter
           );
+          inputUploadRef.current.value = null; // reset the upload value
         } else {
           toast.error("Please select a file to upload");
         }
@@ -512,6 +514,7 @@ const FinanaceAdminNoDueClearance = () => {
                       Upload F & F Settlement
                     </Button>
                     <input
+                      ref={inputUploadRef}
                       type="file"
                       accept=".xlsx, .xls"
                       style={{
