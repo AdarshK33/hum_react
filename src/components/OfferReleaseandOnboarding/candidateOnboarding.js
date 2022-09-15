@@ -168,7 +168,7 @@ const CandidateOnboarding = () => {
     if (
       personalInfoData !== undefined &&
       personalInfoData !== null && Object.keys(personalInfoData).length > 0 &&
-      personalInfoData.employeeId !== undefined
+      personalInfoData.employeeId !== undefined && personalInfoData.employeeId !== null
     ) {
       viewEmployee(personalInfoData.employeeId);
       // setEmployeeData(empData);

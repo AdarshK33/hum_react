@@ -347,7 +347,7 @@ const EmployeeExitList = () => {
                             <td>{item.reasonForResignation}</td>
                             {/* <td>{item.modeOfSeparationReasonId}</td> */}
                             <td>
-                              {item.contractType.toLowerCase() === "internship"
+                              {item.contractType!== null && item.contractType !== undefined && item.contractType.toLowerCase() === "internship"
                                 ? "NA"
                                 : item.department == "AFS" ||
                                   item.department == "IT" ||
