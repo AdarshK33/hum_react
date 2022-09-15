@@ -195,6 +195,7 @@ const CandidateOnboarding = () => {
     if (
       empData !== undefined &&
       empData !== null &&
+      Object.keys(empData).length !== 0 &&
       candidateData !== undefined &&
       candidateData !== null &&
       Object.keys(candidateData).length !== 0
