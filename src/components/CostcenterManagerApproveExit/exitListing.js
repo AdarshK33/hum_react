@@ -266,7 +266,7 @@ const ExitListing = () => {
                               <td>{item.reasonForResignation}</td>
                               <td>{item.managerName}</td>
                               <td>
-                                {item.contractType.toLowerCase() ===
+                                {item.contractType!==null && item.contractType !== undefined && item.contractType.toLowerCase() ===
                                 "internship"
                                   ? "NA"
                                   : item.department == "AFS" ||
