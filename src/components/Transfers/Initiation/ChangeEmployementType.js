@@ -73,7 +73,7 @@ const { rolePermission } = useContext(PermissionContext);
   const employeeRef = useRef(null);
 
   useEffect(() => {
-   
+   if(searchEmpSelected.length==0){
     if (
       rolePermission === "admin"
     ){
@@ -94,8 +94,8 @@ const { rolePermission } = useContext(PermissionContext);
     ){
      getEmployeeDetails(2);
     }
-  
-  }, []);
+  }
+  }, [searchEmpSelected]);
   useEffect(() => {
     if (searchValue !== "") {
       getTransferInitiationEmpData(searchValue);
@@ -637,7 +637,7 @@ const { rolePermission } = useContext(PermissionContext);
                                         // labelKey='firstName'
                                         ref={employeeRef}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
                                         onChange={setSearchEmpSelected}
                                         selected={searchEmpSelected}

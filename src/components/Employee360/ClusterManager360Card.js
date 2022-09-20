@@ -247,7 +247,7 @@ useEffect(() => {
                                         type="text"
                                         ref={employeeMyTeamRef}
                                         options={employeeMyTeam}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search Employee Name/ID"
                                         onChange={setSearchMyTeamSelected}
                                         selected={searchMyTeamSelected}
@@ -443,7 +443,7 @@ useEffect(() => {
                                         type="text"
                                         ref={employeeAllTeamRef}
                                         options={employeeAllTeam}
-                                         labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search Employee Name/ID"
                                         onChange={setSearchAllTeamSelected}
                                         selected={searchAllTeamSelected}
