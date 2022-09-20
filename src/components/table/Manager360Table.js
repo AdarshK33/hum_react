@@ -17,10 +17,13 @@ const TableComponentManager360 = ({
     <div style={{ height: height }}>
       <TableScrollbar>
         <table className="table table-hover">
-          <thead className="thead-light" style={{ fontSize: "15px" }}>
-            <tr>
+          <thead className="thead-light " style={{ fontSize: "15px" }}>
+            <tr >
+             
               {Object.entries(tableHeaders).map(([key, value]) => (
-                <th key={key}>{value}</th>
+                <th key={key}>
+                {value} 
+                  </th>
               ))}
             </tr>
           </thead>
@@ -29,14 +32,14 @@ const TableComponentManager360 = ({
           Object.keys(tableBody).length !== 0 ? (
             <tbody style={{ fontSize: "15px" }}>
               {tableBody.map((item, itemIndex) => (
-                <tr key={`${item.sno}_${itemIndex}`}>
+                <tr key={`${item.sno}_${itemIndex}`} >
                   {Object.entries(item).map(([key, value], index) => {
                     console.log(value,key,"table1")
                     if (key === "view") {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                          {value.link !== "" ? (           
-                            <Link to={value.link}>
+                          {value.link !== "" ? (
+                             <Link to={value.link}>
                               <TableActionButton
                                 disabled={!value.active}
                                 type={key}
@@ -52,7 +55,8 @@ const TableComponentManager360 = ({
                           )}
                         </td>
                       );
-                    } else if (key === "action") {
+                    }
+                     else if (key === "action") {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
                           <Row className="text-center">
@@ -87,7 +91,7 @@ const TableComponentManager360 = ({
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
                           <Link
-                            to={item.action.edit.link}
+                            // to={item.action.edit.link}
                             style={{ textDecoration: "none" }}
                           >
                             {value}
@@ -97,8 +101,7 @@ const TableComponentManager360 = ({
                     }
                   })}
                 </tr>
-              ))}
-                              
+              ))}           
             </tbody>
           ) : (
             <tbody>

@@ -93,10 +93,11 @@ const PromotionInitiate = () => {
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
   const [reportManager, setReportManager] = useState();
   
-  const [managerListDep, setManagerListDep] = useState(false);
-  const [managerListPos, setManagerListPos] = useState(false);
+  const [managerDetailsDisplay, setManagerDetailsDisplay] = useState(false);
+  const [positionsDisplay, setPositionsDisplay] = useState(false);
+  const [departmentsReset, setDepartmentsReset] = useState(false);
 
-  // console.log("ssssssssssss",searchEmpSelected);
+
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -135,10 +136,9 @@ const PromotionInitiate = () => {
   // const employeeRef = React.createRef();
   const employeeRef = useRef(null);
 
-  // console.log("eeeeee",employeeDetails)
   //get ALL EmployeeDetails
   useEffect(() => {
-   
+    if(searchEmpSelected.length==0){
     if (
       rolePermission === "admin"
     ){
@@ -159,7 +159,7 @@ const PromotionInitiate = () => {
     ){
      getEmployeeList(2);
     }
-  
+    }
   }, [searchEmpSelected]);
 //   useEffect(() => {}, [employeeDetails]);
     //  console.log("employeeDetails",employeeDetails)
@@ -183,11 +183,7 @@ const PromotionInitiate = () => {
     }
   }, [departmentNew]);
 
-  useEffect(() => {
-    if(managerListDep){
-      setManagerListPos(true);
-    }
-  }, [position]);
+
   useEffect(() => {
     ViewEmployeeProfile();
     fetchEmployeeProfile();
@@ -646,6 +642,8 @@ const PromotionInitiate = () => {
   };
 
   const reportManagerChangeHandler = (e) => {
+    setReportManager("");
+    if(e.value){
     setReportManager(e.value);
     let selectedEmployeeId=e.value.split("-")[1].trim()
     allManagerList.map((item) => {
@@ -661,9 +659,101 @@ const PromotionInitiate = () => {
         });
       }
     });
+  }
+  else{
+    setReportManager("");
+    setState({
+      ...state,
+      reportingManagerId: "",
+      reportingManagerName: "",
+    });
+  }
   };
 
   const getStringValue = (data, type) => data[type] || '';
+  
+  const changeHandlerDepartmentId = (e) => {
+    setPosition("");
+    setState({
+      ...state,
+      positionId:"",
+      promotedPosition:"",
+    });
+    setManagerDetailsDisplay(false);
+    setPositionsDisplay(false);
+    if (e.target.name === "departmentId" && e.target.value) {
+      let value = departmentName.filter(
+        (item) => item.departmentName === e.target.value
+      );
+      setDepartmentNew(e.target.value);
+      setState({
+        ...state,
+        positionId: "",
+        promotedPosition: "",
+        reportingManagerId:"",
+        reportingManagerName: "",
+        newDepartment: value[0].departmentName,
+        departmentId: value[0].deptId,
+      });
+      
+      setPositionsDisplay(true);
+      setManagerDetailsDisplay(false);
+      // console.log(e.target.value, value, state, "department2");
+    } 
+    else{
+      setState({
+        ...state,
+        newDepartment: "",
+        departmentId: "",
+        positionId: "",
+        promotedPosition: "",
+        reportingManagerId:"",
+        reportingManagerName: "",
+      });
+      setPositionsDisplay(false);
+      setManagerDetailsDisplay(false);
+      setDepartmentNew("");
+      setPosition("");
+    }
+  }
+  const changeHandlerPositionId = (e) => {
+    setReportManager("");
+    setPosition("");
+    setManagerDetailsDisplay(false)
+  
+    if (e.target.name === "positionId" &&e.target.value) {
+      positionNew.map((item) => {
+        if (item.position === e.target.value) {
+   
+          setPosition(e.target.value);
+          //  if(positionsDisplay){
+          setManagerDetailsDisplay(true)
+          //  }
+          setState({
+            ...state,
+            positionId: item.positionId,
+            promotedPosition: item.position,
+            reportingManagerId:"",
+            reportingManagerName: "",
+          });
+        }
+      });
+    } 
+    else{
+    
+      setPositionsDisplay(false);
+      setManagerDetailsDisplay(false);
+      setReportManager("");
+      setPosition("");
+      setState({
+        ...state,
+        positionId: "",
+        promotedPosition: "",
+        reportingManagerId:"",
+        reportingManagerName: "",
+      });
+    }
+  }
 
   const changeHandler = (e) => {
     console.log("ttttttttttttttt",e)
@@ -674,35 +764,36 @@ const PromotionInitiate = () => {
         ...state,
         empName: e.target.value,
       });
-    } else if (e.target.name === "departmentId") {
-      let value = departmentName.filter(
-        (item) => item.departmentName === e.target.value
-      );
-      console.log(e.target.value, value, state, "department1");
-      setDepartmentNew(e.target.value);
-      setManagerListDep(true);
-      setState({
-        ...state,
-        newDepartment: value[0].departmentName,
-        departmentId: value[0].deptId,
-      });
-      console.log(e.target.value, value, state, "department2");
-    } else if (e.target.name === "positionId") {
-      positionNew.map((item) => {
-        if (item.position === e.target.value) {
-          setPosition(e.target.value);
-          if(managerListDep){
-            setManagerListPos(true);
-          }
-          setState({
-            ...state,
-            positionId: item.positionId,
-            promotedPosition: item.position,
-          });
-        }
-      });
-      console.log(e.target.value, state, "value666");
-    } 
+    }
+    //  else if (e.target.name === "departmentId") {
+    //   let value = departmentName.filter(
+    //     (item) => item.departmentName === e.target.value
+    //   );
+    //   console.log(e.target.value, value, state, "department1");
+    //   setDepartmentNew(e.target.value);
+    //   setManagerListDep(true);
+    //   setState({
+    //     ...state,
+    //     newDepartment: value[0].departmentName,
+    //     departmentId: value[0].deptId,
+    //   });
+    //   console.log(e.target.value, value, state, "department2");
+    // } else if (e.target.name === "positionId") {
+    //   positionNew.map((item) => {
+    //     if (item.position === e.target.value) {
+    //       setPosition(e.target.value);
+    //       if(managerListDep){
+    //         setManagerListPos(true);
+    //       }
+    //       setState({
+    //         ...state,
+    //         positionId: item.positionId,
+    //         promotedPosition: item.position,
+    //       });
+    //     }
+    //   });
+    //   console.log(e.target.value, state, "value666");
+    // } 
     // else if (e.target.name === "reportingManagerId") {
       // allManagerList.map((item) => {
       //   const temp =
@@ -1114,7 +1205,7 @@ const PromotionInitiate = () => {
                                        
                                         ref={employeeRef}
                                         options={promotionEmployeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
 
                                         // labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}
                                         placeholder="Search.."
@@ -1218,7 +1309,7 @@ const PromotionInitiate = () => {
                                     : { borderRadius: "5px" }
                                 }
                                 defaultValue={departmentNew}
-                                onChange={(e) => changeHandler(e)}
+                                onChange={(e) => changeHandlerDepartmentId(e)}
                               >
                                 <option value="">Select Department</option>
                                 {departmentName !== null &&
@@ -1253,29 +1344,54 @@ const PromotionInitiate = () => {
                             <label>New Position </label>
                           </Col>
                           <Col sm={8}>
-                            <Form.Group>
+                          {positionsDisplay? (
+                            <> <Form.Group>
+                            <Form.Control
+                              as="select"
+                              name="positionId"
+                              defaultValue={position}
+                              style={
+                                positionIdError
+                                  ? { borderColor: "red" }
+                                  : { borderRadius: "5px" }
+                              }
+                              onChange={(e) => changeHandlerPositionId(e)}
+                            >
+                              <option value="">Select Position</option>
+                              {positionNew !== null &&
+                                positionNew !== undefined &&
+                                positionNew.length > 0 &&
+                                positionNew.map((item, index) => {
+                                  return (
+                                    <option key={index}>
+                                      {item.position}
+                                    </option>
+                                  );
+                                })}
+                            </Form.Control>
+                            {positionIdError ? (
+                              <p style={{ color: "red" }}>
+                                {positionIdError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </Form.Group> 
+                          </>):(
+                            <>
+                              <Form.Group>
                               <Form.Control
                                 as="select"
                                 name="positionId"
-                                defaultValue={position}
+                                
                                 style={
                                   positionIdError
                                     ? { borderColor: "red" }
                                     : { borderRadius: "5px" }
                                 }
-                                onChange={(e) => changeHandler(e)}
+                                // onChange={(e) => changeHandler(e)}
                               >
-                                <option value="">Select Position</option>
-                                {positionNew !== null &&
-                                  positionNew !== undefined &&
-                                  positionNew.length > 0 &&
-                                  positionNew.map((item, index) => {
-                                    return (
-                                      <option key={index + 1}>
-                                        {item.position}
-                                      </option>
-                                    );
-                                  })}
+                              <option value="">Select Position</option>
                               </Form.Control>
                               {positionIdError ? (
                                 <p style={{ color: "red" }}>
@@ -1285,6 +1401,10 @@ const PromotionInitiate = () => {
                                 ""
                               )}
                             </Form.Group>
+                            
+                            </>
+                          )}
+                           
                           </Col>
                         </Row>
                         <Row
@@ -1346,35 +1466,35 @@ const PromotionInitiate = () => {
                                 ""
                               )}
                             </Form.Group> */}
-                           {managerListPos? (
+                           {managerDetailsDisplay? (
                             <>
                                <div className="form-input" >
                 
-                              <Select
-                  name="reportingManagerId"
-                  as="select"
-                  value={{
-                    'label': reportManager,
-                    'value':reportManager}} 
-                  className="form-input"
-                  aria-label="reportingManagerId"
-                  placeholder="Select Manager"
-                  // disabled=
-                  // isDisabled={managerListPos}
-                  onChange={(e) => reportManagerChangeHandler(e)}
-                  // styles= {customStyles}
-                  options={
-                    allManagerList !== null &&
-                    allManagerList !== undefined &&
-                    allManagerList.length > 0 &&
-                    allManagerList.map((item, index) => ({
-                    label:getStringValue(item, 'firstName') + " " + getStringValue(item, 'lastName') + "-" + item.employeeId,
-                    value:item.firstName + " " + item.lastName +"-" + item.employeeId,
-                        }))}
-                  required
-                  isSearchable
-                />
-                </div> 
+                                            <Select
+                                name="reportingManagerId"
+                                as="select"
+                                value={{
+                                  'label': reportManager,
+                                  'value':reportManager}} 
+                                className="form-input"
+                                aria-label="reportingManagerId"
+                                placeholder="Select Manager"
+                                // disabled=
+                                // isDisabled={managerListPos}
+                                onChange={(e) => reportManagerChangeHandler(e)}
+                                // styles= {customStyles}
+                                options={
+                                  allManagerList !== null &&
+                                  allManagerList !== undefined &&
+                                  allManagerList.length > 0 &&
+                                  allManagerList.map((item, index) => ({
+                                  label:getStringValue(item, 'firstName') + " " + getStringValue(item, 'lastName') + "-" + item.employeeId,
+                                  value:item.firstName + " " + item.lastName +"-" + item.employeeId,
+                                      }))}
+                                required
+                                isSearchable
+                              />
+                               </div> 
                             </>
                           ):(
                             <>
@@ -1383,7 +1503,7 @@ const PromotionInitiate = () => {
                                 as="select"
                                 name="reportingManagerId"
                                 style={
-                                  departmentIdError
+                                  reportingManagerError
                                     ? { borderColor: "red" }
                                     : { borderRadius: "5px" }
                                 }
@@ -1403,11 +1523,8 @@ const PromotionInitiate = () => {
                             </Form.Group>
                             </>
                           )}
-                       
-                 
-                     
-                </Col>
-                        </Row>
+                      </Col>
+                 </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",

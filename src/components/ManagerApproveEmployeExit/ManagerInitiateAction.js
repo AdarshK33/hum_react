@@ -1389,7 +1389,7 @@ e.preventDefault()
                                         // labelKey='firstName'
                                         ref={employeeRef}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
                                        
                                        

@@ -93,6 +93,7 @@ const IssueShowCauseNotice = () => {
   const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   useEffect(() => {
    //condtion  checkbox
+   if(searchEmpSelected.length==0){
     if (
       rolePermission === "admin"
     ){
@@ -114,7 +115,7 @@ const IssueShowCauseNotice = () => {
     {
      getEmployeeDetails(2);
     }
-  
+  }
   }, [searchEmpSelected]);
   useEffect(() => {
     ViewEmployeeProfile();
@@ -803,7 +804,7 @@ const IssueShowCauseNotice = () => {
                                         ref={employeeRef}
                                         // labelKey='firstName'
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
                                         onChange={setSearchEmpSelected}
                                         selected={searchEmpSelected}
