@@ -356,7 +356,9 @@ const PersonalInformation = (props) => {
                 )}
               </Form.Group>
             </Col>
-          
+          {EmpProfile !== null &&
+        EmpProfile !== undefined &&
+        Object.keys(EmpProfile).length !== 0 && EmpProfile.contractType.toLowerCase() !== "local expat" && EmpProfile.contractType.toLowerCase() !== "internship"?
             <Col sm={3}>
               <label>
                 <b>PAN Number</b>
@@ -364,6 +366,8 @@ const PersonalInformation = (props) => {
               <br />
               <label className="itemResult">{EmpProfile.panNo}</label>
             </Col>
+            :""
+          }
             <Col sm={3}>
               <label>
                 <b>PF UAN Number</b>
