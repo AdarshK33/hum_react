@@ -63,7 +63,7 @@ const { rolePermission } = useContext(PermissionContext);
   const [modalShow, setModalShow] = useState(false);
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
   useEffect(() => {
-   
+  if(searchEmpSelected.length==0){
     if (
       rolePermission === "admin"
     ){
@@ -84,7 +84,7 @@ const { rolePermission } = useContext(PermissionContext);
     ){
      getEmployeeDetails(2);
     }
-  
+  }
   }, [searchEmpSelected]);
 
   useEffect(() => {
@@ -500,7 +500,7 @@ const { rolePermission } = useContext(PermissionContext);
                                         // labelKey='firstName'
                                         // onChange={searchInputHandler}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
                                         onChange={setSearchEmpSelected}
                                         selected={searchEmpSelected}

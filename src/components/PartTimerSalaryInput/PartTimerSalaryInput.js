@@ -458,7 +458,7 @@ const PartTimerSalaryInput = () => {
                                 disabled={!employeeData.length}
                                 ref={employeeRef}
                                 options={employeeData}
-                                 labelKey={option => `${option.firstName} ${option.lastName} / ${option.employeeId}`}
+                                 labelKey={option => `${option.firstName ??''} ${option.lastName ??''} / ${option.employeeId??''}`}
                                 placeholder="Search.."
                                 onChange={setSearchEmpSelected}
                                 selected={searchEmpSelected}

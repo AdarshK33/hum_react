@@ -273,7 +273,7 @@ const RegularTransferAction = () => {
     setShowLetterSubmitModal(true);
   };
 
-  console.log(transferData, "transferData");
+  console.log(transferData.promotedMonthlyBonus, "hello transferData");
   return (
     <Fragment>
       {/* <ToastContainer /> */}

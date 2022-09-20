@@ -161,7 +161,6 @@ const ManagerInitiateExit = () => {
     ){
      getEmployeeDetails(2);
     }
-  
   }, []);
   useEffect(() => {
     ViewEmployeeProfile();
@@ -1571,7 +1570,7 @@ const ManagerInitiateExit = () => {
                                         // labelKey='firstName'
                                         ref={employeeRef}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
                                         onChange={setSearchEmpSelected}
                                         selected={searchEmpSelected}

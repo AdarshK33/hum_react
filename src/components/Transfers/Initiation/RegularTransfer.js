@@ -41,7 +41,7 @@ const RegularTransfer = () => {
     ExportPDFandUploadRegular,
     uploadRegularTransferForm,
   } = useContext(TransferContext);
-  
+ 
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
     const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
@@ -93,7 +93,7 @@ const RegularTransfer = () => {
 
 
   useEffect(() => {
-   
+  if(searchEmpSelected.length==0){
     if (
       rolePermission === "admin"
     ){
@@ -114,7 +114,7 @@ const RegularTransfer = () => {
     ){
      getEmployeeDetails(2);
     }
-  
+  }
   }, [searchEmpSelected]);
   useEffect(() => {
     if (
@@ -635,6 +635,7 @@ const RegularTransfer = () => {
     }
   };
 
+  console.log("hello transferData",transferData)
   return (
     <div className="transfer-initiation">
       <ToastContainer />
@@ -770,7 +771,7 @@ const RegularTransfer = () => {
                                         // labelKey='firstName'
                                         // onChange={searchInputHandler}
                                         options={employeeDetails}
-                                        labelKey={option => `${option.firstName} ${option.lastName}`}
+                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
                                         onChange={setSearchEmpSelected}
                                         selected={searchEmpSelected}
