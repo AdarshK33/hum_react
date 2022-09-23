@@ -90,12 +90,15 @@ const TableComponentManager360 = ({
                     } else {
                       return (
                         <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                          <Link
+                          {/* <Link
                             // to={item.action.edit.link}
                             style={{ textDecoration: "none" }}
-                          >
-                            {value}
-                          </Link>
+                          > */}
+                            <span style={{ textDecoration: "none" ,color: "#4466f2"}}>
+                              {value}
+                            </span>
+                            
+                          {/* </Link> */}
                         </td>
                       );
                     }
