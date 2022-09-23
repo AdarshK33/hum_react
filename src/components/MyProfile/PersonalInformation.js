@@ -325,7 +325,9 @@ const PersonalInformation = (props) => {
               )}
             </Form.Group>
           </Col>
-         
+          {fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 && fetchemployeeData.contractType.toLowerCase() !== "local expat" && fetchemployeeData.contractType.toLowerCase() !== "internship"?
           <Col sm={3}>
             <label>
               <b>PAN Number</b>
@@ -333,6 +335,8 @@ const PersonalInformation = (props) => {
             <br />
             <label className="itemResult">{fetchemployeeData.panNo}</label>
           </Col>
+          :""
+}
           <Col sm={3}>
             <label>
               <b>PF UAN Number</b>

@@ -166,14 +166,19 @@ const CandidateOnboarding = () => {
   useEffect(() => {
     console.log("employeeData", employeeData);
     if (
-      personalInfoData !== undefined &&
-      personalInfoData !== null && Object.keys(personalInfoData).length > 0 &&
-      personalInfoData.employeeId !== undefined && personalInfoData.employeeId !== null
+      (onBoardData !== undefined &&
+      onBoardData !== null && Object.keys(onBoardData).length > 0 &&
+      onBoardData.employeeId !== undefined && onBoardData.employeeId !== null)
     ) {
-      viewEmployee(personalInfoData.employeeId);
+      viewEmployee(onBoardData.employeeId);
       // setEmployeeData(empData);
-    }
-  }, [personalInfoData]);
+    }else if(personalInfoData !== undefined &&
+      personalInfoData !== null && Object.keys(personalInfoData).length > 0 &&
+      personalInfoData.employeeId !== undefined && personalInfoData.employeeId !== null){
+        viewEmployee(personalInfoData.employeeId);
+      }
+
+  }, [onBoardData,personalInfoData]);
 
   useEffect(() => {
     console.log("employeeData", employeeData);
