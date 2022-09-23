@@ -25,6 +25,7 @@ const EducationAndWorkDoc = (props) => {
   const [relivingDocName, setRelivingDocName] = useState("");
   const [latestPayslipDocName, setLatestPayslipDocName] = useState("");
   const [collegeDocName, setCollegeDocName] = useState("");
+  const [collegeIdName, setCollegeIdName] = useState("");
   const [appointmentDocName, setAppointmentDocName] = useState("");
   const [signedDocName, setSignedDocName] = useState("");
   const [LetterName, setLetterName] = useState("");
@@ -56,6 +57,8 @@ const EducationAndWorkDoc = (props) => {
           setLatestPayslipDocName(item.documentName);
         } else if (item.documentType === 15) {
           setCollegeDocName(item.documentName);
+        } else if (item.documentType === 16) {
+          setCollegeIdName(item.documentName);
         } else if (item.documentType === 18) {
           setSignedDocName(item.documentName);
         }
@@ -144,6 +147,12 @@ const EducationAndWorkDoc = (props) => {
             </div>
           </Col>
         </Row>
+        {fetchemployeeData &&
+        fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 &&
+        fetchemployeeData.contractType.toLowerCase() !== "internship" ? 
+        <Fragment>
         <Row>
           <Col sm={8}>
             <label>
@@ -236,6 +245,9 @@ const EducationAndWorkDoc = (props) => {
             </div>
           </Col>
         </Row>
+        </Fragment>
+        :""
+        }
         {fetchemployeeData &&
         fetchemployeeData !== null &&
         fetchemployeeData !== undefined &&
@@ -282,6 +294,61 @@ const EducationAndWorkDoc = (props) => {
                   }
                   onClick={(e, name) => downloadTheLetter(e, collegeDocName,EmployeeId)}
                   disabled={collegeDocName ? false : true}
+                >
+                  Download
+                </button>
+              </div>
+            </Col>
+          </Row>
+        ) : (
+          ""
+        )}
+        {fetchemployeeData &&
+        fetchemployeeData !== null &&
+        fetchemployeeData !== undefined &&
+        Object.keys(fetchemployeeData).length !== 0 &&
+        fetchemployeeData.contractType.toLowerCase() === "internship" ? (
+          <Row>
+            <Col sm={8}>
+              <label>
+                <b>College ID :</b>
+              </label>
+              <br />
+              <label className="itemResult">{collegeIdName}</label>
+            </Col>
+            <Col sm={2}>
+              <div
+                style={{
+                  marginTop: "1rem",
+                  marginBottom: "1rem",
+                  textAlign: "right",
+                }}
+              >
+                <button
+                  className={
+                    collegeIdName ? "profileButtons" : "confirmButton"
+                  }
+                  onClick={(e, name) => showTheLetter(e, collegeIdName,EmployeeId)}
+                  disabled={collegeIdName ? false : true}
+                >
+                  View
+                </button>
+              </div>
+            </Col>
+            <Col sm={2}>
+              <div
+                style={{
+                  marginTop: "1rem",
+                  marginBottom: "1rem",
+                  textAlign: "right",
+                }}
+              >
+                <button
+                  className={
+                    collegeIdName ? "profileButtons" : "confirmButton"
+                  }
+                  onClick={(e, name) => downloadTheLetter(e, collegeIdName,EmployeeId)}
+                  disabled={collegeIdName ? false : true}
                 >
                   Download
                 </button>

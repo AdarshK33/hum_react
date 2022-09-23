@@ -25,6 +25,8 @@ const OtherDocuments = (props) => {
   const { rolePermission ,ImageView,imageViewData} = useContext(PermissionContext);
   const { downloadFile } = useContext(DocsVerifyContext);
   const [ethicsCharter, setEthicsCharter] = useState("");
+  const [dsiCharter, setDsiCharter] = useState("");
+  const [itCharter, setItCharter] = useState("");
   const [relivingDocName, setRelivingDocName] = useState("");
   const [latestPayslipDocName, setLatestPayslipDocName] = useState("");
   const [collegeDocName, setCollegeDocName] = useState("");
@@ -64,6 +66,10 @@ const OtherDocuments = (props) => {
         setEmployeeId(item.employeeId)
         if (item.documentType === 28) {
           setEthicsCharter(item.documentName);
+        }if (item.documentType === 25) {
+          setDsiCharter(item.documentName);
+        }if (item.documentType === 26) {
+          setItCharter(item.documentName);
         }
         //  else if (item.documentType === 7) {
         //   setRelivingDocName(item.documentName);
@@ -230,6 +236,92 @@ const OtherDocuments = (props) => {
                 className={ethicsCharter ? "profileButtons" : "confirmButton"}
                 onClick={(e, name) => downloadTheLetter(e, ethicsCharter,EmployeeId)}
                 disabled={ethicsCharter ? false : true}
+              >
+                Download
+              </button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={8}>
+            <label>
+              <b>Code of Conduct:</b>
+            </label>
+            <br />
+            <label className="itemResult">{dsiCharter}</label>
+          </Col>
+          <Col sm={2}>
+            <div
+              style={{
+                marginTop: "1rem",
+                marginBottom: "1rem",
+                textAlign: "right",
+              }}
+            >
+              <button
+                className={dsiCharter ? "profileButtons" : "confirmButton"}
+                onClick={(e, name) => showTheLetter(e, dsiCharter,EmployeeId)}
+                disabled={dsiCharter ? false : true}
+              >
+                View
+              </button>
+            </div>
+          </Col>
+          <Col sm={2}>
+            <div
+              style={{
+                marginTop: "1rem",
+                marginBottom: "1rem",
+                textAlign: "right",
+              }}
+            >
+              <button
+                className={dsiCharter ? "profileButtons" : "confirmButton"}
+                onClick={(e, name) => downloadTheLetter(e, dsiCharter,EmployeeId)}
+                disabled={dsiCharter ? false : true}
+              >
+                Download
+              </button>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={8}>
+            <label>
+              <b>IT Charter :</b>
+            </label>
+            <br />
+            <label className="itemResult">{itCharter}</label>
+          </Col>
+          <Col sm={2}>
+            <div
+              style={{
+                marginTop: "1rem",
+                marginBottom: "1rem",
+                textAlign: "right",
+              }}
+            >
+              <button
+                className={itCharter ? "profileButtons" : "confirmButton"}
+                onClick={(e, name) => showTheLetter(e, itCharter,EmployeeId)}
+                disabled={itCharter ? false : true}
+              >
+                View
+              </button>
+            </div>
+          </Col>
+          <Col sm={2}>
+            <div
+              style={{
+                marginTop: "1rem",
+                marginBottom: "1rem",
+                textAlign: "right",
+              }}
+            >
+              <button
+                className={itCharter ? "profileButtons" : "confirmButton"}
+                onClick={(e, name) => downloadTheLetter(e, itCharter,EmployeeId)}
+                disabled={itCharter ? false : true}
               >
                 Download
               </button>
