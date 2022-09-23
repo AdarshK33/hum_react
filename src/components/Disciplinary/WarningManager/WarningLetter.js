@@ -247,7 +247,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                     disciplinarySearchData.gender !== undefined &&
                     disciplinarySearchData.maritalStatus !== null &&
                     disciplinarySearchData.maritalStatus !== undefined
-                      ? disciplinarySearchData.gender === "MALE"
+                      ? disciplinarySearchData.gender === "MALE" || disciplinarySearchData.gender === "Male"
                         ? "Mr."
                         : disciplinarySearchData.maritalStatus === "Married"
                         ? "Mrs."

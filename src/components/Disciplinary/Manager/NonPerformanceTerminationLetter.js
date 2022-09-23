@@ -143,7 +143,7 @@ const NonPerformanceTerminationLetter = () => {
                     {" "}
                     <b>Name:</b>&nbsp;&nbsp;
                     {terminationLetterData !== undefined &&
-                    terminationLetterData.gender == "MALE"
+                    (terminationLetterData.gender == "MALE"|| terminationLetterData.gender == "Male")
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
