@@ -79,11 +79,13 @@ const employeeAllTeamRef = useRef(null);
 
   useEffect(() => {
     ClusterView(); //ClusterData
+    setSearchMyTeamSelected("");
+    setSearchAllTeamSelected("");
     getEmployeeMyTeam('all'); //MY team  //employeeMyTeam
     getEmployeeAllTeam(pageCount,'all');// ALL team //employeeAllTeam
     // ClusterDirectTeam("all"); //MY team //clusterDirect
     // ClusterSearchByEmployeeName("all", "all"); // ALL team //ClusterEmpList
-  }, []);
+  }, [rolePermission]);
   // console.log("ClusterData", ClusterData);
   // console.log("ClusterEmpList", ClusterEmpList); 
   // console.log("clusterDirect", clusterDirect);
@@ -481,7 +483,9 @@ useEffect(() => {
                       Object.keys(employeeAllTeam).length !== 0 ? (
                         <div>
                         
-                          {employeeAllTeam.map((item) => {
+                          {
+                          employeeAllTeam.map((item) =>
+                           {
                             return (
                               <div className="clusterEmpployeeBox">
                                 <div

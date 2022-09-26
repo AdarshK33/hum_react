@@ -266,7 +266,7 @@ const LocalExpactAppointmentLetter = (props) => {
              <p>For {candidateLetterData.companyName} </p>
              </Col>
               <Col sm="4">
-              <p> Accepted By Me</p>
+              <p style={{ textAlign: "right" }}> Accepted By Me</p>
               <p>{candidateLetterData !== undefined &&
           candidateLetterData.candidateName}
           </p>

@@ -89,15 +89,17 @@ const PromotionList = () => {
 
   /*-----------------Pagination------------------*/
   const searchHandler = (e) => {
+    setPageCount(0);
     setSearchValue(e.target.value);
   };
 
   const searchDataHandler = () => {
     setPromotionStatus("");
     setPageCount(0);
+    console.log("hello setPageCount",pageCount);
     setCurrentPage(1);
     if (searchValue !== "") {
-      promotionListView(searchValue, pageCount, 6, role);
+      promotionListView(searchValue, pageCount, 6, role);//
     } else {
       promotionListView("all", 0, 6, role);
     }
@@ -302,7 +304,7 @@ const PromotionList = () => {
                     total > 0 ? (
                     currentRecords.map((item, i) => {
                       return (
-                        <tbody key={item.promotionId}>
+                        <tbody key={i}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.employeeId}</td>
