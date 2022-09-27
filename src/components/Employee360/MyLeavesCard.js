@@ -93,13 +93,13 @@ const MyLeavesCard = () => {
                 ["Leave Type", "Days"],
                 ["UnPlanned", (plannedLeaves !== null &&
                   plannedLeaves !== undefined &&
-                Object.keys(plannedLeaves)?.length !== 0)?plannedLeaves[0]?.unplanned:plannedLeaves[0]?.unplanned],
+                Object.keys(plannedLeaves).length !== 0)?plannedLeaves[0]?.unplanned:unPlannedLeaves[0]?.unplanned],
                 ["Applied",(plannedLeaves !== null &&
                   plannedLeaves !== undefined &&
-                  Object.keys(plannedLeaves)?.length !== 0)?plannedLeaves[0]?.applied: plannedLeaves[0]?.applied],
+                  Object.keys(plannedLeaves).length !== 0)?plannedLeaves[0]?.applied: unPlannedLeaves[0]?.applied],
                 ["Pending", (plannedLeaves !== null &&
                   plannedLeaves !== undefined &&
-                  Object.keys(plannedLeaves)?.length !== 0)?plannedLeaves[0]?.pendingLeaves:plannedLeaves[0]?.pendingLeaves],
+                  Object.keys(plannedLeaves).length !== 0)?plannedLeaves[0]?.pendingLeaves:unPlannedLeaves[0]?.pendingLeaves],
               ]}
               legend_toggle
               options={LeavesOption}

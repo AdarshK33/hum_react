@@ -321,7 +321,7 @@ const ChangeEmployementTypeAction = () => {
       promotedJoiningDate: transferData.promotedJoiningDate,
       promotedLocation: transferData.currentLocation,
       promotedManagerId: transferData.currentManagerId,
-      promotedMonthlyBonus: transferData.currentMonthlyBonus,
+      promotedMonthlyBonus: transferData.promotedMonthlyBonus,
       promotedPosition: transferData.currentPosition,
       promotedRelocationBonus: transferData.currentMonthlyBonus,
       promotedTermOfProject: transferData.promotedTermOfProject,

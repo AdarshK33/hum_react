@@ -240,7 +240,7 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                 <p>
                   {" "}
                   <b>
-                    {disciplinarySearchData !== null &&
+                    {/* {disciplinarySearchData !== null &&
                     disciplinarySearchData !== undefined &&
                     Object.keys(disciplinarySearchData).legth !== 0 &&
                     disciplinarySearchData.gender !== null &&
@@ -252,9 +252,9 @@ const WarningLetter = ({ approver = true, sign = true }) => {
                         : disciplinarySearchData.maritalStatus === "Married"
                         ? "Mrs."
                         : "Miss."
-                      : "Mr./Ms."}
+                      : "Mr./Ms."} */}
                   </b>{" "}
-                  &nbsp; {disciplinarySearchData.employeeName}
+                  &nbsp; {disciplinarySearchData !== undefined && disciplinarySearchData.employeeName}
                 </p>
                 <p>
                   <b>Residential Address:</b>{" "}

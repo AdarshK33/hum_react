@@ -305,7 +305,7 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
                 <p>To ,</p>
                 <p>
                   <b>
-                    {disciplinarySearchData !== null &&
+                    {/* {disciplinarySearchData !== null &&
                     disciplinarySearchData !== undefined &&
                     Object.keys(disciplinarySearchData).legth !== 0 &&
                     disciplinarySearchData.gender !== null &&
@@ -317,9 +317,9 @@ const ShowCauseNotice = ({ approver = true, sign = true }) => {
                         : (disciplinarySearchData.gender == "FEMALE" || disciplinarySearchData.gender == "Female") && disciplinarySearchData.maritalStatus === "Married"
                         ? "Mrs."
                         : "Miss."
-                      : "Mr./Ms."}
+                      : "Mr./Ms."} */}
                   </b>{" "}
-                  &nbsp; {disciplinarySearchData.employeeName}
+                  &nbsp; {disciplinarySearchData !== undefined && disciplinarySearchData.employeeName}
                 </p>
                 <p>
                   <b>Employee ID:</b> {disciplinarySearchData.employeeId}

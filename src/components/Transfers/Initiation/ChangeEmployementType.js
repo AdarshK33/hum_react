@@ -7,6 +7,7 @@ import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { TransferContext } from "../../../context/TransferState";
+import { BonusContext } from "../../../context/BonusState";
 import PartTimeToFullTimeLetter from "./partTimeToFullTimeLetter";
 import FullTimeToPartTimeLetter from "./fullTimeToPartTimeLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
@@ -40,6 +41,8 @@ const ChangeEmployementType = () => {
     letterView,
   } = useContext(TransferContext);
   const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+  useContext(BonusContext);
   // console.log("employeeDetails",employeeDetails)
 const { rolePermission } = useContext(PermissionContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
@@ -68,7 +71,7 @@ const { rolePermission } = useContext(PermissionContext);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
-
+  const [promotedBonusValue, setPromotedMonthlyBonus]= useState(0);
   const history = useHistory();
   const employeeRef = useRef(null);
 
@@ -164,6 +167,41 @@ const { rolePermission } = useContext(PermissionContext);
       setSearchInput("");
     }
   }, [initiationEmpData]);
+
+  useEffect(() => {
+    if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 &&
+      initiationEmpData.currentDepartment !== "" &&
+      initiationEmpData.currentDepartment !== null &&
+      initiationEmpData.currentDepartment !== undefined &&
+      initiationEmpData.currentPosition !== "" &&
+      initiationEmpData.currentPosition !== null &&
+      initiationEmpData.currentPosition !== undefined 
+    ) {
+      let contractType = newEmployement !== null && newEmployement !== "" && newEmployement === "From Part Time to Full Time"
+        ? "Fulltime"
+        : "Parttime"
+      viewBonusByContarctType(
+        contractType,
+        initiationEmpData.currentDepartment,
+        initiationEmpData.currentPosition
+      );
+    }
+  }, [initiationEmpData,newEmployement]);
+
+
+  useEffect(() => {
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined &&
+      Object.keys(getBonusByContractType).length !== 0
+    ) {
+      setPromotedMonthlyBonus(getBonusByContractType.bonus)
+    }
+  }, [getBonusByContractType]);
+  console.log("getBonusByContractType->", getBonusByContractType);
 
   // const searchInputHandler = (e) => {
   //   const searchText = employeeRef.current.getInput();
@@ -271,7 +309,7 @@ const { rolePermission } = useContext(PermissionContext);
           promotedJoiningDate: moment(DateOfTransfer).format("YYYY-MM-DD"),
           promotedLocation: initiationEmpData.currentLocation,
           promotedManagerId: initiationEmpData.currentManagerId,
-          promotedMonthlyBonus: initiationEmpData.currentMonthlyBonus,
+          promotedMonthlyBonus: promotedBonusValue,
           promotedPosition: initiationEmpData.currentPosition,
           promotedRelocationBonus: initiationEmpData.currentMonthlyBonus,
           promotedTermOfProject: initiationEmpData.promotedTermOfProject,
@@ -279,7 +317,7 @@ const { rolePermission } = useContext(PermissionContext);
           transferId: transferData.transferId,
           transferType: transferData.transferType,
         };
-        console.log(InfoData);
+        console.log("InfoData 2",InfoData);
         createTransferInitiation(InfoData,history);
         setFormValid(true);
         setLetterSent(true);
@@ -432,7 +470,7 @@ const { rolePermission } = useContext(PermissionContext);
           promotedJoiningDate: moment(DateOfTransfer).format("YYYY-MM-DD"),
           promotedLocation: initiationEmpData.currentLocation,
           promotedManagerId: initiationEmpData.currentManagerId,
-          promotedMonthlyBonus: initiationEmpData.currentMonthlyBonus,
+          promotedMonthlyBonus: promotedBonusValue,
           promotedPosition: initiationEmpData.currentPosition,
           promotedRelocationBonus: initiationEmpData.currentMonthlyBonus,
           promotedTermOfProject: initiationEmpData.promotedTermOfProject,
@@ -442,7 +480,7 @@ const { rolePermission } = useContext(PermissionContext);
           transferLetter: null,
           transferType: "Employment Type Transfer",
         };
-        console.log(InfoData);
+        console.log("InfoData 1",InfoData);
         createTransferInitiation(InfoData,history);
         setFormValid(true);
         // setModalShow(true);
