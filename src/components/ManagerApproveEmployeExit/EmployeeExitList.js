@@ -349,12 +349,7 @@ const EmployeeExitList = () => {
                             <td>
                               {item.contractType!== null && item.contractType !== undefined && item.contractType.toLowerCase() === "internship"
                                 ? "NA"
-                                : item.department == "AFS" ||
-                                  item.department == "IT" ||
-                                  item.department == "Legal" ||
-                                  item.department == "Finance"
-                                ? 2
-                                : 1}
+                                : item.noticePeriod}
                             </td>
                             <td>
                               {item.status === 0

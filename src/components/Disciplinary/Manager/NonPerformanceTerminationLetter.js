@@ -142,13 +142,15 @@ const NonPerformanceTerminationLetter = () => {
                   <p>
                     {" "}
                     <b>Name:</b>&nbsp;&nbsp;
-                    {terminationLetterData !== undefined &&
+                    {/* {terminationLetterData !== undefined &&
                     (terminationLetterData.gender == "MALE"|| terminationLetterData.gender == "Male")
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
                       ? `Miss. ${terminationLetterData.employeeName}`
-                      : `Mrs.${terminationLetterData.employeeName}`}
+                      : `Mrs.${terminationLetterData.employeeName}`} */}
+                      {terminationLetterData !== undefined &&
+                    terminationLetterData.employeeName}
                   </p>
                   <p>
                     <b>Employee ID:</b>&nbsp;&nbsp;
@@ -172,13 +174,15 @@ const NonPerformanceTerminationLetter = () => {
                   {" "}
                   Dear{" "}
                   <b>
-                    {terminationLetterData !== undefined &&
+                    {/* {terminationLetterData !== undefined &&
                     terminationLetterData.gender == "MALE"
                       ? `Mr.${terminationLetterData.employeeName}`
                       : terminationLetterData.gender == "FEMALE" &&
                         terminationLetterData.maritalStatus == "Single"
                       ? `Miss. ${terminationLetterData.employeeName}`
-                      : `Mrs.${terminationLetterData.employeeName}`}
+                      : `Mrs.${terminationLetterData.employeeName}`} */}
+                      {terminationLetterData !== undefined &&
+                    terminationLetterData.employeeName}
                   </b>{" "}
                 </p>
                 <br></br>
