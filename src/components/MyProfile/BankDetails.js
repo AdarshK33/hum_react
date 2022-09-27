@@ -439,7 +439,7 @@ const BankDetails = (props) => {
             <Form.Group>
               <div className="FileInputWithOutStar">
                 <label>
-                  <b>Upload Canceled cheque</b>
+                  <b>Upload Canceled cheque</b><span style={{ color: "red" }}>*</span>
                 </label>
               </div>
               <div className="parentInput">
