@@ -293,7 +293,7 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
                   {" "}
                   <b>
                     {" "}
-                    {disciplinarySearchData !== null &&
+                    {/* {disciplinarySearchData !== null &&
                     disciplinarySearchData !== undefined &&
                     Object.keys(disciplinarySearchData).legth !== 0 &&
                     disciplinarySearchData.gender !== null &&
@@ -305,9 +305,9 @@ const NonPerformanceLetter = ({ approver = true, sign = true }) => {
                         : disciplinarySearchData.maritalStatus === "Married" && (disciplinarySearchData.maritalStatus === "FEMALE" || disciplinarySearchData.maritalStatus === "Female")
                         ? "Mrs."
                         : "Miss."
-                      : "Mr./Ms."}
+                      : "Mr./Ms."} */}
                   </b>{" "}
-                  &nbsp; {disciplinarySearchData.employeeName}
+                  &nbsp; {disciplinarySearchData !== undefined && disciplinarySearchData.employeeName}
                 </p>
                 <p>
                   <b>Employee ID:</b> {disciplinarySearchData.employeeId}

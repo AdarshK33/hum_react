@@ -378,6 +378,9 @@ const PersonalInformation = (props) => {
             <label className="itemResult">{fetchemployeeData.epsMember?fetchemployeeData.epsMember:"NA"}</label>
           </Col>
         </Row>
+        {fetchemployeeData &&
+          Object.keys(fetchemployeeData).length &&
+          fetchemployeeData.reference1Name ? (
         <Row
           style={{
             marginBottom: "2rem",
@@ -398,6 +401,9 @@ const PersonalInformation = (props) => {
             <label className="itemResult">{fetchemployeeData.reference1Email?fetchemployeeData.reference1Email:"NA"}</label>
           </Col>
         </Row>
+          ) : (
+            ""
+          )}
         {fetchemployeeData !== null &&
         fetchemployeeData !== undefined &&
         Object.keys(fetchemployeeData).length !== 0 &&

@@ -212,7 +212,7 @@ const ReasonByEmployee = ({ sign = true }) => {
                 <p>
                   {" "}
                   <b>
-                    {disciplinarySearchData !== null &&
+                    {/* {disciplinarySearchData !== null &&
                     disciplinarySearchData !== undefined &&
                     Object.keys(disciplinarySearchData).legth !== 0 &&
                     disciplinarySearchData.initiatedByGender !== null &&
@@ -225,9 +225,9 @@ const ReasonByEmployee = ({ sign = true }) => {
                           "Married"
                         ? "Mrs."
                         : "Miss."
-                      : "Mr./Ms."}
+                      : "Mr./Ms."} */}
                   </b>{" "}
-                  &nbsp; {disciplinarySearchData.initiatedByName}
+                  &nbsp; {disciplinarySearchData !== undefined && disciplinarySearchData.initiatedByName}
                 </p>
                 <p> {disciplinarySearchData.company}</p>
                 <br />

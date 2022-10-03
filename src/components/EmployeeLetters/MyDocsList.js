@@ -294,8 +294,20 @@ const EmployeeDocementsList = () => {
                                 ? item.disciplinaryWarning.statusDesc
                                 : item.disciplinaryAction.statusDesc}
                             </td>
-                            <td>
-                              {item.disciplinaryAction !== null &&
+                            <td>{item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined && 
+                              item.disciplinaryWarning.statusDesc === "Warning Letter Approved"?
+                              <Link to="/letters/warning">
+                                  <Edit2
+                                    onClick={() => {
+                                      disciplinaryEmployeeSearch(
+                                        item.disciplinaryAction.disciplinaryId
+                                      );
+                                    }}
+                                  />
+                                </Link>
+                                :
+                              item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
                               (item.disciplinaryAction.statusDesc ===
                                 "Action Required By Employee" ||

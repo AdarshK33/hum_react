@@ -91,15 +91,15 @@ const MyLeavesCard = () => {
               chartType="PieChart"
               data={[
                 ["Leave Type", "Days"],
-                ["UnPlanned", (unPlannedLeaves !== null &&
-                unPlannedLeaves !== undefined &&
-                Object.keys(unPlannedLeaves).length !== 0)?unPlannedLeaves[0].unplanned:plannedLeaves[0].unplanned],
-                ["Applied",(unPlannedLeaves !== null &&
-                  unPlannedLeaves !== undefined &&
-                  Object.keys(unPlannedLeaves).length !== 0)?unPlannedLeaves[0].applied: plannedLeaves[0].applied],
-                ["Pending", (unPlannedLeaves !== null &&
-                  unPlannedLeaves !== undefined &&
-                  Object.keys(unPlannedLeaves).length !== 0)?unPlannedLeaves[0].pendingLeaves:plannedLeaves[0].pendingLeaves],
+                ["UnPlanned", (plannedLeaves !== null &&
+                  plannedLeaves !== undefined &&
+                Object.keys(plannedLeaves).length !== 0)?plannedLeaves[0]?.unplanned:unPlannedLeaves[0]?.unplanned],
+                ["Applied",(plannedLeaves !== null &&
+                  plannedLeaves !== undefined &&
+                  Object.keys(plannedLeaves).length !== 0)?plannedLeaves[0]?.applied: unPlannedLeaves[0]?.applied],
+                ["Pending", (plannedLeaves !== null &&
+                  plannedLeaves !== undefined &&
+                  Object.keys(plannedLeaves).length !== 0)?plannedLeaves[0]?.pendingLeaves:unPlannedLeaves[0]?.pendingLeaves],
               ]}
               legend_toggle
               options={LeavesOption}
