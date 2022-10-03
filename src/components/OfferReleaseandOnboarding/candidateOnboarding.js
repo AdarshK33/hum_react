@@ -266,7 +266,7 @@ const CandidateOnboarding = () => {
         // ["email"]: empData.email,
         // ["fedId"]: (empData.fedId !== null && 
         //   empData.fedId !== undefined && empData.fedId !== "")?empData.fedId.replace(/"/g, ''):'',
-        ["role"]: empData.role,
+        ["role"]: empData.role,   
         ["address"]: empData.address,
         ["isClusterManager"]: 0,
         ["aadhaarNumber"]: empData.aadhaarNumber,
@@ -362,7 +362,8 @@ const CandidateOnboarding = () => {
       candidateData.workInformation !== undefined &&
       candidateData.workInformation.contractType !== "Internship" &&
       e.target.name === "email"
-    ) {
+    ) 
+    {
       if (!validateEmail(e.target.value)) {
         setError(true);
       } else {
@@ -653,6 +654,20 @@ const CandidateOnboarding = () => {
       }
     }
   };
+  useEffect(() => {
+    if( empData !== undefined &&
+      empData !== null &&
+      RoleList&&
+      Object.keys(empData).length !== 0 ){
+    const roleListSelected = RoleList.find(item =>item.roleName === empData.role)
+    setEmployeeData({
+      ...employeeData,
+      ["role"]: roleListSelected?.roleId,
+    })
+        //  console.log("hello roleListSelected",roleListSelected)
+      }
+  },[ empData,RoleList])
+  // console.log("hello  employeeData.role", employeeData.role)
 
   return (
     <Fragment>
@@ -810,14 +825,18 @@ const CandidateOnboarding = () => {
               <Form.Control
                 as="select"
                 name="role"
-                value={employeeData.role}
+                value={
+                  employeeData !== undefined && employeeData !== null
+                    ? employeeData.role
+                    : ""
+                }
                 onChange={(e) => handleChange(e)}
                 style={{ borderColor: "#006ebb" }}
               >
                 <option value="">Select Role</option>
                 {RoleList !== null &&
                   RoleList !== undefined &&
-                  RoleList.map((item, i) => {
+                   RoleList.map((item, i) => {
                     if (
                       // item.roleName !== "ADMIN" &&
                       // item.roleName !== "IT_ADMIN"
@@ -825,7 +844,7 @@ const CandidateOnboarding = () => {
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
-                        <option key={i} value={item.roleId}>
+                        <option  key={`role3${item.roleId}`}value={item.roleId}>
                           {item.roleDesc}
                         </option>
                       );
@@ -835,7 +854,8 @@ const CandidateOnboarding = () => {
                        item.roleName == "GENERAL_USER")|| ((fetchemployeeData.department.includes("finance")||fetchemployeeData.department.includes("Finance")) && 
                        item.roleName == "FINANCE_PARTNER")){
                       return (
-                        <option key={i} value={item.roleId}>
+                                       
+                        <option  key={`role${item.roleId}`}   value={item.roleId}>
                           {item.roleDesc}
                         </option>
                       );
@@ -847,7 +867,7 @@ const CandidateOnboarding = () => {
                        item.roleName == "FINANCE_PARTNER")
                     ) {
                       return (
-                        <option key={i} value={item.roleId}>
+                        <option key={`role2${item.roleId}`} value={item.roleId}>
                           {item.roleDesc}
                         </option>
                       );

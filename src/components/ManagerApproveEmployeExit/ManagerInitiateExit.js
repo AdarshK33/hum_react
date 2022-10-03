@@ -1757,7 +1757,7 @@ const ManagerInitiateExit = () => {
                                   onChange={ModeOfSepchangeHandler}
                                   //   disabled={disabled}
                                   style={
-                                    modOfSepError ? { borderColor: "red" } : {}
+                                    modOfSepError ? { borderColor: "red",paddingLeft:".2rem" } : {paddingLeft:".2rem"}
                                   }
                                 >
                                   <option value=""></option>
@@ -2024,8 +2024,8 @@ const ManagerInitiateExit = () => {
                                   //   disabled={disabled}
                                   style={
                                     modOfSepReasonError
-                                      ? { borderColor: "red" }
-                                      : {}
+                                      ? { borderColor: "red" ,paddingLeft:".2rem"}
+                                      : {paddingLeft:".2rem"}
                                   }
                                 >
                                   <option value=""></option>

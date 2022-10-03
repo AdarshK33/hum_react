@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { PermissionContext } from "../../../context/PermissionState";
 import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 import { PromotionContext } from "../../../context/PromotionState";
+import { SeparationContext } from "../../../context/SepearationState";
 import { AppContext } from "../../../context/AppState";
 
 const IssueShowCauseNotice = () => {
@@ -89,6 +90,9 @@ const IssueShowCauseNotice = () => {
   } = useContext(DisciplinaryContext);
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
+  );
+  const { searchByCostData } = useContext(
+    SeparationContext
   );
   const { getUserInfo,fetchEmployeeProfile, user } = useContext(AppContext);
   useEffect(() => {
@@ -769,61 +773,72 @@ const IssueShowCauseNotice = () => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={2}>
+                         <Col sm={2}>
                           <div>
                             <label>Emp Name/Id:</label>
                           </div>
                         </Col>
                         <Col sm={2}>
-                          <Form.Group>
-                            {/* <div className="faq-form ">
-                              <input
-                                className="form-control"
-                                type="text"
-                                name="empName"
-                                // disabled={disabled}
-                                value={EmpName}
-                                style={{ borderRadius: "5px" }}
-                                // style={
-                                //   empName1Error ? { borderColor: "red" } : {}
-                                // }
-                                placeholder="Search......."
-                                onChange={(e) => changeHandler(e)}
-                                required
-                              />
-                              <Search
-                                className="search-icon"
-                                style={{ color: "#313131" }}
-                                onClick={searchDataHandler}
-                              />
-                            </div> */}
-                                      <Typeahead
-                                        id="_empSearchId"
-                                        filterBy={['firstName', 'lastName', 'employeeId']}
-                                        minLength={2}
-                                        ref={employeeRef}
-                                        // labelKey='firstName'
-                                        options={employeeDetails}
-                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
-                                        placeholder="Search.."
-                                        onChange={setSearchEmpSelected}
-                                        selected={searchEmpSelected}
-                                        style={{ borderRadius: "5px" }}
-                                    
+                    
+                           <div>
+                            { disciplinaryEmpSearchData?.employeeId== searchByCostData?.employeeId && disciplinaryEmpSearchData?.employeeId !==undefined  && searchByCostData?.employeeId !==undefined? (
+                              <label className="itemResult">
+                               &nbsp; {EmpName} 
+                                {/* &nbsp;{state.empId} */}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                              {/* <div className="faq-form ">
+                                <input
+                                  className="form-control"
+                                  type="text"
+                                  name="empName"
+                                  // disabled={disabled}
+                                  value={EmpName}
+                                  style={{ borderRadius: "5px" }}
+                                  // style={
+                                  //   empName1Error ? { borderColor: "red" } : {}
+                                  // }
+                                  placeholder="Search......."
+                                  onChange={(e) => changeHandler(e)}
+                                  required
+                                />
+                                <Search
+                                  className="search-icon"
+                                  style={{ color: "#313131" }}
+                                  onClick={searchDataHandler}
+                                />
+                              </div> */}
+                                        <Typeahead
+                                          id="_empSearchId"
+                                          filterBy={['firstName', 'lastName', 'employeeId']}
+                                          minLength={2}
+                                          ref={employeeRef}
+                                          // labelKey='firstName'
+                                          options={employeeDetails}
+                                          labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
+                                          placeholder="Search.."
+                                          onChange={setSearchEmpSelected}
+                                          selected={searchEmpSelected}
+                                          style={{ borderRadius: "5px" }}
+                                      
+                                        />
+                                 {searchEmpSelected.length > 0  ? (
+  
+                                      <Search
+                                      className="search-icon"
+                                      style={{ color: "#313131" }}
+                                      onClick={searchDataHandler}
                                       />
-                               {searchEmpSelected.length > 0  ? (
-
-                                    <Search
-                                    className="search-icon"
-                                    style={{ color: "#313131" }}
-                                    onClick={searchDataHandler}
-                                    />
-                                    ) : (
-                                    ""
-                                    )}
-                          </Form.Group>
-                        </Col>
-
+                                      ) : (
+                                      ""
+                                      )}
+                            </Form.Group>
+                            )
+                            }
+                      </div>                   
+                      </Col>
+                      
                         <Col sm={4}>
                           <div>
                             <label>

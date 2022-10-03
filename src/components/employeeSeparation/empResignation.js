@@ -602,7 +602,7 @@ const EmpResignation = () => {
                 <Col sm={4}>
                   {submitted === true ? (
                     <Form.Group as={Row}>
-                      <Form.Label column sm="4" className="labels-data">
+                      <Form.Label column sm="3" className="labels-data ">
                         Date of Resignation:
                       </Form.Label>
                       <Col sm="8">
@@ -616,7 +616,7 @@ const EmpResignation = () => {
                     </Form.Group>
                   ) : (
                     <Form.Group as={Row}>
-                      <Form.Label column sm="4" className="labels-data">
+                      <Form.Label column sm="3" className="labels-data">
                         Date of Resignation:
                       </Form.Label>
                       <Col sm="8">
@@ -697,7 +697,7 @@ const EmpResignation = () => {
                 <Col sm={4}>
                   {submitted === true ? (
                     <Form.Group as={Row}>
-                      <Form.Label column sm="4" className="labels-data">
+                      <Form.Label column sm="3" className="labels-data">
                         Preffered Last Working Date:
                       </Form.Label>
                       <Col sm="8">
@@ -711,7 +711,7 @@ const EmpResignation = () => {
                     </Form.Group>
                   ) : (
                     <Form.Group as={Row}>
-                      <Form.Label column sm="4" className="labels-data">
+                      <Form.Label column sm="3" className="labels-data">
                         Preffered Last Working Date:
                       </Form.Label>
                       <Col sm="8">

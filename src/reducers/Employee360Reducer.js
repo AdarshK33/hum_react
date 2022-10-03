@@ -24,7 +24,7 @@ const GroupReducer = (state, action) => {
     case "MANAGER_360_APROVAL":
       return { ...state, 
         Manager360ListData: action.payload,
-        totalManager360ListData: action.totalManager360ListData, 
+        totalData: action.totalData, 
       };
     case "CLUSTER_DIRECT":
       return { ...state, clusterDirect: action.payload };

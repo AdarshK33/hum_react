@@ -80,7 +80,6 @@ const EntityTransferAcceptance = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
   const history = useHistory();
-
   useEffect(() => {
     if (transferId !== null && transferId !== undefined) {
       getTransferData(transferId);
@@ -143,10 +142,14 @@ const EntityTransferAcceptance = () => {
   }, [transferData]);
 
   useEffect(() => {
-    if (newDept !== "") {
+    if (newDept !== ""  &&
+    transferData !== null &&
+    newDept !== undefined &&
+    transferData !== undefined &&
+    Object.keys(transferData).length !== 0) {
       getDeptPositionDetails(newDept);
     }
-  }, [newDept]);
+  }, [newDept,transferData]);
 
   useEffect(() => {
     if (
@@ -527,6 +530,37 @@ const EntityTransferAcceptance = () => {
   const handleImageView = (data,employeeId)=>{
     ImageView(data,employeeId)
   }
+  useEffect(()=>{
+    if (
+      transferData !== null &&
+      transferData !== undefined &&
+      Object.keys(transferData).length !== 0 ){
+    // console.log("hello",deptDetails, transferData.promotedDepartment)
+    const departmentSelected = deptDetails.find(item =>item?.departmentName === transferData?.promotedDepartment)
+    //console.log("department", departmentSelected);
+     setNewDept(departmentSelected?.deptId)
+    // setNewCostCentre(transferData.promotedCostCentre);
+    if(departmentSelected){
+    getCostCentreDetails(
+      transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
+        ? "Prodin Sporting Pvt Ltd"
+        : transferData.promotedCompany === "Indeca Sporting Goods Pvt Ltd"
+        ? "Indeca Sporting Goods Pvt Ltd"
+        : transferData.promotedCompany,
+     departmentSelected?.departmentName
+    );
+    }
+    }
+  },[transferData]);
+  useEffect(()=>{
+    if(costCentreData && newDept){
+        const costCentreDataSelected = costCentreData.find(item =>item.costCentreName === transferData.promotedCostCentre)
+    // console.log("costCentreDataSelected",costCentreDataSelected,costCentreData );
+   setNewCostCentre(costCentreDataSelected?.costCentreName);
+    }
+  },[costCentreData,newDept]);
+ 
+ 
   return (
     <Fragment>
       <ToastContainer />
@@ -556,7 +590,6 @@ const EntityTransferAcceptance = () => {
           </Modal.Body>
         </Container>
       </Modal>
-
       {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
@@ -926,7 +959,7 @@ const EntityTransferAcceptance = () => {
                             as="select"
                             className="text-primary"
                             aria-label="department"
-                            value={newDept}
+                              value={newDept}
                             placeholder="Select Location"
                             onChange={departmentChangeHandler}
                           >
@@ -980,7 +1013,7 @@ const EntityTransferAcceptance = () => {
                                 value={newCostCentre}
                                 placeholder="Select Cost Centre"
                                 onChange={changeCostCentreHandler}
-                              >
+                              >                      
                                 <option value="undefined">Select Cost Centre</option>
                                 {costCentreData !== null &&
                                   costCentreData !== undefined &&
