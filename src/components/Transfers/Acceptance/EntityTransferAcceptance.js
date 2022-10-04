@@ -79,8 +79,9 @@ const EntityTransferAcceptance = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
-  const history = useHistory();
+  const [selectedDepartment, setSelectedDepartment] = useState(true);
 
+  const history = useHistory();
   useEffect(() => {
     if (transferId !== null && transferId !== undefined) {
       getTransferData(transferId);
@@ -143,10 +144,14 @@ const EntityTransferAcceptance = () => {
   }, [transferData]);
 
   useEffect(() => {
-    if (newDept !== "") {
+    if (newDept !== ""  &&
+    transferData !== null &&
+    newDept !== undefined &&
+    transferData !== undefined &&
+    Object.keys(transferData).length !== 0) {
       getDeptPositionDetails(newDept);
     }
-  }, [newDept]);
+  }, [newDept,transferData]);
 
   useEffect(() => {
     if (
@@ -330,9 +335,18 @@ const EntityTransferAcceptance = () => {
     history.push("../transfers");
   };
   const departmentChangeHandler = (e) => {
+    console.log("hello value",e.target.value)
+    if(e.target.value){
+    setNewCostCentre("")
     setNewDept(e.target.value);
     setNewDeptName(e.target.options[e.target.selectedIndex].text);
     setDeptErrMsg("");
+    setSelectedDepartment(false);
+    }
+    else{
+      setSelectedDepartment(false)
+      setNewCostCentre("")
+    }
   };
   const changePositionHandler = (e) => {
     setNewPosition(e.target.value);
@@ -527,6 +541,34 @@ const EntityTransferAcceptance = () => {
   const handleImageView = (data,employeeId)=>{
     ImageView(data,employeeId)
   }
+  useEffect(()=>{
+    if (
+      transferData !== null &&
+      transferData !== undefined &&
+      selectedDepartment &&
+      Object.keys(transferData).length !== 0 ){
+    const departmentSelected = deptDetails.find(item =>item?.departmentName === transferData?.promotedDepartment)
+     setNewDept(departmentSelected?.deptId)
+   
+    getCostCentreDetails(
+      transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
+        ? "Prodin Sporting Pvt Ltd"
+        : transferData.promotedCompany === "Indeca Sporting Goods Pvt Ltd"
+        ? "Indeca Sporting Goods Pvt Ltd"
+        : transferData.promotedCompany,
+     departmentSelected?.departmentName
+    );
+    
+    }
+  },[transferData]);
+  useEffect(()=>{
+    if(costCentreData && newDept && selectedDepartment){
+        const costCentreDataSelected = costCentreData.find(item =>item.costCentreName === transferData.promotedCostCentre)
+   setNewCostCentre(costCentreDataSelected?.costCentreName);
+    }
+  },[costCentreData,newDept]);
+ 
+ 
   return (
     <Fragment>
       <ToastContainer />
@@ -556,7 +598,6 @@ const EntityTransferAcceptance = () => {
           </Modal.Body>
         </Container>
       </Modal>
-
       {/* <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
@@ -926,7 +967,7 @@ const EntityTransferAcceptance = () => {
                             as="select"
                             className="text-primary"
                             aria-label="department"
-                            value={newDept}
+                              value={newDept}
                             placeholder="Select Location"
                             onChange={departmentChangeHandler}
                           >
@@ -980,7 +1021,7 @@ const EntityTransferAcceptance = () => {
                                 value={newCostCentre}
                                 placeholder="Select Cost Centre"
                                 onChange={changeCostCentreHandler}
-                              >
+                              >                      
                                 <option value="undefined">Select Cost Centre</option>
                                 {costCentreData !== null &&
                                   costCentreData !== undefined &&

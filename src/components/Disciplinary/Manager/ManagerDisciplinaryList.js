@@ -158,8 +158,12 @@ const ManagerDisciplinaryList = () => {
                     />
                   </div>
                 </div>
-                <Link to="/issue-show-cause-notice">
-                  <Button className="apply-button btn btn-light mr-2">
+                <Link to="/issue-show-cause-notice"  onClick={() => {
+                      MakedisciplinaryEmployeeSearchNull();
+                    }}>
+                  <Button className="apply-button btn btn-light mr-2"  
+                   
+                  >
                     Issue Show Cause Notice
                   </Button>
                 </Link>
