@@ -179,7 +179,7 @@ console.log(dates)
                               }
                             </td>
                             <td>{item.dueDays}</td>
-                            <td>{item.reminderSent}</td>
+                            <td>{item.reminderDate}</td>
                             <td>
                               {item.status === 0
                                 ? "Due for confirmation"

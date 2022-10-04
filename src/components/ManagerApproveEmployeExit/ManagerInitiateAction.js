@@ -472,24 +472,24 @@ const ManagerInitiateAction = (props) => {
       }
     }
   }, [employeeData, ModeOfSeparationData, employeeId]);
-  useEffect(() => {
-    if (
-      fetchemployeeData &&
-      fetchemployeeData &&
-      fetchemployeeData !== null &&
-      fetchemployeeData !== undefined &&
-      Object.keys(fetchemployeeData).length !== 0
-    ) {
-      state.mngrName =
-      fetchemployeeData.lastName !== null &&
-      fetchemployeeData.lastName !== undefined
-          ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
-          : fetchemployeeData.firstName;
-      state.mngrId = fetchemployeeData.employeeId;
-      state.mngrCostCenterName = fetchemployeeData.costCentre;
-      state.mngrPosition = fetchemployeeData.position;
-    }
-  }, [fetchemployeeData]);
+  // useEffect(() => {
+  //   if (
+  //     fetchemployeeData &&
+  //     fetchemployeeData &&
+  //     fetchemployeeData !== null &&
+  //     fetchemployeeData !== undefined &&
+  //     Object.keys(fetchemployeeData).length !== 0
+  //   ) {
+  //     state.mngrName =
+  //     fetchemployeeData.lastName !== null &&
+  //     fetchemployeeData.lastName !== undefined
+  //         ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
+  //         : fetchemployeeData.firstName;
+  //     state.mngrId = fetchemployeeData.employeeId;
+  //     state.mngrCostCenterName = fetchemployeeData.costCentre;
+  //     state.mngrPosition = fetchemployeeData.position;
+  //   }
+  // }, [fetchemployeeData]);
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();

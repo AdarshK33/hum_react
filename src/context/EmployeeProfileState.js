@@ -259,6 +259,19 @@ export const EmployeeProfileProvider = ({ children }) => {
       });
   };
 
+  const UpdateVpf = (empId, vpf) => {
+    setLoader(true);
+    return client
+      .post(`/api/v1/employee/profile/update/${empId}/vpf?vpf=${vpf}`)
+      .then((response) => {
+        toast.info(response.data.message);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const UpdateInsurance = (updateData) => {
     setLoader(true);
     console.log("updateAddress", updateData);
@@ -569,6 +582,7 @@ export const EmployeeProfileProvider = ({ children }) => {
         DocApprove,
         DocDisapprove,
         EmpDocsView,
+        UpdateVpf,
         EmpDocsData: state.EmpDocsData,
         EmployeesDocsVerifyList: state.EmployeesDocsVerifyList,
         EmpProfile: state.EmpProfile,

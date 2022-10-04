@@ -267,7 +267,7 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
         bankName: selectedBankName,
         ifscCode: state.ifscCode,
         panNumber: state.panNo,
-        employeeId: bankViewData.employeeId,
+        employeeId: currentEmpId!==0?currentEmpId:empId,
       };
       console.log("bank payload", bankInfo);
       BankUpdate(bankInfo);
