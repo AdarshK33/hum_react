@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 
 const ApprovalsManager360List = ({ ListType }) => {
   const history = useHistory();
-  const { Manager360ListView, Manager360ListData, approvalsLoader ,totalManager360ListData} =
+  const { Manager360ListView, Manager360ListData, approvalsLoader ,totalData} =
     useContext(Employee360Context);
     const {
       disciplinaryEmployeeSearch
@@ -36,11 +36,7 @@ const ApprovalsManager360List = ({ ListType }) => {
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
 
-  const [test, setTest] = useState("");
-
-
-  console.log("hello test",test)
-
+  
   const TableHeaders =
     ListType === "promotion"
       ? APPROVALS_MANAGER360_TABLE_HEADERS.promotion
@@ -56,9 +52,10 @@ const ApprovalsManager360List = ({ ListType }) => {
   const [tableBody, setTableBody] = useState([]);
 
   useEffect(() => {
-    Manager360ListView(ListType, rolePermission,pageCount );
+    setPageCount(0);
+    setCurrentPage(1);
+    Manager360ListView(ListType, rolePermission,0 ); //pageCount ==0
   }, [ListType]);
-  console.log("totalManager360ListData", totalManager360ListData);
   useEffect(() => {
     makeBonusByContractTypeEmpty();
   }, []);
@@ -507,8 +504,8 @@ const ApprovalsManager360List = ({ ListType }) => {
 
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
-const recordPerPage = 10;
-const totalRecords = totalManager360ListData;
+const recordPerPage = 5;
+const totalRecords = totalData;
 const pageRange = 5;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -523,19 +520,19 @@ useEffect(() => {
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber-1);
   setCurrentPage(pageNumber)
-  if(ListType && pageNumber ){
-Manager360ListView(ListType,rolePermission,pageNumber-1) //call api
-  }
-  else{
-    Manager360ListView(ListType, rolePermission,pageCount );
-  }
-setTest(Manager360ListData);
-   setCurrentRecords(Manager360ListData);
  
+  // if( ListType && pageNumber){
+Manager360ListView(ListType,rolePermission,pageNumber-1) //call api
+  // }
+  // else{
+  //   Manager360ListView(ListType, rolePermission,pageCount);
+  // }
+   setCurrentRecords(Manager360ListData);
 };
 
+
 /*-----------------Pagination------------------*/
-console.log("hello pagination",Manager360ListData)
+// console.log("hello pagination",Manager360ListData)
 
 
   return (
