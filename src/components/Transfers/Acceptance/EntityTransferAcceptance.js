@@ -79,6 +79,8 @@ const EntityTransferAcceptance = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
+  const [selectedDepartment, setSelectedDepartment] = useState(true);
+
   const history = useHistory();
   useEffect(() => {
     if (transferId !== null && transferId !== undefined) {
@@ -333,9 +335,18 @@ const EntityTransferAcceptance = () => {
     history.push("../transfers");
   };
   const departmentChangeHandler = (e) => {
+    console.log("hello value",e.target.value)
+    if(e.target.value){
+    setNewCostCentre("")
     setNewDept(e.target.value);
     setNewDeptName(e.target.options[e.target.selectedIndex].text);
     setDeptErrMsg("");
+    setSelectedDepartment(false);
+    }
+    else{
+      setSelectedDepartment(false)
+      setNewCostCentre("")
+    }
   };
   const changePositionHandler = (e) => {
     setNewPosition(e.target.value);
@@ -534,13 +545,11 @@ const EntityTransferAcceptance = () => {
     if (
       transferData !== null &&
       transferData !== undefined &&
+      selectedDepartment &&
       Object.keys(transferData).length !== 0 ){
-    // console.log("hello",deptDetails, transferData.promotedDepartment)
     const departmentSelected = deptDetails.find(item =>item?.departmentName === transferData?.promotedDepartment)
-    //console.log("department", departmentSelected);
      setNewDept(departmentSelected?.deptId)
-    // setNewCostCentre(transferData.promotedCostCentre);
-    if(departmentSelected){
+   
     getCostCentreDetails(
       transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
         ? "Prodin Sporting Pvt Ltd"
@@ -549,13 +558,12 @@ const EntityTransferAcceptance = () => {
         : transferData.promotedCompany,
      departmentSelected?.departmentName
     );
-    }
+    
     }
   },[transferData]);
   useEffect(()=>{
-    if(costCentreData && newDept){
+    if(costCentreData && newDept && selectedDepartment){
         const costCentreDataSelected = costCentreData.find(item =>item.costCentreName === transferData.promotedCostCentre)
-    // console.log("costCentreDataSelected",costCentreDataSelected,costCentreData );
    setNewCostCentre(costCentreDataSelected?.costCentreName);
     }
   },[costCentreData,newDept]);
