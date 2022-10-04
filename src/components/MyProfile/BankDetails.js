@@ -256,7 +256,7 @@ const BankDetails = (props) => {
           bankName: selectedBankName,
           ifscCode: state.ifscCode,
           panNumber: state.panNo,
-          employeeId: bankViewData.employeeId,
+          employeeId: fetchemployeeData.employeeId,
         };
         console.log("bank payload", bankInfo);
         BankUpdate(bankInfo);
