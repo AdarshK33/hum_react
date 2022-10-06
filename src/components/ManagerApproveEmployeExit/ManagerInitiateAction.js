@@ -289,16 +289,17 @@ const ManagerInitiateAction = (props) => {
 
       state.empContractType = searchByCostData.contractType;
       state.empCostCenterName = searchByCostData.costCentre;
-      if (
-        searchByCostData.department == "AFS" ||
-        searchByCostData.department == "IT" ||
-        searchByCostData.department == "Legal" ||
-        searchByCostData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = searchByCostData.noticePeriod;
+      // if (
+      //   searchByCostData.department == "AFS" ||
+      //   searchByCostData.department == "IT" ||
+      //   searchByCostData.department == "Legal" ||
+      //   searchByCostData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = 2;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
@@ -375,16 +376,17 @@ const ManagerInitiateAction = (props) => {
       state.iamStatus = employeeData.iamStatus;
       state.remarks = employeeData.rehireRemark
       setDateOfResignation(new Date(employeeData.dateOfResignation));
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = employeeData.noticePeriod;
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = 2;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"

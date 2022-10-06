@@ -135,25 +135,25 @@ const EmpResignation = () => {
       fetchemployeeData.department == "Finance") &&
       (fetchemployeeData.contractType === "Fulltime" || fetchemployeeData.contractType === "parttime" || fetchemployeeData.contractType === "Parttime")
     ) {
-      setNoticePeriod(2);
-      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 2));
+      setNoticePeriod(fetchemployeeData.noticePeriod);
+      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + fetchemployeeData.noticePeriod));
       let aboveDateValue = new Date(
-        new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
+        new Date().setMonth(new Date().getMonth() + (parseInt(fetchemployeeData.noticePeriod) + 1))
       );
       setLastDateSelection(aboveDateValue);
-       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(2))))
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(fetchemployeeData.noticePeriod))))
       setEmailId(fetchemployeeData.personalEmail);
-      console.log(dateValue, aboveDateValue, "2");
+      console.log(dateValue, aboveDateValue, "hello if");
     } else {
-      setNoticePeriod(1);
-      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + 1));
+      setNoticePeriod(fetchemployeeData.noticePeriod);
+      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + fetchemployeeData.noticePeriod));
       let aboveDateValue = new Date(
-        new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
+        new Date().setMonth(new Date().getMonth() + (parseInt(fetchemployeeData.noticePeriod) + 1))
       );
       setLastDateSelection(aboveDateValue);
-       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(1))))
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(fetchemployeeData.noticePeriod))))
       setEmailId(fetchemployeeData.personalEmail);
-      console.log(dateValue, aboveDateValue, "1");
+      console.log(dateValue, aboveDateValue, "hello else");
     }
   }, [fetchemployeeData]);
 
@@ -170,32 +170,32 @@ const EmpResignation = () => {
       setLastDate(new Date(employeeData.lastWorkingDate));
       var noticeValue = 0;
       // setLastDate(new Date(employeeData.lastWorkingDate));
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        setNoticePeriod(2);
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+        setNoticePeriod(employeeData.noticePeriod);
         var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + 2)
+          new Date().setMonth(new Date().getMonth() + employeeData.noticePeriod)
         );
         let aboveDateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1))
+          new Date().setMonth(new Date().getMonth() + (parseInt(employeeData.noticePeriod) + 1))
         );
         setLastDateSelection(aboveDateValue);
-        console.log(dateValue, aboveDateValue, "2");
-      } else {
-        setNoticePeriod(1);
-        var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + 1)
-        );
-        let aboveDateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
-        );
-        setLastDateSelection(aboveDateValue);
-        console.log(dateValue, aboveDateValue, "1");
-      }
+        console.log(dateValue, aboveDateValue, "check value");
+      // } else {
+      //   setNoticePeriod(employeeData.noticePeriod);
+      //   var dateValue = new Date(
+      //     new Date().setMonth(new Date().getMonth() + 1)
+      //   );
+      //   let aboveDateValue = new Date(
+      //     new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1))
+      //   );
+      //   setLastDateSelection(aboveDateValue);
+      //   console.log(dateValue, aboveDateValue, "1");
+      // }
 
       setReasonOfSepration("");
       setEmailId(employeeData.personalEmailId);
@@ -652,7 +652,7 @@ const EmpResignation = () => {
                             ? `${noticePeriod} Month`
                             : noticePeriod > 1
                             ? `${noticePeriod} Months`
-                            : ""
+                            : 0
                         }`}
                         readOnly
                         className="disabledValue readTextBlue"

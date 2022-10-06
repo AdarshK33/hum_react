@@ -209,16 +209,17 @@ const ManagerInitiateExit = () => {
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = employeeData.noticePeriod;
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = employeeData.noticePeriod;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -463,16 +464,17 @@ const ManagerInitiateExit = () => {
 
       state.empContractType = searchByCostData.contractType;
       state.empCostCenterName = searchByCostData.costCentre;
-      if (
-        searchByCostData.department == "AFS" ||
-        searchByCostData.department == "IT" ||
-        searchByCostData.department == "Legal" ||
-        searchByCostData.department == "Finance"
-      ) {
-        state.noticePeriod = searchByCostData.noticePeriod;
-      } else {
-        state.noticePeriod = searchByCostData.noticePeriod;
-      }
+      state.noticePeriod = searchByCostData.noticePeriod;
+      // if (
+      //   searchByCostData.department == "AFS" ||
+      //   searchByCostData.department == "IT" ||
+      //   searchByCostData.department == "Legal" ||
+      //   searchByCostData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = searchByCostData.noticePeriod;
+      // } else {
+      //   state.noticePeriod = searchByCostData.noticePeriod;
+      // }
       // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;

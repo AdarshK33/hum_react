@@ -157,18 +157,18 @@ const EmployeeExitAction = (props) => {
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.personalEmailId = employeeData.personalEmailId;
       state.iamStatus = employeeData.iamStatus;
-      state.remarks = employeeData.rehireRemark
-
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.remarks = employeeData.rehireRemark;
+      state.noticePeriod = employeeData.noticePeriod; 
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = 2;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       // state.noticePeriod = employeeData.noticePeriod;
       if (
         employeeData.lastWorkingDate !== null &&
@@ -988,14 +988,14 @@ const EmployeeExitAction = (props) => {
                             type="text"
                             placeholder=""
                             required
-                            style={{
-                              borderColor: "#006ebb",
-                            }}
+                            // style={{
+                            //   borderColor: "#006ebb",
+                            // }}
                             disabled={true}
                             name="noticePeriodRcryDays"
                             value={state.noticePeriodRcryDays}
                             onChange={(e) => changeHandler(e)}
-                            style={rcryDaysError ? { borderColor: "red" } : {}}
+                            style={rcryDaysError ? { borderColor: "red" } : {borderColor: "#006ebb"}}
                           />
 
                           {rcryDaysError ? (
