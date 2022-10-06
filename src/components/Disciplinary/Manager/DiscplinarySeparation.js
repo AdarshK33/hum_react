@@ -269,16 +269,17 @@ const DisciplinarySeparation = (props) => {
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.email;
-      if (
-        searchByCostData.department == "AFS" ||
-        searchByCostData.department == "IT" ||
-        searchByCostData.department == "Legal" ||
-        searchByCostData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = searchByCostData.noticePeriod;
+      // if (
+      //   searchByCostData.department == "AFS" ||
+      //   searchByCostData.department == "IT" ||
+      //   searchByCostData.department == "Legal" ||
+      //   searchByCostData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = 2;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -1269,15 +1270,15 @@ const DisciplinarySeparation = (props) => {
                                   type="text"
                                   placeholder=""
                                   required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
+                                  // style={{
+                                  //   borderColor: "#006ebb",
+                                  // }}
                                   //   disabled={!RcryYes}
                                   name="emailId"
                                   value={state.emailId}
                                   onChange={(e) => changeHandler(e)}
                                   style={
-                                    emailError ? { borderColor: "red" } : {}
+                                    emailError ? { borderColor: "red" } : {borderColor: "#006ebb"}
                                   }
                                 />
 
@@ -1369,15 +1370,15 @@ const DisciplinarySeparation = (props) => {
                                   type="text"
                                   placeholder=""
                                   required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
+                                  // style={{
+                                  //   borderColor: "#006ebb",
+                                  // }}
                                   disabled={!RcryYes}
                                   name="noticePeriodRcryDays"
                                   value={state.noticePeriodRcryDays}
                                   onChange={(e) => changeHandler(e)}
                                   style={
-                                    rcryDaysError ? { borderColor: "red" } : {}
+                                    rcryDaysError ? { borderColor: "red" } : {borderColor: "#006ebb"}
                                   }
                                 />
 

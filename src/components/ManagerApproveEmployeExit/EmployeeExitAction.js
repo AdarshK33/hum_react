@@ -125,16 +125,17 @@ const EmployeeExitAction = (props) => {
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = employeeData.noticePeriod;
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = 2;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -1001,14 +1002,14 @@ const EmployeeExitAction = (props) => {
                                 type="text"
                                 placeholder=""
                                 required
-                                style={{
-                                  borderColor: "#006ebb",
-                                }}
+                                // style={{
+                                //   borderColor: "#006ebb",
+                                // }}
                                 //   disabled={!RcryYes}
                                 name="personalEmailId"
                                 value={state.personalEmailId}
                                 onChange={(e) => changeHandler(e)}
-                                style={emailError ? { borderColor: "red" } : {}}
+                                style={emailError ? { borderColor: "red" } : {borderColor: "#006ebb"}}
                               />
 
                               {emailError ? (
@@ -1160,14 +1161,14 @@ const EmployeeExitAction = (props) => {
                             type="text"
                             placeholder=""
                             required
-                            style={{
-                              borderColor: "#006ebb",
-                            }}
+                            // style={{
+                            //   borderColor: "#006ebb",
+                            // }}
                             disabled={!RcryYes}
                             name="noticePeriodRcryDays"
                             value={state.noticePeriodRcryDays}
                             onChange={(e) => changeHandler(e)}
-                            style={rcryDaysError ? { borderColor: "red" } : {}}
+                            style={rcryDaysError ? { borderColor: "red" } : {borderColor: "#006ebb"}}
                           />
 
                           {rcryDaysError ? (
