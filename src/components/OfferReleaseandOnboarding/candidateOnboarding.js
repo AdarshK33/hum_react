@@ -205,6 +205,11 @@ const CandidateOnboarding = () => {
       candidateData !== null &&
       Object.keys(candidateData).length !== 0
     ) {
+      const roleListSelected = RoleList.find(item =>item.roleName === empData.role)
+      // setEmployeeData({
+      //   ...employeeData,
+      //   ["role"]: roleListSelected?.roleId,
+      // })
       console.log("empData check1",empData);
       // let employeeFedId = (empData.fedId !== null && empData.fedId !== undefined && empData.fedId !== " ")?empData.fedId:""
       // var newFedId=   employeeFedId.replace(/"/g, '');
@@ -266,7 +271,7 @@ const CandidateOnboarding = () => {
         // ["email"]: empData.email,
         // ["fedId"]: (empData.fedId !== null && 
         //   empData.fedId !== undefined && empData.fedId !== "")?empData.fedId.replace(/"/g, ''):'',
-        ["role"]: empData.role,   
+        ["role"]: roleListSelected?.roleId,   
         ["address"]: empData.address,
         ["isClusterManager"]: 0,
         ["aadhaarNumber"]: empData.aadhaarNumber,
@@ -275,9 +280,10 @@ const CandidateOnboarding = () => {
         ["panDoc"]:empData.panDoc,
         ["photo"]:empData.photo
       });
+  console.log("empData data",employeeData);
      
     }
-  }, [empData]);
+  }, [empData,RoleList]);
   console.log("empData check",empData);
 
   // useEffect(() => {
@@ -654,19 +660,6 @@ const CandidateOnboarding = () => {
       }
     }
   };
-  useEffect(() => {
-    if( empData !== undefined &&
-      empData !== null &&
-      RoleList&&
-      Object.keys(empData).length !== 0 ){
-    const roleListSelected = RoleList.find(item =>item.roleName === empData.role)
-    setEmployeeData({
-      ...employeeData,
-      ["role"]: roleListSelected?.roleId,
-    })
-        //  console.log("hello roleListSelected",roleListSelected)
-      }
-  },[ empData,RoleList])
   // console.log("hello  employeeData.role", employeeData.role)
 
   return (
