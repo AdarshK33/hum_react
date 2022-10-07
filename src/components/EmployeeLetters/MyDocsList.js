@@ -296,7 +296,9 @@ const EmployeeDocementsList = () => {
                             </td>
                             <td>{item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined && 
-                              item.disciplinaryWarning.statusDesc === "Warning Letter Approved"?
+                              item.disciplinaryWarning.statusDesc === "Warning Letter Approved"
+                             && item.disciplinaryWarning.ccmEsign === true
+                              ?
                               <Link to="/letters/warning">
                                   <Edit2
                                     onClick={() => {

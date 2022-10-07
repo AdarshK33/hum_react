@@ -430,7 +430,8 @@ const ManagerDisciplinaryList = () => {
                                   Object.keys(item.disciplinaryWarning)
                                     .length &&
                                   item.disciplinaryWarning.statusDesc ===
-                                    "Warning Letter Issued") ||
+                                    "Warning Letter Issued"&&
+                                    item.disciplinaryWarning.managerEsign ===true) ||         
                                   item.disciplinaryAction.statusDesc ===
                                     "Show Cause Notice Issued")) ||
                               (fetchemployeeData !== null &&
