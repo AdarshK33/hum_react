@@ -261,16 +261,21 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? item.disciplinaryAction.statusDesc
                 : "NA",
             action:
-              (fetchemployeeData !== null &&
-                fetchemployeeData !== undefined &&
-                fetchemployeeData.employeeId !== item.initiatedBy &&
+            (fetchemployeeData !== null &&
+              fetchemployeeData !== undefined &&
+              fetchemployeeData.employeeId !== item.initiatedBy &&
                 rolePermission == "costCenterManager" &&
                 item.disciplinaryAction !== null &&
                 item.disciplinaryAction !== undefined &&
                 item.disciplinaryAction !== "" &&
-                item.disciplinaryAction.initiatedRole === "manager" &&
-                (item.disciplinaryAction.statusDesc ===
-                  "Warning Letter Issued" ||
+                item.disciplinaryAction.initiatedRole ===
+                  "manager" &&
+                ((item.disciplinaryWarning &&
+                  Object.keys(item.disciplinaryWarning)
+                    .length &&
+                  item.disciplinaryWarning.statusDesc ===
+                    "Warning Letter Issued"&&
+                    item.disciplinaryWarning.managerEsign ===true) ||
                   item.disciplinaryAction.statusDesc ===
                     "Show Cause Notice Issued")) ||
               (fetchemployeeData !== null &&
@@ -280,9 +285,13 @@ const ApprovalsManager360List = ({ ListType }) => {
                 item.disciplinaryAction !== null &&
                 item.disciplinaryAction !== undefined &&
                 item.disciplinaryAction !== "" &&
-                item.disciplinaryAction.initiatedRole === "costCenterManager" &&
-                (item.disciplinaryAction.statusDesc ===
-                  "Warning Letter Issued" ||
+                item.disciplinaryAction.initiatedRole ===
+                  "costCenterManager" &&
+                ((item.disciplinaryWarning &&
+                  Object.keys(item.disciplinaryWarning)
+                    .length &&
+                  item.disciplinaryWarning.statusDesc ===
+                    "Warning Letter Issued") ||
                   item.disciplinaryAction.statusDesc ===
                     "Show Cause Notice Issued")) ||
               (fetchemployeeData !== null &&
@@ -294,8 +303,11 @@ const ApprovalsManager360List = ({ ListType }) => {
                 item.disciplinaryAction !== "" &&
                 item.disciplinaryAction.initiatedRole ===
                   "superCostCenterManager" &&
-                (item.disciplinaryAction.statusDesc ===
-                  "Warning Letter Issued" ||
+                ((item.disciplinaryWarning &&
+                  Object.keys(item.disciplinaryWarning)
+                    .length &&
+                  item.disciplinaryWarning.statusDesc ===
+                    "Warning Letter Issued") ||
                   item.disciplinaryAction.statusDesc ===
                     "Show Cause Notice Issued"))
                 ? {
