@@ -22,13 +22,14 @@ import { EmployeeProfileContext } from "../../context/EmployeeProfileState";
 import { AppContext } from "../../context/AppState";
 
 const Remuneration = () => {
-  const { user,fetchemployeeData } = useContext(AppContext);
+  const { user,fetchemployeeData, } = useContext(AppContext);
   const {
     RemunerationView,
     remunerationData,
     CostCentreSplitView,
     costCentreSplitData,
     UpdateRemuneration,
+    UpdateVpf
   } = useContext(EmployeeProfileContext);
   const [state, setState] = useState({
     salaryType: "",
@@ -84,28 +85,29 @@ const Remuneration = () => {
     e.preventDefault();
     console.log("insideSubmit");
     if (
-      VpfValidation() === true &&
-      remunerationData !== null &&
-      remunerationData !== undefined &&
-      remunerationData !== "" &&
-      Object.keys(remunerationData).length !== 0
+      VpfValidation() === true 
+      // &&remunerationData !== null &&
+      // remunerationData !== undefined &&
+      // remunerationData !== "" &&
+      // Object.keys(remunerationData).length !== 0
     ) {
       console.log(".....", remunerationData);
 
-      const data = {
-        employeeId: remunerationData.employeeId,
-        esicNumber: remunerationData.esicNumber,
-        fixedGross: state.fixedGross,
-        maxBonus: state.monthlyBonus,
-        paymentType: state.salaryType,
-        pfNumber: remunerationData.pfNumber,
-        remunerationId: remunerationData.remunerationId,
-        salaryTransferType: state.salaryType,
-        uanNumber: remunerationData.uanNumber,
-        vpf: vpfValue,
-        withEffectiveFrom: new Date(),
-      };
-      UpdateRemuneration(data);
+      // const data = {
+      //   employeeId: remunerationData.employeeId,
+      //   esicNumber: remunerationData.esicNumber,
+      //   fixedGross: state.fixedGross,
+      //   maxBonus: state.monthlyBonus,
+      //   paymentType: state.salaryType,
+      //   pfNumber: remunerationData.pfNumber,
+      //   remunerationId: remunerationData.remunerationId,
+      //   salaryTransferType: state.salaryType,
+      //   uanNumber: remunerationData.uanNumber,
+      //   vpf: vpfValue,
+      //   withEffectiveFrom: new Date(),
+      // };
+      // UpdateRemuneration(data);
+      UpdateVpf(fetchemployeeData.employeeId,vpfValue)
     } else {
       console.log("error");
     }

@@ -92,16 +92,17 @@ const EmployeeExitView = () => {
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = employeeData.noticePeriod;
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = employeeData.noticePeriod;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       // state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.personalEmailId;
@@ -884,16 +885,16 @@ const EmployeeExitView = () => {
                               type="text"
                               placeholder=""
                               required
-                              style={{
-                                borderColor: "#006ebb",
-                              }}
+                              // style={{
+                              //   borderColor: "#006ebb",
+                              // }}
                               // disabled={!RcryYes}
                               disabled={true}
                               name="noticePeriodRcryDays"
                               value={state.noticePeriodRcryDays}
                               onChange={(e) => changeHandler(e)}
                               style={
-                                rcryDaysError ? { borderColor: "red" } : {}
+                                rcryDaysError ? { borderColor: "red" } : {borderColor: "#006ebb"}
                               }
                             />
 

@@ -11,6 +11,7 @@ import { BonusContext } from "../../context/BonusState";
 import { PermissionContext } from "../../context/PermissionState";
 import { PromotionContext } from "../../context/PromotionState";
 import { Employee360Context } from "../../context/Employee360State";
+import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import LoaderIcon from "../Loader/LoaderIcon";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
@@ -19,6 +20,9 @@ const ApprovalsManager360List = ({ ListType }) => {
   const history = useHistory();
   const { Manager360ListView, Manager360ListData, approvalsLoader ,totalData} =
     useContext(Employee360Context);
+    const {
+      disciplinaryEmployeeSearch
+    } = useContext(DisciplinaryContext);
   const { rolePermission } = useContext(PermissionContext);
   const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
   const { user,fetchemployeeData } = useContext(AppContext);
@@ -117,7 +121,16 @@ const ApprovalsManager360List = ({ ListType }) => {
                       link: `/promotion-approval/${item.employeeId}`,
                     },
                   }
-                : {
+                :fetchemployeeData !== null &&
+                fetchemployeeData !== undefined &&
+                fetchemployeeData.employeeId === item.initiatedBy && (item.status === 1 || item.status === 5) 
+                ? {
+                    edit: {
+                      active: true,
+                      onClick:ViewPromotionById(item.promotionId),
+                      link: `/promotion/${item.employeeId}`,
+                    },
+                  }:{
                     edit: {
                       active: false,
                       link: "",
@@ -348,6 +361,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                   {
                     edit: {
                       active: true,
+                      onClick:item.disciplinaryAction.disciplinaryId?disciplinaryEmployeeSearch(item.disciplinaryAction.disciplinaryId):null,
                       link: `/manager-warning-action-view/${item.employeeId}`,
                     },
                   }:(fetchemployeeData !== null &&

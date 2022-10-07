@@ -209,16 +209,17 @@ const ManagerInitiateExit = () => {
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      if (
-        employeeData.department == "AFS" ||
-        employeeData.department == "IT" ||
-        employeeData.department == "Legal" ||
-        employeeData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = employeeData.noticePeriod;
+      // if (
+      //   employeeData.department == "AFS" ||
+      //   employeeData.department == "IT" ||
+      //   employeeData.department == "Legal" ||
+      //   employeeData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = employeeData.noticePeriod;
+      // } else {
+      //   state.noticePeriod = 1;
+      // }
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
@@ -463,20 +464,25 @@ const ManagerInitiateExit = () => {
 
       state.empContractType = searchByCostData.contractType;
       state.empCostCenterName = searchByCostData.costCentre;
-      if (
-        searchByCostData.department == "AFS" ||
-        searchByCostData.department == "IT" ||
-        searchByCostData.department == "Legal" ||
-        searchByCostData.department == "Finance"
-      ) {
-        state.noticePeriod = 2;
-      } else {
-        state.noticePeriod = 1;
-      }
+      state.noticePeriod = searchByCostData.noticePeriod;
+      // if (
+      //   searchByCostData.department == "AFS" ||
+      //   searchByCostData.department == "IT" ||
+      //   searchByCostData.department == "Legal" ||
+      //   searchByCostData.department == "Finance"
+      // ) {
+      //   state.noticePeriod = searchByCostData.noticePeriod;
+      // } else {
+      //   state.noticePeriod = searchByCostData.noticePeriod;
+      // }
       // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.personalEmail;
+      state.mngrName = searchByCostData.managerName;
+      state.mngrId = searchByCostData.managerId;
+      state.mngrCostCenterName = searchByCostData.managerCostCentre;
+      state.mngrPosition = searchByCostData.managerPosition;
       console.log(searchByCostData);
       if (
         state.empContractType === "internship" ||
@@ -548,24 +554,24 @@ const ManagerInitiateExit = () => {
       setEmpName("");
     }
   }, [searchByCostData]);
-  useEffect(() => {
-    if (
-      fetchemployeeData &&
-      fetchemployeeData &&
-      fetchemployeeData !== null &&
-      fetchemployeeData !== undefined &&
-      Object.keys(fetchemployeeData).length !== 0
-    ) {
-      state.mngrName =
-      fetchemployeeData.lastName !== null &&
-      fetchemployeeData.lastName !== undefined
-          ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
-          : fetchemployeeData.firstName;
-      state.mngrId = fetchemployeeData.employeeId;
-      state.mngrCostCenterName = fetchemployeeData.costCentre;
-      state.mngrPosition = fetchemployeeData.position;
-    }
-  }, [fetchemployeeData]);
+  // useEffect(() => {
+  //   if (
+  //     fetchemployeeData &&
+  //     fetchemployeeData &&
+  //     fetchemployeeData !== null &&
+  //     fetchemployeeData !== undefined &&
+  //     Object.keys(fetchemployeeData).length !== 0
+  //   ) {
+  //     state.mngrName =
+  //     fetchemployeeData.lastName !== null &&
+  //     fetchemployeeData.lastName !== undefined
+  //         ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
+  //         : fetchemployeeData.firstName;
+  //     state.mngrId = fetchemployeeData.employeeId;
+  //     state.mngrCostCenterName = fetchemployeeData.costCentre;
+  //     state.mngrPosition = fetchemployeeData.position;
+  //   }
+  // }, [fetchemployeeData]);
 
   const searchDataHandler = () => {
     const searchText = employeeRef.current.getInput();
