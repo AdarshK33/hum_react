@@ -549,24 +549,18 @@ const EntityTransferAcceptance = () => {
       Object.keys(transferData).length !== 0 ){
     const departmentSelected = deptDetails.find(item =>item?.departmentName === transferData?.promotedDepartment)
      setNewDept(departmentSelected?.deptId)
-   
-    getCostCentreDetails(
-      transferData.promotedCompany === "Prodin Sporting Pvt Ltd"
-        ? "Prodin Sporting Pvt Ltd"
-        : transferData.promotedCompany === "Indeca Sporting Goods Pvt Ltd"
-        ? "Indeca Sporting Goods Pvt Ltd"
-        : transferData.promotedCompany,
-     departmentSelected?.departmentName
-    );
-    
+     setNewDeptName(departmentSelected?.departmentName)
     }
-  },[transferData]);
+  },[transferData,deptDetails]);
   useEffect(()=>{
-    if(costCentreData && newDept && selectedDepartment){
+    if( transferData !== null &&
+      transferData !== undefined &&
+      costCentreData &&
+      selectedDepartment){
         const costCentreDataSelected = costCentreData.find(item =>item.costCentreName === transferData.promotedCostCentre)
    setNewCostCentre(costCentreDataSelected?.costCentreName);
     }
-  },[costCentreData,newDept]);
+  },[transferData,costCentreData]);
  
  
   return (
