@@ -856,6 +856,8 @@ const DisciplinarySeparation = (props) => {
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
+            approverName:"",
+            approverEmpId:"",
             dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
             emailId: state.emailId,
             empName: EmpName,
@@ -893,6 +895,8 @@ const DisciplinarySeparation = (props) => {
           //  TerminationFromDesciplinary(false);
         } else if (intern === true) {
           const data1 = {
+            approverName:"",
+            approverEmpId:"",
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,

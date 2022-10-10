@@ -333,6 +333,8 @@ const EmpResignation = () => {
       toast.error("internship employee cannot raise self resignation");
     } else {
       const data1 = {
+        approverName : approver,
+        approverEmpId : fetchemployeeData.managerId ? fetchemployeeData.managerId : "",
         company: fetchemployeeData.company,
         contractType: fetchemployeeData.contractType,
         costCentreManagerEmailId: null,

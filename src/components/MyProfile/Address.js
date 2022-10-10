@@ -1095,9 +1095,15 @@ const Address = (props) => {
                   name="street"
                   value={state.street}
                   onChange={changeHandler}
+                  maxLength="250"
                   placeholder="Street"
                   disabled={disabled}
                 />
+                {state.street && state.street.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </div>
             <div className="col-sm-3">
@@ -1111,9 +1117,15 @@ const Address = (props) => {
                   name="locality"
                   value={state.locality}
                   onChange={changeHandler}
+                  maxLength="250"
                   placeholder="Locality"
                   disabled={disabled}
                 />
+                { state.locality && state.locality.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </div>
             <div className="col-sm-3">
@@ -1127,12 +1139,15 @@ const Address = (props) => {
                   value={state.addressLine}
                   onChange={changeHandler}
                   required
+                  maxLength="250"
                   style={addressLineError ? { borderColor: "red" } : {}}
                   placeholder="Address Line 1"
                   disabled={disabled}
                 />
                 {addressLineError ? (
                   <p style={{ color: "red" }}> Please enter address line1</p>
+                ) :state.addressLine && state.addressLine.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
                 ) : (
                   <p></p>
                 )}
@@ -1367,9 +1382,15 @@ const Address = (props) => {
                       value={state.permanentStreet}
                       onChange={changeHandler}
                       required
+                      maxLength="250"
                       placeholder="Street"
                       disabled={disabled}
                     />
+                    {state.permanentStreet && state.permanentStreet.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">
@@ -1384,9 +1405,15 @@ const Address = (props) => {
                       value={state.permanentLocality}
                       onChange={changeHandler}
                       required
+                      maxLength="250"
                       placeholder="Locality"
                       disabled={disabled}
                     />
+                    {state.permanentLocality && state.permanentLocality.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">
@@ -1397,6 +1424,7 @@ const Address = (props) => {
                     <Form.Control
                       type="text"
                       name="permanentAddressLine"
+                      maxLength="250"
                       value={state.permanentAddressLine}
                       onChange={changeHandler}
                       required
@@ -1411,6 +1439,8 @@ const Address = (props) => {
                         {" "}
                         Please enter address line1
                       </p>
+                    ) :state.permanentAddressLine && state.permanentAddressLine.length === 250 ? (
+                      <p style={{ color: "red" }}> Max 250 Characters</p>
                     ) : (
                       <p></p>
                     )}

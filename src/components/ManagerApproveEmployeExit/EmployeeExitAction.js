@@ -68,7 +68,9 @@ const EmployeeExitAction = (props) => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
-    iamStatus:""
+    iamStatus:"",
+    approverName:"",
+    approverEmpId:""
   });
   const {
     loader,
@@ -126,6 +128,8 @@ const EmployeeExitAction = (props) => {
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
+      state.approverEmpId = employeeData.approverEmpId;
+      state.approverName = employeeData.approverName;
       // if (
       //   employeeData.department == "AFS" ||
       //   employeeData.department == "IT" ||
@@ -1071,8 +1075,8 @@ const EmployeeExitAction = (props) => {
                           <label>
                             <b>Approver:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.mngrName}
-                              &nbsp; {state.mngrId}
+                              &nbsp;&nbsp; {state.approverName}
+                              &nbsp; {state.approverEmpId}
                             </label>
                           </label>
                         </div>

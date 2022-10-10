@@ -84,6 +84,8 @@ const EmployeeExitAction = (props) => {
     status: "",
     withdraw: "",
     iamStatus:"",
+    approverName:"",
+    approverEmpId:""
   });
   const {
     EmployeeSeparationListView,
@@ -158,7 +160,9 @@ const EmployeeExitAction = (props) => {
       state.personalEmailId = employeeData.personalEmailId;
       state.iamStatus = employeeData.iamStatus;
       state.remarks = employeeData.rehireRemark;
-      state.noticePeriod = employeeData.noticePeriod; 
+      state.noticePeriod = employeeData.noticePeriod;
+      state.approverEmpId = employeeData.approverEmpId;
+      state.approverName = employeeData.approverName; 
       // if (
       //   employeeData.department == "AFS" ||
       //   employeeData.department == "IT" ||
@@ -911,8 +915,8 @@ const EmployeeExitAction = (props) => {
                           <label>
                             <b>Approver:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.managerName}
-                              &nbsp; {state.managerId}
+                              &nbsp;&nbsp; {state.approverName}
+                              &nbsp; {state.approverEmpId}
                             </label>
                           </label>
                         </div>
