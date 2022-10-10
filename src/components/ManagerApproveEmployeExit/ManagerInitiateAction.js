@@ -95,6 +95,8 @@ const ManagerInitiateAction = (props) => {
     remarks: "",
     status: 0,
     iamStatus:"",
+    approverName:"",
+    approverEmpId:""
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
@@ -207,6 +209,8 @@ const ManagerInitiateAction = (props) => {
         state.remarks = "";
         state.exitId = "";
         state.iamStatus="";
+        state.approverEmpId="";
+        state.approverName="";
         setModeOfSeparation("");
         setRehireYes(false);
         setRehireNo(false);
@@ -374,7 +378,9 @@ const ManagerInitiateAction = (props) => {
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.iamStatus = employeeData.iamStatus;
-      state.remarks = employeeData.rehireRemark
+      state.remarks = employeeData.rehireRemark;
+      state.approverEmpId = employeeData.approverEmpId;
+      state.approverName = employeeData.approverName;
       setDateOfResignation(new Date(employeeData.dateOfResignation));
       state.noticePeriod = employeeData.noticePeriod;
       // if (
@@ -1048,6 +1054,8 @@ e.preventDefault()
           });
 
           const data2 = {
+            approverName : state.approverName,
+            approverEmpId : state.approverEmpId,
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
@@ -1090,6 +1098,8 @@ e.preventDefault()
           //  TerminationFromDesciplinary(false);
         } else if (intern === true) {
           const data1 = {
+            approverName : state.approverName,
+            approverEmpId : state.approverEmpId,
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
@@ -1988,8 +1998,8 @@ e.preventDefault()
                             <label>
                               <b>Approver:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.mngrName}
-                                &nbsp; {state.mngrId}
+                                &nbsp;&nbsp; {state.approverName}
+                                &nbsp; {state.approverEmpId}
                               </label>
                             </label>
                           </div>

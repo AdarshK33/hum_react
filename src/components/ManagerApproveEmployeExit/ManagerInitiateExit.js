@@ -97,6 +97,8 @@ const ManagerInitiateExit = () => {
     noticePeriodRcryDays: "",
     remarks: "",
     iamStatus:"",
+    approverName:"",
+    approverEmpId:""
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
@@ -210,6 +212,8 @@ const ManagerInitiateExit = () => {
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
+      state.approverEmpId = employeeData.approverEmpId;
+      state.approverName = employeeData.approverName;
       // if (
       //   employeeData.department == "AFS" ||
       //   employeeData.department == "IT" ||
@@ -381,6 +385,8 @@ const ManagerInitiateExit = () => {
         state.comments = "";
         state.noticePeriodRcryDays = "";
         state.remarks = "";
+        state.approverEmpId="";
+        state.approverName="";
         setModeOfSeparation("");
         setRehireYes(false);
         setRehireNo(false);
@@ -483,6 +489,8 @@ const ManagerInitiateExit = () => {
       state.mngrId = searchByCostData.managerId;
       state.mngrCostCenterName = searchByCostData.managerCostCentre;
       state.mngrPosition = searchByCostData.managerPosition;
+      state.approverEmpId = searchByCostData.approverEmpId;
+      state.approverName = searchByCostData.approverName;
       console.log(searchByCostData);
       if (
         state.empContractType === "internship" ||
@@ -546,6 +554,8 @@ const ManagerInitiateExit = () => {
       state.empPosition = "";
       state.mngrName = "";
       state.mngrId = "";
+      state.approverEmpId="";
+      state.approverName="";
       state.mngrCostCenterName = "";
       state.mngrPosition = "";
       state.dateOfResignation = "";
@@ -1203,6 +1213,8 @@ const ManagerInitiateExit = () => {
           });
 
           const data2 = {
+            approverName : state.approverName,
+            approverEmpId : state.approverEmpId,
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
@@ -1264,6 +1276,8 @@ const ManagerInitiateExit = () => {
             }
           });
           const data1 = {
+            approverName : state.approverName,
+            approverEmpId : state.approverEmpId,
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
@@ -2185,8 +2199,8 @@ const ManagerInitiateExit = () => {
                             <label>
                               <b>Approver:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.mngrName}
-                                &nbsp; {state.mngrId}
+                                &nbsp;&nbsp; {state.approverName}
+                                &nbsp; {state.approverEmpId}
                               </label>
                             </label>
                           </div>

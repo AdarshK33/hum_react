@@ -52,6 +52,8 @@ const EmployeeExitView = () => {
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
+    approverName:"",
+    approverEmpId:""
   });
   const {
     EmployeeSeparationListView,
@@ -93,6 +95,8 @@ const EmployeeExitView = () => {
       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
+      state.approverEmpId = employeeData.approverEmpId;
+      state.approverName = employeeData.approverName;
       // if (
       //   employeeData.department == "AFS" ||
       //   employeeData.department == "IT" ||
@@ -799,8 +803,8 @@ const EmployeeExitView = () => {
                           <label>
                             <b>Approver:</b>
                             <label className="itemResult">
-                              &nbsp;&nbsp; {state.mngrName}
-                              &nbsp; {state.mngrId}
+                              &nbsp;&nbsp; {state.approverName}
+                              &nbsp; {state.approverEmpId}
                             </label>
                           </label>
                         </div>

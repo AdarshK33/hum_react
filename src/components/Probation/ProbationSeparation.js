@@ -618,6 +618,8 @@ const ProbationSeparation = () => {
       } else {
         if (intern === false) {
           const data2 = {
+            approverName : "",
+            approverEmpId : "",
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
@@ -661,6 +663,8 @@ const ProbationSeparation = () => {
           //  TerminationFromDesciplinary(false);
         } else if (intern === true) {
           const data1 = {
+            approverName : "",
+            approverEmpId : "",
             company: null,
             contractType: state.empContractType,
             costCentreManagerEmailId: null,
