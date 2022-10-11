@@ -1118,13 +1118,21 @@ if(stateList !== null &&
                   name="flatNumber"
                   value={state.flatNumber}
                   onChange={changeHandler}
+                  maxLength="200"
                   required
                   style={flatNumberErro ? { borderColor: "red" } : {}}
                   placeholder="Flat/Plot No"
                   disabled={disabled}
                 />
-                {flatNumberErro ? (
+                {/* {flatNumberErro ? (
                   <p style={{ color: "red" }}> Please enter flat/plot no</p>
+                ) : (
+                  <p></p>
+                )} */}
+                 {flatNumberErro ? (
+                  <p style={{ color: "red" }}>  Please enter flat/plot no</p>
+                ) :state.flatNumber && state.flatNumber.length === 200 ? (
+                  <p style={{ color: "red" }}> Max 200 Characters</p>
                 ) : (
                   <p></p>
                 )}
@@ -1401,6 +1409,7 @@ if(stateList !== null &&
                       type="text"
                       name="permanentFlatNumber"
                       value={state.permanentFlatNumber}
+                      maxLength="200"
                       onChange={changeHandler}
                       required
                       style={
@@ -1409,11 +1418,18 @@ if(stateList !== null &&
                       placeholder="Flat/Plot No"
                       disabled={disabled}
                     />
-                    {PermanentFlatNumberError ? (
+                    {/* {PermanentFlatNumberError ? (
                       <p style={{ color: "red" }}> Please enter flat/plot no</p>
                     ) : (
                       <p></p>
-                    )}
+                    )} */}
+                      {PermanentFlatNumberError ? (
+                  <p style={{ color: "red" }}>  Please enter flat/plot no</p>
+                ) :state.permanentFlatNumber && state.permanentFlatNumber.length === 200 ? (
+                  <p style={{ color: "red" }}> Max 200 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">

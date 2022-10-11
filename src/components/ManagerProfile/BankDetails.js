@@ -355,14 +355,23 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
                 maxLength="20"
                 style={accountNumberError ? { borderColor: "red" } : {}}
               />
-              {accountNumberError ? (
+              {/* {accountNumberError ? (
                 <p style={{ color: "red" }}>
                   {" "}
                   Please enter the valid Account Number
                 </p>
               ) : (
                 <p></p>
-              )}
+              )} */}
+                {accountNumberError ? (
+                  <p style={{ color: "red" }}> 
+                   {" "}
+                  Please enter the valid Account Number</p>
+                ) :state.accountNumber && state.accountNumber.length === 20 ? (
+                  <p style={{ color: "red" }}> Max 20 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
           <div className="col-sm-3">
@@ -378,17 +387,24 @@ if ((state.panNo !== "") & panValid.test(state.panNo)) {
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
-                maxLength="20"
+                maxLength="100"
                 style={ifscCodeError ? { borderColor: "red" } : {}}
               />
-              {ifscCodeError ? (
+              {/* {ifscCodeError ? (
                 <p style={{ color: "red" }}>
                   {" "}
                   Please enter the valid IFSC code
                 </p>
               ) : (
                 <p></p>
-              )}
+              )} */}
+                {ifscCodeError ? (
+                  <p style={{ color: "red" }}> Please enter the valid IFSC code</p>
+                ) :state.ifscCode && state.ifscCode.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
           {rolePermission == "admin"?
