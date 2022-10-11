@@ -3477,6 +3477,7 @@ const InsuranceNomination = (props) => {
                       <Form.Control
                         type="text"
                         name="nominiName"
+                        maxLength="100"
                         value={state.nominiName}
                         onChange={changeHandler}
                         disabled={disable || disabled}
@@ -3489,6 +3490,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :state.nominiName && state.nominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -3709,6 +3712,7 @@ const InsuranceNomination = (props) => {
                       </Form.Label>
                       <Form.Control
                         type="text"
+                        maxLength="100"
                         name="extra1nominiName"
                         value={state.extra1nominiName}
                         onChange={changeHandler}
@@ -3724,6 +3728,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :state.extra1nominiName && state.extra1nominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -3951,6 +3957,7 @@ const InsuranceNomination = (props) => {
                         name="nominee2NominiName"
                         value={state.nominee2NominiName}
                         onChange={changeHandler}
+                        maxLength="100"
                         disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
@@ -3961,6 +3968,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :  state.nominee2NominiName && state.nominee2NominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -4175,6 +4184,7 @@ const InsuranceNomination = (props) => {
                         value={state.extra2nominiName}
                         onChange={changeHandler}
                         disabled={disable || disabled}
+                        maxLength="100"
                         required
                         style={
                           extra2nomineNameError_1 ? { borderColor: "red" } : {}
@@ -4186,6 +4196,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :  state.extra2nominiName && state.extra2nominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -4402,6 +4414,7 @@ const InsuranceNomination = (props) => {
                         type="text"
                         name="nominee5NominiName"
                         value={state.nominee5NominiName}
+                        maxLength="100"
                         onChange={changeHandler}
                         disabled={disable || disabled}
                         placeholder="Dependent Name"
@@ -4413,6 +4426,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) : state.nominee5NominiName && state.nominee5NominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -4628,6 +4643,7 @@ const InsuranceNomination = (props) => {
                         onChange={changeHandler}
                         placeholder="Dependent Name"
                         required="required"
+                        maxLength="100"
                         disabled={disable || disabled}
                         style={nomineNameError_51 ? { borderColor: "red" } : {}}
                       />
@@ -4636,6 +4652,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :state.nominee5NominiName1 && state.nominee5NominiName1.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -4998,6 +5016,7 @@ const InsuranceNomination = (props) => {
                       <Form.Control
                         type="text"
                         name="nominee3NominiName"
+                        maxLength="100"
                         value={state.nominee3NominiName}
                         onChange={changeHandler}
                         disabled={disable || disabled}
@@ -5010,6 +5029,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) : state.nominee3NominiName && state.nominee3NominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -5227,6 +5248,7 @@ const InsuranceNomination = (props) => {
                         name="nominee4NominiName"
                         value={state.nominee4NominiName}
                         onChange={changeHandler}
+                        maxLength="100"
                         disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
@@ -5237,6 +5259,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :  state.nominee4NominiName && state.nominee4NominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -5480,6 +5504,7 @@ const InsuranceNomination = (props) => {
                         name="In_law_nominee1NominiName"
                         value={state.In_law_nominee1NominiName}
                         onChange={changeHandler}
+                        maxLength="100"
                         disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
@@ -5492,6 +5517,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :state.In_law_nominee1NominiName && state.In_law_nominee1NominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -5721,6 +5748,7 @@ const InsuranceNomination = (props) => {
                         name="In_law_nominee2NominiName"
                         value={state.In_law_nominee2NominiName}
                         onChange={changeHandler}
+                        maxLength="100"
                         disabled={disable || disabled}
                         placeholder="Dependent Name"
                         required="required"
@@ -5733,6 +5761,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :state.In_law_nominee2NominiName && state.In_law_nominee2NominiName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -6032,6 +6062,7 @@ const InsuranceNomination = (props) => {
                         onChange={nomineeHandler}
                         required
                         disabled={disabled}
+                        maxLength="100"
                         style={nomineeNameError ? { borderColor: "red" } : {}}
                         placeholder="Nominee Name"
                       />
@@ -6040,6 +6071,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please enter valid name
                         </p>
+                      ) :nominee.nomineeName && nominee.nomineeName.length === 100 ? (
+                        <p style={{ color: "red" }}> Max 100 Characters</p>
                       ) : (
                         <p></p>
                       )}
@@ -6151,6 +6184,7 @@ const InsuranceNomination = (props) => {
                           value={nominee.nomineeAddress}
                           onChange={nomineeHandler}
                           disabled={disabled}
+                          maxLength="256"
                           required
                           style={
                             nomineeAddressError ? { borderColor: "red" } : {}
@@ -6163,6 +6197,8 @@ const InsuranceNomination = (props) => {
                           {" "}
                           &nbsp; *Please Enter valid address
                         </p>
+                      ) : nominee.nomineeAddress && nominee.nomineeAddress.length === 256 ? (
+                        <p style={{ color: "red" }}> Max 256 Characters</p>
                       ) : (
                         <p></p>
                       )}

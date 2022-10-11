@@ -1145,6 +1145,7 @@ const PersonalInformation = (props) => {
                 value={state.aadhaarName}
                 onChange={changeHandler}
                 required
+                maxLength="100"
                 style={adharNameError ? { borderColor: "red" } : {}}
                 placeholder={
                   candidateViewInfo !== null &&
@@ -1159,6 +1160,8 @@ const PersonalInformation = (props) => {
 
               {adharNameError ? (
                 <p style={{ color: "red" }}> Please enter valid name</p>
+              ) :state.aadhaarName && state.aadhaarName.length === 100 ? (
+                <p style={{ color: "red" }}> Max 100 Characters</p>
               ) : (
                 <p></p>
               )}
@@ -1174,6 +1177,7 @@ const PersonalInformation = (props) => {
                 name="fatherName"
                 value={state.fatherName}
                 onChange={changeHandler}
+                maxLength="100"
                 required
                 placeholder="Father's Name"
                 disabled={disabled}
@@ -1181,6 +1185,8 @@ const PersonalInformation = (props) => {
               />
               {fatherName ? (
                 <p style={{ color: "red" }}>Please enter valid father's name</p>
+              ) : state.fatherName && state.fatherName.length === 100 ? (
+                <p style={{ color: "red" }}> Max 100 Characters</p>
               ) : (
                 <p></p>
               )}
