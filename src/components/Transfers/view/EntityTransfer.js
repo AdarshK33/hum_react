@@ -24,11 +24,19 @@ const EntityTransfer = ({ transferData }) => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
+  const [viewDoc, setViewDoc] = useState(false); 
+
   const handleImageView = (data,employeeId)=>{
     if(data !== "" && data !== null && data !== undefined){
+   setViewDoc(true)
     ImageView(data,employeeId)
     }
   }
+  useEffect(() => {
+    if(imageViewData.data && viewDoc){
+     window.open(imageViewData.data, '_blank');
+    }
+   }, [imageViewData.data]);
   return (
     <Fragment>
       {transferData &&
@@ -169,16 +177,16 @@ const EntityTransfer = ({ transferData }) => {
                 //   }
                 //   target="_blank"
                 // >
-                <a
-                href={(imageViewData !== null && imageViewData !== undefined
-                  && imageViewData.data) ? imageViewData.data:""}
-                target="_blank"
+                <span
+                // href={(imageViewData !== null && imageViewData !== undefined
+                //   && imageViewData.data) ? imageViewData.data:""}
+                // target="_blank"
               >
                   {" "}
-                  <u className="text-primary"
+                  <u className="text-primary" style={{ cursor: "pointer" }} 
                     onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc,
                       transferData.currentEmployeeId)}>View</u>
-                    </a>
+                    </span>
               ) : (
                 "(No Documents Available)"
               )}
@@ -210,16 +218,16 @@ const EntityTransfer = ({ transferData }) => {
                 //   }
                 //   target="_blank"
                 // >
-                <a
-                href={(imageViewData !== null && imageViewData !== undefined
-                  && imageViewData.data) ? imageViewData.data:""}
-                target="_blank"
+                <span
+                // href={(imageViewData !== null && imageViewData !== undefined
+                //   && imageViewData.data) ? imageViewData.data:""}
+                // target="_blank"
               >
                   {" "}
-                  <u className="text-primary"
+                  <u className="text-primary" style={{ cursor: "pointer" }} 
             onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc,
               transferData.currentEmployeeId)}  >View</u>
-                             </a>
+                             </span>
               ) : (
                 "(No Documents Available)"
               )}
