@@ -1138,11 +1138,17 @@ if(stateList !== null &&
                 <Form.Control
                   type="text"
                   name="street"
+                  maxLength="250"
                   value={state.street}
                   onChange={changeHandler}
                   placeholder="Street"
                   disabled={disabled}
                 />
+                {state.street && state.street.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </div>
             <div className="col-sm-3">
@@ -1155,10 +1161,16 @@ if(stateList !== null &&
                   type="text"
                   name="locality"
                   value={state.locality}
+                  maxLength="250"
                   onChange={changeHandler}
                   placeholder="Locality"
                   disabled={disabled}
                 />
+                {state.locality && state.locality.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </div>
             <div className="col-sm-3">
@@ -1172,12 +1184,15 @@ if(stateList !== null &&
                   value={state.addressLine}
                   onChange={changeHandler}
                   required
+                  maxLength="250"
                   style={addressLineError ? { borderColor: "red" } : {}}
                   placeholder="Address Line 1"
                   disabled={disabled}
                 />
                 {addressLineError ? (
                   <p style={{ color: "red" }}> Please enter address line1</p>
+                ) : state.addressLine && state.addressLine.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
                 ) : (
                   <p></p>
                 )}
@@ -1412,9 +1427,15 @@ if(stateList !== null &&
                       value={state.permanentStreet}
                       onChange={changeHandler}
                       required
+                      maxLength="250"
                       placeholder="Street"
                       disabled={disabled}
                     />
+                    {state.permanentStreet && state.permanentStreet.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">
@@ -1429,9 +1450,15 @@ if(stateList !== null &&
                       value={state.permanentLocality}
                       onChange={changeHandler}
                       required
+                      maxLength="250"
                       placeholder="Locality"
                       disabled={disabled}
                     />
+                    {state.permanentLocality && state.permanentLocality.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">
@@ -1445,6 +1472,7 @@ if(stateList !== null &&
                       value={state.permanentAddressLine}
                       onChange={changeHandler}
                       required
+                      maxLength="250"
                       style={
                         PermanentAddressLineError ? { borderColor: "red" } : {}
                       }
@@ -1456,6 +1484,8 @@ if(stateList !== null &&
                         {" "}
                         Please enter address line1
                       </p>
+                    ) :state.permanentAddressLine && state.permanentAddressLine.length === 250 ? (
+                      <p style={{ color: "red" }}> Max 250 Characters</p>
                     ) : (
                       <p></p>
                     )}

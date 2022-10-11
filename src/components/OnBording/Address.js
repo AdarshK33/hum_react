@@ -708,10 +708,16 @@ const Address = (props) => {
                   type="text"
                   name="street"
                   value={state.street}
+                  maxLength="250"
                   onChange={changeHandler}
                   placeholder="Street"
                   disabled={disabled}
                 />
+                {state.street && state.street.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </div>
             <div className="col-sm-3">
@@ -722,10 +728,16 @@ const Address = (props) => {
                   type="text"
                   name="locality"
                   value={state.locality}
+                  maxLength="250"
                   onChange={changeHandler}
                   placeholder="Locality"
                   disabled={disabled}
                 />
+                { state.locality && state.locality.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </div>
             <div className="col-sm-3">
@@ -737,6 +749,7 @@ const Address = (props) => {
                   type="text"
                   name="addressLine"
                   value={state.addressLine}
+                  maxLength="250"
                   onChange={changeHandler}
                   required
                   style={addressLineError ? { borderColor: "red" } : {}}
@@ -745,6 +758,8 @@ const Address = (props) => {
                 />
                 {addressLineError ? (
                   <p style={{ color: "red" }}> Please enter address line1</p>
+                ) : state.addressLine && state.addressLine.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
                 ) : (
                   <p></p>
                 )}
@@ -984,10 +999,16 @@ const Address = (props) => {
                       name="permanentStreet"
                       value={state.permanentStreet}
                       onChange={changeHandler}
+                      maxLength="250"
                       required
                       placeholder="Street"
                       disabled={disabled}
                     />
+                    {state.permanentStreet && state.permanentStreet.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">
@@ -998,11 +1019,17 @@ const Address = (props) => {
                       type="text"
                       name="permanentLocality"
                       value={state.permanentLocality}
+                      maxLength="250"
                       onChange={changeHandler}
                       required
                       placeholder="Locality"
                       disabled={disabled}
                     />
+                    {state.permanentLocality && state.permanentLocality.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-3">
@@ -1016,6 +1043,7 @@ const Address = (props) => {
                       value={state.permanentAddressLine}
                       onChange={changeHandler}
                       required
+                      maxLength="250"
                       style={
                         PermanentAddressLineError ? { borderColor: "red" } : {}
                       }
@@ -1027,6 +1055,8 @@ const Address = (props) => {
                         {" "}
                         Please enter address line1
                       </p>
+                    ) : state.permanentAddressLine && state.permanentAddressLine.length === 250 ? (
+                      <p style={{ color: "red" }}> Max 250 Characters</p>
                     ) : (
                       <p></p>
                     )}
