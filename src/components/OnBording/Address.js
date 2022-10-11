@@ -686,6 +686,7 @@ const Address = (props) => {
                 </Form.Label>
                 <Form.Control
                   type="text"
+                  maxLength="200"
                   name="flatNumber"
                   value={state.flatNumber}
                   onChange={changeHandler}
@@ -696,6 +697,8 @@ const Address = (props) => {
                 />
                 {flatNumberErro ? (
                   <p style={{ color: "red" }}> Please enter flat/plot no</p>
+                ) : state.flatNumber && state.flatNumber.length === 200 ? (
+                  <p style={{ color: "red" }}> Max 200 Characters</p>
                 ) : (
                   <p></p>
                 )}
@@ -975,6 +978,7 @@ const Address = (props) => {
                     <Form.Control
                       type="text"
                       name="permanentFlatNumber"
+                      maxLength="200"
                       value={state.permanentFlatNumber}
                       onChange={changeHandler}
                       required
@@ -986,6 +990,8 @@ const Address = (props) => {
                     />
                     {PermanentFlatNumberError ? (
                       <p style={{ color: "red" }}> Please enter flat/plot no</p>
+                    ) :state.permanentFlatNumber && state.permanentFlatNumber.length === 200 ? (
+                      <p style={{ color: "red" }}> Max 200 Characters</p>
                     ) : (
                       <p></p>
                     )}

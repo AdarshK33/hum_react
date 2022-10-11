@@ -276,7 +276,7 @@ const BankDetails = (props) => {
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
-                // maxLength="20"
+                maxLength="100"
                 style={ifscCodeError ? { borderColor: "red" } : {}}
               />
               {ifscCodeError ? (
@@ -284,6 +284,8 @@ const BankDetails = (props) => {
                   {" "}
                   Please enter the valid IFSC code
                 </p>
+              ) :state.ifscCode && state.ifscCode.length === 100 ? (
+                <p style={{ color: "red" }}> Max 100 Characters</p>
               ) : (
                 <p></p>
               )}

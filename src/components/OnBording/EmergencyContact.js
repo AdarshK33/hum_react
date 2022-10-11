@@ -258,12 +258,19 @@ const EmergencyContact = (props) => {
                 onChange={changeHandler}
                 required
                 placeholder="Name"
+                maxLength="100"
                 disabled={disabled}
                 style={
                   stateError.contactNameError ? { borderColor: "red" } : {}
                 }
               />
+              {stateError.contactNameError? 
               <p style={{ color: "red" }}>{stateError.contactNameError} </p>
+              : state.contactName && state.contactName.length === 100 ? (
+                <p style={{ color: "red" }}> Max 100 Characters</p>
+              ) : (
+                <p></p>
+              )}
             </Form.Group>
           </div>
           <div className="col-sm-3">
@@ -316,6 +323,7 @@ const EmergencyContact = (props) => {
                 value={state.phoneNumber}
                 onChange={changeHandler}
                 required
+                maxLength="10"
                 placeholder="Contact No"
                 disabled={disabled}
                 style={
@@ -337,10 +345,17 @@ const EmergencyContact = (props) => {
                 value={state.addressLine}
                 onChange={changeHandler}
                 required
+                maxLength="100"
                 placeholder="Address Line 1"
                 disabled={disabled}
               />
+              {stateError.addressLineError?
               <p style={{ color: "red" }}>{stateError.addressLineError} </p>
+              : state.addressLine && state.addressLine.length === 100 ? (
+                <p style={{ color: "red" }}> Max 100 Characters</p>
+              ) : (
+                <p></p>
+              )}
             </Form.Group>
           </div>
           {/* </div> */}
@@ -355,12 +370,19 @@ const EmergencyContact = (props) => {
                 value={state.locality}
                 onChange={changeHandler}
                 required
+                maxLength="100"
                 placeholder="Locality"
                 disabled={disabled}
                 style={stateError.localityError ? { borderColor: "red" } : {}}
               />
             </Form.Group>
+            {stateError.localityError?
             <p style={{ color: "red" }}>{stateError.localityError} </p>
+            : state.locality && state.locality.length === 100 ? (
+              <p style={{ color: "red" }}> Max 100 Characters</p>
+            ) : (
+              <p></p>
+            )}
           </div>
           <div className="col-sm-3">
             <Form.Group>
@@ -373,11 +395,18 @@ const EmergencyContact = (props) => {
                 value={state.city}
                 onChange={changeHandler}
                 required
+                maxLength="250"
                 placeholder="City"
                 disabled={disabled}
                 style={stateError.cityError ? { borderColor: "red" } : {}}
               />
+              {stateError.cityError?
               <p style={{ color: "red" }}>{stateError.cityError}</p>
+              :state.city && state.city.length === 250 ? (
+                <p style={{ color: "red" }}> Max 250 Characters</p>
+              ) : (
+                <p></p>
+              )}
             </Form.Group>
           </div>
           <div className="col-sm-3">
@@ -390,12 +419,19 @@ const EmergencyContact = (props) => {
                 name="country"
                 value={state.country}
                 onChange={changeHandler}
+                maxLength="100"
                 required
                 placeholder="Country"
                 disabled={disabled}
                 style={stateError.countryError ? { borderColor: "red" } : {}}
               />
+              {stateError.countryError?
               <p style={{ color: "red" }}>{stateError.countryError} </p>
+              : state.country && state.country.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
 
@@ -409,6 +445,7 @@ const EmergencyContact = (props) => {
                 name="pinCode"
                 value={state.pinCode}
                 onChange={changeHandler}
+                maxLength="6"
                 required
                 placeholder="Pin Code"
                 disabled={disabled}
