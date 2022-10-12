@@ -216,12 +216,15 @@ const EmpResignation = () => {
       ModeOfSeparationData !== undefined &&
       Object.keys(ModeOfSeparationData).length !== 0
     ) {
+      let tempArray;
       if (employeeData.modeOfSeparationId === 1) {
         console.log(ModeOfSeparationData[0].modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
         console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
+        tempArray =
+        ModeOfSeparationData[0].modeOfSeparationReasonList[0].modeOfSeparationReason;
       }
-      let tempArray;
+      
       ModeOfSeparationData.map((item, i) => {
         if (employeeData.modeOfSeparationId === 0) {
           tempArray = " ";
@@ -877,7 +880,7 @@ const EmpResignation = () => {
                   {submitted === false ? (
                     <Button type="submit">Submit</Button>
                   ) : (
-                    <Button disabled={employeeData!==undefined&&employeeData!==null&&employeeData.modeOfSeparationId == 2?true:false} onClick={withdrawHandler}>
+                    <Button disabled={employeeData!==undefined && employeeData!==null && employeeData.modeOfSeparationId == 2 ? true :(employeeData.ccmEsign === true || employeeData.managerEsign === true) ? false : false} onClick={withdrawHandler}>
                       WithDraw Resignation
                     </Button>
                   )}
