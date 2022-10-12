@@ -77,6 +77,8 @@ const EntityTransferAction = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
+  const [viewDoc, setViewDoc] = useState(false); 
+
   const history = useHistory();
   console.log("user->", user);
   useEffect(() => {
@@ -442,8 +444,14 @@ const EntityTransferAction = () => {
     setShowLetterSubmitModal(true);
   };
   const handleImageView = (data,employeeId)=>{
+    setViewDoc(true)
     ImageView(data,employeeId)
   }
+  useEffect(() => {
+    if(imageViewData.data && viewDoc){
+     window.open(imageViewData.data, '_blank');
+    }
+   }, [imageViewData.data]);
   return (
     <Fragment>
       <ToastContainer />
@@ -727,16 +735,16 @@ const EntityTransferAction = () => {
                             //   }
                             //   target="_blank"
                             // >
-                            <a
-                            href={(imageViewData !== null && imageViewData !== undefined
-                              && imageViewData.data) ? imageViewData.data:""}
-                            target="_blank"
+                            <span
+                            // href={(imageViewData !== null && imageViewData !== undefined
+                            //   && imageViewData.data) ? imageViewData.data:""}
+                            // target="_blank"
                           >
                               {" "}
-                              <u className="text-primary"
+                              <u className="text-primary" style={{ cursor: "pointer" }}
                     onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc,
                       transferData.currentEmployeeId)}>View</u>
-                            </a>
+                            </span>
                           ) : (
                             "(No Documents Available)"
                           )}
@@ -770,16 +778,16 @@ const EntityTransferAction = () => {
                             //   }
                             //   target="_blank"
                             // >
-                               <a
-                              href={(imageViewData !== null && imageViewData !== undefined
-                                 && imageViewData.data) ? imageViewData.data:""}
-                              target="_blank"
+                               <span
+                              // href={(imageViewData !== null && imageViewData !== undefined
+                              //    && imageViewData.data) ? imageViewData.data:""}
+                              // target="_blank"
                             >
                               {" "}
-                              <u className="text-primary"
+                              <u className="text-primary" style={{ cursor: "pointer" }}
                              onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc,
                               transferData.currentEmployeeId)}  >View</u>
-                            </a>
+                            </span>
                           ) : (
                             "(No Documents Available)"
                           )}
