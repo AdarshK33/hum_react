@@ -233,6 +233,7 @@ const EmergencyContact = (props) => {
                 name="contactName"
                 value={state.contactName}
                 onChange={changeHandler}
+                maxLength="100"
                 required
                 placeholder="Name"
                 disabled={disabled}
@@ -240,7 +241,14 @@ const EmergencyContact = (props) => {
                   stateError.contactNameError ? { borderColor: "red" } : {}
                 }
               />
-              <p style={{ color: "red" }}>{stateError.contactNameError} </p>
+              {/* <p style={{ color: "red" }}>{stateError.contactNameError} </p> */}
+                 {stateError.contactNameError ? (
+                  <p style={{ color: "red" }}>  {stateError.contactNameError}</p>
+                ) :state.contactName && state.contactName.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
           <div className="col-sm-3">
@@ -281,6 +289,7 @@ const EmergencyContact = (props) => {
                 name="phoneNumber"
                 value={state.phoneNumber}
                 onChange={changeHandler}
+                maxLength="10"
                 required
                 placeholder="Contact No"
                 disabled={disabled}
@@ -288,7 +297,15 @@ const EmergencyContact = (props) => {
                   stateError.phoneNumberError ? { borderColor: "red" } : {}
                 }
               />
-              <p style={{ color: "red" }}>{stateError.phoneNumberError} </p>
+              {/* <p style={{ color: "red" }}>{stateError.phoneNumberError} </p> */}
+
+              {stateError.phoneNumberError ? (
+                  <p style={{ color: "red" }}>  {stateError.phoneNumberError}</p>
+                ) :state.phoneNumber && state.phoneNumber.length === 10 ? (
+                  <p style={{ color: "red" }}> Max 10 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
 
@@ -303,10 +320,18 @@ const EmergencyContact = (props) => {
                 value={state.addressLine}
                 onChange={changeHandler}
                 required
+                maxLength="100"
                 placeholder="Address Line 1"
                 disabled={disabled}
               />
-              <p style={{ color: "red" }}>{stateError.addressLineError} </p>
+              {/* <p style={{ color: "red" }}>{stateError.addressLineError} </p> */}
+              {stateError.addressLineError ? (
+                  <p style={{ color: "red" }}>  {stateError.addressLineError}</p>
+                ) :state.addressLine && state.addressLine.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
           {/* </div> */}
@@ -321,6 +346,7 @@ const EmergencyContact = (props) => {
                 type="text"
                 name="locality"
                 value={state.locality}
+                maxLength="100"
                 onChange={changeHandler}
                 required
                 placeholder="Locality"
@@ -328,7 +354,14 @@ const EmergencyContact = (props) => {
                 style={stateError.localityError ? { borderColor: "red" } : {}}
               />
             </Form.Group>
-            <p style={{ color: "red" }}>{stateError.localityError} </p>
+            {/* <p style={{ color: "red" }}>{stateError.localityError} </p> */}
+            {stateError.localityError ? (
+                  <p style={{ color: "red" }}>  {stateError.localityError}</p>
+                ) :state.locality && state.locality.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
           </div>
           <div className="col-sm-3">
             <Form.Group>
@@ -339,13 +372,21 @@ const EmergencyContact = (props) => {
                 type="text"
                 name="city"
                 value={state.city}
+                maxLength="250"
                 onChange={changeHandler}
                 required
                 placeholder="City"
                 disabled={disabled}
                 style={stateError.cityError ? { borderColor: "red" } : {}}
               />
-              <p style={{ color: "red" }}>{stateError.cityError}</p>
+              {/* <p style={{ color: "red" }}>{stateError.cityError}</p> */}
+              {stateError.cityError ? (
+                  <p style={{ color: "red" }}>  {stateError.cityError}</p>
+                ) :state.city && state.city.length === 250 ? (
+                  <p style={{ color: "red" }}> Max 250 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
           <div className="col-sm-3">
@@ -357,13 +398,21 @@ const EmergencyContact = (props) => {
                 type="text"
                 name="country"
                 value={state.country}
+                maxLength="100"
                 onChange={changeHandler}
                 required
                 placeholder="Country"
                 disabled={disabled}
                 style={stateError.countryError ? { borderColor: "red" } : {}}
               />
-              <p style={{ color: "red" }}>{stateError.countryError} </p>
+              {/* <p style={{ color: "red" }}>{stateError.countryError} </p> */}
+              {stateError.countryError ? (
+                  <p style={{ color: "red" }}>  {stateError.countryError}</p>
+                ) :state.country && state.country.length === 100 ? (
+                  <p style={{ color: "red" }}> Max 100 Characters</p>
+                ) : (
+                  <p></p>
+                )}
             </Form.Group>
           </div>
 

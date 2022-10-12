@@ -80,6 +80,7 @@ const EntityTransferAcceptance = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(true);
+  const [viewDoc, setViewDoc] = useState(false); 
 
   const history = useHistory();
   useEffect(() => {
@@ -539,6 +540,7 @@ const EntityTransferAcceptance = () => {
     }
   };
   const handleImageView = (data,employeeId)=>{
+    setViewDoc(true);
     ImageView(data,employeeId)
   }
   useEffect(()=>{
@@ -562,6 +564,11 @@ const EntityTransferAcceptance = () => {
     }
   },[transferData,costCentreData]);
  
+  useEffect(() => {
+    if(imageViewData.data && viewDoc){
+     window.open(imageViewData.data, '_blank');
+    }
+   }, [imageViewData.data]);
  
   return (
     <Fragment>
@@ -847,15 +854,15 @@ const EntityTransferAcceptance = () => {
                               //   }
                               //   target="_blank"
                               // >
-                              <a
-                              href={imageViewData.data ? imageViewData.data:""}
-                              target="_blank"
+                              <span
+                              // href={imageViewData.data ? imageViewData.data:imageViewData.data}
+                              // target="_blank"
                             >
                                 {" "}
-                                <u className="text-primary" 
+                                <u className="text-primary"  style={{ cursor: "pointer" }}
                                 onClick={()=>handleImageView(transferData.internationalTransfer.panNumberDoc,
                                   transferData.currentEmployeeId)}>View</u>
-                              </a>
+                              </span>
                             ) : (
                               "(No Documents Available)"
                             )}
@@ -889,15 +896,15 @@ const EntityTransferAcceptance = () => {
                               //   }
                               //   target="_blank"
                               // >
-                                 <a
-                              href={imageViewData.data ? imageViewData.data:""}
-                              target="_blank"
+                                 <span
+                              // href={imageViewData.data ? imageViewData.data:""}
+                              // target="_blank"
                             >
                                 {" "}
-                                <u className="text-primary" 
+                                <u className="text-primary" style={{ cursor: "pointer" }} 
                                  onClick={()=>handleImageView(transferData.internationalTransfer.aadhaarNumberDoc,
                                   transferData.currentEmployeeId)}>View</u>
-                              </a>
+                              </span>
                             ) : (
                               "(No Documents Available)"
                             )}
