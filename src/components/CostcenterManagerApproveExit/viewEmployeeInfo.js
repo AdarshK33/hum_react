@@ -207,11 +207,11 @@ const EmployeeExitAction = (props) => {
         state.contractType === "Parttime"
       ) {
         var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+          new Date().setMonth(new Date().getMonth() + state.noticePeriod||0)
         );
         let aboveDateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+            new Date().getMonth() + (parseInt(state.noticePeriod||0) + 1)
           )
         );
         setIntern(false);
