@@ -880,7 +880,7 @@ const EmpResignation = () => {
                   {submitted === false ? (
                     <Button type="submit">Submit</Button>
                   ) : (
-                    <Button disabled={employeeData!==undefined && employeeData!==null && employeeData.modeOfSeparationId == 2 ? true :employeeData!==undefined && employeeData!==null && ((employeeData.ccmEsign === true || employeeData.managerEsign === true)||employeeData.status===0) ? false : true} onClick={withdrawHandler}>
+                    <Button disabled={employeeData!==undefined && employeeData!==null && employeeData.modeOfSeparationId == 2 ? true :employeeData!==undefined && employeeData!==null && ((employeeData.status===2 &&(employeeData.ccmEsign === true || employeeData.managerEsign === true))||employeeData.status===0) ? false : true} onClick={withdrawHandler}>
                       WithDraw Resignation
                     </Button>
                   )}
