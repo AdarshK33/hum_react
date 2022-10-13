@@ -91,7 +91,7 @@ const EmpResignation = () => {
       managersByCostcenterList &&
       managersByCostcenterList !== null &&
       managersByCostcenterList !== undefined &&
-      Object.keys(managersByCostcenterList).length !== 0
+      Object.keys(managersByCostcenterList).length !== 0 && (employeeData ===null || Object.keys(employeeData).length === 0)
     ) {
       let managerNames = managersByCostcenterList.filter(
         (j) => j.employeeId === fetchemployeeData.managerId
@@ -107,7 +107,7 @@ const EmpResignation = () => {
         setApproverId(managerNames[0].employeeId);
       }
     }
-  }, [managersByCostcenterList]);
+  }, [managersByCostcenterList,employeeData]);
 
   useEffect(() => {
     console.log("profile data", user, "profile data1", employeeData);
@@ -196,7 +196,8 @@ const EmpResignation = () => {
       //   setLastDateSelection(aboveDateValue);
       //   console.log(dateValue, aboveDateValue, "1");
       // }
-
+      setApprover(employeeData.approverName);
+      setApproverId(employeeData.approverEmpId);
       setReasonOfSepration("");
       setEmailId(employeeData.personalEmailId);
       setSubmitted(true);

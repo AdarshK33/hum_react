@@ -642,8 +642,7 @@ const EmployeeExitAction = (props) => {
                             <b>Emp Name/Id:</b>
                             <label className="itemResult">
                               {" "}
-                              &nbsp;&nbsp; {state.employeeName +"/"+state.employeeId} &nbsp;
-                              {state.employeeId}
+                              &nbsp;&nbsp; {state.employeeName +"/"+state.employeeId}
                             </label>
                           </label>
                         </div>
