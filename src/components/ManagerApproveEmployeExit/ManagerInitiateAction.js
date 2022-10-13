@@ -333,11 +333,11 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "Parttime"
       ) {
         var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+          new Date().setMonth(new Date().getMonth() + state.noticePeriod||0)
         );
         let aboveDateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+            new Date().getMonth() + (parseInt(state.noticePeriod||0) + 1)
           )
         );
         setIntern(false);
@@ -397,7 +397,7 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
-        state.noticePeriod = employeeData.internshipPeriod;
+        state.noticePeriod = employeeData.internshipPeriod||0;
         setIntern(true);
         state.lastWorkingDate = new Date(employeeData.joiningDate).setMonth(
           new Date(employeeData.joiningDate).getMonth() +
@@ -414,11 +414,11 @@ const ManagerInitiateAction = (props) => {
         state.empContractType === "Parttime"
       ) {
         var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + state.noticePeriod)
+          new Date().setMonth(new Date().getMonth() + state.noticePeriod||0)
         );
         let aboveDateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+            new Date().getMonth() + (parseInt(state.noticePeriod||0) + 1)
           )
         );
         setLastDateSelection(aboveDateValue);
@@ -840,7 +840,7 @@ const ManagerInitiateAction = (props) => {
     var AdjusteddateValue1 = new Date(AdjusteddateValue);
     setLastWorkingDate(
       AdjusteddateValue1.setMonth(
-        AdjusteddateValue1.getMonth() + parseInt(state.noticePeriod)
+        AdjusteddateValue1.getMonth() + parseInt(state.noticePeriod||0)
       )
     );
     setDateOfResignation(AdjusteddateValue);

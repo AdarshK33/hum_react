@@ -189,6 +189,7 @@ const ManagerInitiateExit = () => {
     }
   }, [EmpName]);
   console.log("employeeData", employeeData);
+  
   useEffect(() => {
     if (
       employeeData &&
@@ -247,12 +248,12 @@ const ManagerInitiateExit = () => {
       ) {
         var dateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + parseInt(state.noticePeriod)
+            new Date().getMonth() + parseInt(state.noticePeriod||0)
           )
         );
         let aboveDateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+            new Date().getMonth() + (parseInt(state.noticePeriod||0) + 1)
           )
         );
         setLastWorkingDate(dateValue);
@@ -518,13 +519,13 @@ const ManagerInitiateExit = () => {
       ) {
         var dateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + parseInt(state.noticePeriod)
+            new Date().getMonth() + parseInt(state.noticePeriod||0)
           )
         );
         setLastWorkingDate(dateValue);
         let aboveDateValue = new Date(
           new Date().setMonth(
-            new Date().getMonth() + (parseInt(state.noticePeriod) + 1)
+            new Date().getMonth() + (parseInt(state.noticePeriod||0) + 1)
           )
         );
         setIntern(false);
@@ -1000,7 +1001,7 @@ const ManagerInitiateExit = () => {
     var AdjusteddateValue1 = new Date(AdjusteddateValue);
     setLastWorkingDate(
       AdjusteddateValue1.setMonth(
-        AdjusteddateValue1.getMonth() + parseInt(state.noticePeriod)
+        AdjusteddateValue1.getMonth() + parseInt(state.noticePeriod||0)
       )
     );
     setDateOfResignation(AdjusteddateValue);
