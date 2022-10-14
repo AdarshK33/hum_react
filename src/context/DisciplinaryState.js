@@ -51,7 +51,8 @@ export const DisciplinaryProvider = (props,context) => {
         "&size=10&key="+
         key+
         "&superManager="+
-        role
+        role +
+        "&status=14"
          )
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;
