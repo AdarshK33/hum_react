@@ -180,7 +180,7 @@ const CharterEdit = () => {
                             </div>
                           </Col>
 
-                          <Col sm={3} style={{marginLeft: "-6rem"}}>
+                          <Col sm={3} style={{marginLeft: "-3rem"}}>
                             <div>
                               <Form.Group>
                                 <div className={""}>
@@ -223,7 +223,7 @@ const CharterEdit = () => {
                             </div>
                           </Col>
 
-                          <Col sm={3} style={{marginLeft: "-6rem"}}>
+                          <Col sm={3} style={{marginLeft: "-3rem"}}>
                             <div>
                               <Form.Group>
                                 <div className={""}>
