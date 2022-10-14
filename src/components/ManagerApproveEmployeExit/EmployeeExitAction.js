@@ -177,7 +177,7 @@ const EmployeeExitAction = (props) => {
         let aboveDateValue = new Date(
           new Date(employeeData.dateOfResignation).setMonth(
             new Date(employeeData.dateOfResignation).getMonth() +
-              (parseInt(state.noticePeriod) + 1)
+              (parseInt(state.noticePeriod||0) + 1)
           )
         );
         setLastDateSelection(aboveDateValue);

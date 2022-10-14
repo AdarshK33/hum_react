@@ -91,7 +91,7 @@ const EmpResignation = () => {
       managersByCostcenterList &&
       managersByCostcenterList !== null &&
       managersByCostcenterList !== undefined &&
-      Object.keys(managersByCostcenterList).length !== 0
+      Object.keys(managersByCostcenterList).length !== 0 && (employeeData ===null || Object.keys(employeeData).length === 0)
     ) {
       let managerNames = managersByCostcenterList.filter(
         (j) => j.employeeId === fetchemployeeData.managerId
@@ -107,7 +107,7 @@ const EmpResignation = () => {
         setApproverId(managerNames[0].employeeId);
       }
     }
-  }, [managersByCostcenterList]);
+  }, [managersByCostcenterList,employeeData]);
 
   useEffect(() => {
     console.log("profile data", user, "profile data1", employeeData);
@@ -135,23 +135,23 @@ const EmpResignation = () => {
       fetchemployeeData.department == "Finance") &&
       (fetchemployeeData.contractType === "Fulltime" || fetchemployeeData.contractType === "parttime" || fetchemployeeData.contractType === "Parttime")
     ) {
-      setNoticePeriod(fetchemployeeData.noticePeriod);
-      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + fetchemployeeData.noticePeriod));
+      setNoticePeriod(fetchemployeeData.noticePeriod||0);
+      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + fetchemployeeData.noticePeriod||0));
       let aboveDateValue = new Date(
-        new Date().setMonth(new Date().getMonth() + (parseInt(fetchemployeeData.noticePeriod) + 1))
+        new Date().setMonth(new Date().getMonth() + (parseInt(fetchemployeeData.noticePeriod||0) + 1))
       );
       setLastDateSelection(aboveDateValue);
-       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(fetchemployeeData.noticePeriod))))
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(fetchemployeeData.noticePeriod||0))))
       setEmailId(fetchemployeeData.personalEmail);
       console.log(dateValue, aboveDateValue, "hello if");
     } else {
-      setNoticePeriod(fetchemployeeData.noticePeriod);
-      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + fetchemployeeData.noticePeriod));
+      setNoticePeriod(fetchemployeeData.noticePeriod||0);
+      var dateValue = new Date(new Date().setMonth(new Date().getMonth() + fetchemployeeData.noticePeriod||0));
       let aboveDateValue = new Date(
-        new Date().setMonth(new Date().getMonth() + (parseInt(fetchemployeeData.noticePeriod) + 1))
+        new Date().setMonth(new Date().getMonth() + (parseInt(fetchemployeeData.noticePeriod||0) + 1))
       );
       setLastDateSelection(aboveDateValue);
-       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(fetchemployeeData.noticePeriod))))
+       setLastDate(new Date(new Date().setMonth(new Date().getMonth()+ parseInt(fetchemployeeData.noticePeriod||0))))
       setEmailId(fetchemployeeData.personalEmail);
       console.log(dateValue, aboveDateValue, "hello else");
     }
@@ -176,12 +176,12 @@ const EmpResignation = () => {
       //   employeeData.department == "Legal" ||
       //   employeeData.department == "Finance"
       // ) {
-        setNoticePeriod(employeeData.noticePeriod);
+        setNoticePeriod(employeeData.noticePeriod||0);
         var dateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + employeeData.noticePeriod)
+          new Date().setMonth(new Date().getMonth() + employeeData.noticePeriod||0)
         );
         let aboveDateValue = new Date(
-          new Date().setMonth(new Date().getMonth() + (parseInt(employeeData.noticePeriod) + 1))
+          new Date().setMonth(new Date().getMonth() + (parseInt(employeeData.noticePeriod||0) + 1))
         );
         setLastDateSelection(aboveDateValue);
         console.log(dateValue, aboveDateValue, "check value");
@@ -196,7 +196,8 @@ const EmpResignation = () => {
       //   setLastDateSelection(aboveDateValue);
       //   console.log(dateValue, aboveDateValue, "1");
       // }
-
+      setApprover(employeeData.approverName);
+      setApproverId(employeeData.approverEmpId);
       setReasonOfSepration("");
       setEmailId(employeeData.personalEmailId);
       setSubmitted(true);
@@ -224,7 +225,7 @@ const EmpResignation = () => {
         tempArray =
         ModeOfSeparationData[0].modeOfSeparationReasonList[0].modeOfSeparationReason;
       }
-      
+
       ModeOfSeparationData.map((item, i) => {
         if (employeeData.modeOfSeparationId === 0) {
           tempArray = " ";
@@ -430,7 +431,7 @@ const EmpResignation = () => {
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     var AdjusteddateValue1 = new Date(AdjusteddateValue)
-    setLastDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(noticePeriod)))
+    setLastDate(AdjusteddateValue1.setMonth(AdjusteddateValue1.getMonth()+ parseInt(noticePeriod||0)))
     setRegDate(AdjusteddateValue);
   };
   return (
@@ -880,7 +881,7 @@ const EmpResignation = () => {
                   {submitted === false ? (
                     <Button type="submit">Submit</Button>
                   ) : (
-                    <Button disabled={employeeData!==undefined && employeeData!==null && employeeData.modeOfSeparationId == 2 ? true :(employeeData.ccmEsign === true || employeeData.managerEsign === true) ? false : false} onClick={withdrawHandler}>
+                    <Button disabled={employeeData!==undefined && employeeData!==null && employeeData.modeOfSeparationId == 2 ? true :employeeData!==undefined && employeeData!==null && ((employeeData.status===2 &&(employeeData.ccmEsign === true || employeeData.managerEsign === true))||employeeData.status===0) ? false : true} onClick={withdrawHandler}>
                       WithDraw Resignation
                     </Button>
                   )}

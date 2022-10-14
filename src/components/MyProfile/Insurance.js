@@ -160,7 +160,7 @@ const Insurance = () => {
         item.sumInsured = parseInt(sumInsured);
         item.premiumAmount = parseInt(premiumAmnt);
         item.year = parseInt(year);
-        item.dob = moment(item.dob).format("DD-MM-YYY");
+        item.dob = moment(item.dob).format("YYYY-MM-DD");
       });
       console.log("data insurance", insuranceData);
       UpdateInsurance(insuranceData);
