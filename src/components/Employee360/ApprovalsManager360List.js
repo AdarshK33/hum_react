@@ -151,7 +151,7 @@ const ApprovalsManager360List = ({ ListType }) => {
               item.transferType === "International Transfer"
                 ? "Request Sent To Admin"
                 : item.transferType === "Employment Type Transfer" && item.status === 0 
-                ? "Completed"
+                ? "Request Sent to Manager"
                 : item.statusDesc,
             action: (item.transferType === "Regular Transfer"
               ? {

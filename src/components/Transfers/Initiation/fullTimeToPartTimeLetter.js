@@ -62,7 +62,8 @@ const FullTimeToPartTimeLetter = (props) => {
         promotedPosition: transferData.currentPosition,
         promotedRelocationBonus: transferData.currentMonthlyBonus,
         promotedTermOfProject: transferData.promotedTermOfProject,
-        status: 0,
+        // status: 0,
+        status:1,
         transferId: transferData.transferId,
         transferType: transferData.transferType,
       };

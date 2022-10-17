@@ -228,14 +228,26 @@ const RosterMonthSearchYear =()=>{
 
   const Manager360ListView = (key, roleCheck,page) => {
     let api = "";
-
+console.log("Manager360ListView",roleCheck);
     setApprovalsLoader(true);
     if (key === "transfer") {
       api =
         "/api/v1/employee/360/view/employee/transfer?page="+page+"&size=5&key=all";
     } else if (key === "promotion") {
-      api =
-        "/api/v1/employee/360/view/promotion/manager?key=all&page="+page+"&size=5&superManager=0";
+      if(roleCheck=="manager"){
+        api =
+        "/api/v1/employee/360/view/promotion/manager?key=all&page="+page+"&size=5&superManager=0&role="+3;
+      }else if(roleCheck == "costCenterManager"){
+        api =
+        "/api/v1/employee/360/view/promotion/manager?key=all&page="+page+"&size=5&superManager=0&role="+7;
+      }else if(roleCheck == "superCostCenterManager"){
+        api =
+        "/api/v1/employee/360/view/promotion/manager?key=all&page="+page+"&size=5&superManager=0&role="+9;
+      }else if(roleCheck == "admin"){
+        api =
+        "/api/v1/employee/360/view/promotion/manager?key=all&page="+page+"&size=5&superManager=0&role="+1;
+      }
+     
     } else if (key === "probation") {
       api = "/api/v1/probation/view/all?page="+page+"&size=5&key=all&superManager=0";
     } else if (key === "disciplinary") {
