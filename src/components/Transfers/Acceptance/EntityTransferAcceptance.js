@@ -547,6 +547,8 @@ const EntityTransferAcceptance = () => {
     if (
       transferData !== null &&
       transferData !== undefined &&
+      deptDetails !== null &&
+      deptDetails !== undefined &&
       selectedDepartment &&
       Object.keys(transferData).length !== 0 ){
     const departmentSelected = deptDetails.find(item =>item?.departmentName === transferData?.promotedDepartment)
@@ -557,7 +559,8 @@ const EntityTransferAcceptance = () => {
   useEffect(()=>{
     if( transferData !== null &&
       transferData !== undefined &&
-      costCentreData &&
+      costCentreData !== null &&
+      costCentreData !== undefined &&
       selectedDepartment){
         const costCentreDataSelected = costCentreData.find(item =>item.costCentreName === transferData.promotedCostCentre)
    setNewCostCentre(costCentreDataSelected?.costCentreName);

@@ -301,7 +301,7 @@ const EmergencyContact = (props) => {
 
               {stateError.phoneNumberError ? (
                   <p style={{ color: "red" }}>  {stateError.phoneNumberError}</p>
-                ) :state.phoneNumber && state.phoneNumber.length === 10 ? (
+                ) :state.phoneNumber && state.phoneNumber.length === 11 ? (
                   <p style={{ color: "red" }}> Max 10 Characters</p>
                 ) : (
                   <p></p>
