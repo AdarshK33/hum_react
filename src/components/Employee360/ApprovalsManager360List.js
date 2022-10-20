@@ -157,14 +157,14 @@ const ApprovalsManager360List = ({ ListType }) => {
               ? {
                   edit: {
                     active:
-                       item.status === 3
+                    item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                       ? true
                       :item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                         ? true
                         : false,
                     link:
-                    item.status === 3
+                    item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                       ? `/transferaction/${item.transferId}`
                       :item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
