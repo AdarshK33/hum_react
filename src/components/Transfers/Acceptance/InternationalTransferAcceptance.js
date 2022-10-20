@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { TransferContext } from "../../../context/TransferState";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import NoDataComp from "../../no-data/NoData.component";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const InternationalTransferAcceptance = () => {
   const { transferId } = useParams();
@@ -20,6 +21,7 @@ const InternationalTransferAcceptance = () => {
     transferData,
     loader,
   } = useContext(TransferContext);
+  const { rolePermission } = useContext(PermissionContext);
 
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
@@ -106,6 +108,7 @@ const InternationalTransferAcceptance = () => {
         transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
+        initiatedRole:rolePermission, 
         isInsuranceCovered: countryInsurance,
         currency: transferData.currency,
         promotedManagerEmailId: transferData.promotedManagerEmailId,

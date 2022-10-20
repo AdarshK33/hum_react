@@ -6,6 +6,7 @@ import TransferInitationLetter from "../Initiation/TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory, useParams } from "react-router-dom";
 import Breadcrumb from "../../common/breadcrumb";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const RegularTransferAction = () => {
   const { transferId } = useParams();
@@ -19,7 +20,7 @@ const RegularTransferAction = () => {
     getCostCentreLocationDetails,
     costCentreLocationData,
   } = useContext(TransferContext);
-
+  const { rolePermission } = useContext(PermissionContext);
   // const [newLocation, setNewLocation] = useState("");
   const [newLocation, setNewLocation] = useState("");
   const [locationErrMsg, setLocationErrMsg] = useState("");
@@ -265,6 +266,7 @@ const RegularTransferAction = () => {
       status: 0,
       transferId: transferData.transferId,
       transferType: transferData.transferType,
+      initiatedRole:rolePermission, 
     };
     console.log(InfoData);
     createTransferInitiation(InfoData);

@@ -316,6 +316,7 @@ const { rolePermission } = useContext(PermissionContext);
           status: 0,
           transferId: transferData.transferId,
           transferType: transferData.transferType,
+          initiatedRole:rolePermission, 
         };
         console.log("InfoData 2",InfoData);
         createTransferInitiation(InfoData,history);
@@ -479,6 +480,7 @@ const { rolePermission } = useContext(PermissionContext);
           transferId: 0,
           transferLetter: null,
           transferType: "Employment Type Transfer",
+          initiatedRole:rolePermission, 
         };
         console.log("InfoData 1",InfoData);
         createTransferInitiation(InfoData,history);

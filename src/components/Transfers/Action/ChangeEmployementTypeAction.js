@@ -12,6 +12,7 @@ import FullTimeToPartTimeLetter from "../Initiation/fullTimeToPartTimeLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory, useParams } from "react-router-dom";
 import "../../Transfers/Transfers.css";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const ChangeEmployementTypeAction = () => {
   const { transferId } = useParams();
@@ -37,6 +38,7 @@ const ChangeEmployementTypeAction = () => {
     setLetterViewing,
     letterView,
   } = useContext(TransferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEmployement, setNewEmployement] = useState("");
   const [newEmployementErrMsg, setNewEmployementErrMsg] = useState("");
@@ -328,6 +330,7 @@ const ChangeEmployementTypeAction = () => {
       status: 0,
       transferId: transferData.transferId,
       transferType: transferData.transferType,
+      initiatedRole:rolePermission, 
     };
     console.log(InfoData);
     createTransferInitiation(InfoData);

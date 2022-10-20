@@ -5,6 +5,7 @@ import { TransferContext } from "../../../context/TransferState";
 import { E_signContext } from "../../../context/E_signState";
 import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
+import { PermissionContext } from "../../../context/PermissionState";
 
 const PartTimeToFullTimeLetter = (props) => {
   const {
@@ -15,6 +16,7 @@ const PartTimeToFullTimeLetter = (props) => {
     setLetterViewing,
     letterView,
   } = useContext(TransferContext);
+  const { rolePermission } = useContext(PermissionContext);
   const { user, fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -66,6 +68,7 @@ const PartTimeToFullTimeLetter = (props) => {
         status: 1,
         transferId: transferData.transferId,
         transferType: transferData.transferType,
+        initiatedRole:rolePermission, 
       };
       console.log(InfoData);
       createTransferInitiation(InfoData);

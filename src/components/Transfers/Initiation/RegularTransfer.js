@@ -41,7 +41,7 @@ const RegularTransfer = () => {
     ExportPDFandUploadRegular,
     uploadRegularTransferForm,
   } = useContext(TransferContext);
- 
+
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
     const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
@@ -206,6 +206,7 @@ const RegularTransfer = () => {
         status: 3,
         transferId: 0,
         transferType: transferType,
+        initiatedRole:rolePermission, 
       };
       createTransferInitiation(initiationData,history);
     }
@@ -419,6 +420,7 @@ const RegularTransfer = () => {
         status: 0,
         transferId: initiationTransferId,
         transferType: transferType,
+        initiatedRole:rolePermission, 
       };
       createTransferInitiation(initiationData,history);
       setLetterSent(true);
