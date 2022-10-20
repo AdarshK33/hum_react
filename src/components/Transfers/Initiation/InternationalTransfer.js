@@ -149,6 +149,7 @@ const { rolePermission } = useContext(PermissionContext);
         transferId: 0,
         transferLetter: null,
         transferType: transferType,
+        initiatedRole:rolePermission, 
         isInsuranceCovered: countryInsurance,
         currency: newCurrency,
         promotedManagerEmailId: newMangerMailId,

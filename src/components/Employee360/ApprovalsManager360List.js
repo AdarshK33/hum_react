@@ -151,20 +151,20 @@ const ApprovalsManager360List = ({ ListType }) => {
               item.transferType === "International Transfer"
                 ? "Request Sent To Admin"
                 : item.transferType === "Employment Type Transfer" && item.status === 0 
-                ? "Completed"
+                ? "Request Sent to Manager"
                 : item.statusDesc,
             action: (item.transferType === "Regular Transfer"
               ? {
                   edit: {
                     active:
-                       item.status === 3
+                    item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                       ? true
                       :item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                         ? true
                         : false,
                     link:
-                    item.status === 3
+                    item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                       ? `/transferaction/${item.transferId}`
                       :item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0

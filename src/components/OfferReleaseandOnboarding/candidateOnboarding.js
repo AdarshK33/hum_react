@@ -1375,7 +1375,7 @@ const CandidateOnboarding = () => {
             </Col>
           </Row>
       </div> */}
-      {!previewLetter && generateAppoint === false && (
+      {(!previewLetter && generateAppoint === false) || createStatus ==="FAIL" ? (
         <Row className="text-center mt-4">
           <Button
             type="button"
@@ -1385,8 +1385,7 @@ const CandidateOnboarding = () => {
             Save
           </Button>
         </Row>
-      )}
-      {generateAppoint === true ? (
+      ): createStatus ==="SUCCESS" ? (
         <div className="px-5 mx-auto mt-5">
           <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
           <Row className="text-center mt-4">

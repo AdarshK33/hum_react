@@ -322,6 +322,7 @@ const EntityTransferAcceptance = () => {
         transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
+        initiatedRole:rolePermission, 
       };
       console.log(InfoData);
       createTransferInitiation(InfoData);
@@ -533,6 +534,7 @@ const EntityTransferAcceptance = () => {
         transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
+        initiatedRole:rolePermission, 
       };
       console.log(InfoData);
       createTransferInitiation(InfoData);

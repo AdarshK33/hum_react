@@ -417,6 +417,7 @@ const EntityTransfer = () => {
         transferId: 0,
         transferLetter: null,
         transferType: transferType,
+        initiatedRole:rolePermission, 
       };
       console.log(InfoData);
       createTransferInitiation(InfoData,history);
