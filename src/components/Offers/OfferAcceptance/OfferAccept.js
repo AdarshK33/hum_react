@@ -189,6 +189,22 @@ console.log("docViewData",docViewData);
   const downloadAppointmentLetter = () => {
     downloadFileOnboard(candidateProfileData.appointmentSignedLetter);
   };
+  const onButtonPDFClick = () => {
+    // using Java Script method to get PDF file
+    fetch(insuranceFile).then(response => {
+        response.blob().then(blob => {
+            // Creating new object of PDF file
+            const fileURL = window.URL.createObjectURL(blob);
+            // Setting various property values
+            // let alink = document.c
+            let alink = document.createElement('a');
+            // createElement('a');
+            alink.href = fileURL;
+            alink.download = 'Insurance_Benefits_2022.pdf';
+            alink.click();
+        })
+    })
+}
 
   return (
     <Fragment>
@@ -318,6 +334,12 @@ console.log("docViewData",docViewData);
                     View Benefits
                   </span>
                   <Button onClick={showInsuranceClick}>Show</Button>
+                 
+                    <Col sm={2}>
+                  <Button onClick={onButtonPDFClick}>
+                    Download
+                    </Button>
+                  </Col>
                 </div>
               </Container>
               {insuranceLetter === true && (
