@@ -299,15 +299,14 @@ const EmployeeDocementsList = () => {
                               item.disciplinaryWarning.statusDesc === "Warning Letter Approved"
                              && item.disciplinaryWarning.ccmEsign === true
                               ?
-                              <Link to="/letters/warning">
-                                  <Edit2
-                                    onClick={() => {
-                                      disciplinaryEmployeeSearch(
-                                        item.disciplinaryAction.disciplinaryId
-                                      );
-                                    }}
-                                  />
-                                </Link>
+                              // <Link to="/letters/warning">
+                                  <Edit2/>
+                                    // onClick={() => {
+                                    //   disciplinaryEmployeeSearch(
+                                    //     item.disciplinaryAction.disciplinaryId
+                                    //   );
+                                    // }}
+                                    // </Link> 
                                 :
                               item.disciplinaryAction !== null &&
                               item.disciplinaryAction !== undefined &&
