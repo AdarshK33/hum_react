@@ -111,7 +111,7 @@ export const EmployeeHistoryProvider = (props) => {
     client
       .get("api/v1/employee_history/pan_details/" + employeeId)
       .then((response) => {
-        state.panData = new Array(response.data.data)
+        state.panData = response.data.data
 
         setLoader(false);
         console.log("--->panData", state.panData);
