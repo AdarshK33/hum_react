@@ -136,14 +136,14 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  item.status === 3
+                item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                     ? true
                     : item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
                     ? true
                     : false,
                 link:
-                  item.status === 3
+                item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                     ? `/entity-transferaction/${item.transferId}`
                     : item.promotedManagerId === fetchemployeeData.employeeId &&
                       item.status === 0
@@ -177,9 +177,9 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active: item.status === 3 ? true : false,
+                active: item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3 ? true : false,
                 link:
-                  item.status === 3
+                item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                     ? `/changeinemp-transfer/${item.transferId}`
                     : // item.promotedManagerId === user.employeeId &&
                       // item.status === 0
