@@ -334,12 +334,8 @@ console.log("docViewData",docViewData);
                     View Benefits
                   </span>
                   <Button onClick={showInsuranceClick}>Show</Button>
+                  <Button  onClick={onButtonPDFClick} style={{ marginLeft: "1rem" }}>Download</Button>
                  
-                    <Col sm={2}>
-                  <Button onClick={onButtonPDFClick}>
-                    Download
-                    </Button>
-                  </Col>
                 </div>
               </Container>
               {insuranceLetter === true && (
@@ -598,6 +594,8 @@ console.log("docViewData",docViewData);
                     View Benefits
                   </span>
                   <Button onClick={showInsuranceClick}>Show</Button>
+                  <Button  onClick={onButtonPDFClick} style={{ marginLeft: "1rem" }}>Download</Button>
+                 
                 </div>
               </Container>
               {insuranceLetter === true && (
