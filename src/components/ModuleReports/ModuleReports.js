@@ -46,7 +46,7 @@ const ModuleReports = () => {
   });
 
   const [toDate, setToDate] = useState({
-    value: new Date(),
+    value: moment().add("30", "d"),
     errMsg: "",
   });
 
@@ -192,7 +192,7 @@ const ModuleReports = () => {
 
   const changeToDateHandler = (date) => {
     setToDate({
-      value: date,
+      value: moment(date, "YYYY-MM-DD"),
       errMsg: "",
     });
   };
@@ -432,8 +432,8 @@ const ModuleReports = () => {
                             <Col md={6}>
                               <DatePicker
                                 className="text-primary form-control"
-                                selected={toDate.value}
-                                minDate={fromDate.value}
+                                selected={toDate.value.toDate()}
+                                minDate={new Date(fromDate.value)}
                                 closeOnScroll={true}
                                 dateFormat="yyyy-MM-dd"
                                 onChange={(date) => {
