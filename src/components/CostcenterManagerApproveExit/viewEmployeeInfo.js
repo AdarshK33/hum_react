@@ -1192,7 +1192,7 @@ const EmployeeExitAction = (props) => {
                       <div className="text-center mb-3">
                         <br></br>
                         <br></br>
-                        <img src={calendarImage} alt="calendar" width="300px" />
+                        {/* <img src={calendarImage} alt="calendar" width="300px" /> */}
                       </div>
                     )}
                     {submit === true && (

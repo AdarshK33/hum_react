@@ -270,6 +270,14 @@ const DisciplinarySeparation = (props) => {
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.email;
       state.noticePeriod = searchByCostData.noticePeriod;
+      state.mngrName =
+      searchByCostData.lastName !== null &&
+      searchByCostData.lastName !== undefined
+          ? searchByCostData.firstName + " " + searchByCostData.lastName
+          : searchByCostData.firstName;
+      state.mngrId = searchByCostData.employeeId;
+      state.mngrCostCenterName = searchByCostData.costCentre;
+      state.mngrPosition = searchByCostData.position;
       // if (
       //   searchByCostData.department == "AFS" ||
       //   searchByCostData.department == "IT" ||
@@ -310,24 +318,24 @@ const DisciplinarySeparation = (props) => {
     }
   }, [searchByCostData]);
 
-  useEffect(() => {
-    if (
-      fetchemployeeData &&
-      fetchemployeeData &&
-      fetchemployeeData !== null &&
-      fetchemployeeData !== undefined &&
-      Object.keys(fetchemployeeData).length !== 0
-    ) {
-      state.mngrName =
-      fetchemployeeData.lastName !== null &&
-      fetchemployeeData.lastName !== undefined
-          ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
-          : fetchemployeeData.firstName;
-      state.mngrId = fetchemployeeData.employeeId;
-      state.mngrCostCenterName = fetchemployeeData.costCentre;
-      state.mngrPosition = fetchemployeeData.position;
-    }
-  }, [fetchemployeeData]);
+  // useEffect(() => {
+  //   if (
+  //     fetchemployeeData &&
+  //     fetchemployeeData &&
+  //     fetchemployeeData !== null &&
+  //     fetchemployeeData !== undefined &&
+  //     Object.keys(fetchemployeeData).length !== 0
+  //   ) {
+  //     state.mngrName =
+  //     fetchemployeeData.lastName !== null &&
+  //     fetchemployeeData.lastName !== undefined
+  //         ? fetchemployeeData.firstName + " " + fetchemployeeData.lastName
+  //         : fetchemployeeData.firstName;
+  //     state.mngrId = fetchemployeeData.employeeId;
+  //     state.mngrCostCenterName = fetchemployeeData.costCentre;
+  //     state.mngrPosition = fetchemployeeData.position;
+  //   }
+  // }, [fetchemployeeData]);
   console.log(ModeOfSeparationData);
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
