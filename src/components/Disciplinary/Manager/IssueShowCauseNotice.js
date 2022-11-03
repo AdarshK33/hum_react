@@ -292,6 +292,7 @@ const IssueShowCauseNotice = () => {
     setShowSignature(true);
   };
 
+  console.log("search disable",saveLetter, showPreview, submitted);
   const submitfinalShowCauseLetter = (e) => {
     e.preventDefault();
     if (
@@ -786,7 +787,7 @@ const IssueShowCauseNotice = () => {
                                &nbsp; {EmpName} 
                                 {/* &nbsp;{state.empId} */}
                               </label>
-                            ) : (
+                            ) :saveLetter===false && showPreview ===false && submitted === false? (
                               <Form.Group>
                               {/* <div className="faq-form ">
                                 <input
@@ -834,6 +835,10 @@ const IssueShowCauseNotice = () => {
                                       ""
                                       )}
                             </Form.Group>
+                            ):(
+                              <label className="itemResult">
+                              &nbsp; {EmpName} 
+                             </label> 
                             )
                             }
                       </div>                   
