@@ -90,6 +90,13 @@ const ManagerDisciplinaryList = () => {
   /*-----------------Pagination------------------*/
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
+    if(e.target.value.length===0){
+      disciplinaryListView(
+        "all",
+        pageCount,
+        rolePermission == "superCostCenterManager" ? 1 : 0
+      );
+    }
   };
 
   const searchDataHandler = () => {
@@ -220,7 +227,7 @@ const ManagerDisciplinaryList = () => {
                     total !== 0 ? (
                     currentRecords.map((item, i) => {
                       return (
-                        <tbody key={item.employeeId}>
+                        <tbody key={i}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.employeeId}</td>
