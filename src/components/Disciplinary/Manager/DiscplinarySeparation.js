@@ -271,11 +271,11 @@ const DisciplinarySeparation = (props) => {
       state.emailId = searchByCostData.email;
       state.noticePeriod = searchByCostData.noticePeriod;
       state.mngrName =
-      searchByCostData.lastName !== null &&
-      searchByCostData.lastName !== undefined
-          ? searchByCostData.firstName + " " + searchByCostData.lastName
-          : searchByCostData.firstName;
-      state.mngrId = searchByCostData.employeeId;
+      searchByCostData.managerName !== null &&
+      searchByCostData.managerName !== undefined
+          ? searchByCostData.managerName 
+          : "";
+      state.mngrId = searchByCostData.managerId;
       state.mngrCostCenterName = searchByCostData.costCentre;
       state.mngrPosition = searchByCostData.position;
       // if (
