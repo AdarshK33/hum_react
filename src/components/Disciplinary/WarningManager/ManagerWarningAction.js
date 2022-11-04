@@ -517,12 +517,12 @@ const ManagerWarningAction = (props) => {
                 initiatedRole: state.disciplinaryAction.initiatedRole,
                 status:
                   rolePermission == "admin"
-                  ? 13
+                  ? 14
                   : rolePermission == "superCostCenterManager"
-                  ? 12
+                  ? 13
                   : rolePermission == "costCenterManager"
-                  ? 11
-                  : 10,
+                  ? 12
+                  : 11,
 
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
@@ -549,12 +549,12 @@ const ManagerWarningAction = (props) => {
                 initiatedRole: rolePermission !== null ? rolePermission : null,
                 status:
                   rolePermission == "admin"
-                  ? 13
+                  ? 14
               : rolePermission == "superCostCenterManager"
-              ? 12
+              ? 13
               : rolePermission == "costCenterManager"
-              ? 11
-              : 10,
+              ? 12
+              : 11,
                 statusDesc: null,
                 warningDueDays: 0,
                 warningId: 0,

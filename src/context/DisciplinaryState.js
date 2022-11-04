@@ -152,7 +152,7 @@ export const DisciplinaryProvider = (props,context) => {
         state.showCauseIssueCreateResponse = response.data.data;
         state.showCauseIssueCreateResponseMessage = response.data
         console.log(response.data, "createDisciplinary");
-        if(response.data.message == "DisciplinaryAction is already in the system."){
+        if(response.data.message == "DisciplinaryAction is already in the system." || response.data.message == "Employee Exit is already in the system"){
           toast.error(response.data.message);
           history.push("/disciplinary-action")
         }else{
