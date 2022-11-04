@@ -907,8 +907,8 @@ const HistoryView = () => {
                       {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
-                      {(employeeData.status === 0 ||
-                        updateResponse.status === 0) &&
+                      {((employeeData !== null && employeeData !== undefined && employeeData.status === 0) ||
+                        (updateResponse !== null && updateResponse !== undefined && updateResponse.status === 0)) &&
                       letterSent === false ? (
                         <button
                           // style={
@@ -928,7 +928,7 @@ const HistoryView = () => {
                     </div>
 
                     {!saveLetter &&
-                    (employeeData.status === 2 || showPreview === true) ? (
+                    ((employeeData !== null && employeeData !== undefined && employeeData.status === 2) || showPreview === true) ? (
                       <Row>
                         <Col sm={4}></Col>
                         <Col
