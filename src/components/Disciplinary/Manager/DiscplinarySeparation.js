@@ -268,7 +268,7 @@ const DisciplinarySeparation = (props) => {
       state.empCostCenterName = searchByCostData.costCentre;
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
-      state.emailId = searchByCostData.email;
+      state.emailId = searchByCostData.personalEmail;
       state.noticePeriod = searchByCostData.noticePeriod;
       state.mngrName =
       searchByCostData.managerName !== null &&
