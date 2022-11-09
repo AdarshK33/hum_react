@@ -25,7 +25,7 @@ const NonPerformanceTerminationLetter = () => {
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
 
-  const { user } = useContext(AppContext);
+  const { user,fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const [show, setShow] = useState(true);
@@ -89,9 +89,9 @@ const NonPerformanceTerminationLetter = () => {
       empId: employeeData.employeeId,
       candidateId: 0,
       module: "Separation",
-      empName: employeeData.managerName,
-      empEmail: employeeData.managerEmailId,
-      empPhNo: employeeData.managerPhNo,
+      empName: fetchemployeeData.firstName + " " + fetchemployeeData.lastName,
+      empEmail: user.email,
+      empPhNo: fetchemployeeData.phone,
       history: history,
       path: "../employee-separation-listing",
       recipient2: {
