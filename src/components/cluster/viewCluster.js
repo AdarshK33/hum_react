@@ -262,7 +262,8 @@ function ViewCluster() {
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
-                            {e.sports.map((f, j) => {
+                            {e.sports !== undefined && e.sports !== null && e.sports.length > 0 ? 
+                            e.sports.map((f, j) => {
                               return (
                                 <tr key={j + 1}>
                                   <td
@@ -277,7 +278,12 @@ function ViewCluster() {
                                   </td>
                                 </tr>
                               );
-                            })}
+                            })
+                            :
+                            <tr>
+                            <td></td>
+                            </tr>
+                            }
                             <td>{e.clusterName}</td>
                             <td>{e.storeId}</td>
                             <td>{e.description}</td>

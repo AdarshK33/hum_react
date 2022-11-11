@@ -11,7 +11,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 
 const EmployeeExitView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
-  const [modeOfSeparationReasonId, SetModeOfSeparationReasonId] = useState("");
+  const [modeOfSeparationReasonId, SetModeOfSeparationReasonId] = useState();
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
   const [RehireYes, setRehireYes] = useState(false);
@@ -665,7 +665,10 @@ const EmployeeExitView = () => {
                             <b>Reason of Separation:</b>
                             <label className="itemResult">
                               &nbsp;&nbsp; {(modeOfSeparationReasonId !== null 
-                              && modeOfSeparationReasonId !== undefined)?modeOfSeparationReasonId:"NA"}
+                              && modeOfSeparationReasonId !== undefined)
+                              ?modeOfSeparationReasonId
+                              :employeeData !== null &&
+                              employeeData !== undefined && employeeData.modeOfSeparationReasonId === 0?"NA" :""}
                             </label>
                           </label>
                         </div>

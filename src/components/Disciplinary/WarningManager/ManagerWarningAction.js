@@ -49,7 +49,10 @@ const ManagerWarningAction = (props) => {
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [acceptEmployeeReason, setAcceptEmployeeReason] = useState("");
-
+  const [actionRequiredByManager, setActionRequiredByManager] = useState(11);
+  const [actionRequiredByCCM, setActionRequiredByCCM] = useState(12);
+  const [actionRequiredBySCCM, setActionRequiredBySCCM] = useState(13);
+  const [actionRequiredByAdmin, setActionRequiredByAdmin] = useState(14);
   const [reasonForCauseError, setReasonForCauseError] = useState(false);
 
   const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
@@ -517,12 +520,12 @@ const ManagerWarningAction = (props) => {
                 initiatedRole: state.disciplinaryAction.initiatedRole,
                 status:
                   rolePermission == "admin"
-                  ? 14
+                  ? actionRequiredByAdmin
                   : rolePermission == "superCostCenterManager"
-                  ? 13
+                  ? actionRequiredBySCCM
                   : rolePermission == "costCenterManager"
-                  ? 12
-                  : 11,
+                  ? actionRequiredByCCM
+                  : actionRequiredByManager,
 
                 statusDesc: state.disciplinaryWarning.statusDesc,
                 warningDueDays: state.disciplinaryWarning.warningDueDays,
@@ -549,12 +552,12 @@ const ManagerWarningAction = (props) => {
                 initiatedRole: rolePermission !== null ? rolePermission : null,
                 status:
                   rolePermission == "admin"
-                  ? 14
+                  ? actionRequiredByAdmin
               : rolePermission == "superCostCenterManager"
-              ? 13
+              ? actionRequiredBySCCM
               : rolePermission == "costCenterManager"
-              ? 12
-              : 11,
+              ? actionRequiredByCCM
+              : actionRequiredByManager,
                 statusDesc: null,
                 warningDueDays: 0,
                 warningId: 0,
