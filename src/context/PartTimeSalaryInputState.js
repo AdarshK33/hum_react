@@ -7,7 +7,8 @@ import { saveAs } from "file-saver";
 
 const initialState = {
     employeeData: {},
-    createdData:{}
+    createdData:{},
+    searchKey:''
 };
 
 export const PartTimeSalaryInputContext = createContext();
@@ -16,14 +17,16 @@ export const PartTimeSalaryInputProvider = (props) => {
   const [state, dispatch] = useReducer(PartTimeSalaryInputReducer, initialState);
   const [loader, setLoader] = useState(false);
 
-  const ViewEmployeeData = (key) => {
+  const ViewEmployeeData = (key,displayData) => {
     // http://huminedev.theretailinsights.co/api/v1/employee/parttime_employee_search?key=all
     setLoader(true); 
     client
       .get("/api/v1/employee/parttime_employee_search?key=" + key)
       .then((response) => {
-        // toast.info(response.data.message);
-        
+        state.searchKey = key
+        if(key!=='all'&&response.data.message){
+        toast.info(response.data.message);
+        }
         if(response.data&& Object.keys(response.data).length &&
         response.data.data&& Object.keys(response.data.data).length){
         //   state.employeeData = response.data.data[0];
@@ -37,6 +40,7 @@ export const PartTimeSalaryInputProvider = (props) => {
         return dispatch({
           type: "EMPLOYEE_DATA",
           payload: state.employeeData,
+          searchKey:state.searchKey
         });
       })
       .catch((error) => {
@@ -69,7 +73,8 @@ export const PartTimeSalaryInputProvider = (props) => {
         ViewEmployeeData,
         CreateSalaryInput,
         employeeData:state.employeeData,
-        createdData:state.createdData
+        createdData:state.createdData,
+        searchKey: state.searchKey
       }}
     >
       {props.children}
