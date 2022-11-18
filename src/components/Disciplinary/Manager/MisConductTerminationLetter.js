@@ -25,6 +25,7 @@ const MisConductTerminationLetter = () => {
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
   const { user,fetchemployeeData } = useContext(AppContext);
+  const { rolePermission,ImageView,imageViewData } = useContext(PermissionContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
   const [show, setShow] = useState(true);
@@ -75,8 +76,8 @@ const MisConductTerminationLetter = () => {
       status: employeeData.contractType
         ? employeeData.contractType.toLowerCase() === "internship"
           ? 2
-          : 4
-        : 4,
+          : rolePermission == "manager"?4:5
+        : rolePermission == "manager"?4:5,
     };
 
     console.log("createExitData", data2);

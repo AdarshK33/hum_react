@@ -24,7 +24,7 @@ const NonPerformanceTerminationLetter = () => {
     lettterview,
     setViewLetter,
   } = useContext(EmployeeSeparationContext);
-
+  const { rolePermission,ImageView,imageViewData } = useContext(PermissionContext);
   const { user,fetchemployeeData } = useContext(AppContext);
   const history = useHistory();
   const { CreatePdfAndUpload } = useContext(E_signContext);
@@ -76,8 +76,8 @@ const NonPerformanceTerminationLetter = () => {
       status: employeeData.contractType
         ? employeeData.contractType.toLowerCase() === "internship"
           ? 2
-          : 4
-        : 4,
+          : rolePermission == "manager"?4:5
+        : rolePermission == "manager"?4:5,
     };
 
     console.log("createExitData", data2);

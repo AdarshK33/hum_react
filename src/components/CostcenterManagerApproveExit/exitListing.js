@@ -356,7 +356,7 @@ const ExitListing = () => {
                                   ((rolePermission === "costCenterManager" ||
                                   rolePermission === "superCostCenterManager" ||
                                   rolePermission === "admin")
-                                   && ((item.status === 2 && item.managerEsign === true) || item.status === 10 )) ?
+                                   && ((item.status === 2 && item.managerEsign === true) ||(item.status === 4 && item.managerEsign === true) || item.status === 10 )) ?
                                    <Link to={"/employee-info/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
