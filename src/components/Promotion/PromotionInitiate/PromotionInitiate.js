@@ -1173,7 +1173,7 @@ const PromotionInitiate = () => {
                                   {" "}
                                   &nbsp;&nbsp; {} &nbsp;{state.employeeId}
                                 </label>
-                              ) : (
+                              )  : saveLetter===false && showPreview === false && submitted === false?(
                                 <Form.Group>
                                   <div className="faq-form ">
                                     {/* <input
@@ -1238,6 +1238,11 @@ const PromotionInitiate = () => {
                                     ""
                                   )}
                                 </Form.Group>
+                              ):(
+                                <label className="itemResult">
+                                &nbsp; {EmpName} /
+                                  &nbsp;{state.employeeId}
+                               </label> 
                               )}
                             </div>
                           </Col>

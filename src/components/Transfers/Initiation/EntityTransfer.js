@@ -538,6 +538,7 @@ const EntityTransfer = () => {
                                         minLength={2}
                                         ref={employeeRef}
                                         // labelKey='firstName'
+                                      //  disabled={!(formValid===false && previewTransferLetter === false && showSignature === false)}
                                         options={employeeDetails}
                                         labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
                                         placeholder="Search.."
