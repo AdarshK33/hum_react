@@ -5,6 +5,7 @@ const PartTimeSalaryInputReducer = (state, action) => {
           return {
             ...state,
             employeeData: action.payload,
+            searchKey: action.searchKey
           };
           case "CREATED_DATA":
           return {

@@ -38,16 +38,15 @@ const PartTimerSalaryInput = () => {
   const [fromDate,setFromDate] = useState(null)
   const [toDate,setToDate] = useState(null)
   const {
-    ViewEmployeeData,employeeData,CreateSalaryInput,createdData
+    ViewEmployeeData,employeeData,message,searchKey,CreateSalaryInput,createdData
   } = useContext(PartTimeSalaryInputContext);
   const employeeRef = useRef(null);
-  useEffect(() => {
-    ViewEmployeeData('all');
-  }, []);
-
+  // useEffect(() => {
+  //   ViewEmployeeData('all');
+  // }, []);
   useEffect(() => {
     if(searchEmpSelected.length==0){
-       ViewEmployeeData('all');
+      ViewEmployeeData('all'); //first time call & after submit its call
       setSearchClickHandle([]);
       setState({
         empName: "",
@@ -56,22 +55,21 @@ const PartTimerSalaryInput = () => {
         hoursWorked:0,
         toDate: null,
         fromDate: null,
-       
       });
     }
-    else{
-      const searchText = employeeRef.current.getInput();
-      let key =searchText.value.split("/")
-       ViewEmployeeData(key[0]);
-    }
+    // else{
+    //   const searchText = employeeRef.current.getInput();
+    //   let key =searchText.value.split("/")
+    //    ViewEmployeeData(key[1].trim());
+    // }
   }, [searchEmpSelected]);
-
   useEffect(() => {
   if (
    employeeData &&
    searchEmpSelected.length>0 &&
    searchClickHandle.length>0 &&
    employeeData !== null &&
+   searchKey!=='all'&&
    employeeData !== undefined &&
    Object.keys(employeeData).length
  ){
@@ -123,14 +121,13 @@ const PartTimerSalaryInput = () => {
     const searchText = employeeRef.current.getInput();
      let key =searchText.value.split("/")
     setSearchClickHandle(key[1]);//emp ID
-    setEmpName(key[0]);
+    setEmpName(key[0]); //emp name
     setState({
       ...state,
       empName: key[0],//full name
     });
     if (searchText.value !== null) {
-      ViewEmployeeData(key[0]);
-
+      ViewEmployeeData(key[1].trim());
     }
   };
   
@@ -350,7 +347,7 @@ const PartTimerSalaryInput = () => {
       setSearchClickHandle([]);
       setFromDate(null);
       setToDate(null);
-      ViewEmployeeData('all');
+      // ViewEmployeeData('all');
   }
 
   }

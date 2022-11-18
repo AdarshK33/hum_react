@@ -1560,7 +1560,7 @@ const ManagerInitiateExit = () => {
                                 {" "}
                                 &nbsp;&nbsp; {EmpName} &nbsp;{state.empId}
                               </label>
-                            ) : (
+                            ) : saveLetter===false && showPreview ===false && submitted === false  && letterSent ===false?(
                               <Form.Group>
                                 {/* <div className="faq-form ">
                                   <input
@@ -1610,6 +1610,11 @@ const ManagerInitiateExit = () => {
                                     ""
                                     )}
                           </Form.Group>
+                            ):(
+                              <label className="itemResult">
+                              &nbsp; {EmpName} /
+                                &nbsp;{state.empId}
+                             </label> 
                             )}
                           </div>
                         </Col>
