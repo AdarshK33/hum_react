@@ -376,16 +376,30 @@ const { rolePermission } = useContext(PermissionContext);
     const emailValid =
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (newMangerMailId !== "") {
-      if(emailValid.test(newMangerMailId) && newMangerMailId.includes("@decathlon.com")){
-        validForm = true;
-      setManagerMailIdErrMsg("");
-      }else{
+      // if(emailValid.test(newMangerMailId) && newMangerMailId.includes("@decathlon.com")){
+      //   // validForm = true;
+      // setManagerMailIdErrMsg("");
+      // }else{
+      //   console.log("decathlon mail",emailValid.test(newMangerMailId), newMangerMailId.includes("@decathlon.com"));
+      //   validForm = false;
+      //   setManagerMailIdErrMsg("Please enter decathlon email");
+      // } 
+
+      var re =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(newMangerMailId)) {
+      if (
+        newMangerMailId.includes("@decathlon.com")
+      ) {
+
+      } else {
         validForm = false;
         setManagerMailIdErrMsg("Please enter decathlon email");
-      } 
-    }else{
+      }
+    }
+  }else{
       validForm = false;
-      setManagerMailIdErrMsg("Please Enter manager Email");
+      setManagerMailIdErrMsg("Please Enter valid manager Email");
     }
 
     if (newGross === "") {
@@ -446,7 +460,7 @@ const { rolePermission } = useContext(PermissionContext);
       validForm = false;
       setProjectTermErrMsg("Please enter project term");
     }
-
+console.log("return",validForm);
     return validForm;
   };
 
