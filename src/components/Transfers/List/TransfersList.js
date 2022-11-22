@@ -226,13 +226,13 @@ const TransferPage = () => {
                 active:
                   rolePermission == "admin" &&
                   (item.status === 0 ||
-                    isDateBeforeToday(item.promotedDateOfReturn))
+                    (item.contractStatus ==="Freeze" && isDateBeforeToday(item.promotedDateOfReturn)))
                     ? true
                     : false,
                 link:
                   rolePermission == "admin" &&
                   (item.status === 0 ||
-                    isDateBeforeToday(item.promotedDateOfReturn))
+                    (item.contractStatus ==="Freeze" && isDateBeforeToday(item.promotedDateOfReturn)))
                     ? `/international-transfer/${item.transferId}`
                     : "",
               },

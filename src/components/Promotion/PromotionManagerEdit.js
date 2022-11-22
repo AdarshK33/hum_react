@@ -110,6 +110,7 @@ const PromotionManagerEdit = (props) => {
     promotionLetterData,
     lettterview,
     setViewLetter,
+    promotionCreate
   } = useContext(PromotionContext);
   const { rolePermission } = useContext(PermissionContext);
 
@@ -997,7 +998,8 @@ const PromotionManagerEdit = (props) => {
                                 promotionIdData !== undefined &&
                                 Object.keys(promotionIdData).length !== 0 &&
                                 promotionIdData.status === 5) ||
-                              showPreview === true ? (
+                                (promotionCreate && promotionCreate !== null &&
+                                promotionCreate !== undefined && showPreview === true) ? (
                                 <button
                                   // disabled={!submitted}
                                   className={
