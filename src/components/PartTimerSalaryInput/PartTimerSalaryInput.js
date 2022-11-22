@@ -671,7 +671,7 @@ const PartTimerSalaryInput = () => {
                                       <DatePicker
                                         className="form-control part-view"
                                         selected={toDate}
-                              
+                                        disabled={fromDate === null?true:false}
                                         name="toDate"
                                          minDate={new Date(fromDate)}
                                         required
