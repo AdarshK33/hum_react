@@ -425,13 +425,13 @@ const EmployeeExitAction = (props) => {
 
   const handleConfirmation = (exitId, employeeId) => {
     if (state.modeOfSeparationId == 2) {
-     terminationConfirmation(exitId, employeeId);
+    //  terminationConfirmation(exitId, employeeId);
       viewTermination();
       setLetterView(2)
       setShow(true);
       // setModal(true)
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
-     resignationConfirmation(exitId, employeeId);
+    //  resignationConfirmation(exitId, employeeId);
       viewResignation();
       setLetterView(4)
       setShow(true);
