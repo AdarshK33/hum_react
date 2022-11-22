@@ -1115,6 +1115,10 @@ const IssueShowCauseNotice = () => {
                           </button>
 
                           {!saveLetter &&
+                          showCauseIssueCreateResponseMessage &&
+                          showCauseIssueCreateResponseMessage !== null &&
+                          showCauseIssueCreateResponseMessage !== undefined &&
+                           showCauseIssueCreateResponseMessage?.status === "SUCCESS"&&
                           showPreview === true &&
                           submitted === true ? (
                             <button

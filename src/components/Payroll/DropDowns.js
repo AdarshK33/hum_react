@@ -14,6 +14,7 @@ import Payslip from "./Payslip";
 import OtherPayrollDoc from "./OtherPayrollDoc";
 import Select from "react-select";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import { Typeahead } from "react-bootstrap-typeahead"; //Auto search
 
 import { PayrollContext } from "../../context/PayrollState";
 import { SeparationContext } from "../../context/SepearationState";
@@ -39,6 +40,11 @@ const DropDowns = (props) => {
   const [empOptions, setEmpOptions] = useState([{ id: " ", name: " " }]);
   const [empSelected, setEmpSelected] = useState([]);
   const [searchString, setSearchString] = useState("");
+  const [searchEmpSelected, setSearchEmpSelected] = useState("");
+  const [showData, setShowData] = useState(false);
+
+  const employeeRef = useRef(null);
+
 
   // const debounce = (func) => {
   //   let timer;
@@ -52,8 +58,16 @@ const DropDowns = (props) => {
   //   };
   // };
 
+useEffect(() => {
+  if(searchEmpSelected.length==0){
+    empSearchByCostCenter('all'); //first time call & after submit its call
+    setEmpNameId("");
+    setEmployeeId("");
+    setSearchString("");
+  }
+}, [searchEmpSelected]);
   const handleOnSearch = (string, results) => {
-    //console.lo("changing", string, results);
+    console.lo("hello handleOnSearch", string, results);
     if (string) {
       setEmpNameId("");
       setEmployeeId("");
@@ -71,12 +85,14 @@ const DropDowns = (props) => {
     setSearchString("");
     setEmpNameId("");
     setEmployeeId("");
+    console.log("hello Cleared",searchString,empNameId,currentEmpId)
   };
 
   const handleOnSelect = (string) => {
     //console.lo("string", string);
     if (string && Object.keys(string).length) {
       setSearchString(string.name);
+    
       setEmpNameId(string.id);
       setEmployeeId(string.id);
     } else {
@@ -128,6 +144,7 @@ const DropDowns = (props) => {
       empSearchByCostData !== undefined &&
       Object.keys(empSearchByCostData).length
     ) {
+      setShowData(true);
       let tempArray = [];
       empSearchByCostData.map((item, i) => {
         tempArray.push({
@@ -138,12 +155,23 @@ const DropDowns = (props) => {
       setEmpOptions(tempArray);
     } else {
       setEmpOptions([]);
+      setShowData(false);
     }
   }, [empSearchByCostData]);
 
   //console.lo("empOptions", empOptions);
   //console.lo("empSearchByCostData", empSearchByCostData);
   //console.lo("empNameId", empNameId);
+
+  const searchValueHandler = () => {
+    const searchText = employeeRef.current.getInput();
+    let key =searchText.value.split("/")
+    setSearchString(key[0]);
+    setEmpNameId(key[1].trim());
+    setEmployeeId(key[1].trim());
+    empSearchByCostCenter(key[1].trim());
+    
+  };
   return (
     <Fragment>
       <Row className="mt-3">
@@ -169,15 +197,17 @@ const DropDowns = (props) => {
       </Row>
 
       {managerFlag ? (
-        <Row className="mt-3 mb-3" style={{ marginLeft: "0px" }}>
+          <Row className="mt-3 mb-3">
+         <Col sm={10}>
+        {/* <Row className="mt-3 mb-3" style={{ marginLeft: "0px" }}> */}
           <div
             style={{
-              width: "82%",
+              width: "100%",
               zIndex: "1",
               border: "0px",
             }}
           >
-            <ReactSearchAutocomplete
+            {/* <ReactSearchAutocomplete
               styling={{
                 borderRadius: "5px",
                 boxShadow: "none",
@@ -192,8 +222,43 @@ const DropDowns = (props) => {
               onClear={handleOnClear}
               inputSearchString={searchString}
               showIcon={false}
-            />
+            /> */}
+  <>
+                                       <Typeahead
+                                        id="_empSearchId"
+                                        filterBy={['firstName', 'lastName', 'employeeId']}
+                                        minLength={1}
+                                        ref={employeeRef}
+                                        
+                                        disabled={!showData}
+                                        // labelKey='firstName'
+                                        // onChange={searchInputHandler}
+                                        options={empSearchByCostData}
+                                        labelKey={option => `${option.firstName ??''} ${option.lastName ??''} / ${option.employeeId??''}`}
+                                        
+                                        placeholder="Search Employee Name/Id"
+                                        onChange={setSearchEmpSelected}
+                                        selected={searchEmpSelected}
+                                        style={
+                                          { borderRadius: "5px",fontFamily:"Cairo" }
+                                        }
+                                      />
+                                       {searchEmpSelected.length > 0  ? (
+
+                                        <Search
+                                        className="search-icon mr-1"
+                                        style={{ color: "#313131" }}
+                                        onClick={searchValueHandler}
+                                        />
+
+                                        ) : (
+                                        ""
+                                        )}
+                                        </>
+
           </div>
+        {/* </Row> */}
+        </Col>
         </Row>
       ) : // <Row className="mt-3 mb-3">
       //   <Col sm={10}>

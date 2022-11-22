@@ -88,16 +88,21 @@ export const PayrollProvider = ({ children }) => {
     client
       .get("/api/v1/employee/role_based_search?key=" + key)
       .then((response) => {
-        if (response.data.data === null) {
+        if (
+          response.data.data &&
+          response.data.data !== null &&
+          response.data.data !== undefined 
+          ) {
           state.empSearchByCostData = response.data.data;
           console.log("response.data.data", response.data.data);
           // toast.info(response.data.message);
-        } else {
-          state.empSearchByCostData = response.data.data;
-          console.log("response.data.data[0]", response.data.data[0]);
-        }
-        console.log("response", response);
-        console.log("search Emp response", state.searchEmpData1);
+         } 
+        //else {
+        //   state.empSearchByCostData = response.data.data;
+        //   console.log("response.data.data[0]", response.data.data[0]);
+        // }
+        // console.log("response", response);
+        // console.log("search Emp response", state.searchEmpData1);
         return dispatch({
           type: "EMP_SEARCH_BY_COST_DATA",
           payload: state.empSearchByCostData,
