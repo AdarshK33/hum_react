@@ -68,8 +68,9 @@ const ManagerInitiateExit = () => {
   const [showPreview, setPreview] = useState(false);
   const [termination, setTermination] = useState(false);
   const [searchEmpSelected, setSearchEmpSelected] = useState("");
-
-
+ const [employeeDemiseConfirmed,setEmployeeDemiseConfirmed]=useState(10);
+ const [separationInitiation,setSeparationInitiation] =useState(9);
+ const [notConfirmed,setNotConfirmed] =useState(8);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [lastDateSelection, setLastDateSelection] = useState(new Date());
 
@@ -803,7 +804,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 9,
+            status: separationInitiation,
             // status:employeeData.status === 3 ? 3 :
             // (modeOfSeparation == 1 || modeOfSeparation == "Resignation")?2:4,
           };
@@ -1249,7 +1250,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: changeInSeparation === 7?10:8,
+            status: changeInSeparation === 7 && rolePermission === "manager"?employeeDemiseConfirmed : changeInSeparation === 7 && rolePermission !== "manager"?separationInitiation:notConfirmed,
             // iamStatus:state.iamStatus
           };
 
@@ -1312,7 +1313,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 8,
+            status: notConfirmed,
             iamStatus:state.iamStatus
           };
           console.log("createExitData", data1);
