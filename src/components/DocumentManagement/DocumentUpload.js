@@ -166,6 +166,16 @@ const DocumentUpload = () => {
     }
   
   };
+  const downloadDocuments = (moduleName,fromDate,documentName) => {
+    console.log("downloadDocuments",moduleName,fromDate,documentName);
+  let formData = {
+    "fromDate":moment(new Date(fromDate)).format("YYYY-MM-DD"),
+    "moduleName":moduleName - 1,
+    "toDate": moment(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+1)).format("YYYY-MM-DD") 
+    }
+    downloadDocumentUpload(formData,documentName)
+  }
+
   const handleDate = (data)=>{
     let current = new Date(data)
   let cDate = current.getDate() + '-' + (current.getMonth() + 1) + '-' + current.getFullYear();
@@ -345,7 +355,7 @@ const DocumentUpload = () => {
                 <Button
                   variant="primary"
                   type="button"
-                  onClick={(e) => downloadDocumentUpload(item.uploadId,item.auditField.createdDate,item.documentName)}
+                  onClick={(e) => downloadDocuments(item.uploadId,item.auditField.createdDate,item.documentName)}
                 >
                   Download
                 </Button>
