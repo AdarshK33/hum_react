@@ -41,14 +41,14 @@ export const DocumentUploadProvider = (props) => {
       });
   };
 
-  const downloadDocumentUpload = (moduleName,fromDate,documentName) => {
-    console.log(moduleName,fromDate,"downloadDocumentUpload")
+  const downloadDocumentUpload = (formData,documentName) => {
+    console.log(documentName,formData,"downloadDocumentUpload")
     setLoader(true);
-    let formData = {
-    "fromDate":moment(new Date(fromDate)).format("YYYY-MM-DD"),
-    "moduleName":moduleName - 1,
-    "toDate": moment(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+1)).format("YYYY-MM-DD") 
-    }
+    // let formData = {
+    // "fromDate":moment(new Date(fromDate)).format("YYYY-MM-DD"),
+    // "moduleName":moduleName - 1,
+    // "toDate": moment(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+1)).format("YYYY-MM-DD") 
+    // }
     console.log(formData,"formDataDocument")
     client
       .post(
@@ -57,11 +57,11 @@ export const DocumentUploadProvider = (props) => {
         })
       .then((response) => {
         console.log(response, "reponse excel");
-        var blob = new Blob([response.data], {
+        const blob = new Blob([response.data], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         
-        var fileName = `${documentName}.xlsx`;
+        const fileName = `${documentName}.xls`;
         saveAs(blob, fileName);
         toast.info(response.data.message);
         setLoader(false);
