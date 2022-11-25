@@ -117,7 +117,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? {
                     edit: {
                       active: true,
-                      onClick:ViewPromotionById(item.promotionId),
+                      onClick:()=>ViewPromotionById(item.promotionId),
                       link: `/promotion-approval/${item.employeeId}`,
                     },
                   }
@@ -127,8 +127,9 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? {
                     edit: {
                       active: true,
-                      onClick:ViewPromotionById(item.promotionId),
+                      onClick:()=>ViewPromotionById(item.promotionId),
                       link: `/promotion/${item.employeeId}`,
+                      
                     },
                   }:{
                     edit: {
@@ -163,6 +164,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                       item.status === 0
                         ? true
                         : false,
+                    onClick:()=>null,
                     link:
                     item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                       ? `/transferaction/${item.transferId}`
@@ -185,6 +187,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                           item.status === 0
                             ? true
                             : false,
+                        onClick:()=>null,
                         link:
                         item.promotedManagerId === fetchemployeeData.employeeId && item.status === 3
                          ? `/entity-transferaction/${item.transferId}`
@@ -203,6 +206,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                                (item.contractStatus ==="Freeze"&& isDateBeforeToday(item.promotedDateOfReturn)))
                                 ? true
                                 : false,
+                            onClick:()=>null,
                             link:
                               rolePermission == "admin" &&
                               (item.status === 0 ||
@@ -216,6 +220,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                           edit: {
                             active:
                             item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3 ? true : false,
+                            onClick:()=>null,
                             link:
                             item.initiatedBy === fetchemployeeData.employeeId && item.initiatedRole == rolePermission && item.status === 3
                             ? `/changeinemp-transfer/${item.transferId}`
@@ -326,6 +331,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                 ? {
                     edit: {
                       active: true,
+                      onClick:()=>null,
                       link: `/disciplinary-action-page/${item.disciplinaryAction.disciplinaryId}`,
                     },
                   }
@@ -361,7 +367,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                   {
                     edit: {
                       active: true,
-                      onClick:item.disciplinaryAction.disciplinaryId?disciplinaryEmployeeSearch(item.disciplinaryAction.disciplinaryId):null,
+                      onClick:()=>item.disciplinaryAction.disciplinaryId?disciplinaryEmployeeSearch(item.disciplinaryAction.disciplinaryId):null,
                       link: `/manager-warning-action-view/${item.employeeId}`,
                     },
                   }:(fetchemployeeData !== null &&
@@ -447,6 +453,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                     {
                       edit: {
                         active: true,
+                        onClick:()=>null,
                         link: `/manager-action-view/${item.employeeId}`,
                       },
                     }:{
@@ -476,6 +483,7 @@ const ApprovalsManager360List = ({ ListType }) => {
                   item.status === 5 ||
                   item.status === 6) &&
                 item.dueDays > 0  ? true : false,
+                onClick:()=>null,
                 link:
                 (item.status === 0 ||
                   item.status === 5 ||
@@ -497,6 +505,7 @@ const ApprovalsManager360List = ({ ListType }) => {
             action: {
               edit: {
                 active: true,
+                onClick:()=>null,
                 link:
                   item.status === 0
                     ? `/exit-action/${item.employeeId}`

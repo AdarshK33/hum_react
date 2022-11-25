@@ -3,7 +3,7 @@ import { client } from "../utils/axios";
 import DisciplinaryReducer from "../reducers/DisciplinaryReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const initial_state = {
   total: {},
@@ -21,7 +21,7 @@ const initial_state = {
 export const DisciplinaryContext = createContext();
 
 export const DisciplinaryProvider = (props,context) => {
-  // let history = useHistory();
+  let history = useHistory();
 
   const [state, dispatch] = useReducer(DisciplinaryReducer, initial_state);
   const [loader, setLoader] = useState(false);
@@ -154,11 +154,10 @@ export const DisciplinaryProvider = (props,context) => {
         state.showCauseIssueCreateResponse = response.data.data;
         state.showCauseIssueCreateResponseMessage = response.data
         console.log(response.data, "createDisciplinary");
-        if(response.data.message == state.DisciplinaryExist || response.data.message == state.EmployeeExitExist ||response.data.status==='FAIL'){
+        if(response.data.message == state.DisciplinaryExist || response.data.message == state.EmployeeExitExist){
           toast.error(response.data.message);
           history.push("/disciplinary-action")
-        }
-        else{
+        }else{
           toast.info(response.data.message);
         }
         disciplinaryEmployeeSearch(response.data.data.disciplinaryId);
@@ -171,9 +170,7 @@ export const DisciplinaryProvider = (props,context) => {
 
         return dispatch({
           type: "CREATE_SHOW_CAUSE_NOTICE",
-          payload: {
-            createData:state.showCauseIssueCreateResponse,
-            messageData:state.showCauseIssueCreateResponseMessage},
+          payload: {createData:state.showCauseIssueCreateResponse,messageData:state.showCauseIssueCreateResponseMessage},
         });
       })
       .catch((error) => {

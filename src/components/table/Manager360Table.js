@@ -64,7 +64,7 @@ const TableComponentManager360 = ({
                               console.log(actValue,actKey,"table2")
                               if (actValue.link !== "") {
                                 return (
-                                  <Link to={actValue.link}  key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}>
+                                  <Link onClick={() => actValue.onClick()} to={actValue.link}  key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}>
                                     <TableActionButton
                                       key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                       disabled={!actValue.active}

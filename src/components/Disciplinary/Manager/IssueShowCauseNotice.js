@@ -28,6 +28,7 @@ const IssueShowCauseNotice = () => {
   const [checkForExist, setCheckForExist] = useState(false);
   const [firstTimeUpdate, setFirstTimeUpdate] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+
   const [intern, setIntern] = useState(false);
   const [EmpName, setEmpName] = useState();
   let history = useHistory();
@@ -362,7 +363,7 @@ const IssueShowCauseNotice = () => {
         // },
       };
 
-      createShowCauseIssue(InfoData, state.empId,history);
+      createShowCauseIssue(InfoData, state.empId);
       SubmitDisciplinaryLetter(
         disciplinarySearchData.disciplinaryAction.disciplinaryId
       );
@@ -604,8 +605,8 @@ const IssueShowCauseNotice = () => {
       setSuccessModal(true);
     }
   };
-  
-    return (
+
+  return (
     <Fragment>
       {/* letter */}
 
@@ -1198,3 +1199,4 @@ const IssueShowCauseNotice = () => {
 };
 
 export default IssueShowCauseNotice;
+
