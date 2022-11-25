@@ -51,6 +51,15 @@ export const DocumentUploadProvider = (props) => {
     // }
     console.log(formData,"formDataDocument")
     client
+    .post(
+      "/api/v1/admin/uploads/download",formData)
+    .then((response) => {
+      console.log(response, "reponse excel");
+      if(response.data.status==="FAIL"){
+        toast.error(response.data.message);
+        setLoader(false);
+      }else{
+     client
       .post(
         "/api/v1/admin/uploads/download",formData,{
           responseType: "arraybuffer",
@@ -71,9 +80,11 @@ export const DocumentUploadProvider = (props) => {
           payload: state.downloadDocumentUploadData,
         });
       })
+      }
+    })
       .catch(() => {
         setLoader(false);
-        toast.error(`No data found`);
+        toast.error(`Something went wrong`);
       });
   };
   const ViewEmployeeUpload = () => {
