@@ -14,16 +14,18 @@ const initial_state = {
   showCauseIssueCreateResponseMessage: {},
   issueShowCauseNoticeData: {},
   disciplinaryEmpSearchData: {},
-  disciplinaryExist:"DisciplinaryAction is already in the system.",
-  employeeExitExist:"Employee Exit is already in the system"
+  
 };
 
 export const DisciplinaryContext = createContext();
 
 export const DisciplinaryProvider = (props,context) => {
   let history = useHistory();
-
+  
   const [state, dispatch] = useReducer(DisciplinaryReducer, initial_state);
+  const [disciplinaryExist, setDisciplinaryExist] = useState("DisciplinaryAction is already in the system.");
+  const [employeeExitExist, setEmployeeExitExist] = useState("Employee Exit is already in the system");
+
   const [loader, setLoader] = useState(false);
   const [lettterview, setLetterView] = useState(false);
   const [lettterviewShow, setLetterViewShow] = useState(false);
@@ -116,7 +118,7 @@ export const DisciplinaryProvider = (props,context) => {
   };
   const MakedisciplinaryEmployeeSearchNull = () => {
     state.disciplinaryEmpSearchData = {};
-
+    
     return dispatch({
       type: "DISCIPLINARY_SEARCH_WITH_KEY",
       payload: state.disciplinaryEmpSearchData,
@@ -154,7 +156,7 @@ export const DisciplinaryProvider = (props,context) => {
         state.showCauseIssueCreateResponse = response.data.data;
         state.showCauseIssueCreateResponseMessage = response.data
         console.log(response.data, "createDisciplinary");
-        if(response.data.message == state.DisciplinaryExist || response.data.message == state.EmployeeExitExist){
+        if(response.data.message == disciplinaryExist || response.data.message == employeeExitExist){
           toast.error(response.data.message);
           history.push("/disciplinary-action")
         }else{
