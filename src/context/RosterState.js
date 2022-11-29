@@ -593,7 +593,7 @@ export const RosterProvider = ({ children }) => {
           flag +
           "&clusterId=" +
           clusterId +
-          "&contract_type=" +
+          "&contractType=" +
           contractType +
           "&storeId=" +
           storeId
