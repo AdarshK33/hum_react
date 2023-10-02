@@ -58,14 +58,14 @@ const DropDowns = (props) => {
   //   };
   // };
 
-useEffect(() => {
-  if(searchEmpSelected.length==0){
-    empSearchByCostCenter('all'); //first time call & after submit its call
-    setEmpNameId("");
-    setEmployeeId("");
-    setSearchString("");
-  }
-}, [searchEmpSelected]);
+  useEffect(() => {
+    if (searchEmpSelected.length == 0) {
+      empSearchByCostCenter('all'); //first time call & after submit its call
+      setEmpNameId("");
+      setEmployeeId("");
+      setSearchString("");
+    }
+  }, [searchEmpSelected]);
   const handleOnSearch = (string, results) => {
     console.lo("hello handleOnSearch", string, results);
     if (string) {
@@ -85,14 +85,14 @@ useEffect(() => {
     setSearchString("");
     setEmpNameId("");
     setEmployeeId("");
-    console.log("hello Cleared",searchString,empNameId,currentEmpId)
+    console.log("hello Cleared", searchString, empNameId, currentEmpId)
   };
 
   const handleOnSelect = (string) => {
     //console.lo("string", string);
     if (string && Object.keys(string).length) {
       setSearchString(string.name);
-    
+
       setEmpNameId(string.id);
       setEmployeeId(string.id);
     } else {
@@ -165,12 +165,12 @@ useEffect(() => {
 
   const searchValueHandler = () => {
     const searchText = employeeRef.current.getInput();
-    let key =searchText.value.split("/")
+    let key = searchText.value.split("/")
     setSearchString(key[0]);
     setEmpNameId(key[1].trim());
     setEmployeeId(key[1].trim());
     empSearchByCostCenter(key[1].trim());
-    
+
   };
   return (
     <Fragment>
@@ -197,17 +197,17 @@ useEffect(() => {
       </Row>
 
       {managerFlag ? (
-          <Row className="mt-3 mb-3">
-         <Col sm={10}>
-        {/* <Row className="mt-3 mb-3" style={{ marginLeft: "0px" }}> */}
-          <div
-            style={{
-              width: "100%",
-              zIndex: "1",
-              border: "0px",
-            }}
-          >
-            {/* <ReactSearchAutocomplete
+        <Row className="mt-3 mb-3">
+          <Col sm={10}>
+            {/* <Row className="mt-3 mb-3" style={{ marginLeft: "0px" }}> */}
+            <div
+              style={{
+                width: "100%",
+                zIndex: "1",
+                border: "0px",
+              }}
+            >
+              {/* <ReactSearchAutocomplete
               styling={{
                 borderRadius: "5px",
                 boxShadow: "none",
@@ -223,83 +223,83 @@ useEffect(() => {
               inputSearchString={searchString}
               showIcon={false}
             /> */}
-  <>
-                                       <Typeahead
-                                        id="_empSearchId"
-                                        filterBy={['firstName', 'lastName', 'employeeId']}
-                                        minLength={1}
-                                        ref={employeeRef}
-                                        
-                                        disabled={!showData}
-                                        // labelKey='firstName'
-                                        // onChange={searchInputHandler}
-                                        options={empSearchByCostData}
-                                        labelKey={option => `${option.firstName ??''} ${option.lastName ??''} / ${option.employeeId??''}`}
-                                        
-                                        placeholder="Search Employee Name/Id"
-                                        onChange={setSearchEmpSelected}
-                                        selected={searchEmpSelected}
-                                        style={
-                                          { borderRadius: "5px",fontFamily:"Cairo" }
-                                        }
-                                      />
-                                       {searchEmpSelected.length > 0  ? (
+              <>
+                <Typeahead
+                  id="_empSearchId"
+                  filterBy={['firstName', 'lastName', 'employeeId']}
+                  minLength={1}
+                  ref={employeeRef}
 
-                                        <Search
-                                        className="search-icon mr-1"
-                                        style={{ color: "#313131" }}
-                                        onClick={searchValueHandler}
-                                        />
+                  disabled={!showData}
+                  // labelKey='firstName'
+                  // onChange={searchInputHandler}
+                  options={empSearchByCostData}
+                  labelKey={option => `${option.firstName ?? ''} ${option.lastName ?? ''} / ${option.employeeId ?? ''}`}
 
-                                        ) : (
-                                        ""
-                                        )}
-                                        </>
+                  placeholder="Search Employee Name/Id"
+                  onChange={setSearchEmpSelected}
+                  selected={searchEmpSelected}
+                  style={
+                    { borderRadius: "5px", fontFamily: "Cairo" }
+                  }
+                />
+                {searchEmpSelected.length > 0 ? (
 
-          </div>
-        {/* </Row> */}
-        </Col>
+                  <Search
+                    className="search-icon mr-1"
+                    style={{ color: "#313131" }}
+                    onClick={searchValueHandler}
+                  />
+
+                ) : (
+                  ""
+                )}
+              </>
+
+            </div>
+            {/* </Row> */}
+          </Col>
         </Row>
       ) : // <Row className="mt-3 mb-3">
-      //   <Col sm={10}>
-      //     <div>
-      //       <Select
-      //         name="Week"
-      //         options={
-      //           empOptions && Object.keys(empOptions).length
-      //             ? empOptions.map((item) => ({
-      //                 label: item.label,
-      //                 value: item.value,
-      //               }))
-      //             : []
-      //         }
-      //         value={empSelected}
-      //         onChange={ChangeSearchOption}
-      //         placeholder="Search Employee/Id"
-      //         isSearchable
-      //         // className="rosterSelect"
-      //       ></Select>
-      //     </div>
-      //   </Col>
-      // </Row>
-      // <Row className="mt-3">
-      //   <Col sm={10}>
-      //     <Form.Group>
-      //       <Form.Control
-      //         type="text"
-      //         placeholder="Search Employee Id/Name"
-      //         value={searchInput}
-      //         onChange={(e) => setSearchInput(e.target.value)}
-      //       />
-      //       <Search
-      //         className="search-icon mr-1"
-      //         style={{ color: "#313131" }}
-      //         onClick={searchValueHandler}
-      //       />
-      //     </Form.Group>
-      //   </Col>
-      // </Row>
-      null}
+        //   <Col sm={10}>
+        //     <div>
+        //       <Select
+        //         name="Week"
+        //         options={
+        //           empOptions && Object.keys(empOptions).length
+        //             ? empOptions.map((item) => ({
+        //                 label: item.label,
+        //                 value: item.value,
+        //               }))
+        //             : []
+        //         }
+        //         value={empSelected}
+        //         onChange={ChangeSearchOption}
+        //         placeholder="Search Employee/Id"
+        //         isSearchable
+        //         // className="rosterSelect"
+        //       ></Select>
+        //     </div>
+        //   </Col>
+        // </Row>
+        // <Row className="mt-3">
+        //   <Col sm={10}>
+        //     <Form.Group>
+        //       <Form.Control
+        //         type="text"
+        //         placeholder="Search Employee Id/Name"
+        //         value={searchInput}
+        //         onChange={(e) => setSearchInput(e.target.value)}
+        //       />
+        //       <Search
+        //         className="search-icon mr-1"
+        //         style={{ color: "#313131" }}
+        //         onClick={searchValueHandler}
+        //       />
+        //     </Form.Group>
+        //   </Col>
+        // </Row>
+        null}
       {managerFlag ? (
         empNameId !== "" && empNameId ? (
           docType === "Payslip" ? (

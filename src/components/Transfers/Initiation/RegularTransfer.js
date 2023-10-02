@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect,useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
 import { Search } from "react-feather";
 import Select from "react-select";
@@ -37,15 +37,17 @@ const RegularTransfer = () => {
     createTransferInitiation,
     initiationStatus,
     initiationTransferId,
-    transferData, loader, regularResponse,
+    transferData,
+    loader,
+    regularResponse,
     ExportPDFandUploadRegular,
     uploadRegularTransferForm,
   } = useContext(TransferContext);
 
   const { viewBonusByContarctType, getBonusByContractType } =
     useContext(BonusContext);
-    const {  employeeDetails,getEmployeeDetails} = useContext(PromotionContext);
-    // console.log("employeeDetails",employeeDetails)
+  const { employeeDetails, getEmployeeDetails } = useContext(PromotionContext);
+  // console.log("employeeDetails",employeeDetails)
   const { rolePermission } = useContext(PermissionContext);
   const [transferType, setTransferType] = useState("Regular Transfer");
   const [transferErrMsg, setTransferErrMsg] = useState("");
@@ -90,31 +92,18 @@ const RegularTransfer = () => {
   const history = useHistory();
   const employeeRef = useRef(null);
 
-
-
   useEffect(() => {
-  if(searchEmpSelected.length==0){
-    if (
-      rolePermission === "admin"
-    ){
-     getEmployeeDetails(1);
+    if (searchEmpSelected.length == 0) {
+      if (rolePermission === "admin") {
+        getEmployeeDetails(1);
+      } else if (rolePermission === "superCostCenterManager") {
+        getEmployeeDetails(9);
+      } else if (rolePermission === "costCenterManager") {
+        getEmployeeDetails(7);
+      } else if (rolePermission === "manager") {
+        getEmployeeDetails(2);
+      }
     }
-    else if (
-      rolePermission === "superCostCenterManager"
-    ){
-     getEmployeeDetails(9);
-    }
-    else if (
-      rolePermission === "costCenterManager"
-    ){
-     getEmployeeDetails(7);
-    }
-    else if (
-      rolePermission === "manager"
-    ){
-     getEmployeeDetails(2);
-    }
-  }
   }, [searchEmpSelected]);
   useEffect(() => {
     if (
@@ -154,9 +143,10 @@ const RegularTransfer = () => {
     if (
       initiationEmpData !== null &&
       initiationEmpData !== undefined &&
-      Object.keys(initiationEmpData).length !== 0 ){
-    getDepartmentDetails(initiationEmpData.currentCompany);
-      }
+      Object.keys(initiationEmpData).length !== 0
+    ) {
+      getDepartmentDetails(initiationEmpData.currentCompany);
+    }
   }, [initiationEmpData]);
 
   useEffect(() => {
@@ -206,9 +196,9 @@ const RegularTransfer = () => {
         status: 3,
         transferId: 0,
         transferType: transferType,
-        initiatedRole:rolePermission, 
+        initiatedRole: rolePermission,
       };
-      createTransferInitiation(initiationData,history);
+      createTransferInitiation(initiationData, history);
     }
   }, [formValid]);
 
@@ -239,8 +229,7 @@ const RegularTransfer = () => {
 
   // const searchInputHandler = (e) => {
   //   const searchText = employeeRef.current.getInput();
-   
-   
+
   // };
 
   const searchValueHandler = () => {
@@ -248,8 +237,6 @@ const RegularTransfer = () => {
     setSearchInput(searchText.value);
     setSearchValue(searchText.value);
     setEmpErrMsg("");
- 
-    
   };
 
   const departmentChangeHandler = (e) => {
@@ -378,7 +365,7 @@ const RegularTransfer = () => {
         dsiType: "regular",
         fileType: 24,
       };
-      console.log("bbbbbbbbbbbb",blobStore)
+      console.log("bbbbbbbbbbbb", blobStore);
 
       ExportPDFandUploadRegular(
         blobStore,
@@ -387,11 +374,8 @@ const RegularTransfer = () => {
         transferData.currentEmployeeId
       );
       setShowInitiationLetter(false);
-    setPreviewTransferLetter(true);
-        });
-   
-
-   
+      setPreviewTransferLetter(true);
+    });
   };
 
   const showTransferLetterModal = (e) => {
@@ -420,9 +404,9 @@ const RegularTransfer = () => {
         status: 0,
         transferId: initiationTransferId,
         transferType: transferType,
-        initiatedRole:rolePermission, 
+        initiatedRole: rolePermission,
       };
-      createTransferInitiation(initiationData,history);
+      createTransferInitiation(initiationData, history);
       setLetterSent(true);
       setShowLetterSubmitModal(true);
     }
@@ -474,18 +458,18 @@ const RegularTransfer = () => {
 
   const noChangeCostCentreHandler = (e) => {
     if (e.target.checked === true) {
-    const costCenter = costCentreData.find((item) => {
-      return (
-        item.costCentreName.toLowerCase() ===
-        initiationEmpData.currentCostCentre.toLowerCase()
-      );
-    });
-    console.log("costCenter->", costCenter);
-    if (costCenter !== undefined && Object.keys(costCenter).length > 0) {
-      setCostCentreNoChange(true);
-      setNewCostCentre(costCenter.costCentreName);
-    }
-  }else{
+      const costCenter = costCentreData.find((item) => {
+        return (
+          item.costCentreName.toLowerCase() ===
+          initiationEmpData.currentCostCentre.toLowerCase()
+        );
+      });
+      console.log("costCenter->", costCenter);
+      if (costCenter !== undefined && Object.keys(costCenter).length > 0) {
+        setCostCentreNoChange(true);
+        setNewCostCentre(costCenter.costCentreName);
+      }
+    } else {
       setCostCentreNoChange(false);
       setNewCostCentre("");
       MakeCostCenterDependienciesNull();
@@ -505,7 +489,7 @@ const RegularTransfer = () => {
         setManagerNoChange(true);
         setNewManager(managerData.employeeId);
       }
-    }else {
+    } else {
       MakeManagerDependienciesNull();
       setManagerNoChange(false);
       setNewManager("");
@@ -637,7 +621,7 @@ const RegularTransfer = () => {
     }
   };
 
-  console.log("hello transferData",transferData)
+  console.log("hello transferData", transferData);
   return (
     <div className="transfer-initiation">
       <ToastContainer />
@@ -702,29 +686,29 @@ const RegularTransfer = () => {
               </>
             )}
           </Row> */}
-          { !previewTransferLetter ? (
-              <Row style={{textAlign:"center"}}>
-                <Col sm={{ span: 5, offset: 4 }}>
-                  <Button
-                    variant="primary"
-                    onClick={handleTransferLetterModalClose}
-                  >
-                    Save 
-                  </Button>
-                </Col>
-              </Row>
-            ):(
-              <Row style={{textAlign:"center"}}>
+          {!previewTransferLetter ? (
+            <Row style={{ textAlign: "center" }}>
               <Col sm={{ span: 5, offset: 4 }}>
                 <Button
                   variant="primary"
                   onClick={handleTransferLetterModalClose}
                 >
-                  Save 
+                  Save
                 </Button>
               </Col>
             </Row>
-            )}
+          ) : (
+            <Row style={{ textAlign: "center" }}>
+              <Col sm={{ span: 5, offset: 4 }}>
+                <Button
+                  variant="primary"
+                  onClick={handleTransferLetterModalClose}
+                >
+                  Save
+                </Button>
+              </Col>
+            </Row>
+          )}
         </Modal.Body>
       </Modal>
 
@@ -765,36 +749,32 @@ const RegularTransfer = () => {
             style={{ color: "#313131" }}
             onClick={searchValueHandler}
           /> */}
-                                     <Typeahead
-                                        id="_empSearchId"
-                                        filterBy={['firstName', 'lastName', 'employeeId']}
-                                        minLength={2}
-                                        ref={employeeRef}
-                                        // labelKey='firstName'
-                                        // onChange={searchInputHandler}
-                                        options={employeeDetails}
-                                        labelKey={option => `${option.firstName  ?? ''} ${option.lastName ?? ''}`}
-                                        placeholder="Search.."
-                                        onChange={setSearchEmpSelected}
-                                        selected={searchEmpSelected}
-                                        style={
-                                          empErrMsg
-                                            ? { borderColor: "red" }
-                                            : { borderRadius: "5px" }
-                                        }
-                                      />
-                                                                                      
-                                                {searchEmpSelected.length > 0  ? (
+          <Typeahead
+            id="_empSearchId"
+            filterBy={["firstName", "lastName", "employeeId"]}
+            minLength={2}
+            ref={employeeRef}
+            // labelKey='firstName'
+            // onChange={searchInputHandler}
+            options={employeeDetails}
+            labelKey={(option) =>
+              `${option.firstName ?? ""} ${option.lastName ?? ""}`
+            }
+            placeholder="Search.."
+            onChange={setSearchEmpSelected}
+            selected={searchEmpSelected}
+            style={empErrMsg ? { borderColor: "red" } : { borderRadius: "5px" }}
+          />
 
-                                                <Search
-                                                className="search-icon mr-1"
-                                                style={{ color: "#313131" }}
-                                                onClick={searchValueHandler}
-                                                />
-
-                                                ) : (
-                                                ""
-                                                )}
+          {searchEmpSelected.length > 0 ? (
+            <Search
+              className="search-icon mr-1"
+              style={{ color: "#313131" }}
+              onClick={searchValueHandler}
+            />
+          ) : (
+            ""
+          )}
           {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
         </Col>
       </Form.Group>
@@ -834,7 +814,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-dept-change"
-                disabled={formValid?true:false}
+                  disabled={formValid ? true : false}
                   checked={depNoChange}
                   onChange={noChangeDeptHandler}
                 />
@@ -884,7 +864,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-costcentre-change"
-                  disabled={(newDeptName === "" || formValid)? true : false}
+                  disabled={newDeptName === "" || formValid ? true : false}
                   checked={costCentreNoChange}
                   onChange={noChangeCostCentreHandler}
                 />
@@ -965,7 +945,7 @@ const RegularTransfer = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   id="no-manager-change"
-                  disabled={(newCostCentre === "" || formValid) ? true : false}
+                  disabled={newCostCentre === "" || formValid ? true : false}
                   checked={managerNoChange}
                   onChange={noChangeManagerHandler}
                 />
@@ -1020,7 +1000,7 @@ const RegularTransfer = () => {
                   type="checkbox"
                   id="no-position-change"
                   checked={positionNoChange}
-                  disabled={(newManager === "" || formValid) ? true : false}
+                  disabled={newManager === "" || formValid ? true : false}
                   onChange={noChangePositionHandler}
                 />
               </div>
@@ -1074,7 +1054,7 @@ const RegularTransfer = () => {
                   type="checkbox"
                   id="no-location-change"
                   checked={locationNoChange}
-                  disabled={(newPositionName === "" || formValid) ? true : false}
+                  disabled={newPositionName === "" || formValid ? true : false}
                   onChange={noChangeLocationHandler}
                 />
               </div>
@@ -1230,7 +1210,9 @@ const RegularTransfer = () => {
                 </button>
               )}
 
-              {searchValue !== "" && initiationStatus && previewTransferLetter && (
+              {searchValue !== "" &&
+                initiationStatus &&
+                previewTransferLetter && (
                   <button
                     disabled={letterSent}
                     className={letterSent ? "confirmButton" : "stepperButtons"}
@@ -1238,7 +1220,7 @@ const RegularTransfer = () => {
                   >
                     Submit
                   </button>
-              )}
+                )}
             </Col>
           </Row>
         </div>
